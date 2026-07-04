@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es" data-universe-page="home">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UNIVERSE</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQNXG3BRZP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WQNXG3BRZP');
+  </script>
+  <script>
+    (function(){
+      try {
+        if (localStorage.getItem('universe_theme') === 'dark') {
+          document.documentElement.setAttribute('data-universe-theme', 'dark');
+        }
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div id="login-overlay">
+  <div class="login-card">
+    <div class="login-card-inner">
+      <div class="login-brand">
+        <div class="login-logo">UNIVERSE</div>
+        <div class="login-tagline">Plataforma Preuniversitaria · UNI</div>
+      </div>
+
+      <p class="login-desc">Accede como invitado para explorar todo el contenido educativo, o utiliza los accesos directos a las plataformas oficiales.</p>
+
+      <div class="login-guest-section">
+        <button class="login-guest-btn" id="login-guest-btn" onclick="event.preventDefault();var o=document.getElementById('login-overlay');if(o){o.classList.add('hidden');o.style.display='none';}try{if(window.handleLogin){window.handleLogin();}}catch(e){}return false;" type="button">
+          <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Entrar como invitado
+        </button>
+      </div>
+
+      <div class="login-gmail-coming">
+        <div class="login-divider"><span>Proximamente</span></div>
+        <div class="login-gmail-msg">
+          <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M22 6v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6l8 5.5L20 6Z"/><path d="M22 6 12 11.5 2 6"/></svg>
+          Inicio con Gmail ; Proximamente
+        </div>
+      </div>
+
+      <div class="login-official">
+        <div class="login-divider"><span>o accede desde</span></div>
+        <div class="login-official-grid">
+          <a class="login-official-card cu" href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
+            <div class="login-official-name">CEPREUNI</div>
+            <div class="login-official-desc">Sitio Oficial</div>
+          </a>
+          <a class="login-official-card cn" href="https://ceprenet.uni.edu.pe/auth/login" rel="noopener noreferrer" target="_blank">
+            <div class="login-official-name">CEPRENET</div>
+            <div class="login-official-desc">Plataforma Virtual</div>
+          </a>
+        </div>
+      </div>
+
+    <div class="login-terms">Al continuar aceptas nuestros <a href="/terminos.html">Términos de Servicio</a> y <a href="/privacidad.html">Política de Privacidad</a> de UNIVERSE.</div>
+    </div>
+  </div>
+</div>
+
+
+<div id="account-panel">
+  <div class="tp-header">
+    <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeAccountPanel()" type="button">×</button>
+    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;color:var(--gray);">MI CUENTA · UNIVERSE</div>
+    <div class="tp-header-logo">UNIVERSE</div>
+  </div>
+  <!-- UNIVERSE 2026: perfil compacto, ancho y personalizable -->
+  <div class="ap-shell">
+    <aside class="ap-profile-card">
+      <div class="ap-hero">
+        <div class="ap-avatar-row">
+          <label class="ap-avatar-wrap" for="ap-photo-input" id="ap-avatar-wrap" title="Subir foto de perfil">
+            <img alt="" id="ap-avatar-img" src="" style="display:none;"/>
+            <span id="ap-avatar-initial">?</span>
+          </label>
+          <input accept="image/*" id="ap-photo-input" onchange="handleProfilePhoto(this)" style="display:none;" type="file"/>
+          <div>
+            <div class="ap-name" id="ap-name">Usuario</div>
+            <div class="ap-email" id="ap-email"/>
+            <div class="ap-badge" id="ap-role-badge"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="m10.6 16.2 7.05-7.05-1.7-1.7-5.35 5.35-2.55-2.55-1.7 1.7 4.25 4.25ZM12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/></svg> Usuario</div>
+          </div>
+        </div>
+        <label class="ap-field" for="ap-nickname-field">Apodo de batalla
+          <input class="ap-input" id="ap-nickname-field" maxlength="28" oninput="saveProfilePrefs(false)" placeholder="Ej. Futuro UNI"/>
+        </label>
+        <button class="ap-mini-save" onclick="saveProfilePrefs(true)">Guardar perfil</button>
+
+      </div>
+    </aside>
+    <main class="ap-body ap-dashboard">
+      <section class="ap-panel">
+        <div class="ap-panel-head">
+          <div class="ap-section-title">Mi Progreso</div>
+          <button class="tool-cta" onclick="openMiniTournament()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 3h10v3h3v4a5 5 0 0 1-5 5h-.3A5.7 5.7 0 0 1 13 16.6V19h3v2H8v-2h3v-2.4A5.7 5.7 0 0 1 9.3 15H9a5 5 0 0 1-5-5V6h3V3Zm0 5H6v2a3 3 0 0 0 1.6 2.65A7.7 7.7 0 0 1 7 9.6V8Zm10 1.6c0 2.75-1.88 5-5 5s-5-2.25-5-5V5h10v4.6Zm1 3.05A3 3 0 0 0 20 10V8h-1v1.6c0 1.1-.2 2.12-.6 3.05Z"/></svg> Mini torneo</button>
+        </div>
+        <div class="ap-stat-row">
+          <div class="ap-stat-card"><div class="ap-stat-val" id="ap-score">0</div><div class="ap-stat-lbl">Correctas</div></div>
+          <div class="ap-stat-card"><div class="ap-stat-val" id="ap-total">0</div><div class="ap-stat-lbl">Intentadas</div></div>
+          <div class="ap-stat-card"><div class="ap-stat-val" id="ap-pct">-</div><div class="ap-stat-lbl">Precisión</div></div>
+          <div class="ap-stat-card"><div class="ap-stat-val" id="ap-rank">-</div><div class="ap-stat-lbl">Ranking</div></div>
+        </div>
+      </section>
+      <section class="ap-panel">
+        <div class="ap-section-title">Gamificación</div>
+        <div class="ap-gam-mini">
+          <div class="ap-gam-chip"><div class="ap-gam-value" id="ap-points">0</div><div class="ap-gam-label">Puntos</div></div>
+          <div class="ap-gam-chip"><div class="ap-gam-value" id="ap-streak">1</div><div class="ap-gam-label">Racha</div></div>
+          <div class="ap-gam-chip"><div class="ap-gam-value" id="ap-tasks">0%</div><div class="ap-gam-label">Agenda</div></div>
+        </div>
+      </section>
+      <section class="ap-panel">
+        <div class="ap-section-title">Cursos por mejorar</div>
+        <div class="ap-course-grid" id="ap-course-progress"/>
+      </section>
+      <section class="ap-panel">
+        <div class="ap-section-title">Configuración de cuenta</div>
+        <div class="account-config-grid">
+          <label class="ap-field" for="ap-account-name-field">Nombre visible
+            <input class="ap-input" id="ap-account-name-field" maxlength="40" oninput="saveProfilePrefs(false)" placeholder="Tu nombre"/>
+          </label>
+          <label class="ap-field" for="ap-account-email-field">Correo afiliado
+            <input class="ap-input" id="ap-account-email-field" oninput="saveProfilePrefs(false)" placeholder="correo@ejemplo.com" type="email"/>
+          </label>
+          <label class="ap-field" for="ap-phone-field">Número de celular
+            <input class="ap-input" id="ap-phone-field" inputmode="tel" maxlength="18" oninput="saveProfilePrefs(false)" placeholder="+51 999 999 999"/>
+          </label>
+          <label class="ap-field" for="ap-goal-field">Meta UNI
+            <input class="ap-input" id="ap-goal-field" maxlength="42" oninput="saveProfilePrefs(false)" placeholder="Ej. Ingeniería de Sistemas"/>
+          </label>
+        </div>
+        <div class="account-name-warning" id="account-name-warning"/>
+        <div class="account-config-note">UniverseAI ya está integrado para generar preguntas con el temario y el material que subas, sin configurar motor, modelo ni clave desde tu cuenta.</div>
+        <button class="ap-mini-save" onclick="saveProfilePrefs(true)">Guardar configuración</button>
+      </section>
+      <section class="ap-panel">
+        <div class="ap-section-title">Acceso rápido</div>
+        <div class="ap-action-grid">
+          <a class="ap-action" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M3.5 19 9.6 8.5h4.8L8.3 19H3.5Zm12.2 0L9.6 8.5 12 4.3 20.5 19h-4.8ZM10 19l2.4-4.2h8.1L18.1 19H10Z"/></svg> Drive Universe</a>
+          <a class="ap-action" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a9.7 9.7 0 0 0-8.4 14.56L2.6 22l5.55-1.45A9.7 9.7 0 1 0 12 2Zm4.72 13.65c-.2.56-1.16 1.04-1.62 1.1-.42.06-.96.09-1.55-.1-.36-.12-.82-.27-1.41-.53-2.48-1.08-4.1-3.58-4.22-3.75-.12-.16-1.01-1.34-1.01-2.56 0-1.22.64-1.82.86-2.07.22-.25.49-.31.65-.31h.47c.15.01.36-.06.56.43.2.49.69 1.68.75 1.8.06.12.1.27.02.43-.08.16-.12.26-.25.4-.12.15-.26.33-.37.44-.12.12-.25.25-.1.49.15.25.67 1.1 1.43 1.78.98.87 1.8 1.14 2.06 1.27.25.12.4.1.55-.06.16-.19.64-.75.82-1 .17-.25.35-.21.59-.12.25.08 1.55.73 1.82.86.27.14.45.2.51.31.07.13.07.69-.13 1.19Z"/></svg> WhatsApp</a>
+          <a class="ap-action" href="https://whatsapp.com/channel/0029Vb7lA2q7IUYXqEZIDH3R" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a9.7 9.7 0 0 0-8.4 14.56L2.6 22l5.55-1.45A9.7 9.7 0 1 0 12 2Zm4.72 13.65c-.2.56-1.16 1.04-1.62 1.1-.42.06-.96.09-1.55-.1-.36-.12-.82-.27-1.41-.53-2.48-1.08-4.1-3.58-4.22-3.75-.12-.16-1.01-1.34-1.01-2.56 0-1.22.64-1.82.86-2.07.22-.25.49-.31.65-.31h.47c.15.01.36-.06.56.43.2.49.69 1.68.75 1.8.06.12.1.27.02.43-.08.16-.12.26-.25.4-.12.15-.26.33-.37.44-.12.12-.25.25-.1.49.15.25.67 1.1 1.43 1.78.98.87 1.8 1.14 2.06 1.27.25.12.4.1.55-.06.16-.19.64-.75.82-1 .17-.25.35-.21.59-.12.25.08 1.55.73 1.82.86.27.14.45.2.51.31.07.13.07.69-.13 1.19Z"/></svg> CicleSolus</a>
+          <div class="ap-action" onclick="openQuiz()" style="cursor:pointer;"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2 4 5.5v6c0 4.8 3.4 9.3 8 10.5 4.6-1.2 8-5.7 8-10.5v-6L12 2Zm1 5v5.2l4 2.4-1 1.7-5-3V7h2Z"/></svg> Simulacro IA</div>
+          <div class="ap-action ap-logout" onclick="logoutUser()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M10 3h9a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-9v-2h9V5h-9V3Zm1.3 5.3 1.4-1.4L17.8 12l-5.1 5.1-1.4-1.4 2.7-2.7H3v-2h11l-2.7-2.7Z"/></svg> Cerrar sesión</div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+
+<div id="temario-main-panel">
+  <div class="tp-header">
+    <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeTemarioMain()" type="button">×</button>
+    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;color:var(--gray);">TEMARIO UNI 2026-2</div>
+    <div class="tp-header-logo">UNIVERSE</div>
+  </div>
+  <div class="tp-body">
+    <div class="tp-course-header">
+      <div class="tp-course-icon">🏛️</div>
+      <div class="tp-course-info">
+        <div class="tp-course-cat" style="color:var(--electric)">Universidad Nacional de Ingeniería</div>
+        <div class="tp-course-name">TEMARIO COMPLETO 2026-2</div>
+        <div class="tp-course-sub">Haz clic en cualquier materia para ver el temario detallado</div>
+      </div>
+    </div>
+
+    <div class="tp-semana-label" style="color:var(--lime);margin-bottom:1rem;">PRUEBAS CALIFICADAS</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.65rem;margin-bottom:2rem;">
+      <div class="subject-card pc-syllabus-card" onclick="scrollToCepreTemario()"><div class="s-icon">PC</div><div class="s-name">Temario Exámenes CepreUNI 2026-2</div></div>
+    </div>
+
+    <div class="tp-semana-label" style="color:var(--electric);margin-bottom:1rem;">MATEMÁTICA</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.65rem;margin-bottom:2rem;">
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('aritmetica')"><div class="s-icon">∑</div><div class="s-name">Aritmética</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('geometria')"><div class="s-icon">📐</div><div class="s-name">Geometría</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('trigonometria')"><div class="s-icon">△</div><div class="s-name">Trigonometría</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('algebra')"><div class="s-icon">√</div><div class="s-name">Álgebra</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('calculo')"><div class="s-icon">∫</div><div class="s-name">Cálculo</div></div>
+    </div>
+
+    <div class="tp-semana-label" style="color:var(--purple);margin-bottom:1rem;">HUMANIDADES</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.65rem;margin-bottom:2rem;">
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('razonamientoverbal')"><div class="s-icon">📚</div><div class="s-name">Raz. Verbal</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('razonamientomatematico')"><div class="s-icon">➕</div><div class="s-name">Raz. Matemático</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('dpcc')"><div class="s-icon">👤</div><div class="s-name">DPCC</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openActualidad()"><div class="s-icon">📰</div><div class="s-name">Actualidad</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('logica')"><div class="s-icon">⚙️</div><div class="s-name">Lógica</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('psicologia')"><div class="s-icon">🧠</div><div class="s-name">Psicología</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('literatura')"><div class="s-icon">🖊️</div><div class="s-name">Literatura</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('historia')"><div class="s-icon">⌛</div><div class="s-name">Historia</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('geografia')"><div class="s-icon">🌍</div><div class="s-name">Geografía</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('economia')"><div class="s-icon">💰</div><div class="s-name">Economía</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('lenguaje')"><div class="s-icon">🗣️</div><div class="s-name">Lenguaje</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('filosofia')"><div class="s-icon">☯️</div><div class="s-name">Filosofía</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('ingles')"><div class="s-icon">🇬🇧</div><div class="s-name">Inglés</div></div>
+    </div>
+
+    <div class="tp-semana-label" style="color:var(--cyan);margin-bottom:1rem;">CIENCIAS</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.65rem;margin-bottom:2rem;">
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('fisica')"><div class="s-icon">⚡</div><div class="s-name">Física</div></div>
+      <div class="subject-card" onclick="closeTemarioMain();openTemario('quimica')"><div class="s-icon">🧪</div><div class="s-name">Química</div></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="actualidad-panel">
+  <div class="tp-header">
+    <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeActualidad()" type="button">×</button>
+    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;color:var(--gray);">ACTUALIDAD · Noticias del Mundo</div>
+    <div class="tp-header-logo">UNIVERSE</div>
+  </div>
+  <div class="tp-body">
+    <div class="tp-course-header">
+      <div class="tp-course-icon">📰</div>
+      <div class="tp-course-info">
+        <div class="tp-course-cat" style="color:#a855f7">Humanidades</div>
+        <div class="tp-course-name">ACTUALIDAD</div>
+        <div class="tp-course-sub">Fuentes de información confiables · Noticias nacionales e internacionales · CEPREUNI</div>
+      </div>
+    </div>
+
+    <div class="news-section-label">🇵🇪 Medios Nacionales - Perú</div>
+    <div class="news-grid">
+      <a class="news-card-v2" href="https://larepublica.pe/" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="La República" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#d32f2f;font-size:.9rem;letter-spacing:1px;\'&gt;LA REPÚBLICA&lt;/span&gt;'" src="https://logo.clearbit.com/larepublica.pe"/></div>
+        <div class="news-name-v2">La República</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://rpp.pe/" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="RPP" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;font-size:1.4rem;color:#c00;\'&gt;RPP&lt;/span&gt;'" src="https://logo.clearbit.com/rpp.pe"/></div>
+        <div class="news-name-v2">RPP Noticias</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://www.latina.pe/" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Latina" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#c62828;font-size:1.2rem;\'&gt;LATINA&lt;/span&gt;'" src="https://logo.clearbit.com/latina.pe"/></div>
+        <div class="news-name-v2">Latina TV</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://www.tvperu.gob.pe/" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="TV Perú" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#1b5e20;font-size:.85rem;\'&gt;TV PERÚ&lt;/span&gt;'" src="https://logo.clearbit.com/tvperu.gob.pe"/></div>
+        <div class="news-name-v2">TV Perú</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://panamericana.pe/" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Panamericana" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#0d47a1;font-size:.65rem;\'&gt;PANAMERICANA&lt;/span&gt;'" src="https://logo.clearbit.com/panamericana.pe"/></div>
+        <div class="news-name-v2">Panamericana TV</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://www.americatv.com.pe/" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="América TV" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#1565c0;font-size:.85rem;\'&gt;AMÉRICA&lt;/span&gt;'" src="https://logo.clearbit.com/americatv.com.pe"/></div>
+        <div class="news-name-v2">América TV</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://gestion.pe/" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Gestión" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#b71c1c;font-size:1rem;letter-spacing:1px;\'&gt;GESTIÓN&lt;/span&gt;'" src="https://logo.clearbit.com/gestion.pe"/></div>
+        <div class="news-name-v2">Gestión</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://elcomercio.pe" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="El Comercio" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:.7rem;\'&gt;EL COMERCIO&lt;/span&gt;'" src="https://logo.clearbit.com/elcomercio.pe"/></div>
+        <div class="news-name-v2">El Comercio</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://canaln.pe" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Canal N" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#283593;font-size:.9rem;\'&gt;CANAL N&lt;/span&gt;'" src="https://logo.clearbit.com/canaln.pe"/></div>
+        <div class="news-name-v2">Canal N</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://atv.pe/noticias" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="ATV" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#880e4f;font-size:1.2rem;\'&gt;ATV&lt;/span&gt;'" src="https://logo.clearbit.com/atv.pe"/></div>
+        <div class="news-name-v2">ATV Noticias</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://peru21.pe" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Perú 21" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#b71c1c;font-size:.9rem;\'&gt;PERÚ 21&lt;/span&gt;'" src="https://logo.clearbit.com/peru21.pe"/></div>
+        <div class="news-name-v2">Perú 21</div><div class="news-country">Perú</div>
+      </a>
+      <a class="news-card-v2" href="https://ojo.pe" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Ojo" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#f57f17;font-size:1.3rem;\'&gt;OJO&lt;/span&gt;'" src="https://logo.clearbit.com/ojo.pe"/></div>
+        <div class="news-name-v2">Diario Ojo</div><div class="news-country">Perú</div>
+      </a>
+    </div>
+
+    <div class="news-section-label">🌎 Medios Latinoamericanos</div>
+    <div class="news-grid">
+      <a class="news-card-v2" href="https://infobae.com/peru" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Infobae" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#3b5bff;font-size:.95rem;\'&gt;INFOBAE&lt;/span&gt;'" src="https://logo.clearbit.com/infobae.com"/></div>
+        <div class="news-name-v2">Infobae</div><div class="news-country">Internacional</div>
+      </a>
+      <a class="news-card-v2" href="https://clarin.com" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Clarín" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#e53935;font-size:.95rem;\'&gt;CLARÍN&lt;/span&gt;'" src="https://logo.clearbit.com/clarin.com"/></div>
+        <div class="news-name-v2">Clarín</div><div class="news-country">Argentina</div>
+      </a>
+      <a class="news-card-v2" href="https://elpais.com/america" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="El País" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:.85rem;\'&gt;EL PAÍS&lt;/span&gt;'" src="https://logo.clearbit.com/elpais.com"/></div>
+        <div class="news-name-v2">El País América</div><div class="news-country">España/LATAM</div>
+      </a>
+      <a class="news-card-v2" href="https://telesurtv.net" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="TeleSUR" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#0d47a1;font-size:.9rem;\'&gt;TELESUR&lt;/span&gt;'" src="https://logo.clearbit.com/telesurtv.net"/></div>
+        <div class="news-name-v2">TeleSUR</div><div class="news-country">LATAM</div>
+      </a>
+    </div>
+
+    <div class="news-section-label">🌍 Medios Internacionales</div>
+    <div class="news-grid">
+      <a class="news-card-v2" href="https://www.bbc.com" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="BBC" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#bb1919;font-size:1.5rem;letter-spacing:2px;\'&gt;BBC&lt;/span&gt;'" src="https://logo.clearbit.com/bbc.com"/></div>
+        <div class="news-name-v2">BBC</div><div class="news-country">Reino Unido</div>
+      </a>
+      <a class="news-card-v2" href="https://cnnespanol.cnn.com" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="CNN" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#cc0000;font-size:1.2rem;\'&gt;CNN&lt;/span&gt;'" src="https://logo.clearbit.com/cnn.com"/></div>
+        <div class="news-name-v2">CNN en Español</div><div class="news-country">EEUU</div>
+      </a>
+      <a class="news-card-v2" href="https://reuters.com" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Reuters" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#ff6600;font-size:.85rem;\'&gt;REUTERS&lt;/span&gt;'" src="https://logo.clearbit.com/reuters.com"/></div>
+        <div class="news-name-v2">Reuters</div><div class="news-country">Internacional</div>
+      </a>
+      <a class="news-card-v2" href="https://apnews.com" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="AP News" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:1.1rem;\'&gt;AP&lt;/span&gt;'" src="https://logo.clearbit.com/apnews.com"/></div>
+        <div class="news-name-v2">AP News</div><div class="news-country">EEUU</div>
+      </a>
+      <a class="news-card-v2" href="https://france24.com/es" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="France 24" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#003399;font-size:.8rem;\'&gt;FRANCE 24&lt;/span&gt;'" src="https://logo.clearbit.com/france24.com"/></div>
+        <div class="news-name-v2">France 24</div><div class="news-country">Francia</div>
+      </a>
+      <a class="news-card-v2" href="https://dw.com/es" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="DW" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#003b6f;font-size:1.3rem;\'&gt;DW&lt;/span&gt;'" src="https://logo.clearbit.com/dw.com"/></div>
+        <div class="news-name-v2">Deutsche Welle</div><div class="news-country">Alemania</div>
+      </a>
+      <a class="news-card-v2" href="https://rt.com/spanish" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="RT" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#cc0000;font-size:1.3rem;\'&gt;RT&lt;/span&gt;'" src="https://logo.clearbit.com/rt.com"/></div>
+        <div class="news-name-v2">RT en Español</div><div class="news-country">Internacional</div>
+      </a>
+      <a class="news-card-v2" href="https://aljazeera.com/espanol" rel="noopener noreferrer" target="_blank">
+        <div class="news-logo-v2"><img alt="Al Jazeera" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#d4a017;font-size:.75rem;\'&gt;AL JAZEERA&lt;/span&gt;'" src="https://logo.clearbit.com/aljazeera.com"/></div>
+        <div class="news-name-v2">Al Jazeera</div><div class="news-country">Qatar</div>
+      </a>
+    </div>
+
+    <div style="background:rgba(59,91,255,.08);border:1px solid rgba(59,91,255,.2);border-radius:12px;padding:1.2rem 1.5rem;margin-top:2rem;">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;color:#93c5fd;margin-bottom:.5rem;">💡 Tip para el examen de Actualidad</div>
+      <div style="font-size:.88rem;color:#cbd5e1;line-height:1.6;">El área de Actualidad en CEPREUNI evalúa noticias y hechos relevantes de los últimos 6 meses. Consulta diariamente estos medios para estar al día con política nacional, economía, ciencia, medio ambiente y relaciones internacionales.</div>
+    </div>
+  </div>
+</div>
+
+
+<div id="quiz-panel">
+  <div class="tp-header">
+    <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeQuiz()" type="button">×</button>
+    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;color:var(--cyan);">SIMULACRO · IA · TIPO UNI</div>
+    <div class="tp-header-logo">UNIVERSE</div>
+  </div>
+  <div class="quiz-body">
+    <div class="quiz-mode-banner" id="quiz-mode-banner">
+      <div>
+        <strong>MODO EXTREMO UNI REAL</strong>
+        <div style="font-size:.82rem;color:#cbd5e1;margin-top:.2rem;">Examen activo: todos los cursos, sin cantidad fija de preguntas.</div>
+      </div>
+      <div class="quiz-timer" id="quiz-timer">03:00:00</div>
+    </div>
+    <div id="quiz-setup">
+      <div style="margin-bottom:1.5rem;">
+        <div id="quiz-mode-title" style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;margin-bottom:.4rem;">GENERADOR DE PREGUNTAS</div>
+        <div id="quiz-mode-desc" style="font-size:.9rem;color:var(--gray);line-height:1.6;">Selecciona el curso, el nivel de dificultad y genera preguntas estilo UNI con IA. Puedes subir PDFs, apuntes, fotos o capturas para preguntas personalizadas.</div>
+      </div>
+      <div class="quiz-ai-note" id="quiz-ai-note">UniverseAI genera preguntas nuevas con 5 alternativas, solución y búsqueda web cuando el modelo lo permite, combinando temario CEPREUNI, patrones tipo UNI y el material que subas.</div>
+
+      <div id="quiz-subject-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:.8rem;">Selecciona el Curso</div>
+      <div class="quiz-selector" id="quiz-subject-grid">
+        <div class="quiz-subject-btn active" data-area="math" data-subject="Aritmética" onclick="selectSubject(this)"><div class="qsb-icon">∑</div>Aritmética</div>
+        <div class="quiz-subject-btn" data-area="math" data-subject="Álgebra" onclick="selectSubject(this)"><div class="qsb-icon">√</div>Álgebra</div>
+        <div class="quiz-subject-btn" data-area="math" data-subject="Geometría" onclick="selectSubject(this)"><div class="qsb-icon">📐</div>Geometría</div>
+        <div class="quiz-subject-btn" data-area="math" data-subject="Trigonometría" onclick="selectSubject(this)"><div class="qsb-icon">△</div>Trigonometría</div>
+        <div class="quiz-subject-btn" data-area="math" data-subject="Cálculo" onclick="selectSubject(this)"><div class="qsb-icon">∫</div>Cálculo</div>
+        <div class="quiz-subject-btn" data-area="science" data-subject="Física" onclick="selectSubject(this)"><div class="qsb-icon">⚡</div>Física</div>
+        <div class="quiz-subject-btn" data-area="science" data-subject="Química" onclick="selectSubject(this)"><div class="qsb-icon">🧪</div>Química</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Razonamiento Verbal" onclick="selectSubject(this)"><div class="qsb-icon">📚</div>Raz. Verbal</div>
+        <div class="quiz-subject-btn" data-area="math" data-subject="Razonamiento Matemático" onclick="selectSubject(this)"><div class="qsb-icon">➕</div>Raz. Matemático</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Literatura" onclick="selectSubject(this)"><div class="qsb-icon">🖊️</div>Literatura</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Historia" onclick="selectSubject(this)"><div class="qsb-icon">⌛</div>Historia</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Geografía" onclick="selectSubject(this)"><div class="qsb-icon">🌍</div>Geografía</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Economía" onclick="selectSubject(this)"><div class="qsb-icon">💰</div>Economía</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Filosofía" onclick="selectSubject(this)"><div class="qsb-icon">☯️</div>Filosofía</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Lógica" onclick="selectSubject(this)"><div class="qsb-icon">⚙️</div>Lógica</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Actualidad" onclick="selectSubject(this)"><div class="qsb-icon">📰</div>Actualidad</div>
+        <div class="quiz-subject-btn" data-area="humanities" data-subject="Inglés" onclick="selectSubject(this)"><div class="qsb-icon">🇬🇧</div>Inglés</div>
+      </div>
+
+      <div id="quiz-diff-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:.5rem 0 .8rem;">Dificultad</div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.2rem;">
+        <button class="quiz-subject-btn diff-btn active" data-diff="difícil" onclick="selectDiff(this)" style="min-width:100px;padding:.6rem 1rem;">🔥 Difícil</button>
+        <button class="quiz-subject-btn diff-btn" data-diff="muy difícil" onclick="selectDiff(this)" style="min-width:100px;padding:.6rem 1rem;">💀 Muy difícil</button>
+        <button class="quiz-subject-btn diff-btn" data-diff="nivel UNI extremo" onclick="selectDiff(this)" style="min-width:100px;padding:.6rem 1rem;">🏆 Extremo UNI</button>
+      </div>
+
+      <div id="quiz-upload-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;">Subir material multimodal</div>
+      <label class="quiz-upload-zone" for="quiz-file-input" id="quiz-upload-zone" ondragleave="this.classList.remove('dragover')" ondragover="event.preventDefault();this.classList.add('dragover')" ondrop="handleDropUpload(event)">
+        <div class="upload-zone-grid">
+          <div class="upload-icon"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M11 16V7.85l-3.05 3.05-1.4-1.4L12 4.05l5.45 5.45-1.4 1.4L13 7.85V16h-2Zm-5 4a2 2 0 0 1-2-2v-3h2v3h12v-3h2v3a2 2 0 0 1-2 2H6Z"/></svg></div>
+          <div>
+            <div class="upload-title">Arrastra tu PDF, foto o captura aquí</div>
+            <div class="upload-sub">Acepta PDF, TXT, MD, PNG, JPG y WEBP. Los PDFs/TXT se leen en local; las imágenes se convierten en contexto visual guiado.</div>
+            <div id="quiz-file-name" style="margin-top:.5rem;font-size:.82rem;color:var(--cyan);"/>
+          </div>
+          <div class="upload-pill">Elegir archivo</div>
+        </div>
+      </label>
+      <input accept=".pdf,.txt,.md,image/png,image/jpeg,image/webp,image/*" id="quiz-file-input" onchange="handleFileUpload(this)" style="display:none;" type="file"/>
+      <div class="image-context-box" id="quiz-image-context">
+        <img alt="Vista previa del material visual" class="image-preview" id="quiz-image-preview"/>
+        <textarea class="image-notes" id="quiz-image-notes" oninput="updateImageContextFromNotes()" placeholder="Detalle visible de la imagen: tema, datos, gráfico, fórmula o pregunta que quieres practicar."/>
+      </div>
+
+      <button class="quiz-generate-btn" id="quiz-gen-btn" onclick="generateQuestion()">GENERAR PREGUNTA CON UNIVERSEAI</button>
+
+      <div class="quiz-score-bar" id="quiz-scorebar" style="display:none;">
+        <span>PUNTAJE ACTUAL</span>
+        <div><span class="quiz-score-val" id="quiz-score-display">0</span> <span>/ <span id="quiz-total-display">0</span></span></div>
+        <span id="quiz-pct-display" style="color:var(--cyan);">-</span>
+      </div>
+    </div>
+
+    <div id="quiz-question-area"/>
+  </div>
+</div>
+
+
+<div id="temario-panel">
+  <div class="tp-header">
+    <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeTemario()" type="button">×</button>
+    <div class="tp-header-logo">UNIVERSE</div>
+  </div>
+  <div class="tp-body" id="tp-body-content">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+
+<nav>
+  <a class="nav-logo" data-route="home" href="/">UNIVERSE</a>
+  <ul class="nav-links">
+    <li><a data-route="home" href="/">Inicio</a></li>
+    <li><a data-route="ranking" href="/ranking.html">Ranking</a></li>
+    <li><a data-route="calculator" href="/calculadora.html">Calculadora</a></li>
+    <li><a data-route="syllabus" href="/temario.html">Temario</a></li>
+    <li><a data-route="library" href="/biblioteca.html">Biblioteca</a></li>
+    <li><a data-route="simulators" href="/simulacros.html">Simulacros</a></li>
+    <li><a data-route="exams" href="/examenes.html">Exámenes</a></li>
+    <li><a data-route="terms" href="/terminos.html">Términos</a></li>
+    <li><a data-route="privacy" href="/privacidad.html">Privacidad</a></li>
+  </ul>
+  <div class="nav-user-btn" id="nav-user-btn" onclick="handleNavUser()">
+    <svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.05 0-7.25 2.05-7.25 4.6 0 .64.51 1.15 1.15 1.15h12.2c.64 0 1.15-.51 1.15-1.15 0-2.55-3.2-4.6-7.25-4.6Z"/></svg><span>Cuenta</span>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UNIVERSE_SUPPORT_V2_START -->
+<div id='support-v2-overlay' onclick='UniverseSupport.close()'></div>
+<div id='support-v2-hint'>¿Problemas? Te ayudamos</div>
+<button aria-label='Abrir soporte privado' id='support-v2-fab' onclick='UniverseSupport.open()' title='Soporte' type='button'>
+  <svg aria-hidden='true' viewBox='0 0 24 24'><path d='M12 2a9 9 0 0 0-9 9v3a3 3 0 0 0 3 3h1v-7H5.1A7 7 0 0 1 19 11v6h-5v2h3a4 4 0 0 0 4-4v-4a9 9 0 0 0-9-9ZM5 12h2v3H6a1 1 0 0 1-1-1v-2Zm12 0h2v3h-2v-3Z'/></svg>
+  <span>Soporte</span><i id='support-v2-fab-dot'></i>
+</button>
+<aside aria-hidden='true' id='support-v2-panel'>
+  <header class='support-v2-head'><div><strong>Soporte UNIVERSE</strong><span id='support-v2-presence'>Comprobando conexión...</span></div><button aria-label='Cerrar soporte' onclick='UniverseSupport.close()' type='button'>x</button></header>
+  <div class='support-v2-admin-layout'>
+    <aside hidden='hidden' id='support-v2-inbox'><div class='support-v2-inbox-title'>Conversaciones</div><div id='support-v2-threads'></div></aside>
+    <main class='support-v2-conversation'>
+      <div class='support-v2-thread-head'><div><strong id='support-v2-thread-name'>Tu consulta</strong><span id='support-v2-thread-status'>Chat privado</span></div><button hidden='hidden' id='support-v2-solved' onclick='UniverseSupport.solve()' type='button'>Solucionado</button></div>
+      <label class='support-v2-name-row' id='support-v2-name-row'><span>Tu nombre</span><input id='support-v2-name' maxlength='50' placeholder='¿Cómo te llamas?' type='text'/></label>
+      <div aria-live='polite' id='support-v2-messages'/>
+      <div hidden='hidden' id='support-v2-closed'>El chat ha sido cerrado. Cierra y vuelve a abrir Soporte para realizar otra consulta.</div>
+      <div hidden='hidden' id='support-v2-image-preview'><img alt='Imagen adjunta' id='support-v2-preview-img'/><button onclick='UniverseSupport.clearImage()' type='button'>Quitar</button></div>
+      <div class='support-v2-compose' id='support-v2-compose'><textarea id='support-v2-input' maxlength='1200' placeholder='Escribe tu consulta...'></textarea><div><label class='support-v2-attach' for='support-v2-file'>Adjuntar imagen</label><input accept='image/png,image/jpeg,image/webp' id='support-v2-file' onchange='UniverseSupport.pickImage(this)' type='file'/><button class='support-v2-send' onclick='UniverseSupport.send()' type='button'>Enviar</button></div></div>
+    </main>
+  </div>
+</aside>
+<!-- UNIVERSE_SUPPORT_V2_END -->
+
+<b:if cond='data:view.isHomepage'>
+<section id="inicio">
+  <div class="hero-bg"/>
+  <div class="hero-grid"/>
+  <div class="hero-layout hero-layout-single">
+    <div class="hero-content reveal">
+      <div class="hero-badge"><span/> Plataforma Preuniversitaria N°1 - UNI</div>
+      <h1 class="hero-title">¡<span class="accent">INGRESA</span> A LA <span class="grad">UNI!</span></h1>
+      <p class="hero-sub">Entrena con temario CEPREUNI, material ordenado, simulacros cronometrados y preguntas generadas por UniverseAI con búsqueda web para acercarte al nivel real del examen.</p>
+      <ul class="hero-bullets">
+        <li>📚 Biblioteca, boletines, solucionarios y rutas por curso</li>
+        <li>🎯 Simulacros tipo UNI con registro de avance mensual</li>
+        <li>🔥 UniverseAI genera retos de alto nivel según tu tema de estudio</li>
+      </ul>
+      <div class="hero-actions">
+        <a class="btn-primary" href="/temario.html">Ver Temario 2026-2</a>
+        <a class="btn-ghost" href="/simulacros.html">Practicar con IA</a>
+      </div>
+      <div class="official-access-links">
+        <a class="official-access-card cepreuni" href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
+          <span class="official-access-logo"><img alt="Logo CEPREUNI" src="https://www.cepre.uni.edu.pe/assets/img/logo-favicon/logocepreuni.jpg"/></span>
+          <span class="official-access-copy">
+            <span class="official-access-name">CEPREUNI</span>
+            <span class="official-access-title">Web oficial de CEPREUNI</span>
+            <span class="official-access-desc">Ver comunicados, ciclos e inscripciones.</span>
+          </span>
+        </a>
+        <a class="official-access-card ceprenet" href="https://ceprenet.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
+          <span class="official-access-logo"><img alt="Logo CEPREUNI" src="https://www.cepre.uni.edu.pe/assets/img/logo-favicon/logocepreuni.jpg"/></span>
+          <span class="official-access-copy">
+            <span class="official-access-name">CEPRENET</span>
+            <span class="official-access-title">Plataforma de CEPREUNI</span>
+            <span class="official-access-desc">Para ver asistencias, faltas y tardanzas.</span>
+          </span>
+        </a>
+        <a class="official-access-card admisionuni" href="https://admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
+          <span class="official-access-logo official-access-logo-text">UNI</span>
+          <span class="official-access-copy">
+            <span class="official-access-name">Admisión UNI</span>
+            <span class="official-access-title">Dirección de Admisión UNI</span>
+            <span class="official-access-desc">Comunicados, prospecto, vacantes e inscripciones.</span>
+          </span>
+        </a>
+      </div>
+    </div>
+    </div>
+
+  <div class="socials reveal">
+    <a class="social-pill pill-wa" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.845L.057 23.998l6.304-1.654C8.002 23.449 9.967 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+      Canal de WhatsApp
+    </a>
+    <a class="social-pill pill-wa" href="https://whatsapp.com/channel/0029Vb7lA2q7IUYXqEZIDH3R" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.845L.057 23.998l6.304-1.654C8.002 23.449 9.967 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+      CicleSolus
+    </a>
+    <a class="social-pill pill-tt" href="https://www.tiktok.com/@universe_preuni" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.83a8.2 8.2 0 004.79 1.53V6.92a4.85 4.85 0 01-1.02-.23z"/></svg>
+      @universe_preuni
+    </a>
+    <a class="social-pill pill-gd" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" viewbox="0 0 87.3 78"><path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3L28.1 51H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="M43.65 25L29.35 0c-1.35.8-2.5 1.9-3.3 3.3L1.2 46.5C.4 47.9 0 49.45 0 51h28.1z" fill="#00ac47"/><path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.2l5.9 11.7z" fill="#ea4335"/><path d="M43.65 25L58 0H29.35z" fill="#00832d"/><path d="M59.2 51H87.3l-13.75-23.75-14.35 23.75z" fill="#2684fc"/><path d="M73.55 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.65 25 59.2 51h28.1c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
+      Drive Universe
+    </a>
+    <a class="social-pill pill-ki" href="https://kick.com/universeoficial" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M4 2h3.5v8.3L13 2h4.2L11 10.9 17.3 22H13L8.5 13.7V22H4z"/></svg>
+      @universeoficial
+    </a>
+    <a class="social-pill pill-lt" href="https://linktr.ee/UNIverse.Criss" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.002.196-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.54-.124 1.06-.235 1.44a2.01 2.01 0 0 1-1.415 1.42c-1.156.316-5.752.354-6.218.356l-.149.001h-.174c-.555 0-2.635-.027-4.309-.158l-.128-.011-.147-.012c-.551-.053-1.07-.143-1.46-.291a2.01 2.01 0 0 1-1.276-1.268c-.166-.516-.25-1.168-.29-1.73l-.004-.065-.01-.135-.008-.134c-.065-.914-.073-1.77-.074-1.956v-.075c.002-.196.01-1.108.082-2.06l.008-.105.009-.104c.05-.54.124-1.06.236-1.44a2.01 2.01 0 0 1 1.415-1.42c1.156-.315 5.752-.353 6.218-.355zm-.005 1.79h-.089c-.72.003-4.923.038-5.895.31a.21.21 0 0 0-.149.148c-.074.27-.14.73-.186 1.238l-.009.104-.022.258-.008.104c-.062.857-.07 1.688-.071 1.87v.07c.002.18.01.988.07 1.824l.008.104.009.104c.046.532.112 1.01.188 1.285a.21.21 0 0 0 .148.148c.897.245 4.517.308 5.882.311l.144.001h.168c.72-.003 4.922-.038 5.895-.31a.21.21 0 0 0 .148-.149c.074-.27.14-.73.187-1.238l.009-.104.021-.258.009-.104c.061-.857.069-1.688.07-1.87v-.07c-.001-.18-.009-.988-.07-1.824l-.008-.104-.009-.104c-.046-.532-.112-1.01-.187-1.285a.21.21 0 0 0-.149-.148c-.897-.245-4.516-.308-5.88-.311zm3.274 3.498l1.77 1.022-1.77 1.022V7.287z"/></svg>
+      UNIverse.Criss
+    </a>
+  </div>
+</section>
+
+
+
+<section class="section admission-hub" id="admision-uni">
+  <div class="reveal">
+    <div class="section-label">Admisión UNI 2026-2</div>
+    <h2 class="section-title">SIMULACRO, INSCRIPCIONES<br/>Y VACANTES</h2>
+    <p class="section-sub">Accesos rápidos al simulacro, preinscripción, tarifas oficiales y cuadro completo de vacantes 2026-2.</p>
+  </div>
+  <div class="admission-hero-grid reveal">
+    <article class="admission-card">
+      <img alt="Simulacro UNI 2026-2" loading="lazy" src="https://admision.uni.edu.pe/wp-content/uploads/2026/06/Simulacro_20262-1536x864.jpeg"/>
+      <div class="admission-card-body">
+        <div><div class="admission-card-title">Simulacro UNI</div><div class="admission-card-meta">Practica con el formato de admisión 2026-2.</div></div>
+        <a class="admission-action sim" href="https://simulacro.admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Ir al simulacro</a>
+      </div>
+    </article>
+    <article class="admission-card">
+      <img alt="Admisión UNI 2026-2 preinscripción" loading="lazy" src="https://admision.uni.edu.pe/wp-content/uploads/2026/06/ADM-2026-2-PREINSCRIP-1920x1080-1.jpg"/>
+      <div class="admission-card-body">
+        <div><div class="admission-card-title">Admisión UNI</div><div class="admission-card-meta">Preinscripción y registro oficial de postulantes.</div></div>
+        <a class="admission-action" href="https://inscripciones.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Ir a inscripciones</a>
+      </div>
+    </article>
+  </div>
+  <div class="admission-info-grid reveal">
+    <article class="admission-table-card">
+      <div class="admission-table-head">
+        <div><div class="admission-table-kicker">Pagos oficiales</div><div class="admission-table-title">Tarifas</div></div>
+        <p class="admission-table-note">Pagos para rendir exámenes y trámites. El prospecto es obligatorio.</p>
+      </div>
+      <div class="uni-table-wrap">
+        <table class="uni-table">
+          <thead><tr><th>Concepto</th><th>Modalidad</th><th>Procedencia</th><th>Costo</th></tr></thead>
+          <tbody>
+            <tr><td>Prospecto</td><td>Todas</td><td>Estatal/Privada</td><td>S/. 90</td></tr>
+            <tr><td>Inscripción</td><td>Ordinario</td><td>Estatal</td><td>S/. 410</td></tr>
+            <tr><td>Inscripción</td><td>Ordinario</td><td>Privada</td><td>S/. 780</td></tr>
+            <tr><td>Inscripción</td><td>Extraord. (P. Puestos/Dep/Disc)</td><td>Estatal</td><td>S/. 410</td></tr>
+            <tr><td>Inscripción</td><td>Extraord. (P. Puestos/Dep/Disc)</td><td>Privada</td><td>S/. 780</td></tr>
+            <tr><td>Inscripción</td><td>Extraord. (Bachiller/Convenios)</td><td>Cualquiera</td><td>S/. 850</td></tr>
+            <tr><td>Inscripción</td><td>Traslado Externo</td><td>Estatal</td><td>S/. 620</td></tr>
+            <tr><td>Inscripción</td><td>Traslado Externo</td><td>Privada/Extr.</td><td>S/. 840</td></tr>
+            <tr><td>Inscripción</td><td>Titulados o Graduados</td><td>Cualquiera</td><td>S/. 680</td></tr>
+            <tr><td>Inscripción</td><td>Plan de Reparaciones (PIR)</td><td>Estatal/Priv.</td><td>(*)</td></tr>
+            <tr><td>Inscripción</td><td>Ingreso Directo CEPRE</td><td>Estatal</td><td>S/. 410</td></tr>
+            <tr><td>Inscripción</td><td>Ingreso Directo CEPRE</td><td>Privada</td><td>S/. 780</td></tr>
+            <tr><td>Semibeca</td><td>Ordinario / P. Puestos</td><td>Estatal</td><td>S/. 205</td></tr>
+            <tr><td>Semibeca</td><td>Deportistas / Discapacidad</td><td>Privada</td><td>S/. 390</td></tr>
+            <tr><td>Ex. Arquitectura</td><td>Ingreso Directo CEPRE(**)</td><td>Cualquiera</td><td>S/. 160</td></tr>
+            <tr><td>Ex. Arquitectura</td><td>Todas las demás</td><td>Cualquiera</td><td>S/. 160</td></tr>
+            <tr><td>Convalidación</td><td>Traslado Externo</td><td>Cualquiera</td><td>S/. 440</td></tr>
+            <tr><td>Convalidación</td><td>Titulado o Graduado</td><td>Cualquiera</td><td>S/. 660</td></tr>
+            <tr><td>Costo Crédito</td><td>Titulados o Graduados</td><td>Cualquiera</td><td>S/. 80</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="admission-footnotes">
+        <span>(*) Los postulantes por esta modalidad están exonerados por concepto de inscripción.</span>
+        <span>(**) Esta prueba se rendirá en fecha anterior a la Prueba de Aptitud Vocacional general.</span>
+        <span>Los postulantes por la modalidad Ingreso Directo que no alcancen vacante por esta modalidad deberán abonar el monto establecido para la Prueba de Aptitud Vocacional general; de lo contrario, no serán considerados en la modalidad Ordinario.</span>
+      </div>
+    </article>
+    <article class="admission-table-card">
+      <div class="admission-table-head">
+        <div><div class="admission-table-kicker">Cronograma de admisión</div><div class="admission-table-title">Fechas clave</div></div>
+        <p class="admission-table-note">Estas fechas también están integradas al calendario interactivo de la portada.</p>
+      </div>
+      <div class="uni-table-wrap">
+        <table class="uni-table">
+          <thead><tr><th>Actividad</th><th>Fecha</th></tr></thead>
+          <tbody>
+            <tr><td>Inscripción de postulantes excepto Ingreso Directo CEPRE-UNI</td><td>Del 30/06/2026 al 31/07/2026</td></tr>
+            <tr><td>Inscripción Ingreso Directo CEPRE-UNI</td><td>Del 30/06/2026 al 27/07/2026</td></tr>
+            <tr><td>Solicitud de semibecas</td><td>Del 30/06/2026 al 03/07/2026</td></tr>
+            <tr><td>Publicacion de resultados de semibecas</td><td>13/07/2026</td></tr>
+            <tr><td>Sorteo Comision de Postulantes</td><td>24/07/2026</td></tr>
+            <tr><td>Prueba de Aptitud Vocacional Arquitectura - Ingreso Directo</td><td>01/08/2026</td></tr>
+            <tr><td>Examen Final Ingreso Directo CEPRE-UNI</td><td>02/08/2026</td></tr>
+            <tr><td>Prueba de Aptitud Vocacional Arquitectura - Ordinario y otras modalidades</td><td>08/08/2026</td></tr>
+            <tr><td>Examen de Admisión Ordinario</td><td>10, 12 y 14/08/2026</td></tr>
+            <tr><td>Examen Traslado Externo, Titulados o Graduados y universidades no licenciadas</td><td>12/08/2026</td></tr>
+            <tr><td>Identificacion del ingresante, constancia, renuncias y postergaciones</td><td>Del 18/08/2026 al 21/08/2026</td></tr>
+            <tr><td>Envio de datos de ingresantes a DIRCE</td><td>24/08/2026</td></tr>
+            <tr><td>Envío de información de ingresantes a Facultades</td><td>25/08/2026</td></tr>
+            <tr><td>Examen medico</td><td>Del 24/08/2026 al 28/08/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+    <article class="admission-table-card vacancies-card" id="vacantes-uni-2026-2">
+      <div class="admission-table-head">
+        <div><div class="admission-table-kicker">Cuadro de vacantes UNI</div><div class="admission-table-title">Vacantes 2026-2</div></div>
+        <p class="admission-table-note">Tabla completa reconstruida desde el PDF CUADRO-VACANTES-2026-2. Desliza horizontalmente para ver todas las modalidades.</p>
+      </div>
+      <div class="uni-table-wrap">
+        <table class="uni-table vacancies-table">
+          <thead><tr><th>Fac.</th><th>Codigo</th><th>Especialidad</th><th>Ex. General</th><th>CEPRE</th><th>1ros Puestos</th><th>Andres Bello</th><th>Bach. Intl</th><th>T1</th><th>Disc.</th><th>PIR</th><th>Dep. Alto Nivel</th><th>T2</th><th>T1+T2</th><th>Trasl. Ext.</th><th>Univ. no lic.</th><th>Tit. UNI / Arq.</th><th>Tit. otra Univ.</th><th>CEPRE Juliaca</th><th>Conv. Dipl.</th><th>Total CVF</th></tr></thead>
+          <tbody>
+            <tr><td>FAUA</td><td>A1</td><td>Arquitectura</td><td class="num">23</td><td class="num">16</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">45</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">9</td><td class="num">54</td><td class="num">1</td><td class="num">3</td><td class="num">Todos los inscritos</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">62</td></tr>
+            <tr><td>FAUA</td><td>A2</td><td>Urbanismo</td><td class="num">15</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">33</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">38</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">43</td></tr>
+            <tr><td>FC</td><td>N1</td><td>Fisica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
+            <tr><td>FC</td><td>N2</td><td>Matematica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
+            <tr><td>FC</td><td>N3</td><td>Quimica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
+            <tr><td>FC</td><td>N5</td><td>Ingenieria Fisica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
+            <tr><td>FC</td><td>N6</td><td>Ciencia de la Computacion</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
+            <tr><td>FIA</td><td>S1</td><td>Ingenieria Sanitaria</td><td class="num">14</td><td class="num">9</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">27</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">32</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">38</td></tr>
+            <tr><td>FIA</td><td>S2</td><td>Ing. de higiene y seguridad industrial</td><td class="num">14</td><td class="num">9</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">27</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">32</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">38</td></tr>
+            <tr><td>FIA</td><td>S3</td><td>Ingenieria Ambiental</td><td class="num">14</td><td class="num">9</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">27</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">32</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">38</td></tr>
+            <tr><td>FIC</td><td>C1</td><td>Ingenieria Civil</td><td class="num">47</td><td class="num">32</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">94</td><td class="num">6</td><td class="num">5</td><td class="num">5</td><td class="num">16</td><td class="num">110</td><td class="num">0</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">6</td><td class="num">1</td><td class="num">120</td></tr>
+            <tr><td>FIEECS</td><td>E1</td><td>Ingenieria Economica</td><td class="num">21</td><td class="num">14</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">41</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">47</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">54</td></tr>
+            <tr><td>FIEECS</td><td>E2</td><td>Ingenieria Estadistica</td><td class="num">24</td><td class="num">14</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">44</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">50</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">57</td></tr>
+            <tr><td>FIEE</td><td>L1</td><td>Ingenieria Electrica</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
+            <tr><td>FIEE</td><td>L2</td><td>Ingenieria Electronica</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
+            <tr><td>FIEE</td><td>L3</td><td>Ing. de Telecomunicaciones</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
+            <tr><td>FIEE</td><td>L4</td><td>Ing. de ciberseguridad</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="num">0</td><td class="num">44</td></tr>
+            <tr><td>FIEE</td><td>L5</td><td>Ing. Biomedica</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="num">0</td><td class="num">44</td></tr>
+            <tr><td>FIGMM</td><td>G1</td><td>Ing. Geologica</td><td class="num">20</td><td class="num">14</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">40</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">46</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">53</td></tr>
+            <tr><td>FIGMM</td><td>G2</td><td>Ing. Metalurgica</td><td class="num">17</td><td class="num">11</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">34</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">40</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">46</td></tr>
+            <tr><td>FIGMM</td><td>G3</td><td>Ing. de Minas</td><td class="num">17</td><td class="num">9</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">31</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">34</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">42</td></tr>
+            <tr><td>FIIS</td><td>I1</td><td>Ingenieria Industrial</td><td class="num">31</td><td class="num">16</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">52</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">4</td><td class="num">56</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">62</td></tr>
+            <tr><td>FIIS</td><td>I2</td><td>Ing. de sistemas</td><td class="num">31</td><td class="num">16</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">52</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">4</td><td class="num">56</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">62</td></tr>
+            <tr><td>FIIS</td><td>I3</td><td>Ing. de software</td><td class="num">17</td><td class="num">7</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">26</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">27</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">28</td></tr>
+            <tr><td>FIIS</td><td>I4</td><td>Ing. de Inteligencia artificial</td><td class="num">17</td><td class="num">10</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">29</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">29</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">29</td></tr>
+            <tr><td>FIM</td><td>M3</td><td>Ing. Mecanica</td><td class="num">24</td><td class="num">12</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">42</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">5</td><td class="num">47</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">53</td></tr>
+            <tr><td>FIM</td><td>M4</td><td>Ing. Mecanica - electrica</td><td class="num">24</td><td class="num">12</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">42</td><td class="num">2</td><td class="num">5</td><td class="num">1</td><td class="num">8</td><td class="num">50</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
+            <tr><td>FIM</td><td>M5</td><td>Ing. Naval</td><td class="num">12</td><td class="num">6</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">22</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">5</td><td class="num">27</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">33</td></tr>
+            <tr><td>FIM</td><td>M6</td><td>Ing. Mecatronica</td><td class="num">24</td><td class="num">12</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">42</td><td class="num">2</td><td class="num">5</td><td class="num">1</td><td class="num">8</td><td class="num">50</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
+            <tr><td>FIM</td><td>M7</td><td>Ing. Aeroespacial</td><td class="num">17</td><td class="num">10</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">30</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">31</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">31</td></tr>
+            <tr><td>FIP</td><td>P3</td><td>Ing. de petroleo y gas natural</td><td class="num">8</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">18</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">21</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">22</td></tr>
+            <tr><td>FIP</td><td>P2</td><td>Ing. Petroquimica</td><td class="num">8</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">18</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">21</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">22</td></tr>
+            <tr><td>FIQT</td><td>Q1</td><td>Ing. Quimica</td><td class="num">43</td><td class="num">30</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">85</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">15</td><td class="num">100</td><td class="num">1</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">1</td><td class="num">117</td></tr>
+            <tr><td>FIQT</td><td>Q2</td><td>Ing. Textil</td><td class="num">19</td><td class="num">13</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">38</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">44</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">52</td></tr>
+            <tr class="total-row"><td/><td>TOTAL</td><td>Total general</td><td class="num">641</td><td class="num">402</td><td class="num">72</td><td class="num">51</td><td class="num">53</td><td class="num">1219</td><td class="num">63</td><td class="num">64</td><td class="num">53</td><td class="num">180</td><td class="num">1399</td><td class="num">40</td><td class="num">44</td><td class="num">40</td><td class="num">36</td><td class="num">51</td><td class="num">20</td><td class="num">1630</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="admission-footnotes">
+        <span>T1 corresponde a vacantes por especialidades y T2 a vacantes reservadas por ley. CVF es el total final por especialidad.</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<section id="cronograma-universe" class="universe-calendar-section"><div class="universe-calendar-intro reveal"><div class="section-label">Agenda 2026-2</div><h2 class="section-title">CALENDARIO UNI Y CEPREUNI</h2><p class="section-sub">Revisa semanas, evaluaciones, pagos, inscripciones y actividades oficiales. Pasa el cursor o enfoca una fecha para ver todos sus eventos.</p></div><div class="universe-calendar-stage"><aside aria-label="Cronograma UNI y CEPREUNI 2026-2" class="hero-calendar-panel payment-card reveal" id="payment-calendar">
+      <div class="tool-top">
+        <div><div class="tool-kicker">Cronograma CEPREUNI</div><div class="tool-title">Calendario 2026-2</div><p class="tool-copy">Navega mes por mes y revisa semanas, PCs, exámenes, pagos, clases virtuales y recuperaciones.</p></div>
+        <div class="tool-mark"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3V2Zm13 8H4v10h16V10ZM7 13h5v5H7v-5Z"/></svg></div>
+      </div>
+      <div class="payment-shell">
+        <div>
+          <div class="payment-calendar-head">
+            <div class="payment-month-title" id="payment-month-title">2026</div>
+            <div class="payment-nav">
+              <button aria-label="Mes anterior" id="payment-prev" onclick="movePaymentMonth(-1)" type="button">&lt;</button>
+              <button aria-label="Mes siguiente" id="payment-next" onclick="movePaymentMonth(1)" type="button">&gt;</button>
+            </div>
+          </div>
+          <div class="payment-calendar-grid" id="payment-calendar-grid"/>
+        </div>
+        <div>
+          <div class="payment-list" id="payment-event-list"/>
+          <div class="payment-note">Incluye cronograma académico CEPREUNI 2026-2 y cuotas. Si se pagan las 5 cuotas al contado, se aplica 10% de descuento: S/. 2,295.00 en vez de S/. 2,550.00. Para rendir pruebas o exámenes, el alumno debe estar al día en sus pagos. Sábado 06 de junio: clase virtual, no presencial.</div>
+        </div>
+      </div>
+    </aside>
+  </div></section>
+<div class="stats-bar">
+  <div class="stat-item reveal"><div class="stat-num">5K+</div><div class="stat-label">Estudiantes Activos</div></div>
+  <div class="stat-item reveal"><div class="stat-num">2500+</div><div class="stat-label">Exámenes Resueltos</div></div>
+  <div class="stat-item reveal"><div class="stat-num">20</div><div class="stat-label">Cursos Completos</div></div>
+  <div class="stat-item reveal"><div class="stat-num">91%</div><div class="stat-label">Satisfacción</div></div>
+</div>
+
+
+<section class="section" id="plataforma">
+  <div class="reveal">
+    <div class="section-label">La plataforma</div>
+    <h2 class="section-title">LA MEJOR PLATAFORMA<br/>PREUNIVERSITARIA</h2>
+    <p class="section-sub">La democratización del nivel académico más alto del Perú. Accede a una preparación de élite diseñada estratégicamente para vencer el examen de admisión de la UNI.</p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card"><div class="feature-icon">📖</div><div class="feature-name">Contenido Nivel UNI</div><div class="feature-desc">Material creado y validado por estudiantes y egresados de la UNI. Todo con el rigor que la competencia exige.</div></div>
+    <div class="feature-card"><div class="feature-icon">📝</div><div class="feature-name">Exámenes Resueltos</div><div class="feature-desc">Más de 2500 exámenes históricos de la UNI y CEPREUNI con soluciones detalladas paso a paso.</div></div>
+    <div class="feature-card"><div class="feature-icon">⏱️</div><div class="feature-name">Simulacros Cronometrados</div><div class="feature-desc">Mide tu rendimiento en tiempo real con simulacros que replican las condiciones exactas del examen real.</div></div>
+    <div class="feature-card"><div class="feature-icon">🧮</div><div class="feature-name">Matemática &amp; Ciencias</div><div class="feature-desc">Aritmética, Álgebra, Geometría, Trigonometría, Cálculo, Física y Química al nivel más exigente.</div></div>
+    <div class="feature-card"><div class="feature-icon">🌐</div><div class="feature-name">Sin horarios fijos</div><div class="feature-desc">Estudia cuando puedas. Sin barreras económicas ni horarios impuestos. Solo tú y tu meta.</div></div>
+    <div class="feature-card"><div class="feature-icon">🤝</div><div class="feature-name">Comunidad activa</div><div class="feature-desc">Más de 5,000 postulantes. Siempre hay alguien dispuesto a explicarte un ejercicio a las 2 a.m.</div></div>
+  </div>
+</section>
+
+
+<section class="section tools-section" id="herramientas">
+  <div class="tools-header reveal">
+    <div>
+      <div class="section-label">Centro de control · CEPREUNI</div>
+      <h2 class="section-title">SEGUIMIENTO Y RECURSOS<br/>DE ALTO RENDIMIENTO</h2>
+      <p class="section-sub">Fechas clave, planificación semanal, videos y avance de la comunidad en un solo espacio.</p>
+    </div>
+    <button class="tool-cta" onclick="openMiniTournament()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 3h10v3h3v4a5 5 0 0 1-5 5h-.3A5.7 5.7 0 0 1 13 16.6V19h3v2H8v-2h3v-2.4A5.7 5.7 0 0 1 9.3 15H9a5 5 0 0 1-5-5V6h3V3Zm10 6.6V5H7v4.6c0 2.75 1.88 5 5 5s5-2.25 5-5Z"/></svg> Bajar pepita</button>
+  </div>
+
+  <div class="tools-grid reveal">
+    <article class="tool-card wide exam-countdown-card" id="exam-countdowns">
+      <div class="tool-top">
+        <div><div class="tool-kicker">Centro de seguimiento</div><div class="tool-title">Fechas clave 2026-2</div><p class="tool-copy">Reloj sincronizado con hora Perú para la 6.ª prueba calificada y el examen de admisión UNI.</p></div>
+        <div class="tool-mark"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 5v5.2l3.5 2.1-1 1.7-4.5-2.7V7h2Z"/></svg></div>
+      </div>
+      <div class="countdown-grid">
+        <div class="countdown-item" data-countdown-key="parcial" data-countdown-target="2026-07-12T09:00:00-05:00">
+          <div class="countdown-label"><strong>6.ª prueba calificada CEPREUNI</strong><span class="countdown-pill">Dom. 12 jul - 9:00 AM</span></div>
+          <div class="countdown-time" id="countdown-parcial">
+            <div class="countdown-box"><div class="countdown-number" data-unit="days">--</div><div class="countdown-unit">Dias</div></div>
+            <div class="countdown-box"><div class="countdown-number" data-unit="hours">--</div><div class="countdown-unit">Horas</div></div>
+            <div class="countdown-box"><div class="countdown-number" data-unit="minutes">--</div><div class="countdown-unit">Min</div></div>
+            <div class="countdown-box"><div class="countdown-number" data-unit="seconds">--</div><div class="countdown-unit">Seg</div></div>
+          </div>
+        </div>
+        <div class="countdown-item" data-countdown-key="admision" data-countdown-target="2026-08-10T09:00:00-05:00">
+          <div class="countdown-label"><strong>Examen de Admisión UNI 2026-2</strong><span class="countdown-pill">Lun. 10 ago - 9:00 AM</span></div>
+          <div class="countdown-time" id="countdown-admision">
+            <div class="countdown-box"><div class="countdown-number" data-unit="days">--</div><div class="countdown-unit">Dias</div></div>
+            <div class="countdown-box"><div class="countdown-number" data-unit="hours">--</div><div class="countdown-unit">Horas</div></div>
+            <div class="countdown-box"><div class="countdown-number" data-unit="minutes">--</div><div class="countdown-unit">Min</div></div>
+            <div class="countdown-box"><div class="countdown-number" data-unit="seconds">--</div><div class="countdown-unit">Seg</div></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="tool-card wide" id="study-calendar">
+      <div class="tool-top">
+        <div><div class="tool-kicker">Cronograma</div><div class="tool-title">Semana de estudio</div><p class="tool-copy">Bloques compactos por día con avance persistente.</p></div>
+        <div class="tool-mark"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3V2Zm13 8H4v10h16V10Z"/></svg></div>
+      </div>
+      <form class="study-form" onsubmit="addStudyBlock(event)">
+        <select class="tool-select" id="study-day"><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option></select>
+        <select class="tool-select" id="study-time"><option>6am-8am</option><option>8am-10am</option><option>2pm-4pm</option><option>4pm-6pm</option><option>6pm-8pm</option><option>8pm-10pm</option></select>
+        <select class="tool-select" id="study-subject" onchange="handleStudySubjectChange()"><option>Aritmética</option><option>Álgebra</option><option>Geometría</option><option>Trigonometría</option><option>Cálculo</option><option>Física</option><option>Química</option><option>Razonamiento Matemático</option><option>Razonamiento Verbal</option><option>Literatura</option><option>Historia</option><option>Geografía</option><option>Economía</option><option>Filosofía</option><option>Lógica</option><option>Inglés</option><option>Otro curso</option></select>
+        <select class="tool-select" id="study-topic"/>
+        <input class="tool-input study-custom-subject" id="study-custom-subject" placeholder="Escribir curso" style="display:none;"/>
+        <div class="study-actions">
+          <button class="tool-cta" type="submit">Agregar</button>
+          <button class="tool-cta secondary" onclick="clearStudyPlan()" type="button">Limpiar</button>
+        </div>
+      </form>
+      <div class="calendar-progress"><span id="study-progress"/></div>
+      <div class="tool-copy" id="study-progress-label">0% completado</div>
+      <div class="calendar-grid" id="study-calendar-grid"/>
+    </article>
+
+    <article aria-label="Playlists CEPREUNI en YouTube" class="tool-card wide hero-video-panel universe-video-card" id="video-playlists">
+      <div class="hero-video-kicker"><span>Videos · CEPREUNI 26-2</span><a href="https://www.youtube.com/@universepre_official/playlists" rel="noopener noreferrer" target="_blank">Ver playlists</a></div>
+      <div class="hero-video-stack">
+        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFfkRErmzmBMMGvbObeRYNV&amp;si=XO2EfcUeUaCGfxT2" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/uE9inSxqjhY/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">🗺️ GEOGRAFÍA CEPREUNI 26-2 by Criss</div><div class="yt-meta">Playlist completa para reforzar Geografía.</div><span class="yt-chip">Geografía</span></div>
+        </a>
+        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsHVu6J25FosIoyIQHgYHvEo&amp;si=T2lvd73g-jw9kjw3" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/Os5t-340smU/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">🧠 PSICOLOGÍA CEPREUNI 26-2 by Criss</div><div class="yt-meta">Clases ordenadas para Psicología CEPREUNI.</div><span class="yt-chip">Psicología</span></div>
+        </a>
+        <a class="yt-preview" href="https://www.youtube.com/playlist?list=PLZZWh41GUPsGvxutb8VAIihGO91pABB93" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/R2U6QAt9Rjw/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">𝗤𝘂𝗶𝗺𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Química CEPRELIBRE.</div><span class="yt-chip">Química</span></div>
+        </a>
+        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFxVK1oMotXsPP3F4Vp0LNU&amp;si=la43T1OQVMs8k5gf" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/GO7OJ0GWdJM/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">𝗙𝗶𝘀𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Física CEPRELIBRE.</div><span class="yt-chip">Física</span></div>
+        </a>
+        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsE8cFjywD9b1Rr0wk8CroGI&amp;si=bbPTMcCjWztFW5xw" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/YfLjwmT3jqU/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">𝗧𝗿𝗶𝗴𝗼𝗻𝗼𝗺𝗲𝘁𝗿𝗶𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Trigonometría CEPRELIBRE.</div><span class="yt-chip">Trigonometría</span></div>
+        </a>
+        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsGsNNB22cBeVnpQvgQubLLy&amp;si=jQWXL8Z_0XGENRe7" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/qlZL22MJRiY/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">𝗚𝗲𝗼𝗺𝗲𝘁𝗿𝗶𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Geometría CEPRELIBRE.</div><span class="yt-chip">Geometría</span></div>
+        </a>
+        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsHQ70zXO4BdFMTEVSbwFLRD&amp;si=dTvIvmSR9DVFd_8w" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/5xSLdFWOkIM/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">𝗔𝗿𝗶𝘁𝗺𝗲𝘁𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Aritmética CEPRELIBRE.</div><span class="yt-chip">Aritmética</span></div>
+        </a>
+        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFdJ5C-RnMtzEtgWcemXByQ&amp;si=TlOqms9UII7iG4wB" rel="noopener noreferrer" target="_blank">
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/HzzLprntp2g/hqdefault.jpg&quot;)"/>
+          <div class="yt-copy"><div class="yt-title">𝗔𝗹𝗴𝗲𝗯𝗿𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Álgebra CEPRELIBRE.</div><span class="yt-chip">Álgebra</span></div>
+        </a>
+      </div>
+    </article>
+
+    <article class="tool-card wide" id="gamification-panel">
+      <div class="tool-top">
+        <div><div class="tool-kicker">Gamificación</div><div class="tool-title">Puntos, racha y ranking</div><p class="tool-copy">Puntos y racha se calculan por mes y se reinician automáticamente al comenzar el siguiente.</p></div>
+        <button class="tool-cta" onclick="openMiniTournament()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Zm1 5v4h3l-5 6v-4H8l5-6Z"/></svg> Mini torneo</button>
+      </div>
+      <div class="gamification-grid">
+        <div class="gam-stats">
+          <div class="gam-stat"><div class="gam-number" id="gam-points">0</div><div class="gam-label">Puntos</div></div>
+          <div class="gam-stat"><div class="gam-number" id="gam-streak">1</div><div class="gam-label">Racha</div></div>
+          <div class="gam-stat"><div class="gam-number" id="gam-completion">0%</div><div class="gam-label">Agenda</div></div>
+        </div>
+        <div class="ranking-live-panel">
+          <div class="ranking-live-summary" id="ranking-live-summary">Cargando cuentas Universe...</div>
+          <div aria-label="Ranking en vivo de cuentas Universe" class="ranking-list" id="ranking-list" tabindex="0"/>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<section class="section" id="mapa">
+  <div class="reveal">
+    <div class="section-label">Dónde estamos</div>
+    <h2 class="section-title">UNIVERSIDAD<br/>NACIONAL DE INGENIERÍA</h2>
+    <p class="section-sub">Av. Túpac Amaru 210, Rímac, Lima - Sede principal de la UNI y CEPREUNI.</p>
+  </div>
+  <div class="map-container reveal">
+    <iframe allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.5977!2d-77.0512!3d-12.0192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662bf%3A0x2842ac5e2e5e57a4!2sUniversidad%20Nacional%20de%20Ingenier%C3%ADa!5e0!3m2!1ses-419!2spe!4v1716000000000!5m2!1ses-419!2spe">
+    </iframe>
+    <div class="map-overlay-badge">
+      <div class="mob-title">🏛️ Universidad Nacional de Ingeniería</div>
+      <div class="mob-sub">Av. Túpac Amaru 210, Rímac · Lima, Perú</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="testimonios">
+  <div class="reveal">
+    <div class="section-label">Lo que dicen</div>
+    <h2 class="section-title">TESTIMONIOS<br/>REALES</h2>
+  </div>
+  <div class="testi-grid reveal">
+    <div class="testi-card">
+      <p class="testi-text">Logré mi vacante sin gastar un sol en mensualidades. Al principio no creía que un recurso gratuito tuviera este nivel. Los exámenes resueltos tienen trucos que ni en las academias premium te enseñan. <strong>Hoy soy Cachimbo de Ingeniería Civil y gran parte de mi base en Física y Química la saqué de aquí.</strong> ¡Gracias por democratizar la educación!</p>
+      <div class="testi-author">Álvaro S.</div>
+      <div class="testi-role">Estudiante de Ing. Civil - UNI</div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-text"><strong>Nivel UNI y San Marcos garantizado</strong>, nada de preguntas fáciles. Lo que más me gusta es que no te pasean. Los simuladores tienen el rigor real del examen de admisión. Ya somos más de 5,000 en el grupo y siempre hay alguien dispuesto a explicarte un ejercicio de Geometría o Cálculo a las 2 a.m. Es una comunidad increíble.</p>
+      <div class="testi-author">Luhana B.</div>
+      <div class="testi-role">Postulante de UNMSM</div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-text">Como trabajo y estudio a la vez, no puedo seguir el ritmo de una academia con horarios fijos. Esta plataforma me permite medir mi progreso con las prácticas cronometradas y ver los videos de teoría cuando tengo tiempo. <strong>Es la herramienta definitiva para el autodidacta.</strong></p>
+      <div class="testi-author">Joaquín Quispe L.</div>
+      <div class="testi-role">Postulante de UNI</div>
+    </div>
+  </div>
+</section>
+
+
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">UNIVERSE</div>
+      <div class="footer-tagline">Recursos, seguimiento y comunidad para postulantes UNI y estudiantes CEPREUNI.</div>
+    </div>
+    <div class="footer-links">
+      <h4>Páginas</h4>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/ranking.html">Ranking de Promedios</a></li>
+        <li><a href="/calculadora.html">Calculadoras y Carreras</a></li>
+        <li><a href="/temario.html">Temario UNI y CEPREUNI</a></li>
+        <li><a href="/biblioteca.html">Biblioteca UNIVERSE</a></li>
+        <li><a href="/simulacros.html">Simulacros Tipo UNI</a></li>
+        <li><a href="/examenes.html">Exámenes CEPREUNI</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Accesos oficiales</h4>
+      <ul>
+        <li><a href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPREUNI oficial</a></li>
+        <li><a href="https://ceprenet.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPRENET</a></li>
+        <li><a href="https://admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Admisión UNI</a></li>
+        <li><a href="https://whatsapp.com/channel/0029Vb7lA2q7IUYXqEZIDH3R" rel="noopener noreferrer" target="_blank">CicleSolus</a></li>
+        <li><a href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" rel="noopener noreferrer" target="_blank">Canal UNIVERSE</a></li>
+        <li><a href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank">Drive UNIVERSE</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legal y ayuda</h4>
+      <ul>
+        <li><a href="/terminos.html">Términos y Condiciones</a></li>
+        <li><a href="/privacidad.html">Política de Privacidad</a></li>
+        <li><a href="https://wa.me/51963385410" rel="noopener noreferrer" target="_blank">Contacto</a></li>
+        <li><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte privado</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 UNIVERSE. Todos los derechos reservados.</div>
+    <div class="footer-legal"><a href="/terminos.html">Términos</a><a href="/privacidad.html">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
+  </div>
+</footer>
+            
+
+</body>
+</html>
