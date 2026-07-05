@@ -88,7 +88,7 @@
           <input accept="image/*" id="ap-photo-input" onchange="handleProfilePhoto(this)" style="display:none;" type="file"/>
           <div>
             <div class="ap-name" id="ap-name">Usuario</div>
-            <div class="ap-email" id="ap-email"/>
+            <div class="ap-email" id="ap-email"></div>
             <div class="ap-badge" id="ap-role-badge"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="m10.6 16.2 7.05-7.05-1.7-1.7-5.35 5.35-2.55-2.55-1.7 1.7 4.25 4.25ZM12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/></svg> Usuario</div>
           </div>
         </div>
@@ -122,7 +122,7 @@
       </section>
       <section class="ap-panel">
         <div class="ap-section-title">Cursos por mejorar</div>
-        <div class="ap-course-grid" id="ap-course-progress"/>
+        <div class="ap-course-grid" id="ap-course-progress"></div>
       </section>
       <section class="ap-panel">
         <div class="ap-section-title">Configuración de cuenta</div>
@@ -140,7 +140,7 @@
             <input class="ap-input" id="ap-goal-field" maxlength="42" oninput="saveProfilePrefs(false)" placeholder="Ej. Ingeniería de Sistemas"/>
           </label>
         </div>
-        <div class="account-name-warning" id="account-name-warning"/>
+        <div class="account-name-warning" id="account-name-warning"></div>
         <div class="account-config-note">UniverseAI ya está integrado para generar preguntas con el temario y el material que subas, sin configurar motor, modelo ni clave desde tu cuenta.</div>
         <button class="ap-mini-save" onclick="saveProfilePrefs(true)">Guardar configuración</button>
       </section>
@@ -403,7 +403,7 @@
           <div>
             <div class="upload-title">Arrastra tu PDF, foto o captura aquí</div>
             <div class="upload-sub">Acepta PDF, TXT, MD, PNG, JPG y WEBP. Los PDFs/TXT se leen en local; las imágenes se convierten en contexto visual guiado.</div>
-            <div id="quiz-file-name" style="margin-top:.5rem;font-size:.82rem;color:var(--cyan);"/>
+            <div id="quiz-file-name" style="margin-top:.5rem;font-size:.82rem;color:var(--cyan);"></div>
           </div>
           <div class="upload-pill">Elegir archivo</div>
         </div>
@@ -411,7 +411,7 @@
       <input accept=".pdf,.txt,.md,image/png,image/jpeg,image/webp,image/*" id="quiz-file-input" onchange="handleFileUpload(this)" style="display:none;" type="file"/>
       <div class="image-context-box" id="quiz-image-context">
         <img alt="Vista previa del material visual" class="image-preview" id="quiz-image-preview"/>
-        <textarea class="image-notes" id="quiz-image-notes" oninput="updateImageContextFromNotes()" placeholder="Detalle visible de la imagen: tema, datos, gráfico, fórmula o pregunta que quieres practicar."/>
+        <textarea class="image-notes" id="quiz-image-notes" oninput="updateImageContextFromNotes()" placeholder="Detalle visible de la imagen: tema, datos, gráfico, fórmula o pregunta que quieres practicar."></textarea>
       </div>
 
       <button class="quiz-generate-btn" id="quiz-gen-btn" onclick="generateQuestion()">GENERAR PREGUNTA CON UNIVERSEAI</button>
@@ -423,7 +423,7 @@
       </div>
     </div>
 
-    <div id="quiz-question-area"/>
+    <div id="quiz-question-area"></div>
   </div>
 </div>
 
@@ -507,7 +507,7 @@
     <main class='support-v2-conversation'>
       <div class='support-v2-thread-head'><div><strong id='support-v2-thread-name'>Tu consulta</strong><span id='support-v2-thread-status'>Chat privado</span></div><button hidden='hidden' id='support-v2-solved' onclick='UniverseSupport.solve()' type='button'>Solucionado</button></div>
       <label class='support-v2-name-row' id='support-v2-name-row'><span>Tu nombre</span><input id='support-v2-name' maxlength='50' placeholder='¿Cómo te llamas?' type='text'/></label>
-      <div aria-live='polite' id='support-v2-messages'/>
+      <div aria-live='polite' id='support-v2-messages'></div>
       <div hidden='hidden' id='support-v2-closed'>El chat ha sido cerrado. Cierra y vuelve a abrir Soporte para realizar otra consulta.</div>
       <div hidden='hidden' id='support-v2-image-preview'><img alt='Imagen adjunta' id='support-v2-preview-img'/><button onclick='UniverseSupport.clearImage()' type='button'>Quitar</button></div>
       <div class='support-v2-compose' id='support-v2-compose'><textarea id='support-v2-input' maxlength='1200' placeholder='Escribe tu consulta...'></textarea><div><label class='support-v2-attach' for='support-v2-file'>Adjuntar imagen</label><input accept='image/png,image/jpeg,image/webp' id='support-v2-file' onchange='UniverseSupport.pickImage(this)' type='file'/><button class='support-v2-send' onclick='UniverseSupport.send()' type='button'>Enviar</button></div></div>
@@ -516,13 +516,13 @@
 </aside>
 <!-- UNIVERSE_SUPPORT_V2_END -->
 
-<b:if cond='data:view.isHomepage'>
+
 <section id="inicio">
-  <div class="hero-bg"/>
-  <div class="hero-grid"/>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
   <div class="hero-layout hero-layout-single">
     <div class="hero-content reveal">
-      <div class="hero-badge"><span/> Plataforma Preuniversitaria N°1 - UNI</div>
+      <div class="hero-badge"><span></span> Plataforma Preuniversitaria N°1 - UNI</div>
       <h1 class="hero-title">¡<span class="accent">INGRESA</span> A LA <span class="grad">UNI!</span></h1>
       <p class="hero-sub">Entrena con temario CEPREUNI, material ordenado, simulacros cronometrados y preguntas generadas por UniverseAI con búsqueda web para acercarte al nivel real del examen.</p>
       <ul class="hero-bullets">
@@ -723,7 +723,7 @@
             <tr><td>FIP</td><td>P2</td><td>Ing. Petroquimica</td><td class="num">8</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">18</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">21</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">22</td></tr>
             <tr><td>FIQT</td><td>Q1</td><td>Ing. Quimica</td><td class="num">43</td><td class="num">30</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">85</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">15</td><td class="num">100</td><td class="num">1</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">1</td><td class="num">117</td></tr>
             <tr><td>FIQT</td><td>Q2</td><td>Ing. Textil</td><td class="num">19</td><td class="num">13</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">38</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">44</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">52</td></tr>
-            <tr class="total-row"><td/><td>TOTAL</td><td>Total general</td><td class="num">641</td><td class="num">402</td><td class="num">72</td><td class="num">51</td><td class="num">53</td><td class="num">1219</td><td class="num">63</td><td class="num">64</td><td class="num">53</td><td class="num">180</td><td class="num">1399</td><td class="num">40</td><td class="num">44</td><td class="num">40</td><td class="num">36</td><td class="num">51</td><td class="num">20</td><td class="num">1630</td></tr>
+            <tr class="total-row"><td></td><td>TOTAL</td><td>Total general</td><td class="num">641</td><td class="num">402</td><td class="num">72</td><td class="num">51</td><td class="num">53</td><td class="num">1219</td><td class="num">63</td><td class="num">64</td><td class="num">53</td><td class="num">180</td><td class="num">1399</td><td class="num">40</td><td class="num">44</td><td class="num">40</td><td class="num">36</td><td class="num">51</td><td class="num">20</td><td class="num">1630</td></tr>
           </tbody>
         </table>
       </div>
@@ -749,10 +749,10 @@
               <button aria-label="Mes siguiente" id="payment-next" onclick="movePaymentMonth(1)" type="button">&gt;</button>
             </div>
           </div>
-          <div class="payment-calendar-grid" id="payment-calendar-grid"/>
+          <div class="payment-calendar-grid" id="payment-calendar-grid"></div>
         </div>
         <div>
-          <div class="payment-list" id="payment-event-list"/>
+          <div class="payment-list" id="payment-event-list"></div>
           <div class="payment-note">Incluye cronograma académico CEPREUNI 2026-2 y cuotas. Si se pagan las 5 cuotas al contado, se aplica 10% de descuento: S/. 2,295.00 en vez de S/. 2,550.00. Para rendir pruebas o exámenes, el alumno debe estar al día en sus pagos. Sábado 06 de junio: clase virtual, no presencial.</div>
         </div>
       </div>
@@ -830,51 +830,51 @@
         <select class="tool-select" id="study-day"><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option></select>
         <select class="tool-select" id="study-time"><option>6am-8am</option><option>8am-10am</option><option>2pm-4pm</option><option>4pm-6pm</option><option>6pm-8pm</option><option>8pm-10pm</option></select>
         <select class="tool-select" id="study-subject" onchange="handleStudySubjectChange()"><option>Aritmética</option><option>Álgebra</option><option>Geometría</option><option>Trigonometría</option><option>Cálculo</option><option>Física</option><option>Química</option><option>Razonamiento Matemático</option><option>Razonamiento Verbal</option><option>Literatura</option><option>Historia</option><option>Geografía</option><option>Economía</option><option>Filosofía</option><option>Lógica</option><option>Inglés</option><option>Otro curso</option></select>
-        <select class="tool-select" id="study-topic"/>
+        <select class="tool-select" id="study-topic"></select>
         <input class="tool-input study-custom-subject" id="study-custom-subject" placeholder="Escribir curso" style="display:none;"/>
         <div class="study-actions">
           <button class="tool-cta" type="submit">Agregar</button>
           <button class="tool-cta secondary" onclick="clearStudyPlan()" type="button">Limpiar</button>
         </div>
       </form>
-      <div class="calendar-progress"><span id="study-progress"/></div>
+      <div class="calendar-progress"><span id="study-progress"></span></div>
       <div class="tool-copy" id="study-progress-label">0% completado</div>
-      <div class="calendar-grid" id="study-calendar-grid"/>
+      <div class="calendar-grid" id="study-calendar-grid"></div>
     </article>
 
     <article aria-label="Playlists CEPREUNI en YouTube" class="tool-card wide hero-video-panel universe-video-card" id="video-playlists">
       <div class="hero-video-kicker"><span>Videos · CEPREUNI 26-2</span><a href="https://www.youtube.com/@universepre_official/playlists" rel="noopener noreferrer" target="_blank">Ver playlists</a></div>
       <div class="hero-video-stack">
         <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFfkRErmzmBMMGvbObeRYNV&amp;si=XO2EfcUeUaCGfxT2" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/uE9inSxqjhY/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/uE9inSxqjhY/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">🗺️ GEOGRAFÍA CEPREUNI 26-2 by Criss</div><div class="yt-meta">Playlist completa para reforzar Geografía.</div><span class="yt-chip">Geografía</span></div>
         </a>
         <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsHVu6J25FosIoyIQHgYHvEo&amp;si=T2lvd73g-jw9kjw3" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/Os5t-340smU/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/Os5t-340smU/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">🧠 PSICOLOGÍA CEPREUNI 26-2 by Criss</div><div class="yt-meta">Clases ordenadas para Psicología CEPREUNI.</div><span class="yt-chip">Psicología</span></div>
         </a>
         <a class="yt-preview" href="https://www.youtube.com/playlist?list=PLZZWh41GUPsGvxutb8VAIihGO91pABB93" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/R2U6QAt9Rjw/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/R2U6QAt9Rjw/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">𝗤𝘂𝗶𝗺𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Química CEPRELIBRE.</div><span class="yt-chip">Química</span></div>
         </a>
         <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFxVK1oMotXsPP3F4Vp0LNU&amp;si=la43T1OQVMs8k5gf" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/GO7OJ0GWdJM/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/GO7OJ0GWdJM/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">𝗙𝗶𝘀𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Física CEPRELIBRE.</div><span class="yt-chip">Física</span></div>
         </a>
         <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsE8cFjywD9b1Rr0wk8CroGI&amp;si=bbPTMcCjWztFW5xw" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/YfLjwmT3jqU/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/YfLjwmT3jqU/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">𝗧𝗿𝗶𝗴𝗼𝗻𝗼𝗺𝗲𝘁𝗿𝗶𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Trigonometría CEPRELIBRE.</div><span class="yt-chip">Trigonometría</span></div>
         </a>
         <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsGsNNB22cBeVnpQvgQubLLy&amp;si=jQWXL8Z_0XGENRe7" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/qlZL22MJRiY/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/qlZL22MJRiY/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">𝗚𝗲𝗼𝗺𝗲𝘁𝗿𝗶𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Geometría CEPRELIBRE.</div><span class="yt-chip">Geometría</span></div>
         </a>
         <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsHQ70zXO4BdFMTEVSbwFLRD&amp;si=dTvIvmSR9DVFd_8w" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/5xSLdFWOkIM/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/5xSLdFWOkIM/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">𝗔𝗿𝗶𝘁𝗺𝗲𝘁𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Aritmética CEPRELIBRE.</div><span class="yt-chip">Aritmética</span></div>
         </a>
         <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFdJ5C-RnMtzEtgWcemXByQ&amp;si=TlOqms9UII7iG4wB" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/HzzLprntp2g/hqdefault.jpg&quot;)"/>
+          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/HzzLprntp2g/hqdefault.jpg&quot;)"></div>
           <div class="yt-copy"><div class="yt-title">𝗔𝗹𝗴𝗲𝗯𝗿𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Álgebra CEPRELIBRE.</div><span class="yt-chip">Álgebra</span></div>
         </a>
       </div>
@@ -893,7 +893,7 @@
         </div>
         <div class="ranking-live-panel">
           <div class="ranking-live-summary" id="ranking-live-summary">Cargando cuentas Universe...</div>
-          <div aria-label="Ranking en vivo de cuentas Universe" class="ranking-list" id="ranking-list" tabindex="0"/>
+          <div aria-label="Ranking en vivo de cuentas Universe" class="ranking-list" id="ranking-list" tabindex="0"></div>
         </div>
       </div>
     </article>
