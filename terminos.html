@@ -5248,7 +5248,7 @@ class CepreVirtualGame2D {
     this.setStatus('Conectado en vivo. Usa WASD o las flechas para moverte.');
     if (this.syncTimer) clearInterval(this.syncTimer);
     if (this.heartbeatTimer) clearInterval(this.heartbeatTimer);
-    this.syncTimer = setInterval(() => this.fetchRoom(), 420);
+    this.syncTimer = setInterval(() => this.fetchRoom(), 2000);
     this.heartbeatTimer = setInterval(() => this.writePlayer(true), 1800);
     this.fetchRoom();
     this.startLoop();
@@ -5960,8 +5960,12 @@ function getUniverseAccountPayload(snapshot = universeLastGamificationSnapshot |
   };
 }
 
+let __universeLastAccountSync = 0;
 async function syncUniverseAccount(snapshot = universeLastGamificationSnapshot) {
   if (!snapshot || !currentUser || universeAccountSyncInFlight) return;
+  const __now = Date.now();
+  if (__now - __universeLastAccountSync < 8000) return; // hard throttle: max once per 8s, protects Firebase quota
+  __universeLastAccountSync = __now;
   universeAccountSyncInFlight = true;
   try {
     const payload = getUniverseAccountPayload(snapshot);
@@ -5978,7 +5982,11 @@ async function syncUniverseAccount(snapshot = universeLastGamificationSnapshot) 
   }
 }
 
+let __universeLastAccountsFetch = 0;
 async function fetchUniverseAccounts() {
+  const __now = Date.now();
+  if (__now - __universeLastAccountsFetch < 8000) return; // hard throttle: max once per 8s, protects Firebase quota
+  __universeLastAccountsFetch = __now;
   try {
     const res = await fetch(`${UNIVERSE_USERS_URL}.json`);
     if (!res.ok) throw new Error('Servidor no disponible');
