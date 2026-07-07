@@ -7190,10 +7190,6 @@ html[data-universe-page] #page-content {
   -webkit-overflow-scrolling:touch;
 }
 
-html[data-universe-page] body > *:not(#page-content):not(#peru-clock):not(#universe-theme-toggle):not(#universe-game-button):not(#current-news-button):not(#universe-game-panel):not(#universe-code-cursor):not(script):not(style):not(link) {
-  display:none !important;
-}
-
 html[data-universe-page] body:has(#temario-panel.open) #page-content,
 html[data-universe-page] body:has(#temario-main-panel.open) #page-content,
 html[data-universe-page] body:has(#quiz-panel.open) #page-content,
@@ -7783,3 +7779,48 @@ body.support-v2-active #universe-game-button,body.support-v2-active #peru-clock,
 @media(max-width:900px){html[data-universe-page='home'] .hero-bullets,html[data-universe-page='home'] .official-access-links,html[data-universe-page='home'] .admission-info-grid{grid-template-columns:1fr}html[data-universe-page='home'] .vacancies-card{grid-column:auto}html[data-universe-page='home'] #herramientas .tools-grid{grid-template-columns:1fr!important}html[data-universe-page='home'] #herramientas :is(#exam-countdowns,#study-calendar,#video-playlists,#gamification-panel){grid-column:1!important}html[data-universe-page='home'] .countdown-grid{grid-template-columns:1fr}.support-v2-admin-layout{grid-template-columns:190px minmax(0,1fr)}}
 @media(max-width:620px){#support-v2-fab{right:82px;bottom:62px;padding:12px}#support-v2-fab span{display:none}#support-v2-hint{right:14px;bottom:120px}#support-v2-panel{inset:8px;width:auto;height:auto;border-radius:18px}.support-v2-admin-layout{grid-template-columns:1fr}.support-v2-admin-layout.admin #support-v2-inbox{max-height:150px;border-right:0;border-bottom:1px solid #dce7f2}.support-v2-msg{max-width:92%}}
 /* UNIVERSE_MAIN_V8_END */
+
+/* GITHUB_PAGES_FIX_START
+   En Blogger el contenido vivia dentro de #page-content. En GitHub Pages el
+   HTML ya esta directo en body, asi que esta capa evita que la regla heredada
+   oculte toda la pagina. */
+html[data-universe-page],
+html[data-universe-page] body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+html[data-universe-page] body > nav {
+  display: flex !important;
+}
+
+html[data-universe-page] body > section,
+html[data-universe-page] body > .stats-bar,
+html[data-universe-page] body > footer {
+  display: block !important;
+}
+
+html[data-universe-page] body > #support-v2-fab {
+  display: flex !important;
+}
+
+html[data-universe-page] body > #support-v2-overlay,
+html[data-universe-page] body > #support-v2-hint {
+  display: block !important;
+}
+
+html[data-universe-page] body > #support-v2-panel {
+  display: flex !important;
+}
+
+html[data-universe-page] body > #login-overlay.hidden,
+html[data-universe-page] body > #account-panel:not(.open),
+html[data-universe-page] body > #temario-main-panel:not(.open),
+html[data-universe-page] body > #temario-panel:not(.open),
+html[data-universe-page] body > #actualidad-panel:not(.open),
+html[data-universe-page] body > #quiz-panel:not(.open) {
+  display: none !important;
+}
+/* GITHUB_PAGES_FIX_END */
