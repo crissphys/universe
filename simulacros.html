@@ -8950,7 +8950,7 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     var inbox=el('support-v2-inbox'), nameRow=el('support-v2-name-row'), presence=el('support-v2-presence');
     if(inbox)inbox.hidden=!S.admin;
     if(nameRow)nameRow.hidden=S.admin;
-    if(presence)presence.textContent=S.admin?'Panel privado del propietario':'Comprobando conexi?n...';
+    if(presence)presence.textContent=S.admin?'Panel privado del propietario':'Comprobando conexión...';
     if(S.admin){heartbeat();clearInterval(S.presenceTimer);S.presenceTimer=setInterval(heartbeat,25000)}
   }
   async function send(){var input=el('support-v2-input'),txt=String(input.value||'').trim();if(!txt&&!S.image)return;var p=profile(),id=S.admin?S.active:threadId();if(!id)return;var thread=S.admin?S.threads[id]:S.thread||{},meta=thread&&thread.meta||{};var msg={name:S.admin?'Soporte Universe to Study':p.name,userId:p.id,admin:S.admin,text:txt.slice(0,1200),image:S.image||'',ts:Date.now(),page:location.pathname};input.value='';clearImage();try{await api('/threads/'+id+'/messages','POST',msg);await api('/threads/'+id+'/meta','PATCH',{userId:meta.userId||p.id,userName:meta.userName||p.name,lastText:txt||'Imagen adjunta',updatedAt:msg.ts,status:'open',archived:false,unread:!S.admin});await load()}catch(e){input.value=txt;alert('No se pudo enviar. Revisa tu conexión.')}}
@@ -15695,7 +15695,7 @@ html[data-universe-theme='dark'][data-universe-page] body{
 }
 html[data-universe-theme='dark'][data-universe-page] :is(main,.section,.ranking-section,.universe-page-stage,.universe-static-page,.universe-page-stage-inner,.universe-library-layout,.universe-legal-page,.universe-exams-page,#herramientas,.cepre-planner){background:transparent!important;color:#f8fafc!important;}
 
-/* Bot?n de tema: fijo abajo a la izquierda, fuera del header */
+/* Botón de tema: fijo abajo a la izquierda, fuera del header */
 html[data-universe-page] body > nav .nav-theme-toggle{
   position:fixed!important;
   left:max(14px,calc(env(safe-area-inset-left) + 14px))!important;
@@ -15713,7 +15713,7 @@ html[data-universe-page] body.support-v2-active > nav .nav-theme-toggle{opacity:
   html[data-universe-page] body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px))!important;bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px))!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;}
 }
 
-/* Soporte: bot?n pegado correctamente a la esquina en celular */
+/* Soporte: botón pegado correctamente a la esquina en celular */
 @media(max-width:620px){
   html[data-universe-page] body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px))!important;padding:12px!important;border-radius:999px!important;}
   html[data-universe-page] body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px))!important;}
@@ -15748,7 +15748,7 @@ html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table t
 html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody tr:hover,html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody tr:hover :is(th,td,.cepre-v2-code,.cepre-v2-position){background:#111827!important;}
 html[data-universe-theme='dark'][data-universe-page='ranking'] :is(.cepre-v2-control-label,.cepre-v2-summary,.cepre-v2-missing){color:#94a3b8!important;}
 
-/* Calculadora: pesta?as y tarjetas oscuras completas */
+/* Calculadora: pestañas y tarjetas oscuras completas */
 html[data-universe-theme='dark'][data-universe-page='calculator'] .cepre-planner{--ink:#f8fafc!important;--muted:#cbd5e1!important;--line:#2b3544!important;--card:#050505!important;--soft:#0d0d0d!important;--sky:#081a32!important;color:#f8fafc!important;background:transparent!important;}
 html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-hero,.cp-card,.cp-mode-tabs,.cp-method-card,.cp-note-chip,.cp-architecture,.cp-status,.cp-next,.cp-metric,.cp-formula,.cp-results,.cp-result-body){background:#050505!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.42)!important;}
 html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-hero{background:linear-gradient(135deg,#050505,#0b1220)!important;}
@@ -15762,7 +15762,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.goo
 html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.equal{background:#1c1607!important;color:#fde68a!important;border-color:#92400e!important;}
 html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.low{background:#250b0b!important;color:#fca5a5!important;border-color:#991b1b!important;}
 
-/* Res?menes / biblioteca / legal en oscuro */
+/* Resúmenes / biblioteca / legal en oscuro */
 html[data-universe-theme='dark'][data-universe-page] :is(.summary-hub,.summary-main,.summary-topic-panel,.summary-course-btn,.summary-topic-btn,.summary-concept,.summary-table-wrap,.summary-table,.library-section,.lib-box,.doc-card,.universe-legal-grid .legal-card,.universe-exams-page .legal-card,.legal-card){background:#050505!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.36)!important;}
 html[data-universe-theme='dark'][data-universe-page] :is(.summary-title,.summary-topic-title,.summary-course-name,.summary-concept strong,.summary-detail h4,.summary-table th,.library-section-title,.doc-title,.legal-card h3,.legal-card h4,.legal-card strong){color:#fff!important;}
 html[data-universe-theme='dark'][data-universe-page] :is(.summary-body,.summary-detail,.summary-line,.summary-course-count,.summary-topic-name,.summary-table td,.summary-source-note,.library-section-meta,.doc-meta,.legal-card,.legal-card li,.legal-card p){color:#cbd5e1!important;}
@@ -15781,6 +15781,7 @@ html[data-universe-theme='dark'][data-universe-page='home'] .official-access-log
 html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table th:first-child,html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table td:first-child{background:#050505!important;}
 </style>
 <!-- UNIVERSE_FINAL_THEME_CONTRAST_FIX_END -->
+  <link rel="stylesheet" href="universe-polish.css">
 </body>
 </html>
 
