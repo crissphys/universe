@@ -7951,3 +7951,7 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock) 
   }
 }
 /* STATIC_PAGE_RECOVERY_FIX_END */
+
+/* LOGIN_DISABLED_LOADER_START */
+#login-overlay,.universe-google-signin,.universe-google-account,#account-panel,#nav-user-btn{display:none!important}
+/* LOGIN_DISABLED_LOADER_END */

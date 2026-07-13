@@ -9,14 +9,6 @@
   <meta name="apple-mobile-web-app-title" content="Universe to Study">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQNXG3BRZP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WQNXG3BRZP');
-  </script>
   <script>
     (function(){
       try {
@@ -70,53 +62,43 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
 </script>
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237378560312131"
-     crossorigin="anonymous"></script></head>
+     crossorigin="anonymous"></script><style id="universe-loader-style">
+#universe-page-loader{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 20% 15%,rgba(37,99,235,.22),transparent 34%),linear-gradient(135deg,#031427,#0b1f3a 58%,#06111f);color:#fff;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;transition:opacity .32s ease,visibility .32s ease}
+#universe-page-loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.upl-card{width:min(92vw,360px);border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(255,255,255,.08);box-shadow:0 24px 70px rgba(0,0,0,.35);backdrop-filter:blur(14px);padding:28px 22px;text-align:center}
+.upl-orbit{position:relative;width:66px;height:66px;margin:0 auto 16px;border-radius:50%;border:3px solid rgba(255,255,255,.18);border-top-color:#60a5fa;animation:upl-spin .85s linear infinite}
+.upl-orbit span{position:absolute;inset:17px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb)}
+#universe-page-loader strong{display:block;font-size:clamp(1.25rem,5vw,1.7rem);letter-spacing:-.03em}
+#universe-page-loader small{display:block;margin-top:7px;color:#cfe7ff;font-weight:700}
+#account-panel,.universe-google-signin,.universe-google-account,#nav-user-btn{display:none!important}
+@keyframes upl-spin{to{transform:rotate(360deg)}}
+@media(max-width:520px){.upl-card{border-radius:20px;padding:24px 18px}.upl-orbit{width:58px;height:58px}}
+</style>
+<script id="universe-loader-script">
+(function(){
+  function hideLoader(){var el=document.getElementById('universe-page-loader');if(!el)return;el.classList.add('hide');setTimeout(function(){try{el.remove()}catch(e){}},420)}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,450)},{once:true});
+  window.addEventListener('load',function(){setTimeout(hideLoader,180)},{once:true});
+  setTimeout(hideLoader,1800);
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NK0XVN4NF5');
+</script>
+</head>
 <body>
-<div id="login-overlay">
-  <div class="login-card">
-    <div class="login-card-inner">
-      <div class="login-brand">
-        <div class="login-logo">Universe to Study</div>
-        <div class="login-tagline">Plataforma Preuniversitaria · UNI</div>
-      </div>
-
-      <p class="login-desc">Accede como invitado para explorar todo el contenido educativo, o utiliza los accesos directos a las plataformas oficiales.</p>
-
-      <div class="login-guest-section">
-        <button class="login-guest-btn" id="login-guest-btn" onclick="event.preventDefault();var o=document.getElementById('login-overlay');if(o){o.classList.add('hidden');o.style.display='none';}try{if(window.handleLogin){window.handleLogin();}}catch(e){}return false;" type="button">
-          <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Entrar como invitado
-        </button>
-      </div>
-
-      <div class="login-gmail-coming">
-        <div class="login-divider"><span>Proximamente</span></div>
-        <div class="login-gmail-msg">
-          <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M22 6v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6l8 5.5L20 6Z"/><path d="M22 6 12 11.5 2 6"/></svg>
-          Inicio con Gmail ; Proximamente
-        </div>
-      </div>
-
-      <div class="login-official">
-        <div class="login-divider"><span>o accede desde</span></div>
-        <div class="login-official-grid">
-          <a class="login-official-card cu" href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
-            <div class="login-official-name">CEPREUNI</div>
-            <div class="login-official-desc">Sitio Oficial</div>
-          </a>
-          <a class="login-official-card cn" href="https://ceprenet.uni.edu.pe/auth/login" rel="noopener noreferrer" target="_blank">
-            <div class="login-official-name">CEPRENET</div>
-            <div class="login-official-desc">Plataforma Virtual</div>
-          </a>
-        </div>
-      </div>
-
-    <div class="login-terms">Al continuar aceptas nuestros <a href="/terminos">Términos de Servicio</a> y <a href="/privacidad">Política de Privacidad</a> de Universe to Study.</div>
-    </div>
+<div id="universe-page-loader" role="status" aria-live="polite">
+  <div class="upl-card">
+    <div class="upl-orbit"><span></span></div>
+    <strong>Cargando página</strong>
+    <small>Preparando Universe to Study...</small>
   </div>
 </div>
-
-
 <div id="account-panel">
   <div class="tp-header">
     <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeAccountPanel()" type="button">×</button>
@@ -7771,6 +7753,17 @@ window.addEventListener('load', initUniverseApp, { once: true });
 //]]></script>
 
 
+<script id="universe-login-disable-script">
+(function(){
+  function hidePageLoader(){var el=document.getElementById('universe-page-loader');if(el){el.classList.add('hide');setTimeout(function(){try{el.remove()}catch(e){}},420)}}
+  window.handleLogin=function(){hidePageLoader();return false};
+  window.showEmailLogin=function(){hidePageLoader();return false};
+  window.showLoginMain=function(){hidePageLoader();return false};
+  window.submitEmailLogin=function(event){if(event&&event.preventDefault)event.preventDefault();hidePageLoader();return false};
+  window.openAccountPanel=function(){return false};
+  window.closeAccountPanel=function(){return false};
+})();
+</script>
 </body>
 </html>
 
