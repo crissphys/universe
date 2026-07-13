@@ -135,6 +135,42 @@ html[data-universe-theme="dark"][data-universe-page] body > nav .nav-links a.act
   background: rgba(96, 165, 250, .16) !important;
 }
 
+/* Header final: escritorio sin superposiciones */
+html[data-universe-page] body > nav {
+  width: min(1320px, calc(100vw - 28px)) !important;
+  grid-template-columns: auto minmax(0, 1fr) !important;
+}
+
+html[data-universe-page] body > nav .nav-actions {
+  display: none !important;
+}
+
+html[data-universe-page] body > nav .nav-logo {
+  flex: 0 0 auto !important;
+  max-width: clamp(172px, 19vw, 245px) !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+html[data-universe-page] body > nav .nav-links {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+html[data-universe-page] body > nav .nav-links::-webkit-scrollbar {
+  display: none !important;
+}
+
+html[data-universe-page] body > nav .nav-links a {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+  padding-inline: clamp(.48rem, .72vw, .72rem) !important;
+}
+
 html[data-universe-page] :where(main, .universe-static-page, .universe-page-stage) {
   position: relative;
   z-index: 1;
