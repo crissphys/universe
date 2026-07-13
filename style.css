@@ -7905,3 +7905,49 @@ nav .nav-logo {
   }
 }
 /* BRAND_LONG_NAME_FIX_END */
+
+/* STATIC_PAGE_RECOVERY_FIX_START
+   Refuerzo para GitHub Pages/Cloudflare: si un script falla o el navegador
+   restaura una posicion rara, el contenido principal nunca debe quedar oculto. */
+html[data-universe-page] body {
+  background: var(--navy, #050505) !important;
+}
+
+html[data-universe-page] .universe-static-page,
+html[data-universe-page] .universe-page-stage,
+html[data-universe-page] .universe-page-stage-inner {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+html[data-universe-page] .universe-static-page {
+  position: relative !important;
+  z-index: 1 !important;
+  min-height: 100svh !important;
+}
+
+html[data-universe-page] .universe-page-stage {
+  position: relative !important;
+  z-index: 2 !important;
+  min-height: calc(100svh - 64px) !important;
+}
+
+html[data-universe-page] body > nav {
+  position: fixed !important;
+  top: 0 !important;
+  bottom: auto !important;
+}
+
+html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock) {
+  position: fixed !important;
+}
+
+@media (max-width: 700px) {
+  html[data-universe-page] .universe-page-stage {
+    padding-top: 4.4rem !important;
+  }
+}
+/* STATIC_PAGE_RECOVERY_FIX_END */
