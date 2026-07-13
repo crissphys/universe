@@ -8895,14 +8895,14 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
       <div class="cp-result-top">
         <div class="cp-result-kicker">Tu resultado comparado</div>
         <div class="cp-result-explain">A la izquierda está tu promedio estimado. A la derecha, la nota mínima referencial del ciclo anterior.</div>
-        <div class="cp-result-label">Tu promedio actual</div>
+        <div class="cp-result-label">Tu promedio ponderado actual</div>
         <div class="cp-score-line"><div class="cp-score" id="cp-score">-<small>/20</small></div><div class="cp-target">Mínimo referencial de la carrera<strong id="cp-cutoff">-</strong></div></div>
         <div class="cp-gauge" aria-hidden="true"><span id="cp-gauge"></span></div>
       </div>
       <div class="cp-result-body">
         <div class="cp-status" id="cp-status">Elige una carrera y carga tus notas para ver tu diagnóstico.</div>
         <div class="cp-metrics">
-          <div class="cp-metric"><span>Promedio en escala CEPRE</span><strong id="cp-raw">-</strong></div>
+          <div class="cp-metric"><span>Promedio actual en escala CEPRE</span><strong id="cp-raw">-</strong></div>
           <div class="cp-metric"><span>Distancia frente al mínimo</span><strong id="cp-difference">-</strong></div>
         </div>
         <div class="cp-next"><span>Meta del siguiente examen</span><strong id="cp-next">-</strong><p id="cp-next-copy">Esta es la nota mínima orientativa para conservar o alcanzar el margen de referencia.</p></div>
@@ -8933,7 +8933,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   var CAREERS=[
     ['A1','Arquitectura',13.079],['A2','Urbanismo',9.668],['C1','Ingeniería Civil',14.304],['M3','Ingeniería Mecánica',12.718],['M4','Ingeniería Mecánica Eléctrica',12.449],['M5','Ingeniería Naval',12.519],['M6','Ingeniería Mecatrónica',14.550],['M7','Ingeniería Aeroespacial',14.051],['N1','Física',10.879],['N2','Matemática',9.451],['N3','Química',10.305],['N5','Ingeniería Física',8.748],['N6','Ciencia de la Computación',12.468],['L1','Ingeniería Eléctrica',13.119],['L2','Ingeniería Electrónica',12.493],['L3','Ingeniería de Telecomunicaciones',11.887],['L4','Ingeniería de Ciberseguridad',12.368],['L5','Ingeniería Biomédica',9.068],['I1','Ingeniería Industrial',13.302],['I2','Ingeniería de Sistemas',14.536],['I3','Ingeniería de Software',14.776],['I4','Ingeniería de Inteligencia Artificial',11.629],['G1','Ingeniería Geológica',9.895],['G2','Ingeniería Metalúrgica',11.298],['G3','Ingeniería de Minas',12.766],['S1','Ingeniería Sanitaria',10.301],['S2','Ingeniería de Higiene y Seguridad Industrial',9.474],['S3','Ingeniería Ambiental',9.439],['E1','Ingeniería Económica',11.936],['E3','Ingeniería Estadística',10.986],['Q1','Ingeniería Química',9.807],['Q2','Ingeniería Textil',9.110],['P2','Ingeniería Petroquímica',9.047],['P3','Ingeniería de Petróleo y Gas Natural',9.685]
   ];
-  var NOTE_LABELS=['PC1','PC2','Primer examen parcial (EP1)','PC3','PC4','Segundo examen parcial (EP2)','PC5','PC6','PC7','Examen final'];
+  var NOTE_LABELS=['1.ª PC','2.ª PC','1.er examen parcial (EP1)','3.ª PC','4.ª PC','2.º examen parcial (EP2)','5.ª PC','6.ª PC','7.ª PC','Examen final'];
   var PC_INDEXES=[0,1,3,4,6,7],EP1_INDEX=2,EP2_INDEX=5,PC7_INDEX=8,EF_INDEX=9,EXAM_ORDER=[0,1,2,3,4,5,6,7,8,9];
   var state={mode:'code',notes:null,student:null};
   function byId(id){return document.getElementById(id)}
