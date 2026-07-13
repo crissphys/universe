@@ -473,6 +473,72 @@ html[data-universe-theme="dark"][data-universe-page] :where(.support-v2-bubble, 
   border-color: rgba(96, 165, 250, .22) !important;
 }
 
+html[data-universe-theme="dark"][data-universe-page="syllabus"] :where(
+  .tp-course-name,
+  .tp-topic-title,
+  .temario-group-label,
+  .temario-pc-title,
+  .tvcol-header,
+  .tvcard-name,
+  .news-name,
+  .news-name-v2,
+  .news-section-label,
+  .current-news-title,
+  .current-news-card-title,
+  .current-news-filter,
+  .section-title
+) {
+  color: #f8fafc !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .28) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="syllabus"] :where(
+  .tp-course-cat,
+  .temario-uni-badge,
+  .section-label,
+  .news-section-label,
+  .current-news-kicker
+) {
+  color: #60a5fa !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="syllabus"] :where(
+  .tp-course-sub,
+  .temario-pc-desc,
+  .tvcard p,
+  .news-country,
+  .current-news-sub,
+  .current-news-card-text,
+  .current-news-date,
+  .current-news-count
+) {
+  color: #cbd5e1 !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="syllabus"] :where(
+  .tp-course-header,
+  .temario-visual-grid,
+  .tvcol,
+  .tvcard,
+  .news-card,
+  .news-card-v2,
+  .current-news-card,
+  .current-news-head,
+  .current-news-toolbar,
+  #actualidad-panel,
+  #temario-panel,
+  #temario-main-panel
+) {
+  background: linear-gradient(180deg, rgba(15, 23, 42, .98), rgba(2, 6, 23, .98)) !important;
+  border-color: rgba(96, 165, 250, .24) !important;
+  color: #f8fafc !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="syllabus"] :where(.tvcard:hover, .news-card:hover, .news-card-v2:hover, .current-news-card:hover) {
+  background: rgba(37, 99, 235, .16) !important;
+  border-color: rgba(96, 165, 250, .48) !important;
+}
+
 html[data-universe-page] footer {
   margin-top: 0 !important;
   background: rgba(255, 255, 255, .72) !important;
