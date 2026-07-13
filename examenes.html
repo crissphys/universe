@@ -23,6 +23,17 @@
       } catch(e) {}
     })();
   </script>
+  <script>
+    (function(){
+      try {
+        var path = window.location.pathname;
+        if (/\.html$/i.test(path)) {
+          var clean = path.replace(/\/index\.html$/i, '/').replace(/\.html$/i, '');
+          window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body>
 <!-- UNIVERSE · Página física: exams -->
@@ -312,7 +323,7 @@ html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; out
         </div>
       </div>
 
-    <div class="login-terms">Al continuar aceptas nuestros <a href="/terminos.html">Términos de Servicio</a> y <a href="/privacidad.html">Política de Privacidad</a> de UNIVERSE.</div>
+    <div class="login-terms">Al continuar aceptas nuestros <a href="/terminos">Términos de Servicio</a> y <a href="/privacidad">Política de Privacidad</a> de UNIVERSE.</div>
     </div>
   </div>
 </div>
@@ -690,14 +701,14 @@ html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; out
   <a class="nav-logo" data-route="home" href="/">UNIVERSE</a>
   <ul class="nav-links">
     <li><a data-route="home" href="/">Inicio</a></li>
-    <li><a data-route="ranking" href="/ranking.html">Ranking</a></li>
-    <li><a data-route="calculator" href="/calculadora.html">Calculadora</a></li>
-    <li><a data-route="syllabus" href="/temario.html">Temario</a></li>
-    <li><a data-route="library" href="/biblioteca.html">Biblioteca</a></li>
-    <li><a data-route="simulators" href="/simulacros.html">Simulacros</a></li>
-    <li><a data-route="exams" href="/examenes.html">Exámenes</a></li>
-    <li><a data-route="terms" href="/terminos.html">Términos</a></li>
-    <li><a data-route="privacy" href="/privacidad.html">Privacidad</a></li>
+    <li><a data-route="ranking" href="/ranking">Ranking</a></li>
+    <li><a data-route="calculator" href="/calculadora">Calculadora</a></li>
+    <li><a data-route="syllabus" href="/temario">Temario</a></li>
+    <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
+    <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
+    <li><a data-route="exams" href="/examenes">Exámenes</a></li>
+    <li><a data-route="terms" href="/terminos">Términos</a></li>
+    <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
   </ul>
   <div class="nav-user-btn" id="nav-user-btn" onclick="handleNavUser()">
     <svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.05 0-7.25 2.05-7.25 4.6 0 .64.51 1.15 1.15 1.15h12.2c.64 0 1.15-.51 1.15-1.15 0-2.55-3.2-4.6-7.25-4.6Z"></path></svg><span>Cuenta</span>
@@ -732,12 +743,12 @@ html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; out
       <h4>Páginas</h4>
       <ul>
         <li><a href="/">Inicio</a></li>
-        <li><a href="/ranking.html">Ranking de Promedios</a></li>
-        <li><a href="/calculadora.html">Calculadoras y Carreras</a></li>
-        <li><a href="/temario.html">Temario UNI y CEPREUNI</a></li>
-        <li><a href="/biblioteca.html">Biblioteca UNIVERSE</a></li>
-        <li><a href="/simulacros.html">Simulacros Tipo UNI</a></li>
-        <li><a href="/examenes.html">Exámenes CEPREUNI</a></li>
+        <li><a href="/ranking">Ranking de Promedios</a></li>
+        <li><a href="/calculadora">Calculadoras y Carreras</a></li>
+        <li><a href="/temario">Temario UNI y CEPREUNI</a></li>
+        <li><a href="/biblioteca">Biblioteca UNIVERSE</a></li>
+        <li><a href="/simulacros">Simulacros Tipo UNI</a></li>
+        <li><a href="/examenes">Exámenes CEPREUNI</a></li>
       </ul>
     </div>
     <div class="footer-links">
@@ -754,8 +765,8 @@ html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; out
     <div class="footer-links">
       <h4>Legal y ayuda</h4>
       <ul>
-        <li><a href="/terminos.html">Términos y Condiciones</a></li>
-        <li><a href="/privacidad.html">Política de Privacidad</a></li>
+        <li><a href="/terminos">Términos y Condiciones</a></li>
+        <li><a href="/privacidad">Política de Privacidad</a></li>
         <li><a href="https://wa.me/51963385410" rel="noopener noreferrer" target="_blank">Contacto</a></li>
         <li><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte privado</a></li>
       </ul>
@@ -763,7 +774,7 @@ html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; out
   </div>
   <div class="footer-bottom">
     <div class="footer-copy">© 2026 UNIVERSE. Todos los derechos reservados.</div>
-    <div class="footer-legal"><a href="/terminos.html">Términos</a><a href="/privacidad.html">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
+    <div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
   </div>
 </footer>
             
@@ -7697,4 +7708,5 @@ window.addEventListener('load', initUniverseApp, { once: true });
 
 </body>
 </html>
+
 
