@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" data-universe-page="home">
+<html lang="es" data-universe-page="exams">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Universe to Study</title>
+  <title>Exámenes CEPREUNI | Universe to Study</title>
   <meta name="application-name" content="Universe to Study">
   <meta property="og:site_name" content="Universe to Study">
   <meta name="apple-mobile-web-app-title" content="Universe to Study">
@@ -29,37 +29,6 @@
       } catch(e) {}
     })();
   </script>
-<style id="universe-static-page-recovery-fix">
-html[data-universe-page] .universe-static-page,
-html[data-universe-page] .universe-page-stage,
-html[data-universe-page] .universe-page-stage-inner{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;filter:none!important}
-html[data-universe-page] .universe-static-page{position:relative!important;z-index:1!important;min-height:100svh!important}
-html[data-universe-page] .universe-page-stage{position:relative!important;z-index:2!important;min-height:calc(100svh - 64px)!important}
-html[data-universe-page] body>nav{position:fixed!important;top:0!important;bottom:auto!important}
-html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){position:fixed!important}
-@media(max-width:700px){html[data-universe-page] .universe-page-stage{padding-top:4.4rem!important}}
-</style>
-<script id="universe-static-page-scroll-reset">
-(function(){
-  if (window.__universeStaticPageScrollReset) return;
-  window.__universeStaticPageScrollReset = true;
-  try { history.scrollRestoration = 'manual'; } catch(e) {}
-  function reset(){
-    if (location.hash) return;
-    try { window.scrollTo(0, 0); } catch(e) {}
-    try { document.documentElement.scrollTop = 0; } catch(e) {}
-    try { document.body.scrollTop = 0; } catch(e) {}
-    try {
-      var pc = document.getElementById('page-content');
-      if (pc) pc.scrollTop = 0;
-    } catch(e) {}
-  }
-  reset();
-  document.addEventListener('DOMContentLoaded', function(){ reset(); setTimeout(reset, 80); }, { once:true });
-  window.addEventListener('load', function(){ reset(); setTimeout(reset, 220); }, { once:true });
-  window.addEventListener('pageshow', function(){ setTimeout(reset, 0); });
-})();
-</script>
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237378560312131"
      crossorigin="anonymous"></script><style id="universe-loader-style">
@@ -92,6 +61,278 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
 </script>
 </head>
 <body>
+<!-- UNIVERSE · Página física: exams -->
+<script>(function(){
+  document.documentElement.setAttribute('data-universe-page','exams');
+  window.UNIVERSE_PAGE_ROUTE='exams';
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.nav-links a[data-route]').forEach(function(link){
+      link.classList.toggle('active',link.getAttribute('data-route')==='exams');
+    });
+  });
+  window.addEventListener('load',function(){
+    if(typeof window.initUniverseApp==='function') window.initUniverseApp();
+  },{once:true});
+})();</script>
+<style>
+html[data-universe-page] #blogger-header,
+html[data-universe-page] #blogger-footer,
+html[data-universe-page] #Header1,
+html[data-universe-page] #PageList1,
+html[data-universe-page] #Navbar1,
+html[data-universe-page] #Attribution1,
+html[data-universe-page] .header-outer,
+html[data-universe-page] .tabs-outer,
+html[data-universe-page] .navbar,
+html[data-universe-page] .widget.Header,
+html[data-universe-page] .widget.PageList,
+html[data-universe-page] .post-title,
+html[data-universe-page] .post-header,
+html[data-universe-page] .post-footer,
+html[data-universe-page] .post-share-buttons,
+html[data-universe-page] .share-buttons,
+html[data-universe-page] .share-buttons-container,
+html[data-universe-page] .byline,
+html[data-universe-page] #comments,
+html[data-universe-page] .comments,
+html[data-universe-page] .comment-form,
+html[data-universe-page] .feed-links,
+html[data-universe-page] .blog-feeds,
+html[data-universe-page] .blog-pager,
+html[data-universe-page] .Attribution,
+html[data-universe-page] .footer-outer,
+html[data-universe-page] .sidebar-container,
+html[data-universe-page] .post-author,
+html[data-universe-page] .post-labels,
+html[data-universe-page] .post-timestamp,
+html[data-universe-page] .post-location { display:none !important; }
+
+html[data-universe-page],html[data-universe-page] body {
+  width:100% !important;
+  min-height:100% !important;
+  margin:0 !important;
+  overflow-x:hidden !important;
+}
+html[data-universe-page] {
+  height:auto !important;
+  overflow-y:auto !important;
+  overscroll-behavior-y:auto !important;
+  touch-action:pan-y !important;
+}
+html[data-universe-page] body {
+  height:auto !important;
+  min-height:100svh !important;
+  overflow-y:visible !important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y !important;
+}
+html[data-universe-page] #page-content {
+  position:relative !important;
+  z-index:1 !important;
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-height:100svh !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:visible !important;
+}
+html[data-universe-page] #main-wrapper,
+html[data-universe-page] #page_body,
+html[data-universe-page] #Blog1,
+html[data-universe-page] #Blog1 .widget-content,
+html[data-universe-page] #Blog1 .blog-posts,
+html[data-universe-page] #Blog1 .post-outer-container,
+html[data-universe-page] #Blog1 .post-outer,
+html[data-universe-page] #Blog1 article,
+html[data-universe-page] #Blog1 .post,
+html[data-universe-page] #Blog1 .post-body-container,
+html[data-universe-page] #Blog1 .post-body {
+  display:block !important;
+  box-sizing:border-box !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+}
+
+html[data-universe-page] .universe-static-page {
+  --universe-page-gutter:clamp(1rem,4vw,4.5rem);
+  box-sizing:border-box;
+  width:100% !important;
+  max-width:none !important;
+  min-height:100%;
+  margin:0 !important;
+}
+html[data-universe-page] .universe-page-stage {
+  box-sizing:border-box;
+  width:100%;
+  min-width:0;
+  padding:clamp(4.5rem,6vw,5.5rem) var(--universe-page-gutter) 0;
+}
+html[data-universe-page] .universe-page-stage-inner {
+  box-sizing:border-box;
+  width:min(1600px,100%);
+  min-width:0;
+  margin-inline:auto;
+}
+html[data-universe-page] .universe-page-stage-inner > .section,
+html[data-universe-page] .universe-page-stage-inner > .ranking-section,
+html[data-universe-page] .universe-page-stage-inner > .universe-legal-page,
+html[data-universe-page] .universe-page-stage-inner > .universe-exams-page,
+html[data-universe-page] .universe-page-stage-inner > .universe-library-layout,
+html[data-universe-page] .universe-library-layout > .section {
+  box-sizing:border-box !important;
+  width:100% !important;
+  max-width:none !important;
+  margin-inline:auto !important;
+  padding-inline:0 !important;
+  padding-top:clamp(1.75rem,3.2vw,3rem) !important;
+}
+html[data-universe-page] .universe-page-stage :where(.section-label,.section-title,.section-sub) {
+  margin-left:auto !important;
+  margin-right:auto !important;
+  text-align:center !important;
+}
+html[data-universe-page] .universe-page-stage .section-label { display:flex; width:max-content; max-width:100%; }
+html[data-universe-page] .universe-legal-page { padding-bottom:4rem !important; }
+html[data-universe-page] .universe-legal-page .section-title {
+  max-width:100% !important;
+  font-size:clamp(1.8rem,4.2vw,3.55rem) !important;
+  line-height:1.02 !important;
+  word-break:normal !important;
+  overflow-wrap:normal !important;
+  text-wrap:balance;
+}
+html[data-universe-page] .universe-legal-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:1rem !important;
+  width:100% !important;
+  margin-top:1.7rem !important;
+}
+html[data-universe-page] .universe-legal-grid .legal-card {
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  min-height:190px !important;
+  height:auto !important;
+  margin:0 !important;
+  padding:clamp(1rem,1.8vw,1.35rem) !important;
+  border:1px solid rgba(37,99,235,.18) !important;
+  border-radius:8px !important;
+  background:#ffffff !important;
+  color:#0f172a !important;
+  box-shadow:0 10px 28px rgba(15,23,42,.06) !important;
+}
+html[data-universe-page] .universe-legal-grid .legal-card h3 {
+  margin:0 0 .75rem !important;
+  color:#0f172a !important;
+  text-align:left !important;
+}
+html[data-universe-page] .universe-legal-grid .legal-card ul { margin:.15rem 0 0 !important; padding-left:1.15rem !important; }
+html[data-universe-page] .universe-legal-grid .legal-card li { margin:.42rem 0 !important; color:#475569 !important; line-height:1.55 !important; text-align:left !important; }
+html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:1 / -1; }
+html[data-universe-theme='dark'][data-universe-page] .universe-legal-grid .legal-card {
+  border-color:rgba(96,165,250,.34) !important;
+  background:#050505 !important;
+  color:#ffffff !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.5) !important;
+}
+html[data-universe-theme='dark'][data-universe-page] .universe-legal-grid .legal-card h3 { color:#ffffff !important; }
+html[data-universe-theme='dark'][data-universe-page] .universe-legal-grid .legal-card li { color:#dbeafe !important; }
+html[data-universe-page='ranking'] .universe-page-stage-inner,
+html[data-universe-page='library'] .universe-page-stage-inner { width:min(1720px,100%); }
+html[data-universe-page='terms'] .universe-page-stage-inner,
+html[data-universe-page='privacy'] .universe-page-stage-inner { width:min(1380px,100%); }
+html[data-universe-page] #universe-code-cursor,
+html[data-universe-page] #current-news-overlay:not(.open),
+html[data-universe-page] #chat-overlay:not(.open),
+html[data-universe-page] #current-news-panel:not(.open),
+html[data-universe-page] #chat-panel:not(.open) { pointer-events:none !important; }
+html[data-universe-page] #current-news-overlay.open,
+html[data-universe-page] #chat-overlay.open,
+html[data-universe-page] #current-news-panel.open,
+html[data-universe-page] #chat-panel.open { pointer-events:auto !important; }
+html[data-universe-page] {
+  --universe-arrow-cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='32' viewBox='0 0 26 32'%3E%3Cpath d='M3.5 3.5v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2H24z' fill='%232563eb' opacity='.48'/%3E%3Cpath d='M2 2v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2h9.4z' fill='%23050505' stroke='%23ffffff' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2,default;
+}
+html.universe-arrow-cursor,
+html.universe-arrow-cursor body,
+html.universe-arrow-cursor body * { cursor:var(--universe-arrow-cursor) !important; }
+html.universe-arrow-cursor #universe-code-cursor { display:none !important; }
+@media (pointer:coarse){
+  html.universe-arrow-cursor,
+  html.universe-arrow-cursor body,
+  html.universe-arrow-cursor body * { cursor:auto !important; }
+}
+html[data-universe-page] .universe-static-page,
+html[data-universe-page] .universe-static-page footer,
+html[data-universe-page] .universe-static-page a,
+html[data-universe-page] .universe-static-page button { position:relative; pointer-events:auto; }
+html[data-universe-page] footer .footer-links ul { display:grid; gap:.12rem; padding-left:0; list-style:none; }
+html[data-universe-page] footer .footer-links a,
+html[data-universe-page] footer .footer-legal a {
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:.32rem .48rem;
+  margin-left:-.48rem;
+  border-radius:6px;
+  transition:color .18s ease,background .18s ease,transform .18s ease;
+}
+html[data-universe-page] footer .footer-links a:hover,
+html[data-universe-page] footer .footer-legal a:hover {
+  background:rgba(37,99,235,.10);
+  color:#2563eb !important;
+  transform:translateX(2px);
+}
+html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; outline-offset:2px; }
+@media(max-width:760px){
+  html[data-universe-page] .universe-static-page { --universe-page-gutter:.9rem; }
+  html[data-universe-page] .universe-page-stage { padding-top:4.15rem; }
+  html[data-universe-page] .universe-legal-page .section-title { font-size:clamp(1.55rem,7.2vw,2.35rem) !important; }
+  html[data-universe-page] .universe-legal-grid { grid-template-columns:minmax(0,1fr) !important; }
+  html[data-universe-page] .universe-legal-grid .legal-card { min-height:0 !important; }
+  html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:auto; }
+}
+
+
+</style>
+<style id="universe-static-page-recovery-fix">
+html[data-universe-page] .universe-static-page,
+html[data-universe-page] .universe-page-stage,
+html[data-universe-page] .universe-page-stage-inner{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;filter:none!important}
+html[data-universe-page] .universe-static-page{position:relative!important;z-index:1!important;min-height:100svh!important}
+html[data-universe-page] .universe-page-stage{position:relative!important;z-index:2!important;min-height:calc(100svh - 64px)!important}
+html[data-universe-page] body>nav{position:fixed!important;top:0!important;bottom:auto!important}
+html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){position:fixed!important}
+@media(max-width:700px){html[data-universe-page] .universe-page-stage{padding-top:4.4rem!important}}
+</style>
+<script id="universe-static-page-scroll-reset">
+(function(){
+  if (window.__universeStaticPageScrollReset) return;
+  window.__universeStaticPageScrollReset = true;
+  try { history.scrollRestoration = 'manual'; } catch(e) {}
+  function reset(){
+    if (location.hash) return;
+    try { window.scrollTo(0, 0); } catch(e) {}
+    try { document.documentElement.scrollTop = 0; } catch(e) {}
+    try { document.body.scrollTop = 0; } catch(e) {}
+    try {
+      var pc = document.getElementById('page-content');
+      if (pc) pc.scrollTop = 0;
+    } catch(e) {}
+  }
+  reset();
+  document.addEventListener('DOMContentLoaded', function(){ reset(); setTimeout(reset, 80); }, { once:true });
+  window.addEventListener('load', function(){ reset(); setTimeout(reset, 220); }, { once:true });
+  window.addEventListener('pageshow', function(){ setTimeout(reset, 0); });
+})();
+</script>
 <div id="universe-page-loader" role="status" aria-live="polite">
   <div class="upl-card">
     <div class="upl-orbit"><span></span></div>
@@ -111,18 +352,18 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
       <div class="ap-hero">
         <div class="ap-avatar-row">
           <label class="ap-avatar-wrap" for="ap-photo-input" id="ap-avatar-wrap" title="Subir foto de perfil">
-            <img alt="" id="ap-avatar-img" src="" style="display:none;"/>
+            <img alt="" id="ap-avatar-img" src="" style="display:none;"></img>
             <span id="ap-avatar-initial">?</span>
           </label>
-          <input accept="image/*" id="ap-photo-input" onchange="handleProfilePhoto(this)" style="display:none;" type="file"/>
+          <input accept="image/*" id="ap-photo-input" onchange="handleProfilePhoto(this)" style="display:none;" type="file"></input>
           <div>
             <div class="ap-name" id="ap-name">Usuario</div>
             <div class="ap-email" id="ap-email"></div>
-            <div class="ap-badge" id="ap-role-badge"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="m10.6 16.2 7.05-7.05-1.7-1.7-5.35 5.35-2.55-2.55-1.7 1.7 4.25 4.25ZM12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/></svg> Usuario</div>
+            <div class="ap-badge" id="ap-role-badge"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="m10.6 16.2 7.05-7.05-1.7-1.7-5.35 5.35-2.55-2.55-1.7 1.7 4.25 4.25ZM12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"></path></svg> Usuario</div>
           </div>
         </div>
         <label class="ap-field" for="ap-nickname-field">Apodo de batalla
-          <input class="ap-input" id="ap-nickname-field" maxlength="28" oninput="saveProfilePrefs(false)" placeholder="Ej. Futuro UNI"/>
+          <input class="ap-input" id="ap-nickname-field" maxlength="28" oninput="saveProfilePrefs(false)" placeholder="Ej. Futuro UNI"></input>
         </label>
         <button class="ap-mini-save" onclick="saveProfilePrefs(true)">Guardar perfil</button>
 
@@ -132,7 +373,7 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
       <section class="ap-panel">
         <div class="ap-panel-head">
           <div class="ap-section-title">Mi Progreso</div>
-          <button class="tool-cta" onclick="openMiniTournament()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 3h10v3h3v4a5 5 0 0 1-5 5h-.3A5.7 5.7 0 0 1 13 16.6V19h3v2H8v-2h3v-2.4A5.7 5.7 0 0 1 9.3 15H9a5 5 0 0 1-5-5V6h3V3Zm0 5H6v2a3 3 0 0 0 1.6 2.65A7.7 7.7 0 0 1 7 9.6V8Zm10 1.6c0 2.75-1.88 5-5 5s-5-2.25-5-5V5h10v4.6Zm1 3.05A3 3 0 0 0 20 10V8h-1v1.6c0 1.1-.2 2.12-.6 3.05Z"/></svg> Mini torneo</button>
+          <button class="tool-cta" onclick="openMiniTournament()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 3h10v3h3v4a5 5 0 0 1-5 5h-.3A5.7 5.7 0 0 1 13 16.6V19h3v2H8v-2h3v-2.4A5.7 5.7 0 0 1 9.3 15H9a5 5 0 0 1-5-5V6h3V3Zm0 5H6v2a3 3 0 0 0 1.6 2.65A7.7 7.7 0 0 1 7 9.6V8Zm10 1.6c0 2.75-1.88 5-5 5s-5-2.25-5-5V5h10v4.6Zm1 3.05A3 3 0 0 0 20 10V8h-1v1.6c0 1.1-.2 2.12-.6 3.05Z"></path></svg> Mini torneo</button>
         </div>
         <div class="ap-stat-row">
           <div class="ap-stat-card"><div class="ap-stat-val" id="ap-score">0</div><div class="ap-stat-lbl">Correctas</div></div>
@@ -153,20 +394,25 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
         <div class="ap-section-title">Cursos por mejorar</div>
         <div class="ap-course-grid" id="ap-course-progress"></div>
       </section>
+      <section class="ap-panel universe-google-account">
+        <div class="ap-section-title">Inicio con Google</div>
+        <div class="universe-google-status" id="universe-google-status">Conecta tu cuenta para usar tu nombre, correo y foto en Universe to Study.</div>
+        <div class="universe-google-signin" data-google-place="account"></div>
+      </section>
       <section class="ap-panel">
         <div class="ap-section-title">Configuración de cuenta</div>
         <div class="account-config-grid">
           <label class="ap-field" for="ap-account-name-field">Nombre visible
-            <input class="ap-input" id="ap-account-name-field" maxlength="40" oninput="saveProfilePrefs(false)" placeholder="Tu nombre"/>
+            <input class="ap-input" id="ap-account-name-field" maxlength="40" oninput="saveProfilePrefs(false)" placeholder="Tu nombre"></input>
           </label>
           <label class="ap-field" for="ap-account-email-field">Correo afiliado
-            <input class="ap-input" id="ap-account-email-field" oninput="saveProfilePrefs(false)" placeholder="correo@ejemplo.com" type="email"/>
+            <input class="ap-input" id="ap-account-email-field" oninput="saveProfilePrefs(false)" placeholder="correo@ejemplo.com" type="email"></input>
           </label>
           <label class="ap-field" for="ap-phone-field">Número de celular
-            <input class="ap-input" id="ap-phone-field" inputmode="tel" maxlength="18" oninput="saveProfilePrefs(false)" placeholder="+51 999 999 999"/>
+            <input class="ap-input" id="ap-phone-field" inputmode="tel" maxlength="18" oninput="saveProfilePrefs(false)" placeholder="+51 999 999 999"></input>
           </label>
           <label class="ap-field" for="ap-goal-field">Meta UNI
-            <input class="ap-input" id="ap-goal-field" maxlength="42" oninput="saveProfilePrefs(false)" placeholder="Ej. Ingeniería de Sistemas"/>
+            <input class="ap-input" id="ap-goal-field" maxlength="42" oninput="saveProfilePrefs(false)" placeholder="Ej. Ingeniería de Sistemas"></input>
           </label>
         </div>
         <div class="account-name-warning" id="account-name-warning"></div>
@@ -176,17 +422,16 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
       <section class="ap-panel">
         <div class="ap-section-title">Acceso rápido</div>
         <div class="ap-action-grid">
-          <a class="ap-action" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M3.5 19 9.6 8.5h4.8L8.3 19H3.5Zm12.2 0L9.6 8.5 12 4.3 20.5 19h-4.8ZM10 19l2.4-4.2h8.1L18.1 19H10Z"/></svg> Drive Universe</a>
-          <a class="ap-action" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a9.7 9.7 0 0 0-8.4 14.56L2.6 22l5.55-1.45A9.7 9.7 0 1 0 12 2Zm4.72 13.65c-.2.56-1.16 1.04-1.62 1.1-.42.06-.96.09-1.55-.1-.36-.12-.82-.27-1.41-.53-2.48-1.08-4.1-3.58-4.22-3.75-.12-.16-1.01-1.34-1.01-2.56 0-1.22.64-1.82.86-2.07.22-.25.49-.31.65-.31h.47c.15.01.36-.06.56.43.2.49.69 1.68.75 1.8.06.12.1.27.02.43-.08.16-.12.26-.25.4-.12.15-.26.33-.37.44-.12.12-.25.25-.1.49.15.25.67 1.1 1.43 1.78.98.87 1.8 1.14 2.06 1.27.25.12.4.1.55-.06.16-.19.64-.75.82-1 .17-.25.35-.21.59-.12.25.08 1.55.73 1.82.86.27.14.45.2.51.31.07.13.07.69-.13 1.19Z"/></svg> WhatsApp</a>
-          <a class="ap-action" href="https://whatsapp.com/channel/0029Vb7lA2q7IUYXqEZIDH3R" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a9.7 9.7 0 0 0-8.4 14.56L2.6 22l5.55-1.45A9.7 9.7 0 1 0 12 2Zm4.72 13.65c-.2.56-1.16 1.04-1.62 1.1-.42.06-.96.09-1.55-.1-.36-.12-.82-.27-1.41-.53-2.48-1.08-4.1-3.58-4.22-3.75-.12-.16-1.01-1.34-1.01-2.56 0-1.22.64-1.82.86-2.07.22-.25.49-.31.65-.31h.47c.15.01.36-.06.56.43.2.49.69 1.68.75 1.8.06.12.1.27.02.43-.08.16-.12.26-.25.4-.12.15-.26.33-.37.44-.12.12-.25.25-.1.49.15.25.67 1.1 1.43 1.78.98.87 1.8 1.14 2.06 1.27.25.12.4.1.55-.06.16-.19.64-.75.82-1 .17-.25.35-.21.59-.12.25.08 1.55.73 1.82.86.27.14.45.2.51.31.07.13.07.69-.13 1.19Z"/></svg> CicleSolus</a>
-          <div class="ap-action" onclick="openQuiz()" style="cursor:pointer;"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2 4 5.5v6c0 4.8 3.4 9.3 8 10.5 4.6-1.2 8-5.7 8-10.5v-6L12 2Zm1 5v5.2l4 2.4-1 1.7-5-3V7h2Z"/></svg> Simulacro IA</div>
-          <div class="ap-action ap-logout" onclick="logoutUser()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M10 3h9a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-9v-2h9V5h-9V3Zm1.3 5.3 1.4-1.4L17.8 12l-5.1 5.1-1.4-1.4 2.7-2.7H3v-2h11l-2.7-2.7Z"/></svg> Cerrar sesión</div>
+          <a class="ap-action" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M3.5 19 9.6 8.5h4.8L8.3 19H3.5Zm12.2 0L9.6 8.5 12 4.3 20.5 19h-4.8ZM10 19l2.4-4.2h8.1L18.1 19H10Z"></path></svg> Drive Universe</a>
+          <a class="ap-action" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a9.7 9.7 0 0 0-8.4 14.56L2.6 22l5.55-1.45A9.7 9.7 0 1 0 12 2Zm4.72 13.65c-.2.56-1.16 1.04-1.62 1.1-.42.06-.96.09-1.55-.1-.36-.12-.82-.27-1.41-.53-2.48-1.08-4.1-3.58-4.22-3.75-.12-.16-1.01-1.34-1.01-2.56 0-1.22.64-1.82.86-2.07.22-.25.49-.31.65-.31h.47c.15.01.36-.06.56.43.2.49.69 1.68.75 1.8.06.12.1.27.02.43-.08.16-.12.26-.25.4-.12.15-.26.33-.37.44-.12.12-.25.25-.1.49.15.25.67 1.1 1.43 1.78.98.87 1.8 1.14 2.06 1.27.25.12.4.1.55-.06.16-.19.64-.75.82-1 .17-.25.35-.21.59-.12.25.08 1.55.73 1.82.86.27.14.45.2.51.31.07.13.07.69-.13 1.19Z"></path></svg> WhatsApp</a>
+          <a class="ap-action" href="https://whatsapp.com/channel/0029Vb7lA2q7IUYXqEZIDH3R" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a9.7 9.7 0 0 0-8.4 14.56L2.6 22l5.55-1.45A9.7 9.7 0 1 0 12 2Zm4.72 13.65c-.2.56-1.16 1.04-1.62 1.1-.42.06-.96.09-1.55-.1-.36-.12-.82-.27-1.41-.53-2.48-1.08-4.1-3.58-4.22-3.75-.12-.16-1.01-1.34-1.01-2.56 0-1.22.64-1.82.86-2.07.22-.25.49-.31.65-.31h.47c.15.01.36-.06.56.43.2.49.69 1.68.75 1.8.06.12.1.27.02.43-.08.16-.12.26-.25.4-.12.15-.26.33-.37.44-.12.12-.25.25-.1.49.15.25.67 1.1 1.43 1.78.98.87 1.8 1.14 2.06 1.27.25.12.4.1.55-.06.16-.19.64-.75.82-1 .17-.25.35-.21.59-.12.25.08 1.55.73 1.82.86.27.14.45.2.51.31.07.13.07.69-.13 1.19Z"></path></svg> CicleSolus</a>
+          <div class="ap-action" onclick="openQuiz()" style="cursor:pointer;"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2 4 5.5v6c0 4.8 3.4 9.3 8 10.5 4.6-1.2 8-5.7 8-10.5v-6L12 2Zm1 5v5.2l4 2.4-1 1.7-5-3V7h2Z"></path></svg> Simulacro IA</div>
+          <div class="ap-action ap-logout" onclick="logoutUser()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M10 3h9a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-9v-2h9V5h-9V3Zm1.3 5.3 1.4-1.4L17.8 12l-5.1 5.1-1.4-1.4 2.7-2.7H3v-2h11l-2.7-2.7Z"></path></svg> Cerrar sesión</div>
         </div>
       </section>
     </main>
   </div>
 </div>
-
 
 <div id="temario-main-panel">
   <div class="tp-header">
@@ -243,7 +488,6 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
   </div>
 </div>
 
-
 <div id="actualidad-panel">
   <div class="tp-header">
     <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeActualidad()" type="button">×</button>
@@ -263,51 +507,51 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     <div class="news-section-label">🇵🇪 Medios Nacionales - Perú</div>
     <div class="news-grid">
       <a class="news-card-v2" href="https://larepublica.pe/" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="La República" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#d32f2f;font-size:.9rem;letter-spacing:1px;\'&gt;LA REPÚBLICA&lt;/span&gt;'" src="https://logo.clearbit.com/larepublica.pe"/></div>
+        <div class="news-logo-v2"><img alt="La República" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#d32f2f;font-size:.9rem;letter-spacing:1px;\'&gt;LA REPÚBLICA&lt;/span&gt;'" src="https://logo.clearbit.com/larepublica.pe"></img></div>
         <div class="news-name-v2">La República</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://rpp.pe/" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="RPP" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;font-size:1.4rem;color:#c00;\'&gt;RPP&lt;/span&gt;'" src="https://logo.clearbit.com/rpp.pe"/></div>
+        <div class="news-logo-v2"><img alt="RPP" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;font-size:1.4rem;color:#c00;\'&gt;RPP&lt;/span&gt;'" src="https://logo.clearbit.com/rpp.pe"></img></div>
         <div class="news-name-v2">RPP Noticias</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://www.latina.pe/" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Latina" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#c62828;font-size:1.2rem;\'&gt;LATINA&lt;/span&gt;'" src="https://logo.clearbit.com/latina.pe"/></div>
+        <div class="news-logo-v2"><img alt="Latina" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#c62828;font-size:1.2rem;\'&gt;LATINA&lt;/span&gt;'" src="https://logo.clearbit.com/latina.pe"></img></div>
         <div class="news-name-v2">Latina TV</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://www.tvperu.gob.pe/" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="TV Perú" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#1b5e20;font-size:.85rem;\'&gt;TV PERÚ&lt;/span&gt;'" src="https://logo.clearbit.com/tvperu.gob.pe"/></div>
+        <div class="news-logo-v2"><img alt="TV Perú" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#1b5e20;font-size:.85rem;\'&gt;TV PERÚ&lt;/span&gt;'" src="https://logo.clearbit.com/tvperu.gob.pe"></img></div>
         <div class="news-name-v2">TV Perú</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://panamericana.pe/" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Panamericana" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#0d47a1;font-size:.65rem;\'&gt;PANAMERICANA&lt;/span&gt;'" src="https://logo.clearbit.com/panamericana.pe"/></div>
+        <div class="news-logo-v2"><img alt="Panamericana" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#0d47a1;font-size:.65rem;\'&gt;PANAMERICANA&lt;/span&gt;'" src="https://logo.clearbit.com/panamericana.pe"></img></div>
         <div class="news-name-v2">Panamericana TV</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://www.americatv.com.pe/" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="América TV" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#1565c0;font-size:.85rem;\'&gt;AMÉRICA&lt;/span&gt;'" src="https://logo.clearbit.com/americatv.com.pe"/></div>
+        <div class="news-logo-v2"><img alt="América TV" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#1565c0;font-size:.85rem;\'&gt;AMÉRICA&lt;/span&gt;'" src="https://logo.clearbit.com/americatv.com.pe"></img></div>
         <div class="news-name-v2">América TV</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://gestion.pe/" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Gestión" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#b71c1c;font-size:1rem;letter-spacing:1px;\'&gt;GESTIÓN&lt;/span&gt;'" src="https://logo.clearbit.com/gestion.pe"/></div>
+        <div class="news-logo-v2"><img alt="Gestión" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#b71c1c;font-size:1rem;letter-spacing:1px;\'&gt;GESTIÓN&lt;/span&gt;'" src="https://logo.clearbit.com/gestion.pe"></img></div>
         <div class="news-name-v2">Gestión</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://elcomercio.pe" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="El Comercio" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:.7rem;\'&gt;EL COMERCIO&lt;/span&gt;'" src="https://logo.clearbit.com/elcomercio.pe"/></div>
+        <div class="news-logo-v2"><img alt="El Comercio" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:.7rem;\'&gt;EL COMERCIO&lt;/span&gt;'" src="https://logo.clearbit.com/elcomercio.pe"></img></div>
         <div class="news-name-v2">El Comercio</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://canaln.pe" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Canal N" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#283593;font-size:.9rem;\'&gt;CANAL N&lt;/span&gt;'" src="https://logo.clearbit.com/canaln.pe"/></div>
+        <div class="news-logo-v2"><img alt="Canal N" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#283593;font-size:.9rem;\'&gt;CANAL N&lt;/span&gt;'" src="https://logo.clearbit.com/canaln.pe"></img></div>
         <div class="news-name-v2">Canal N</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://atv.pe/noticias" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="ATV" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#880e4f;font-size:1.2rem;\'&gt;ATV&lt;/span&gt;'" src="https://logo.clearbit.com/atv.pe"/></div>
+        <div class="news-logo-v2"><img alt="ATV" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#880e4f;font-size:1.2rem;\'&gt;ATV&lt;/span&gt;'" src="https://logo.clearbit.com/atv.pe"></img></div>
         <div class="news-name-v2">ATV Noticias</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://peru21.pe" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Perú 21" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#b71c1c;font-size:.9rem;\'&gt;PERÚ 21&lt;/span&gt;'" src="https://logo.clearbit.com/peru21.pe"/></div>
+        <div class="news-logo-v2"><img alt="Perú 21" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#b71c1c;font-size:.9rem;\'&gt;PERÚ 21&lt;/span&gt;'" src="https://logo.clearbit.com/peru21.pe"></img></div>
         <div class="news-name-v2">Perú 21</div><div class="news-country">Perú</div>
       </a>
       <a class="news-card-v2" href="https://ojo.pe" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Ojo" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#f57f17;font-size:1.3rem;\'&gt;OJO&lt;/span&gt;'" src="https://logo.clearbit.com/ojo.pe"/></div>
+        <div class="news-logo-v2"><img alt="Ojo" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#f57f17;font-size:1.3rem;\'&gt;OJO&lt;/span&gt;'" src="https://logo.clearbit.com/ojo.pe"></img></div>
         <div class="news-name-v2">Diario Ojo</div><div class="news-country">Perú</div>
       </a>
     </div>
@@ -315,19 +559,19 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     <div class="news-section-label">🌎 Medios Latinoamericanos</div>
     <div class="news-grid">
       <a class="news-card-v2" href="https://infobae.com/peru" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Infobae" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#3b5bff;font-size:.95rem;\'&gt;INFOBAE&lt;/span&gt;'" src="https://logo.clearbit.com/infobae.com"/></div>
+        <div class="news-logo-v2"><img alt="Infobae" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#3b5bff;font-size:.95rem;\'&gt;INFOBAE&lt;/span&gt;'" src="https://logo.clearbit.com/infobae.com"></img></div>
         <div class="news-name-v2">Infobae</div><div class="news-country">Internacional</div>
       </a>
       <a class="news-card-v2" href="https://clarin.com" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Clarín" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#e53935;font-size:.95rem;\'&gt;CLARÍN&lt;/span&gt;'" src="https://logo.clearbit.com/clarin.com"/></div>
+        <div class="news-logo-v2"><img alt="Clarín" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#e53935;font-size:.95rem;\'&gt;CLARÍN&lt;/span&gt;'" src="https://logo.clearbit.com/clarin.com"></img></div>
         <div class="news-name-v2">Clarín</div><div class="news-country">Argentina</div>
       </a>
       <a class="news-card-v2" href="https://elpais.com/america" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="El País" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:.85rem;\'&gt;EL PAÍS&lt;/span&gt;'" src="https://logo.clearbit.com/elpais.com"/></div>
+        <div class="news-logo-v2"><img alt="El País" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:.85rem;\'&gt;EL PAÍS&lt;/span&gt;'" src="https://logo.clearbit.com/elpais.com"></img></div>
         <div class="news-name-v2">El País América</div><div class="news-country">España/LATAM</div>
       </a>
       <a class="news-card-v2" href="https://telesurtv.net" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="TeleSUR" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#0d47a1;font-size:.9rem;\'&gt;TELESUR&lt;/span&gt;'" src="https://logo.clearbit.com/telesurtv.net"/></div>
+        <div class="news-logo-v2"><img alt="TeleSUR" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#0d47a1;font-size:.9rem;\'&gt;TELESUR&lt;/span&gt;'" src="https://logo.clearbit.com/telesurtv.net"></img></div>
         <div class="news-name-v2">TeleSUR</div><div class="news-country">LATAM</div>
       </a>
     </div>
@@ -335,35 +579,35 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     <div class="news-section-label">🌍 Medios Internacionales</div>
     <div class="news-grid">
       <a class="news-card-v2" href="https://www.bbc.com" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="BBC" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#bb1919;font-size:1.5rem;letter-spacing:2px;\'&gt;BBC&lt;/span&gt;'" src="https://logo.clearbit.com/bbc.com"/></div>
+        <div class="news-logo-v2"><img alt="BBC" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#bb1919;font-size:1.5rem;letter-spacing:2px;\'&gt;BBC&lt;/span&gt;'" src="https://logo.clearbit.com/bbc.com"></img></div>
         <div class="news-name-v2">BBC</div><div class="news-country">Reino Unido</div>
       </a>
       <a class="news-card-v2" href="https://cnnespanol.cnn.com" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="CNN" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#cc0000;font-size:1.2rem;\'&gt;CNN&lt;/span&gt;'" src="https://logo.clearbit.com/cnn.com"/></div>
+        <div class="news-logo-v2"><img alt="CNN" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#cc0000;font-size:1.2rem;\'&gt;CNN&lt;/span&gt;'" src="https://logo.clearbit.com/cnn.com"></img></div>
         <div class="news-name-v2">CNN en Español</div><div class="news-country">EEUU</div>
       </a>
       <a class="news-card-v2" href="https://reuters.com" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Reuters" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#ff6600;font-size:.85rem;\'&gt;REUTERS&lt;/span&gt;'" src="https://logo.clearbit.com/reuters.com"/></div>
+        <div class="news-logo-v2"><img alt="Reuters" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#ff6600;font-size:.85rem;\'&gt;REUTERS&lt;/span&gt;'" src="https://logo.clearbit.com/reuters.com"></img></div>
         <div class="news-name-v2">Reuters</div><div class="news-country">Internacional</div>
       </a>
       <a class="news-card-v2" href="https://apnews.com" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="AP News" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:1.1rem;\'&gt;AP&lt;/span&gt;'" src="https://logo.clearbit.com/apnews.com"/></div>
+        <div class="news-logo-v2"><img alt="AP News" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#111;font-size:1.1rem;\'&gt;AP&lt;/span&gt;'" src="https://logo.clearbit.com/apnews.com"></img></div>
         <div class="news-name-v2">AP News</div><div class="news-country">EEUU</div>
       </a>
       <a class="news-card-v2" href="https://france24.com/es" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="France 24" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#003399;font-size:.8rem;\'&gt;FRANCE 24&lt;/span&gt;'" src="https://logo.clearbit.com/france24.com"/></div>
+        <div class="news-logo-v2"><img alt="France 24" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#003399;font-size:.8rem;\'&gt;FRANCE 24&lt;/span&gt;'" src="https://logo.clearbit.com/france24.com"></img></div>
         <div class="news-name-v2">France 24</div><div class="news-country">Francia</div>
       </a>
       <a class="news-card-v2" href="https://dw.com/es" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="DW" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#003b6f;font-size:1.3rem;\'&gt;DW&lt;/span&gt;'" src="https://logo.clearbit.com/dw.com"/></div>
+        <div class="news-logo-v2"><img alt="DW" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#003b6f;font-size:1.3rem;\'&gt;DW&lt;/span&gt;'" src="https://logo.clearbit.com/dw.com"></img></div>
         <div class="news-name-v2">Deutsche Welle</div><div class="news-country">Alemania</div>
       </a>
       <a class="news-card-v2" href="https://rt.com/spanish" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="RT" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#cc0000;font-size:1.3rem;\'&gt;RT&lt;/span&gt;'" src="https://logo.clearbit.com/rt.com"/></div>
+        <div class="news-logo-v2"><img alt="RT" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#cc0000;font-size:1.3rem;\'&gt;RT&lt;/span&gt;'" src="https://logo.clearbit.com/rt.com"></img></div>
         <div class="news-name-v2">RT en Español</div><div class="news-country">Internacional</div>
       </a>
       <a class="news-card-v2" href="https://aljazeera.com/espanol" rel="noopener noreferrer" target="_blank">
-        <div class="news-logo-v2"><img alt="Al Jazeera" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#d4a017;font-size:.75rem;\'&gt;AL JAZEERA&lt;/span&gt;'" src="https://logo.clearbit.com/aljazeera.com"/></div>
+        <div class="news-logo-v2"><img alt="Al Jazeera" onerror="this.style.display='none';this.parentElement.innerHTML='&lt;span style=\'font-family:Bebas Neue;color:#d4a017;font-size:.75rem;\'&gt;AL JAZEERA&lt;/span&gt;'" src="https://logo.clearbit.com/aljazeera.com"></img></div>
         <div class="news-name-v2">Al Jazeera</div><div class="news-country">Qatar</div>
       </a>
     </div>
@@ -374,7 +618,6 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     </div>
   </div>
 </div>
-
 
 <div id="quiz-panel">
   <div class="tp-header">
@@ -428,7 +671,7 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
       <div id="quiz-upload-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;">Subir material multimodal</div>
       <label class="quiz-upload-zone" for="quiz-file-input" id="quiz-upload-zone" ondragleave="this.classList.remove('dragover')" ondragover="event.preventDefault();this.classList.add('dragover')" ondrop="handleDropUpload(event)">
         <div class="upload-zone-grid">
-          <div class="upload-icon"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M11 16V7.85l-3.05 3.05-1.4-1.4L12 4.05l5.45 5.45-1.4 1.4L13 7.85V16h-2Zm-5 4a2 2 0 0 1-2-2v-3h2v3h12v-3h2v3a2 2 0 0 1-2 2H6Z"/></svg></div>
+          <div class="upload-icon"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M11 16V7.85l-3.05 3.05-1.4-1.4L12 4.05l5.45 5.45-1.4 1.4L13 7.85V16h-2Zm-5 4a2 2 0 0 1-2-2v-3h2v3h12v-3h2v3a2 2 0 0 1-2 2H6Z"></path></svg></div>
           <div>
             <div class="upload-title">Arrastra tu PDF, foto o captura aquí</div>
             <div class="upload-sub">Acepta PDF, TXT, MD, PNG, JPG y WEBP. Los PDFs/TXT se leen en local; las imágenes se convierten en contexto visual guiado.</div>
@@ -437,9 +680,9 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
           <div class="upload-pill">Elegir archivo</div>
         </div>
       </label>
-      <input accept=".pdf,.txt,.md,image/png,image/jpeg,image/webp,image/*" id="quiz-file-input" onchange="handleFileUpload(this)" style="display:none;" type="file"/>
+      <input accept=".pdf,.txt,.md,image/png,image/jpeg,image/webp,image/*" id="quiz-file-input" onchange="handleFileUpload(this)" style="display:none;" type="file"></input>
       <div class="image-context-box" id="quiz-image-context">
-        <img alt="Vista previa del material visual" class="image-preview" id="quiz-image-preview"/>
+        <img alt="Vista previa del material visual" class="image-preview" id="quiz-image-preview"></img>
         <textarea class="image-notes" id="quiz-image-notes" oninput="updateImageContextFromNotes()" placeholder="Detalle visible de la imagen: tema, datos, gráfico, fórmula o pregunta que quieres practicar."></textarea>
       </div>
 
@@ -456,7 +699,6 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
   </div>
 </div>
 
-
 <div id="temario-panel">
   <div class="tp-header">
     <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeTemario()" type="button">×</button>
@@ -467,7 +709,6 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
   </div>
 </div>
 
-
 <nav>
   <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
   <ul class="nav-links">
@@ -475,6 +716,7 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     <li><a data-route="ranking" href="/ranking">Ranking</a></li>
     <li><a data-route="calculator" href="/calculadora">Calculadora</a></li>
     <li><a data-route="syllabus" href="/temario">Temario</a></li>
+    <li><a data-route="learn" href="/aprender">Aprende</a></li>
     <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
     <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
     <li><a data-route="exams" href="/examenes">Exámenes</a></li>
@@ -492,493 +734,24 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
   </div>
 </nav>
 
+<div class="universe-static-page universe-page-exams" data-universe-route="exams">
+<div class="universe-page-stage"><div class="universe-page-stage-inner">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- UNIVERSE_SUPPORT_V2_START -->
-<div id='support-v2-overlay' onclick='UniverseSupport.close()'></div>
-<div id='support-v2-hint'>¿Problemas? Te ayudamos</div>
-<button aria-label='Abrir soporte privado' id='support-v2-fab' onclick='UniverseSupport.open()' title='Soporte' type='button'>
-  <svg aria-hidden='true' viewBox='0 0 24 24'><path d='M12 2a9 9 0 0 0-9 9v3a3 3 0 0 0 3 3h1v-7H5.1A7 7 0 0 1 19 11v6h-5v2h3a4 4 0 0 0 4-4v-4a9 9 0 0 0-9-9ZM5 12h2v3H6a1 1 0 0 1-1-1v-2Zm12 0h2v3h-2v-3Z'/></svg>
-  <span>Soporte</span><i id='support-v2-fab-dot'></i>
-</button>
-<aside aria-hidden='true' id='support-v2-panel'>
-  <header class='support-v2-head'><div><strong>Soporte Universe to Study</strong><span id='support-v2-presence'>Comprobando conexión...</span></div><button aria-label='Cerrar soporte' onclick='UniverseSupport.close()' type='button'>x</button></header>
-  <div class='support-v2-admin-layout'>
-    <aside hidden='hidden' id='support-v2-inbox'><div class='support-v2-inbox-title'>Conversaciones</div><div id='support-v2-threads'></div></aside>
-    <main class='support-v2-conversation'>
-      <div class='support-v2-thread-head'><div><strong id='support-v2-thread-name'>Tu consulta</strong><span id='support-v2-thread-status'>Chat privado</span></div><button hidden='hidden' id='support-v2-solved' onclick='UniverseSupport.solve()' type='button'>Solucionado</button></div>
-      <label class='support-v2-name-row' id='support-v2-name-row'><span>Tu nombre</span><input id='support-v2-name' maxlength='50' placeholder='¿Cómo te llamas?' type='text'/></label>
-      <div aria-live='polite' id='support-v2-messages'></div>
-      <div hidden='hidden' id='support-v2-closed'>El chat ha sido cerrado. Cierra y vuelve a abrir Soporte para realizar otra consulta.</div>
-      <div hidden='hidden' id='support-v2-image-preview'><img alt='Imagen adjunta' id='support-v2-preview-img'/><button onclick='UniverseSupport.clearImage()' type='button'>Quitar</button></div>
-      <div class='support-v2-compose' id='support-v2-compose'><textarea id='support-v2-input' maxlength='1200' placeholder='Escribe tu consulta...'></textarea><div><label class='support-v2-attach' for='support-v2-file'>Adjuntar imagen</label><input accept='image/png,image/jpeg,image/webp' id='support-v2-file' onchange='UniverseSupport.pickImage(this)' type='file'/><button class='support-v2-send' onclick='UniverseSupport.send()' type='button'>Enviar</button></div></div>
-    </main>
-  </div>
-</aside>
-<!-- UNIVERSE_SUPPORT_V2_END -->
-
-
-<section id="inicio">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-layout hero-layout-single">
-    <div class="hero-content reveal">
-      <div class="hero-badge"><span></span> Plataforma Preuniversitaria N°1 - UNI</div>
-      <h1 class="hero-title">¡<span class="accent">INGRESA</span> A LA <span class="grad">UNI!</span></h1>
-      <p class="hero-sub">Entrena con temario CEPREUNI, material ordenado, simulacros cronometrados y preguntas generadas por UniverseAI con búsqueda web para acercarte al nivel real del examen.</p>
-      <ul class="hero-bullets">
-        <li>📚 Biblioteca, boletines, solucionarios y rutas por curso</li>
-        <li>🎯 Simulacros tipo UNI con registro de avance mensual</li>
-        <li>🔥 UniverseAI genera retos de alto nivel según tu tema de estudio</li>
-      </ul>
-      <div class="hero-actions">
-        <a class="btn-primary" href="/temario">Ver Temario 2026-2</a>
-        <a class="btn-ghost" href="/simulacros">Practicar con IA</a>
-      </div>
-      <div class="official-access-links">
-        <a class="official-access-card cepreuni" href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
-          <span class="official-access-logo"><img alt="Logo CEPREUNI" src="https://www.cepre.uni.edu.pe/assets/img/logo-favicon/logocepreuni.jpg"/></span>
-          <span class="official-access-copy">
-            <span class="official-access-name">CEPREUNI</span>
-            <span class="official-access-title">Web oficial de CEPREUNI</span>
-            <span class="official-access-desc">Ver comunicados, ciclos e inscripciones.</span>
-          </span>
-        </a>
-        <a class="official-access-card ceprenet" href="https://ceprenet.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
-          <span class="official-access-logo"><img alt="Logo CEPREUNI" src="https://www.cepre.uni.edu.pe/assets/img/logo-favicon/logocepreuni.jpg"/></span>
-          <span class="official-access-copy">
-            <span class="official-access-name">CEPRENET</span>
-            <span class="official-access-title">Plataforma de CEPREUNI</span>
-            <span class="official-access-desc">Para ver asistencias, faltas y tardanzas.</span>
-          </span>
-        </a>
-        <a class="official-access-card admisionuni" href="https://admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
-          <span class="official-access-logo official-access-logo-text">UNI</span>
-          <span class="official-access-copy">
-            <span class="official-access-name">Admisión UNI</span>
-            <span class="official-access-title">Dirección de Admisión UNI</span>
-            <span class="official-access-desc">Comunicados, prospecto, vacantes e inscripciones.</span>
-          </span>
-        </a>
-      </div>
-    </div>
-    </div>
-
-  <div class="socials reveal">
-    <a class="social-pill pill-wa" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" rel="noopener noreferrer" target="_blank">
-      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.845L.057 23.998l6.304-1.654C8.002 23.449 9.967 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-      Canal de WhatsApp
-    </a>
-    <a class="social-pill pill-wa" href="https://whatsapp.com/channel/0029Vb7lA2q7IUYXqEZIDH3R" rel="noopener noreferrer" target="_blank">
-      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.845L.057 23.998l6.304-1.654C8.002 23.449 9.967 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-      CicleSolus
-    </a>
-    <a class="social-pill pill-tt" href="https://www.tiktok.com/@universe_preuni" rel="noopener noreferrer" target="_blank">
-      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.83a8.2 8.2 0 004.79 1.53V6.92a4.85 4.85 0 01-1.02-.23z"/></svg>
-      @universe_preuni
-    </a>
-    <a class="social-pill pill-gd" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank">
-      <svg fill="currentColor" viewbox="0 0 87.3 78"><path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3L28.1 51H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="M43.65 25L29.35 0c-1.35.8-2.5 1.9-3.3 3.3L1.2 46.5C.4 47.9 0 49.45 0 51h28.1z" fill="#00ac47"/><path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.2l5.9 11.7z" fill="#ea4335"/><path d="M43.65 25L58 0H29.35z" fill="#00832d"/><path d="M59.2 51H87.3l-13.75-23.75-14.35 23.75z" fill="#2684fc"/><path d="M73.55 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.65 25 59.2 51h28.1c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-      Drive Universe
-    </a>
-    <a class="social-pill pill-ki" href="https://kick.com/universeoficial" rel="noopener noreferrer" target="_blank">
-      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M4 2h3.5v8.3L13 2h4.2L11 10.9 17.3 22H13L8.5 13.7V22H4z"/></svg>
-      @universeoficial
-    </a>
-    <a class="social-pill pill-lt" href="https://linktr.ee/UNIverse.Criss" rel="noopener noreferrer" target="_blank">
-      <svg fill="currentColor" viewbox="0 0 24 24"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.002.196-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.54-.124 1.06-.235 1.44a2.01 2.01 0 0 1-1.415 1.42c-1.156.316-5.752.354-6.218.356l-.149.001h-.174c-.555 0-2.635-.027-4.309-.158l-.128-.011-.147-.012c-.551-.053-1.07-.143-1.46-.291a2.01 2.01 0 0 1-1.276-1.268c-.166-.516-.25-1.168-.29-1.73l-.004-.065-.01-.135-.008-.134c-.065-.914-.073-1.77-.074-1.956v-.075c.002-.196.01-1.108.082-2.06l.008-.105.009-.104c.05-.54.124-1.06.236-1.44a2.01 2.01 0 0 1 1.415-1.42c1.156-.315 5.752-.353 6.218-.355zm-.005 1.79h-.089c-.72.003-4.923.038-5.895.31a.21.21 0 0 0-.149.148c-.074.27-.14.73-.186 1.238l-.009.104-.022.258-.008.104c-.062.857-.07 1.688-.071 1.87v.07c.002.18.01.988.07 1.824l.008.104.009.104c.046.532.112 1.01.188 1.285a.21.21 0 0 0 .148.148c.897.245 4.517.308 5.882.311l.144.001h.168c.72-.003 4.922-.038 5.895-.31a.21.21 0 0 0 .148-.149c.074-.27.14-.73.187-1.238l.009-.104.021-.258.009-.104c.061-.857.069-1.688.07-1.87v-.07c-.001-.18-.009-.988-.07-1.824l-.008-.104-.009-.104c-.046-.532-.112-1.01-.187-1.285a.21.21 0 0 0-.149-.148c-.897-.245-4.516-.308-5.88-.311zm3.274 3.498l1.77 1.022-1.77 1.022V7.287z"/></svg>
-      UNIverse.Criss
-    </a>
-  </div>
-</section>
-
-
-
-<section class="section admission-hub" id="admision-uni">
-  <div class="reveal">
-    <div class="section-label">Admisión UNI 2026-2</div>
-    <h2 class="section-title">SIMULACRO, INSCRIPCIONES<br/>Y VACANTES</h2>
-    <p class="section-sub">Accesos rápidos al simulacro, preinscripción, tarifas oficiales y cuadro completo de vacantes 2026-2.</p>
-  </div>
-  <div class="admission-hero-grid reveal">
-    <article class="admission-card">
-      <img alt="Simulacro UNI 2026-2" loading="lazy" src="https://admision.uni.edu.pe/wp-content/uploads/2026/06/Simulacro_20262-1536x864.jpeg"/>
-      <div class="admission-card-body">
-        <div><div class="admission-card-title">Simulacro UNI</div><div class="admission-card-meta">Practica con el formato de admisión 2026-2.</div></div>
-        <a class="admission-action sim" href="https://simulacro.admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Ir al simulacro</a>
-      </div>
-    </article>
-    <article class="admission-card">
-      <img alt="Admisión UNI 2026-2 preinscripción" loading="lazy" src="https://admision.uni.edu.pe/wp-content/uploads/2026/06/ADM-2026-2-PREINSCRIP-1920x1080-1.jpg"/>
-      <div class="admission-card-body">
-        <div><div class="admission-card-title">Admisión UNI</div><div class="admission-card-meta">Preinscripción y registro oficial de postulantes.</div></div>
-        <a class="admission-action" href="https://inscripciones.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Ir a inscripciones</a>
-      </div>
-    </article>
-  </div>
-  <div class="admission-info-grid reveal">
-    <article class="admission-table-card">
-      <div class="admission-table-head">
-        <div><div class="admission-table-kicker">Pagos oficiales</div><div class="admission-table-title">Tarifas</div></div>
-        <p class="admission-table-note">Pagos para rendir exámenes y trámites. El prospecto es obligatorio.</p>
-      </div>
-      <div class="uni-table-wrap">
-        <table class="uni-table">
-          <thead><tr><th>Concepto</th><th>Modalidad</th><th>Procedencia</th><th>Costo</th></tr></thead>
-          <tbody>
-            <tr><td>Prospecto</td><td>Todas</td><td>Estatal/Privada</td><td>S/. 90</td></tr>
-            <tr><td>Inscripción</td><td>Ordinario</td><td>Estatal</td><td>S/. 410</td></tr>
-            <tr><td>Inscripción</td><td>Ordinario</td><td>Privada</td><td>S/. 780</td></tr>
-            <tr><td>Inscripción</td><td>Extraord. (P. Puestos/Dep/Disc)</td><td>Estatal</td><td>S/. 410</td></tr>
-            <tr><td>Inscripción</td><td>Extraord. (P. Puestos/Dep/Disc)</td><td>Privada</td><td>S/. 780</td></tr>
-            <tr><td>Inscripción</td><td>Extraord. (Bachiller/Convenios)</td><td>Cualquiera</td><td>S/. 850</td></tr>
-            <tr><td>Inscripción</td><td>Traslado Externo</td><td>Estatal</td><td>S/. 620</td></tr>
-            <tr><td>Inscripción</td><td>Traslado Externo</td><td>Privada/Extr.</td><td>S/. 840</td></tr>
-            <tr><td>Inscripción</td><td>Titulados o Graduados</td><td>Cualquiera</td><td>S/. 680</td></tr>
-            <tr><td>Inscripción</td><td>Plan de Reparaciones (PIR)</td><td>Estatal/Priv.</td><td>(*)</td></tr>
-            <tr><td>Inscripción</td><td>Ingreso Directo CEPRE</td><td>Estatal</td><td>S/. 410</td></tr>
-            <tr><td>Inscripción</td><td>Ingreso Directo CEPRE</td><td>Privada</td><td>S/. 780</td></tr>
-            <tr><td>Semibeca</td><td>Ordinario / P. Puestos</td><td>Estatal</td><td>S/. 205</td></tr>
-            <tr><td>Semibeca</td><td>Deportistas / Discapacidad</td><td>Privada</td><td>S/. 390</td></tr>
-            <tr><td>Ex. Arquitectura</td><td>Ingreso Directo CEPRE(**)</td><td>Cualquiera</td><td>S/. 160</td></tr>
-            <tr><td>Ex. Arquitectura</td><td>Todas las demás</td><td>Cualquiera</td><td>S/. 160</td></tr>
-            <tr><td>Convalidación</td><td>Traslado Externo</td><td>Cualquiera</td><td>S/. 440</td></tr>
-            <tr><td>Convalidación</td><td>Titulado o Graduado</td><td>Cualquiera</td><td>S/. 660</td></tr>
-            <tr><td>Costo Crédito</td><td>Titulados o Graduados</td><td>Cualquiera</td><td>S/. 80</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="admission-footnotes">
-        <span>(*) Los postulantes por esta modalidad están exonerados por concepto de inscripción.</span>
-        <span>(**) Esta prueba se rendirá en fecha anterior a la Prueba de Aptitud Vocacional general.</span>
-        <span>Los postulantes por la modalidad Ingreso Directo que no alcancen vacante por esta modalidad deberán abonar el monto establecido para la Prueba de Aptitud Vocacional general; de lo contrario, no serán considerados en la modalidad Ordinario.</span>
-      </div>
-    </article>
-    <article class="admission-table-card">
-      <div class="admission-table-head">
-        <div><div class="admission-table-kicker">Cronograma de admisión</div><div class="admission-table-title">Fechas clave</div></div>
-        <p class="admission-table-note">Estas fechas también están integradas al calendario interactivo de la portada.</p>
-      </div>
-      <div class="uni-table-wrap">
-        <table class="uni-table">
-          <thead><tr><th>Actividad</th><th>Fecha</th></tr></thead>
-          <tbody>
-            <tr><td>Inscripción de postulantes excepto Ingreso Directo CEPRE-UNI</td><td>Del 30/06/2026 al 31/07/2026</td></tr>
-            <tr><td>Inscripción Ingreso Directo CEPRE-UNI</td><td>Del 30/06/2026 al 27/07/2026</td></tr>
-            <tr><td>Solicitud de semibecas</td><td>Del 30/06/2026 al 03/07/2026</td></tr>
-            <tr><td>Publicacion de resultados de semibecas</td><td>13/07/2026</td></tr>
-            <tr><td>Sorteo Comision de Postulantes</td><td>24/07/2026</td></tr>
-            <tr><td>Prueba de Aptitud Vocacional Arquitectura - Ingreso Directo</td><td>01/08/2026</td></tr>
-            <tr><td>Examen Final Ingreso Directo CEPRE-UNI</td><td>02/08/2026</td></tr>
-            <tr><td>Prueba de Aptitud Vocacional Arquitectura - Ordinario y otras modalidades</td><td>08/08/2026</td></tr>
-            <tr><td>Examen de Admisión Ordinario</td><td>10, 12 y 14/08/2026</td></tr>
-            <tr><td>Examen Traslado Externo, Titulados o Graduados y universidades no licenciadas</td><td>12/08/2026</td></tr>
-            <tr><td>Identificacion del ingresante, constancia, renuncias y postergaciones</td><td>Del 18/08/2026 al 21/08/2026</td></tr>
-            <tr><td>Envio de datos de ingresantes a DIRCE</td><td>24/08/2026</td></tr>
-            <tr><td>Envío de información de ingresantes a Facultades</td><td>25/08/2026</td></tr>
-            <tr><td>Examen medico</td><td>Del 24/08/2026 al 28/08/2026</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </article>
-    <article class="admission-table-card vacancies-card" id="vacantes-uni-2026-2">
-      <div class="admission-table-head">
-        <div><div class="admission-table-kicker">Cuadro de vacantes UNI</div><div class="admission-table-title">Vacantes 2026-2</div></div>
-        <p class="admission-table-note">Tabla completa reconstruida desde el PDF CUADRO-VACANTES-2026-2. Desliza horizontalmente para ver todas las modalidades.</p>
-      </div>
-      <div class="uni-table-wrap">
-        <table class="uni-table vacancies-table">
-          <thead><tr><th>Fac.</th><th>Codigo</th><th>Especialidad</th><th>Ex. General</th><th>CEPRE</th><th>1ros Puestos</th><th>Andres Bello</th><th>Bach. Intl</th><th>T1</th><th>Disc.</th><th>PIR</th><th>Dep. Alto Nivel</th><th>T2</th><th>T1+T2</th><th>Trasl. Ext.</th><th>Univ. no lic.</th><th>Tit. UNI / Arq.</th><th>Tit. otra Univ.</th><th>CEPRE Juliaca</th><th>Conv. Dipl.</th><th>Total CVF</th></tr></thead>
-          <tbody>
-            <tr><td>FAUA</td><td>A1</td><td>Arquitectura</td><td class="num">23</td><td class="num">16</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">45</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">9</td><td class="num">54</td><td class="num">1</td><td class="num">3</td><td class="num">Todos los inscritos</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">62</td></tr>
-            <tr><td>FAUA</td><td>A2</td><td>Urbanismo</td><td class="num">15</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">33</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">38</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">43</td></tr>
-            <tr><td>FC</td><td>N1</td><td>Fisica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
-            <tr><td>FC</td><td>N2</td><td>Matematica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
-            <tr><td>FC</td><td>N3</td><td>Quimica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
-            <tr><td>FC</td><td>N5</td><td>Ingenieria Fisica</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
-            <tr><td>FC</td><td>N6</td><td>Ciencia de la Computacion</td><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">20</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">23</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">30</td></tr>
-            <tr><td>FIA</td><td>S1</td><td>Ingenieria Sanitaria</td><td class="num">14</td><td class="num">9</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">27</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">32</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">38</td></tr>
-            <tr><td>FIA</td><td>S2</td><td>Ing. de higiene y seguridad industrial</td><td class="num">14</td><td class="num">9</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">27</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">32</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">38</td></tr>
-            <tr><td>FIA</td><td>S3</td><td>Ingenieria Ambiental</td><td class="num">14</td><td class="num">9</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">27</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">32</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">38</td></tr>
-            <tr><td>FIC</td><td>C1</td><td>Ingenieria Civil</td><td class="num">47</td><td class="num">32</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">94</td><td class="num">6</td><td class="num">5</td><td class="num">5</td><td class="num">16</td><td class="num">110</td><td class="num">0</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">6</td><td class="num">1</td><td class="num">120</td></tr>
-            <tr><td>FIEECS</td><td>E1</td><td>Ingenieria Economica</td><td class="num">21</td><td class="num">14</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">41</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">47</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">54</td></tr>
-            <tr><td>FIEECS</td><td>E2</td><td>Ingenieria Estadistica</td><td class="num">24</td><td class="num">14</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">44</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">50</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">57</td></tr>
-            <tr><td>FIEE</td><td>L1</td><td>Ingenieria Electrica</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
-            <tr><td>FIEE</td><td>L2</td><td>Ingenieria Electronica</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
-            <tr><td>FIEE</td><td>L3</td><td>Ing. de Telecomunicaciones</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
-            <tr><td>FIEE</td><td>L4</td><td>Ing. de ciberseguridad</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="num">0</td><td class="num">44</td></tr>
-            <tr><td>FIEE</td><td>L5</td><td>Ing. Biomedica</td><td class="num">18</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">36</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">42</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="num">0</td><td class="num">44</td></tr>
-            <tr><td>FIGMM</td><td>G1</td><td>Ing. Geologica</td><td class="num">20</td><td class="num">14</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">40</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">46</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">53</td></tr>
-            <tr><td>FIGMM</td><td>G2</td><td>Ing. Metalurgica</td><td class="num">17</td><td class="num">11</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">34</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">40</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">46</td></tr>
-            <tr><td>FIGMM</td><td>G3</td><td>Ing. de Minas</td><td class="num">17</td><td class="num">9</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">31</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">34</td><td class="num">1</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">42</td></tr>
-            <tr><td>FIIS</td><td>I1</td><td>Ingenieria Industrial</td><td class="num">31</td><td class="num">16</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">52</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">4</td><td class="num">56</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">62</td></tr>
-            <tr><td>FIIS</td><td>I2</td><td>Ing. de sistemas</td><td class="num">31</td><td class="num">16</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">52</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">4</td><td class="num">56</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">62</td></tr>
-            <tr><td>FIIS</td><td>I3</td><td>Ing. de software</td><td class="num">17</td><td class="num">7</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">26</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">27</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">28</td></tr>
-            <tr><td>FIIS</td><td>I4</td><td>Ing. de Inteligencia artificial</td><td class="num">17</td><td class="num">10</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">29</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">29</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">29</td></tr>
-            <tr><td>FIM</td><td>M3</td><td>Ing. Mecanica</td><td class="num">24</td><td class="num">12</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">42</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">5</td><td class="num">47</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">53</td></tr>
-            <tr><td>FIM</td><td>M4</td><td>Ing. Mecanica - electrica</td><td class="num">24</td><td class="num">12</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">42</td><td class="num">2</td><td class="num">5</td><td class="num">1</td><td class="num">8</td><td class="num">50</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
-            <tr><td>FIM</td><td>M5</td><td>Ing. Naval</td><td class="num">12</td><td class="num">6</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">22</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">5</td><td class="num">27</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">33</td></tr>
-            <tr><td>FIM</td><td>M6</td><td>Ing. Mecatronica</td><td class="num">24</td><td class="num">12</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">42</td><td class="num">2</td><td class="num">5</td><td class="num">1</td><td class="num">8</td><td class="num">50</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">58</td></tr>
-            <tr><td>FIM</td><td>M7</td><td>Ing. Aeroespacial</td><td class="num">17</td><td class="num">10</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">30</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">31</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">31</td></tr>
-            <tr><td>FIP</td><td>P3</td><td>Ing. de petroleo y gas natural</td><td class="num">8</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">18</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">21</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">22</td></tr>
-            <tr><td>FIP</td><td>P2</td><td>Ing. Petroquimica</td><td class="num">8</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">18</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">21</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">22</td></tr>
-            <tr><td>FIQT</td><td>Q1</td><td>Ing. Quimica</td><td class="num">43</td><td class="num">30</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">85</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">15</td><td class="num">100</td><td class="num">1</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">1</td><td class="num">117</td></tr>
-            <tr><td>FIQT</td><td>Q2</td><td>Ing. Textil</td><td class="num">19</td><td class="num">13</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">38</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">6</td><td class="num">44</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">52</td></tr>
-            <tr class="total-row"><td></td><td>TOTAL</td><td>Total general</td><td class="num">641</td><td class="num">402</td><td class="num">72</td><td class="num">51</td><td class="num">53</td><td class="num">1219</td><td class="num">63</td><td class="num">64</td><td class="num">53</td><td class="num">180</td><td class="num">1399</td><td class="num">40</td><td class="num">44</td><td class="num">40</td><td class="num">36</td><td class="num">51</td><td class="num">20</td><td class="num">1630</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="admission-footnotes">
-        <span>T1 corresponde a vacantes por especialidades y T2 a vacantes reservadas por ley. CVF es el total final por especialidad.</span>
-      </div>
-    </article>
-  </div>
-</section>
-
-
-<section id="cronograma-universe" class="universe-calendar-section"><div class="universe-calendar-intro reveal"><div class="section-label">Agenda 2026-2</div><h2 class="section-title">CALENDARIO UNI Y CEPREUNI</h2><p class="section-sub">Revisa semanas, evaluaciones, pagos, inscripciones y actividades oficiales. Pasa el cursor o enfoca una fecha para ver todos sus eventos.</p></div><div class="universe-calendar-stage"><aside aria-label="Cronograma UNI y CEPREUNI 2026-2" class="hero-calendar-panel payment-card reveal" id="payment-calendar">
-      <div class="tool-top">
-        <div><div class="tool-kicker">Cronograma CEPREUNI</div><div class="tool-title">Calendario 2026-2</div><p class="tool-copy">Navega mes por mes y revisa semanas, PCs, exámenes, pagos, clases virtuales y recuperaciones.</p></div>
-        <div class="tool-mark"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3V2Zm13 8H4v10h16V10ZM7 13h5v5H7v-5Z"/></svg></div>
-      </div>
-      <div class="payment-shell">
-        <div>
-          <div class="payment-calendar-head">
-            <div class="payment-month-title" id="payment-month-title">2026</div>
-            <div class="payment-nav">
-              <button aria-label="Mes anterior" id="payment-prev" onclick="movePaymentMonth(-1)" type="button">&lt;</button>
-              <button aria-label="Mes siguiente" id="payment-next" onclick="movePaymentMonth(1)" type="button">&gt;</button>
-            </div>
-          </div>
-          <div class="payment-calendar-grid" id="payment-calendar-grid"></div>
-        </div>
-        <div>
-          <div class="payment-list" id="payment-event-list"></div>
-          <div class="payment-note">Incluye cronograma académico CEPREUNI 2026-2 y cuotas. Si se pagan las 5 cuotas al contado, se aplica 10% de descuento: S/. 2,295.00 en vez de S/. 2,550.00. Para rendir pruebas o exámenes, el alumno debe estar al día en sus pagos. Sábado 06 de junio: clase virtual, no presencial.</div>
-        </div>
-      </div>
-    </aside>
-  </div></section>
-<div class="stats-bar">
-  <div class="stat-item reveal"><div class="stat-num">5K+</div><div class="stat-label">Estudiantes Activos</div></div>
-  <div class="stat-item reveal"><div class="stat-num">2500+</div><div class="stat-label">Exámenes Resueltos</div></div>
-  <div class="stat-item reveal"><div class="stat-num">20</div><div class="stat-label">Cursos Completos</div></div>
-  <div class="stat-item reveal"><div class="stat-num">91%</div><div class="stat-label">Satisfacción</div></div>
-</div>
-
-
-<section class="section" id="plataforma">
-  <div class="reveal">
-    <div class="section-label">La plataforma</div>
-    <h2 class="section-title">LA MEJOR PLATAFORMA<br/>PREUNIVERSITARIA</h2>
-    <p class="section-sub">La democratización del nivel académico más alto del Perú. Accede a una preparación de élite diseñada estratégicamente para vencer el examen de admisión de la UNI.</p>
-  </div>
-  <div class="features-grid reveal">
-    <div class="feature-card"><div class="feature-icon">📖</div><div class="feature-name">Contenido Nivel UNI</div><div class="feature-desc">Material creado y validado por estudiantes y egresados de la UNI. Todo con el rigor que la competencia exige.</div></div>
-    <div class="feature-card"><div class="feature-icon">📝</div><div class="feature-name">Exámenes Resueltos</div><div class="feature-desc">Más de 2500 exámenes históricos de la UNI y CEPREUNI con soluciones detalladas paso a paso.</div></div>
-    <div class="feature-card"><div class="feature-icon">⏱️</div><div class="feature-name">Simulacros Cronometrados</div><div class="feature-desc">Mide tu rendimiento en tiempo real con simulacros que replican las condiciones exactas del examen real.</div></div>
-    <div class="feature-card"><div class="feature-icon">🧮</div><div class="feature-name">Matemática &amp; Ciencias</div><div class="feature-desc">Aritmética, Álgebra, Geometría, Trigonometría, Cálculo, Física y Química al nivel más exigente.</div></div>
-    <div class="feature-card"><div class="feature-icon">🌐</div><div class="feature-name">Sin horarios fijos</div><div class="feature-desc">Estudia cuando puedas. Sin barreras económicas ni horarios impuestos. Solo tú y tu meta.</div></div>
-    <div class="feature-card"><div class="feature-icon">🤝</div><div class="feature-name">Comunidad activa</div><div class="feature-desc">Más de 5,000 postulantes. Siempre hay alguien dispuesto a explicarte un ejercicio a las 2 a.m.</div></div>
-  </div>
-</section>
-
-
-<section class="section tools-section" id="herramientas">
-  <div class="tools-header reveal">
-    <div>
-      <div class="section-label">Centro de control · CEPREUNI</div>
-      <h2 class="section-title">SEGUIMIENTO Y RECURSOS<br/>DE ALTO RENDIMIENTO</h2>
-      <p class="section-sub">Fechas clave, planificación semanal, videos y avance de la comunidad en un solo espacio.</p>
-    </div>
-    <button class="tool-cta" onclick="openMiniTournament()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 3h10v3h3v4a5 5 0 0 1-5 5h-.3A5.7 5.7 0 0 1 13 16.6V19h3v2H8v-2h3v-2.4A5.7 5.7 0 0 1 9.3 15H9a5 5 0 0 1-5-5V6h3V3Zm10 6.6V5H7v4.6c0 2.75 1.88 5 5 5s5-2.25 5-5Z"/></svg> Bajar pepita</button>
-  </div>
-
-  <div class="tools-grid reveal">
-    <article class="tool-card wide exam-countdown-card" id="exam-countdowns">
-      <div class="tool-top">
-        <div><div class="tool-kicker">Centro de seguimiento</div><div class="tool-title">Fechas clave 2026-2</div><p class="tool-copy">Reloj sincronizado con hora Perú para la 6.ª prueba calificada y el examen de admisión UNI.</p></div>
-        <div class="tool-mark"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 5v5.2l3.5 2.1-1 1.7-4.5-2.7V7h2Z"/></svg></div>
-      </div>
-      <div class="countdown-grid">
-        <div class="countdown-item" data-countdown-key="parcial" data-countdown-target="2026-07-12T09:00:00-05:00">
-          <div class="countdown-label"><strong>6.ª prueba calificada CEPREUNI</strong><span class="countdown-pill">Dom. 12 jul - 9:00 AM</span></div>
-          <div class="countdown-time" id="countdown-parcial">
-            <div class="countdown-box"><div class="countdown-number" data-unit="days">--</div><div class="countdown-unit">Dias</div></div>
-            <div class="countdown-box"><div class="countdown-number" data-unit="hours">--</div><div class="countdown-unit">Horas</div></div>
-            <div class="countdown-box"><div class="countdown-number" data-unit="minutes">--</div><div class="countdown-unit">Min</div></div>
-            <div class="countdown-box"><div class="countdown-number" data-unit="seconds">--</div><div class="countdown-unit">Seg</div></div>
-          </div>
-        </div>
-        <div class="countdown-item" data-countdown-key="admision" data-countdown-target="2026-08-10T09:00:00-05:00">
-          <div class="countdown-label"><strong>Examen de Admisión UNI 2026-2</strong><span class="countdown-pill">Lun. 10 ago - 9:00 AM</span></div>
-          <div class="countdown-time" id="countdown-admision">
-            <div class="countdown-box"><div class="countdown-number" data-unit="days">--</div><div class="countdown-unit">Dias</div></div>
-            <div class="countdown-box"><div class="countdown-number" data-unit="hours">--</div><div class="countdown-unit">Horas</div></div>
-            <div class="countdown-box"><div class="countdown-number" data-unit="minutes">--</div><div class="countdown-unit">Min</div></div>
-            <div class="countdown-box"><div class="countdown-number" data-unit="seconds">--</div><div class="countdown-unit">Seg</div></div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="tool-card wide" id="study-calendar">
-      <div class="tool-top">
-        <div><div class="tool-kicker">Cronograma</div><div class="tool-title">Semana de estudio</div><p class="tool-copy">Bloques compactos por día con avance persistente.</p></div>
-        <div class="tool-mark"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3V2Zm13 8H4v10h16V10Z"/></svg></div>
-      </div>
-      <form class="study-form" onsubmit="addStudyBlock(event)">
-        <select class="tool-select" id="study-day"><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option></select>
-        <select class="tool-select" id="study-time"><option>6am-8am</option><option>8am-10am</option><option>2pm-4pm</option><option>4pm-6pm</option><option>6pm-8pm</option><option>8pm-10pm</option></select>
-        <select class="tool-select" id="study-subject" onchange="handleStudySubjectChange()"><option>Aritmética</option><option>Álgebra</option><option>Geometría</option><option>Trigonometría</option><option>Cálculo</option><option>Física</option><option>Química</option><option>Razonamiento Matemático</option><option>Razonamiento Verbal</option><option>Literatura</option><option>Historia</option><option>Geografía</option><option>Economía</option><option>Filosofía</option><option>Lógica</option><option>Inglés</option><option>Otro curso</option></select>
-        <select class="tool-select" id="study-topic"></select>
-        <input class="tool-input study-custom-subject" id="study-custom-subject" placeholder="Escribir curso" style="display:none;"/>
-        <div class="study-actions">
-          <button class="tool-cta" type="submit">Agregar</button>
-          <button class="tool-cta secondary" onclick="clearStudyPlan()" type="button">Limpiar</button>
-        </div>
-      </form>
-      <div class="calendar-progress"><span id="study-progress"></span></div>
-      <div class="tool-copy" id="study-progress-label">0% completado</div>
-      <div class="calendar-grid" id="study-calendar-grid"></div>
-    </article>
-
-    <article aria-label="Playlists CEPREUNI en YouTube" class="tool-card wide hero-video-panel universe-video-card" id="video-playlists">
-      <div class="hero-video-kicker"><span>Videos · CEPREUNI 26-2</span><a href="https://www.youtube.com/@universepre_official/playlists" rel="noopener noreferrer" target="_blank">Ver playlists</a></div>
-      <div class="hero-video-stack">
-        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFfkRErmzmBMMGvbObeRYNV&amp;si=XO2EfcUeUaCGfxT2" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/uE9inSxqjhY/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">🗺️ GEOGRAFÍA CEPREUNI 26-2 by Criss</div><div class="yt-meta">Playlist completa para reforzar Geografía.</div><span class="yt-chip">Geografía</span></div>
-        </a>
-        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsHVu6J25FosIoyIQHgYHvEo&amp;si=T2lvd73g-jw9kjw3" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/Os5t-340smU/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">🧠 PSICOLOGÍA CEPREUNI 26-2 by Criss</div><div class="yt-meta">Clases ordenadas para Psicología CEPREUNI.</div><span class="yt-chip">Psicología</span></div>
-        </a>
-        <a class="yt-preview" href="https://www.youtube.com/playlist?list=PLZZWh41GUPsGvxutb8VAIihGO91pABB93" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/R2U6QAt9Rjw/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">𝗤𝘂𝗶𝗺𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Química CEPRELIBRE.</div><span class="yt-chip">Química</span></div>
-        </a>
-        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFxVK1oMotXsPP3F4Vp0LNU&amp;si=la43T1OQVMs8k5gf" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/GO7OJ0GWdJM/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">𝗙𝗶𝘀𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Física CEPRELIBRE.</div><span class="yt-chip">Física</span></div>
-        </a>
-        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsE8cFjywD9b1Rr0wk8CroGI&amp;si=bbPTMcCjWztFW5xw" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/YfLjwmT3jqU/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">𝗧𝗿𝗶𝗴𝗼𝗻𝗼𝗺𝗲𝘁𝗿𝗶𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Trigonometría CEPRELIBRE.</div><span class="yt-chip">Trigonometría</span></div>
-        </a>
-        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsGsNNB22cBeVnpQvgQubLLy&amp;si=jQWXL8Z_0XGENRe7" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/qlZL22MJRiY/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">𝗚𝗲𝗼𝗺𝗲𝘁𝗿𝗶𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Geometría CEPRELIBRE.</div><span class="yt-chip">Geometría</span></div>
-        </a>
-        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsHQ70zXO4BdFMTEVSbwFLRD&amp;si=dTvIvmSR9DVFd_8w" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/5xSLdFWOkIM/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">𝗔𝗿𝗶𝘁𝗺𝗲𝘁𝗶𝗰𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Aritmética CEPRELIBRE.</div><span class="yt-chip">Aritmética</span></div>
-        </a>
-        <a class="yt-preview" href="https://youtube.com/playlist?list=PLZZWh41GUPsFdJ5C-RnMtzEtgWcemXByQ&amp;si=TlOqms9UII7iG4wB" rel="noopener noreferrer" target="_blank">
-          <div class="yt-thumb" style="--yt-thumb:url(&quot;https://i.ytimg.com/vi/HzzLprntp2g/hqdefault.jpg&quot;)"></div>
-          <div class="yt-copy"><div class="yt-title">𝗔𝗹𝗴𝗲𝗯𝗿𝗮 𝗖𝗘𝗣𝗥𝗘𝗟𝗜𝗕𝗥𝗘</div><div class="yt-meta">Playlist de Álgebra CEPRELIBRE.</div><span class="yt-chip">Álgebra</span></div>
-        </a>
-      </div>
-    </article>
-
-    <article class="tool-card wide" id="gamification-panel">
-      <div class="tool-top">
-        <div><div class="tool-kicker">Gamificación</div><div class="tool-title">Puntos, racha y ranking</div><p class="tool-copy">Puntos y racha se calculan por mes y se reinician automáticamente al comenzar el siguiente.</p></div>
-        <button class="tool-cta" onclick="openMiniTournament()"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Zm1 5v4h3l-5 6v-4H8l5-6Z"/></svg> Mini torneo</button>
-      </div>
-      <div class="gamification-grid">
-        <div class="gam-stats">
-          <div class="gam-stat"><div class="gam-number" id="gam-points">0</div><div class="gam-label">Puntos</div></div>
-          <div class="gam-stat"><div class="gam-number" id="gam-streak">1</div><div class="gam-label">Racha</div></div>
-          <div class="gam-stat"><div class="gam-number" id="gam-completion">0%</div><div class="gam-label">Agenda</div></div>
-        </div>
-        <div class="ranking-live-panel">
-          <div class="ranking-live-summary" id="ranking-live-summary">Cargando cuentas Universe to Study...</div>
-          <div aria-label="Ranking en vivo de cuentas Universe to Study" class="ranking-list" id="ranking-list" tabindex="0"></div>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-
-<section class="section" id="mapa">
-  <div class="reveal">
-    <div class="section-label">Dónde estamos</div>
-    <h2 class="section-title">UNIVERSIDAD<br/>NACIONAL DE INGENIERÍA</h2>
-    <p class="section-sub">Av. Túpac Amaru 210, Rímac, Lima - Sede principal de la UNI y CEPREUNI.</p>
-  </div>
-  <div class="map-container reveal">
-    <iframe allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.5977!2d-77.0512!3d-12.0192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662bf%3A0x2842ac5e2e5e57a4!2sUniversidad%20Nacional%20de%20Ingenier%C3%ADa!5e0!3m2!1ses-419!2spe!4v1716000000000!5m2!1ses-419!2spe">
-    </iframe>
-    <div class="map-overlay-badge">
-      <div class="mob-title">🏛️ Universidad Nacional de Ingeniería</div>
-      <div class="mob-sub">Av. Túpac Amaru 210, Rímac · Lima, Perú</div>
+<section class="universe-exams-page" id="examenes-cepreuni-page">
+  <div class="universe-exams-shell">
+    <div class="section-label">Archivo académico</div>
+    <h1 class="section-title">EXÁMENES CEPREUNI</h1>
+    <p class="section-sub">Esta sección está preparada para ordenar los enlaces de Google Drive por ciclo, evaluación y sede. Los archivos se incorporarán aquí cuando proporciones los enlaces.</p>
+    <div class="universe-exams-grid">
+      <article class="universe-exam-placeholder"><strong>Prácticas calificadas</strong><span>PC1 a PC7, separadas por ciclo y sede.</span></article>
+      <article class="universe-exam-placeholder"><strong>Exámenes parciales</strong><span>Primer y segundo examen parcial con solucionarios disponibles.</span></article>
+      <article class="universe-exam-placeholder"><strong>Exámenes finales</strong><span>Evaluaciones finales e ingreso directo CEPREUNI.</span></article>
+      <article class="universe-exam-placeholder"><strong>Solucionarios</strong><span>Documentos y videos organizados junto a cada evaluación.</span></article>
     </div>
   </div>
 </section>
 
-
-<section class="section" id="testimonios">
-  <div class="reveal">
-    <div class="section-label">Lo que dicen</div>
-    <h2 class="section-title">TESTIMONIOS<br/>REALES</h2>
-  </div>
-  <div class="testi-grid reveal">
-    <div class="testi-card">
-      <p class="testi-text">Logré mi vacante sin gastar un sol en mensualidades. Al principio no creía que un recurso gratuito tuviera este nivel. Los exámenes resueltos tienen trucos que ni en las academias premium te enseñan. <strong>Hoy soy Cachimbo de Ingeniería Civil y gran parte de mi base en Física y Química la saqué de aquí.</strong> ¡Gracias por democratizar la educación!</p>
-      <div class="testi-author">Álvaro S.</div>
-      <div class="testi-role">Estudiante de Ing. Civil - UNI</div>
-    </div>
-    <div class="testi-card">
-      <p class="testi-text"><strong>Nivel UNI y San Marcos garantizado</strong>, nada de preguntas fáciles. Lo que más me gusta es que no te pasean. Los simuladores tienen el rigor real del examen de admisión. Ya somos más de 5,000 en el grupo y siempre hay alguien dispuesto a explicarte un ejercicio de Geometría o Cálculo a las 2 a.m. Es una comunidad increíble.</p>
-      <div class="testi-author">Luhana B.</div>
-      <div class="testi-role">Postulante de UNMSM</div>
-    </div>
-    <div class="testi-card">
-      <p class="testi-text">Como trabajo y estudio a la vez, no puedo seguir el ritmo de una academia con horarios fijos. Esta plataforma me permite medir mi progreso con las prácticas cronometradas y ver los videos de teoría cuando tengo tiempo. <strong>Es la herramienta definitiva para el autodidacta.</strong></p>
-      <div class="testi-author">Joaquín Quispe L.</div>
-      <div class="testi-role">Postulante de UNI</div>
-    </div>
-  </div>
-</section>
-
-
-
+</div></div>
 <footer>
   <div class="footer-top">
     <div>
@@ -992,6 +765,7 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
         <li><a href="/ranking">Ranking de Promedios</a></li>
         <li><a href="/calculadora">Calculadoras y Carreras</a></li>
         <li><a href="/temario">Temario UNI y CEPREUNI</a></li>
+        <li><a href="/aprender">Aprende CEPREUNI</a></li>
         <li><a href="/biblioteca">Biblioteca Universe to Study</a></li>
         <li><a href="/simulacros">Simulacros Tipo UNI</a></li>
         <li><a href="/examenes">Exámenes CEPREUNI</a></li>
@@ -1024,6 +798,146 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
   </div>
 </footer>
             
+</div>
+
+<script>//<![CDATA[
+(function(){
+  function setupUniverseCursor(){
+    if(!document.body || !window.matchMedia || window.matchMedia('(pointer: coarse)').matches) return;
+    if(window.__universeCursorReady) return;
+    window.__universeCursorReady=true;
+    var obsolete=document.getElementById('universe-code-cursor');
+    if(obsolete) obsolete.remove();
+    document.documentElement.classList.remove('universe-custom-cursor');
+    document.documentElement.classList.add('universe-arrow-cursor');
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setupUniverseCursor,{once:true});
+  else setupUniverseCursor();
+})();
+//]]></script>
+
+<script>//<![CDATA[
+(function(){
+  if(window.__universeDirectLinksReady) return;
+  window.__universeDirectLinksReady=true;
+  function navigateUniverseLink(event){
+    if(event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var targetNode=event.target;
+    var link=targetNode && targetNode.closest ? targetNode.closest('a[href]') : null;
+    if(!link || link.hasAttribute('download')) return;
+    var raw=(link.getAttribute('href')||'').trim();
+    if(!raw || raw.charAt(0)==='#' || raw.indexOf('javascript:')===0) return;
+    var target;
+    try { target=new URL(link.href,window.location.href); } catch(error) { return; }
+    if(target.protocol!=='http:' && target.protocol!=='https:') return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    var host=target.hostname.toLowerCase();
+    var isUniverse=host===window.location.hostname.toLowerCase() || host==='universetostudy.com';
+    if(isUniverse || link.target!=='_blank'){
+      window.location.assign(target.href);
+      return;
+    }
+    var popup=window.open(target.href,'_blank');
+    if(popup){ try { popup.opener=null; } catch(error) {} }
+    else window.location.assign(target.href);
+  }
+  window.bindUniverseDirectNavigation=function(){ return true; };
+  document.addEventListener('click',navigateUniverseLink,true);
+})();
+//]]></script>
+
+<!-- UNIVERSE_STANDALONE_SUPPORT_START -->
+<script id="universe-support-v2-standalone">
+(function(){
+  var SUPPORT_CSS="#support-v2-fab{position:fixed;right:22px;bottom:70px;z-index:2147482500;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:13px 17px;background:linear-gradient(135deg,#075dcc,#1694ed);color:#fff;box-shadow:0 14px 38px rgba(7,93,204,.38);font:900 13px/1 Inter,system-ui,sans-serif;cursor:pointer}\n#support-v2-fab svg{width:23px;height:23px;fill:currentColor}#support-v2-fab i{width:9px;height:9px;border-radius:50%;background:#94a3b8;box-shadow:0 0 0 3px rgba(255,255,255,.2)}#support-v2-fab i.online{background:#35d07f}\n#support-v2-hint{position:fixed;right:22px;bottom:130px;z-index:2147482490;max-width:220px;padding:11px 14px;border:1px solid #cfe1f3;border-radius:14px;background:#fff;color:#173a5e;box-shadow:0 12px 30px rgba(20,68,116,.18);font:800 13px/1.35 Inter,system-ui,sans-serif;opacity:0;transform:translateY(8px);pointer-events:none;transition:.25s}#support-v2-hint.show{opacity:1;transform:none}\n#support-v2-overlay{position:fixed;inset:0;z-index:2147482501;background:rgba(5,17,31,.45);opacity:0;visibility:hidden;transition:.25s}#support-v2-overlay.open{opacity:1;visibility:visible}\n#support-v2-panel{position:fixed;right:18px;bottom:18px;z-index:2147482502;width:min(92vw,760px);height:min(84vh,720px);display:flex;flex-direction:column;border:1px solid #cfe0f1;border-radius:24px;background:#fff;color:#102a43;box-shadow:0 28px 80px rgba(4,31,60,.35);overflow:hidden;opacity:0;visibility:hidden;transform:translateY(22px) scale(.98);transition:.25s;font-family:Inter,system-ui,sans-serif}#support-v2-panel.open{opacity:1;visibility:visible;transform:none}\nbody.support-v2-active #universe-game-button,body.support-v2-active #peru-clock,body.support-v2-active #current-news-button{z-index:2147482400!important;pointer-events:none!important;opacity:.18!important;filter:grayscale(1)!important}\n.support-v2-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;background:linear-gradient(135deg,#075dcc,#1189e5);color:#fff}.support-v2-head div{display:flex;flex-direction:column;gap:3px}.support-v2-head strong{font-size:16px}.support-v2-head span{font-size:11px;opacity:.85}.support-v2-head button{width:32px;height:32px;border:1px solid rgba(255,255,255,.28);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}\n.support-v2-admin-layout{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:0;flex:1}.support-v2-admin-layout.visitor{grid-template-columns:1fr}#support-v2-inbox{min-width:0;border-right:1px solid #dce7f2;background:#f5f9fd;overflow:auto}.support-v2-inbox-title{padding:13px 14px;color:#506b84;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.support-v2-thread{display:block;width:100%;border:0;border-top:1px solid #e0eaf4;background:transparent;padding:12px 14px;text-align:left;cursor:pointer}.support-v2-thread.active{background:#e6f2ff}.support-v2-thread strong,.support-v2-thread span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.support-v2-thread strong{font-size:12px;color:#173a5e}.support-v2-thread span{margin-top:4px;color:#71859a;font-size:10px}.support-v2-thread b{float:right;width:8px;height:8px;border-radius:50%;background:#0b79e5}\n.support-v2-conversation{display:flex;min-width:0;min-height:0;flex-direction:column}.support-v2-thread-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 15px;border-bottom:1px solid #e0eaf4}.support-v2-thread-head div{min-width:0}.support-v2-thread-head strong,.support-v2-thread-head span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.support-v2-thread-head strong{font-size:13px}.support-v2-thread-head span{margin-top:2px;color:#6d8297;font-size:10px}#support-v2-solved{border:0;border-radius:999px;padding:8px 11px;background:#dcfce7;color:#167344;font-size:10px;font-weight:900;cursor:pointer}\n.support-v2-name-row{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #e5edf5;background:#fbfdff}.support-v2-name-row span{color:#5f758b;font-size:10px;font-weight:900;text-transform:uppercase}.support-v2-name-row input{flex:1;border:1px solid #d3e1ef;border-radius:10px;padding:8px 10px;font:inherit;outline:none}\n#support-v2-messages{flex:1;min-height:0;overflow:auto;padding:15px;display:flex;flex-direction:column;gap:10px;background:#f7fafc}.support-v2-msg{max-width:82%;align-self:flex-start}.support-v2-msg.mine{align-self:flex-end}.support-v2-bubble{padding:10px 12px;border:1px solid #d8e4f0;border-radius:15px 15px 15px 4px;background:#fff;color:#243b53;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.support-v2-msg.mine .support-v2-bubble{border-color:#1678d2;border-radius:15px 15px 4px 15px;background:#0b73cf;color:#fff}.support-v2-msg.bot .support-v2-bubble{border-color:#b9dcfa;background:#eaf5ff}.support-v2-meta{margin:3px 4px 0;color:#8293a4;font-size:9px}.support-v2-bubble a{color:#075dcc!important;text-decoration:underline!important}.support-v2-msg.mine .support-v2-bubble a{color:#fff!important}.support-v2-bubble img{display:block;max-width:100%;max-height:280px;margin-top:7px;border-radius:10px}\n#support-v2-closed{margin:10px 14px;padding:11px;border:1px solid #f2cd83;border-radius:12px;background:#fff7df;color:#70520e;font-size:11px;text-align:center}.support-v2-compose{padding:11px 13px;border-top:1px solid #dce7f2;background:#fff}.support-v2-compose textarea{width:100%;height:66px;resize:none;border:1px solid #ccddec;border-radius:12px;padding:10px 12px;font:12px/1.4 Inter,system-ui,sans-serif;outline:none}.support-v2-compose>div{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}.support-v2-attach,.support-v2-send{border:0;border-radius:999px;padding:9px 12px;font-size:10px;font-weight:900;cursor:pointer}.support-v2-attach{background:#eaf4ff;color:#075dcc}#support-v2-file{display:none}.support-v2-send{background:#075dcc;color:#fff}#support-v2-image-preview{display:flex;align-items:center;gap:9px;padding:8px 13px;border-top:1px solid #e1eaf3}#support-v2-image-preview[hidden],#support-v2-closed[hidden],#support-v2-inbox[hidden],#support-v2-solved[hidden],#support-v2-compose[hidden],.support-v2-name-row[hidden]{display:none!important}#support-v2-image-preview img{width:54px;height:44px;object-fit:cover;border-radius:8px}#support-v2-image-preview button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer}\n@media(max-width:900px){html[data-universe-page='home'] .hero-bullets,html[data-universe-page='home'] .official-access-links,html[data-universe-page='home'] .admission-info-grid{grid-template-columns:1fr}html[data-universe-page='home'] .vacancies-card{grid-column:auto}html[data-universe-page='home'] #herramientas .tools-grid{grid-template-columns:1fr!important}html[data-universe-page='home'] #herramientas :is(#exam-countdowns,#study-calendar,#video-playlists,#gamification-panel){grid-column:1!important}html[data-universe-page='home'] .countdown-grid{grid-template-columns:1fr}.support-v2-admin-layout{grid-template-columns:190px minmax(0,1fr)}}\n@media(max-width:620px){#support-v2-fab{right:82px;bottom:62px;padding:12px}#support-v2-fab span{display:none}#support-v2-hint{right:14px;bottom:120px}#support-v2-panel{inset:8px;width:auto;height:auto;border-radius:18px}.support-v2-admin-layout{grid-template-columns:1fr}.support-v2-admin-layout.admin #support-v2-inbox{max-height:150px;border-right:0;border-bottom:1px solid #dce7f2}.support-v2-msg{max-width:92%}}";
+  var SUPPORT_MARKUP="<div id='support-v2-overlay' onclick='UniverseSupport.close()'></div>\n<div id='support-v2-hint'>¿Problemas? Te ayudamos</div>\n<button aria-label='Abrir soporte privado' id='support-v2-fab' onclick='UniverseSupport.open()' title='Soporte' type='button'>\n  <svg aria-hidden='true' viewBox='0 0 24 24'><path d='M12 2a9 9 0 0 0-9 9v3a3 3 0 0 0 3 3h1v-7H5.1A7 7 0 0 1 19 11v6h-5v2h3a4 4 0 0 0 4-4v-4a9 9 0 0 0-9-9ZM5 12h2v3H6a1 1 0 0 1-1-1v-2Zm12 0h2v3h-2v-3Z'/></svg>\n  <span>Soporte</span><i id='support-v2-fab-dot'></i>\n</button>\n<aside aria-hidden='true' id='support-v2-panel'>\n  <header class='support-v2-head'><div><strong>Soporte Universe to Study</strong><span id='support-v2-presence'>Comprobando conexión...</span></div><button aria-label='Cerrar soporte' onclick='UniverseSupport.close()' type='button'>x</button></header>\n  <div class='support-v2-admin-layout'>\n    <aside hidden='hidden' id='support-v2-inbox'><div class='support-v2-inbox-title'>Conversaciones</div><div id='support-v2-threads'></div></aside>\n    <main class='support-v2-conversation'>\n      <div class='support-v2-thread-head'><div><strong id='support-v2-thread-name'>Tu consulta</strong><span id='support-v2-thread-status'>Chat privado</span></div><button hidden='hidden' id='support-v2-solved' onclick='UniverseSupport.solve()' type='button'>Solucionado</button></div>\n      <label class='support-v2-name-row' id='support-v2-name-row'><span>Tu nombre</span><input id='support-v2-name' maxlength='50' placeholder='¿Cómo te llamas?' type='text'/></label>\n      <div aria-live='polite' id='support-v2-messages'></div>\n      <div hidden='hidden' id='support-v2-closed'>El chat ha sido cerrado. Cierra y vuelve a abrir Soporte para realizar otra consulta.</div>\n      <div hidden='hidden' id='support-v2-image-preview'><img alt='Imagen adjunta' id='support-v2-preview-img'/><button onclick='UniverseSupport.clearImage()' type='button'>Quitar</button></div>\n      <div class='support-v2-compose' id='support-v2-compose'><textarea id='support-v2-input' maxlength='1200' placeholder='Escribe tu consulta...'></textarea><div><label class='support-v2-attach' for='support-v2-file'>Adjuntar imagen</label><input accept='image/png,image/jpeg,image/webp' id='support-v2-file' onchange='UniverseSupport.pickImage(this)' type='file'/><button class='support-v2-send' onclick='UniverseSupport.send()' type='button'>Enviar</button></div></div>\n    </main>\n  </div>\n</aside>";
+  function startUniverseStandaloneSupport(){
+    if(window.UniverseSupport || document.getElementById('support-v2-fab')) return;
+    if(!document.getElementById('universe-support-v2-standalone-style')){
+      var style=document.createElement('style');
+      style.id='universe-support-v2-standalone-style';
+      style.textContent=SUPPORT_CSS;
+      document.head.appendChild(style);
+    }
+    document.body.insertAdjacentHTML('beforeend',SUPPORT_MARKUP);
+    (function(){
+  var BASE='https://universe-82fc3-default-rtdb.firebaseio.com/chat/supportPrivateV2';
+  var OWNER_HASH='6f74b8706e8196aade0849d6f7aef50bd3e9d205b01d1cf29019680a6b1fdfc5';
+  var OWNER_FLAG='universe_support_owner_pc_20260712_v1';
+  var OWNER_SECRET_HASH='efe05040d27a1892e9a48e4b997c1e89ae0e7ef89003bd614d56b546ae6ac71d';
+  var S={admin:false,owner:false,open:false,active:'',thread:null,threads:{},image:'',timer:0,presenceTimer:0,ipMatch:false};
+  function el(id){return document.getElementById(id)}
+  function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]})}
+  function textHtml(v){return safe(v).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>').replace(/\n/g,'<br/>')}
+  function cleanId(v){return String(v||'').replace(/[^a-zA-Z0-9_-]/g,'')}
+  function makeId(){return 's_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,12)}
+  function getOwnerFlag(){try{return localStorage.getItem(OWNER_FLAG)==='1'}catch(e){return false}}
+  function setOwnerFlag(value){try{if(value)localStorage.setItem(OWNER_FLAG,'1');else localStorage.removeItem(OWNER_FLAG)}catch(e){}}
+  function threadId(){var id='';try{id=localStorage.getItem('universe_support_thread_v2')||''}catch(e){}if(!id){id=makeId();try{localStorage.setItem('universe_support_thread_v2',id)}catch(e){}}return cleanId(id)}
+  function resetThread(){var id=makeId();try{localStorage.setItem('universe_support_thread_v2',id);localStorage.removeItem('universe_support_closed_v2')}catch(e){}S.active=id;S.thread=null}
+  function profile(){var id=typeof getOrCreateUniverseAccountId==='function'?getOrCreateUniverseAccountId():threadId();var saved='';try{saved=localStorage.getItem('universe_support_name')||''}catch(e){}var name=saved||(window.currentUser&&currentUser.name)||('Usuario '+String(id).slice(-4));return {id:cleanId(id),name:String(name).slice(0,50)}}
+  async function api(route,method,data){var options={method:method||'GET',cache:'no-store',headers:{'Content-Type':'application/json'}};if(data!==undefined)options.body=JSON.stringify(data);var response=await fetch(BASE+route+'.json',options);if(!response.ok)throw new Error('HTTP '+response.status);return method==='DELETE'?null:response.json()}
+  function listMessages(obj){return Object.keys(obj||{}).map(function(k){var m=obj[k]||{};m._key=k;return m}).sort(function(a,b){return (a.ts||0)-(b.ts||0)}).slice(-160)}
+  function welcome(){return '<div class="support-v2-msg bot"><div class="support-v2-bubble"><strong>UNIverseIA</strong><br/>Hola, soy UNIverseIA, el asistente de recepción de Soporte Universe to Study. Este espacio organiza tu consulta para que sea atendida de forma individual. Escribe qué problema tienes y adjunta una imagen si ayuda a explicarlo.</div><div class="support-v2-meta">Mensaje de bienvenida</div></div>'}
+  function renderMessages(){var box=el('support-v2-messages');if(!box)return;var p=profile(),thread=S.admin?S.threads[S.active]:S.thread,messages=listMessages(thread&&thread.messages||{});var html=welcome();messages.forEach(function(m){var mine=S.admin?!!m.admin:!m.admin;html+='<div class="support-v2-msg '+(mine?'mine':'')+'"><div class="support-v2-bubble">'+(m.text?textHtml(m.text):'')+(m.image&&/^data:image\/(png|jpeg|webp);base64,/i.test(m.image)?'<img alt="Imagen adjunta" src="'+safe(m.image)+'"/>':'')+'</div><div class="support-v2-meta">'+safe(m.name||'Usuario')+' · '+new Date(m.ts||Date.now()).toLocaleString('es-PE',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})+'</div></div>'});box.innerHTML=html;box.scrollTop=box.scrollHeight;var closed=!!(thread&&thread.meta&&thread.meta.status==='closed');el('support-v2-closed').hidden=!closed;el('support-v2-compose').hidden=closed||(!S.active&&S.admin);el('support-v2-solved').hidden=!S.admin||!S.active||closed;el('support-v2-thread-name').textContent=S.admin?(thread&&thread.meta&&thread.meta.userName||'Selecciona una conversación'):'Tu consulta';el('support-v2-thread-status').textContent=closed?'Conversación solucionada':'Chat privado'}
+  function renderInbox(){var box=el('support-v2-threads');if(!box)return;var items=Object.keys(S.threads||{}).map(function(id){var t=S.threads[id]||{},meta=t.meta||{};return{id:id,t:t,updated:meta.updatedAt||0}}).filter(function(x){return !(x.t.meta&&x.t.meta.archived)}).sort(function(a,b){return b.updated-a.updated});if(S.active&&!S.threads[S.active])S.active='';box.innerHTML=items.map(function(x){var m=x.t.meta||{};return '<button class="support-v2-thread '+(x.id===S.active?'active':'')+'" data-support-id="'+safe(x.id)+'" type="button">'+(m.unread?'<b></b>':'')+'<strong>'+safe(m.userName||'Usuario')+'</strong><span>'+safe(m.lastText||'Nueva consulta')+'</span></button>'}).join('')||'<div class="support-v2-inbox-title">No hay consultas pendientes.</div>';box.querySelectorAll('[data-support-id]').forEach(function(btn){btn.onclick=function(){S.active=btn.getAttribute('data-support-id')||'';var t=S.threads[S.active];if(t&&t.meta){t.meta.unread=false;api('/threads/'+S.active+'/meta','PATCH',{unread:false}).catch(function(){})}renderInbox();renderMessages()}})}
+  async function load(){if(!S.open)return;try{if(S.admin){S.threads=await api('/threads')||{};renderInbox()}else{S.active=threadId();S.thread=await api('/threads/'+S.active)||{};var presence=await api('/presence/admin').catch(function(){return null});var online=!!(presence&&Date.now()-(presence.ts||0)<65000);el('support-v2-presence').textContent=online?'Soporte conectado ahora':'Soporte desconectado · deja tu consulta';el('support-v2-fab-dot').classList.toggle('online',online)}renderMessages()}catch(e){el('support-v2-presence').textContent='Sin conexión temporal';renderMessages()}}
+  async function heartbeat(){if(!S.admin)return;await api('/presence/admin','PUT',{online:true,ts:Date.now()}).catch(function(){})}
+  async function detectOwnerIp(){try{var response=await fetch('https://api.ipify.org',{cache:'no-store'}),ip=(await response.text()).trim(),bytes=new TextEncoder().encode(ip),digest=await crypto.subtle.digest('SHA-256',bytes),hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');S.ipMatch=hash===OWNER_HASH;S.owner=S.ipMatch&&getOwnerFlag()}catch(e){S.ipMatch=false;S.owner=false}detectAdmin()}
+  function readSetupKey(){
+    try{
+      var url=new URL(location.href);
+      var raw=(url.hash||'').replace(/^#/, '');
+      var params=new URLSearchParams(raw);
+      var value=params.get('ust-owner')||'';
+      return String(value).trim();
+    }catch(e){return ''}
+  }
+  async function validOwnerKey(key){
+    try{
+      if(!key||!window.crypto||!crypto.subtle||!window.TextEncoder)return false;
+      var bytes=new TextEncoder().encode(String(key).trim());
+      var digest=await crypto.subtle.digest('SHA-256',bytes);
+      var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+      return hash===OWNER_SECRET_HASH;
+    }catch(e){return false}
+  }
+  async function detectAdmin(){
+    var setup=readSetupKey();
+    if(S.ipMatch&&setup){
+      if(await validOwnerKey(setup)){
+        setOwnerFlag(true);
+        try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+      }
+    }
+    S.admin=!!(S.ipMatch&&getOwnerFlag());
+    var layout=document.querySelector('.support-v2-admin-layout');
+    if(layout){layout.classList.toggle('admin',S.admin);layout.classList.toggle('visitor',!S.admin)}
+    var inbox=el('support-v2-inbox'), nameRow=el('support-v2-name-row'), presence=el('support-v2-presence');
+    if(inbox)inbox.hidden=!S.admin;
+    if(nameRow)nameRow.hidden=S.admin;
+    if(presence)presence.textContent=S.admin?'Panel privado del propietario':'Comprobando conexi?n...';
+    if(S.admin){heartbeat();clearInterval(S.presenceTimer);S.presenceTimer=setInterval(heartbeat,25000)}
+  }
+  async function send(){var input=el('support-v2-input'),txt=String(input.value||'').trim();if(!txt&&!S.image)return;var p=profile(),id=S.admin?S.active:threadId();if(!id)return;var thread=S.admin?S.threads[id]:S.thread||{},meta=thread&&thread.meta||{};var msg={name:S.admin?'Soporte Universe to Study':p.name,userId:p.id,admin:S.admin,text:txt.slice(0,1200),image:S.image||'',ts:Date.now(),page:location.pathname};input.value='';clearImage();try{await api('/threads/'+id+'/messages','POST',msg);await api('/threads/'+id+'/meta','PATCH',{userId:meta.userId||p.id,userName:meta.userName||p.name,lastText:txt||'Imagen adjunta',updatedAt:msg.ts,status:'open',archived:false,unread:!S.admin});await load()}catch(e){input.value=txt;alert('No se pudo enviar. Revisa tu conexión.')}}
+  async function solve(){if(!S.admin||!S.active)return;await api('/threads/'+S.active+'/meta','PATCH',{status:'closed',archived:true,unread:false,updatedAt:Date.now(),lastText:'Consulta solucionada'}).catch(function(){});S.active='';await load()}
+  function pickImage(input){var file=input.files&&input.files[0];if(!file)return;if(file.size>700000){alert('La imagen debe pesar menos de 700 KB.');input.value='';return}var reader=new FileReader();reader.onload=function(){S.image=String(reader.result||'');el('support-v2-preview-img').src=S.image;el('support-v2-image-preview').hidden=false};reader.readAsDataURL(file)}
+  function clearImage(){S.image='';el('support-v2-file').value='';el('support-v2-image-preview').hidden=true;el('support-v2-preview-img').removeAttribute('src')}
+  async function open(){await detectAdmin();if(!S.admin){try{if(localStorage.getItem('universe_support_closed_v2')==='1')resetThread()}catch(e){}}S.open=true;document.body.classList.add('support-v2-active');el('support-v2-panel').classList.add('open');el('support-v2-overlay').classList.add('open');el('support-v2-panel').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';load();clearInterval(S.timer);S.timer=setInterval(load,4000)}
+  function close(){var thread=S.admin?S.threads[S.active]:S.thread;if(!S.admin&&thread&&thread.meta&&thread.meta.status==='closed'){try{localStorage.setItem('universe_support_closed_v2','1')}catch(e){}}S.open=false;document.body.classList.remove('support-v2-active');el('support-v2-panel').classList.remove('open');el('support-v2-overlay').classList.remove('open');el('support-v2-panel').setAttribute('aria-hidden','true');document.body.style.overflow='';clearInterval(S.timer)}
+  function init(){var name=el('support-v2-name'),p=profile();name.value=p.name;name.onchange=function(){var value=String(name.value||'').trim().slice(0,50);if(value){try{localStorage.setItem('universe_support_name',value)}catch(e){}}};el('support-v2-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});detectOwnerIp();setTimeout(detectAdmin,1000);var seen=false;try{seen=localStorage.getItem('universe_support_hint_seen')==='1'}catch(e){}if(!seen){setTimeout(function(){el('support-v2-hint').classList.add('show');try{localStorage.setItem('universe_support_hint_seen','1')}catch(e){}setTimeout(function(){el('support-v2-hint').classList.remove('show')},6500)},1000)}}
+  window.UniverseSupport={open:open,close:close,send:send,solve:solve,pickImage:pickImage,clearImage:clearImage};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',startUniverseStandaloneSupport,{once:true});
+  else setTimeout(startUniverseStandaloneSupport,0);
+})();
+</script>
+<!-- UNIVERSE_STANDALONE_SUPPORT_END -->
+
+
 
     <script>//<![CDATA[
 // ===================== USER STATE =====================
@@ -7719,79 +7633,6 @@ window.addEventListener('load', initUniverseApp, { once: true });
 </script>
 
 
-<script id='universe-support-v2-script'>//<![CDATA[
-(function(){
-  var BASE='https://universe-82fc3-default-rtdb.firebaseio.com/chat/supportPrivateV2';
-  var OWNER_HASH='6f74b8706e8196aade0849d6f7aef50bd3e9d205b01d1cf29019680a6b1fdfc5';
-  var OWNER_FLAG='universe_support_owner_pc_20260712_v1';
-  var OWNER_SECRET_HASH='efe05040d27a1892e9a48e4b997c1e89ae0e7ef89003bd614d56b546ae6ac71d';
-  var S={admin:false,owner:false,open:false,active:'',thread:null,threads:{},image:'',timer:0,presenceTimer:0,ipMatch:false};
-  function el(id){return document.getElementById(id)}
-  function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]})}
-  function textHtml(v){return safe(v).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>').replace(/\n/g,'<br/>')}
-  function cleanId(v){return String(v||'').replace(/[^a-zA-Z0-9_-]/g,'')}
-  function makeId(){return 's_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,12)}
-  function getOwnerFlag(){try{return localStorage.getItem(OWNER_FLAG)==='1'}catch(e){return false}}
-  function setOwnerFlag(value){try{if(value)localStorage.setItem(OWNER_FLAG,'1');else localStorage.removeItem(OWNER_FLAG)}catch(e){}}
-  function threadId(){var id='';try{id=localStorage.getItem('universe_support_thread_v2')||''}catch(e){}if(!id){id=makeId();try{localStorage.setItem('universe_support_thread_v2',id)}catch(e){}}return cleanId(id)}
-  function resetThread(){var id=makeId();try{localStorage.setItem('universe_support_thread_v2',id);localStorage.removeItem('universe_support_closed_v2')}catch(e){}S.active=id;S.thread=null}
-  function profile(){var id=typeof getOrCreateUniverseAccountId==='function'?getOrCreateUniverseAccountId():threadId();var saved='';try{saved=localStorage.getItem('universe_support_name')||''}catch(e){}var name=saved||(window.currentUser&&currentUser.name)||('Usuario '+String(id).slice(-4));return {id:cleanId(id),name:String(name).slice(0,50)}}
-  async function api(route,method,data){var options={method:method||'GET',cache:'no-store',headers:{'Content-Type':'application/json'}};if(data!==undefined)options.body=JSON.stringify(data);var response=await fetch(BASE+route+'.json',options);if(!response.ok)throw new Error('HTTP '+response.status);return method==='DELETE'?null:response.json()}
-  function listMessages(obj){return Object.keys(obj||{}).map(function(k){var m=obj[k]||{};m._key=k;return m}).sort(function(a,b){return (a.ts||0)-(b.ts||0)}).slice(-160)}
-  function welcome(){return '<div class="support-v2-msg bot"><div class="support-v2-bubble"><strong>UNIverseIA</strong><br/>Hola, soy UNIverseIA, el asistente de recepción de Soporte Universe to Study. Este espacio organiza tu consulta para que sea atendida de forma individual. Escribe qué problema tienes y adjunta una imagen si ayuda a explicarlo.</div><div class="support-v2-meta">Mensaje de bienvenida</div></div>'}
-  function renderMessages(){var box=el('support-v2-messages');if(!box)return;var p=profile(),thread=S.admin?S.threads[S.active]:S.thread,messages=listMessages(thread&&thread.messages||{});var html=welcome();messages.forEach(function(m){var mine=S.admin?!!m.admin:!m.admin;html+='<div class="support-v2-msg '+(mine?'mine':'')+'"><div class="support-v2-bubble">'+(m.text?textHtml(m.text):'')+(m.image&&/^data:image\/(png|jpeg|webp);base64,/i.test(m.image)?'<img alt="Imagen adjunta" src="'+safe(m.image)+'"/>':'')+'</div><div class="support-v2-meta">'+safe(m.name||'Usuario')+' · '+new Date(m.ts||Date.now()).toLocaleString('es-PE',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})+'</div></div>'});box.innerHTML=html;box.scrollTop=box.scrollHeight;var closed=!!(thread&&thread.meta&&thread.meta.status==='closed');el('support-v2-closed').hidden=!closed;el('support-v2-compose').hidden=closed||(!S.active&&S.admin);el('support-v2-solved').hidden=!S.admin||!S.active||closed;el('support-v2-thread-name').textContent=S.admin?(thread&&thread.meta&&thread.meta.userName||'Selecciona una conversación'):'Tu consulta';el('support-v2-thread-status').textContent=closed?'Conversación solucionada':'Chat privado'}
-  function renderInbox(){var box=el('support-v2-threads');if(!box)return;var items=Object.keys(S.threads||{}).map(function(id){var t=S.threads[id]||{},meta=t.meta||{};return{id:id,t:t,updated:meta.updatedAt||0}}).filter(function(x){return !(x.t.meta&&x.t.meta.archived)}).sort(function(a,b){return b.updated-a.updated});if(S.active&&!S.threads[S.active])S.active='';box.innerHTML=items.map(function(x){var m=x.t.meta||{};return '<button class="support-v2-thread '+(x.id===S.active?'active':'')+'" data-support-id="'+safe(x.id)+'" type="button">'+(m.unread?'<b></b>':'')+'<strong>'+safe(m.userName||'Usuario')+'</strong><span>'+safe(m.lastText||'Nueva consulta')+'</span></button>'}).join('')||'<div class="support-v2-inbox-title">No hay consultas pendientes.</div>';box.querySelectorAll('[data-support-id]').forEach(function(btn){btn.onclick=function(){S.active=btn.getAttribute('data-support-id')||'';var t=S.threads[S.active];if(t&&t.meta){t.meta.unread=false;api('/threads/'+S.active+'/meta','PATCH',{unread:false}).catch(function(){})}renderInbox();renderMessages()}})}
-  async function load(){if(!S.open)return;try{if(S.admin){S.threads=await api('/threads')||{};renderInbox()}else{S.active=threadId();S.thread=await api('/threads/'+S.active)||{};var presence=await api('/presence/admin').catch(function(){return null});var online=!!(presence&&Date.now()-(presence.ts||0)<65000);el('support-v2-presence').textContent=online?'Soporte conectado ahora':'Soporte desconectado · deja tu consulta';el('support-v2-fab-dot').classList.toggle('online',online)}renderMessages()}catch(e){el('support-v2-presence').textContent='Sin conexión temporal';renderMessages()}}
-  async function heartbeat(){if(!S.admin)return;await api('/presence/admin','PUT',{online:true,ts:Date.now()}).catch(function(){})}
-  async function detectOwnerIp(){try{var response=await fetch('https://api.ipify.org',{cache:'no-store'}),ip=(await response.text()).trim(),bytes=new TextEncoder().encode(ip),digest=await crypto.subtle.digest('SHA-256',bytes),hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');S.ipMatch=hash===OWNER_HASH;S.owner=S.ipMatch&&getOwnerFlag()}catch(e){S.ipMatch=false;S.owner=false}detectAdmin()}
-  function readSetupKey(){
-    try{
-      var url=new URL(location.href);
-      var raw=(url.hash||'').replace(/^#/, '');
-      var params=new URLSearchParams(raw);
-      var value=params.get('ust-owner')||'';
-      return String(value).trim();
-    }catch(e){return ''}
-  }
-  async function validOwnerKey(key){
-    try{
-      if(!key||!window.crypto||!crypto.subtle||!window.TextEncoder)return false;
-      var bytes=new TextEncoder().encode(String(key).trim());
-      var digest=await crypto.subtle.digest('SHA-256',bytes);
-      var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
-      return hash===OWNER_SECRET_HASH;
-    }catch(e){return false}
-  }
-  async function detectAdmin(){
-    var setup=readSetupKey();
-    if(S.ipMatch&&setup){
-      if(await validOwnerKey(setup)){
-        setOwnerFlag(true);
-        try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
-      }
-    }
-    S.admin=!!(S.ipMatch&&getOwnerFlag());
-    var layout=document.querySelector('.support-v2-admin-layout');
-    if(layout){layout.classList.toggle('admin',S.admin);layout.classList.toggle('visitor',!S.admin)}
-    var inbox=el('support-v2-inbox'), nameRow=el('support-v2-name-row'), presence=el('support-v2-presence');
-    if(inbox)inbox.hidden=!S.admin;
-    if(nameRow)nameRow.hidden=S.admin;
-    if(presence)presence.textContent=S.admin?'Panel privado del propietario':'Comprobando conexi?n...';
-    if(S.admin){heartbeat();clearInterval(S.presenceTimer);S.presenceTimer=setInterval(heartbeat,25000)}
-  }
-  async function send(){var input=el('support-v2-input'),txt=String(input.value||'').trim();if(!txt&&!S.image)return;var p=profile(),id=S.admin?S.active:threadId();if(!id)return;var thread=S.admin?S.threads[id]:S.thread||{},meta=thread&&thread.meta||{};var msg={name:S.admin?'Soporte Universe to Study':p.name,userId:p.id,admin:S.admin,text:txt.slice(0,1200),image:S.image||'',ts:Date.now(),page:location.pathname};input.value='';clearImage();try{await api('/threads/'+id+'/messages','POST',msg);await api('/threads/'+id+'/meta','PATCH',{userId:meta.userId||p.id,userName:meta.userName||p.name,lastText:txt||'Imagen adjunta',updatedAt:msg.ts,status:'open',archived:false,unread:!S.admin});await load()}catch(e){input.value=txt;alert('No se pudo enviar. Revisa tu conexión.')}}
-  async function solve(){if(!S.admin||!S.active)return;await api('/threads/'+S.active+'/meta','PATCH',{status:'closed',archived:true,unread:false,updatedAt:Date.now(),lastText:'Consulta solucionada'}).catch(function(){});S.active='';await load()}
-  function pickImage(input){var file=input.files&&input.files[0];if(!file)return;if(file.size>700000){alert('La imagen debe pesar menos de 700 KB.');input.value='';return}var reader=new FileReader();reader.onload=function(){S.image=String(reader.result||'');el('support-v2-preview-img').src=S.image;el('support-v2-image-preview').hidden=false};reader.readAsDataURL(file)}
-  function clearImage(){S.image='';el('support-v2-file').value='';el('support-v2-image-preview').hidden=true;el('support-v2-preview-img').removeAttribute('src')}
-  async function open(){await detectAdmin();if(!S.admin){try{if(localStorage.getItem('universe_support_closed_v2')==='1')resetThread()}catch(e){}}S.open=true;document.body.classList.add('support-v2-active');el('support-v2-panel').classList.add('open');el('support-v2-overlay').classList.add('open');el('support-v2-panel').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';load();clearInterval(S.timer);S.timer=setInterval(load,4000)}
-  function close(){var thread=S.admin?S.threads[S.active]:S.thread;if(!S.admin&&thread&&thread.meta&&thread.meta.status==='closed'){try{localStorage.setItem('universe_support_closed_v2','1')}catch(e){}}S.open=false;document.body.classList.remove('support-v2-active');el('support-v2-panel').classList.remove('open');el('support-v2-overlay').classList.remove('open');el('support-v2-panel').setAttribute('aria-hidden','true');document.body.style.overflow='';clearInterval(S.timer)}
-  function init(){var name=el('support-v2-name'),p=profile();name.value=p.name;name.onchange=function(){var value=String(name.value||'').trim().slice(0,50);if(value){try{localStorage.setItem('universe_support_name',value)}catch(e){}}};el('support-v2-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});detectOwnerIp();setTimeout(detectAdmin,1000);var seen=false;try{seen=localStorage.getItem('universe_support_hint_seen')==='1'}catch(e){}if(!seen){setTimeout(function(){el('support-v2-hint').classList.add('show');try{localStorage.setItem('universe_support_hint_seen','1')}catch(e){}setTimeout(function(){el('support-v2-hint').classList.remove('show')},6500)},1000)}}
-  window.UniverseSupport={open:open,close:close,send:send,solve:solve,pickImage:pickImage,clearImage:clearImage};
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-})();
-//]]></script>
-
-
 <script id="universe-login-disable-script">
 (function(){
   function hidePageLoader(){var el=document.getElementById('universe-page-loader');if(el){el.classList.add('hide');setTimeout(function(){try{el.remove()}catch(e){}},420)}}
@@ -7803,6 +7644,110 @@ window.addEventListener('load', initUniverseApp, { once: true });
   window.closeAccountPanel=function(){return false};
 })();
 </script>
+<!-- UNIVERSE_FINAL_THEME_CONTRAST_FIX_START -->
+<style id="universe-final-theme-contrast-fix">
+/* Fondo de cuadr?cula conectado en toda la pantalla */
+html[data-universe-page],html[data-universe-page] body{min-height:100%;}
+html[data-universe-page] body{
+  background-color:#f7fbff!important;
+  background-image:linear-gradient(rgba(37,99,235,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.075) 1px,transparent 1px),radial-gradient(circle at 18% 8%,rgba(37,99,235,.13),transparent 32%),radial-gradient(circle at 82% 14%,rgba(14,165,233,.10),transparent 30%)!important;
+  background-size:42px 42px,42px 42px,100% 100%,100% 100%!important;
+  background-attachment:fixed!important;
+}
+html[data-universe-theme='dark'][data-universe-page] body{
+  background-color:#020202!important;
+  background-image:linear-gradient(rgba(96,165,250,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.12) 1px,transparent 1px),radial-gradient(circle at 20% 8%,rgba(37,99,235,.22),transparent 32%),radial-gradient(circle at 84% 16%,rgba(14,165,233,.14),transparent 30%),linear-gradient(180deg,#020202 0%,#05070b 52%,#07111f 100%)!important;
+  background-size:44px 44px,44px 44px,100% 100%,100% 100%,100% 100%!important;
+  color:#f8fafc!important;
+}
+html[data-universe-theme='dark'][data-universe-page] :is(main,.section,.ranking-section,.universe-page-stage,.universe-static-page,.universe-page-stage-inner,.universe-library-layout,.universe-legal-page,.universe-exams-page,#herramientas,.cepre-planner){background:transparent!important;color:#f8fafc!important;}
+
+/* Bot?n de tema: fijo abajo a la izquierda, fuera del header */
+html[data-universe-page] body > nav .nav-theme-toggle{
+  position:fixed!important;
+  left:max(14px,calc(env(safe-area-inset-left) + 14px))!important;
+  bottom:max(16px,calc(env(safe-area-inset-bottom) + 16px))!important;
+  z-index:2147482455!important;
+  width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;
+  display:grid!important;place-items:center!important;
+  border-radius:999px!important;border:1px solid rgba(37,99,235,.24)!important;
+  background:rgba(255,255,255,.94)!important;color:#175cd3!important;
+  box-shadow:0 14px 38px rgba(15,23,42,.18)!important;backdrop-filter:blur(12px)!important;
+}
+html[data-universe-theme='dark'][data-universe-page] body > nav .nav-theme-toggle{background:#050505!important;color:#bfdbfe!important;border-color:rgba(96,165,250,.42)!important;box-shadow:0 14px 38px rgba(0,0,0,.58)!important;}
+html[data-universe-page] body.support-v2-active > nav .nav-theme-toggle{opacity:.18!important;pointer-events:none!important;filter:grayscale(1)!important;}
+@media(max-width:620px){
+  html[data-universe-page] body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px))!important;bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px))!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;}
+}
+
+/* Soporte: bot?n pegado correctamente a la esquina en celular */
+@media(max-width:620px){
+  html[data-universe-page] body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px))!important;padding:12px!important;border-radius:999px!important;}
+  html[data-universe-page] body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px))!important;}
+}
+
+/* Soporte en oscuro: sin paneles blancos */
+html[data-universe-theme='dark'] :is(#support-v2-panel,#support-v2-inbox,.support-v2-conversation,#support-v2-messages,.support-v2-compose,.support-v2-name-row,.support-v2-thread-head,#support-v2-image-preview){background:#050505!important;color:#f8fafc!important;border-color:#1f2937!important;}
+html[data-universe-theme='dark'] .support-v2-head{background:linear-gradient(135deg,#020202,#0b1220)!important;border-bottom:1px solid #1f2937!important;color:#fff!important;}
+html[data-universe-theme='dark'] .support-v2-thread{background:#050505!important;color:#e5e7eb!important;border-color:#1f2937!important;}
+html[data-universe-theme='dark'] .support-v2-thread.active{background:#101827!important;}
+html[data-universe-theme='dark'] .support-v2-thread :is(strong,span),html[data-universe-theme='dark'] .support-v2-thread-head :is(strong,span),html[data-universe-theme='dark'] .support-v2-inbox-title,html[data-universe-theme='dark'] .support-v2-meta,html[data-universe-theme='dark'] .support-v2-name-row span{color:#cbd5e1!important;}
+html[data-universe-theme='dark'] .support-v2-bubble{background:#111111!important;color:#f8fafc!important;border-color:#2b3544!important;}
+html[data-universe-theme='dark'] .support-v2-msg.mine .support-v2-bubble{background:#0b2f63!important;color:#fff!important;border-color:#1d4ed8!important;}
+html[data-universe-theme='dark'] .support-v2-msg.bot .support-v2-bubble{background:#0b1220!important;border-color:#1e3a8a!important;color:#e5edff!important;}
+html[data-universe-theme='dark'] :is(.support-v2-compose textarea,.support-v2-name-row input){background:#080808!important;color:#f8fafc!important;border-color:#2b3544!important;}
+html[data-universe-theme='dark'] #support-v2-closed{background:#17110a!important;color:#fde68a!important;border-color:#92400e!important;}
+html[data-universe-theme='dark'] #support-v2-hint{background:#050505!important;color:#f8fafc!important;border-color:#334155!important;}
+
+/* Ranking: ancho real y columna PC sin blanco en oscuro */
+html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1840px,calc(100vw - 1rem))!important;max-width:none!important;}
+html[data-universe-page='ranking'] .ranking-section{padding-inline:0!important;}
+html[data-universe-page='ranking'] .cepre-v2-shell{width:100%!important;max-width:none!important;margin-inline:0!important;}
+html[data-universe-page='ranking'] .cepre-v2-wrap{max-height:min(68vh,680px)!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] :is(.cepre-v2-shell,.cepre-v2-controls,.cepre-v2-wrap,.cepre-v2-summary,.cepre-v2-search,.cepre-v2-site-group){background:#050505!important;color:#f8fafc!important;border-color:#263244!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table{background:#050505!important;color:#e5e7eb!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table :is(th,td){border-color:#263244!important;color:#dbeafe!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table thead :is(th,.cepre-v2-group-pc,.cepre-v2-group-exam,.cepre-v2-group-result,.cepre-v2-group-list){background:#0b1220!important;color:#f8fafc!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody :is(th,.cepre-v2-code){background:#050505!important;color:#f8fafc!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-position{background:#0a1a2f!important;color:#7dd3fc!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tr > :nth-child(7){background:#07111f!important;color:#e0f2fe!important;border-right-color:#334155!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tr > :nth-child(9){background:#0b1020!important;border-right-color:#3b314a!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody tr:hover,html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody tr:hover :is(th,td,.cepre-v2-code,.cepre-v2-position){background:#111827!important;}
+html[data-universe-theme='dark'][data-universe-page='ranking'] :is(.cepre-v2-control-label,.cepre-v2-summary,.cepre-v2-missing){color:#94a3b8!important;}
+
+/* Calculadora: pesta?as y tarjetas oscuras completas */
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cepre-planner{--ink:#f8fafc!important;--muted:#cbd5e1!important;--line:#2b3544!important;--card:#050505!important;--soft:#0d0d0d!important;--sky:#081a32!important;color:#f8fafc!important;background:transparent!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-hero,.cp-card,.cp-mode-tabs,.cp-method-card,.cp-note-chip,.cp-architecture,.cp-status,.cp-next,.cp-metric,.cp-formula,.cp-results,.cp-result-body){background:#050505!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.42)!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-hero{background:linear-gradient(135deg,#050505,#0b1220)!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-result-top{background:linear-gradient(145deg,#020202,#0b1220)!important;color:#fff!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-mode-tab{background:#080808!important;color:#cbd5e1!important;border:1px solid #1f2937!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-mode-tab.active{background:#0b2f63!important;color:#fff!important;border-color:#3b82f6!important;box-shadow:0 8px 22px rgba(37,99,235,.26)!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-field,.cp-card-title p,.cp-field small,.cp-note-chip span,.cp-source,.cp-method-card p,.cp-next p,.cp-next span,.cp-result-explain,.cp-target,.cp-architecture p){color:#cbd5e1!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-card-title h2,.cp-card-title h3,.cp-formula code,.cp-source b,.cp-method-card b,.cp-score,.cp-metric strong,.cp-architecture h3){color:#f8fafc!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-field input,.cp-field select){background:#080808!important;color:#f8fafc!important;border-color:#334155!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.good{background:#061b13!important;color:#86efac!important;border-color:#166534!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.equal{background:#1c1607!important;color:#fde68a!important;border-color:#92400e!important;}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.low{background:#250b0b!important;color:#fca5a5!important;border-color:#991b1b!important;}
+
+/* Res?menes / biblioteca / legal en oscuro */
+html[data-universe-theme='dark'][data-universe-page] :is(.summary-hub,.summary-main,.summary-topic-panel,.summary-course-btn,.summary-topic-btn,.summary-concept,.summary-table-wrap,.summary-table,.library-section,.lib-box,.doc-card,.universe-legal-grid .legal-card,.universe-exams-page .legal-card,.legal-card){background:#050505!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.36)!important;}
+html[data-universe-theme='dark'][data-universe-page] :is(.summary-title,.summary-topic-title,.summary-course-name,.summary-concept strong,.summary-detail h4,.summary-table th,.library-section-title,.doc-title,.legal-card h3,.legal-card h4,.legal-card strong){color:#fff!important;}
+html[data-universe-theme='dark'][data-universe-page] :is(.summary-body,.summary-detail,.summary-line,.summary-course-count,.summary-topic-name,.summary-table td,.summary-source-note,.library-section-meta,.doc-meta,.legal-card,.legal-card li,.legal-card p){color:#cbd5e1!important;}
+html[data-universe-theme='dark'][data-universe-page] .summary-table :is(th,td){border-color:#2b3544!important;background:#080808!important;}
+html[data-universe-theme='dark'][data-universe-page] :is(.summary-course-btn.active,.summary-course-btn:hover,.summary-topic-btn.active,.summary-topic-btn:hover){background:#0b2f63!important;color:#fff!important;border-color:#3b82f6!important;}
+
+/* Inicio: contraste de accesos, pagos, cronograma, vacantes y fechas clave */
+html[data-universe-page='home'] :is(.official-access-card,.admission-card,.admission-table-card,.tool-card,.countdown-item,.countdown-box,.payment-card,.hero-calendar-panel,.payment-event){border-color:rgba(37,99,235,.20)!important;box-shadow:0 18px 44px rgba(18,66,115,.12)!important;}
+html:not([data-universe-theme='dark'])[data-universe-page='home'] :is(.admission-card,.admission-table-card,.tool-card,.countdown-item,.countdown-box,.payment-event){background:#ffffff!important;color:#0f172a!important;}
+html:not([data-universe-theme='dark'])[data-universe-page='home'] :is(.admission-card-title,.admission-table-title,.tool-title,.countdown-number,.countdown-label strong){color:#0f172a!important;}
+html:not([data-universe-theme='dark'])[data-universe-page='home'] :is(.admission-card-meta,.admission-table-note,.tool-copy,.countdown-unit,.payment-note,.payment-event small){color:#475569!important;}
+html[data-universe-theme='dark'][data-universe-page='home'] :is(.official-access-card,.admission-card,.admission-table-card,.tool-card,.countdown-item,.countdown-box,.payment-card,.hero-calendar-panel,.payment-event,.vacancies-table th,.vacancies-table td){background:#050505!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.42)!important;}
+html[data-universe-theme='dark'][data-universe-page='home'] :is(.admission-card-title,.admission-table-title,.tool-title,.countdown-number,.countdown-label strong,.payment-month-title,.official-access-name,.official-access-title){color:#fff!important;}
+html[data-universe-theme='dark'][data-universe-page='home'] :is(.admission-card-meta,.admission-table-note,.tool-copy,.countdown-unit,.payment-note,.payment-event small,.official-access-desc){color:#cbd5e1!important;}
+html[data-universe-theme='dark'][data-universe-page='home'] .official-access-logo{background:#f8fafc!important;}
+html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table th:first-child,html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table td:first-child{background:#050505!important;}
+</style>
+<!-- UNIVERSE_FINAL_THEME_CONTRAST_FIX_END -->
 </body>
 </html>
 
