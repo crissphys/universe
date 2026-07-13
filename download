@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tierra 3D interactiva</title>
+  <link rel="icon" href="data:," />
+  <style>
+    :root {
+      color-scheme: dark;
+      --panel: rgba(8, 13, 22, 0.74);
+      --panel-strong: rgba(14, 23, 37, 0.88);
+      --line: rgba(255, 255, 255, 0.15);
+      --text: #eef6ff;
+      --muted: #a8b7c9;
+      --accent: #55c7ff;
+      --accent-2: #ffcc5c;
+      --danger: #ff7a7a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+    }
+
+    #app {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 55%, rgba(18, 50, 82, 0.28), transparent 40%), #000;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .toolbar {
+      position: fixed;
+      left: 18px;
+      top: 18px;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(112px, 1fr));
+      gap: 10px;
+      width: min(390px, calc(100vw - 36px));
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(18px);
+    }
+
+    .field {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      height: 38px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.42);
+      color: var(--text);
+      font: inherit;
+      padding: 0 10px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: rgba(85, 199, 255, 0.85);
+      box-shadow: 0 0 0 3px rgba(85, 199, 255, 0.16);
+    }
+
+    button {
+      height: 38px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.34);
+      background: rgba(255, 255, 255, 0.13);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .primary {
+      background: rgba(85, 199, 255, 0.2);
+      border-color: rgba(85, 199, 255, 0.48);
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .readout {
+      display: grid;
+      gap: 3px;
+      padding: 10px;
+      min-height: 58px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.34);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .readout strong {
+      font-size: 13px;
+    }
+
+    .readout span {
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .hint {
+      position: fixed;
+      right: 18px;
+      bottom: 16px;
+      z-index: 10;
+      color: rgba(238, 246, 255, 0.68);
+      font-size: 12px;
+      pointer-events: none;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.8);
+    }
+
+    .pin-label {
+      position: fixed;
+      z-index: 9;
+      display: grid;
+      grid-template-columns: 1fr 24px;
+      gap: 2px 8px;
+      min-width: 132px;
+      padding: 7px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      background: var(--panel-strong);
+      box-shadow: 0 14px 42px rgba(0, 0, 0, 0.38);
+      transform: translate(-50%, calc(-100% - 16px));
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 120ms ease;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .pin-label b {
+      grid-column: 1;
+      font-size: 12px;
+      color: var(--accent-2);
+    }
+
+    .pin-label span {
+      grid-column: 1;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .pin-label button {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: center;
+      justify-self: end;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border-radius: 50%;
+      color: #ffdede;
+      border-color: rgba(255, 122, 122, 0.45);
+      background: rgba(255, 122, 122, 0.16);
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .pin-label.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 20;
+      max-width: min(420px, calc(100vw - 32px));
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 122, 122, 0.4);
+      border-radius: 8px;
+      background: rgba(34, 12, 16, 0.88);
+      color: #ffdede;
+      transform: translateX(-50%) translateY(12px);
+      opacity: 0;
+      transition: opacity 140ms ease, transform 140ms ease;
+      pointer-events: none;
+      font-size: 13px;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 620px) {
+      .toolbar {
+        left: 10px;
+        right: 10px;
+        top: 10px;
+        width: auto;
+        grid-template-columns: 1fr 1fr;
+        padding: 10px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="app" aria-label="Tierra 3D interactiva">
+    <form class="toolbar" id="pinForm">
+      <div class="field">
+        <label for="latInput">Latitud</label>
+        <input id="latInput" name="lat" type="number" min="-90" max="90" step="0.0001" value="-12.0464" />
+      </div>
+      <div class="field">
+        <label for="lonInput">Longitud</label>
+        <input id="lonInput" name="lon" type="number" min="-180" max="180" step="0.0001" value="-77.0428" />
+      </div>
+      <div class="actions wide">
+        <button class="primary" type="submit" title="Agregar pin">Pin</button>
+        <button type="button" id="autoBtn" aria-pressed="true" title="Rotacion automatica">Auto</button>
+        <button type="button" id="clearBtn" title="Borrar pins">Borrar</button>
+      </div>
+      <div class="readout wide" aria-live="polite">
+        <strong id="statusTitle">Pin listo</strong>
+        <span id="coordText">Lat -12.0464, Lon -77.0428</span>
+      </div>
+    </form>
+    <div class="hint">Arrastra para rotar - clic en la superficie para ubicar un pin</div>
+    <div class="toast" id="toast"></div>
+  </main>
+
+  <script type="module">
+    import * as THREE from "./vendor/three.module.js";
+    import { OrbitControls } from "./vendor/OrbitControls.js";
+
+    const app = document.querySelector("#app");
+    const form = document.querySelector("#pinForm");
+    const latInput = document.querySelector("#latInput");
+    const lonInput = document.querySelector("#lonInput");
+    const autoBtn = document.querySelector("#autoBtn");
+    const clearBtn = document.querySelector("#clearBtn");
+    const statusTitle = document.querySelector("#statusTitle");
+    const coordText = document.querySelector("#coordText");
+    const toast = document.querySelector("#toast");
+
+    const highPixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    const lowPixelRatio = Math.min(window.devicePixelRatio || 1, 1) * 0.55;
+    let renderQuality = "high";
+    let highQualityTimer = 0;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(highPixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    app.prepend(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x000000, 0.018);
+
+    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0.9, 5.2);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.rotateSpeed = 0.55;
+    controls.minDistance = 2.35;
+    controls.maxDistance = 9.5;
+    controls.enablePan = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.28;
+
+    const earthGroup = new THREE.Group();
+    scene.add(earthGroup);
+
+    const earthRadius = 1.55;
+    const textureLoader = new THREE.TextureLoader();
+    const earthMap = loadTexture("./assets/earth/earth_day_4096.jpg", true);
+    const normalMap = loadTexture("./assets/earth/earth_normal_2048.jpg");
+    const specularMap = loadTexture("./assets/earth/earth_specular_2048.jpg");
+    const cloudMap = loadTexture("./assets/earth/earth_clouds_1024.png", true);
+    const earthHighGeometry = new THREE.SphereGeometry(earthRadius, 128, 96);
+    const earthLowGeometry = new THREE.SphereGeometry(earthRadius, 48, 32);
+    const cloudHighGeometry = new THREE.SphereGeometry(earthRadius * 1.011, 96, 72);
+    const cloudLowGeometry = new THREE.SphereGeometry(earthRadius * 1.011, 40, 24);
+
+    const earthMaterial = new THREE.MeshPhongMaterial({
+      map: earthMap,
+      normalMap,
+      normalScale: new THREE.Vector2(0.42, 0.42),
+      specularMap,
+      specular: new THREE.Color(0x325d7c),
+      shininess: 23
+    });
+
+    const earth = new THREE.Mesh(earthHighGeometry, earthMaterial);
+    earth.rotation.y = THREE.MathUtils.degToRad(-82);
+    earthGroup.add(earth);
+
+    const clouds = new THREE.Mesh(
+      cloudHighGeometry,
+      new THREE.MeshLambertMaterial({
+        map: cloudMap,
+        transparent: true,
+        opacity: 0.36,
+        depthWrite: false
+      })
+    );
+    clouds.rotation.y = THREE.MathUtils.degToRad(-95);
+    earthGroup.add(clouds);
+
+    const atmosphere = new THREE.Mesh(
+      new THREE.SphereGeometry(earthRadius * 1.05, 96, 96),
+      new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexShader: `
+          varying vec3 vNormal;
+          void main() {
+            vNormal = normalize(normalMatrix * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          varying vec3 vNormal;
+          void main() {
+            float intensity = pow(0.72 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.6);
+            gl_FragColor = vec4(0.22, 0.7, 1.0, intensity * 0.42);
+          }
+        `
+      })
+    );
+    earthGroup.add(atmosphere);
+
+    scene.add(new THREE.AmbientLight(0x8eaed0, 1.25));
+
+    const sun = new THREE.DirectionalLight(0xffffff, 2.8);
+    sun.position.set(4.5, 2.6, 4.2);
+    scene.add(sun);
+
+    const rim = new THREE.DirectionalLight(0x66bbff, 1.1);
+    rim.position.set(-5, -1.4, -3);
+    scene.add(rim);
+
+    scene.add(makeStars(1450));
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    const pins = [];
+    let pointerDown = null;
+    let activeLabel = null;
+
+    addPin(-12.0464, -77.0428, true);
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const lat = Number(latInput.value);
+      const lon = Number(lonInput.value);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+        showToast("Ingresa valores numericos validos.");
+        return;
+      }
+      if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+        showToast("Latitud: -90 a 90. Longitud: -180 a 180.");
+        return;
+      }
+      addPin(lat, lon, true);
+    });
+
+    autoBtn.addEventListener("click", () => {
+      controls.autoRotate = !controls.autoRotate;
+      autoBtn.setAttribute("aria-pressed", String(controls.autoRotate));
+      autoBtn.classList.toggle("primary", controls.autoRotate);
+      if (controls.autoRotate) {
+        setRenderQuality("low");
+      } else {
+        scheduleHighQuality();
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      for (const pin of pins.splice(0)) {
+        earth.remove(pin.group);
+        pin.label.remove();
+      }
+      activeLabel = null;
+      statusTitle.textContent = "Sin pins";
+      coordText.textContent = "Lat --, Lon --";
+    });
+
+    renderer.domElement.addEventListener("pointerdown", (event) => {
+      pointerDown = { x: event.clientX, y: event.clientY };
+      setRenderQuality("low");
+    });
+
+    renderer.domElement.addEventListener("pointerup", (event) => {
+      if (!pointerDown) return;
+      const dx = event.clientX - pointerDown.x;
+      const dy = event.clientY - pointerDown.y;
+      pointerDown = null;
+      scheduleHighQuality();
+      if (Math.hypot(dx, dy) > 5) return;
+
+      const hit = pickEarth(event.clientX, event.clientY);
+      if (!hit) return;
+
+      const local = earth.worldToLocal(hit.point.clone()).normalize();
+      const coords = vectorToLatLon(local);
+      latInput.value = coords.lat.toFixed(4);
+      lonInput.value = coords.lon.toFixed(4);
+      addPin(coords.lat, coords.lon, true);
+    });
+
+    controls.addEventListener("start", () => setRenderQuality("low"));
+    controls.addEventListener("end", () => scheduleHighQuality());
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function loadTexture(url, color = false) {
+      const texture = textureLoader.load(url, () => renderer.render(scene, camera));
+      if (color) texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return texture;
+    }
+
+    function addPin(lat, lon, focus = false) {
+      const marker = createPinMesh();
+      const position = latLonToVector(lat, lon, earthRadius);
+      marker.position.copy(position);
+      marker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), position.clone().normalize());
+      marker.userData = { lat, lon };
+      earth.add(marker);
+
+      const label = document.createElement("div");
+      label.className = "pin-label";
+      label.innerHTML = `<b>Lat ${formatCoord(lat)}</b><span>Lon ${formatCoord(lon)}</span><button type="button" aria-label="Quitar pin">x</button>`;
+      document.body.appendChild(label);
+
+      const pin = { group: marker, label, lat, lon };
+      label.querySelector("button").addEventListener("click", (event) => {
+        event.stopPropagation();
+        removePin(pin);
+      });
+      pins.push(pin);
+      activeLabel = pin;
+      updateReadout(pin);
+
+      if (focus) {
+        controls.autoRotate = false;
+        autoBtn.setAttribute("aria-pressed", "false");
+        autoBtn.classList.remove("primary");
+        scheduleHighQuality();
+      }
+    }
+
+    function removePin(pin) {
+      const index = pins.indexOf(pin);
+      if (index !== -1) pins.splice(index, 1);
+      earth.remove(pin.group);
+      pin.label.remove();
+
+      if (activeLabel === pin) {
+        activeLabel = pins[pins.length - 1] ?? null;
+      }
+
+      if (activeLabel) {
+        updateReadout(activeLabel);
+      } else {
+        statusTitle.textContent = "Sin pins";
+        coordText.textContent = "Lat --, Lon --";
+      }
+    }
+
+    function createPinMesh() {
+      const group = new THREE.Group();
+      const pole = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.012, 0.018, 0.22, 18),
+        new THREE.MeshStandardMaterial({ color: 0xffcc5c, roughness: 0.34, metalness: 0.18 })
+      );
+      pole.position.y = 0.1;
+      group.add(pole);
+
+      const head = new THREE.Mesh(
+        new THREE.SphereGeometry(0.055, 24, 24),
+        new THREE.MeshStandardMaterial({ color: 0xff4d6d, emissive: 0x8d102b, emissiveIntensity: 0.35, roughness: 0.28 })
+      );
+      head.position.y = 0.225;
+      group.add(head);
+
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(0.07, 0.006, 12, 40),
+        new THREE.MeshBasicMaterial({ color: 0xffcc5c, transparent: true, opacity: 0.82 })
+      );
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = 0.006;
+      group.add(ring);
+
+      return group;
+    }
+
+    function updateReadout(pin) {
+      statusTitle.textContent = "Pin seleccionado";
+      coordText.textContent = `Lat ${formatCoord(pin.lat)}, Lon ${formatCoord(pin.lon)}`;
+    }
+
+    function pickEarth(clientX, clientY) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+      return raycaster.intersectObject(earth, false)[0] ?? null;
+    }
+
+    function latLonToVector(lat, lon, radius) {
+      const phi = THREE.MathUtils.degToRad(90 - lat);
+      const theta = THREE.MathUtils.degToRad(lon + 180);
+      return new THREE.Vector3(
+        -radius * Math.sin(phi) * Math.cos(theta),
+        radius * Math.cos(phi),
+        radius * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+
+    function vectorToLatLon(vector) {
+      const lat = 90 - THREE.MathUtils.radToDeg(Math.acos(THREE.MathUtils.clamp(vector.y, -1, 1)));
+      let lon = THREE.MathUtils.radToDeg(Math.atan2(vector.z, -vector.x)) - 180;
+      lon = ((lon + 540) % 360) - 180;
+      return { lat, lon };
+    }
+
+    function formatCoord(value) {
+      return `${value.toFixed(4)} deg`;
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("visible");
+      window.clearTimeout(showToast.timeout);
+      showToast.timeout = window.setTimeout(() => toast.classList.remove("visible"), 2300);
+    }
+
+    function updateLabels() {
+      const cameraPosition = new THREE.Vector3();
+      camera.getWorldPosition(cameraPosition);
+
+      for (const pin of pins) {
+        const world = new THREE.Vector3();
+        pin.group.getWorldPosition(world);
+        const normal = world.clone().sub(earth.getWorldPosition(new THREE.Vector3())).normalize();
+        const view = cameraPosition.clone().sub(world).normalize();
+        const visible = normal.dot(view) > 0.04;
+        const projected = world.clone().project(camera);
+        const x = (projected.x * 0.5 + 0.5) * window.innerWidth;
+        const y = (-projected.y * 0.5 + 0.5) * window.innerHeight;
+
+        pin.label.style.left = `${x}px`;
+        pin.label.style.top = `${y}px`;
+        pin.label.classList.toggle("visible", visible);
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (controls.autoRotate) {
+        setRenderQuality("low");
+      }
+      controls.update();
+      clouds.rotation.y += 0.00055;
+      updateLabels();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    function setRenderQuality(quality) {
+      if (quality === renderQuality) return;
+      renderQuality = quality;
+      window.clearTimeout(highQualityTimer);
+
+      if (quality === "low") {
+        renderer.setPixelRatio(lowPixelRatio);
+        earth.geometry = earthLowGeometry;
+        clouds.geometry = cloudLowGeometry;
+        earthMaterial.normalScale.set(0.18, 0.18);
+        clouds.material.opacity = 0.22;
+      } else {
+        renderer.setPixelRatio(highPixelRatio);
+        earth.geometry = earthHighGeometry;
+        clouds.geometry = cloudHighGeometry;
+        earthMaterial.normalScale.set(0.42, 0.42);
+        clouds.material.opacity = 0.36;
+      }
+
+      renderer.setSize(window.innerWidth, window.innerHeight, false);
+    }
+
+    function scheduleHighQuality() {
+      window.clearTimeout(highQualityTimer);
+      highQualityTimer = window.setTimeout(() => {
+        if (!controls.autoRotate) setRenderQuality("high");
+      }, 420);
+    }
+
+    function makeStars(count) {
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(count * 3);
+      const colors = new Float32Array(count * 3);
+
+      for (let i = 0; i < count; i++) {
+        const radius = 24 + Math.random() * 42;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(THREE.MathUtils.randFloatSpread(2));
+        positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = radius * Math.cos(phi);
+        positions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+
+        const warmth = Math.random();
+        colors[i * 3] = 0.72 + warmth * 0.28;
+        colors[i * 3 + 1] = 0.78 + warmth * 0.2;
+        colors[i * 3 + 2] = 0.9 + Math.random() * 0.1;
+      }
+
+      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+      return new THREE.Points(
+        geometry,
+        new THREE.PointsMaterial({
+          size: 0.055,
+          sizeAttenuation: true,
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.86
+        })
+      );
+    }
+
+  </script>
+</body>
+</html>
