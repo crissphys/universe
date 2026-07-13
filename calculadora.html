@@ -9,14 +9,6 @@
   <meta name="apple-mobile-web-app-title" content="Universe to Study">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQNXG3BRZP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WQNXG3BRZP');
-  </script>
   <script>
     (function(){
       try {
@@ -39,7 +31,35 @@
   </script>
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237378560312131"
-     crossorigin="anonymous"></script></head>
+     crossorigin="anonymous"></script><style id="universe-loader-style">
+#universe-page-loader{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 20% 15%,rgba(37,99,235,.22),transparent 34%),linear-gradient(135deg,#031427,#0b1f3a 58%,#06111f);color:#fff;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;transition:opacity .32s ease,visibility .32s ease}
+#universe-page-loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.upl-card{width:min(92vw,360px);border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(255,255,255,.08);box-shadow:0 24px 70px rgba(0,0,0,.35);backdrop-filter:blur(14px);padding:28px 22px;text-align:center}
+.upl-orbit{position:relative;width:66px;height:66px;margin:0 auto 16px;border-radius:50%;border:3px solid rgba(255,255,255,.18);border-top-color:#60a5fa;animation:upl-spin .85s linear infinite}
+.upl-orbit span{position:absolute;inset:17px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb)}
+#universe-page-loader strong{display:block;font-size:clamp(1.25rem,5vw,1.7rem);letter-spacing:-.03em}
+#universe-page-loader small{display:block;margin-top:7px;color:#cfe7ff;font-weight:700}
+#account-panel,.universe-google-signin,.universe-google-account,#nav-user-btn{display:none!important}
+@keyframes upl-spin{to{transform:rotate(360deg)}}
+@media(max-width:520px){.upl-card{border-radius:20px;padding:24px 18px}.upl-orbit{width:58px;height:58px}}
+</style>
+<script id="universe-loader-script">
+(function(){
+  function hideLoader(){var el=document.getElementById('universe-page-loader');if(!el)return;el.classList.add('hide');setTimeout(function(){try{el.remove()}catch(e){}},420)}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,450)},{once:true});
+  window.addEventListener('load',function(){setTimeout(hideLoader,180)},{once:true});
+  setTimeout(hideLoader,1800);
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NK0XVN4NF5');
+</script>
+</head>
 <body>
 <!-- UNIVERSE · Página física: calculator -->
 <script>(function(){
@@ -280,15 +300,7 @@ html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; out
   html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:auto; }
 }
 
-/* UNIVERSE_GOOGLE_LOGIN_START */
-#login-overlay{display:none!important}
-.login-google-section{margin-bottom:1.5rem}
-.login-google-note,.universe-google-status{color:#64748b;font-size:.82rem;line-height:1.45}
-.login-google-note{margin-top:.7rem;text-align:center}
-.universe-google-account{border-color:rgba(37,99,235,.18)!important;background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(239,246,255,.92))!important}
-.universe-google-signin{display:flex;min-height:44px;align-items:center;justify-content:flex-start;margin-top:.85rem}
-.universe-google-status.connected{color:#0f766e;font-weight:700}
-/* UNIVERSE_GOOGLE_LOGIN_END */
+
 </style>
 <style id="universe-static-page-recovery-fix">
 html[data-universe-page] .universe-static-page,
@@ -321,49 +333,13 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
   window.addEventListener('pageshow', function(){ setTimeout(reset, 0); });
 })();
 </script>
-<div id="login-overlay">
-  <div class="login-card">
-    <div class="login-card-inner">
-      <div class="login-brand">
-        <div class="login-logo">Universe to Study</div>
-        <div class="login-tagline">Plataforma Preuniversitaria · UNI</div>
-      </div>
-
-      <p class="login-desc">Accede como invitado para explorar todo el contenido educativo, o utiliza los accesos directos a las plataformas oficiales.</p>
-
-      <div class="login-guest-section">
-        <button class="login-guest-btn" id="login-guest-btn" onclick="event.preventDefault();var o=document.getElementById('login-overlay');if(o){o.classList.add('hidden');o.style.display='none';}try{if(window.handleLogin){window.handleLogin();}}catch(e){}return false;" type="button">
-          <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          Entrar como invitado
-        </button>
-      </div>
-
-      
-      <div class="login-google-section">
-        <div class="login-divider"><span>Google</span></div>
-        <div class="universe-google-signin" data-google-place="login"></div>
-        <div class="login-google-note">Tu nombre, correo y foto se guardan solo para tu perfil de Universe to Study.</div>
-      </div>
-
-      <div class="login-official">
-        <div class="login-divider"><span>o accede desde</span></div>
-        <div class="login-official-grid">
-          <a class="login-official-card cu" href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">
-            <div class="login-official-name">CEPREUNI</div>
-            <div class="login-official-desc">Sitio Oficial</div>
-          </a>
-          <a class="login-official-card cn" href="https://ceprenet.uni.edu.pe/auth/login" rel="noopener noreferrer" target="_blank">
-            <div class="login-official-name">CEPRENET</div>
-            <div class="login-official-desc">Plataforma Virtual</div>
-          </a>
-        </div>
-      </div>
-
-    <div class="login-terms">Al continuar aceptas nuestros <a href="/terminos">Términos de Servicio</a> y <a href="/privacidad">Política de Privacidad</a> de Universe to Study.</div>
-    </div>
+<div id="universe-page-loader" role="status" aria-live="polite">
+  <div class="upl-card">
+    <div class="upl-orbit"><span></span></div>
+    <strong>Cargando página</strong>
+    <small>Preparando Universe to Study...</small>
   </div>
 </div>
-
 <div id="account-panel">
   <div class="tp-header">
     <button aria-label="Cerrar" class="tp-back universe-panel-close" onclick="closeAccountPanel()" type="button">×</button>
@@ -896,7 +872,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
 
       <div class="cp-hidden" id="cp-manual-panel">
         <div class="cp-divider"></div>
-        <div class="cp-card-title" style="margin-bottom:.85rem"><span class="cp-step">2</span><div><h3>Escribe tus notas actuales</h3><p>Escala de 0 a 150 puntos. Puedes dejar en blanco los exámenes que todavía no rindes.</p></div></div>
+        <div class="cp-card-title" style="margin-bottom:.85rem"><span class="cp-step">2</span><div><h3>Escribe tus notas actuales</h3><p>Orden: PC1, PC2, EP1, PC3, PC4, EP2, PC5, PC6, PC7 y examen final. Cada nota va de 0 a 150 puntos.</p></div></div>
         <div class="cp-notes-grid" id="cp-manual-grid"></div>
       </div>
 
@@ -948,8 +924,8 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   var CAREERS=[
     ['A1','Arquitectura',13.079],['A2','Urbanismo',9.668],['C1','Ingeniería Civil',14.304],['M3','Ingeniería Mecánica',12.718],['M4','Ingeniería Mecánica Eléctrica',12.449],['M5','Ingeniería Naval',12.519],['M6','Ingeniería Mecatrónica',14.550],['M7','Ingeniería Aeroespacial',14.051],['N1','Física',10.879],['N2','Matemática',9.451],['N3','Química',10.305],['N5','Ingeniería Física',8.748],['N6','Ciencia de la Computación',12.468],['L1','Ingeniería Eléctrica',13.119],['L2','Ingeniería Electrónica',12.493],['L3','Ingeniería de Telecomunicaciones',11.887],['L4','Ingeniería de Ciberseguridad',12.368],['L5','Ingeniería Biomédica',9.068],['I1','Ingeniería Industrial',13.302],['I2','Ingeniería de Sistemas',14.536],['I3','Ingeniería de Software',14.776],['I4','Ingeniería de Inteligencia Artificial',11.629],['G1','Ingeniería Geológica',9.895],['G2','Ingeniería Metalúrgica',11.298],['G3','Ingeniería de Minas',12.766],['S1','Ingeniería Sanitaria',10.301],['S2','Ingeniería de Higiene y Seguridad Industrial',9.474],['S3','Ingeniería Ambiental',9.439],['E1','Ingeniería Económica',11.936],['E3','Ingeniería Estadística',10.986],['Q1','Ingeniería Química',9.807],['Q2','Ingeniería Textil',9.110],['P2','Ingeniería Petroquímica',9.047],['P3','Ingeniería de Petróleo y Gas Natural',9.685]
   ];
-  var NOTE_LABELS=['PC 1','PC 2','PC 3','PC 4','PC 5','EP 1','EP 2','PC 6','PC 7','Examen final'];
-  var PC_INDEXES=[0,1,2,3,4,7],EXAM_ORDER=[0,1,5,2,3,6,4,7,8,9];
+  var NOTE_LABELS=['PC1','PC2','Primer examen parcial (EP1)','PC3','PC4','Segundo examen parcial (EP2)','PC5','PC6','PC7','Examen final'];
+  var PC_INDEXES=[0,1,3,4,6,7],EP1_INDEX=2,EP2_INDEX=5,PC7_INDEX=8,EF_INDEX=9,EXAM_ORDER=[0,1,2,3,4,5,6,7,8,9];
   var state={mode:'code',notes:null,student:null};
   function byId(id){return document.getElementById(id)}
   function number(value){var n=parseFloat(value);return Number.isFinite(n)?n:null}
@@ -962,15 +938,16 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
     var workshops=byId('cp-workshop-grid');for(var i=0;i<6;i++){var w=document.createElement('label');w.className='cp-field';w.textContent='Taller '+(i+1);var wi=document.createElement('input');wi.type='number';wi.min='0';wi.max='90';wi.step='.01';wi.placeholder='0-90';wi.dataset.workshop=i;wi.addEventListener('input',render);w.appendChild(wi);workshops.appendChild(w)}
     var p=document.createElement('label');p.className='cp-field';p.textContent='Prueba PVD';var pi=document.createElement('input');pi.id='cp-pvd-input';pi.type='number';pi.min='0';pi.max='200';pi.step='.01';pi.placeholder='0-200';pi.addEventListener('input',render);p.appendChild(pi);workshops.appendChild(p)
   }
-  function setMode(mode){state.mode=mode;document.querySelectorAll('.cp-mode-tab').forEach(function(btn){var active=btn.dataset.mode===mode;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active?'true':'false')});byId('cp-code-panel').classList.toggle('cp-hidden',mode!=='code');byId('cp-manual-panel').classList.toggle('cp-hidden',mode!=='manual');if(mode==='manual')manualChanged();else state.notes=state.student?state.student.slice(0,7).concat([null,null,null]):null;showNotes();render()}
+  function recordToNotes(record){return record?[record[0],record[1],record[5],record[2],record[3],record[6],record[4],null,null,null]:null}
+  function setMode(mode){state.mode=mode;document.querySelectorAll('.cp-mode-tab').forEach(function(btn){var active=btn.dataset.mode===mode;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active?'true':'false')});byId('cp-code-panel').classList.toggle('cp-hidden',mode!=='code');byId('cp-manual-panel').classList.toggle('cp-hidden',mode!=='manual');if(mode==='manual')manualChanged();else state.notes=recordToNotes(state.student);showNotes();render()}
   function manualChanged(){state.notes=Array.prototype.map.call(document.querySelectorAll('[data-note]'),function(input){return number(input.value)});showNotes();render()}
   function alertMessage(message){var box=byId('cp-alert');box.textContent=message||'';box.classList.toggle('show',!!message)}
-  function findStudent(){var code=byId('cp-code').value.trim().toUpperCase().replace(/\s+/g,'');byId('cp-code').value=code;var record=STUDENTS[code];if(!record){state.student=null;state.notes=null;alertMessage(code?'No encontramos ese código en los 2,824 registros del ranking. Revisa si está completo.':'Escribe tu código CEPREUNI.');showNotes();render();return}state.student=record;state.notes=record.slice(0,7).concat([null,null,null]);alertMessage('');showNotes();render()}
-  function droppedIndex(notes){var min=Math.min.apply(null,notes.slice(0,5));return notes.slice(0,5).indexOf(min)}
+  function findStudent(){var code=byId('cp-code').value.trim().toUpperCase().replace(/\s+/g,'');byId('cp-code').value=code;var record=STUDENTS[code];if(!record){state.student=null;state.notes=null;alertMessage(code?'No encontramos ese código en los 2,824 registros del ranking. Revisa si está completo.':'Escribe tu código CEPREUNI.');showNotes();render();return}state.student=record;state.notes=recordToNotes(record);alertMessage('');showNotes();render()}
+  function droppedIndex(notes){var pcs=PC_INDEXES.map(function(idx){return{idx:idx,value:notes[idx]}}).filter(function(item){return known(item.value)});if(pcs.length<6)return-1;pcs.sort(function(a,b){return a.value-b.value});return pcs[0].idx}
   function showNotes(){var readout=byId('cp-note-readout');if(!state.notes||state.mode!=='code'){readout.classList.remove('show');return}var drop=droppedIndex(state.notes),strip=byId('cp-note-strip');strip.innerHTML='';state.notes.slice(0,7).forEach(function(value,index){var chip=document.createElement('div');chip.className='cp-note-chip'+(index===drop?' dropped':'');chip.innerHTML='<span>'+NOTE_LABELS[index]+'</span><strong>'+fmt(value,2)+'</strong>';strip.appendChild(chip)});var site=state.student?state.student[8]:'';byId('cp-source').innerHTML='<span><b>Código:</b> '+byId('cp-code').value+'</span><span><b>Sede:</b> '+site+'</span><span><b>Ranking provisional:</b> '+fmt(state.student?state.student[7]:NaN,3)+'/150</span>';readout.classList.add('show')}
   function known(v){return Number.isFinite(v)}
   function hasAny(notes){return notes&&notes.some(known)}
-  function completedScore(notes,cutoff20){var points=0,max=0,pcVals=PC_INDEXES.map(function(i){return notes[i]}).filter(known).sort(function(a,b){return b-a});if(pcVals.length>=6){points+=pcVals.slice(0,5).reduce(function(a,b){return a+b},0);max+=750}else if(pcVals.length>=5){points+=pcVals.slice(0,4).reduce(function(a,b){return a+b},0);max+=600}else{points+=pcVals.reduce(function(a,b){return a+b},0);max+=150*pcVals.length}if(known(notes[8])){points+=notes[8];max+=150}if(known(notes[5])){points+=2*notes[5];max+=300}if(known(notes[6])){points+=4*notes[6];max+=600}if(known(notes[9])){points+=6*notes[9];max+=900}var current20=max?points/max*20:NaN;return{raw:current20*7.5,current20:current20,weighted:points,max:max,pidEstimate:Number.isFinite(current20)?current20/20*2700:NaN,diff:current20-cutoff20}}
+  function completedScore(notes,cutoff20){var points=0,max=0,pcVals=PC_INDEXES.map(function(i){return notes[i]}).filter(known);if(pcVals.length>=6){pcVals=pcVals.slice().sort(function(a,b){return b-a});points+=pcVals.slice(0,5).reduce(function(a,b){return a+b},0);max+=750}else{points+=pcVals.reduce(function(a,b){return a+b},0);max+=150*pcVals.length}if(known(notes[PC7_INDEX])){points+=notes[PC7_INDEX];max+=150}if(known(notes[EP1_INDEX])){points+=2*notes[EP1_INDEX];max+=300}if(known(notes[EP2_INDEX])){points+=4*notes[EP2_INDEX];max+=600}if(known(notes[EF_INDEX])){points+=6*notes[EF_INDEX];max+=900}var current20=max?points/max*20:NaN;return{raw:current20*7.5,current20:current20,weighted:points,max:max,pidEstimate:Number.isFinite(current20)?current20/20*2700:NaN,diff:current20-cutoff20}}
   function nextExam(notes){for(var i=0;i<EXAM_ORDER.length;i++){var idx=EXAM_ORDER[i];if(!known(notes[idx]))return{index:idx,label:NOTE_LABELS[idx],max:150}}return null}
   function scoreWith(notes,index,value){var copy=notes.slice();copy[index]=value;return completedScore(copy,0).current20}
   function neededForNext(notes,target20){var nx=nextExam(notes);if(!nx)return null;if(scoreWith(notes,nx.index,0)>=target20)return{exam:nx,needed:0};if(scoreWith(notes,nx.index,nx.max)<target20)return{exam:nx,needed:Infinity};var low=0,high=nx.max;for(var i=0;i<30;i++){var mid=(low+high)/2;if(scoreWith(notes,nx.index,mid)>=target20)high=mid;else low=mid}return{exam:nx,needed:high}}
@@ -1140,133 +1117,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
 </script>
 <!-- UNIVERSE_STANDALONE_SUPPORT_END -->
 
-<!-- UNIVERSE_GOOGLE_LOGIN_START -->
-<script>//<![CDATA[
-(function(){
-  if(window.__universeGoogleLoginReady) return;
-  window.__universeGoogleLoginReady = true;
-  var CLIENT_ID = '410302293146-nr50k7kovcpd5kuekfd49ddqc041612g.apps.googleusercontent.com';
-  var SDK_SRC = 'https://accounts.google.com/gsi/client';
-  var REGISTERED_KEY = 'universe_google_registered';
 
-  function parseJwt(token){
-    var base64Url = String(token || '').split('.')[1] || '';
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c){
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-  }
-
-  function saveGoogleUser(data){
-    var id = 'google_' + String(data.sub || data.email || Date.now()).replace(/[^a-zA-Z0-9_-]/g, '');
-    var user = {
-      id: id,
-      name: data.name || data.given_name || 'Usuario Google',
-      email: data.email || 'Cuenta Google',
-      avatar: data.picture || null,
-      provider: 'google',
-      createdAt: Date.now()
-    };
-    try { localStorage.setItem('universe_google_registered', '1'); } catch(e) {}
-    try { localStorage.setItem('universe_usuario_nombre', user.name); } catch(e) {}
-    try { localStorage.setItem('universe_usuario_email', user.email); } catch(e) {}
-    try { if(user.avatar) localStorage.setItem('universe_usuario_foto', user.avatar); } catch(e) {}
-    try {
-      if (typeof saveUser === 'function') saveUser(user);
-      else {
-        window.currentUser = user;
-        localStorage.setItem('universe_user', JSON.stringify(user));
-        sessionStorage.setItem('universe_user', JSON.stringify(user));
-      }
-    } catch(e) {}
-    try { if (typeof loadProfilePrefs === 'function') loadProfilePrefs(); } catch(e) {}
-    try { if (typeof completeLogin === 'function') completeLogin(); } catch(e) {}
-    try { if (typeof updateNavUser === 'function') updateNavUser(); } catch(e) {}
-    try { if (typeof renderGamification === 'function') renderGamification(); } catch(e) {}
-    updateGoogleStatus(user);
-  }
-
-  window.manejarRespuestaGoogle = function(response){
-    if (!response || !response.credential) return;
-    saveGoogleUser(parseJwt(response.credential));
-  };
-
-  function getSavedUser(){
-    try {
-      var raw = localStorage.getItem('universe_user') || sessionStorage.getItem('universe_user');
-      return raw ? JSON.parse(raw) : null;
-    } catch(e) { return null; }
-  }
-
-  function updateGoogleStatus(user){
-    user = user || getSavedUser();
-    var status = document.getElementById('universe-google-status');
-    if (!status) return;
-    if (user && user.provider === 'google') {
-      status.textContent = 'Conectado con Google: ' + (user.email || user.name || 'cuenta activa');
-      status.classList.add('connected');
-    } else {
-      status.textContent = 'Conecta tu cuenta para usar tu nombre, correo y foto en Universe to Study.';
-      status.classList.remove('connected');
-    }
-  }
-
-  function renderButtons(){
-    if (!window.google || !google.accounts || !google.accounts.id) return;
-    google.accounts.id.initialize({
-      client_id: CLIENT_ID,
-      callback: window.manejarRespuestaGoogle,
-      auto_select: false,
-      cancel_on_tap_outside: true
-    });
-    document.querySelectorAll('.universe-google-signin').forEach(function(target){
-      if (target.dataset.rendered === '1') return;
-      target.dataset.rendered = '1';
-      target.innerHTML = '';
-      google.accounts.id.renderButton(target, {
-        type: 'standard',
-        shape: 'pill',
-        theme: 'outline',
-        text: 'signin_with',
-        size: 'large',
-        logo_alignment: 'left',
-        width: Math.max(240, Math.min(360, target.clientWidth || 280))
-      });
-    });
-    updateGoogleStatus();
-  }
-
-  function loadSdk(){
-    if (window.google && google.accounts && google.accounts.id) { renderButtons(); return; }
-    if (!document.querySelector('script[src="' + SDK_SRC + '"]')) {
-      var script = document.createElement('script');
-      script.src = SDK_SRC;
-      script.async = true;
-      script.defer = true;
-      script.onload = renderButtons;
-      document.head.appendChild(script);
-    } else {
-      setTimeout(renderButtons, 500);
-    }
-  }
-
-  function initGoogleLogin(){
-    var overlay = document.getElementById('login-overlay');
-    if (overlay) {
-      overlay.classList.add('hidden');
-      overlay.style.display = 'none';
-    }
-    loadSdk();
-    updateGoogleStatus();
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initGoogleLogin, { once: true });
-  else initGoogleLogin();
-  window.addEventListener('load', initGoogleLogin, { once: true });
-})();
-//]]></script>
-<!-- UNIVERSE_GOOGLE_LOGIN_END -->
 
     <script>//<![CDATA[
 // ===================== USER STATE =====================
@@ -7962,6 +7813,17 @@ window.addEventListener('load', initUniverseApp, { once: true });
 </script>
 
 
+<script id="universe-login-disable-script">
+(function(){
+  function hidePageLoader(){var el=document.getElementById('universe-page-loader');if(el){el.classList.add('hide');setTimeout(function(){try{el.remove()}catch(e){}},420)}}
+  window.handleLogin=function(){hidePageLoader();return false};
+  window.showEmailLogin=function(){hidePageLoader();return false};
+  window.showLoginMain=function(){hidePageLoader();return false};
+  window.submitEmailLogin=function(event){if(event&&event.preventDefault)event.preventDefault();hidePageLoader();return false};
+  window.openAccountPanel=function(){return false};
+  window.closeAccountPanel=function(){return false};
+})();
+</script>
 </body>
 </html>
 
