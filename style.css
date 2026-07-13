@@ -7855,11 +7855,5 @@ html[data-universe-page] body > #temario-panel:not(.open),
 html[data-universe-page] body > #actualidad-panel:not(.open),
 html[data-universe-page] body > #quiz-panel:not(.open) {
   display: none !important;
-    /* Forzar scroll vertical en todas las subpáginas */
-html, body {
-    height: auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden;
-}
 }
 /* GITHUB_PAGES_FIX_END */

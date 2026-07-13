@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-universe-page="exams">
 <head>
   <meta charset="UTF-8">
@@ -73,25 +73,32 @@ html[data-universe-page] .post-location { display:none !important; }
 
 html[data-universe-page],html[data-universe-page] body {
   width:100% !important;
-  height:100% !important;
   min-height:100% !important;
   margin:0 !important;
-  overflow:hidden !important;
+  overflow-x:hidden !important;
+}
+html[data-universe-page] {
+  height:auto !important;
+  overflow-y:auto !important;
+  overscroll-behavior-y:auto !important;
+  touch-action:pan-y !important;
+}
+html[data-universe-page] body {
+  height:auto !important;
+  min-height:100svh !important;
+  overflow-y:visible !important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y !important;
 }
 html[data-universe-page] #page-content {
-  position:fixed !important;
-  inset:0 !important;
+  position:relative !important;
   z-index:1 !important;
   box-sizing:border-box !important;
-  width:100vw !important;
-  height:100vh !important;
-  height:100dvh !important;
+  width:100% !important;
+  min-height:100svh !important;
   margin:0 !important;
   padding:0 !important;
-  overflow-x:hidden !important;
-  overflow-y:auto !important;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
+  overflow:visible !important;
 }
 html[data-universe-page] #main-wrapper,
 html[data-universe-page] #page_body,
@@ -7690,3 +7697,4 @@ window.addEventListener('load', initUniverseApp, { once: true });
 
 </body>
 </html>
+

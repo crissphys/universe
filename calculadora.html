@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-universe-page="calculator">
 <head>
   <meta charset="UTF-8">
@@ -73,25 +73,32 @@ html[data-universe-page] .post-location { display:none !important; }
 
 html[data-universe-page],html[data-universe-page] body {
   width:100% !important;
-  height:100% !important;
   min-height:100% !important;
   margin:0 !important;
-  overflow:hidden !important;
+  overflow-x:hidden !important;
+}
+html[data-universe-page] {
+  height:auto !important;
+  overflow-y:auto !important;
+  overscroll-behavior-y:auto !important;
+  touch-action:pan-y !important;
+}
+html[data-universe-page] body {
+  height:auto !important;
+  min-height:100svh !important;
+  overflow-y:visible !important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y !important;
 }
 html[data-universe-page] #page-content {
-  position:fixed !important;
-  inset:0 !important;
+  position:relative !important;
   z-index:1 !important;
   box-sizing:border-box !important;
-  width:100vw !important;
-  height:100vh !important;
-  height:100dvh !important;
+  width:100% !important;
+  min-height:100svh !important;
   margin:0 !important;
   padding:0 !important;
-  overflow-x:hidden !important;
-  overflow-y:auto !important;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
+  overflow:visible !important;
 }
 html[data-universe-page] #main-wrapper,
 html[data-universe-page] #page_body,
@@ -803,7 +810,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
     <div>
       <div class="cp-eyebrow">Planificador CEPREUNI 2026</div>
       <h1 id="cp-title">Tu ruta de ingreso, en números claros.</h1>
-      <p>Busca tu código o ingresa tus notas. Compara tu promedio provisional con la nota mínima de la carrera elegida y descubre cuánto necesitas en la 6.ª prueba calificada.</p>
+      <p>Busca tu código o ingresa tus notas. Compara tu promedio provisional con la referencia de tu carrera y descubre cuánto necesitas en el siguiente examen disponible.</p>
     </div>
     <div class="cp-formula-stack" aria-label="Fórmulas oficiales usadas">
       <div class="cp-formula"><strong>Todas las especialidades</strong><code>PID = S + 2EP1 + 4EP2 + 6EF</code></div>
@@ -842,7 +849,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
 
       <div class="cp-hidden" id="cp-manual-panel">
         <div class="cp-divider"></div>
-        <div class="cp-card-title" style="margin-bottom:.85rem"><span class="cp-step">2</span><div><h3>Escribe tus notas actuales</h3><p>Escala de 0 a 150 puntos. Completa las cinco PC y los dos parciales.</p></div></div>
+        <div class="cp-card-title" style="margin-bottom:.85rem"><span class="cp-step">2</span><div><h3>Escribe tus notas actuales</h3><p>Escala de 0 a 150 puntos. Puedes dejar en blanco los exámenes que todavía no rindes.</p></div></div>
         <div class="cp-notes-grid" id="cp-manual-grid"></div>
       </div>
 
@@ -866,7 +873,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
           <div class="cp-metric"><span>Promedio en escala CEPRE</span><strong id="cp-raw">-</strong></div>
           <div class="cp-metric"><span>Distancia frente al mínimo</span><strong id="cp-difference">-</strong></div>
         </div>
-        <div class="cp-next"><span>¿Cuánto necesitas en la 6ta PC?</span><strong id="cp-next">-</strong><p id="cp-next-copy">Esta es la nota mínima orientativa para conservar o alcanzar el margen de tu carrera.</p></div>
+        <div class="cp-next"><span>Meta del siguiente examen</span><strong id="cp-next">-</strong><p id="cp-next-copy">Esta es la nota mínima orientativa para conservar o alcanzar el margen de referencia.</p></div>
         <div class="cp-arch-results" id="cp-arch-results">
           <h4>Proyección de Arquitectura</h4>
           <div class="cp-metrics">
@@ -881,8 +888,8 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   </div>
 
   <div class="cp-method" aria-label="Cómo se interpreta el cálculo">
-    <div class="cp-method-card"><b>1. Promedio actual comparable</b><p>Con las cinco PC registradas se elimina la menor; luego se aplican los pesos x2 y x4 a EP1 y EP2. Es el mismo criterio del ranking provisional.</p></div>
-    <div class="cp-method-card"><b>2. Meta de la 6.ª PC</b><p>Al llegar la sexta PC se conservan las cinco mejores. La meta indica el mínimo matemático para alcanzar o sostener la referencia elegida en esa etapa.</p></div>
+    <div class="cp-method-card"><b>1. Promedio actual comparable</b><p>Con las notas ingresadas se calcula una referencia provisional respetando descartes y ponderaciones cuando corresponde.</p></div>
+    <div class="cp-method-card"><b>2. Meta del siguiente examen</b><p>La calculadora detecta el primer examen pendiente y estima la nota mínima para sostener o alcanzar la referencia elegida.</p></div>
     <div class="cp-method-card"><b>3. Una referencia, no una garantía</b><p>La nota de corte cambia cada ciclo. El resultado orienta tu estrategia; el ingreso real depende del puntaje final, vacantes y rendimiento del grupo.</p></div>
   </div>
 </section>
@@ -894,7 +901,8 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   var CAREERS=[
     ['A1','Arquitectura',13.079],['A2','Urbanismo',9.668],['C1','Ingeniería Civil',14.304],['M3','Ingeniería Mecánica',12.718],['M4','Ingeniería Mecánica Eléctrica',12.449],['M5','Ingeniería Naval',12.519],['M6','Ingeniería Mecatrónica',14.550],['M7','Ingeniería Aeroespacial',14.051],['N1','Física',10.879],['N2','Matemática',9.451],['N3','Química',10.305],['N5','Ingeniería Física',8.748],['N6','Ciencia de la Computación',12.468],['L1','Ingeniería Eléctrica',13.119],['L2','Ingeniería Electrónica',12.493],['L3','Ingeniería de Telecomunicaciones',11.887],['L4','Ingeniería de Ciberseguridad',12.368],['L5','Ingeniería Biomédica',9.068],['I1','Ingeniería Industrial',13.302],['I2','Ingeniería de Sistemas',14.536],['I3','Ingeniería de Software',14.776],['I4','Ingeniería de Inteligencia Artificial',11.629],['G1','Ingeniería Geológica',9.895],['G2','Ingeniería Metalúrgica',11.298],['G3','Ingeniería de Minas',12.766],['S1','Ingeniería Sanitaria',10.301],['S2','Ingeniería de Higiene y Seguridad Industrial',9.474],['S3','Ingeniería Ambiental',9.439],['E1','Ingeniería Económica',11.936],['E3','Ingeniería Estadística',10.986],['Q1','Ingeniería Química',9.807],['Q2','Ingeniería Textil',9.110],['P2','Ingeniería Petroquímica',9.047],['P3','Ingeniería de Petróleo y Gas Natural',9.685]
   ];
-  var NOTE_LABELS=['PC 1','PC 2','PC 3','PC 4','PC 5','EP 1','EP 2'];
+  var NOTE_LABELS=['PC 1','PC 2','PC 3','PC 4','PC 5','EP 1','EP 2','PC 6','PC 7','Examen final'];
+  var PC_INDEXES=[0,1,2,3,4,7],EXAM_ORDER=[0,1,5,2,3,6,4,7,8,9];
   var state={mode:'code',notes:null,student:null};
   function byId(id){return document.getElementById(id)}
   function number(value){var n=parseFloat(value);return Number.isFinite(n)?n:null}
@@ -907,21 +915,27 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
     var workshops=byId('cp-workshop-grid');for(var i=0;i<6;i++){var w=document.createElement('label');w.className='cp-field';w.textContent='Taller '+(i+1);var wi=document.createElement('input');wi.type='number';wi.min='0';wi.max='90';wi.step='.01';wi.placeholder='0-90';wi.dataset.workshop=i;wi.addEventListener('input',render);w.appendChild(wi);workshops.appendChild(w)}
     var p=document.createElement('label');p.className='cp-field';p.textContent='Prueba PVD';var pi=document.createElement('input');pi.id='cp-pvd-input';pi.type='number';pi.min='0';pi.max='200';pi.step='.01';pi.placeholder='0-200';pi.addEventListener('input',render);p.appendChild(pi);workshops.appendChild(p)
   }
-  function setMode(mode){state.mode=mode;document.querySelectorAll('.cp-mode-tab').forEach(function(btn){var active=btn.dataset.mode===mode;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active?'true':'false')});byId('cp-code-panel').classList.toggle('cp-hidden',mode!=='code');byId('cp-manual-panel').classList.toggle('cp-hidden',mode!=='manual');if(mode==='manual')manualChanged();else state.notes=state.student?state.student.slice(0,7):null;showNotes();render()}
-  function manualChanged(){var vals=Array.prototype.map.call(document.querySelectorAll('[data-note]'),function(input){return number(input.value)});state.notes=vals.every(function(v){return v!==null})?vals:null;showNotes();render()}
+  function setMode(mode){state.mode=mode;document.querySelectorAll('.cp-mode-tab').forEach(function(btn){var active=btn.dataset.mode===mode;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active?'true':'false')});byId('cp-code-panel').classList.toggle('cp-hidden',mode!=='code');byId('cp-manual-panel').classList.toggle('cp-hidden',mode!=='manual');if(mode==='manual')manualChanged();else state.notes=state.student?state.student.slice(0,7).concat([null,null,null]):null;showNotes();render()}
+  function manualChanged(){state.notes=Array.prototype.map.call(document.querySelectorAll('[data-note]'),function(input){return number(input.value)});showNotes();render()}
   function alertMessage(message){var box=byId('cp-alert');box.textContent=message||'';box.classList.toggle('show',!!message)}
-  function findStudent(){var code=byId('cp-code').value.trim().toUpperCase().replace(/\s+/g,'');byId('cp-code').value=code;var record=STUDENTS[code];if(!record){state.student=null;state.notes=null;alertMessage(code?'No encontramos ese código en los 2,824 registros del ranking. Revisa si está completo.':'Escribe tu código CEPREUNI.');showNotes();render();return}state.student=record;state.notes=record.slice(0,7);alertMessage('');showNotes();render()}
+  function findStudent(){var code=byId('cp-code').value.trim().toUpperCase().replace(/\s+/g,'');byId('cp-code').value=code;var record=STUDENTS[code];if(!record){state.student=null;state.notes=null;alertMessage(code?'No encontramos ese código en los 2,824 registros del ranking. Revisa si está completo.':'Escribe tu código CEPREUNI.');showNotes();render();return}state.student=record;state.notes=record.slice(0,7).concat([null,null,null]);alertMessage('');showNotes();render()}
   function droppedIndex(notes){var min=Math.min.apply(null,notes.slice(0,5));return notes.slice(0,5).indexOf(min)}
-  function showNotes(){var readout=byId('cp-note-readout');if(!state.notes||state.mode!=='code'){readout.classList.remove('show');return}var drop=droppedIndex(state.notes),strip=byId('cp-note-strip');strip.innerHTML='';state.notes.forEach(function(value,index){var chip=document.createElement('div');chip.className='cp-note-chip'+(index===drop?' dropped':'');chip.innerHTML='<span>'+NOTE_LABELS[index]+'</span><strong>'+fmt(value,2)+'</strong>';strip.appendChild(chip)});var site=state.student?state.student[8]:'';byId('cp-source').innerHTML='<span><b>Código:</b> '+byId('cp-code').value+'</span><span><b>Sede:</b> '+site+'</span><span><b>Ranking provisional:</b> '+fmt(state.student?state.student[7]:NaN,3)+'/150</span>';readout.classList.add('show')}
-  function calculate(notes,cutoff20){var pcs=notes.slice(0,5),sorted=pcs.slice().sort(function(a,b){return b-a}),top4=sorted.slice(0,4).reduce(function(a,b){return a+b},0),lowest=sorted[4],weighted=top4+2*notes[5]+4*notes[6],raw=weighted/10,current20=raw/7.5,targetRaw=cutoff20*7.5,neededAddition=targetRaw*11-weighted,needed=neededAddition<=lowest?0:neededAddition;return{raw:raw,current20:current20,weighted:weighted,lowest:lowest,needed:needed,diff:current20-cutoff20}}
+  function showNotes(){var readout=byId('cp-note-readout');if(!state.notes||state.mode!=='code'){readout.classList.remove('show');return}var drop=droppedIndex(state.notes),strip=byId('cp-note-strip');strip.innerHTML='';state.notes.slice(0,7).forEach(function(value,index){var chip=document.createElement('div');chip.className='cp-note-chip'+(index===drop?' dropped':'');chip.innerHTML='<span>'+NOTE_LABELS[index]+'</span><strong>'+fmt(value,2)+'</strong>';strip.appendChild(chip)});var site=state.student?state.student[8]:'';byId('cp-source').innerHTML='<span><b>Código:</b> '+byId('cp-code').value+'</span><span><b>Sede:</b> '+site+'</span><span><b>Ranking provisional:</b> '+fmt(state.student?state.student[7]:NaN,3)+'/150</span>';readout.classList.add('show')}
+  function known(v){return Number.isFinite(v)}
+  function hasAny(notes){return notes&&notes.some(known)}
+  function completedScore(notes,cutoff20){var points=0,max=0,pcVals=PC_INDEXES.map(function(i){return notes[i]}).filter(known).sort(function(a,b){return b-a});if(pcVals.length>=6){points+=pcVals.slice(0,5).reduce(function(a,b){return a+b},0);max+=750}else if(pcVals.length>=5){points+=pcVals.slice(0,4).reduce(function(a,b){return a+b},0);max+=600}else{points+=pcVals.reduce(function(a,b){return a+b},0);max+=150*pcVals.length}if(known(notes[8])){points+=notes[8];max+=150}if(known(notes[5])){points+=2*notes[5];max+=300}if(known(notes[6])){points+=4*notes[6];max+=600}if(known(notes[9])){points+=6*notes[9];max+=900}var current20=max?points/max*20:NaN;return{raw:current20*7.5,current20:current20,weighted:points,max:max,pidEstimate:Number.isFinite(current20)?current20/20*2700:NaN,diff:current20-cutoff20}}
+  function nextExam(notes){for(var i=0;i<EXAM_ORDER.length;i++){var idx=EXAM_ORDER[i];if(!known(notes[idx]))return{index:idx,label:NOTE_LABELS[idx],max:150}}return null}
+  function scoreWith(notes,index,value){var copy=notes.slice();copy[index]=value;return completedScore(copy,0).current20}
+  function neededForNext(notes,target20){var nx=nextExam(notes);if(!nx)return null;if(scoreWith(notes,nx.index,0)>=target20)return{exam:nx,needed:0};if(scoreWith(notes,nx.index,nx.max)<target20)return{exam:nx,needed:Infinity};var low=0,high=nx.max;for(var i=0;i<30;i++){var mid=(low+high)/2;if(scoreWith(notes,nx.index,mid)>=target20)high=mid;else low=mid}return{exam:nx,needed:high}}
+  function calculate(notes,cutoff20){var calc=completedScore(notes,cutoff20),goal=neededForNext(notes,cutoff20);calc.needed=goal?goal.needed:null;calc.next=goal?goal.exam:null;return calc}
   function workshopScores(){return Array.prototype.map.call(document.querySelectorAll('[data-workshop]'),function(input){return number(input.value)})}
   function svFor(values){return values.map(function(v){return v==null?0:v}).sort(function(a,b){return b-a}).slice(0,5).reduce(function(a,b){return a+b},0)}
   function solveWorkshop(values,targetSv){var blank=values.findIndex(function(v){return v==null});if(blank<0)return null;var current=svFor(values);if(current>=targetSv)return 0;var test=values.slice();test[blank]=90;if(svFor(test)+1e-8<targetSv)return Infinity;var low=0,high=90;for(var i=0;i<28;i++){var mid=(low+high)/2;test[blank]=mid;if(svFor(test)>=targetSv)high=mid;else low=mid}return high}
   function goalText(value,max,suffix){if(value===null)return 'Completo';if(value===Infinity||value>max+1e-6)return 'No alcanza';return fmt(clamp(value,0,max),2)+(suffix||'')}
-  function architectureProjection(calc,cutoff20){var values=workshopScores(),pvd=number(byId('cp-pvd-input').value),vocational=svFor(values)+(pvd||0),sv=svFor(values),pidEstimate=calc.raw/150*2700,pad=pidEstimate+1.54*vocational,targetPad=cutoff20/20*3701,targetSv=(targetPad-pidEstimate)/1.54-(pvd||0),workshopNeed=solveWorkshop(values,targetSv),pvdNeed=(targetPad-pidEstimate)/1.54-sv,targetAcademicRaw=(targetPad-1.54*vocational)/2700*150,neededAddition=targetAcademicRaw*11-calc.weighted,needed=neededAddition<=calc.lowest?0:neededAddition;return{sv:sv,pad:pad,pad20:pad/3701*20,workshopNeed:workshopNeed,pvdNeed:pvdNeed,needed:needed}}
+  function architectureProjection(calc,cutoff20){var values=workshopScores(),pvd=number(byId('cp-pvd-input').value),vocational=svFor(values)+(pvd||0),sv=svFor(values),pidEstimate=calc.pidEstimate,pad=pidEstimate+1.54*vocational,targetPad=cutoff20/20*3701,targetSv=(targetPad-pidEstimate)/1.54-(pvd||0),workshopNeed=solveWorkshop(values,targetSv),pvdNeed=(targetPad-pidEstimate)/1.54-sv,targetAcademic20=((targetPad-1.54*vocational)/2700*150)/7.5,nextGoal=neededForNext(state.notes,targetAcademic20);return{sv:sv,pad:pad,pad20:pad/3701*20,workshopNeed:workshopNeed,pvdNeed:pvdNeed,needed:nextGoal?nextGoal.needed:null}}
   function renderArchitecture(projection){var panel=byId('cp-arch-results');panel.classList.add('show');byId('cp-sv').textContent=fmt(projection.sv,2)+' /450';byId('cp-pad').textContent=fmt(projection.pad20,3)+' /20';byId('cp-workshop-needed').textContent=goalText(projection.workshopNeed,90,' /90');byId('cp-pvd-needed').textContent=goalText(projection.pvdNeed,200,' /200')}
-  function resetResult(message){byId('cp-score').innerHTML='-<small>/20</small>';byId('cp-cutoff').textContent=career()?career()[2].toFixed(3):'-';byId('cp-gauge').style.width='0';byId('cp-status').className='cp-status';byId('cp-status').textContent=message;byId('cp-raw').textContent='-';byId('cp-difference').textContent='-';byId('cp-next').textContent='-';byId('cp-arch-results').classList.remove('show')}
-  function render(){var selected=career(),isArch=selected&&selected[0]==='A1';byId('cp-architecture').classList.toggle('show',!!isArch);if(!selected){resetResult('Primero selecciona la carrera que quieres usar como referencia.');return}if(!state.notes){resetResult(state.mode==='code'?'Busca tu código para cargar las notas del ranking.':'Completa las siete notas para calcular tu avance.');return}var invalid=state.notes.some(function(v){return !Number.isFinite(v)||v<0||v>150});if(invalid){resetResult('Todas las notas deben estar entre 0 y 150 puntos.');return}var calc=calculate(state.notes,selected[2]),comparison={score20:calc.current20,diff:calc.diff,needed:calc.needed},tolerance=.0005,status=byId('cp-status');if(isArch){var projection=architectureProjection(calc,selected[2]);comparison.score20=projection.pad20;comparison.diff=projection.pad20-selected[2];comparison.needed=projection.needed;renderArchitecture(projection)}else byId('cp-arch-results').classList.remove('show');var needed=comparison.needed;byId('cp-score').innerHTML=fmt(comparison.score20,3)+'<small>/20</small>';byId('cp-cutoff').textContent=selected[2].toFixed(3);byId('cp-gauge').style.width=clamp(comparison.score20/selected[2]*100,0,100)+'%';byId('cp-raw').textContent=fmt(calc.raw,3);byId('cp-difference').textContent=(comparison.diff>=0?'+':'')+fmt(comparison.diff,3);status.className='cp-status '+(comparison.diff>tolerance?'good':comparison.diff<-tolerance?'low':'equal');if(comparison.diff>tolerance)status.innerHTML='<strong>Tu nota está muy bien.</strong> Estás '+fmt(comparison.diff,3)+' puntos sobre la referencia de '+selected[1]+'. Sigue cuidando el margen.';else if(comparison.diff<-tolerance)status.innerHTML='<strong>Tu nota está por debajo de la referencia.</strong> Necesitas mejorar para acercarte al mínimo del ciclo anterior de '+selected[1]+'.';else status.innerHTML='<strong>Tu nota es exactamente igual a la referencia.</strong> Mantén el ritmo y evita bajar del objetivo en la siguiente prueba.';if(needed<=0){byId('cp-next').textContent='0.00 /150';byId('cp-next-copy').textContent='Incluso una nota baja quedaría descartada y tu quinta PC actual completa el ponderado de esta etapa.'}else if(needed<=150){byId('cp-next').textContent=fmt(needed,2)+' /150';byId('cp-next-copy').textContent=(Math.abs(comparison.diff)<=tolerance?'No saques menos de ':'Apunta como mínimo a ')+fmt(needed,2)+' para quedar en el margen de referencia tras la 6.ª PC.'}else{byId('cp-next').textContent=fmt(needed,2)+' /150';byId('cp-next-copy').textContent='La meta supera el máximo de 150: la 6.ª PC por sí sola no basta. Tendrás que recuperar también en Humanidades y el examen final.'}}
+  function resetResult(message){var selected=career();byId('cp-score').innerHTML='-<small>/20</small>';byId('cp-cutoff').textContent=selected?selected[2].toFixed(3):'10.000';byId('cp-gauge').style.width='0';byId('cp-status').className='cp-status';byId('cp-status').textContent=message;byId('cp-raw').textContent='-';byId('cp-difference').textContent='-';byId('cp-next').textContent='-';byId('cp-next-copy').textContent='Selecciona tu carrera y/o completa tus notas para calcular la meta.';byId('cp-arch-results').classList.remove('show')}
+  function render(){var selected=career(),target=selected?selected[2]:10,isArch=selected&&selected[0]==='A1';byId('cp-architecture').classList.toggle('show',!!isArch);if(!state.notes||!hasAny(state.notes)){resetResult(state.mode==='code'?'Busca tu código para cargar las notas del ranking.':'Ingresa al menos una nota para calcular tu avance.');return}var invalid=state.notes.some(function(v){return v!==null&&(!Number.isFinite(v)||v<0||v>150)});if(invalid){resetResult('Todas las notas deben estar entre 0 y 150 puntos.');return}var calc=calculate(state.notes,target);if(!Number.isFinite(calc.current20)){resetResult('Ingresa al menos una nota válida para calcular tu avance.');return}var comparison={score20:calc.current20,diff:calc.diff,needed:calc.needed,next:calc.next},tolerance=.0005,status=byId('cp-status');if(isArch){var projection=architectureProjection(calc,target);comparison.score20=projection.pad20;comparison.diff=projection.pad20-target;comparison.needed=projection.needed;renderArchitecture(projection)}else byId('cp-arch-results').classList.remove('show');byId('cp-score').innerHTML=fmt(comparison.score20,3)+'<small>/20</small>';byId('cp-cutoff').textContent=target.toFixed(3);byId('cp-gauge').style.width=clamp(comparison.score20/target*100,0,100)+'%';byId('cp-raw').textContent=fmt(calc.raw,3);byId('cp-difference').textContent=(comparison.diff>=0?'+':'')+fmt(comparison.diff,3);status.className='cp-status '+(comparison.diff>tolerance?'good':comparison.diff<-tolerance?'low':'equal');if(!selected)status.innerHTML='<strong>Selecciona tu carrera.</strong> Por ahora comparo tu promedio con 10/20 como referencia básica de aprobación.';else if(comparison.diff>tolerance)status.innerHTML='<strong>Tu nota está muy bien.</strong> Estás '+fmt(comparison.diff,3)+' puntos sobre la referencia de '+selected[1]+'. Sigue cuidando el margen.';else if(comparison.diff<-tolerance)status.innerHTML='<strong>Tu nota está por debajo de la referencia.</strong> Necesitas mejorar para acercarte al mínimo del ciclo anterior de '+selected[1]+'.';else status.innerHTML='<strong>Tu nota es exactamente igual a la referencia.</strong> Mantén el ritmo y evita bajar del objetivo en la siguiente prueba.';if(!comparison.next){byId('cp-next').textContent='Cálculo completo';byId('cp-next-copy').textContent='Ya ingresaste todos los exámenes principales. Revisa tu promedio final estimado.'}else if(comparison.needed===Infinity){byId('cp-next').textContent='Más de 150 /150';byId('cp-next-copy').textContent='Aunque saques 150 en '+comparison.next.label+', no alcanzaría la referencia. Necesitas recuperar en los siguientes exámenes.'}else{byId('cp-next').textContent=fmt(clamp(comparison.needed,0,150),2)+' /150';byId('cp-next-copy').textContent=(Math.abs(comparison.diff)<=tolerance?'No saques menos de ':'Apunta como mínimo a ')+fmt(clamp(comparison.needed,0,150),2)+' en '+comparison.next.label+' para quedar en el margen de referencia.'}}
   function init(){addOptions();addInputs();document.querySelectorAll('.cp-mode-tab').forEach(function(btn){btn.addEventListener('click',function(){setMode(btn.dataset.mode)})});byId('cp-find').addEventListener('click',findStudent);byId('cp-code').addEventListener('keydown',function(event){if(event.key==='Enter'){event.preventDefault();findStudent()}});byId('cp-career').addEventListener('change',render);render()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
@@ -7903,3 +7917,4 @@ window.addEventListener('load', initUniverseApp, { once: true });
 
 </body>
 </html>
+
