@@ -1,4 +1,4 @@
-# Migración de UNIVERSE: de Blogger a GitHub Pages
+# Migración de Universe to Study: de Blogger a GitHub Pages
 
 Este paquete contiene tu sitio ya convertido de la plantilla de Blogger a archivos HTML estáticos normales, listos para GitHub Pages.
 
@@ -10,7 +10,7 @@ Este paquete contiene tu sitio ya convertido de la plantilla de Blogger a archiv
   - `ranking.html` (Ranking de Promedios)
   - `calculadora.html` (Calculadora UNI/CEPREUNI)
   - `temario.html` (Temario UNI y CEPREUNI)
-  - `biblioteca.html` (Biblioteca UNIVERSE)
+  - `biblioteca.html` (Biblioteca Universe to Study)
   - `simulacros.html` (Simulacros tipo UNI)
   - `examenes.html` (Exámenes CEPREUNI)
   - `terminos.html` (Términos y Condiciones)
