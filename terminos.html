@@ -722,8 +722,14 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     <li><a data-route="terms" href="/terminos">Términos</a></li>
     <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
   </ul>
-  <div class="nav-user-btn" id="nav-user-btn" onclick="handleNavUser()">
-    <svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.05 0-7.25 2.05-7.25 4.6 0 .64.51 1.15 1.15 1.15h12.2c.64 0 1.15-.51 1.15-1.15 0-2.55-3.2-4.6-7.25-4.6Z"></path></svg><span>Cuenta</span>
+  <div class="nav-actions">
+    <button aria-label="Activar tema oscuro" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" title="Tema oscuro" type="button">
+      <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.8A8.7 8.7 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"></path></svg>
+      <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+    </button>
+    <div class="nav-user-btn" id="nav-user-btn" onclick="handleNavUser()">
+      <svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.05 0-7.25 2.05-7.25 4.6 0 .64.51 1.15 1.15 1.15h12.2c.64 0 1.15-.51 1.15-1.15 0-2.55-3.2-4.6-7.25-4.6Z"></path></svg><span>Cuenta</span>
+    </div>
   </div>
 </nav>
 
@@ -859,9 +865,9 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
     document.body.insertAdjacentHTML('beforeend',SUPPORT_MARKUP);
     (function(){
   var BASE='https://universe-82fc3-default-rtdb.firebaseio.com/chat/supportPrivateV2';
-  var OWNER_HASH='1fed8b6acd4c701db9d44a5b5fabd0b1f1c34782720bef5e0e104c0a4c3f0a66';
-  var OWNER_FLAG='universe_support_owner_pc_20260703_v3';
-  var OWNER_SETUP_KEY='UNIVERSE_OWNER_7H9K_2026';
+  var OWNER_HASH='6f74b8706e8196aade0849d6f7aef50bd3e9d205b01d1cf29019680a6b1fdfc5';
+  var OWNER_FLAG='universe_support_owner_pc_20260712_v1';
+  var OWNER_SECRET_HASH='efe05040d27a1892e9a48e4b997c1e89ae0e7ef89003bd614d56b546ae6ac71d';
   var S={admin:false,owner:false,open:false,active:'',thread:null,threads:{},image:'',timer:0,presenceTimer:0,ipMatch:false};
   function el(id){return document.getElementById(id)}
   function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]})}
@@ -881,13 +887,46 @@ html[data-universe-page] :is(#support-v2-fab,#universe-game-button,#peru-clock){
   async function load(){if(!S.open)return;try{if(S.admin){S.threads=await api('/threads')||{};renderInbox()}else{S.active=threadId();S.thread=await api('/threads/'+S.active)||{};var presence=await api('/presence/admin').catch(function(){return null});var online=!!(presence&&Date.now()-(presence.ts||0)<65000);el('support-v2-presence').textContent=online?'Soporte conectado ahora':'Soporte desconectado · deja tu consulta';el('support-v2-fab-dot').classList.toggle('online',online)}renderMessages()}catch(e){el('support-v2-presence').textContent='Sin conexión temporal';renderMessages()}}
   async function heartbeat(){if(!S.admin)return;await api('/presence/admin','PUT',{online:true,ts:Date.now()}).catch(function(){})}
   async function detectOwnerIp(){try{var response=await fetch('https://api.ipify.org',{cache:'no-store'}),ip=(await response.text()).trim(),bytes=new TextEncoder().encode(ip),digest=await crypto.subtle.digest('SHA-256',bytes),hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');S.ipMatch=hash===OWNER_HASH;S.owner=S.ipMatch&&getOwnerFlag()}catch(e){S.ipMatch=false;S.owner=false}detectAdmin()}
-  function readSetupKey(){try{return new URL(location.href).hash.replace(/^#/, '')}catch(e){return ''}}
-  function detectAdmin(){if(S.ipMatch&&readSetupKey()===OWNER_SETUP_KEY){setOwnerFlag(true);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}S.admin=!!(S.ipMatch&&getOwnerFlag());var layout=document.querySelector('.support-v2-admin-layout');layout.classList.toggle('admin',S.admin);layout.classList.toggle('visitor',!S.admin);el('support-v2-inbox').hidden=!S.admin;el('support-v2-name-row').hidden=S.admin;el('support-v2-presence').textContent=S.admin?'Panel privado del propietario':'Comprobando conexión...';if(S.admin){heartbeat();clearInterval(S.presenceTimer);S.presenceTimer=setInterval(heartbeat,25000)}}
+  function readSetupKey(){
+    try{
+      var url=new URL(location.href);
+      var raw=(url.hash||'').replace(/^#/, '');
+      var params=new URLSearchParams(raw);
+      var value=params.get('ust-owner')||'';
+      return String(value).trim();
+    }catch(e){return ''}
+  }
+  async function validOwnerKey(key){
+    try{
+      if(!key||!window.crypto||!crypto.subtle||!window.TextEncoder)return false;
+      var bytes=new TextEncoder().encode(String(key).trim());
+      var digest=await crypto.subtle.digest('SHA-256',bytes);
+      var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+      return hash===OWNER_SECRET_HASH;
+    }catch(e){return false}
+  }
+  async function detectAdmin(){
+    var setup=readSetupKey();
+    if(S.ipMatch&&setup){
+      if(await validOwnerKey(setup)){
+        setOwnerFlag(true);
+        try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+      }
+    }
+    S.admin=!!(S.ipMatch&&getOwnerFlag());
+    var layout=document.querySelector('.support-v2-admin-layout');
+    if(layout){layout.classList.toggle('admin',S.admin);layout.classList.toggle('visitor',!S.admin)}
+    var inbox=el('support-v2-inbox'), nameRow=el('support-v2-name-row'), presence=el('support-v2-presence');
+    if(inbox)inbox.hidden=!S.admin;
+    if(nameRow)nameRow.hidden=S.admin;
+    if(presence)presence.textContent=S.admin?'Panel privado del propietario':'Comprobando conexi?n...';
+    if(S.admin){heartbeat();clearInterval(S.presenceTimer);S.presenceTimer=setInterval(heartbeat,25000)}
+  }
   async function send(){var input=el('support-v2-input'),txt=String(input.value||'').trim();if(!txt&&!S.image)return;var p=profile(),id=S.admin?S.active:threadId();if(!id)return;var thread=S.admin?S.threads[id]:S.thread||{},meta=thread&&thread.meta||{};var msg={name:S.admin?'Soporte Universe to Study':p.name,userId:p.id,admin:S.admin,text:txt.slice(0,1200),image:S.image||'',ts:Date.now(),page:location.pathname};input.value='';clearImage();try{await api('/threads/'+id+'/messages','POST',msg);await api('/threads/'+id+'/meta','PATCH',{userId:meta.userId||p.id,userName:meta.userName||p.name,lastText:txt||'Imagen adjunta',updatedAt:msg.ts,status:'open',archived:false,unread:!S.admin});await load()}catch(e){input.value=txt;alert('No se pudo enviar. Revisa tu conexión.')}}
   async function solve(){if(!S.admin||!S.active)return;await api('/threads/'+S.active+'/meta','PATCH',{status:'closed',archived:true,unread:false,updatedAt:Date.now(),lastText:'Consulta solucionada'}).catch(function(){});S.active='';await load()}
   function pickImage(input){var file=input.files&&input.files[0];if(!file)return;if(file.size>700000){alert('La imagen debe pesar menos de 700 KB.');input.value='';return}var reader=new FileReader();reader.onload=function(){S.image=String(reader.result||'');el('support-v2-preview-img').src=S.image;el('support-v2-image-preview').hidden=false};reader.readAsDataURL(file)}
   function clearImage(){S.image='';el('support-v2-file').value='';el('support-v2-image-preview').hidden=true;el('support-v2-preview-img').removeAttribute('src')}
-  function open(){detectAdmin();if(!S.admin){try{if(localStorage.getItem('universe_support_closed_v2')==='1')resetThread()}catch(e){}}S.open=true;document.body.classList.add('support-v2-active');el('support-v2-panel').classList.add('open');el('support-v2-overlay').classList.add('open');el('support-v2-panel').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';load();clearInterval(S.timer);S.timer=setInterval(load,4000)}
+  async function open(){await detectAdmin();if(!S.admin){try{if(localStorage.getItem('universe_support_closed_v2')==='1')resetThread()}catch(e){}}S.open=true;document.body.classList.add('support-v2-active');el('support-v2-panel').classList.add('open');el('support-v2-overlay').classList.add('open');el('support-v2-panel').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';load();clearInterval(S.timer);S.timer=setInterval(load,4000)}
   function close(){var thread=S.admin?S.threads[S.active]:S.thread;if(!S.admin&&thread&&thread.meta&&thread.meta.status==='closed'){try{localStorage.setItem('universe_support_closed_v2','1')}catch(e){}}S.open=false;document.body.classList.remove('support-v2-active');el('support-v2-panel').classList.remove('open');el('support-v2-overlay').classList.remove('open');el('support-v2-panel').setAttribute('aria-hidden','true');document.body.style.overflow='';clearInterval(S.timer)}
   function init(){var name=el('support-v2-name'),p=profile();name.value=p.name;name.onchange=function(){var value=String(name.value||'').trim().slice(0,50);if(value){try{localStorage.setItem('universe_support_name',value)}catch(e){}}};el('support-v2-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});detectOwnerIp();setTimeout(detectAdmin,1000);var seen=false;try{seen=localStorage.getItem('universe_support_hint_seen')==='1'}catch(e){}if(!seen){setTimeout(function(){el('support-v2-hint').classList.add('show');try{localStorage.setItem('universe_support_hint_seen','1')}catch(e){}setTimeout(function(){el('support-v2-hint').classList.remove('show')},6500)},1000)}}
   window.UniverseSupport={open:open,close:close,send:send,solve:solve,pickImage:pickImage,clearImage:clearImage};
@@ -910,7 +949,7 @@ const UNIVERSE_USERS_URL = UNIVERSE_SERVER_BASE + '/chat/users';
 const UNIVERSE_ACCOUNT_KEY = 'universe_account_id';
 const UNIVERSE_USER_KEY = 'universe_user';
 const UNIVERSE_ACCOUNT_SYNC_MS = 12000;
-const UNIVERSE_OWNER_IP_HASH = '1fed8b6acd4c701db9d44a5b5fabd0b1f1c34782720bef5e0e104c0a4c3f0a66';
+const UNIVERSE_OWNER_IP_HASH = '6f74b8706e8196aade0849d6f7aef50bd3e9d205b01d1cf29019680a6b1fdfc5';
 const UNIVERSE_ADMIN_ACCOUNT_IDS = [];
 const UNIVERSE_THEME_KEY = 'universe_theme';
 let universeAccounts = [];
