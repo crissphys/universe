@@ -66,14 +66,14 @@
   </style>
 </head>
 <body>
-<div id="universe-page-loader" role="status" aria-live="polite"><div class="upl-card"><div class="upl-orbit"><span></span></div><strong>Cargando pÃ¡gina</strong><small>Preparando Universe to Study...</small></div></div>
+<div id="universe-page-loader" role="status" aria-live="polite"><div class="upl-card"><div class="upl-orbit"><span></span></div><strong>Cargando página</strong><small>Preparando Universe to Study...</small></div></div>
 <script>setTimeout(function(){var el=document.getElementById('universe-page-loader');if(el)el.remove()},900)</script>
 
 <nav>
   <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
   <ul class="nav-links">
     <li><a data-route="home" href="/">Inicio</a></li>
-    <li><a data-route="admission" href="/admision">AdmisiÃ³n</a></li>
+    <li><a data-route="admission" href="/admision">Admisión</a></li>
     <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
     <li><a data-route="syllabus" href="/temario">Temario</a></li>
     <li><a data-route="learn" href="/aprender">Aprende</a></li>
@@ -91,12 +91,12 @@
 </nav>
 
 <div id="support-v2-overlay" onclick="UniverseSupport.close()"></div>
-<div id="support-v2-hint">Â¿Problemas? Te ayudamos</div>
+<div id="support-v2-hint">¿Problemas? Te ayudamos</div>
 <button aria-label="Abrir soporte privado" id="support-v2-fab" onclick="UniverseSupport.open()" title="Soporte" type="button">
   <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4h16v11H8l-4 4V4Zm4 4v2h8V8H8Zm0 4v2h5v-2H8Z"></path></svg><span>Soporte</span><i id="support-v2-fab-dot"></i>
 </button>
 <aside aria-hidden="true" id="support-v2-panel">
-  <div class="support-v2-head"><div><strong>Soporte Universe to Study</strong><span id="support-v2-presence">Comprobando conexiÃ³n...</span></div><button aria-label="Cerrar soporte" onclick="UniverseSupport.close()" type="button">Ã—</button></div>
+  <div class="support-v2-head"><div><strong>Soporte Universe to Study</strong><span id="support-v2-presence">Comprobando conexión...</span></div><button aria-label="Cerrar soporte" onclick="UniverseSupport.close()" type="button">×</button></div>
   <div class="support-v2-admin-layout visitor">
     <aside hidden id="support-v2-inbox"><div class="support-v2-inbox-title">Consultas</div><div id="support-v2-threads"></div></aside>
     <main class="support-v2-conversation">
@@ -114,12 +114,12 @@
     <section class="account-hero">
       <span class="account-kicker">Cuenta Universe</span>
       <h1>MI CUENTA</h1>
-      <p>Administra tus datos, vincula tu cÃ³digo CEPREUNI y, si eres administrador, publica comunicados y actualiza fechas clave sin editar el cÃ³digo de la pÃ¡gina.</p>
+      <p>Administra tus datos, vincula tu código CEPREUNI y, si eres administrador, publica comunicados y actualiza fechas clave sin editar el código de la página.</p>
     </section>
 
     <section id="account-login-card" class="account-card" hidden>
-      <h2>Inicia sesiÃ³n para ver tu cuenta</h2>
-      <p>Para guardar tu perfil y registrar tu cÃ³digo CEPREUNI necesitas entrar con Google.</p>
+      <h2>Inicia sesión para ver tu cuenta</h2>
+      <p>Para guardar tu perfil y registrar tu código CEPREUNI necesitas entrar con Google.</p>
       <div class="account-actions"><button class="account-btn" type="button" data-login>Entrar con Google</button><a class="account-btn secondary" href="/">Volver al inicio</a></div>
     </section>
 
@@ -134,24 +134,24 @@
           <div class="account-field"><label>Nombre</label><input id="profile-first" autocomplete="given-name"></div>
           <div class="account-field"><label>Apellido</label><input id="profile-last" autocomplete="family-name"></div>
           <div class="account-field"><label>Edad</label><input id="profile-age" type="number" min="10" max="99"></div>
-          <div class="account-field"><label>TelÃ©fono</label><input id="profile-phone" autocomplete="tel"></div>
+          <div class="account-field"><label>Teléfono</label><input id="profile-phone" autocomplete="tel"></div>
           <div class="account-field full"><label>Gmail vinculado</label><input id="profile-email" readonly></div>
         </div>
         <div class="account-actions">
           <button class="account-btn" type="button" data-save-profile>Guardar perfil</button>
-          <button class="account-btn danger" type="button" data-logout>Cerrar sesiÃ³n</button>
+          <button class="account-btn danger" type="button" data-logout>Cerrar sesión</button>
         </div>
         <div id="profile-status" class="account-status">Tus datos se guardan en tu cuenta Universe.</div>
       </section>
 
       <aside class="account-card">
-        <h2>Perfil acadÃ©mico</h2>
-        <p>CuÃ©ntanos cÃ³mo estÃ¡s preparÃ¡ndote para personalizar avisos, recursos y soporte con tu cuenta de Gmail.</p>
+        <h2>Perfil académico</h2>
+        <p>Cuéntanos cómo estás preparándote para personalizar avisos, recursos y soporte con tu cuenta de Gmail.</p>
         <div id="code-current"></div>
         <div class="account-field">
-          <label>Â¿QuÃ© tipo de estudiante eres?</label>
+          <label>¿Qué tipo de estudiante eres?</label>
           <select id="academic-track">
-            <option value="">Selecciona una opciÃ³n</option>
+            <option value="">Selecciona una opción</option>
             <option value="cepreuni">Soy CEPREUNI</option>
             <option value="uni-student">Soy estudiante UNI</option>
             <option value="san-marcos">Postulo a San Marcos</option>
@@ -161,10 +161,10 @@
         </div>
         <div class="account-field" id="academy-wrap" hidden><label>Academia preuniversitaria</label><select id="academy-name"></select></div>
         <div class="account-field" id="cepre-cycle-wrap" hidden><label>Ciclo CEPREUNI</label><select id="cepre-cycle"></select></div>
-        <div class="account-field" id="cepre-code-wrap" hidden><label>CÃ³digo CEPREUNI del ciclo actual</label><input id="cepre-code" placeholder="Ejemplo: 2612345F" maxlength="9"></div>
-        <p class="account-status" id="academic-explain">Elige tu perfil acadÃ©mico para personalizar tu experiencia.</p>
-        <div class="account-actions"><button class="account-btn" type="button" data-register-code>Guardar perfil acadÃ©mico</button></div>
-        <div id="code-status" class="account-status warn">Si eres del ciclo actual, verificaremos que el cÃ³digo exista y que nadie lo haya registrado para este ciclo.</div>
+        <div class="account-field" id="cepre-code-wrap" hidden><label>Código CEPREUNI del ciclo actual</label><input id="cepre-code" placeholder="Ejemplo: 2612345F" maxlength="9"></div>
+        <p class="account-status" id="academic-explain">Elige tu perfil académico para personalizar tu experiencia.</p>
+        <div class="account-actions"><button class="account-btn" type="button" data-register-code>Guardar perfil académico</button></div>
+        <div id="code-status" class="account-status warn">Si eres del ciclo actual, verificaremos que el código exista y que nadie lo haya registrado para este ciclo.</div>
       </aside>
     </div>
 
@@ -174,34 +174,34 @@
         <h2>Comunicado emergente del inicio</h2>
         <div class="account-form">
           <div class="account-field"><label>Activo</label><select id="ann-active"><option value="true">Mostrar</option><option value="false">Ocultar</option></select></div>
-          <div class="account-field"><label>TÃ­tulo</label><input id="ann-title" placeholder="Nuevo comunicado"></div>
-          <div class="account-field full"><label>Mensaje</label><textarea id="ann-text" placeholder="Escribe el comunicado que verÃ¡n todos."></textarea></div>
+          <div class="account-field"><label>Título</label><input id="ann-title" placeholder="Nuevo comunicado"></div>
+          <div class="account-field full"><label>Mensaje</label><textarea id="ann-text" placeholder="Escribe el comunicado que verán todos."></textarea></div>
           <div class="account-field"><label>Imagen por URL</label><input id="ann-image-url" placeholder="https://..."></div>
           <div class="account-field"><label>Subir imagen</label><input id="ann-image-file" type="file" accept="image/png,image/jpeg,image/webp"></div>
         </div>
         <img id="ann-preview" class="announcement-preview" alt="Vista previa">
         <div class="account-actions"><button class="account-btn" type="button" data-save-ann>Publicar comunicado</button></div>
-        <div id="ann-status" class="account-status">Los usuarios lo verÃ¡n en la pÃ¡gina principal.</div>
+        <div id="ann-status" class="account-status">Los usuarios lo verán en la página principal.</div>
       </article>
 
       <article class="account-card">
         <span class="account-kicker">Administrador</span>
         <h2>Fechas clave y calendario del inicio</h2>
         <div class="account-form">
-          <div class="account-field"><label>TÃ­tulo countdown 1</label><input id="pc7-title" value="7.Âª prueba calificada CEPREUNI"></div>
+          <div class="account-field"><label>Título countdown 1</label><input id="pc7-title" value="7.ª prueba calificada CEPREUNI"></div>
           <div class="account-field"><label>Fecha countdown 1</label><input id="pc7-target" type="datetime-local" value="2026-07-26T09:00"></div>
           <div class="account-field full"><label>Etiqueta countdown 1</label><input id="pc7-label" value="Dom. 26 jul - 9:00 AM"></div>
-          <div class="account-field"><label>TÃ­tulo countdown 2</label><input id="adm-title" value="AdmisiÃ³n UNI 2026-2"></div>
+          <div class="account-field"><label>Título countdown 2</label><input id="adm-title" value="Admisión UNI 2026-2"></div>
           <div class="account-field"><label>Fecha countdown 2</label><input id="adm-target" type="datetime-local" value="2026-08-10T09:00"></div>
           <div class="account-field full"><label>Etiqueta countdown 2</label><input id="adm-label" value="Lun. 10 ago - 9:00 AM"></div>
         </div>
         <h3>Agregar evento al calendario</h3>
         <div class="account-form">
-          <div class="account-field"><label>TÃ­tulo</label><input id="ev-title" placeholder="Comunicado o fecha clave"></div>
-          <div class="account-field"><label>Tipo</label><select id="ev-type"><option value="tramite">TrÃ¡mite</option><option value="pc">PC</option><option value="exam">Examen</option><option value="admision">AdmisiÃ³n</option><option value="pago">Pago</option><option value="evento">Evento</option></select></div>
+          <div class="account-field"><label>Título</label><input id="ev-title" placeholder="Comunicado o fecha clave"></div>
+          <div class="account-field"><label>Tipo</label><select id="ev-type"><option value="tramite">Trámite</option><option value="pc">PC</option><option value="exam">Examen</option><option value="admision">Admisión</option><option value="pago">Pago</option><option value="evento">Evento</option></select></div>
           <div class="account-field"><label>Fecha inicio</label><input id="ev-date" type="date"></div>
           <div class="account-field"><label>Fecha fin opcional</label><input id="ev-end" type="date"></div>
-          <div class="account-field full"><label>Detalle</label><input id="ev-detail" placeholder="Detalle que aparecerÃ¡ en la lista del calendario"></div>
+          <div class="account-field full"><label>Detalle</label><input id="ev-detail" placeholder="Detalle que aparecerá en la lista del calendario"></div>
         </div>
         <div class="account-actions"><button class="account-btn" type="button" data-add-event>Agregar evento</button><button class="account-btn secondary" type="button" data-save-schedule>Guardar fechas</button></div>
         <div id="event-list" class="admin-event-list"></div>

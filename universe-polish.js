@@ -723,7 +723,7 @@
           try {
             var profile = decodeGoogleJwt(response && response.credential);
             persistGoogleUser(profile, response && response.credential).catch(function () {
-              slot.innerHTML = '<p class="uts-google-hint">No se pudo validar con el servidor privado. IntÃ©ntalo otra vez.</p>';
+              slot.innerHTML = '<p class="uts-google-hint">No se pudo validar con el servidor privado. Inténtalo otra vez.</p>';
             });
           } catch (error) {
             slot.innerHTML = '<p class="uts-google-hint">No se pudo leer la respuesta de Google. Inténtalo otra vez.</p>';
