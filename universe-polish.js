@@ -77,10 +77,7 @@
   }
 
   function goAccountPage() {
-    if (location.pathname.replace(/\/+$/, '') === '/account') {
-      if (typeof openGoogleAuthPanel === 'function') openGoogleAuthPanel();
-      return;
-    }
+    if (location.pathname.replace(/\/+$/, '') === '/account') return;
     location.href = '/account';
   }
 
@@ -137,7 +134,11 @@
       '.uts-login-official{margin-bottom:1.2rem}.uts-login-official-grid{display:flex;gap:.75rem}.uts-login-official-card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem .4rem;border-radius:16px;text-decoration:none;text-align:center;transition:transform .2s,box-shadow .2s}.uts-login-official-card.cu{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff}.uts-login-official-card.cn{background:linear-gradient(135deg,#7f1d1d,#dc2626);color:#fff}.uts-login-official-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.2)}.uts-login-official-name{font-family:Bebas Neue,Rajdhani,sans-serif;font-size:1.5rem;letter-spacing:2px;line-height:1}.uts-login-official-desc{font-family:Rajdhani,Inter,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:1px;opacity:.86;margin-top:.3rem}',
       '.uts-login-terms{margin-top:1.2rem;text-align:center;font-size:.7rem;color:#94a3b8;line-height:1.45}.uts-login-terms a{color:#64748b;text-decoration:none;font-weight:800}.uts-login-terms a:hover{text-decoration:underline}',
       '#uts-google-auth-modal .uts-google-user{grid-template-columns:52px minmax(0,1fr);border-color:#dbeafe;border-radius:18px;background:#f8fbff;margin-bottom:1rem}#uts-google-auth-modal .uts-google-user img{width:52px;height:52px}#uts-google-auth-modal .uts-google-actions{justify-content:center}.uts-cepre-box{background:linear-gradient(135deg,#f8fbff,#eff6ff)!important}',
-      '@media(max-width:720px){#uts-google-auth-modal{padding:18px 14px!important}#uts-google-auth-modal.open{gap:clamp(34px,7vh,78px)!important}#uts-google-auth-modal:before{width:100%;flex-basis:min(34vh,320px);min-height:180px;background-size:30px 30px,30px 30px,100% 100%}#uts-google-auth-modal .uts-google-card{width:min(380px,94vw)!important;border-radius:22px!important}#uts-google-auth-modal .uts-google-body{padding:1.7rem 1.4rem 1.9rem!important}.uts-login-logo{font-size:2.15rem;letter-spacing:3.5px}.uts-login-official-grid{gap:.55rem}.uts-login-official-name{font-size:1.25rem}}'
+      '@media(max-width:720px){#uts-google-auth-modal{padding:18px 14px!important}#uts-google-auth-modal.open{gap:clamp(34px,7vh,78px)!important}#uts-google-auth-modal:before{width:100%;flex-basis:min(34vh,320px);min-height:180px;background-size:30px 30px,30px 30px,100% 100%}#uts-google-auth-modal .uts-google-card{width:min(380px,94vw)!important;border-radius:22px!important}#uts-google-auth-modal .uts-google-body{padding:1.7rem 1.4rem 1.9rem!important}.uts-login-logo{font-size:2.15rem;letter-spacing:3.5px}.uts-login-official-grid{gap:.55rem}.uts-login-official-name{font-size:1.25rem}}',
+      '#uts-google-auth-button{min-height:50px!important;padding:.58rem 1rem!important;font-size:.96rem!important;gap:.62rem!important}#uts-google-auth-button .uts-g-mark{width:30px!important;height:30px!important}#uts-google-auth-button img{width:32px!important;height:32px!important}',
+      '.nav-actions .nav-user-btn{display:none!important}.nav-user-btn{min-height:46px!important;padding:.58rem 1rem!important;border-radius:999px!important}.nav-user-btn .uts-g-mark{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#eaf4ff;color:#2563eb;font-weight:1000}.nav-user-btn img{width:30px;height:30px;border-radius:50%;object-fit:cover}.nav-user-btn .uts-g-label{display:grid;line-height:1.02}.nav-user-btn .uts-g-label small{font-size:.66rem;opacity:.72}',
+      'body.uts-entry-gate{overflow:hidden!important}body.uts-entry-gate #uts-google-auth-modal{background:#fff!important;align-items:center!important;justify-content:center!important;padding:clamp(16px,4vw,34px)!important;overflow:auto!important;backdrop-filter:none!important}body.uts-entry-gate #uts-google-auth-modal.open{display:flex!important;flex-direction:column!important;gap:0!important}body.uts-entry-gate #uts-google-auth-modal:before{display:none!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-card{margin:auto!important;width:min(390px,92vw)!important;box-shadow:0 28px 70px rgba(15,23,42,.14)!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-close{display:none!important}body.uts-entry-gate .uts-login-official{display:none!important}',
+      '@media(max-width:720px){#uts-google-auth-button{min-height:44px!important;right:max(8px,calc(env(safe-area-inset-right) + 8px))!important;padding:.52rem!important}.nav-user-btn{min-height:42px!important;padding:.52rem .68rem!important}.nav-user-btn .uts-g-label small{display:none}body.uts-entry-gate #uts-google-auth-modal{padding:18px 12px!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-card{width:min(360px,94vw)!important}}'
     ].join('\n');
     document.head.appendChild(style);
   }
@@ -245,7 +246,8 @@
     } catch (error) {}
     window.dispatchEvent(new CustomEvent('universe-google-auth', { detail: user }));
     renderGoogleAuthButton();
-    renderGoogleAuthPanel();
+    if (document.body && document.body.classList.contains('uts-entry-gate')) closeGoogleAuthPanel();
+    else renderGoogleAuthPanel();
     return user;
   }
 
@@ -285,11 +287,11 @@
       legacy.onclick = null;
       if (!legacy.dataset.utsBound) {
         legacy.dataset.utsBound = 'true';
-        legacy.addEventListener('click', openGoogleAuthPanel);
+        legacy.addEventListener('click', goAccountPage);
         legacy.addEventListener('keydown', function (event) {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            openGoogleAuthPanel();
+            goAccountPage();
           }
         });
       }
@@ -297,8 +299,8 @@
     btn = document.createElement('button');
     btn.id = 'uts-google-auth-button';
     btn.type = 'button';
-    btn.setAttribute('aria-label', 'Ingresar con Google');
-    btn.addEventListener('click', openGoogleAuthPanel);
+    btn.setAttribute('aria-label', 'Abrir cuenta');
+    btn.addEventListener('click', goAccountPage);
     document.body.appendChild(btn);
     return btn;
   }
@@ -310,16 +312,16 @@
     if (user && user.provider === 'google') {
       btn.innerHTML = (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<span class="uts-g-mark">G</span>') +
         '<span class="uts-g-label">' + safeText((user.name || 'Cuenta').split(' ')[0]) + '<small>Google conectado</small></span>';
-      btn.setAttribute('aria-label', 'Cuenta Google conectada');
-      btn.title = user.email || 'Cuenta Google conectada';
+      btn.setAttribute('aria-label', 'Abrir cuenta');
+      btn.title = user.email || 'Abrir cuenta';
     } else if (hasGuestMode()) {
-      btn.innerHTML = '<span class="uts-g-mark">U</span><span class="uts-g-label">Invitado<small>registrarse</small></span>';
-      btn.setAttribute('aria-label', 'Cuenta de invitado');
-      btn.title = 'Entraste como invitado. Puedes registrarte con Google.';
+      btn.innerHTML = '<span class="uts-g-mark">U</span><span class="uts-g-label">Cuenta<small>Invitado</small></span>';
+      btn.setAttribute('aria-label', 'Abrir cuenta');
+      btn.title = 'Abrir cuenta';
     } else {
-      btn.innerHTML = '<span class="uts-g-mark">G</span><span class="uts-g-label">Cuenta<small>Google o invitado</small></span>';
-      btn.setAttribute('aria-label', 'Ingresar con Google');
-      btn.title = 'Regístrate con Google o entra como invitado';
+      btn.innerHTML = '<span class="uts-g-mark">G</span><span class="uts-g-label">Cuenta<small>Ingresar</small></span>';
+      btn.setAttribute('aria-label', 'Abrir cuenta');
+      btn.title = 'Abrir cuenta';
     }
   }
 
@@ -329,7 +331,7 @@
     modal = document.createElement('div');
     modal.id = 'uts-google-auth-modal';
     modal.addEventListener('click', function (event) {
-      if (event.target === modal) closeGoogleAuthPanel();
+      if (event.target === modal && !(document.body && document.body.classList.contains('uts-entry-gate'))) closeGoogleAuthPanel();
     });
     modal.innerHTML = '<section class="uts-google-card" role="dialog" aria-modal="true" aria-labelledby="uts-google-title">' +
       '<button class="uts-google-close" type="button" aria-label="Cerrar">×</button>' +
@@ -368,37 +370,29 @@
     var body = modal.querySelector('#uts-google-body');
     var user = getCurrentAuthUser();
     if (user && user.provider === 'google') {
-      body.innerHTML = renderLoginBrand('CUENTA CONECTADA · GOOGLE') +
+      body.innerHTML = renderLoginBrand('CUENTA CONECTADA - GOOGLE') +
         '<div class="uts-google-user">' +
         (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<div class="uts-g-mark">G</div>') +
         '<div><b>' + safeText(user.name || 'Usuario Google') + '</b><span>' + safeText(user.email || '') + '</span></div></div>' +
-        '<p class="uts-login-desc">Tu cuenta ya está conectada. Completa tus datos CEPREUNI si deseas vincular ciclo, código y futuras notificaciones de promedio.</p>' +
-        renderRegisteredData(user, 'Datos registrados') +
-        renderCepreAccountBox() +
-        '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Abrir cuenta completa</button><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button><button class="uts-google-danger" type="button" data-uts-signout>Cerrar sesión</button></div>';
-      hydrateCepreProfileBox(user);
+        '<p class="uts-login-desc">Tu cuenta ya esta conectada. Entra a la pagina de cuenta para completar o editar tu perfil.</p>' +
+        '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Abrir cuenta completa</button><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button><button class="uts-google-danger" type="button" data-uts-signout>Cerrar sesion</button></div>';
       body.querySelector('[data-uts-account-page]').addEventListener('click', goAccountPage);
       body.querySelector('[data-uts-close]').addEventListener('click', closeGoogleAuthPanel);
       body.querySelector('[data-uts-signout]').addEventListener('click', signOutGoogleUser);
     } else if (hasGuestMode()) {
-      var guest = getOrCreateGuestUser();
-      body.innerHTML = renderLoginBrand('MODO INVITADO · UNI') +
-        '<p class="uts-login-desc">Entraste como invitado. Puedes explorar Universe; si quieres guardar tu perfil y datos CEPREUNI, inicia sesión con Google.</p>' +
-        renderRegisteredData(guest, 'Datos locales de invitado') +
-        renderLoginDivider('o inicia con Google') +
+      body.innerHTML = renderLoginBrand('MODO INVITADO - UNI') +
+        '<p class="uts-login-desc">Para guardar tu perfil, vincular tu codigo CEPREUNI o usar soporte, inicia sesion con Google.</p>' +
         '<div id="uts-google-signin-slot"></div>' +
-        renderOfficialLoginLinks() +
         renderLoginTerms() +
         '<div class="uts-google-actions"><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button></div>';
       body.querySelector('[data-uts-close]').addEventListener('click', closeGoogleAuthPanel);
       loadGoogleIdentity(renderGoogleSignInButton);
     } else {
-      body.innerHTML = renderLoginBrand('PLATAFORMA PREUNIVERSITARIA · UNI') +
-        '<p class="uts-login-desc">Accede como invitado para explorar todo el contenido educativo, o inicia sesión con Google para guardar tu perfil y datos CEPREUNI.</p>' +
+      body.innerHTML = renderLoginBrand('PLATAFORMA PREUNIVERSITARIA - UNI') +
+        '<p class="uts-login-desc">Accede como invitado para explorar el contenido educativo, o inicia sesion con Google para guardar tu perfil.</p>' +
         '<div class="uts-login-guest-section"><button class="uts-login-guest-btn" type="button" data-uts-guest><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Entrar como invitado</button></div>' +
         renderLoginDivider('o inicia con Google') +
         '<div id="uts-google-signin-slot"></div>' +
-        renderOfficialLoginLinks() +
         renderLoginTerms();
       body.querySelector('[data-uts-guest]').addEventListener('click', enterAsGuest);
       loadGoogleIdentity(renderGoogleSignInButton);
@@ -570,8 +564,10 @@
     hydrateCepreProfileBox(user);
   }
 
-  function openGoogleAuthPanel() {
+  function openGoogleAuthPanel(options) {
+    options = options || {};
     var modal = ensureGoogleAuthPanel();
+    try { document.body.classList.toggle('uts-entry-gate', !!options.entryGate); } catch (error) {}
     renderGoogleAuthPanel();
     modal.classList.add('open');
     try { document.body.classList.add('uts-google-auth-open'); } catch (error) {}
@@ -592,7 +588,7 @@
   function closeGoogleAuthPanel() {
     var modal = document.getElementById('uts-google-auth-modal');
     if (modal) modal.classList.remove('open');
-    try { document.body.classList.remove('uts-google-auth-open'); } catch (error) {}
+    try { document.body.classList.remove('uts-google-auth-open'); document.body.classList.remove('uts-entry-gate'); } catch (error) {}
   }
 
   function loadGoogleIdentity(callback) {
@@ -629,7 +625,6 @@
           try {
             var profile = decodeGoogleJwt(response && response.credential);
             persistGoogleUser(profile);
-            renderGoogleAuthPanel();
           } catch (error) {
             slot.innerHTML = '<p class="uts-google-hint">No se pudo leer la respuesta de Google. Inténtalo otra vez.</p>';
           }
@@ -670,10 +665,13 @@
       signOut: signOutGoogleUser,
       guest: enterAsGuest
     };
+    window.handleNavUser = goAccountPage;
+    window.updateNavUser = renderGoogleAuthButton;
+    renderGoogleAuthButton();
     setTimeout(function () {
       var hasUser = !!(getCurrentAuthUser() && getCurrentAuthUser().provider === 'google');
       var alreadyGuest = hasGuestMode();
-      if (!hasUser && !alreadyGuest) openGoogleAuthPanel();
+      if (!hasUser && !alreadyGuest) openGoogleAuthPanel({ entryGate: true });
     }, 650);
   }
 
