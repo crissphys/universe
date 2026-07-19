@@ -9092,7 +9092,9 @@ html[data-universe-page='syllabus'] .summary-hub{text-align:center!important}htm
   function setOwnerFlag(value){try{if(value)localStorage.setItem(OWNER_FLAG,'1');else localStorage.removeItem(OWNER_FLAG)}catch(e){}}
   function threadId(){var id='';try{id=localStorage.getItem('universe_support_thread_v2')||''}catch(e){}if(!id){id=makeId();try{localStorage.setItem('universe_support_thread_v2',id)}catch(e){}}return cleanId(id)}
   function resetThread(){var id=makeId();try{localStorage.setItem('universe_support_thread_v2',id);localStorage.removeItem('universe_support_closed_v2')}catch(e){}S.active=id;S.thread=null}
-  function profile(){var id=typeof getOrCreateUniverseAccountId==='function'?getOrCreateUniverseAccountId():threadId();var saved='';try{saved=localStorage.getItem('universe_support_name')||''}catch(e){}var name=saved||(window.currentUser&&currentUser.name)||('Usuario '+String(id).slice(-4));return {id:cleanId(id),name:String(name).slice(0,50)}}
+  function currentGoogleUser(){try{if(window.UniverseGoogleAuth&&typeof UniverseGoogleAuth.user==='function'){var g=UniverseGoogleAuth.user();if(g&&g.provider==='google')return g}}catch(e){}try{var raw=localStorage.getItem('universe_google_user')||'';var user=raw?JSON.parse(raw):null;if(user&&user.provider==='google')return user}catch(e){}return null}
+  function requireGoogleSupport(){if(S.admin)return true;var g=currentGoogleUser();if(g&&g.provider==='google')return true;if(window.UniverseGoogleAuth&&typeof UniverseGoogleAuth.requireSupport==='function')UniverseGoogleAuth.requireSupport();else if(window.UniverseGoogleAuth&&typeof UniverseGoogleAuth.open==='function')UniverseGoogleAuth.open();else alert('Para usar soporte necesitas iniciar sesión con Google.');return false}
+  function profile(){var g=currentGoogleUser();if(g&&g.provider==='google'){var gid=g.id||g.email||threadId();var gname=g.name||(g.email?String(g.email).split('@')[0]:'Usuario Google');return {id:cleanId(gid),name:String(gname).slice(0,50),email:String(g.email||''),avatar:String(g.avatar||'')}}var id=typeof getOrCreateUniverseAccountId==='function'?getOrCreateUniverseAccountId():threadId();var saved='';try{saved=localStorage.getItem('universe_support_name')||''}catch(e){}var name=saved||(window.currentUser&&currentUser.name)||('Usuario '+String(id).slice(-4));return {id:cleanId(id),name:String(name).slice(0,50),email:'',avatar:''}}
   async function api(route,method,data){var options={method:method||'GET',cache:'no-store',headers:{'Content-Type':'application/json'}};if(data!==undefined)options.body=JSON.stringify(data);var response=await fetch(BASE+route+'.json',options);if(!response.ok)throw new Error('HTTP '+response.status);return method==='DELETE'?null:response.json()}
   function listMessages(obj){return Object.keys(obj||{}).map(function(k){var m=obj[k]||{};m._key=k;return m}).sort(function(a,b){return (a.ts||0)-(b.ts||0)}).slice(-160)}
   function welcome(){return '<div class="support-v2-msg bot"><div class="support-v2-bubble"><strong>UNIverseIA</strong><br/>Hola, soy UNIverseIA, el asistente de recepción de Soporte Universe to Study. Este espacio organiza tu consulta para que sea atendida de forma individual. Escribe qué problema tienes y adjunta una imagen si ayuda a explicarlo.</div><div class="support-v2-meta">Mensaje de bienvenida</div></div>'}
@@ -9132,17 +9134,17 @@ html[data-universe-page='syllabus'] .summary-hub{text-align:center!important}htm
     if(layout){layout.classList.toggle('admin',S.admin);layout.classList.toggle('visitor',!S.admin)}
     var inbox=el('support-v2-inbox'), nameRow=el('support-v2-name-row'), presence=el('support-v2-presence');
     if(inbox)inbox.hidden=!S.admin;
-    if(nameRow)nameRow.hidden=S.admin;
+    if(nameRow)nameRow.hidden=true;
     if(presence)presence.textContent=S.admin?'Panel privado del propietario':'Comprobando conexión...';
     if(S.admin){heartbeat();clearInterval(S.presenceTimer);S.presenceTimer=setInterval(heartbeat,25000)}
   }
-  async function send(){var input=el('support-v2-input'),txt=String(input.value||'').trim();if(!txt&&!S.image)return;var p=profile(),id=S.admin?S.active:threadId();if(!id)return;var thread=S.admin?S.threads[id]:S.thread||{},meta=thread&&thread.meta||{};var msg={name:S.admin?'Soporte Universe to Study':p.name,userId:p.id,admin:S.admin,text:txt.slice(0,1200),image:S.image||'',ts:Date.now(),page:location.pathname};input.value='';clearImage();try{await api('/threads/'+id+'/messages','POST',msg);await api('/threads/'+id+'/meta','PATCH',{userId:meta.userId||p.id,userName:meta.userName||p.name,lastText:txt||'Imagen adjunta',updatedAt:msg.ts,status:'open',archived:false,unread:!S.admin});await load()}catch(e){input.value=txt;alert('No se pudo enviar. Revisa tu conexión.')}}
+  async function send(){if(!S.admin&&!requireGoogleSupport())return;var input=el('support-v2-input'),txt=String(input.value||'').trim();if(!txt&&!S.image)return;var p=profile(),id=S.admin?S.active:threadId();if(!id)return;var thread=S.admin?S.threads[id]:S.thread||{},meta=thread&&thread.meta||{};var msg={name:S.admin?'Soporte Universe to Study':p.name,userId:p.id,userEmail:S.admin?'':p.email,userAvatar:S.admin?'':p.avatar,admin:S.admin,text:txt.slice(0,1200),image:S.image||'',ts:Date.now(),page:location.pathname};input.value='';clearImage();try{await api('/threads/'+id+'/messages','POST',msg);await api('/threads/'+id+'/meta','PATCH',{userId:meta.userId||p.id,userName:meta.userName||p.name,userEmail:meta.userEmail||p.email,userAvatar:meta.userAvatar||p.avatar,lastText:txt||'Imagen adjunta',updatedAt:msg.ts,status:'open',archived:false,unread:!S.admin});await load()}catch(e){input.value=txt;alert('No se pudo enviar. Revisa tu conexión.')}}
   async function solve(){if(!S.admin||!S.active)return;await api('/threads/'+S.active+'/meta','PATCH',{status:'closed',archived:true,unread:false,updatedAt:Date.now(),lastText:'Consulta solucionada'}).catch(function(){});S.active='';await load()}
   function pickImage(input){var file=input.files&&input.files[0];if(!file)return;if(file.size>700000){alert('La imagen debe pesar menos de 700 KB.');input.value='';return}var reader=new FileReader();reader.onload=function(){S.image=String(reader.result||'');el('support-v2-preview-img').src=S.image;el('support-v2-image-preview').hidden=false};reader.readAsDataURL(file)}
   function clearImage(){S.image='';el('support-v2-file').value='';el('support-v2-image-preview').hidden=true;el('support-v2-preview-img').removeAttribute('src')}
-  async function open(){await detectAdmin();if(!S.admin){try{if(localStorage.getItem('universe_support_closed_v2')==='1')resetThread()}catch(e){}}S.open=true;document.body.classList.add('support-v2-active');el('support-v2-panel').classList.add('open');el('support-v2-overlay').classList.add('open');el('support-v2-panel').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';load();clearInterval(S.timer);S.timer=setInterval(load,4000)}
+  async function open(){await detectAdmin();if(!S.admin&&!requireGoogleSupport())return;if(!S.admin){try{if(localStorage.getItem('universe_support_closed_v2')==='1')resetThread()}catch(e){}}S.open=true;document.body.classList.add('support-v2-active');el('support-v2-panel').classList.add('open');el('support-v2-overlay').classList.add('open');el('support-v2-panel').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';load();clearInterval(S.timer);S.timer=setInterval(load,4000)}
   function close(){var thread=S.admin?S.threads[S.active]:S.thread;if(!S.admin&&thread&&thread.meta&&thread.meta.status==='closed'){try{localStorage.setItem('universe_support_closed_v2','1')}catch(e){}}S.open=false;document.body.classList.remove('support-v2-active');el('support-v2-panel').classList.remove('open');el('support-v2-overlay').classList.remove('open');el('support-v2-panel').setAttribute('aria-hidden','true');document.body.style.overflow='';clearInterval(S.timer)}
-  function init(){var name=el('support-v2-name'),p=profile();name.value=p.name;name.onchange=function(){var value=String(name.value||'').trim().slice(0,50);if(value){try{localStorage.setItem('universe_support_name',value)}catch(e){}}};el('support-v2-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});detectOwnerIp();setTimeout(detectAdmin,1000);var seen=false;try{seen=localStorage.getItem('universe_support_hint_seen')==='1'}catch(e){}if(!seen){setTimeout(function(){el('support-v2-hint').classList.add('show');try{localStorage.setItem('universe_support_hint_seen','1')}catch(e){}setTimeout(function(){el('support-v2-hint').classList.remove('show')},6500)},1000)}}
+  function init(){var name=el('support-v2-name'),p=profile();if(name){name.value=p.name;name.readOnly=true;name.placeholder='Usaremos tu nombre de Gmail';name.onchange=function(){}}var input=el('support-v2-input');if(input)input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});window.addEventListener('universe-google-auth',function(){var n=el('support-v2-name'),p=profile();if(n)n.value=p.name});detectOwnerIp();setTimeout(detectAdmin,1000);var seen=false;try{seen=localStorage.getItem('universe_support_hint_seen')==='1'}catch(e){}if(!seen){setTimeout(function(){el('support-v2-hint').classList.add('show');try{localStorage.setItem('universe_support_hint_seen','1')}catch(e){}setTimeout(function(){el('support-v2-hint').classList.remove('show')},6500)},1000)}}
   window.UniverseSupport={open:open,close:close,send:send,solve:solve,pickImage:pickImage,clearImage:clearImage};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
@@ -9565,9 +9567,13 @@ function updateChatIdentity() {
 }
 
 function openUniverseSupportChat() {
-  const panel = document.getElementById('chat-panel');
-  if (panel && !panel.classList.contains('open')) toggleChat();
-  if (typeof setUniverseChatMode === 'function') setUniverseChatMode('support');
+  if (window.UniverseSupport && typeof window.UniverseSupport.open === 'function') {
+    window.UniverseSupport.open();
+    return;
+  }
+  if (window.UniverseGoogleAuth && typeof window.UniverseGoogleAuth.requireSupport === 'function') {
+    window.UniverseGoogleAuth.requireSupport();
+  }
 }
 
 function toggleChat() {
@@ -15965,7 +15971,7 @@ html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table th:
 </style>
 <!-- UNIVERSE_FINAL_THEME_CONTRAST_FIX_END -->
   <link rel="stylesheet" href="universe-polish.css">
-  <script src="universe-polish.js?v=google-auth-1" defer></script>
+  <script src="universe-polish.js?v=google-auth-2" defer></script>
 </body>
 </html>
 
