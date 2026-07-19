@@ -5,6 +5,46 @@
   var LEGACY_USER_KEY = 'universe_user';
   var GUEST_KEY = 'universe_guest_mode';
   var FIRST_GATE_KEY = 'universe_entry_gate_seen';
+  var SITE_BASE = 'https://universe-82fc3-default-rtdb.firebaseio.com/site/universeV1';
+  var ADMIN_EMAILS = { 'criss.phys@gmail.com': true };
+
+  function siteApi(route, method, data) {
+    var options = { method: method || 'GET', cache: 'no-store', headers: { 'Content-Type': 'application/json' } };
+    if (data !== undefined) options.body = JSON.stringify(data);
+    return fetch(SITE_BASE + route + '.json', options).then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return method === 'DELETE' ? null : response.json();
+    });
+  }
+
+  function cleanAccountId(value) {
+    return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '');
+  }
+
+  function isAdminGoogleUser() {
+    var g = getCurrentAuthUser();
+    var email = String(g && g.email || '').trim().toLowerCase();
+    return !!(g && g.provider === 'google' && ADMIN_EMAILS[email]);
+  }
+
+  function applyUniverseTheme(theme) {
+    var dark = theme === 'dark';
+    if (dark) document.documentElement.setAttribute('data-universe-theme', 'dark');
+    else document.documentElement.removeAttribute('data-universe-theme');
+    try { localStorage.setItem('universe_theme', dark ? 'dark' : 'light'); } catch (error) {}
+    var btn = document.getElementById('universe-theme-toggle');
+    if (btn) {
+      btn.setAttribute('aria-label', dark ? 'Activar tema claro' : 'Activar tema oscuro');
+      btn.setAttribute('title', dark ? 'Tema claro' : 'Tema oscuro');
+    }
+  }
+
+  if (!window.applyUniverseTheme) window.applyUniverseTheme = applyUniverseTheme;
+  if (!window.toggleUniverseTheme) {
+    window.toggleUniverseTheme = function () {
+      applyUniverseTheme(document.documentElement.getAttribute('data-universe-theme') === 'dark' ? 'light' : 'dark');
+    };
+  }
 
   function moveThemeToggleToViewport() {
     var btn = document.getElementById('universe-theme-toggle');
@@ -27,6 +67,14 @@
     document.querySelectorAll('nav a[data-route]').forEach(function (link) {
       link.classList.toggle('active', link.getAttribute('data-route') === active);
     });
+  }
+
+  function goAccountPage() {
+    if (location.pathname.replace(/\/+$/, '') === '/account') {
+      if (typeof openGoogleAuthPanel === 'function') openGoogleAuthPanel();
+      return;
+    }
+    location.href = '/account';
   }
 
   function addGoogleAuthStyles() {
@@ -55,14 +103,17 @@
       '.uts-google-required{display:inline-flex;margin-bottom:12px;border:1px solid rgba(7,93,204,.24);border-radius:999px;background:rgba(7,93,204,.08);padding:7px 10px;color:#075dcc;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}',
       '.uts-google-support-note{border:1px solid rgba(245,158,11,.34);border-radius:16px;background:#fffbeb;color:#78350f;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.45}.uts-google-support-note strong,.uts-google-support-note span{display:block}.uts-google-support-note span{margin-top:4px;color:#92400e}',
       '.uts-google-data{display:grid;gap:8px;margin:14px 0}.uts-google-data div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;padding:10px 12px}.uts-google-data dt{color:#64748b;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em}.uts-google-data dd{margin:0;min-width:0;overflow-wrap:anywhere;color:#0f172a;font-size:13px;font-weight:800}',
+      '.uts-public-announcement{position:fixed;right:max(16px,env(safe-area-inset-right));top:max(82px,calc(env(safe-area-inset-top) + 82px));z-index:2147482200;width:min(380px,calc(100vw - 28px));border:1px solid rgba(37,99,235,.22);border-radius:22px;background:rgba(255,255,255,.96);color:#0f172a;box-shadow:0 24px 70px rgba(15,23,42,.22);overflow:hidden;font-family:Inter,system-ui,sans-serif;backdrop-filter:blur(16px)}',
+      '.uts-public-announcement img{display:block;width:100%;max-height:210px;object-fit:cover;background:#eaf4ff}.uts-public-announcement div{padding:15px 17px}.uts-public-announcement span{display:inline-flex;margin-bottom:7px;border-radius:999px;background:#eaf4ff;color:#075dcc;padding:5px 9px;font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}.uts-public-announcement strong{display:block;font-size:16px;line-height:1.25}.uts-public-announcement p{margin:7px 0 0;color:#475569;font-size:13px;line-height:1.45}.uts-ann-close{position:absolute;right:10px;top:10px;width:30px;height:30px;border:0;border-radius:50%;background:rgba(15,23,42,.72);color:#fff;cursor:pointer;font-size:18px;line-height:1}',
       'html[data-universe-theme="dark"] #uts-google-auth-button,html[data-universe-theme="dark"] [data-uts-account-button="true"]{background:rgba(5,5,5,.92)!important;color:#e5f2ff!important;border-color:rgba(96,165,250,.34)!important;box-shadow:0 14px 34px rgba(0,0,0,.54)!important}',
       'html[data-universe-theme="dark"] .uts-google-card{background:#061120;color:#f8fafc;border-color:#1e3a5f}',
       'html[data-universe-theme="dark"] .uts-google-body p,html[data-universe-theme="dark"] .uts-google-user span,html[data-universe-theme="dark"] .uts-google-hint{color:#cbd5e1}',
       'html[data-universe-theme="dark"] .uts-google-user{background:#071426;border-color:#1e3a5f}',
       'html[data-universe-theme="dark"] .uts-google-support-note{background:#17110a;border-color:#92400e;color:#fde68a}html[data-universe-theme="dark"] .uts-google-support-note span{color:#fcd34d}',
       'html[data-universe-theme="dark"] .uts-google-data div{background:#071426;border-color:#1e3a5f}html[data-universe-theme="dark"] .uts-google-data dt{color:#93c5fd}html[data-universe-theme="dark"] .uts-google-data dd{color:#f8fafc}',
+      'html[data-universe-theme="dark"] .uts-public-announcement{background:rgba(5,5,5,.96);color:#f8fafc;border-color:rgba(96,165,250,.34);box-shadow:0 24px 70px rgba(0,0,0,.58)}html[data-universe-theme="dark"] .uts-public-announcement p{color:#cbd5e1}',
       'body.support-v2-active #uts-google-auth-button,body.support-v2-active [data-uts-account-button="true"]{z-index:2147482400!important;pointer-events:none!important;opacity:.18!important;filter:grayscale(1)!important}',
-      '@media(max-width:720px){#uts-google-auth-button,[data-uts-account-button="true"]{top:max(10px,calc(env(safe-area-inset-top) + 10px))!important;right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;padding:.52rem .7rem!important}#uts-google-auth-button .uts-g-label,[data-uts-account-button="true"] .uts-g-label{display:none}.uts-google-card{border-radius:22px}}'
+      '@media(max-width:720px){#uts-google-auth-button,[data-uts-account-button="true"]{top:max(10px,calc(env(safe-area-inset-top) + 10px))!important;right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;padding:.52rem .7rem!important}#uts-google-auth-button .uts-g-label,[data-uts-account-button="true"] .uts-g-label{display:none}.uts-google-card{border-radius:22px}.uts-public-announcement{left:14px;right:14px;top:auto;bottom:max(78px,calc(env(safe-area-inset-bottom) + 78px));width:auto}}'
     ].join('\n');
     document.head.appendChild(style);
   }
@@ -211,11 +262,11 @@
       btn.onclick = null;
       if (!btn.dataset.utsBound) {
         btn.dataset.utsBound = 'true';
-        btn.addEventListener('click', openGoogleAuthPanel);
+        btn.addEventListener('click', goAccountPage);
         btn.addEventListener('keydown', function (event) {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            openGoogleAuthPanel();
+            goAccountPage();
           }
         });
       }
@@ -225,7 +276,7 @@
     btn.id = 'uts-google-auth-button';
     btn.type = 'button';
     btn.setAttribute('aria-label', 'Ingresar con Google');
-    btn.addEventListener('click', openGoogleAuthPanel);
+    btn.addEventListener('click', goAccountPage);
     var navActions = document.querySelector('nav .nav-actions') || document.querySelector('nav');
     if (navActions) navActions.appendChild(btn);
     else document.body.appendChild(btn);
@@ -406,6 +457,9 @@
       requireSupport: openSupportLoginPanel,
       close: closeGoogleAuthPanel,
       user: getCurrentAuthUser,
+      isAdmin: isAdminGoogleUser,
+      siteApi: siteApi,
+      cleanId: cleanAccountId,
       isGoogleUser: function () {
         var user = getCurrentAuthUser();
         return !!(user && user.provider === 'google');
@@ -423,7 +477,6 @@
   function initFallbackSupport() {
     if (window.UniverseSupport || !document.getElementById('support-v2-panel')) return;
     var BASE = 'https://universe-82fc3-default-rtdb.firebaseio.com/chat/supportPrivateV2';
-    var ADMIN_EMAILS = { 'criss.phys@gmail.com': true };
     var OWNER_HASH = '6f74b8706e8196aade0849d6f7aef50bd3e9d205b01d1cf29019680a6b1fdfc5';
     var OWNER_FLAG = 'universe_support_owner_pc_20260712_v1';
     var OWNER_SECRET_HASH = 'efe05040d27a1892e9a48e4b997c1e89ae0e7ef89003bd614d56b546ae6ac71d';
@@ -436,7 +489,6 @@
     function threadId() { var id = ''; try { id = localStorage.getItem('universe_support_thread_v2') || ''; } catch (error) {} if (!id) { id = makeId(); try { localStorage.setItem('universe_support_thread_v2', id); } catch (error) {} } return cleanId(id); }
     function resetThread() { var id = makeId(); try { localStorage.setItem('universe_support_thread_v2', id); localStorage.removeItem('universe_support_closed_v2'); } catch (error) {} S.active = id; S.thread = null; }
     function profile() { var g = getCurrentAuthUser(); if (g && g.provider === 'google') { var gid = g.id || g.email || threadId(); var gname = g.name || (g.email ? String(g.email).split('@')[0] : 'Usuario Google'); return { id: cleanId(gid), name: String(gname).slice(0, 50), email: String(g.email || ''), avatar: String(g.avatar || '') }; } return { id: threadId(), name: 'Usuario', email: '', avatar: '' }; }
-    function isAdminGoogleUser() { var g = getCurrentAuthUser(); var email = String(g && g.email || '').trim().toLowerCase(); return !!(g && g.provider === 'google' && ADMIN_EMAILS[email]); }
     function requireGoogleSupport() { if (S.admin) return true; var g = getCurrentAuthUser(); if (g && g.provider === 'google') return true; openSupportLoginPanel(); return false; }
     async function api(route, method, data) { var options = { method: method || 'GET', cache: 'no-store', headers: { 'Content-Type': 'application/json' } }; if (data !== undefined) options.body = JSON.stringify(data); var response = await fetch(BASE + route + '.json', options); if (!response.ok) throw new Error('HTTP ' + response.status); return method === 'DELETE' ? null : response.json(); }
     function listMessages(obj) { return Object.keys(obj || {}).map(function (k) { var m = obj[k] || {}; m._key = k; return m; }).sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); }).slice(-160); }
@@ -460,11 +512,65 @@
     detectAdmin();
   }
 
+  function renderPublicAnnouncement(announcement) {
+    var old = document.getElementById('uts-public-announcement');
+    if (old) old.remove();
+    if (!announcement || !announcement.active) return;
+    if ((document.documentElement.getAttribute('data-universe-page') || '') !== 'home') return;
+    var stamp = String(announcement.updatedAt || announcement.createdAt || '');
+    try {
+      if (stamp && localStorage.getItem('uts_announcement_closed') === stamp) return;
+    } catch (error) {}
+    var card = document.createElement('aside');
+    card.id = 'uts-public-announcement';
+    card.className = 'uts-public-announcement';
+    card.innerHTML =
+      '<button type="button" class="uts-ann-close" aria-label="Cerrar comunicado">×</button>' +
+      (announcement.image ? '<img alt="Comunicado Universe" src="' + safeText(announcement.image) + '">' : '') +
+      '<div><span>Comunicado</span><strong>' + safeText(announcement.title || 'Universe to Study') + '</strong>' +
+      (announcement.text ? '<p>' + safeText(announcement.text).replace(/\n/g, '<br>') + '</p>' : '') + '</div>';
+    card.querySelector('.uts-ann-close').onclick = function () {
+      try { if (stamp) localStorage.setItem('uts_announcement_closed', stamp); } catch (error) {}
+      card.remove();
+    };
+    document.body.appendChild(card);
+  }
+
+  function applyPublicSchedule(schedule) {
+    if (!schedule || (document.documentElement.getAttribute('data-universe-page') || '') !== 'home') return;
+    var countdowns = schedule.countdowns || {};
+    Object.keys(countdowns).forEach(function (key) {
+      var item = countdowns[key] || {};
+      var card = document.querySelector('[data-countdown-key="' + key + '"]');
+      if (!card) return;
+      if (item.target) card.dataset.countdownTarget = item.target;
+      var strong = card.querySelector('.countdown-label strong');
+      var pill = card.querySelector('.countdown-pill');
+      if (strong && item.title) strong.textContent = item.title;
+      if (pill && item.label) pill.textContent = item.label;
+    });
+    window.UNIVERSE_DYNAMIC_PAYMENT_EVENTS = Array.isArray(schedule.extraEvents) ? schedule.extraEvents : [];
+    if (typeof window.startUniverseCountdowns === 'function') window.startUniverseCountdowns();
+    if (typeof window.renderPaymentCalendar === 'function') window.renderPaymentCalendar();
+  }
+
+  function loadUniversePublicSettings() {
+    siteApi('/public', 'GET').then(function (data) {
+      data = data || {};
+      window.UNIVERSE_PUBLIC_SETTINGS = data;
+      renderPublicAnnouncement(data.announcement);
+      applyPublicSchedule(data.schedule);
+      window.dispatchEvent(new CustomEvent('universe-public-settings', { detail: data }));
+    }).catch(function () {});
+  }
+
   function boot() {
+    try { applyUniverseTheme(localStorage.getItem('universe_theme') === 'dark' ? 'dark' : 'light'); } catch (error) {}
     moveThemeToggleToViewport();
     activateUniverseNav();
     initGoogleAuth();
     initFallbackSupport();
+    loadUniversePublicSettings();
     window.openUniverseSupportChat = window.openUniverseSupportChat || function () {
       if (window.UniverseSupport && typeof window.UniverseSupport.open === 'function') window.UniverseSupport.open();
       else openSupportLoginPanel();
