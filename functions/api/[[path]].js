@@ -70,12 +70,25 @@ async function verifySession(request, env) {
   }
 }
 
-function isAdminEmail(env, email) {
-  return String(env.ADMIN_EMAILS || '')
+async function sha256HexText(text) {
+  var bytes = new TextEncoder().encode(String(text || '').trim().toLowerCase());
+  var hash = await crypto.subtle.digest('SHA-256', bytes);
+  return Array.from(new Uint8Array(hash)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+}
+
+async function isAdminEmail(env, email) {
+  var normalized = String(email || '').trim().toLowerCase();
+  var emails = String(env.ADMIN_EMAILS || '')
     .split(',')
     .map(function (v) { return v.trim().toLowerCase(); })
     .filter(Boolean)
-    .includes(String(email || '').trim().toLowerCase());
+  if (emails.includes(normalized)) return true;
+  var emailHash = await sha256HexText(normalized);
+  return String(env.ADMIN_EMAIL_SHA256 || '')
+    .split(',')
+    .map(function (v) { return v.trim().toLowerCase(); })
+    .filter(Boolean)
+    .includes(emailHash);
 }
 
 function rateLimit(request, key, max = 90, windowMs = 60000) {
@@ -119,7 +132,7 @@ async function googleAuth(request, env) {
     email: String(info.email || '').toLowerCase(),
     avatar: info.picture || '',
     provider: 'google',
-    isAdmin: isAdminEmail(env, info.email),
+    isAdmin: await isAdminEmail(env, info.email),
     createdAt: Date.now(),
     updatedAt: Date.now()
   };
