@@ -34,11 +34,11 @@
     var style = document.createElement('style');
     style.id = 'uts-google-auth-style';
     style.textContent = [
-      '#uts-google-auth-button{display:inline-flex!important;align-items:center;justify-content:center;gap:8px;min-height:38px;border:1px solid rgba(59,130,246,.28);border-radius:999px;background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(236,247,255,.9));color:#0f3d75;box-shadow:0 10px 26px rgba(37,99,235,.14);padding:7px 12px;font:900 12px/1 Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap;transition:.2s;z-index:2147482450}',
-      '#uts-google-auth-button:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(37,99,235,.2)}',
-      '#uts-google-auth-button .uts-g-mark{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#fff;color:#2563eb;font-weight:1000;box-shadow:inset 0 0 0 1px rgba(37,99,235,.18)}',
-      '#uts-google-auth-button img{width:24px;height:24px;border-radius:50%;object-fit:cover}',
-      '#uts-google-auth-button small{display:block;font-size:9px;color:#64748b;font-weight:900;line-height:1;margin-top:2px}',
+      '#uts-google-auth-button,[data-uts-account-button="true"]{position:fixed!important;top:max(12px,calc(env(safe-area-inset-top) + 12px))!important;right:max(14px,calc(env(safe-area-inset-right) + 14px))!important;z-index:2147482450!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important;min-height:38px!important;border:1px solid rgba(37,99,235,.22)!important;border-radius:999px!important;background:rgba(255,255,255,.92)!important;color:#0f3d75!important;box-shadow:0 12px 30px rgba(15,23,42,.16)!important;padding:.42rem .82rem!important;font:900 .84rem/1 Rajdhani,Inter,system-ui,sans-serif!important;letter-spacing:.4px!important;cursor:pointer!important;white-space:nowrap!important;transition:.2s!important;backdrop-filter:blur(12px)!important}',
+      '#uts-google-auth-button:hover,[data-uts-account-button="true"]:hover{transform:translateY(-1px)!important;box-shadow:0 16px 36px rgba(37,99,235,.22)!important}',
+      '#uts-google-auth-button .uts-g-mark,[data-uts-account-button="true"] .uts-g-mark{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#eaf4ff;color:#2563eb;font-weight:1000;box-shadow:inset 0 0 0 1px rgba(37,99,235,.18)}',
+      '#uts-google-auth-button img,[data-uts-account-button="true"] img{width:24px;height:24px;border-radius:50%;object-fit:cover}',
+      '#uts-google-auth-button small,[data-uts-account-button="true"] small{display:none}',
       '#uts-google-auth-modal{position:fixed;inset:0;z-index:2147482800;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,6,23,.55);backdrop-filter:blur(7px)}',
       '#uts-google-auth-modal.open{display:flex}',
       '.uts-google-card{width:min(92vw,420px);border:1px solid rgba(148,163,184,.28);border-radius:26px;background:#fff;color:#0f172a;box-shadow:0 32px 90px rgba(2,8,23,.35);overflow:hidden;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}',
@@ -55,15 +55,14 @@
       '.uts-google-required{display:inline-flex;margin-bottom:12px;border:1px solid rgba(7,93,204,.24);border-radius:999px;background:rgba(7,93,204,.08);padding:7px 10px;color:#075dcc;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}',
       '.uts-google-support-note{border:1px solid rgba(245,158,11,.34);border-radius:16px;background:#fffbeb;color:#78350f;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.45}.uts-google-support-note strong,.uts-google-support-note span{display:block}.uts-google-support-note span{margin-top:4px;color:#92400e}',
       '.uts-google-data{display:grid;gap:8px;margin:14px 0}.uts-google-data div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;padding:10px 12px}.uts-google-data dt{color:#64748b;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em}.uts-google-data dd{margin:0;min-width:0;overflow-wrap:anywhere;color:#0f172a;font-size:13px;font-weight:800}',
-      'html[data-universe-theme="dark"] #uts-google-auth-button{background:linear-gradient(135deg,#071426,#0f2744);color:#e5f2ff;border-color:rgba(96,165,250,.28)}',
-      'html[data-universe-theme="dark"] #uts-google-auth-button small{color:#cbd5e1}',
+      'html[data-universe-theme="dark"] #uts-google-auth-button,html[data-universe-theme="dark"] [data-uts-account-button="true"]{background:rgba(5,5,5,.92)!important;color:#e5f2ff!important;border-color:rgba(96,165,250,.34)!important;box-shadow:0 14px 34px rgba(0,0,0,.54)!important}',
       'html[data-universe-theme="dark"] .uts-google-card{background:#061120;color:#f8fafc;border-color:#1e3a5f}',
       'html[data-universe-theme="dark"] .uts-google-body p,html[data-universe-theme="dark"] .uts-google-user span,html[data-universe-theme="dark"] .uts-google-hint{color:#cbd5e1}',
       'html[data-universe-theme="dark"] .uts-google-user{background:#071426;border-color:#1e3a5f}',
       'html[data-universe-theme="dark"] .uts-google-support-note{background:#17110a;border-color:#92400e;color:#fde68a}html[data-universe-theme="dark"] .uts-google-support-note span{color:#fcd34d}',
       'html[data-universe-theme="dark"] .uts-google-data div{background:#071426;border-color:#1e3a5f}html[data-universe-theme="dark"] .uts-google-data dt{color:#93c5fd}html[data-universe-theme="dark"] .uts-google-data dd{color:#f8fafc}',
-      'body.support-v2-active #uts-google-auth-button{z-index:2147482400!important;pointer-events:none!important;opacity:.18!important;filter:grayscale(1)!important}',
-      '@media(max-width:720px){#uts-google-auth-button{position:fixed;left:max(14px,env(safe-area-inset-left));bottom:max(76px,calc(env(safe-area-inset-bottom) + 76px));padding:10px;border-radius:999px}#uts-google-auth-button .uts-g-label{display:none}.uts-google-card{border-radius:22px}}'
+      'body.support-v2-active #uts-google-auth-button,body.support-v2-active [data-uts-account-button="true"]{z-index:2147482400!important;pointer-events:none!important;opacity:.18!important;filter:grayscale(1)!important}',
+      '@media(max-width:720px){#uts-google-auth-button,[data-uts-account-button="true"]{top:max(10px,calc(env(safe-area-inset-top) + 10px))!important;right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;padding:.52rem .7rem!important}#uts-google-auth-button .uts-g-label,[data-uts-account-button="true"] .uts-g-label{display:none}.uts-google-card{border-radius:22px}}'
     ].join('\n');
     document.head.appendChild(style);
   }
@@ -200,8 +199,28 @@
 
   function ensureGoogleAuthButton() {
     if (!document.body) return null;
-    var btn = document.getElementById('uts-google-auth-button');
+    var btn = document.getElementById('uts-google-auth-button') || document.querySelector('[data-uts-account-button="true"]');
     if (btn) return btn;
+    var legacy = document.getElementById('nav-user-btn');
+    if (legacy) {
+      btn = legacy;
+      btn.setAttribute('data-uts-account-button', 'true');
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      btn.removeAttribute('onclick');
+      btn.onclick = null;
+      if (!btn.dataset.utsBound) {
+        btn.dataset.utsBound = 'true';
+        btn.addEventListener('click', openGoogleAuthPanel);
+        btn.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openGoogleAuthPanel();
+          }
+        });
+      }
+      return btn;
+    }
     btn = document.createElement('button');
     btn.id = 'uts-google-auth-button';
     btn.type = 'button';
@@ -227,7 +246,7 @@
       btn.setAttribute('aria-label', 'Cuenta de invitado');
       btn.title = 'Entraste como invitado. Puedes registrarte con Google.';
     } else {
-      btn.innerHTML = '<span class="uts-g-mark">G</span><span class="uts-g-label">Registro<small>o invitado</small></span>';
+      btn.innerHTML = '<span class="uts-g-mark">G</span><span class="uts-g-label">Cuenta<small>Google o invitado</small></span>';
       btn.setAttribute('aria-label', 'Ingresar con Google');
       btn.title = 'Regístrate con Google o entra como invitado';
     }
