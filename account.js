@@ -63,6 +63,7 @@
     if ($('academic-explain')) {
       $('academic-explain').textContent =
         track === 'cepreuni' ? 'Si eres del ciclo actual, validaremos que el código exista en el ranking y que no esté usado por otra cuenta.' :
+        track === 'uni-student' ? 'Guardaremos tu perfil como estudiante de la Universidad Nacional de Ingeniería.' :
         track === 'san-marcos' ? 'Guardaremos tu perfil como postulante San Marcos para personalizar temario, simulacros y avisos.' :
         track === 'academy' ? 'Selecciona tu academia preuniversitaria para organizar mejor tus recursos.' :
         track === 'independent' ? 'Listo: tu perfil quedará como estudiante autónomo.' :
@@ -143,7 +144,7 @@
       updatedAt: Date.now()
     };
 
-    if (!track) { status('code-status', 'Elige si eres CEPREUNI, San Marcos, academia o estudiante independiente.', 'bad'); return; }
+    if (!track) { status('code-status', 'Elige si eres CEPREUNI, estudiante UNI, San Marcos, academia o estudiante independiente.', 'bad'); return; }
     if (track === 'academy' && !data.academyName) { status('code-status', 'Selecciona tu academia.', 'bad'); return; }
     if (track !== 'cepreuni') {
       if (existing) { status('code-status', 'Tu cuenta ya tiene un código CEPREUNI del ciclo actual; no se elimina desde aquí.', 'bad'); return; }
@@ -243,7 +244,7 @@
   }
   function bind() {
     var login = document.querySelector('[data-login]');
-    if (login) login.onclick = function () { UniverseGoogleAuth.open(); };
+    if (login) login.onclick = function () { UniverseGoogleAuth.open({ account: true }); };
     document.querySelector('[data-save-profile]').onclick = saveProfile;
     document.querySelector('[data-register-code]').onclick = saveAcademicProfile;
     document.querySelector('[data-logout]').onclick = function () {
