@@ -360,6 +360,8 @@ html[data-universe-page="ranking"] .cepre-v2-shell {
 html[data-universe-page="ranking"] .cepre-v2-wrap {
   width: 100% !important;
   max-width: calc(100vw - 24px) !important;
+  max-height: none !important;
+  height: auto !important;
   overflow: auto !important;
   border-radius: 20px !important;
   -webkit-overflow-scrolling: touch !important;
