@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-universe-page="admission">
 <head>
 <base href="/">
-<title>Resultados por concurso de admisión UNI | Universe to Study</title>
-<meta name="description" content="Máximos, mínimos, demanda, competitividad y tabla completa por carrera para concursos de admisión UNI.">
+<title>Resultados por concurso de admisiÃ³n UNI | Universe to Study</title>
+<meta name="description" content="MÃ¡ximos, mÃ­nimos, demanda, competitividad y tabla completa por carrera para concursos de admisiÃ³n UNI.">
 <meta charset="UTF-8">
   <!-- UNIVERSE_FAVICON_START -->
   <link rel="icon" href="/favicon.ico?v=1" sizes="any">
@@ -32,13 +32,13 @@
 </head>
 <body>
 <div id="universe-page-loader" role="status" aria-live="polite">
-  <div class="upl-card"><div class="upl-orbit"><span></span></div><strong>Cargando página</strong><small>Preparando Universe to Study...</small></div>
+  <div class="upl-card"><div class="upl-orbit"><span></span></div><strong>Cargando pÃ¡gina</strong><small>Preparando Universe to Study...</small></div>
 </div>
 <nav>
   <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
   <ul class="nav-links">
     <li><a data-route="home" href="/">Inicio</a></li>
-    <li><a data-route="admission" href="/admision">Admisión</a></li>
+    <li><a data-route="admission" href="/admision">AdmisiÃ³n</a></li>
     <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
     <li><a data-route="syllabus" href="/temario">Temario</a></li>
     <li><a data-route="learn" href="/aprender">Aprende</a></li>
@@ -54,18 +54,18 @@
   </div>
 </nav>
 <div id="support-v2-overlay" onclick="UniverseSupport.close()"></div>
-<div id="support-v2-hint">¿Problemas? Te ayudamos</div>
+<div id="support-v2-hint">Â¿Problemas? Te ayudamos</div>
 <button aria-label="Abrir soporte privado" id="support-v2-fab" onclick="UniverseSupport.open()" title="Soporte" type="button">
   <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 0-9 9v3a3 3 0 0 0 3 3h1v-7H5.1A7 7 0 0 1 19 11v6h-5v2h3a4 4 0 0 0 4-4v-4a9 9 0 0 0-9-9ZM5 12h2v3H6a1 1 0 0 1-1-1v-2Zm12 0h2v3h-2v-3Z"></path></svg>
   <span>Soporte</span><i id="support-v2-fab-dot"></i>
 </button>
 <aside aria-hidden="true" id="support-v2-panel">
-  <header class="support-v2-head"><div><strong>Soporte Universe to Study</strong><span id="support-v2-presence">Comprobando conexión...</span></div><button aria-label="Cerrar soporte" onclick="UniverseSupport.close()" type="button">×</button></header>
+  <header class="support-v2-head"><div><strong>Soporte Universe to Study</strong><span id="support-v2-presence">Comprobando conexiÃ³n...</span></div><button aria-label="Cerrar soporte" onclick="UniverseSupport.close()" type="button">Ã—</button></header>
   <div class="support-v2-admin-layout">
     <aside hidden id="support-v2-inbox"><div class="support-v2-inbox-title">Conversaciones</div><div id="support-v2-threads"></div></aside>
     <main class="support-v2-conversation">
       <div class="support-v2-thread-head"><div><strong id="support-v2-thread-name">Tu consulta</strong><span id="support-v2-thread-status">Chat privado</span></div><button hidden id="support-v2-solved" onclick="UniverseSupport.solve()" type="button">Solucionado</button></div>
-      <label class="support-v2-name-row" id="support-v2-name-row"><span>Tu nombre</span><input id="support-v2-name" maxlength="50" placeholder="¿Cómo te llamas?" type="text"></label>
+      <label class="support-v2-name-row" id="support-v2-name-row"><span>Tu nombre</span><input id="support-v2-name" maxlength="50" placeholder="Â¿CÃ³mo te llamas?" type="text"></label>
       <div aria-live="polite" id="support-v2-messages"></div>
       <div hidden id="support-v2-closed">El chat ha sido cerrado. Vuelve a consultar abriendo otra vez el chat de soporte.</div>
       <div hidden id="support-v2-image-preview"><img alt="Vista previa" id="support-v2-preview-img"><button onclick="UniverseSupport.clearImage()" type="button">Quitar</button></div>
@@ -79,17 +79,17 @@
 <main class="admission-page results-page">
   <section class="admission-hero small results-control-hero">
     <div class="admission-hero-copy">
-      <span class="admission-kicker">Resultados por concurso de admisión</span>
-      <h1>Máximos, mínimos, demanda y competitividad por carrera</h1>
-      <p>Selecciona el año/ciclo y mira cómo cambian los cortes por especialidad. Todo se actualiza con el mismo concurso elegido: tarjetas, gráficas y tabla.</p>
+      <span class="admission-kicker">Resultados por concurso de admisiÃ³n</span>
+      <h1>MÃ¡ximos, mÃ­nimos, demanda y competitividad por carrera</h1>
+      <p>Selecciona el aÃ±o/ciclo y mira cÃ³mo cambian los cortes por especialidad. Todo se actualiza con el mismo concurso elegido: tarjetas, grÃ¡ficas y tabla.</p>
       <div class="cycle-control-inline"><label for="cycleSelect">Elige el concurso a revisar</label><select id="cycleSelect" class="cycle-select"></select><p id="cycleSourceNote">&mdash;</p></div>
       <div class="admission-actions"><a class="admission-btn ghost" href="/admision">Volver a puntaje ideal</a><a class="admission-btn ghost" href="https://admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer">Portal oficial UNI</a></div>
     </div>
   </section>
   <section class="kpi-grid" id="resultsKpis"></section>
-  <section class="chart-grid"><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Puntajes</span><h2>Máximo y mínimo por carrera</h2></div></div><div class="score-axis-note"><span>0 puntos</span><strong>Escala UNI de 0 a 1800 puntos</strong><span>1800 puntos</span></div><div class="bar-chart" id="scoreBars"></div></article><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Demanda</span><h2>Distribución de postulantes</h2></div></div><div class="demand-chart" id="demandChart"></div></article></section>
-  <section class="admission-card full-table-card"><div class="section-head clean"><div><span class="admission-kicker">Tabla completa</span><h2>Todas las carreras del ciclo seleccionado</h2></div><div class="table-controls"><label>Concurso<select id="cycleSelectTable" class="cycle-select"></select></label><label>Filtrar carrera<input id="resultsSearch" type="search" placeholder="Ejemplo: Civil, Sistemas, Arquitectura..."></label></div></div><div class="table-full"><table class="admission-table"><thead><tr><th>Carrera</th><th>Postulantes</th><th>Vacantes / capacidad</th><th>Competencia</th><th>Corte mínimo</th><th>Puntaje máximo</th><th>Promedio mín.</th><th>Lectura</th></tr></thead><tbody id="resultsBody"></tbody></table></div></section>
-  <section class="sources-card" id="fuentes"><h2>Fuentes y criterio</h2><p>La tabla conserva todos los registros disponibles. En ciclos proyectados se usa la tendencia histórica de mínimos por carrera y se marca como referencia.</p><div id="sourceList" class="source-list"></div></section>
+  <section class="chart-grid"><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Puntajes</span><h2>MÃ¡ximo y mÃ­nimo por carrera</h2></div></div><div class="score-axis-note"><span>0 puntos</span><strong>Escala UNI de 0 a 1800 puntos</strong><span>1800 puntos</span></div><div class="bar-chart" id="scoreBars"></div></article><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Demanda</span><h2>DistribuciÃ³n de postulantes</h2></div></div><div class="demand-chart" id="demandChart"></div></article></section>
+  <section class="admission-card full-table-card"><div class="section-head clean"><div><span class="admission-kicker">Tabla completa</span><h2>Todas las carreras del ciclo seleccionado</h2></div><div class="table-controls"><label>Concurso<select id="cycleSelectTable" class="cycle-select"></select></label><label>Filtrar carrera<input id="resultsSearch" type="search" placeholder="Ejemplo: Civil, Sistemas, Arquitectura..."></label></div></div><div class="table-full"><table class="admission-table"><thead><tr><th>Carrera</th><th>Postulantes</th><th>Vacantes / capacidad</th><th>Competencia</th><th>Corte mÃ­nimo</th><th>Puntaje mÃ¡ximo</th><th>Promedio mÃ­n.</th><th>Lectura</th></tr></thead><tbody id="resultsBody"></tbody></table></div></section>
+  <section class="sources-card" id="fuentes"><h2>Fuentes y criterio</h2><p>La tabla conserva todos los registros disponibles. En ciclos proyectados se usa la tendencia histÃ³rica de mÃ­nimos por carrera y se marca como referencia.</p><div id="sourceList" class="source-list"></div></section>
 </main>
 <footer>
   <div class="footer-top">
@@ -98,15 +98,15 @@
       <div class="footer-tagline">Recursos, seguimiento y comunidad para postulantes UNI y estudiantes CEPREUNI.</div>
     </div>
     <div class="footer-links">
-      <h4>Páginas</h4>
+      <h4>PÃ¡ginas</h4>
       <ul>
         <li><a href="/">Inicio</a></li>
-        <li><a href="/admision">Admisión UNI</a></li>
+        <li><a href="/admision">AdmisiÃ³n UNI</a></li>
         <li><a href="/cepreuni">CEPREUNI</a></li>
         <li><a href="/temario">Temario</a></li>
         <li><a href="/aprender">Aprende</a></li>
         <li><a href="/biblioteca">Biblioteca</a></li>
-        <li><a href="/simulacros">Simulacros y exámenes</a></li>
+        <li><a href="/simulacros">Simulacros y exÃ¡menes</a></li>
         <li><a href="/privacidad">Privacidad</a></li>
       </ul>
     </div>
@@ -116,29 +116,29 @@
         <li><a href="/ranking">Ranking de promedios</a></li>
         <li><a href="/calculadora">Calculadora CEPREUNI</a></li>
         <li><a href="/temario#temario-cepreuni">Temario CEPREUNI</a></li>
-        <li><a href="/examenes">Exámenes CEPREUNI</a></li>
+        <li><a href="/examenes">ExÃ¡menes CEPREUNI</a></li>
       </ul>
     </div>
     <div class="footer-links">
       <h4>Accesos oficiales</h4>
       <ul>
-        <li><a href="https://admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Admisión UNI</a></li>
+        <li><a href="https://admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">AdmisiÃ³n UNI</a></li>
         <li><a href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPREUNI oficial</a></li>
         <li><a href="https://ceprenet.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPRENET</a></li>
         <li><a href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank">Drive Universe to Study</a></li>
-        <li><a href="/terminos">Términos y condiciones</a></li>
+        <li><a href="/terminos">TÃ©rminos y condiciones</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Universe to Study. Todos los derechos reservados.</div>
-    <div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
+    <div class="footer-copy">Â© 2026 Universe to Study. Todos los derechos reservados.</div>
+    <div class="footer-legal"><a href="/terminos">TÃ©rminos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
   </div>
 </footer>
 <script src="admission-data.js"></script>
 <script src="universe-admission.js"></script>
 <script src="san-marcos-data.js?v=unmsm-1" defer></script>
 <script src="san-marcos-features.js?v=unmsm-3" defer></script>
-<script src="/universe-polish.js?v=account-8" defer></script>
+<script src="/universe-polish.js?v=security-1" defer></script>
 </body>
 </html>

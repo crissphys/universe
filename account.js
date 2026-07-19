@@ -1,5 +1,6 @@
 (function () {
-  var BASE = 'https://universe-82fc3-default-rtdb.firebaseio.com/site/universeV1';
+  var API_BASE = '/api/site';
+  var AUTH_TOKEN_KEY = 'universe_auth_token';
   var CURRENT_CEPRE_CYCLE = '2026-2';
   var CEPRE_CYCLES = ['2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
   var ACADEMIES = ['Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI', 'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Integral Class', 'Academia Prisma', 'Otra academia'];
@@ -10,9 +11,14 @@
   function normalizeCode(v) { return String(v || '').trim().toUpperCase().replace(/\s+/g, ''); }
   function safe(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function api(route, method, data) {
-    var opt = { method: method || 'GET', cache: 'no-store', headers: { 'Content-Type': 'application/json' } };
+    var headers = { 'Content-Type': 'application/json' };
+    try {
+      var token = localStorage.getItem(AUTH_TOKEN_KEY);
+      if (token) headers.Authorization = 'Bearer ' + token;
+    } catch (error) {}
+    var opt = { method: method || 'GET', cache: 'no-store', headers: headers };
     if (data !== undefined) opt.body = JSON.stringify(data);
-    return fetch(BASE + route + '.json', opt).then(function (r) {
+    return fetch(API_BASE + route, opt).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return method === 'DELETE' ? null : r.json();
     });
