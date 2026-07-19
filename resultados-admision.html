@@ -43,7 +43,7 @@
   </div>
 </nav>
 <div id="support-v2-overlay" onclick="UniverseSupport.close()"></div>
-<div id="support-v2-hint">¿Problemas? Te ayudamos</div>
+<div id="support-v2-hint">¿Problemasí Te ayudamos</div>
 <button aria-label="Abrir soporte privado" id="support-v2-fab" onclick="UniverseSupport.open()" title="Soporte" type="button">
   <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 0-9 9v3a3 3 0 0 0 3 3h1v-7H5.1A7 7 0 0 1 19 11v6h-5v2h3a4 4 0 0 0 4-4v-4a9 9 0 0 0-9-9ZM5 12h2v3H6a1 1 0 0 1-1-1v-2Zm12 0h2v3h-2v-3Z"></path></svg>
   <span>Soporte</span><i id="support-v2-fab-dot"></i>
@@ -54,7 +54,7 @@
     <aside hidden id="support-v2-inbox"><div class="support-v2-inbox-title">Conversaciones</div><div id="support-v2-threads"></div></aside>
     <main class="support-v2-conversation">
       <div class="support-v2-thread-head"><div><strong id="support-v2-thread-name">Tu consulta</strong><span id="support-v2-thread-status">Chat privado</span></div><button hidden id="support-v2-solved" onclick="UniverseSupport.solve()" type="button">Solucionado</button></div>
-      <label class="support-v2-name-row" id="support-v2-name-row"><span>Tu nombre</span><input id="support-v2-name" maxlength="50" placeholder="¿Cómo te llamas?" type="text"></label>
+      <label class="support-v2-name-row" id="support-v2-name-row"><span>Tu nombre</span><input id="support-v2-name" maxlength="50" placeholder="¿Cómo te llamasí" type="text"></label>
       <div aria-live="polite" id="support-v2-messages"></div>
       <div hidden id="support-v2-closed">El chat ha sido cerrado. Vuelve a consultar abriendo otra vez el chat de soporte.</div>
       <div hidden id="support-v2-image-preview"><img alt="Vista previa" id="support-v2-preview-img"><button onclick="UniverseSupport.clearImage()" type="button">Quitar</button></div>
@@ -66,18 +66,18 @@
   </div>
 </aside>
 <main class="admission-page results-page">
-  <section class="admission-hero small">
+  <section class="admission-hero small results-control-hero">
     <div class="admission-hero-copy">
       <span class="admission-kicker">Resultados por concurso de admisión</span>
       <h1>Máximos, mínimos, demanda y competitividad por carrera</h1>
-      <p>Selecciona un ciclo para ver los indicadores principales, las barras de puntaje máximo/mínimo y la tabla completa por especialidad.</p>
+      <p>Selecciona el año/ciclo y mira cómo cambian los cortes por especialidad. Todo se actualiza con el mismo concurso elegido: tarjetas, gráficas y tabla.</p>
+      <div class="cycle-control-inline"><label for="cycleSelect">Elige el concurso a revisar</label><select id="cycleSelect" class="cycle-select"></select><p id="cycleSourceNote">&mdash;</p></div>
       <div class="admission-actions"><a class="admission-btn ghost" href="/admision">Volver a puntaje ideal</a><a class="admission-btn ghost" href="https://admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer">Portal oficial UNI</a></div>
     </div>
-    <aside class="admission-cycle-box"><label for="cycleSelect">Concurso</label><select id="cycleSelect"></select><p id="cycleSourceNote">&mdash;</p></aside>
   </section>
   <section class="kpi-grid" id="resultsKpis"></section>
-  <section class="chart-grid"><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Puntajes</span><h2>Máximo y mínimo por carrera</h2></div></div><div class="bar-chart" id="scoreBars"></div></article><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Demanda</span><h2>Distribución de postulantes</h2></div></div><div class="demand-chart" id="demandChart"></div></article></section>
-  <section class="admission-card full-table-card"><div class="section-head clean"><div><span class="admission-kicker">Tabla completa</span><h2>Todas las carreras del ciclo seleccionado</h2></div><input id="resultsSearch" type="search" placeholder="Filtrar carrera..."></div><div class="table-full"><table class="admission-table"><thead><tr><th>Carrera</th><th>Postulantes</th><th>Vacantes / capacidad</th><th>Competencia</th><th>Corte mínimo</th><th>Puntaje máximo</th><th>Promedio mín.</th><th>Lectura</th></tr></thead><tbody id="resultsBody"></tbody></table></div></section>
+  <section class="chart-grid"><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Puntajes</span><h2>Máximo y mínimo por carrera</h2></div></div><div class="score-axis-note"><span>0 puntos</span><strong>Escala UNI de 0 a 1800 puntos</strong><span>1800 puntos</span></div><div class="bar-chart" id="scoreBars"></div></article><article class="admission-card"><div class="section-head clean"><div><span class="admission-kicker">Demanda</span><h2>Distribución de postulantes</h2></div></div><div class="demand-chart" id="demandChart"></div></article></section>
+  <section class="admission-card full-table-card"><div class="section-head clean"><div><span class="admission-kicker">Tabla completa</span><h2>Todas las carreras del ciclo seleccionado</h2></div><div class="table-controls"><label>Concurso<select id="cycleSelectTable" class="cycle-select"></select></label><label>Filtrar carrera<input id="resultsSearch" type="search" placeholder="Ejemplo: Civil, Sistemas, Arquitectura..."></label></div></div><div class="table-full"><table class="admission-table"><thead><tr><th>Carrera</th><th>Postulantes</th><th>Vacantes / capacidad</th><th>Competencia</th><th>Corte mínimo</th><th>Puntaje máximo</th><th>Promedio mín.</th><th>Lectura</th></tr></thead><tbody id="resultsBody"></tbody></table></div></section>
   <section class="sources-card" id="fuentes"><h2>Fuentes y criterio</h2><p>La tabla conserva todos los registros disponibles. En ciclos proyectados se usa la tendencia histórica de mínimos por carrera y se marca como referencia.</p><div id="sourceList" class="source-list"></div></section>
 </main>
 <footer>
