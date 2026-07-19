@@ -56,7 +56,7 @@
   function initTheme(){var key='universe_theme';window.applyUniverseTheme=function(theme){var dark=theme==='dark';if(dark)document.documentElement.setAttribute('data-universe-theme','dark');else document.documentElement.removeAttribute('data-universe-theme');try{localStorage.setItem(key,dark?'dark':'light')}catch(e){}var btn=$('#universe-theme-toggle');if(btn){btn.setAttribute('aria-label',dark?'Activar tema claro':'Activar tema oscuro');btn.setAttribute('title',dark?'Tema claro':'Tema oscuro')}};window.toggleUniverseTheme=function(){window.applyUniverseTheme(document.documentElement.getAttribute('data-universe-theme')==='dark'?'light':'dark')};try{window.applyUniverseTheme(localStorage.getItem(key)==='dark'?'dark':'light')}catch(e){}}
   function activateNav(){var page=document.documentElement.getAttribute('data-universe-page')||'';var map={ranking:'cepre',calculator:'cepre',exams:'simulators','admission-results':'admission'};var active=map[page]||page;$all('nav a[data-route]').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-route')===active)})}
   function hideLoader(){var el=$('#universe-page-loader');if(!el)return;el.classList.add('hide');setTimeout(function(){try{el.remove()}catch(e){}},420)}
-  function initSupport(){if(!$('#support-v2-panel'))return;setupSupport()}
+  function initSupport(){return}
   function init(){initTheme();activateNav();initAdmissionHome();populateCycles();renderSources();initSupport();setTimeout(hideLoader,450)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();window.addEventListener('load',function(){setTimeout(hideLoader,160)},{once:true});setTimeout(hideLoader,1800);
 

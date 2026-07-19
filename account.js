@@ -107,6 +107,7 @@
   }
   async function loadProfile() {
     if (!window.UniverseGoogleAuth) { setTimeout(loadProfile, 180); return; }
+    if (UniverseGoogleAuth.refresh) await UniverseGoogleAuth.refresh().catch(function () {});
     state.user = user();
     if (!state.user || state.user.provider !== 'google') { showLogin(); return; }
     $('account-login-card').hidden = true;
