@@ -140,6 +140,8 @@
       '#uts-google-auth-button{min-height:50px!important;padding:.58rem 1rem!important;font-size:.96rem!important;gap:.62rem!important}#uts-google-auth-button .uts-g-mark{width:30px!important;height:30px!important}#uts-google-auth-button img{width:32px!important;height:32px!important}',
       '.nav-actions .nav-user-btn{display:none!important}.nav-user-btn{min-height:46px!important;padding:.58rem 1rem!important;border-radius:999px!important}.nav-user-btn .uts-g-mark{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#eaf4ff;color:#2563eb;font-weight:1000}.nav-user-btn img{width:30px;height:30px;border-radius:50%;object-fit:cover}.nav-user-btn .uts-g-label{display:grid;line-height:1.02}.nav-user-btn .uts-g-label small{font-size:.66rem;opacity:.72}',
       'body.uts-entry-gate{overflow:hidden!important}body.uts-entry-gate #uts-google-auth-modal{background:#fff!important;align-items:center!important;justify-content:center!important;padding:clamp(16px,4vw,34px)!important;overflow:auto!important;backdrop-filter:none!important}body.uts-entry-gate #uts-google-auth-modal.open{display:flex!important;flex-direction:column!important;gap:0!important}body.uts-entry-gate #uts-google-auth-modal:before{display:none!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-card{margin:auto!important;width:min(390px,92vw)!important;box-shadow:0 28px 70px rgba(15,23,42,.14)!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-close{display:none!important}body.uts-entry-gate .uts-login-official{display:none!important}',
+      'body.uts-entry-gate .uts-login-official{display:block!important}body.uts-entry-gate .uts-login-official-grid{display:flex!important}',
+      'body.uts-support-login #uts-google-auth-modal{background:rgba(255,255,255,.96)!important;align-items:center!important;justify-content:center!important;padding:clamp(16px,4vw,34px)!important;overflow:auto!important;backdrop-filter:blur(8px)!important}body.uts-support-login #uts-google-auth-modal.open{display:flex!important;flex-direction:column!important;gap:0!important}body.uts-support-login #uts-google-auth-modal:before{display:none!important}body.uts-support-login #uts-google-auth-modal .uts-google-card{margin:auto!important;width:min(430px,94vw)!important;max-height:min(92svh,760px)!important;overflow:auto!important;box-shadow:0 28px 70px rgba(15,23,42,.18)!important}body.uts-support-login .uts-login-official{display:block!important}body.uts-support-login .uts-login-official-grid{display:flex!important}',
       '@media(max-width:720px){#uts-google-auth-button{min-height:44px!important;right:max(8px,calc(env(safe-area-inset-right) + 8px))!important;padding:.52rem!important}.nav-user-btn{min-height:42px!important;padding:.52rem .68rem!important}.nav-user-btn .uts-g-label small{display:none}body.uts-entry-gate #uts-google-auth-modal{padding:18px 12px!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-card{width:min(360px,94vw)!important}}'
     ].join('\n');
     document.head.appendChild(style);
@@ -363,6 +365,10 @@
       '</div></div>';
   }
 
+  function renderGuestAccessButton(label) {
+    return '<div class="uts-login-guest-section"><button class="uts-login-guest-btn" type="button" data-uts-guest><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' + safeText(label || 'Entrar como invitado') + '</button></div>';
+  }
+
   function renderLoginTerms() {
     return '<div class="uts-login-terms">Al continuar aceptas nuestros <a href="/terminos">Términos de Servicio</a> y <a href="/privacidad">Política de Privacidad</a> de UNIVERSE.</div>';
   }
@@ -386,17 +392,22 @@
     } else if (hasGuestMode()) {
       body.innerHTML = renderLoginBrand('MODO INVITADO - UNI') +
         '<p class="uts-login-desc">Para guardar tu perfil, vincular tu codigo CEPREUNI o usar soporte, inicia sesion con Google.</p>' +
+        renderGuestAccessButton('Seguir como invitado') +
+        renderLoginDivider('o inicia con Google') +
         '<div id="uts-google-signin-slot"></div>' +
+        renderOfficialLoginLinks() +
         renderLoginTerms() +
         '<div class="uts-google-actions"><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button></div>';
+      body.querySelector('[data-uts-guest]').addEventListener('click', enterAsGuest);
       body.querySelector('[data-uts-close]').addEventListener('click', closeGoogleAuthPanel);
       loadGoogleIdentity(renderGoogleSignInButton);
     } else {
       body.innerHTML = renderLoginBrand('PLATAFORMA PREUNIVERSITARIA - UNI') +
         '<p class="uts-login-desc">Accede como invitado para explorar el contenido educativo, o inicia sesion con Google para guardar tu perfil.</p>' +
-        '<div class="uts-login-guest-section"><button class="uts-login-guest-btn" type="button" data-uts-guest><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Entrar como invitado</button></div>' +
+        renderGuestAccessButton('Entrar como invitado') +
         renderLoginDivider('o inicia con Google') +
         '<div id="uts-google-signin-slot"></div>' +
+        renderOfficialLoginLinks() +
         renderLoginTerms();
       body.querySelector('[data-uts-guest]').addEventListener('click', enterAsGuest);
       loadGoogleIdentity(renderGoogleSignInButton);
@@ -580,14 +591,17 @@
   function openGoogleAuthPanel(options) {
     options = options || {};
     var modal = ensureGoogleAuthPanel();
-    try { document.body.classList.toggle('uts-entry-gate', !!options.entryGate); } catch (error) {}
+    try {
+      document.body.classList.toggle('uts-entry-gate', !!options.entryGate);
+      document.body.classList.toggle('uts-support-login', !!options.support);
+    } catch (error) {}
     renderGoogleAuthPanel();
     modal.classList.add('open');
     try { document.body.classList.add('uts-google-auth-open'); } catch (error) {}
   }
 
   function openSupportLoginPanel() {
-    openGoogleAuthPanel();
+    openGoogleAuthPanel({ support: true });
     var user = getCurrentAuthUser();
     if (user && user.provider === 'google') return;
     var body = document.getElementById('uts-google-body');
@@ -601,7 +615,7 @@
   function closeGoogleAuthPanel() {
     var modal = document.getElementById('uts-google-auth-modal');
     if (modal) modal.classList.remove('open');
-    try { document.body.classList.remove('uts-google-auth-open'); document.body.classList.remove('uts-entry-gate'); } catch (error) {}
+    try { document.body.classList.remove('uts-google-auth-open'); document.body.classList.remove('uts-entry-gate'); document.body.classList.remove('uts-support-login'); } catch (error) {}
   }
 
   function loadGoogleIdentity(callback) {
