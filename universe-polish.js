@@ -142,6 +142,7 @@
       'body.uts-entry-gate{overflow:hidden!important}body.uts-entry-gate #uts-google-auth-modal{background:#fff!important;align-items:center!important;justify-content:center!important;padding:clamp(16px,4vw,34px)!important;overflow:auto!important;backdrop-filter:none!important}body.uts-entry-gate #uts-google-auth-modal.open{display:flex!important;flex-direction:column!important;gap:0!important}body.uts-entry-gate #uts-google-auth-modal:before{display:none!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-card{margin:auto!important;width:min(390px,92vw)!important;box-shadow:0 28px 70px rgba(15,23,42,.14)!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-close{display:none!important}body.uts-entry-gate .uts-login-official{display:none!important}',
       'body.uts-entry-gate .uts-login-official{display:block!important}body.uts-entry-gate .uts-login-official-grid{display:flex!important}',
       'body.uts-support-login #uts-google-auth-modal{background:rgba(255,255,255,.96)!important;align-items:center!important;justify-content:center!important;padding:clamp(16px,4vw,34px)!important;overflow:auto!important;backdrop-filter:blur(8px)!important}body.uts-support-login #uts-google-auth-modal.open{display:flex!important;flex-direction:column!important;gap:0!important}body.uts-support-login #uts-google-auth-modal:before{display:none!important}body.uts-support-login #uts-google-auth-modal .uts-google-card{margin:auto!important;width:min(430px,94vw)!important;max-height:min(92svh,760px)!important;overflow:auto!important;box-shadow:0 28px 70px rgba(15,23,42,.18)!important}body.uts-support-login .uts-login-official{display:block!important}body.uts-support-login .uts-login-official-grid{display:flex!important}',
+      'body.uts-account-login #uts-google-auth-modal{background:rgba(255,255,255,.97)!important;align-items:center!important;justify-content:center!important;padding:clamp(16px,4vw,34px)!important;overflow:auto!important;backdrop-filter:blur(8px)!important}body.uts-account-login #uts-google-auth-modal.open{display:flex!important;flex-direction:column!important;gap:0!important}body.uts-account-login #uts-google-auth-modal:before{display:none!important}body.uts-account-login #uts-google-auth-modal .uts-google-card{margin:auto!important;width:min(430px,94vw)!important;max-height:min(92svh,760px)!important;overflow:auto!important;box-shadow:0 28px 70px rgba(15,23,42,.18)!important}body.uts-account-login .uts-login-official{display:block!important}body.uts-account-login .uts-login-official-grid{display:flex!important}',
       '@media(max-width:720px){#uts-google-auth-button{min-height:44px!important;right:max(8px,calc(env(safe-area-inset-right) + 8px))!important;padding:.52rem!important}.nav-user-btn{min-height:42px!important;padding:.52rem .68rem!important}.nav-user-btn .uts-g-label small{display:none}body.uts-entry-gate #uts-google-auth-modal{padding:18px 12px!important}body.uts-entry-gate #uts-google-auth-modal .uts-google-card{width:min(360px,94vw)!important}}'
     ].join('\n');
     document.head.appendChild(style);
@@ -250,9 +251,41 @@
     } catch (error) {}
     window.dispatchEvent(new CustomEvent('universe-google-auth', { detail: user }));
     renderGoogleAuthButton();
-    if (document.body && document.body.classList.contains('uts-entry-gate')) closeGoogleAuthPanel();
-    else renderGoogleAuthPanel();
+    afterGoogleLogin(user);
     return user;
+  }
+
+  function afterGoogleLogin(user) {
+    var fromEntryGate = !!(document.body && document.body.classList.contains('uts-entry-gate'));
+    if (!fromEntryGate) {
+      renderGoogleAuthPanel();
+      return;
+    }
+    var id = googleProfileId(user);
+    if (!id) {
+      closeGoogleAuthPanel();
+      return;
+    }
+    siteApi('/profiles/' + id, 'GET').then(function (profile) {
+      if (profile && profile.academicTrack) {
+        closeGoogleAuthPanel();
+        return;
+      }
+      showAcademicQuestionAfterGoogle();
+    }).catch(function () {
+      showAcademicQuestionAfterGoogle();
+    });
+  }
+
+  function showAcademicQuestionAfterGoogle() {
+    var modal = ensureGoogleAuthPanel();
+    try {
+      document.body.classList.remove('uts-entry-gate');
+      document.body.classList.add('uts-account-login');
+      document.body.classList.add('uts-google-auth-open');
+    } catch (error) {}
+    renderGoogleAuthPanel();
+    modal.classList.add('open');
   }
 
   function signOutGoogleUser() {
@@ -349,7 +382,7 @@
   function renderLoginBrand(kicker) {
     return '<div class="uts-login-brand">' +
       '<div class="uts-login-logo" id="uts-google-title">UNIVERSE</div>' +
-      '<div class="uts-login-tagline">' + safeText(kicker || 'PLATAFORMA PREUNIVERSITARIA · UNI') + '</div>' +
+      '<div class="uts-login-tagline">' + safeText(kicker || 'PLATAFORMA PREUNIVERSITARIA - UNI') + '</div>' +
       '</div>';
   }
 
@@ -473,9 +506,9 @@
     var cycle = profile.cepreCycle || CURRENT_CEPRE_CYCLE;
     var code = normalizeCepreCode(profile.cepreCode || '');
     var locked = track === 'cepreuni' && cycle === CURRENT_CEPRE_CYCLE && !!code;
-    return '<div class="uts-cepre-head"><div><b>Perfil acad\u00e9mico</b><span>Dinos si eres CEPREUNI, San Marcos, academia o estudiante independiente.</span></div>' + (locked ? '<i>C\u00f3digo bloqueado</i>' : '') + '</div>' +
+    return '<div class="uts-cepre-head"><div><b>Perfil acad\u00e9mico</b><span>Dinos si eres CEPREUNI, estudiante UNI, San Marcos, academia o estudiante independiente.</span></div>' + (locked ? '<i>C\u00f3digo bloqueado</i>' : '') + '</div>' +
       '<div class="uts-cepre-grid">' +
-      '<label>Tipo de estudiante<select id="uts-academic-track"><option value=""' + (!track ? ' selected' : '') + '>Selecciona una opci\u00f3n</option><option value="cepreuni"' + (track === 'cepreuni' ? ' selected' : '') + '>Soy CEPREUNI</option><option value="san-marcos"' + (track === 'san-marcos' ? ' selected' : '') + '>Postulo a San Marcos</option><option value="academy"' + (track === 'academy' ? ' selected' : '') + '>Estoy en una academia</option><option value="independent"' + (track === 'independent' ? ' selected' : '') + '>Soy estudiante independiente</option></select></label>' +
+      '<label>Tipo de estudiante<select id="uts-academic-track"><option value=""' + (!track ? ' selected' : '') + '>Selecciona una opci\u00f3n</option><option value="cepreuni"' + (track === 'cepreuni' ? ' selected' : '') + '>Soy CEPREUNI</option><option value="uni-student"' + (track === 'uni-student' ? ' selected' : '') + '>Soy estudiante UNI</option><option value="san-marcos"' + (track === 'san-marcos' ? ' selected' : '') + '>Postulo a San Marcos</option><option value="academy"' + (track === 'academy' ? ' selected' : '') + '>Estoy en una academia</option><option value="independent"' + (track === 'independent' ? ' selected' : '') + '>Soy estudiante independiente</option></select></label>' +
       '<label id="uts-academy-wrap">Academia preuniversitaria<select id="uts-academy-name">' + academyOptions(profile.academyName || '') + '</select></label>' +
       '<label id="uts-cepre-cycle-wrap">Ciclo CEPREUNI<select id="uts-cepre-cycle">' + cycleOptions(cycle) + '</select></label>' +
       '<label id="uts-cepre-code-wrap">C\u00f3digo del ciclo actual<input id="uts-cepre-code" maxlength="9" placeholder="Ejemplo: 2612345F" value="' + safeText(code) + '"' + (locked ? ' disabled' : '') + '></label>' +
@@ -502,6 +535,7 @@
     cycleWrap.hidden = !isCepre;
     codeWrap.hidden = !isCepre || !isCurrent;
     explain.textContent = value === 'cepreuni' ? (isCurrent ? 'Para el ciclo actual necesitamos tu c\u00f3digo CEPREUNI. As\u00ed evitamos que dos cuentas reclamen el mismo c\u00f3digo.' : 'Para ciclos anteriores basta registrar el ciclo; los c\u00f3digos pueden repetirse entre procesos distintos.') :
+      value === 'uni-student' ? 'Guardaremos tu perfil como estudiante de la Universidad Nacional de Ingenier\u00eda.' :
       value === 'san-marcos' ? 'Guardaremos tu perfil como postulante San Marcos para personalizar temario y simulacros.' :
       value === 'academy' ? 'Selecciona tu academia preuniversitaria para ordenar mejor tus recursos.' :
       value === 'independent' ? 'Tu perfil quedar\u00e1 como estudiante independiente o aut\u00f3nomo.' :
@@ -548,7 +582,7 @@
       googleName: user.name || '',
       avatar: user.avatar || ''
     };
-    if (!track) { if (status) status.textContent = 'Elige si eres CEPREUNI, San Marcos, academia o estudiante independiente.'; return; }
+    if (!track) { if (status) status.textContent = 'Elige si eres CEPREUNI, estudiante UNI, San Marcos, academia o estudiante independiente.'; return; }
     if (track === 'academy' && !payload.academyName) { if (status) status.textContent = 'Selecciona tu academia preuniversitaria.'; return; }
     if (track !== 'cepreuni') {
       if (currentCode) { if (status) status.textContent = 'Tu cuenta ya tiene un c\u00f3digo CEPREUNI actual; no se elimina desde este acceso r\u00e1pido.'; return; }
@@ -591,9 +625,11 @@
   function openGoogleAuthPanel(options) {
     options = options || {};
     var modal = ensureGoogleAuthPanel();
+    var accountMode = !!options.account || (!options.entryGate && !options.support);
     try {
       document.body.classList.toggle('uts-entry-gate', !!options.entryGate);
       document.body.classList.toggle('uts-support-login', !!options.support);
+      document.body.classList.toggle('uts-account-login', accountMode);
     } catch (error) {}
     renderGoogleAuthPanel();
     modal.classList.add('open');
@@ -615,7 +651,7 @@
   function closeGoogleAuthPanel() {
     var modal = document.getElementById('uts-google-auth-modal');
     if (modal) modal.classList.remove('open');
-    try { document.body.classList.remove('uts-google-auth-open'); document.body.classList.remove('uts-entry-gate'); document.body.classList.remove('uts-support-login'); } catch (error) {}
+    try { document.body.classList.remove('uts-google-auth-open'); document.body.classList.remove('uts-entry-gate'); document.body.classList.remove('uts-support-login'); document.body.classList.remove('uts-account-login'); } catch (error) {}
   }
 
   function loadGoogleIdentity(callback) {
