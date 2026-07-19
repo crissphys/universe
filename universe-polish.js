@@ -122,7 +122,22 @@
       'html[data-universe-theme="dark"] .uts-cepre-box{background:#071426;border-color:#1e3a5f}html[data-universe-theme="dark"] .uts-cepre-head span,html[data-universe-theme="dark"] .uts-cepre-mini,html[data-universe-theme="dark"] .uts-cepre-loading{color:#cbd5e1!important}html[data-universe-theme="dark"] .uts-cepre-grid label{color:#93c5fd}html[data-universe-theme="dark"] .uts-cepre-grid select,html[data-universe-theme="dark"] .uts-cepre-grid input{background:#050505;color:#f8fafc;border-color:#334155}',
       'html[data-universe-theme="dark"] .uts-public-announcement{background:rgba(5,5,5,.96);color:#f8fafc;border-color:rgba(96,165,250,.34);box-shadow:0 24px 70px rgba(0,0,0,.58)}html[data-universe-theme="dark"] .uts-public-announcement p{color:#cbd5e1}',
       'body.support-v2-active #uts-google-auth-button,body.support-v2-active [data-uts-account-button="true"]{z-index:2147482400!important;pointer-events:none!important;opacity:.18!important;filter:grayscale(1)!important}',
-      '@media(max-width:720px){#uts-google-auth-button,[data-uts-account-button="true"]{top:max(10px,calc(env(safe-area-inset-top) + 10px))!important;right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;padding:.52rem .7rem!important}#uts-google-auth-button .uts-g-label,[data-uts-account-button="true"] .uts-g-label{display:none}.uts-google-card{border-radius:22px}.uts-public-announcement{left:14px;right:14px;top:auto;bottom:max(78px,calc(env(safe-area-inset-bottom) + 78px));width:auto}}'
+      '@media(max-width:720px){#uts-google-auth-button,[data-uts-account-button="true"]{top:max(10px,calc(env(safe-area-inset-top) + 10px))!important;right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;padding:.52rem .7rem!important}#uts-google-auth-button .uts-g-label,[data-uts-account-button="true"] .uts-g-label{display:none}.uts-google-card{border-radius:22px}.uts-public-announcement{left:14px;right:14px;top:auto;bottom:max(78px,calc(env(safe-area-inset-bottom) + 78px));width:auto}}',
+      '#uts-google-auth-modal{align-items:center!important;justify-content:flex-start!important;padding:clamp(28px,3.4vw,58px)!important;background:#f7fbff!important;backdrop-filter:none!important;overflow:auto!important}',
+      '#uts-google-auth-modal.open{display:flex!important;flex-direction:column!important;gap:clamp(78px,13vh,210px)!important}',
+      '#uts-google-auth-modal:before{content:"";display:block;flex:0 0 min(52vh,620px);width:min(92vw,1450px);min-height:240px;background-color:#eaf2ff;background-image:linear-gradient(rgba(37,99,235,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(219,234,254,.95),rgba(239,246,255,.86));background-size:38px 38px,38px 38px,100% 100%;box-shadow:inset 0 0 0 1px rgba(37,99,235,.02)}',
+      '#uts-google-auth-modal .uts-google-card{position:relative!important;z-index:1!important;width:min(420px,92vw)!important;border:0!important;border-radius:24px!important;background:#fff!important;color:#0f172a!important;box-shadow:0 32px 64px -12px rgba(15,23,42,.18)!important;overflow:auto!important;max-height:none!important;animation:utsLoginCardIn .5s cubic-bezier(.22,1,.36,1) both!important;font-family:DM Sans,Inter,system-ui,-apple-system,Segoe UI,sans-serif!important}',
+      '#uts-google-auth-modal .uts-google-card:before{content:"";display:block;height:4px;background:linear-gradient(90deg,#2563eb,#7c3aed)}',
+      '@keyframes utsLoginCardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}',
+      '#uts-google-auth-modal .uts-google-close{position:absolute!important;top:10px!important;right:10px!important;z-index:3!important;width:30px!important;height:30px!important;border:0!important;border-radius:50%!important;background:#f1f5f9!important;color:#94a3b8!important;box-shadow:none!important;cursor:pointer!important}',
+      '#uts-google-auth-modal .uts-google-body{padding:2rem 2rem 2.2rem!important}#uts-google-auth-modal .uts-google-body p{margin:0 0 1.5rem!important}',
+      '.uts-login-brand{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-bottom:1.6rem;text-align:center}.uts-login-logo{font-family:Bebas Neue,Rajdhani,Inter,sans-serif;font-size:2.6rem;letter-spacing:5px;background:linear-gradient(135deg,#0f172a,#2563eb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}.uts-login-tagline{font-size:.8rem;color:#64748b;font-family:Rajdhani,Inter,sans-serif;letter-spacing:1.5px;text-transform:uppercase;margin-top:.15rem;font-weight:700}',
+      '.uts-login-desc{font-size:.85rem!important;color:#475569!important;line-height:1.55!important;text-align:center!important;margin-bottom:1.5rem!important}.uts-login-guest-section{margin-bottom:1.5rem}.uts-login-guest-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:.7rem;padding:.85rem;background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff;border:none;border-radius:50px;font-family:Rajdhani,Inter,sans-serif;font-weight:800;font-size:1rem;letter-spacing:1.5px;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 24px rgba(37,99,235,.2)}.uts-login-guest-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,99,235,.3)}.uts-login-guest-btn svg{flex-shrink:0}',
+      '.uts-login-divider{display:flex;align-items:center;gap:.8rem;color:#94a3b8;font-size:.78rem;margin:0 0 1rem;font-family:Rajdhani,Inter,sans-serif;font-weight:800;letter-spacing:1px;text-transform:uppercase}.uts-login-divider:before,.uts-login-divider:after{content:"";flex:1;height:1px;background-image:linear-gradient(90deg,transparent,rgba(37,99,235,.15),transparent)}#uts-google-signin-slot{display:flex!important;justify-content:center!important;align-items:center!important;min-height:46px!important;margin:0 0 1.5rem!important}',
+      '.uts-login-official{margin-bottom:1.2rem}.uts-login-official-grid{display:flex;gap:.75rem}.uts-login-official-card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem .4rem;border-radius:16px;text-decoration:none;text-align:center;transition:transform .2s,box-shadow .2s}.uts-login-official-card.cu{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff}.uts-login-official-card.cn{background:linear-gradient(135deg,#7f1d1d,#dc2626);color:#fff}.uts-login-official-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.2)}.uts-login-official-name{font-family:Bebas Neue,Rajdhani,sans-serif;font-size:1.5rem;letter-spacing:2px;line-height:1}.uts-login-official-desc{font-family:Rajdhani,Inter,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:1px;opacity:.86;margin-top:.3rem}',
+      '.uts-login-terms{margin-top:1.2rem;text-align:center;font-size:.7rem;color:#94a3b8;line-height:1.45}.uts-login-terms a{color:#64748b;text-decoration:none;font-weight:800}.uts-login-terms a:hover{text-decoration:underline}',
+      '#uts-google-auth-modal .uts-google-user{grid-template-columns:52px minmax(0,1fr);border-color:#dbeafe;border-radius:18px;background:#f8fbff;margin-bottom:1rem}#uts-google-auth-modal .uts-google-user img{width:52px;height:52px}#uts-google-auth-modal .uts-google-actions{justify-content:center}.uts-cepre-box{background:linear-gradient(135deg,#f8fbff,#eff6ff)!important}',
+      '@media(max-width:720px){#uts-google-auth-modal{padding:18px 14px!important}#uts-google-auth-modal.open{gap:clamp(34px,7vh,78px)!important}#uts-google-auth-modal:before{width:100%;flex-basis:min(34vh,320px);min-height:180px;background-size:30px 30px,30px 30px,100% 100%}#uts-google-auth-modal .uts-google-card{width:min(380px,94vw)!important;border-radius:22px!important}#uts-google-auth-modal .uts-google-body{padding:1.7rem 1.4rem 1.9rem!important}.uts-login-logo{font-size:2.15rem;letter-spacing:3.5px}.uts-login-official-grid{gap:.55rem}.uts-login-official-name{font-size:1.25rem}}'
     ].join('\n');
     document.head.appendChild(style);
   }
@@ -317,7 +332,7 @@
       if (event.target === modal) closeGoogleAuthPanel();
     });
     modal.innerHTML = '<section class="uts-google-card" role="dialog" aria-modal="true" aria-labelledby="uts-google-title">' +
-      '<header class="uts-google-head"><div><strong id="uts-google-title">Cuenta Universe</strong><span>Registro opcional con Google</span></div><button class="uts-google-close" type="button" aria-label="Cerrar">×</button></header>' +
+      '<button class="uts-google-close" type="button" aria-label="Cerrar">×</button>' +
       '<div class="uts-google-body" id="uts-google-body"></div>' +
       '</section>';
     document.body.appendChild(modal);
@@ -325,15 +340,39 @@
     return modal;
   }
 
+  function renderLoginBrand(kicker) {
+    return '<div class="uts-login-brand">' +
+      '<div class="uts-login-logo" id="uts-google-title">UNIVERSE</div>' +
+      '<div class="uts-login-tagline">' + safeText(kicker || 'PLATAFORMA PREUNIVERSITARIA · UNI') + '</div>' +
+      '</div>';
+  }
+
+  function renderLoginDivider(label) {
+    return '<div class="uts-login-divider"><span>' + safeText(label) + '</span></div>';
+  }
+
+  function renderOfficialLoginLinks() {
+    return '<div class="uts-login-official">' + renderLoginDivider('o accede desde') +
+      '<div class="uts-login-official-grid">' +
+      '<a class="uts-login-official-card cu" href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank"><div class="uts-login-official-name">CEPREUNI</div><div class="uts-login-official-desc">Sitio Oficial</div></a>' +
+      '<a class="uts-login-official-card cn" href="https://ceprenet.uni.edu.pe/auth/login" rel="noopener noreferrer" target="_blank"><div class="uts-login-official-name">CEPRENET</div><div class="uts-login-official-desc">Plataforma Virtual</div></a>' +
+      '</div></div>';
+  }
+
+  function renderLoginTerms() {
+    return '<div class="uts-login-terms">Al continuar aceptas nuestros <a href="/terminos">Términos de Servicio</a> y <a href="/privacidad">Política de Privacidad</a> de UNIVERSE.</div>';
+  }
+
   function renderGoogleAuthPanel() {
     var modal = ensureGoogleAuthPanel();
     var body = modal.querySelector('#uts-google-body');
     var user = getCurrentAuthUser();
     if (user && user.provider === 'google') {
-      body.innerHTML = '<div class="uts-google-user">' +
+      body.innerHTML = renderLoginBrand('CUENTA CONECTADA · GOOGLE') +
+        '<div class="uts-google-user">' +
         (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<div class="uts-g-mark">G</div>') +
         '<div><b>' + safeText(user.name || 'Usuario Google') + '</b><span>' + safeText(user.email || '') + '</span></div></div>' +
-        '<p>Tu cuenta ya está conectada en este navegador. No volveremos a pedirte el registro mientras no cierres sesión o borres los datos del navegador.</p>' +
+        '<p class="uts-login-desc">Tu cuenta ya está conectada. Completa tus datos CEPREUNI si deseas vincular ciclo, código y futuras notificaciones de promedio.</p>' +
         renderRegisteredData(user, 'Datos registrados') +
         renderCepreAccountBox() +
         '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Abrir cuenta completa</button><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button><button class="uts-google-danger" type="button" data-uts-signout>Cerrar sesión</button></div>';
@@ -343,19 +382,24 @@
       body.querySelector('[data-uts-signout]').addEventListener('click', signOutGoogleUser);
     } else if (hasGuestMode()) {
       var guest = getOrCreateGuestUser();
-      body.innerHTML = '<span class="uts-google-required">Modo invitado</span>' +
-        '<p>Entraste como invitado. Puedes usar la página normalmente, pero tus datos quedan solo en este navegador. Si quieres guardar tu nombre, correo y foto, regístrate con Google.</p>' +
+      body.innerHTML = renderLoginBrand('MODO INVITADO · UNI') +
+        '<p class="uts-login-desc">Entraste como invitado. Puedes explorar Universe; si quieres guardar tu perfil y datos CEPREUNI, inicia sesión con Google.</p>' +
         renderRegisteredData(guest, 'Datos locales de invitado') +
+        renderLoginDivider('o inicia con Google') +
         '<div id="uts-google-signin-slot"></div>' +
+        renderOfficialLoginLinks() +
+        renderLoginTerms() +
         '<div class="uts-google-actions"><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button></div>';
       body.querySelector('[data-uts-close]').addEventListener('click', closeGoogleAuthPanel);
       loadGoogleIdentity(renderGoogleSignInButton);
     } else {
-      body.innerHTML = '<span class="uts-google-required">Nuevo usuario</span>' +
-        '<p>Para entrar a Universe to Study te recomendamos registrarte con Google. Así podrás ver tus datos registrados y mantener tu perfil en este navegador.</p>' +
+      body.innerHTML = renderLoginBrand('PLATAFORMA PREUNIVERSITARIA · UNI') +
+        '<p class="uts-login-desc">Accede como invitado para explorar todo el contenido educativo, o inicia sesión con Google para guardar tu perfil y datos CEPREUNI.</p>' +
+        '<div class="uts-login-guest-section"><button class="uts-login-guest-btn" type="button" data-uts-guest><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Entrar como invitado</button></div>' +
+        renderLoginDivider('o inicia con Google') +
         '<div id="uts-google-signin-slot"></div>' +
-        '<div class="uts-google-hint">También puedes entrar como invitado y registrarte después desde el botón de cuenta.</div>' +
-        '<div class="uts-google-actions"><button class="uts-google-secondary" type="button" data-uts-guest>Entrar como invitado</button></div>';
+        renderOfficialLoginLinks() +
+        renderLoginTerms();
       body.querySelector('[data-uts-guest]').addEventListener('click', enterAsGuest);
       loadGoogleIdentity(renderGoogleSignInButton);
     }
@@ -390,7 +434,7 @@
       }
       var script = document.createElement('script');
       script.id = CEPRE_CODES_SCRIPT_ID;
-      script.src = 'cepre-codes.js?v=account-2';
+      script.src = 'cepre-codes.js?v=account-3';
       script.onload = function () { resolve(window.UNIVERSE_CEPRE_VALID_CODES || []); };
       script.onerror = function () { resolve([]); };
       document.head.appendChild(script);
