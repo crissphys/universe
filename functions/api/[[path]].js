@@ -139,6 +139,22 @@ async function googleAuth(request, env) {
   return json({ user, token: await signSession(env, user) });
 }
 
+async function authMe(request, env) {
+  var auth = await verifySession(request, env);
+  if (!auth) return json({ error: 'login_required' }, 401);
+  return json({
+    user: {
+      id: auth.id,
+      name: auth.name,
+      email: auth.email,
+      avatar: auth.avatar,
+      provider: 'google',
+      isAdmin: auth.admin === true,
+      secureSession: true
+    }
+  });
+}
+
 async function handleSite(request, env, subpath) {
   var auth = await verifySession(request, env);
   var method = request.method.toUpperCase();
@@ -231,6 +247,7 @@ export async function onRequest(context) {
     var url = new URL(request.url);
     var apiPath = url.pathname.replace(/^\/api\/?/, '');
     if (apiPath === 'auth/google') return googleAuth(request, context.env);
+    if (apiPath === 'auth/me') return authMe(request, context.env);
     if (apiPath.startsWith('site/')) return handleSite(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('support/')) return handleSupport(request, context.env, apiPath.slice(8));
     if (apiPath === 'ai/support') return handleAi(request, context.env);

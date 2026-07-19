@@ -26,6 +26,56 @@
     });
   }
 
+  function getAuthToken() {
+    try { return localStorage.getItem(AUTH_TOKEN_KEY) || ''; } catch (error) { return ''; }
+  }
+
+  function storeGoogleUser(user) {
+    try { localStorage.setItem(AUTH_KEY, JSON.stringify(user)); } catch (error) {}
+    try { localStorage.setItem(LEGACY_USER_KEY, JSON.stringify(user)); } catch (error) {}
+    try { sessionStorage.setItem(LEGACY_USER_KEY, JSON.stringify(user)); } catch (error) {}
+    try { localStorage.setItem('universe_usuario_nombre', user.name || ''); } catch (error) {}
+    try { localStorage.setItem('universe_usuario_email', user.email || ''); } catch (error) {}
+    try { localStorage.setItem('universe_usuario_foto', user.avatar || ''); } catch (error) {}
+  }
+
+  function notifyAuthUpdated(user) {
+    try {
+      if (typeof window.saveUser === 'function') window.saveUser(user);
+      if (typeof window.updateNavUser === 'function') window.updateNavUser();
+      if (typeof window.renderAccountPanel === 'function') window.renderAccountPanel();
+    } catch (error) {}
+    try { window.dispatchEvent(new CustomEvent('universe-google-auth', { detail: user })); } catch (error) {}
+    renderGoogleAuthButton();
+  }
+
+  async function refreshSecureSession() {
+    var token = getAuthToken();
+    if (!token) return null;
+    try {
+      var response = await fetch(API_BASE + '/auth/me', {
+        cache: 'no-store',
+        headers: { Authorization: 'Bearer ' + token }
+      });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      var data = await response.json();
+      if (!data || !data.user) return null;
+      var previous = getCurrentAuthUser() || {};
+      var user = Object.assign({}, previous, data.user, {
+        provider: 'google',
+        createdAt: previous.createdAt || Date.now(),
+        updatedAt: Date.now(),
+        secureSession: true
+      });
+      storeGoogleUser(user);
+      notifyAuthUpdated(user);
+      return user;
+    } catch (error) {
+      try { localStorage.removeItem(AUTH_TOKEN_KEY); } catch (error2) {}
+      return null;
+    }
+  }
+
   function cleanAccountId(value) {
     return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '');
   }
@@ -36,7 +86,7 @@
 
   function isAdminGoogleUser() {
     var g = getCurrentAuthUser();
-    return !!(g && g.provider === 'google' && g.isAdmin === true);
+    return !!(g && g.provider === 'google' && g.secureSession === true && g.isAdmin === true);
   }
 
   function applyUniverseTheme(theme) {
@@ -239,6 +289,7 @@
       avatar: profile.picture || previous.avatar || '',
       provider: 'google',
       isAdmin: false,
+      secureSession: false,
       createdAt: previous.createdAt || now,
       updatedAt: now
     };
@@ -258,7 +309,8 @@
               provider: 'google',
               createdAt: previous.createdAt || secure.user.createdAt || now,
               updatedAt: now,
-              isAdmin: secure.user.isAdmin === true
+              isAdmin: secure.user.isAdmin === true,
+              secureSession: true
             });
           }
         } else {
@@ -270,21 +322,10 @@
     } else {
       try { localStorage.removeItem(AUTH_TOKEN_KEY); } catch (error) {}
     }
-    try { localStorage.setItem(AUTH_KEY, JSON.stringify(user)); } catch (error) {}
+    storeGoogleUser(user);
     try { localStorage.removeItem(GUEST_KEY); } catch (error) {}
     try { localStorage.setItem(FIRST_GATE_KEY, '1'); } catch (error) {}
-    try { localStorage.setItem(LEGACY_USER_KEY, JSON.stringify(user)); } catch (error) {}
-    try { sessionStorage.setItem(LEGACY_USER_KEY, JSON.stringify(user)); } catch (error) {}
-    try { localStorage.setItem('universe_usuario_nombre', user.name); } catch (error) {}
-    try { localStorage.setItem('universe_usuario_email', user.email); } catch (error) {}
-    try { localStorage.setItem('universe_usuario_foto', user.avatar); } catch (error) {}
-    try {
-      if (typeof window.saveUser === 'function') window.saveUser(user);
-      if (typeof window.updateNavUser === 'function') window.updateNavUser();
-      if (typeof window.renderAccountPanel === 'function') window.renderAccountPanel();
-    } catch (error) {}
-    window.dispatchEvent(new CustomEvent('universe-google-auth', { detail: user }));
-    renderGoogleAuthButton();
+    notifyAuthUpdated(user);
     afterGoogleLogin(user);
     return user;
   }
@@ -446,16 +487,20 @@
     var body = modal.querySelector('#uts-google-body');
     var user = getCurrentAuthUser();
     if (user && user.provider === 'google') {
+      var needsSecureRefresh = !user.secureSession || !getAuthToken() || !user.isAdmin;
       body.innerHTML = renderLoginBrand('CUENTA CONECTADA - GOOGLE') +
         '<div class="uts-google-user">' +
         (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<div class="uts-g-mark">G</div>') +
         '<div><b>' + safeText(user.name || 'Usuario Google') + '</b><span>' + safeText(user.email || '') + '</span></div></div>' +
         '<p class="uts-login-desc">Tu cuenta ya está conectada. Indica tu perfil académico o entra a Cuenta para editar tus datos completos.</p>' +
+        (user.isAdmin && user.secureSession ? '<div class="uts-google-support-note"><strong>Administrador verificado</strong><span>El servidor privado reconoció esta cuenta como administradora.</span></div>' : '') +
+        (needsSecureRefresh ? '<div class="uts-google-support-note"><strong>Actualizar permisos con Google</strong><span>Si esta cuenta es administradora, vuelve a continuar con Google para que el backend privado actualice tu rol.</span></div><div id="uts-google-signin-slot"></div>' : '') +
         renderCepreAccountBox() +
         '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Abrir cuenta completa</button><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button><button class="uts-google-danger" type="button" data-uts-signout>Cerrar sesion</button></div>';
       body.querySelector('[data-uts-account-page]').addEventListener('click', goAccountPage);
       body.querySelector('[data-uts-close]').addEventListener('click', closeGoogleAuthPanel);
       body.querySelector('[data-uts-signout]').addEventListener('click', signOutGoogleUser);
+      if (needsSecureRefresh) loadGoogleIdentity(renderGoogleSignInButton);
       hydrateCepreProfileBox(user);
     } else if (hasGuestMode()) {
       body.innerHTML = renderLoginBrand('MODO INVITADO - UNI') +
@@ -756,6 +801,7 @@
       close: closeGoogleAuthPanel,
       user: getCurrentAuthUser,
       isAdmin: isAdminGoogleUser,
+      refresh: refreshSecureSession,
       siteApi: siteApi,
       cleanId: cleanAccountId,
       isGoogleUser: function () {
@@ -768,6 +814,7 @@
     window.handleNavUser = goAccountPage;
     window.updateNavUser = renderGoogleAuthButton;
     renderGoogleAuthButton();
+    refreshSecureSession();
     setTimeout(renderGoogleAuthButton, 900);
     setTimeout(renderGoogleAuthButton, 2400);
     setTimeout(function () {
@@ -777,7 +824,32 @@
     }, 650);
   }
 
+  function ensureSupportDom() {
+    if (!document.body || document.getElementById('support-v2-root')) return;
+    ['support-v2-overlay', 'support-v2-hint', 'support-v2-fab', 'support-v2-panel'].forEach(function (id) {
+      var old = document.getElementById(id);
+      if (old && old.parentNode) old.parentNode.removeChild(old);
+    });
+    var wrap = document.createElement('div');
+    wrap.id = 'support-v2-root';
+    wrap.innerHTML =
+      '<div id="support-v2-overlay" onclick="UniverseSupport.close()"></div>' +
+      '<div id="support-v2-hint">¿Problemas? Te ayudamos</div>' +
+      '<button aria-label="Abrir soporte privado" id="support-v2-fab" onclick="UniverseSupport.open()" title="Soporte" type="button">' +
+      '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 0-9 9v3a3 3 0 0 0 3 3h1v-7H5.1A7 7 0 0 1 19 11v6h-5v2h3a4 4 0 0 0 4-4v-4a9 9 0 0 0-9-9ZM5 12h2v3H6a1 1 0 0 1-1-1v-2Zm12 0h2v3h-2v-3Z"></path></svg><span>Soporte</span><i id="support-v2-fab-dot"></i></button>' +
+      '<aside aria-hidden="true" id="support-v2-panel"><header class="support-v2-head"><div><strong>Soporte Universe to Study</strong><span id="support-v2-presence">Comprobando conexión...</span></div><button aria-label="Cerrar soporte" onclick="UniverseSupport.close()" type="button">×</button></header>' +
+      '<div class="support-v2-admin-layout visitor"><aside hidden id="support-v2-inbox"><div class="support-v2-inbox-title">Conversaciones</div><div id="support-v2-threads"></div></aside><main class="support-v2-conversation">' +
+      '<div class="support-v2-thread-head"><div><strong id="support-v2-thread-name">Tu consulta</strong><span id="support-v2-thread-status">Chat privado</span></div><button hidden id="support-v2-solved" onclick="UniverseSupport.solve()" type="button">Solucionado</button></div>' +
+      '<label class="support-v2-name-row" id="support-v2-name-row"><span>Tu nombre</span><input id="support-v2-name" maxlength="50" placeholder="Usaremos tu nombre de Gmail" type="text"></label>' +
+      '<div aria-live="polite" id="support-v2-messages"></div><div hidden id="support-v2-closed">El chat ha sido cerrado. Vuelve a consultar abriendo otra vez el chat de soporte.</div>' +
+      '<div hidden id="support-v2-image-preview"><img alt="Vista previa" id="support-v2-preview-img"><button onclick="UniverseSupport.clearImage()" type="button">Quitar</button></div>' +
+      '<div class="support-v2-compose" id="support-v2-compose"><textarea id="support-v2-input" maxlength="1200" placeholder="Escribe tu consulta..."></textarea><div><label class="support-v2-attach" for="support-v2-file">Adjuntar imagen</label><input accept="image/png,image/jpeg,image/webp" id="support-v2-file" onchange="UniverseSupport.pickImage(this)" type="file"><button class="support-v2-send" onclick="UniverseSupport.send()" type="button">Enviar</button></div></div>' +
+      '</main></div></aside>';
+    document.body.appendChild(wrap);
+  }
+
   function initFallbackSupport() {
+    ensureSupportDom();
     if (window.UniverseSupport || !document.getElementById('support-v2-panel')) return;
     var BASE = API_BASE + '/support';
     var S = { admin: false, open: false, active: '', thread: null, threads: {}, image: '', timer: 0, presenceTimer: 0, ipMatch: false };
