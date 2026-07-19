@@ -6,7 +6,8 @@ Variables privadas que debes configurar en Cloudflare, nunca en archivos públic
 
 - `GOOGLE_CLIENT_ID`: ID OAuth web de Google.
 - `SESSION_SECRET`: texto largo aleatorio para firmar sesiones.
-- `ADMIN_EMAILS`: correos administradores separados por coma.
+- `ADMIN_EMAILS`: correos administradores separados por coma, o mejor:
+- `ADMIN_EMAIL_SHA256`: hash SHA-256 del correo admin en minúsculas. Esta opción evita guardar el correo como texto visible incluso en variables.
 - `FIREBASE_DATABASE_URL`: URL de Realtime Database.
 - `FIREBASE_DATABASE_SECRET`: secreto/token privado para REST de Firebase.
 - `OPENAI_API_KEY`: solo si luego se habilita el endpoint del modelo.
