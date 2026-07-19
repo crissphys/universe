@@ -136,14 +136,25 @@
       </section>
 
       <aside class="account-card">
-        <h2>CEPREUNI premium</h2>
-        <p>Indica si eres o fuiste CEPREUNI. Si perteneces al ciclo actual, registra tu código para vincular notificaciones y datos de promedio a tu Gmail.</p>
+        <h2>Perfil académico</h2>
+        <p>Cuéntanos cómo estás preparándote para personalizar avisos, recursos y soporte con tu cuenta de Gmail.</p>
         <div id="code-current"></div>
-        <div class="account-field"><label>¿Eres de CEPREUNI?</label><select id="cepre-member"><option value="no">No por ahora</option><option value="yes">Sí, soy / fui CEPREUNI</option></select></div>
-        <div class="account-field" id="cepre-cycle-wrap"><label>Ciclo CEPREUNI</label><select id="cepre-cycle"></select></div>
-        <div class="account-field" id="cepre-code-wrap"><label>Código CEPREUNI del ciclo actual</label><input id="cepre-code" placeholder="Ejemplo: 2612345F" maxlength="9"></div>
-        <div class="account-actions"><button class="account-btn" type="button" data-register-code>Guardar datos CEPREUNI</button></div>
-        <div id="code-status" class="account-status warn">Si eliges el ciclo actual, verificaremos que el código exista y que nadie lo haya registrado para este ciclo.</div>
+        <div class="account-field">
+          <label>¿Qué tipo de estudiante eres?</label>
+          <select id="academic-track">
+            <option value="">Selecciona una opción</option>
+            <option value="cepreuni">Soy CEPREUNI</option>
+            <option value="san-marcos">Postulo a San Marcos</option>
+            <option value="academy">Estoy en una academia</option>
+            <option value="independent">Soy estudiante independiente</option>
+          </select>
+        </div>
+        <div class="account-field" id="academy-wrap" hidden><label>Academia preuniversitaria</label><select id="academy-name"></select></div>
+        <div class="account-field" id="cepre-cycle-wrap" hidden><label>Ciclo CEPREUNI</label><select id="cepre-cycle"></select></div>
+        <div class="account-field" id="cepre-code-wrap" hidden><label>Código CEPREUNI del ciclo actual</label><input id="cepre-code" placeholder="Ejemplo: 2612345F" maxlength="9"></div>
+        <p class="account-status" id="academic-explain">Elige tu perfil académico para personalizar tu experiencia.</p>
+        <div class="account-actions"><button class="account-btn" type="button" data-register-code>Guardar perfil académico</button></div>
+        <div id="code-status" class="account-status warn">Si eres del ciclo actual, verificaremos que el código exista y que nadie lo haya registrado para este ciclo.</div>
       </aside>
     </div>
 
@@ -190,42 +201,8 @@
   </div>
 </main>
 
-<script src="cepre-codes.js?v=account-3"></script>
-<script src="universe-polish.js?v=account-4" defer></script>
-<script>
-(function(){
-  var BASE='https://universe-82fc3-default-rtdb.firebaseio.com/site/universeV1';
-  var state={user:null,profile:null,public:{},announcementImage:'',extraEvents:[]};
-  var CURRENT_CEPRE_CYCLE='2026-2';
-  var CEPRE_CYCLES=['2026-2','2026-1','2025-2','2025-1','2024-2','2024-1','2023-2','2023-1','2022-2','2022-1','2021-2','2021-1'];
-  function $(id){return document.getElementById(id)}
-  function api(route,method,data){var opt={method:method||'GET',cache:'no-store',headers:{'Content-Type':'application/json'}};if(data!==undefined)opt.body=JSON.stringify(data);return fetch(BASE+route+'.json',opt).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return method==='DELETE'?null:r.json()})}
-  function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-  function cleanId(v){return String(v||'').replace(/[^a-zA-Z0-9_-]/g,'')}
-  function status(id,msg,type){var el=$(id);if(!el)return;el.textContent=msg;el.className='account-status '+(type||'')}
-  function user(){return window.UniverseGoogleAuth&&UniverseGoogleAuth.user?UniverseGoogleAuth.user():null}
-  function isAdmin(){return window.UniverseGoogleAuth&&UniverseGoogleAuth.isAdmin&&UniverseGoogleAuth.isAdmin()}
-  function uid(){return cleanId(state.user&&state.user.id||state.user&&state.user.email)}
-  function showLogin(){ $('account-login-card').hidden=false;$('account-content').hidden=true;$('admin-panel').classList.remove('active') }
-  function toPeruIso(v){return v?String(v).slice(0,16)+':00-05:00':''}
-  function fromIso(v){return String(v||'').replace(/:00-05:00$/,'').slice(0,16)}
-  function normalizeCode(v){return String(v||'').trim().toUpperCase().replace(/\s+/g,'')}
-  function validCodes(){return new Set(window.UNIVERSE_CEPRE_VALID_CODES||[])}
-  function fillCycles(selected){var sel=$('cepre-cycle');if(!sel)return;selected=selected||CURRENT_CEPRE_CYCLE;sel.innerHTML=CEPRE_CYCLES.map(function(c){return '<option value="'+safe(c)+'"'+(c===selected?' selected':'')+'>'+safe(c)+(c===CURRENT_CEPRE_CYCLE?' · ciclo actual':'')+'</option>'}).join('')}
-  function toggleCepreFields(){var m=$('cepre-member'),c=$('cepre-cycle'),cw=$('cepre-cycle-wrap'),kw=$('cepre-code-wrap');if(!m||!c||!cw||!kw)return;var yes=m.value==='yes',current=c.value===CURRENT_CEPRE_CYCLE;cw.hidden=!yes;kw.hidden=!yes||!current}
-  function fillProfile(){var u=state.user,p=state.profile||{};var parts=String(u.name||'').split(/\s+/);var member=p.cepreMember===true||!!p.cepreCycle||!!p.cepreCode;var cycle=p.cepreCycle||(p.cepreCode?CURRENT_CEPRE_CYCLE:CURRENT_CEPRE_CYCLE);$('account-display-name').textContent=(p.firstName||u.name||'Usuario')+(p.lastName?' '+p.lastName:'');$('account-display-email').textContent=u.email||'';$('profile-first').value=p.firstName||parts[0]||'';$('profile-last').value=p.lastName||parts.slice(1).join(' ')||'';$('profile-age').value=p.age||'';$('profile-phone').value=p.phone||'';$('profile-email').value=u.email||'';$('cepre-member').value=member?'yes':'no';fillCycles(cycle);var av=$('account-avatar');av.innerHTML=u.avatar?'<img alt="" src="'+safe(u.avatar)+'">':safe((u.name||'U').charAt(0).toUpperCase());if(p.cepreCode){$('code-current').innerHTML='<p><span class="code-lock">Código registrado: '+safe(p.cepreCode)+' · '+safe(cycle)+'</span></p>';$('cepre-code').value=p.cepreCode;$('cepre-code').disabled=true;status('code-status','Tu código ya está vinculado para el ciclo actual. No se puede cambiar desde esta página.','good')}else{$('code-current').innerHTML='';$('cepre-code').value='';$('cepre-code').disabled=false;status('code-status',member&&cycle!==CURRENT_CEPRE_CYCLE?'Ciclo anterior registrado: no se requiere código.':'Si eliges el ciclo actual, verificaremos que el código exista y que nadie lo haya registrado para este ciclo.','warn')}toggleCepreFields()}
-  async function loadProfile(){if(!window.UniverseGoogleAuth){setTimeout(loadProfile,180);return}state.user=user();if(!state.user||state.user.provider!=='google'){showLogin();return} $('account-login-card').hidden=true;$('account-content').hidden=false;state.profile=await api('/profiles/'+uid(),'GET').catch(function(){return null})||{};fillProfile();if(isAdmin()){$('admin-panel').classList.add('active');await loadAdmin()}else $('admin-panel').classList.remove('active')}
-  async function saveProfile(){if(!state.user)return;var data={firstName:$('profile-first').value.trim(),lastName:$('profile-last').value.trim(),age:$('profile-age').value.trim(),phone:$('profile-phone').value.trim(),email:state.user.email||'',googleName:state.user.name||'',avatar:state.user.avatar||'',updatedAt:Date.now()};await api('/profiles/'+uid(),'PATCH',data);state.profile=Object.assign({},state.profile||{},data);fillProfile();status('profile-status','Perfil guardado correctamente.','good')}
-  async function registerCode(){if(!state.user)return;var member=$('cepre-member').value==='yes',cycle=member?$('cepre-cycle').value:'',code=normalizeCode($('cepre-code').value),current=cycle===CURRENT_CEPRE_CYCLE,existing=normalizeCode(state.profile&&state.profile.cepreCode||'');var data={cepreMember:member,cepreCycle:cycle,email:state.user.email||'',googleName:state.user.name||'',avatar:state.user.avatar||'',updatedAt:Date.now()};if(!member){if(existing){status('code-status','Tu cuenta ya tiene un código del ciclo actual. No se elimina desde esta página.','bad');return}data.cepreCode='';await api('/profiles/'+uid(),'PATCH',data);state.profile=Object.assign({},state.profile||{},data);fillProfile();status('code-status','Listo. Quedaste como usuario general.','good');return}if(!current){data.cepreCode='';await api('/profiles/'+uid(),'PATCH',data);state.profile=Object.assign({},state.profile||{},data);fillProfile();status('code-status','Ciclo CEPREUNI anterior guardado. No se pidió código porque puede repetirse entre ciclos.','good');return}if(!code){status('code-status','Escribe tu código CEPREUNI del ciclo actual.','bad');return}var codes=validCodes();if(!codes.has(code)){status('code-status','Ese código no existe en el ranking CEPREUNI actual cargado en Universe. Revisa si lo escribiste bien.','bad');return}if(existing&&existing!==code){status('code-status','Tu cuenta ya tiene un código registrado y no se puede cambiar.','bad');return}var ownerRoute='/codeOwnersByCycle/'+cleanId(cycle)+'/'+cleanId(code);var owner=await api(ownerRoute,'GET').catch(function(){return null});var legacy=await api('/codeOwners/'+cleanId(code),'GET').catch(function(){return null});if((owner&&owner.userId&&owner.userId!==uid())||(legacy&&legacy.userId&&legacy.userId!==uid())){status('code-status','Este código del ciclo actual ya fue registrado por otra cuenta de Gmail.','bad');return}var ok=existing?true:confirm('¿Estás seguro de que este es tu código CEPREUNI del ciclo '+cycle+'?\\n\\nCódigo: '+code+'\\n\\nNo se volverá a cambiar para este ciclo. Las notificaciones de promedio y beneficios asociados llegarán a esta cuenta y a tu correo: '+(state.user.email||''));if(!ok)return;data.cepreCode=code;await api(ownerRoute,'PUT',{userId:uid(),email:state.user.email||'',cycle:cycle,createdAt:Date.now()});await api('/codeOwners/'+cleanId(code),'PUT',{userId:uid(),email:state.user.email||'',cycle:cycle,createdAt:Date.now()});await api('/profiles/'+uid(),'PATCH',data);state.profile=Object.assign({},state.profile||{},data);fillProfile();status('code-status','Datos CEPREUNI guardados. Tu código queda vinculado para el ciclo actual.','good')}
-  async function loadAdmin(){state.public=await api('/public','GET').catch(function(){return null})||{};var a=state.public.announcement||{},s=state.public.schedule||{},c=s.countdowns||{};$('ann-active').value=String(a.active!==false);$('ann-title').value=a.title||'';$('ann-text').value=a.text||'';$('ann-image-url').value=a.image&&String(a.image).indexOf('data:')!==0?a.image:'';state.announcementImage=a.image||'';if(a.image){$('ann-preview').src=a.image;$('ann-preview').style.display='block'}$('pc7-title').value=(c.pc7&&c.pc7.title)||'7.ª prueba calificada CEPREUNI';$('pc7-target').value=fromIso(c.pc7&&c.pc7.target)||'2026-07-26T09:00';$('pc7-label').value=(c.pc7&&c.pc7.label)||'Dom. 26 jul - 9:00 AM';$('adm-title').value=(c.admision&&c.admision.title)||'Admisión UNI 2026-2';$('adm-target').value=fromIso(c.admision&&c.admision.target)||'2026-08-10T09:00';$('adm-label').value=(c.admision&&c.admision.label)||'Lun. 10 ago - 9:00 AM';state.extraEvents=Array.isArray(s.extraEvents)?s.extraEvents:[];renderEvents()}
-  function renderEvents(){var root=$('event-list');root.innerHTML=state.extraEvents.length?state.extraEvents.map(function(e,i){return '<div class="admin-event"><div><strong>'+safe(e.title)+'</strong><br><small>'+safe(e.date)+(e.endDate?' - '+safe(e.endDate):'')+' · '+safe(e.type||'evento')+'</small></div><button class="account-btn danger" type="button" data-del-event="'+i+'">Quitar</button></div>'}).join(''):'<div class="account-status">No hay eventos extra publicados.</div>';root.querySelectorAll('[data-del-event]').forEach(function(btn){btn.onclick=function(){state.extraEvents.splice(Number(btn.dataset.delEvent),1);renderEvents()}})}
-  function addEvent(){var e={title:$('ev-title').value.trim(),date:$('ev-date').value,type:$('ev-type').value,detail:$('ev-detail').value.trim()};var end=$('ev-end').value;if(end)e.endDate=end;if(!e.title||!e.date){status('schedule-status','Completa título y fecha del evento.','bad');return}state.extraEvents.push(e);['ev-title','ev-date','ev-end','ev-detail'].forEach(function(id){$(id).value=''});renderEvents();status('schedule-status','Evento agregado. Presiona Guardar fechas para publicarlo.','warn')}
-  async function saveAnnouncement(){if(!isAdmin())return;var image=$('ann-image-url').value.trim()||state.announcementImage||'';var data={active:$('ann-active').value==='true',title:$('ann-title').value.trim(),text:$('ann-text').value.trim(),image:image,updatedAt:Date.now(),updatedBy:state.user.email};await api('/public/announcement','PUT',data);status('ann-status','Comunicado publicado correctamente.','good')}
-  async function saveSchedule(){if(!isAdmin())return;var data={countdowns:{pc7:{title:$('pc7-title').value.trim(),target:toPeruIso($('pc7-target').value),label:$('pc7-label').value.trim()},admision:{title:$('adm-title').value.trim(),target:toPeruIso($('adm-target').value),label:$('adm-label').value.trim()}},extraEvents:state.extraEvents,updatedAt:Date.now(),updatedBy:state.user.email};await api('/public/schedule','PUT',data);status('schedule-status','Fechas y calendario publicados para todos.','good')}
-  function bind(){document.querySelector('[data-login]').onclick=function(){UniverseGoogleAuth.open()};document.querySelector('[data-save-profile]').onclick=saveProfile;document.querySelector('[data-register-code]').onclick=registerCode;$('cepre-member').onchange=toggleCepreFields;$('cepre-cycle').onchange=toggleCepreFields;document.querySelector('[data-logout]').onclick=function(){if(window.UniverseGoogleAuth)UniverseGoogleAuth.signOut();state.user=null;state.profile=null;showLogin();status('profile-status','Sesión cerrada.','warn')};document.querySelector('[data-save-ann]').onclick=saveAnnouncement;document.querySelector('[data-save-schedule]').onclick=saveSchedule;document.querySelector('[data-add-event]').onclick=addEvent;$('ann-image-file').onchange=function(){var f=this.files&&this.files[0];if(!f)return;if(f.size>750000){status('ann-status','La imagen debe pesar menos de 750 KB.','bad');this.value='';return}var r=new FileReader();r.onload=function(){state.announcementImage=String(r.result||'');$('ann-preview').src=state.announcementImage;$('ann-preview').style.display='block'};r.readAsDataURL(f)};window.addEventListener('universe-google-auth',function(){setTimeout(loadProfile,80)})}
-  function boot(){bind();setTimeout(loadProfile,350)}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-})();
-</script>
+<script src="cepre-codes.js?v=account-5"></script>
+<script src="universe-polish.js?v=account-5" defer></script>
+<script src="account.js?v=academic-1" defer></script>
 </body>
 </html>
