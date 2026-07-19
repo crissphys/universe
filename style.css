@@ -1295,8 +1295,12 @@
 
 
   /* REVEAL */
-  .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s,transform .6s; }
-  .reveal.visible { opacity:1; transform:none; }
+  .reveal,
+  .reveal.visible {
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+  }
 
   /* ===================== VISUAL TEMARIO GRID ===================== */
   .temario-visual-grid {

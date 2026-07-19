@@ -176,6 +176,14 @@ html[data-universe-page] :where(main, .universe-static-page, .universe-page-stag
   z-index: 1;
 }
 
+html[data-universe-page] .reveal,
+html[data-universe-page] .reveal.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+}
+
 html[data-universe-page] .universe-page-stage {
   width: 100% !important;
   padding: clamp(24px, 4vw, 46px) clamp(12px, 3vw, 34px) clamp(44px, 7vw, 88px) !important;
