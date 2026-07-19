@@ -7,6 +7,9 @@
   var FIRST_GATE_KEY = 'universe_entry_gate_seen';
   var SITE_BASE = 'https://universe-82fc3-default-rtdb.firebaseio.com/site/universeV1';
   var ADMIN_EMAILS = { 'criss.phys@gmail.com': true };
+  var CURRENT_CEPRE_CYCLE = '2026-2';
+  var CEPRE_CYCLES = ['2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
+  var CEPRE_CODES_SCRIPT_ID = 'uts-cepre-codes-script';
 
   function siteApi(route, method, data) {
     var options = { method: method || 'GET', cache: 'no-store', headers: { 'Content-Type': 'application/json' } };
@@ -19,6 +22,10 @@
 
   function cleanAccountId(value) {
     return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '');
+  }
+
+  function normalizeCepreCode(value) {
+    return String(value || '').trim().toUpperCase().replace(/\s+/g, '');
   }
 
   function isAdminGoogleUser() {
@@ -103,6 +110,7 @@
       '.uts-google-required{display:inline-flex;margin-bottom:12px;border:1px solid rgba(7,93,204,.24);border-radius:999px;background:rgba(7,93,204,.08);padding:7px 10px;color:#075dcc;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}',
       '.uts-google-support-note{border:1px solid rgba(245,158,11,.34);border-radius:16px;background:#fffbeb;color:#78350f;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.45}.uts-google-support-note strong,.uts-google-support-note span{display:block}.uts-google-support-note span{margin-top:4px;color:#92400e}',
       '.uts-google-data{display:grid;gap:8px;margin:14px 0}.uts-google-data div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;padding:10px 12px}.uts-google-data dt{color:#64748b;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em}.uts-google-data dd{margin:0;min-width:0;overflow-wrap:anywhere;color:#0f172a;font-size:13px;font-weight:800}',
+      '.uts-cepre-box{margin:16px 0;padding:14px;border:1px solid #bfdbfe;border-radius:18px;background:linear-gradient(135deg,#f8fbff,#eff6ff)}.uts-cepre-loading{color:#64748b;font-size:13px}.uts-cepre-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px}.uts-cepre-head b,.uts-cepre-head span{display:block}.uts-cepre-head b{font-size:15px}.uts-cepre-head span{margin-top:3px;color:#64748b;font-size:12px;line-height:1.45}.uts-cepre-head i{flex:0 0 auto;border-radius:999px;background:#dcfce7;color:#166534;padding:6px 9px;font-size:10px;font-style:normal;font-weight:1000;text-transform:uppercase}.uts-cepre-grid{display:grid;grid-template-columns:1fr;gap:10px}.uts-cepre-grid label{display:grid;gap:5px;color:#335a86;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.07em}.uts-cepre-grid select,.uts-cepre-grid input{width:100%;box-sizing:border-box;border:1px solid #cfe1f3;border-radius:13px;background:#fff;color:#0f172a;padding:11px 12px;font:600 14px Inter,system-ui,sans-serif;text-transform:none;letter-spacing:0}.uts-cepre-mini{margin:10px 0 0!important;color:#475569!important;font-size:12px!important;line-height:1.45!important}',
       '.uts-public-announcement{position:fixed;right:max(16px,env(safe-area-inset-right));top:max(82px,calc(env(safe-area-inset-top) + 82px));z-index:2147482200;width:min(380px,calc(100vw - 28px));border:1px solid rgba(37,99,235,.22);border-radius:22px;background:rgba(255,255,255,.96);color:#0f172a;box-shadow:0 24px 70px rgba(15,23,42,.22);overflow:hidden;font-family:Inter,system-ui,sans-serif;backdrop-filter:blur(16px)}',
       '.uts-public-announcement img{display:block;width:100%;max-height:210px;object-fit:cover;background:#eaf4ff}.uts-public-announcement div{padding:15px 17px}.uts-public-announcement span{display:inline-flex;margin-bottom:7px;border-radius:999px;background:#eaf4ff;color:#075dcc;padding:5px 9px;font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}.uts-public-announcement strong{display:block;font-size:16px;line-height:1.25}.uts-public-announcement p{margin:7px 0 0;color:#475569;font-size:13px;line-height:1.45}.uts-ann-close{position:absolute;right:10px;top:10px;width:30px;height:30px;border:0;border-radius:50%;background:rgba(15,23,42,.72);color:#fff;cursor:pointer;font-size:18px;line-height:1}',
       'html[data-universe-theme="dark"] #uts-google-auth-button,html[data-universe-theme="dark"] [data-uts-account-button="true"]{background:rgba(5,5,5,.92)!important;color:#e5f2ff!important;border-color:rgba(96,165,250,.34)!important;box-shadow:0 14px 34px rgba(0,0,0,.54)!important}',
@@ -111,6 +119,7 @@
       'html[data-universe-theme="dark"] .uts-google-user{background:#071426;border-color:#1e3a5f}',
       'html[data-universe-theme="dark"] .uts-google-support-note{background:#17110a;border-color:#92400e;color:#fde68a}html[data-universe-theme="dark"] .uts-google-support-note span{color:#fcd34d}',
       'html[data-universe-theme="dark"] .uts-google-data div{background:#071426;border-color:#1e3a5f}html[data-universe-theme="dark"] .uts-google-data dt{color:#93c5fd}html[data-universe-theme="dark"] .uts-google-data dd{color:#f8fafc}',
+      'html[data-universe-theme="dark"] .uts-cepre-box{background:#071426;border-color:#1e3a5f}html[data-universe-theme="dark"] .uts-cepre-head span,html[data-universe-theme="dark"] .uts-cepre-mini,html[data-universe-theme="dark"] .uts-cepre-loading{color:#cbd5e1!important}html[data-universe-theme="dark"] .uts-cepre-grid label{color:#93c5fd}html[data-universe-theme="dark"] .uts-cepre-grid select,html[data-universe-theme="dark"] .uts-cepre-grid input{background:#050505;color:#f8fafc;border-color:#334155}',
       'html[data-universe-theme="dark"] .uts-public-announcement{background:rgba(5,5,5,.96);color:#f8fafc;border-color:rgba(96,165,250,.34);box-shadow:0 24px 70px rgba(0,0,0,.58)}html[data-universe-theme="dark"] .uts-public-announcement p{color:#cbd5e1}',
       'body.support-v2-active #uts-google-auth-button,body.support-v2-active [data-uts-account-button="true"]{z-index:2147482400!important;pointer-events:none!important;opacity:.18!important;filter:grayscale(1)!important}',
       '@media(max-width:720px){#uts-google-auth-button,[data-uts-account-button="true"]{top:max(10px,calc(env(safe-area-inset-top) + 10px))!important;right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;padding:.52rem .7rem!important}#uts-google-auth-button .uts-g-label,[data-uts-account-button="true"] .uts-g-label{display:none}.uts-google-card{border-radius:22px}.uts-public-announcement{left:14px;right:14px;top:auto;bottom:max(78px,calc(env(safe-area-inset-bottom) + 78px));width:auto}}'
@@ -250,36 +259,32 @@
 
   function ensureGoogleAuthButton() {
     if (!document.body) return null;
-    var btn = document.getElementById('uts-google-auth-button') || document.querySelector('[data-uts-account-button="true"]');
+    var btn = document.getElementById('uts-google-auth-button');
     if (btn) return btn;
     var legacy = document.getElementById('nav-user-btn');
     if (legacy) {
-      btn = legacy;
-      btn.setAttribute('data-uts-account-button', 'true');
-      btn.setAttribute('role', 'button');
-      btn.setAttribute('tabindex', '0');
-      btn.removeAttribute('onclick');
-      btn.onclick = null;
-      if (!btn.dataset.utsBound) {
-        btn.dataset.utsBound = 'true';
-        btn.addEventListener('click', goAccountPage);
-        btn.addEventListener('keydown', function (event) {
+      legacy.removeAttribute('data-uts-account-button');
+      legacy.setAttribute('role', 'button');
+      legacy.setAttribute('tabindex', '0');
+      legacy.removeAttribute('onclick');
+      legacy.onclick = null;
+      if (!legacy.dataset.utsBound) {
+        legacy.dataset.utsBound = 'true';
+        legacy.addEventListener('click', openGoogleAuthPanel);
+        legacy.addEventListener('keydown', function (event) {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            goAccountPage();
+            openGoogleAuthPanel();
           }
         });
       }
-      return btn;
     }
     btn = document.createElement('button');
     btn.id = 'uts-google-auth-button';
     btn.type = 'button';
     btn.setAttribute('aria-label', 'Ingresar con Google');
-    btn.addEventListener('click', goAccountPage);
-    var navActions = document.querySelector('nav .nav-actions') || document.querySelector('nav');
-    if (navActions) navActions.appendChild(btn);
-    else document.body.appendChild(btn);
+    btn.addEventListener('click', openGoogleAuthPanel);
+    document.body.appendChild(btn);
     return btn;
   }
 
@@ -330,7 +335,10 @@
         '<div><b>' + safeText(user.name || 'Usuario Google') + '</b><span>' + safeText(user.email || '') + '</span></div></div>' +
         '<p>Tu cuenta ya está conectada en este navegador. No volveremos a pedirte el registro mientras no cierres sesión o borres los datos del navegador.</p>' +
         renderRegisteredData(user, 'Datos registrados') +
-        '<div class="uts-google-actions"><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button><button class="uts-google-danger" type="button" data-uts-signout>Cerrar sesión</button></div>';
+        renderCepreAccountBox() +
+        '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Abrir cuenta completa</button><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button><button class="uts-google-danger" type="button" data-uts-signout>Cerrar sesión</button></div>';
+      hydrateCepreProfileBox(user);
+      body.querySelector('[data-uts-account-page]').addEventListener('click', goAccountPage);
       body.querySelector('[data-uts-close]').addEventListener('click', closeGoogleAuthPanel);
       body.querySelector('[data-uts-signout]').addEventListener('click', signOutGoogleUser);
     } else if (hasGuestMode()) {
@@ -365,6 +373,157 @@
       '<div><dt>Creado</dt><dd>' + safeText(created) + '</dd></div>' +
       '<div><dt>Actualizado</dt><dd>' + safeText(updated) + '</dd></div>' +
       '</dl>';
+  }
+
+  function googleProfileId(user) {
+    return cleanAccountId(user && (user.id || user.email) || '');
+  }
+
+  function loadCepreCodes() {
+    if (Array.isArray(window.UNIVERSE_CEPRE_VALID_CODES)) return Promise.resolve(window.UNIVERSE_CEPRE_VALID_CODES);
+    return new Promise(function (resolve) {
+      var existing = document.getElementById(CEPRE_CODES_SCRIPT_ID);
+      if (existing) {
+        existing.addEventListener('load', function () { resolve(window.UNIVERSE_CEPRE_VALID_CODES || []); }, { once: true });
+        existing.addEventListener('error', function () { resolve([]); }, { once: true });
+        return;
+      }
+      var script = document.createElement('script');
+      script.id = CEPRE_CODES_SCRIPT_ID;
+      script.src = 'cepre-codes.js?v=account-2';
+      script.onload = function () { resolve(window.UNIVERSE_CEPRE_VALID_CODES || []); };
+      script.onerror = function () { resolve([]); };
+      document.head.appendChild(script);
+    });
+  }
+
+  function cycleOptions(selected) {
+    selected = selected || CURRENT_CEPRE_CYCLE;
+    return CEPRE_CYCLES.map(function (cycle) {
+      return '<option value="' + safeText(cycle) + '"' + (cycle === selected ? ' selected' : '') + '>' + safeText(cycle) + (cycle === CURRENT_CEPRE_CYCLE ? ' · ciclo actual' : '') + '</option>';
+    }).join('');
+  }
+
+  function renderCepreAccountBox() {
+    return '<section class="uts-cepre-box" id="uts-cepre-box"><div class="uts-cepre-loading">Cargando datos CEPREUNI...</div></section>';
+  }
+
+  function renderCepreProfileForm(profile) {
+    profile = profile || {};
+    var member = profile.cepreMember === true || !!profile.cepreCycle || !!profile.cepreCode;
+    var cycle = profile.cepreCycle || (profile.cepreCode ? CURRENT_CEPRE_CYCLE : CURRENT_CEPRE_CYCLE);
+    var code = normalizeCepreCode(profile.cepreCode || '');
+    var locked = member && cycle === CURRENT_CEPRE_CYCLE && !!code;
+    return '<div class="uts-cepre-head"><div><b>Registro CEPREUNI</b><span>Esto permite asociar tu cuenta con tu ciclo y, si corresponde, con tu código actual.</span></div>' + (locked ? '<i>Código bloqueado</i>' : '') + '</div>' +
+      '<div class="uts-cepre-grid">' +
+      '<label>¿Eres de CEPREUNI?<select id="uts-cepre-member"><option value="no"' + (!member ? ' selected' : '') + '>No por ahora</option><option value="yes"' + (member ? ' selected' : '') + '>Sí, soy/ fui CEPREUNI</option></select></label>' +
+      '<label id="uts-cepre-cycle-wrap">Ciclo CEPREUNI<select id="uts-cepre-cycle">' + cycleOptions(cycle) + '</select></label>' +
+      '<label id="uts-cepre-code-wrap">Código del ciclo actual<input id="uts-cepre-code" maxlength="9" placeholder="Ejemplo: 2612345F" value="' + safeText(code) + '"' + (locked ? ' disabled' : '') + '></label>' +
+      '</div>' +
+      '<p class="uts-cepre-mini" id="uts-cepre-explain"></p>' +
+      '<div class="uts-google-actions"><button class="uts-google-primary" type="button" id="uts-cepre-save">' + (locked ? 'Guardar ciclo' : 'Guardar datos CEPREUNI') + '</button></div>' +
+      '<div class="uts-google-hint" id="uts-cepre-status">' + (locked ? 'Tu código ' + safeText(code) + ' ya está vinculado a esta cuenta.' : 'Si eliges el ciclo actual, verificaremos que el código exista y que no lo use otra cuenta.') + '</div>';
+  }
+
+  function toggleCepreModalFields(profile) {
+    profile = profile || {};
+    var member = document.getElementById('uts-cepre-member');
+    var cycle = document.getElementById('uts-cepre-cycle');
+    var cycleWrap = document.getElementById('uts-cepre-cycle-wrap');
+    var codeWrap = document.getElementById('uts-cepre-code-wrap');
+    var explain = document.getElementById('uts-cepre-explain');
+    if (!member || !cycle || !cycleWrap || !codeWrap || !explain) return;
+    var isMember = member.value === 'yes';
+    var isCurrent = cycle.value === CURRENT_CEPRE_CYCLE;
+    var locked = !!(profile.cepreCode && (profile.cepreCycle || CURRENT_CEPRE_CYCLE) === CURRENT_CEPRE_CYCLE);
+    cycleWrap.hidden = !isMember;
+    codeWrap.hidden = !isMember || !isCurrent;
+    explain.textContent = !isMember ? 'Puedes navegar como estudiante general. Si luego perteneces a CEPREUNI, actualiza esta parte desde Cuenta.' :
+      (isCurrent ? 'Para el ciclo actual necesitamos tu código CEPREUNI. Así evitamos que dos cuentas reclamen el mismo código del mismo ciclo.' :
+      'Para ciclos anteriores basta registrar el ciclo. No pediremos código porque los códigos pueden repetirse entre procesos distintos.');
+    if (locked) codeWrap.hidden = false;
+  }
+
+  function hydrateCepreProfileBox(user) {
+    var box = document.getElementById('uts-cepre-box');
+    var id = googleProfileId(user);
+    if (!box || !id) return;
+    siteApi('/profiles/' + id, 'GET').catch(function () { return null; }).then(function (profile) {
+      profile = profile || {};
+      box.innerHTML = renderCepreProfileForm(profile);
+      var member = document.getElementById('uts-cepre-member');
+      var cycle = document.getElementById('uts-cepre-cycle');
+      if (member) member.addEventListener('change', function () { toggleCepreModalFields(profile); });
+      if (cycle) cycle.addEventListener('change', function () { toggleCepreModalFields(profile); });
+      var save = document.getElementById('uts-cepre-save');
+      if (save) save.addEventListener('click', function () { saveCepreProfileFromModal(user, profile); });
+      toggleCepreModalFields(profile);
+    });
+  }
+
+  async function saveCepreProfileFromModal(user, profile) {
+    profile = profile || {};
+    var status = document.getElementById('uts-cepre-status');
+    var member = document.getElementById('uts-cepre-member');
+    var cycle = document.getElementById('uts-cepre-cycle');
+    var input = document.getElementById('uts-cepre-code');
+    var id = googleProfileId(user);
+    if (!id || !member || !cycle) return;
+    var isMember = member.value === 'yes';
+    var selectedCycle = isMember ? String(cycle.value || CURRENT_CEPRE_CYCLE) : '';
+    var currentCode = normalizeCepreCode(profile.cepreCode || '');
+    var payload = { cepreMember: isMember, cepreCycle: selectedCycle, updatedAt: Date.now(), email: user.email || '', googleName: user.name || '', avatar: user.avatar || '' };
+    if (!isMember) {
+      if (currentCode) {
+        if (status) status.textContent = 'Tu cuenta ya tiene un código del ciclo actual. No se elimina desde el acceso rápido.';
+        return;
+      }
+      payload.cepreCode = '';
+      await siteApi('/profiles/' + id, 'PATCH', payload);
+      if (status) status.textContent = 'Listo. Quedaste como usuario general.';
+      hydrateCepreProfileBox(user);
+      return;
+    }
+    if (selectedCycle !== CURRENT_CEPRE_CYCLE) {
+      payload.cepreCode = '';
+      await siteApi('/profiles/' + id, 'PATCH', payload);
+      if (status) status.textContent = 'Ciclo anterior guardado. No se pidió código porque puede repetirse entre ciclos.';
+      hydrateCepreProfileBox(user);
+      return;
+    }
+    var code = normalizeCepreCode(input && input.value || currentCode);
+    if (currentCode && code !== currentCode) {
+      if (status) status.textContent = 'Tu cuenta ya tiene un código registrado y no se puede cambiar desde aquí.';
+      return;
+    }
+    if (!code) {
+      if (status) status.textContent = 'Escribe tu código CEPREUNI del ciclo actual.';
+      return;
+    }
+    var valid = await loadCepreCodes();
+    var validSet = {};
+    (valid || []).forEach(function (v) { validSet[normalizeCepreCode(v)] = true; });
+    if (!validSet[code]) {
+      if (status) status.textContent = 'Ese código no existe en el ranking CEPREUNI actual cargado en Universe.';
+      return;
+    }
+    var ownerRoute = '/codeOwnersByCycle/' + cleanAccountId(selectedCycle) + '/' + cleanAccountId(code);
+    var owner = await siteApi(ownerRoute, 'GET').catch(function () { return null; });
+    var legacyOwner = await siteApi('/codeOwners/' + cleanAccountId(code), 'GET').catch(function () { return null; });
+    if ((owner && owner.userId && owner.userId !== id) || (legacyOwner && legacyOwner.userId && legacyOwner.userId !== id)) {
+      if (status) status.textContent = 'Este código del ciclo actual ya fue registrado por otra cuenta de Gmail.';
+      return;
+    }
+    if (!currentCode) {
+      var ok = confirm('¿Estás seguro de que este es tu código CEPREUNI del ciclo ' + selectedCycle + '?\n\nCódigo: ' + code + '\n\nNo se volverá a cambiar para este ciclo. Las notificaciones de promedio y beneficios asociados llegarán a tu cuenta: ' + (user.email || ''));
+      if (!ok) return;
+    }
+    payload.cepreCode = code;
+    await siteApi(ownerRoute, 'PUT', { userId: id, email: user.email || '', cycle: selectedCycle, createdAt: Date.now() });
+    await siteApi('/codeOwners/' + cleanAccountId(code), 'PUT', { userId: id, email: user.email || '', cycle: selectedCycle, createdAt: Date.now() });
+    await siteApi('/profiles/' + id, 'PATCH', payload);
+    if (status) status.textContent = 'Datos CEPREUNI guardados. Tu código queda vinculado para el ciclo actual.';
+    hydrateCepreProfileBox(user);
   }
 
   function openGoogleAuthPanel() {
@@ -426,7 +585,7 @@
           try {
             var profile = decodeGoogleJwt(response && response.credential);
             persistGoogleUser(profile);
-            closeGoogleAuthPanel();
+            renderGoogleAuthPanel();
           } catch (error) {
             slot.innerHTML = '<p class="uts-google-hint">No se pudo leer la respuesta de Google. Inténtalo otra vez.</p>';
           }
