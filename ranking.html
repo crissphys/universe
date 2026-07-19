@@ -449,6 +449,39 @@ html[data-universe-page='ranking'] .cepre-v2-table tbody tr > :nth-child(11) {
   color:var(--ranking-accent);
   font-weight:880;
 }
+@media(min-width:901px){
+  html[data-universe-page='ranking'] .universe-page-stage { padding-top:1.15rem !important; }
+  html[data-universe-page='ranking'] #ranking-cepreuni { padding-top:.8rem !important; }
+  html[data-universe-page='ranking'] #ranking-cepreuni > .reveal:first-child {
+    display:grid;
+    grid-template-columns:minmax(310px,.62fr) minmax(320px,.9fr);
+    align-items:end;
+    gap:.35rem 1.35rem;
+    margin-bottom:.75rem !important;
+  }
+  html[data-universe-page='ranking'] #ranking-cepreuni :is(.section-label,.section-title,.section-sub) {
+    margin:0 !important;
+    text-align:left !important;
+  }
+  html[data-universe-page='ranking'] #ranking-cepreuni .section-label {
+    justify-self:start;
+    grid-column:1;
+  }
+  html[data-universe-page='ranking'] #ranking-cepreuni .section-title {
+    grid-column:1;
+    font-size:clamp(2rem,3.2vw,3.25rem) !important;
+    line-height:.95 !important;
+  }
+  html[data-universe-page='ranking'] #ranking-cepreuni .section-sub {
+    grid-column:2;
+    grid-row:1 / span 2;
+    align-self:center;
+    max-width:720px !important;
+  }
+  html[data-universe-page='ranking'] .cepre-v2-shell { margin-top:.75rem !important; }
+  html[data-universe-page='ranking'] .cepre-v2-controls { padding:10px 12px !important; align-items:center !important; }
+  html[data-universe-page='ranking'] .cepre-v2-search { min-height:38px !important; }
+}
 html[data-universe-page='ranking'] .cepre-v2-missing { color:#a2aabc; }
 html[data-universe-page='ranking'] .cepre-v2-discarded { color:#8b93a2; text-decoration:line-through; }
 html[data-universe-page='ranking'] .cepre-v2-summary {
