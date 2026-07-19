@@ -3872,7 +3872,7 @@ function renderPaymentCalendar() {
   const firstDay = new Date(2026, month, 1).getDay();
   const mondayOffset = (firstDay + 6) % 7;
   const daysInMonth = new Date(2026, month + 1, 0).getDate();
-  const monthEvents = PAYMENT_EVENTS_2026.filter(event => doesPaymentEventTouchMonth(event, month)).sort(sortPaymentEvents);
+  const monthEvents = PAYMENT_EVENTS_2026.concat(window.UNIVERSE_DYNAMIC_PAYMENT_EVENTS || []).filter(event => doesPaymentEventTouchMonth(event, month)).sort(sortPaymentEvents);
   const eventsByDay = {};
   monthEvents.forEach(event => {
     const markerDay = getPaymentEventMarkerDay(event, month);
@@ -4578,10 +4578,9 @@ html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table th:
 </style>
 <!-- UNIVERSE_FINAL_THEME_CONTRAST_FIX_END -->
   <link rel="stylesheet" href="universe-polish.css">
-  <script src="universe-polish.js?v=admin-email-1" defer></script>
+  <script src="universe-polish.js?v=account-1" defer></script>
 </body>
 </html>
-
 
 
 
