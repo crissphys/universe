@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" data-universe-page="docentes-cepreuni">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de aulas CEPREUNI | Universe to Study</title>
+  <meta name="description" content="Docentes, salones y horarios CEPREUNI organizados por curso.">
+  <script>
+    (function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();
+    (function(){try{var p=location.pathname;if(/\.html$/i.test(p)){history.replaceState(null,'',p.replace(/\/index\.html$/i,'/').replace(/\.html$/i,'')+location.search+location.hash)}}catch(e){}})();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="universe-polish.css">
+  <link rel="stylesheet" href="universe-admission.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237378560312131" crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
+</head>
+<body>
+<div id="universe-page-loader" role="status" aria-live="polite">
+  <div class="upl-card"><div class="upl-orbit"><span></span></div><strong>Cargando página</strong><small>Preparando Universe to Study...</small></div>
+</div>
+<nav>
+  <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
+  <ul class="nav-links">
+    <li><a data-route="home" href="/">Inicio</a></li>
+    <li><a data-route="admission" href="/admision">Admisión</a></li>
+    <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
+    <li><a data-route="syllabus" href="/temario">Temario</a></li>
+    <li><a data-route="learn" href="/aprender">Aprende</a></li>
+    <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
+    <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
+    <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button aria-label="Activar tema oscuro" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" title="Tema oscuro" type="button">
+      <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.8A8.7 8.7 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"></path></svg>
+      <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+    </button>
+  </div>
+</nav>
+
+<div id="support-v2-overlay" onclick="UniverseSupport.close()"></div>
+<div id="support-v2-hint">¿Problemas? Te ayudamos</div>
+<button aria-label="Abrir soporte privado" id="support-v2-fab" onclick="UniverseSupport.open()" title="Soporte" type="button">
+  <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 0-9 9v3a3 3 0 0 0 3 3h1v-7H5.1A7 7 0 0 1 19 11v6h-5v2h3a4 4 0 0 0 4-4v-4a9 9 0 0 0-9-9ZM5 12h2v3H6a1 1 0 0 1-1-1v-2Zm12 0h2v3h-2v-3Z"></path></svg>
+  <span>Soporte</span><i id="support-v2-fab-dot"></i>
+</button>
+<aside aria-hidden="true" id="support-v2-panel">
+  <header class="support-v2-head"><div><strong>Soporte Universe to Study</strong><span id="support-v2-presence">Comprobando conexión...</span></div><button aria-label="Cerrar soporte" onclick="UniverseSupport.close()" type="button">×</button></header>
+  <div class="support-v2-admin-layout">
+    <aside hidden id="support-v2-inbox"><div class="support-v2-inbox-title">Conversaciones</div><div id="support-v2-threads"></div></aside>
+    <main class="support-v2-conversation">
+      <div class="support-v2-thread-head"><div><strong id="support-v2-thread-name">Tu consulta</strong><span id="support-v2-thread-status">Chat privado</span></div><button hidden id="support-v2-solved" onclick="UniverseSupport.solve()" type="button">Solucionado</button></div>
+      <label class="support-v2-name-row" id="support-v2-name-row"><span>Tu nombre</span><input id="support-v2-name" maxlength="50" placeholder="¿Cómo te llamas?" type="text"></label>
+      <div aria-live="polite" id="support-v2-messages"></div>
+      <div hidden id="support-v2-closed">El chat ha sido cerrado. Vuelve a consultar abriendo otra vez el chat de soporte.</div>
+      <div hidden id="support-v2-image-preview"><img alt="Vista previa" id="support-v2-preview-img"><button onclick="UniverseSupport.clearImage()" type="button">Quitar</button></div>
+      <div class="support-v2-compose" id="support-v2-compose">
+        <textarea id="support-v2-input" maxlength="1200" placeholder="Escribe tu consulta..."></textarea>
+        <div><label class="support-v2-attach" for="support-v2-file">Adjuntar imagen</label><input accept="image/*" id="support-v2-file" onchange="UniverseSupport.pickImage(this)" type="file"><button class="support-v2-send" onclick="UniverseSupport.send()" type="button">Enviar</button></div>
+      </div>
+    </main>
+  </div>
+</aside>
+
+<main class="docentes-page">
+  <div class="docentes-shell">
+    <section class="docentes-hero">
+      <div class="docentes-hero-copy">
+        <span class="docentes-kicker">CEPREUNI · Guía de aulas</span>
+        <h1>Docentes, salones y horarios</h1>
+        <p>Busca por profesor, curso o salón y filtra rápidamente para ubicar tus clases. La vista está separada de Biblioteca para que el Drive quede limpio y esta guía sea más directa.</p>
+      </div>
+      <aside class="docentes-stat-card">
+        <span>Directorio CEPREUNI</span>
+        <b id="docentes-total">149</b>
+        <small><span id="docentes-cursos">6</span> cursos · <span id="docentes-salones">45</span> salones registrados</small>
+      </aside>
+    </section>
+
+    <section class="teachv6" id="teacher-directory">
+      <div class="teachv6-head">
+        <div><span class="teachv6-label">BÚSQUEDA RÁPIDA</span><h2>Encuentra tu aula sin perder tiempo</h2><p>Filtra por curso o escribe el nombre del docente, aula o piso.</p></div>
+        <div class="teachv6-stats"><span><b id="docentes-total-mini">149</b> docentes</span><span><b>2</b> horarios</span></div>
+      </div>
+      <div class="teachv6-controls"><label><span>Buscar docente o salón</span><input id="teachv6-search" type="search" placeholder="Ej. Naupay, Física, 301..."></label><div><span>Filtrar por curso</span><div class="teachv6-filters" id="teachv6-filters"></div></div></div>
+      <div class="teachv6-meta"><strong id="teachv6-count">Cargando docentes...</strong><span>Horarios: 7:30 - 10:00 y 10:20 - 12:50</span></div>
+      <div class="teachv6-grid" id="teachv6-grid"></div>
+      <p class="teachv6-source">Los salones y horarios pueden cambiar. Verifica siempre los avisos oficiales de CEPREUNI.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo">Universe to Study</div><div class="footer-tagline">Recursos, seguimiento y comunidad para postulantes UNI y estudiantes CEPREUNI.</div></div>
+    <div class="footer-links"><h4>Páginas</h4><ul><li><a href="/">Inicio</a></li><li><a href="/admision">Admisión</a></li><li><a href="/cepreuni">CEPREUNI</a></li><li><a href="/temario">Temario</a></li><li><a href="/biblioteca">Biblioteca</a></li><li><a href="/simulacros">Simulacros</a></li><li><a href="/privacidad">Privacidad</a></li></ul></div>
+    <div class="footer-links"><h4>CEPREUNI</h4><ul><li><a href="/ranking">Ranking de promedios</a></li><li><a href="/calculadora">Calculadora CEPREUNI</a></li><li><a href="/temario#temario-cepreuni">Temario CEPREUNI</a></li><li><a href="/examenes">Exámenes CEPREUNI</a></li><li><a href="/docentes-cepreuni">Guía de aulas</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 Universe to Study. Todos los derechos reservados.</div><div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div></div>
+</footer>
+<script src="teacher-data.js?v=docentes-1"></script>
+<script src="docentes-cepreuni.js?v=docentes-1" defer></script>
+<script src="universe-admission.js"></script>
+<script src="universe-polish.js?v=account-5" defer></script>
+</body>
+</html>

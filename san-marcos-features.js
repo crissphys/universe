@@ -564,9 +564,42 @@
     return (data().syllabus || []).find(function (c) { return c.name === name; }) || { name: name, icon: '•', topics: ['tema general'] };
   }
   function pick(arr, i) { return arr[((i % arr.length) + arr.length) % arr.length]; }
+  function sourceForQuestion(courseName, topic, n) {
+    var key = norm(courseName);
+    var a = 12 + (n % 9), b = 5 + (n % 7), c = 2 + (n % 4);
+    if (key.indexOf('verbal') >= 0 || key.indexOf('lenguaje') >= 0 || key.indexOf('literatura') >= 0) {
+      return {
+        text: 'Texto original Universe: En una sesi\u00f3n de repaso, un estudiante distingue entre recordar datos sueltos y comprender la relaci\u00f3n entre las ideas. Cuando lee un fragmento, identifica el prop\u00f3sito del autor, reconoce conectores y separa la informaci\u00f3n principal de los ejemplos. Ese trabajo permite responder con mayor precisi\u00f3n sin depender solo de la memoria.',
+        stem: 'Seg\u00fan el texto, \u00bfqu\u00e9 acci\u00f3n permite resolver mejor una pregunta vinculada con "' + topic + '"?'
+      };
+    }
+    if (key.indexOf('matematica') >= 0 || key.indexOf('aritmetica') >= 0 || key.indexOf('algebra') >= 0 || key.indexOf('geometria') >= 0 || key.indexOf('trigonometria') >= 0) {
+      return {
+        text: 'Situaci\u00f3n original Universe: En una pr\u00e1ctica se comparan dos cantidades relacionadas con el tema "' + topic + '". La primera toma el valor ' + a + ', la segunda cambia en ' + b + ' unidades y el dato auxiliar vale ' + c + '. El reto no es operar de inmediato, sino reconocer qu\u00e9 relaci\u00f3n matem\u00e1tica organiza los datos antes de elegir el procedimiento.',
+        stem: '\u00bfCu\u00e1l es el primer paso correcto para resolver el problema sin perder la condici\u00f3n principal?'
+      };
+    }
+    if (key.indexOf('fisica') >= 0 || key.indexOf('quimica') >= 0 || key.indexOf('biologia') >= 0) {
+      return {
+        text: 'Experiencia original Universe: Un equipo de laboratorio registra una variaci\u00f3n controlada asociada con "' + topic + '". Mantiene constantes algunas condiciones, cambia una variable principal y compara el resultado con el modelo te\u00f3rico. La interpretaci\u00f3n correcta exige relacionar unidades, causa f\u00edsica o qu\u00edmica y l\u00edmite del fen\u00f3meno.',
+        stem: '\u00bfQu\u00e9 criterio debe priorizarse para analizar correctamente la experiencia?'
+      };
+    }
+    if (key.indexOf('historia') >= 0 || key.indexOf('geografia') >= 0 || key.indexOf('economia') >= 0 || key.indexOf('filosofia') >= 0 || key.indexOf('psicologia') >= 0 || key.indexOf('civica') >= 0) {
+      return {
+        text: 'Contexto original Universe: El tema "' + topic + '" se comprende mejor cuando se ubica en su proceso, actores, conceptos y consecuencias. No basta memorizar una definici\u00f3n: en admisi\u00f3n suelen pedir reconocer relaciones, comparar casos y aplicar la idea a una situaci\u00f3n social o hist\u00f3rica concreta.',
+        stem: '\u00bfQu\u00e9 alternativa resume mejor la forma adecuada de estudiar este contenido?'
+      };
+    }
+    return {
+      text: 'Caso original Universe: La pregunta eval\u00faa "' + topic + '" mediante una situaci\u00f3n breve. Para resolverla, conviene reconocer el concepto central, revisar datos expl\u00edcitos y descartar alternativas que cambian el sentido del enunciado.',
+      stem: '\u00bfQu\u00e9 estrategia responde mejor al caso propuesto?'
+    };
+  }
   function makeQuestion(courseName, n) {
     var course = courseByName(courseName);
     var topic = pick(course.topics || ['tema general'], n * 7 + courseName.length);
+    var source = sourceForQuestion(course.name, topic, n);
     var same = (course.topics || []).filter(function (t) { return t !== topic; }).slice(0, 8);
     var global = (data().syllabus || []).reduce(function (acc, c) { return acc.concat((c.topics || []).slice(0, 4)); }, []);
     var distractors = same.concat(global).filter(function (t, i, a) { return t !== topic && a.indexOf(t) === i; });
@@ -584,7 +617,7 @@
       options.splice(seed, 0, good);
       correct = seed;
     }
-    return { n: n, course: course.name, topic: topic, correct: correct, options: options };
+    return { n: n, course: course.name, topic: topic, source: source.text, stem: source.stem, correct: correct, options: options };
   }
   function startTimer() {
     clearInterval(simTimer);
@@ -613,9 +646,9 @@
       for (var i = 0; i < dist[course]; i++) questions.push(makeQuestion(course, questions.length + 1));
     });
     $('#uts-sm-exam-questions').innerHTML = questions.map(function (q) {
-      return '<article class="uts-sm-question" data-correct="' + q.correct + '"><b>Pregunta ' + q.n + ' · ' + esc(q.course) + '</b><p><strong>Texto fuente integrado:</strong> el bloque evalúa "' + esc(q.topic) + '". Selecciona la alternativa que mejor describe cómo abordar ese contenido en admisión.</p><div class="uts-sm-options">' +
+      return '<article class="uts-sm-question" data-correct="' + q.correct + '"><b>Pregunta ' + q.n + ' \u00b7 ' + esc(q.course) + '</b><p><strong>Texto fuente integrado:</strong> ' + esc(q.source) + '</p><p><strong>Pregunta:</strong> ' + esc(q.stem) + '</p><div class="uts-sm-options">' +
         q.options.map(function (op, i) { return '<label><input type="radio" name="uts-sm-q' + q.n + '" value="' + i + '"><span>' + esc(op) + '</span></label>'; }).join('') +
-        '</div><small class="uts-sm-note">Fuente de estudio: temario San Marcos ' + esc(data().syllabusCycle) + ' · pregunta original Universe.</small></article>';
+        '</div><small class="uts-sm-note">Referencia: temario San Marcos ' + esc(data().syllabusCycle) + ' y formato de exámenes de admisión anteriores · pregunta original Universe.</small></article>';
     }).join('');
     $('#uts-sm-exam-status').textContent = 'Simulacro generado: 100 preguntas, 5 alternativas y estructura referencial del área ' + area + '.';
     startTimer();
