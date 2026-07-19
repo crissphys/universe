@@ -88,6 +88,7 @@
     var style = document.createElement('style');
     style.id = 'uts-google-auth-style';
     style.textContent = [
+      'html[data-universe-page] .reveal,html[data-universe-page] .reveal.visible{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important}',
       '#uts-google-auth-button,[data-uts-account-button="true"]{position:fixed!important;top:max(12px,calc(env(safe-area-inset-top) + 12px))!important;right:max(14px,calc(env(safe-area-inset-right) + 14px))!important;z-index:2147482450!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important;min-height:38px!important;border:1px solid rgba(37,99,235,.22)!important;border-radius:999px!important;background:rgba(255,255,255,.92)!important;color:#0f3d75!important;box-shadow:0 12px 30px rgba(15,23,42,.16)!important;padding:.42rem .82rem!important;font:900 .84rem/1 Rajdhani,Inter,system-ui,sans-serif!important;letter-spacing:.4px!important;cursor:pointer!important;white-space:nowrap!important;transition:.2s!important;backdrop-filter:blur(12px)!important}',
       '#uts-google-auth-button:hover,[data-uts-account-button="true"]:hover{transform:translateY(-1px)!important;box-shadow:0 16px 36px rgba(37,99,235,.22)!important}',
       '#uts-google-auth-button .uts-g-mark,[data-uts-account-button="true"] .uts-g-mark{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#eaf4ff;color:#2563eb;font-weight:1000;box-shadow:inset 0 0 0 1px rgba(37,99,235,.18)}',
@@ -828,6 +829,18 @@
     }).catch(function () {});
   }
 
+  function forceRevealVisible() {
+    try {
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+        el.style.transform = 'none';
+        el.style.filter = 'none';
+      });
+    } catch (error) {}
+  }
+
   function recoverRankingTable() {
     if ((document.documentElement.getAttribute('data-universe-page') || '') !== 'ranking') return;
     var dataNode = document.getElementById('cepre2026-ranking-data');
@@ -897,12 +910,14 @@
 
   function boot() {
     try { applyUniverseTheme(localStorage.getItem('universe_theme') === 'dark' ? 'dark' : 'light'); } catch (error) {}
+    forceRevealVisible();
     moveThemeToggleToViewport();
     activateUniverseNav();
     recoverRankingTable();
     initGoogleAuth();
     initFallbackSupport();
     loadUniversePublicSettings();
+    setTimeout(forceRevealVisible, 120);
     setTimeout(recoverRankingTable, 700);
     window.openUniverseSupportChat = window.openUniverseSupportChat || function () {
       if (window.UniverseSupport && typeof window.UniverseSupport.open === 'function') window.UniverseSupport.open();
