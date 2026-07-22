@@ -1,0 +1,9 @@
+# Copia estos nombres en Cloudflare Pages/Worker como variables privadas.
+# No subas el archivo real .dev.vars.
+
+GOOGLE_CLIENT_ID=
+SESSION_SECRET=
+ADMIN_EMAIL_SHA256=
+FIREBASE_DATABASE_URL=
+FIREBASE_DATABASE_SECRET=
+OPENAI_API_KEY=
