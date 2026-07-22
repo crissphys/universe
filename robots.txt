@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /outputs/
+Disallow: /work/
+Disallow: /account?*
+
+Sitemap: https://universetostudy.com/sitemap.xml
