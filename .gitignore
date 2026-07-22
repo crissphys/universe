@@ -1,0 +1,6 @@
+tmp/
+.env
+.env.*
+*.local.json
+classes-questions-private/
+__pycache__/

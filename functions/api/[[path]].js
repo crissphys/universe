@@ -15,6 +15,52 @@ function cleanId(value) {
   return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '');
 }
 
+function cleanSlug(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 80);
+}
+
+function cleanText(value, max = 8000) {
+  return String(value == null ? '' : value)
+    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
+    .slice(0, max)
+    .trim();
+}
+
+function sanitizeImage(value) {
+  var src = '';
+  if (typeof value === 'string') src = value;
+  if (value && typeof value === 'object') src = value.src || value.url || value.dataUrl || '';
+  src = String(src || '').trim();
+  if (/^data:image\/(?:png|jpe?g|webp);base64,[a-z0-9+/=]+$/i.test(src) && src.length < 1200000) return { src };
+  if (/^https:\/\/[^\s"'<>()]+$/i.test(src) && src.length < 2000) return { src };
+  return null;
+}
+
+function sanitizeChoice(choice, index) {
+  var label = typeof choice === 'object' && choice ? choice.label : '';
+  var text = typeof choice === 'object' && choice ? choice.text : choice;
+  label = cleanText(label || String.fromCharCode(65 + index), 2).toUpperCase().replace(/[^A-E]/g, '') || String.fromCharCode(65 + index);
+  return { label, text: cleanText(text, 1800) };
+}
+
+function sanitizeQuestion(question, index) {
+  question = question && typeof question === 'object' ? question : {};
+  var choices = Array.isArray(question.choices) ? question.choices : [];
+  var image = sanitizeImage(question.image);
+  var safe = {
+    id: cleanId(question.id || String(index + 1)),
+    number: cleanText(question.number || index + 1, 12),
+    cycle: cleanText(question.cycle, 40),
+    sourceTitle: cleanText(question.sourceTitle, 180),
+    week: cleanText(question.week, 60),
+    requiresImage: question.requiresImage === true,
+    stem: cleanText(question.stem || question.enunciado, 12000),
+    choices: choices.slice(0, 5).map(sanitizeChoice).filter(function (choice) { return choice.text; })
+  };
+  if (image) safe.image = image;
+  return safe;
+}
+
 function base64url(input) {
   var bytes = input instanceof Uint8Array ? input : new TextEncoder().encode(String(input));
   var text = '';
@@ -232,6 +278,48 @@ async function handleSupport(request, env, subpath) {
   return json(await firebase(env, root + path, method, data));
 }
 
+async function handleClasses(request, env, subpath) {
+  var auth = await verifySession(request, env);
+  if (!auth) return json({ error: 'login_required' }, 401);
+  var method = request.method.toUpperCase();
+  var url = new URL(request.url);
+  var path = '/' + subpath.replace(/^\/+/, '').replace(/\.json$/i, '');
+  var course = cleanSlug(url.searchParams.get('course'));
+  var topic = cleanSlug(url.searchParams.get('topic'));
+
+  if (path === '/questions' && method === 'GET') {
+    if (!rateLimit(request, 'classes-questions', 80, 60000)) return json({ error: 'rate_limited' }, 429);
+    if (!course || !topic) return json({ error: 'missing_course_or_topic' }, 400);
+    var stored = await firebase(env, '/classes/questionsV1/' + course + '/' + topic, 'GET');
+    var source = Array.isArray(stored) ? stored : (stored && stored.questions);
+    var questions = Array.isArray(source) ? source.map(sanitizeQuestion).filter(function (q) {
+      return q.stem && q.choices && q.choices.length;
+    }) : [];
+    return json({ course, topic, questions });
+  }
+
+  if (path === '/admin/import' && method === 'POST') {
+    if (!auth.admin) return json({ error: 'admin_required' }, 403);
+    if (!rateLimit(request, 'classes-import', 12, 60000)) return json({ error: 'rate_limited' }, 429);
+    var body = await request.json().catch(function () { return {}; });
+    course = cleanSlug(body.course || course);
+    topic = cleanSlug(body.topic || topic);
+    if (!course || !topic) return json({ error: 'missing_course_or_topic' }, 400);
+    var input = Array.isArray(body.questions) ? body.questions.slice(0, 400) : [];
+    var safeQuestions = input.map(sanitizeQuestion).filter(function (q) {
+      return q.stem && q.choices && q.choices.length;
+    });
+    await firebase(env, '/classes/questionsV1/' + course + '/' + topic, 'PUT', {
+      updatedAt: Date.now(),
+      updatedBy: auth.email,
+      questions: safeQuestions
+    });
+    return json({ ok: true, course, topic, count: safeQuestions.length });
+  }
+
+  return json({ error: 'not_found' }, 404);
+}
+
 async function handleAi(request, env) {
   if (!rateLimit(request, 'ai', 12, 60000)) return json({ error: 'rate_limited' }, 429);
   var auth = await verifySession(request, env);
@@ -250,6 +338,7 @@ export async function onRequest(context) {
     if (apiPath === 'auth/me') return authMe(request, context.env);
     if (apiPath.startsWith('site/')) return handleSite(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('support/')) return handleSupport(request, context.env, apiPath.slice(8));
+    if (apiPath.startsWith('classes/')) return handleClasses(request, context.env, apiPath.slice(8));
     if (apiPath === 'ai/support') return handleAi(request, context.env);
     return json({ error: 'not_found' }, 404);
   } catch (error) {
