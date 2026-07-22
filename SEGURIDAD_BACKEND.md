@@ -19,3 +19,11 @@ Cambios aplicados:
 - El inicio con Google se valida en `/api/auth/google` antes de entregar un token local firmado.
 - Soporte y perfil usan `Authorization: Bearer <token>` y el backend decide permisos.
 - El backend incluye límite básico de abuso por IP para login y endpoints de IA.
+
+Preguntas privadas de Clases:
+
+- Las preguntas exactas no deben guardarse en HTML ni JavaScript público.
+- Extrae a JSON privado con `tools/extract-class-questions.py`.
+- Importa solo con cuenta administradora usando `tools/import-class-questions.js`.
+- El cliente lee preguntas por `GET /api/classes/questions?course=<curso>&topic=<tema>`.
+- El backend exige sesión Google y nunca devuelve claves, respuestas correctas ni solucionarios.
