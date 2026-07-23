@@ -245,6 +245,18 @@
     });
   }
 
+  function repairDisplayText(value) {
+    var text = String(value == null ? '' : value);
+    if (!/[ÃÂðâ]/.test(text)) return text;
+    try {
+      var bytes = Uint8Array.from(Array.from(text).map(function (char) { return char.charCodeAt(0); }));
+      var decoded = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+      return decoded || text;
+    } catch (error) {
+      return text;
+    }
+  }
+
   function getStoredGoogleUser() {
     try {
       var raw = localStorage.getItem(AUTH_KEY) || '';
@@ -460,7 +472,7 @@
     var user = getCurrentAuthUser();
     if (user && user.provider === 'google') {
       btn.innerHTML = (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<span class="uts-g-mark">G</span>') +
-        '<span class="uts-g-label">' + safeText((user.name || 'Cuenta').split(' ')[0]) + '<small>Google conectado</small></span>';
+        '<span class="uts-g-label">' + safeText(repairDisplayText(user.name || 'Cuenta').split(' ')[0]) + '<small>Google conectado</small></span>';
       btn.setAttribute('aria-label', 'Abrir cuenta');
       btn.title = user.email || 'Abrir cuenta';
     } else if (hasGuestMode()) {
@@ -527,7 +539,7 @@
       body.innerHTML = renderLoginBrand('CUENTA CONECTADA - GOOGLE') +
         '<div class="uts-google-user">' +
         (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<div class="uts-g-mark">G</div>') +
-        '<div><b>' + safeText(user.name || 'Usuario Google') + '</b><span>' + safeText(user.email || '') + '</span></div></div>' +
+        '<div><b>' + safeText(repairDisplayText(user.name || 'Usuario Google')) + '</b><span>' + safeText(user.email || '') + '</span></div></div>' +
         '<p class="uts-login-desc">Tu cuenta ya está conectada. Indica tu perfil académico o entra a Cuenta para editar tus datos completos.</p>' +
         (user.isAdmin && user.secureSession ? '<div class="uts-google-support-note"><strong>Administrador verificado</strong><span>El servidor privado reconoció esta cuenta como administradora.</span></div>' : '') +
         (needsSecureRefresh ? '<div class="uts-google-support-note"><strong>Actualizar permisos con Google</strong><span>Si esta cuenta es administradora, vuelve a continuar con Google para que el backend privado actualice tu rol.</span></div><div id="uts-google-signin-slot"></div>' : '') +
@@ -568,7 +580,7 @@
     var updated = user && user.updatedAt ? new Date(user.updatedAt).toLocaleString('es-PE') : 'No registrado';
     return '<h3 style="margin:10px 0 8px;font-size:14px">' + safeText(title || 'Datos') + '</h3>' +
       '<dl class="uts-google-data">' +
-      '<div><dt>Nombre</dt><dd>' + safeText(user && user.name || 'Invitado') + '</dd></div>' +
+      '<div><dt>Nombre</dt><dd>' + safeText(repairDisplayText(user && user.name || 'Invitado')) + '</dd></div>' +
       '<div><dt>Correo</dt><dd>' + safeText(user && user.email || 'Sin correo registrado') + '</dd></div>' +
       '<div><dt>Tipo</dt><dd>' + safeText(user && user.provider === 'google' ? 'Google' : 'Invitado local') + '</dd></div>' +
       '<div><dt>ID local</dt><dd>' + safeText(user && user.id || '') + '</dd></div>' +
@@ -622,13 +634,13 @@
     if (profile.onboardingComplete && community.username) {
       return '<div class="uts-cepre-head"><div><b>Perfil conectado</b><span>Tu configuraci\u00f3n acad\u00e9mica ya qued\u00f3 guardada en esta cuenta.</span></div><i>Completado</i></div>' +
         '<div class="uts-google-data"><div><dt>Usuario</dt><dd>@' + safeText(community.username) + '</dd></div>' +
-        '<div><dt>Perfil</dt><dd>' + safeText(community.displayName || user && user.name || 'Estudiante Universe') + '</dd></div>' +
+        '<div><dt>Perfil</dt><dd>' + safeText(repairDisplayText(community.displayName || user && user.name || 'Estudiante Universe')) + '</dd></div>' +
         '<div><dt>Preparaci\u00f3n</dt><dd>' + safeText(profile.academicTrack === 'academy' ? profile.academyName : profile.academicTrack || 'Registrado') + '</dd></div></div>' +
         '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Editar en Mi cuenta</button></div>';
     }
     var track = profile.academicTrack || '';
     var cycle = profile.cepreCycle || CURRENT_CEPRE_CYCLE;
-    var displayName = community.displayName || user && user.name || '';
+    var displayName = repairDisplayText(community.displayName || user && user.name || '');
     return '<div class="uts-cepre-head"><div><b>Completa tu perfil una sola vez</b><span>Estos datos quedar\u00e1n conectados a tu cuenta Google y podr\u00e1s editarlos luego desde Mi cuenta.</span></div></div>' +
       '<div class="uts-cepre-grid">' +
       '<label>Nombre de usuario<input id="uts-community-username" maxlength="24" placeholder="Ejemplo: criss_uni" value="' + safeText(community.username || '') + '"></label>' +

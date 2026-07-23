@@ -63,6 +63,31 @@ MATCHERS = (
     ("civica", r"\bC[ÍI]VICA\b|\bDPCC\b|\bCIUDADAN[ÍI]A\b"),
 )
 
+PHYSICS_TOPICS = (
+    ("analisis-dimensional-vectores", "Análisis dimensional y vectores", r"AN[ÁA]LISIS\s+DIMENSIONAL.*VECTORES|VECTORES.*AN[ÁA]LISIS\s+DIMENSIONAL"),
+    ("sistema-internacional", "Sistema Internacional y análisis dimensional", r"SISTEMA\s+INTERNACIONAL|AN[ÁA]LISIS\s+DIMENSIONAL|CANTIDADES?\s+F[ÍI]SICAS?"),
+    ("vectores", "Vectores", r"\bVECTORES?\b"),
+    ("cinematica", "Cinemática", r"\bCINEM[ÁA]TICA\b|\bMRU\b|\bMRUV\b|MOVIMIENTO\s+UNIDIMENSIONAL"),
+    ("movimiento-circular", "Movimiento circular", r"MOVIMIENTO\s+CIRCULAR|\bMCU\b|\bMCUV\b"),
+    ("dinamica", "Dinámica y leyes de Newton", r"\bDIN[ÁA]MICA\b|LEYES?\s+DE\s+NEWTON|FRICCI[ÓO]N"),
+    ("gravitacion", "Gravitación", r"GRAVITACI[ÓO]N|LEYES?\s+DE\s+KEPLER|MOVIMIENTO\s+PLANETARIO"),
+    ("trabajo-energia", "Trabajo, energía y potencia", r"\bTRABAJO\b|\bENERG[ÍI]A\b|\bPOTENCIA\b"),
+    ("impulso-colisiones", "Impulso y colisiones", r"\bIMPULSO\b|CANTIDAD\s+DE\s+MOVIMIENTO|COLISION"),
+    ("movimiento-armonico", "Movimiento armónico simple", r"ARM[ÓO]NICO|\bMAS\b"),
+    ("ondas", "Ondas mecánicas", r"ONDAS?\s+MEC[ÁA]NIC|MOVIMIENTO\s+ONDULATORIO"),
+    ("fluidos", "Fluidos", r"\bFLUIDOS?\b|HIDROST[ÁA]TICA|HIDRODIN[ÁA]MICA"),
+    ("calor-temperatura", "Calor y temperatura", r"\bCALOR\b|\bTEMPERATURA\b|DILATACI[ÓO]N"),
+    ("termodinamica", "Termodinámica", r"TERMODIN[ÁA]MICA|GASES?\s+IDEALES?"),
+    ("electrostatica", "Electrostática", r"ELECTROST[ÁA]TICA|LEY\s+DE\s+COULOMB|CAMPO\s+EL[ÉE]CTRICO|POTENCIAL\s+EL[ÉE]CTRICO"),
+    ("capacitores", "Capacitores", r"CAPACITANCIA|CAPACITORES?|CONDENSADORES?"),
+    ("corriente-circuitos", "Corriente y circuitos", r"CORRIENTE\s+EL[ÉE]CTRICA|LEY\s+DE\s+OHM|KIRCHHOFF|CIRCUITOS?\s+EL[ÉE]CTRIC"),
+    ("magnetismo", "Magnetismo", r"MAGNETISMO|CAMPO\s+MAGN[ÉE]TICO|FUERZA\s+MAGN[ÉE]TICA"),
+    ("induccion-electromagnetica", "Inducción electromagnética", r"INDUCCI[ÓO]N\s+ELECTROMAGN[ÉE]TICA|LEY\s+DE\s+FARADAY|LEY\s+DE\s+LENZ|TRANSFORMADORES?"),
+    ("ondas-electromagneticas", "Ondas electromagnéticas", r"ONDAS?\s+ELECTROMAGN[ÉE]TICAS?"),
+    ("optica", "Óptica", r"\b[ÓO]PTICA\b|\bLENTES?\b|\bESPEJOS?\b"),
+    ("fisica-moderna", "Física moderna", r"F[ÍI]SICA\s+MODERNA|PLANCK|FOTOEL[ÉE]CTRICO|RAYOS?\s+X"),
+)
+
 
 def plain(value: str) -> str:
     return "".join(
@@ -85,13 +110,28 @@ def week_from_title(title: str) -> str:
     return match.group(1) if match else ""
 
 
-def question_key(course: str, title: str, week: str) -> str:
+def exact_topic(course: str, title: str) -> tuple[str, str]:
+    normalized = plain(title).upper()
+    if course == "fisica":
+        for topic, label, pattern in PHYSICS_TOPICS:
+            if re.search(plain(pattern), normalized, re.I):
+                return topic, label
+    return "", ""
+
+
+def question_key(course: str, title: str, week: str) -> tuple[str, str]:
     if course == "otros":
-        return ""
+        return "", ""
     normalized = plain(title).upper()
     if re.search(r"\b(?:REPASO|REVIEW|TEMARIO\s+COMPLETO|GENERAL|REF\d*|QUIZ(?:IZ)?|BANCO\s+DE\s+PREGUNTAS)\b", normalized):
-        return f"{course}/general"
-    return f"{course}/semana-{week}" if week else ""
+        return f"{course}/general", "Banco completo del curso"
+    topic, label = exact_topic(course, title)
+    if topic:
+        return f"{course}/{topic}", label
+    is_cepreuni = bool(re.search(r"\bCEPRE\s*UNI\b|\bCEPREUNI\b", normalized))
+    if is_cepreuni and week:
+        return f"{course}/semana-{week}", f"Semana {week} CEPREUNI"
+    return "", ""
 
 
 def slugify(title: str, video_id: str) -> str:
@@ -126,13 +166,15 @@ def main() -> int:
                 seen.add(video_id)
                 course = classify(title)
                 week = week_from_title(title)
+                key, topic_label = question_key(course, title, week)
                 grouped[course].append({
                     "slug": slugify(title, video_id),
                     "title": title,
                     "videoId": video_id,
                     "channel": handle,
                     "week": week,
-                    "questionKey": question_key(course, title, week),
+                    "questionKey": key,
+                    "topicLabel": topic_label,
                     "embedUrl": f"https://www.youtube-nocookie.com/embed/{video_id}?rel=0&modestbranding=1",
                 })
 

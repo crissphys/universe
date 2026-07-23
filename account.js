@@ -10,6 +10,15 @@
   function cleanId(v) { return String(v || '').replace(/[^a-zA-Z0-9_-]/g, ''); }
   function normalizeCode(v) { return String(v || '').trim().toUpperCase().replace(/\s+/g, ''); }
   function safe(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function repairText(value) {
+    var text = String(value == null ? '' : value);
+    if (!/[ÃÂðâ]/.test(text)) return text;
+    try {
+      var bytes = Uint8Array.from(Array.from(text).map(function (char) { return char.charCodeAt(0); }));
+      var decoded = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+      return decoded || text;
+    } catch (error) { return text; }
+  }
   function api(route, method, data) {
     var headers = { 'Content-Type': 'application/json' };
     try {
@@ -96,11 +105,13 @@
   }
   function fillProfile() {
     var u = state.user, p = state.profile || {};
-    var parts = String(p.googleName || u.name || '').split(/\s+/);
-    $('account-display-name').textContent = (p.firstName || u.name || 'Usuario') + (p.lastName ? ' ' + p.lastName : '');
+    var parts = repairText(p.googleName || u.name || '').split(/\s+/);
+    var firstName = repairText(p.firstName || parts[0] || '');
+    var lastName = repairText(p.lastName || parts.slice(1).join(' ') || '');
+    $('account-display-name').textContent = [firstName, lastName].filter(Boolean).join(' ') || 'Usuario';
     $('account-display-email').textContent = u.email || '';
-    $('profile-first').value = p.firstName || parts[0] || '';
-    $('profile-last').value = p.lastName || parts.slice(1).join(' ') || '';
+    $('profile-first').value = firstName;
+    $('profile-last').value = lastName;
     $('profile-age').value = p.age || '';
     $('profile-phone').value = p.phone || '';
     $('profile-email').value = u.email || '';
@@ -126,7 +137,7 @@
   }
   function fillCommunity() {
     var p = state.community || {};
-    var fallbackName = [state.profile && state.profile.firstName, state.profile && state.profile.lastName].filter(Boolean).join(' ') || state.user && state.user.name || '';
+    var fallbackName = repairText([state.profile && state.profile.firstName, state.profile && state.profile.lastName].filter(Boolean).join(' ') || state.user && state.user.name || '');
     $('community-username').value = p.username || '';
     $('community-display-name').value = p.displayName || fallbackName;
     $('community-target').value = p.target || state.profile && state.profile.target || '';

@@ -378,9 +378,10 @@
 
 .classes-topic-layout {
   display: grid;
-  grid-template-columns: minmax(720px, 2.35fr) minmax(360px, .65fr);
+  grid-template-columns: minmax(0, 3fr) minmax(340px, 1fr);
   gap: 1rem;
   align-items: start;
+  min-height: calc(100svh - 170px);
 }
 
 .classes-topic-video,
@@ -395,8 +396,8 @@
 
 .classes-video-frame {
   width: 100%;
-  height: min(76vh, 860px);
-  min-height: 560px;
+  height: min(78vh, 920px);
+  min-height: 620px;
   aspect-ratio: auto;
   border: 0;
   border-radius: 24px;

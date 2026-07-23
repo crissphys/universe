@@ -39,7 +39,7 @@
 
   async function loadIndex() {
     try {
-      indexData = await fetchJson('/class-videos/index.json?v=5');
+      indexData = await fetchJson('/class-videos/index.json?v=6');
     } catch (error) {
       indexData = { courses: [], totalVideos: 0 };
     }
@@ -47,7 +47,7 @@
 
   async function loadCourseVideos(slug) {
     if (videoCache[slug]) return videoCache[slug];
-    var payload = await fetchJson('/class-videos/' + encodeURIComponent(slug) + '.json?v=5');
+    var payload = await fetchJson('/class-videos/' + encodeURIComponent(slug) + '.json?v=6');
     videoCache[slug] = Array.isArray(payload.videos) ? payload.videos : [];
     return videoCache[slug];
   }
@@ -150,15 +150,16 @@
   }
 
   function renderTopic(course, video) {
+    var topicLabel = video.topicLabel || (video.week ? 'Semana ' + video.week : 'Clase del curso');
     app.innerHTML =
       '<section class="classes-topic-topbar"><div><div class="classes-kicker">' + esc(course.title) + ' · ' + esc(video.channel) + '</div>' +
-      '<h1>' + esc(video.title) + '</h1><p>El título y el tema corresponden al video original del canal.</p></div>' +
+      '<h1>' + esc(video.title) + '</h1><p><strong>' + esc(topicLabel) + '.</strong> El video conserva el título original del canal.</p></div>' +
       '<a class="classes-back" href="/clases/' + esc(course.slug) + '">Volver a ' + esc(course.title) + '</a></section>' +
       '<section class="classes-topic-layout"><article class="classes-topic-video">' +
       '<iframe class="classes-video-frame" src="' + esc(video.embedUrl) + '" title="' + esc(video.title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
       '<div class="classes-video-title"><h2>' + esc(video.title) + '</h2><span class="classes-channel">' + esc(video.channel) + '</span></div></article>' +
       '<aside class="classes-questions-panel"><div class="classes-questions-head"><div><h2>Preguntas relacionadas</h2>' +
-      '<p class="classes-private-note">Solo se muestran preguntas cuando el curso y la semana o tema coinciden. Nunca se mezclan con otra clase.</p></div></div>' +
+      '<p class="classes-private-note">Banco asignado: ' + esc(topicLabel) + '. Las preguntas pertenecen a ese bloque del material CEPREUNI y no muestran claves.</p></div></div>' +
       '<div id="classes-private-questions" class="classes-question-list"><div class="classes-loading">Verificando preguntas...</div></div></aside></section>';
 
     if (!video.questionKey || video.questionKey.indexOf('/') < 0) {
