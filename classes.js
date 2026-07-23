@@ -80,7 +80,11 @@
 
   function renderTopic(course, topic) {
     var src = embedUrl(topic);
-    app.innerHTML = hero(topic.title, 'Mira la clase y practica al costado. Las preguntas exactas se cargan desde el backend privado y no están dentro del HTML público.', '/clases/' + course.slug, 'Volver a ' + course.title) +
+    app.innerHTML =
+      '<section class="classes-topic-topbar">' +
+        '<div><div class="classes-kicker">Clase de ' + esc(course.title) + '</div><h1>' + esc(topic.title) + '</h1><p>Video amplio y preguntas del tema en panel privado.</p></div>' +
+        '<a class="classes-back" href="/clases/' + esc(course.slug) + '">Volver a ' + esc(course.title) + '</a>' +
+      '</section>' +
       '<section class="classes-topic-layout">' +
         '<article class="classes-topic-video">' +
           '<iframe class="classes-video-frame" src="' + esc(src) + '" title="' + esc(topic.title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>' +
@@ -97,7 +101,7 @@
 
   function loginBox() {
     return '<div class="classes-login-box"><h3>Inicia sesión con Google para ver las preguntas del tema</h3>' +
-      '<p>El video es público. Las preguntas exactas se protegen para que no queden copiadas dentro del código de la página.</p>' +
+      '<p>Aunque tengas Gmail abierto en el navegador, Universe necesita crear su propia sesión segura. Las preguntas exactas no están copiadas en el código público.</p>' +
       '<button class="classes-login-button" type="button" id="classes-login-google">Entrar con Google</button></div>';
   }
 
@@ -205,6 +209,10 @@
       if (response.status === 401 || response.status === 403) {
         box.innerHTML = loginBox();
         bindLoginButton();
+        return;
+      }
+      if (response.status === 404) {
+        box.innerHTML = '<div class="classes-error"><h3>Backend privado pendiente de activar</h3><p>Tu cuenta de Google puede estar correcta, pero el dominio todavía no está ejecutando /api/*. Cuando el backend esté activo, aquí aparecerán las preguntas privadas del tema.</p></div>';
         return;
       }
       if (!response.ok) throw new Error('HTTP ' + response.status);
