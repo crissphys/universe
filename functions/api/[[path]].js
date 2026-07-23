@@ -511,6 +511,52 @@ async function handleSupport(request, env, subpath) {
   return json(await firebase(env, root + path, method, data));
 }
 
+var CLASS_TOPIC_RANGES = {
+  fisica: {
+    'analisis-dimensional-vectores': ['Libro 1', 1, 30],
+    'sistema-internacional': ['Libro 1', 1, 11],
+    vectores: ['Libro 1', 12, 30],
+    cinematica: ['Libro 1', 31, 68],
+    'movimiento-circular': ['Libro 1', 69, 89],
+    dinamica: ['Libro 1', 90, 151],
+    gravitacion: ['Libro 1', 152, 180],
+    'trabajo-energia': ['Libro 1', 181, 216],
+    'impulso-colisiones': ['Libro 1', 217, 249],
+    'movimiento-armonico': ['Libro 1', 250, 275],
+    ondas: ['Libro 1', 276, 304],
+    fluidos: ['Libro 1', 305, 999],
+    'calor-temperatura': ['Libro 2', 1, 47],
+    termodinamica: ['Libro 2', 48, 80],
+    electrostatica: ['Libro 2', 81, 130],
+    capacitores: ['Libro 2', 131, 147],
+    'corriente-circuitos': ['Libro 2', 148, 203],
+    magnetismo: ['Libro 2', 204, 240],
+    'induccion-electromagnetica': ['Libro 2', 241, 269],
+    'ondas-electromagneticas': ['Libro 2', 270, 285],
+    optica: ['Libro 2', 286, 318],
+    'fisica-moderna': ['Libro 2', 319, 999]
+  }
+};
+
+function deriveClassQuestions(course, topic, questions) {
+  if (!Array.isArray(questions) || !questions.length) return [];
+  var range = CLASS_TOPIC_RANGES[course] && CLASS_TOPIC_RANGES[course][topic];
+  if (range) {
+    return questions.filter(function (question) {
+      var number = Number.parseInt(String(question.number || '').replace(/\D/g, ''), 10);
+      return String(question.sourceTitle || '').includes(range[0]) &&
+        Number.isFinite(number) && number >= range[1] && number <= range[2];
+    });
+  }
+  var weekMatch = String(topic || '').match(/^semana-(\d{1,2})$/);
+  if (!weekMatch) return [];
+  var week = Number(weekMatch[1]);
+  if (week < 1 || week > 20) return [];
+  var start = Math.floor((week - 1) * questions.length / 20);
+  var end = Math.floor(week * questions.length / 20);
+  return questions.slice(start, Math.max(start + 1, end));
+}
+
 async function handleClasses(request, env, subpath) {
   var auth = await verifySession(request, env);
   if (!auth) return json({ error: 'login_required' }, 401);
@@ -528,7 +574,15 @@ async function handleClasses(request, env, subpath) {
     var questions = Array.isArray(source) ? source.map(sanitizeQuestion).filter(function (q) {
       return q.stem && q.choices && q.choices.length;
     }) : [];
-    return json({ course, topic, questions });
+    if (!questions.length && topic !== 'general') {
+      var generalStored = await firebase(env, '/classes/questionsV1/' + course + '/general', 'GET');
+      var generalSource = Array.isArray(generalStored) ? generalStored : (generalStored && generalStored.questions);
+      var generalQuestions = Array.isArray(generalSource) ? generalSource.map(sanitizeQuestion).filter(function (q) {
+        return q.stem && q.choices && q.choices.length;
+      }) : [];
+      questions = deriveClassQuestions(course, topic, generalQuestions);
+    }
+    return json({ course, topic, questions, exactTopic: Boolean(CLASS_TOPIC_RANGES[course] && CLASS_TOPIC_RANGES[course][topic]) });
   }
 
   if (path === '/admin/import' && method === 'POST') {
