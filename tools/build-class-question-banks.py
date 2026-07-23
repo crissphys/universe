@@ -21,6 +21,12 @@ QUESTION_RE = re.compile(r"(?m)(?:^|\n)\s*(\d{1,3})[\.\)]\s+")
 CHOICE_RE = re.compile(r"(?<![A-Za-z0-9])([A-E])\)\s*")
 STOP_RE = re.compile(r"(?im)^\s*(?:CLAVES?|RESPUESTAS?|SOLUCIONARIO|SOLUCIONES)\s*$")
 IMAGE_RE = re.compile(r"\b(figura|gráfico|grafica|tabla|diagrama|imagen|mostrada|mostrado|observe)\b", re.I)
+EXACT_WEEK_RANGES = {
+    "fisica": {
+        "semana-1": ("Física — Libro 1 — CEPREUNI 2026-2", 1, 30),
+        "semana-2": ("Física — Libro 1 — CEPREUNI 2026-2", 31, 60),
+    }
+}
 
 
 def normalize(text: str) -> str:
@@ -107,6 +113,18 @@ def main() -> int:
             encoding="utf-8",
         )
         total += len(questions)
+        for topic, (source_title, first, last) in EXACT_WEEK_RANGES.get(course, {}).items():
+            exact = [
+                question for question in questions
+                if question["sourceTitle"] == source_title
+                and str(question["number"]).isdigit()
+                and first <= int(question["number"]) <= last
+            ]
+            (OUT_DIR / f"{course}-{topic}.json").write_text(
+                json.dumps({"course": course, "topic": topic, "questions": exact}, ensure_ascii=False, separators=(",", ":")),
+                encoding="utf-8",
+            )
+            print(f"{course}/{topic}: {len(exact)} preguntas exactas")
     print(f"Total extraído: {total} preguntas en {len(banks)} cursos")
     return 0
 
