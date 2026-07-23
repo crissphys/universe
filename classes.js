@@ -7,6 +7,7 @@
   var indexData = { courses: [], totalVideos: 0 };
   var videoCache = {};
   var currentQuestionContext = null;
+  var secureLoginOpened = false;
 
   if (!app) return;
 
@@ -174,9 +175,14 @@
   }
 
   function loginBox() {
-    return '<div class="classes-login-box"><h3>Inicia sesión con Google para ver las preguntas</h3>' +
-      '<p>Universe crea una sesión segura independiente de que Gmail esté abierto en otra pestaña.</p>' +
-      '<button class="classes-login-button" type="button" id="classes-login-google">Entrar con Google</button></div>';
+    var knownGoogleUser = window.UniverseGoogleAuth && UniverseGoogleAuth.isGoogleUser && UniverseGoogleAuth.isGoogleUser();
+    return '<div class="classes-login-box"><h3>' +
+      (knownGoogleUser ? 'Renueva tu sesión segura de Google' : 'Inicia sesión con Google para ver las preguntas') + '</h3>' +
+      '<p>' + (knownGoogleUser
+        ? 'Tu perfil sigue conectado, pero la autorización privada venció o falta en este dispositivo. Confírmala una vez para volver a ver los bancos.'
+        : 'Universe crea una sesión segura independiente de que Gmail esté abierto en otra pestaña.') + '</p>' +
+      '<button class="classes-login-button" type="button" id="classes-login-google">' +
+      (knownGoogleUser ? 'Continuar como mi cuenta' : 'Entrar con Google') + '</button></div>';
   }
 
   function safeImageSrc(value) {
@@ -277,6 +283,11 @@
     if (!token) {
       box.innerHTML = loginBox();
       bindLoginButton();
+      var knownGoogleUser = window.UniverseGoogleAuth && UniverseGoogleAuth.isGoogleUser && UniverseGoogleAuth.isGoogleUser();
+      if (knownGoogleUser && !secureLoginOpened) {
+        secureLoginOpened = true;
+        setTimeout(openLogin, 250);
+      }
       return;
     }
     box.innerHTML = '<div class="classes-loading">Cargando preguntas privadas...</div>';
