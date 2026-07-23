@@ -26,6 +26,26 @@
     });
   }
 
+  function unitalkApi(route, method, data) {
+    var headers = { 'Content-Type': 'application/json' };
+    try {
+      var token = localStorage.getItem(AUTH_TOKEN_KEY);
+      if (token) headers.Authorization = 'Bearer ' + token;
+    } catch (error) {}
+    var options = { method: method || 'GET', cache: 'no-store', headers: headers };
+    if (data !== undefined) options.body = JSON.stringify(data);
+    return fetch(API_BASE + '/unitalk' + route, options).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (payload) {
+        if (!response.ok) {
+          var error = new Error(payload.error || 'request_failed');
+          error.status = response.status;
+          throw error;
+        }
+        return payload;
+      });
+    });
+  }
+
   function getAuthToken() {
     try { return localStorage.getItem(AUTH_TOKEN_KEY) || ''; } catch (error) { return ''; }
   }
@@ -119,6 +139,22 @@
   function activateUniverseNav() {
     var root = document.documentElement;
     var page = root && root.getAttribute('data-universe-page') || '';
+    document.querySelectorAll('nav .nav-links').forEach(function (list) {
+      if (list.querySelector('a[href="/unitalk"]')) return;
+      var item = document.createElement('li');
+      item.innerHTML = '<a data-route="unitalk" href="/unitalk">UNITALK</a>';
+      var library = list.querySelector('a[href="/biblioteca"]');
+      if (library && library.parentElement) list.insertBefore(item, library.parentElement);
+      else list.appendChild(item);
+    });
+    document.querySelectorAll('footer .footer-links').forEach(function (group) {
+      var heading = group.querySelector('h4');
+      var list = group.querySelector('ul');
+      if (!heading || !list || !/p[aá]ginas/i.test(heading.textContent) || list.querySelector('a[href="/unitalk"]')) return;
+      var item = document.createElement('li');
+      item.innerHTML = '<a href="/unitalk">UNITALK</a>';
+      list.appendChild(item);
+    });
     var grouped = {
       ranking: 'cepre',
       calculator: 'cepre',
@@ -342,7 +378,7 @@
       return;
     }
     siteApi('/profiles/' + id, 'GET').then(function (profile) {
-      if (profile && profile.academicTrack) {
+      if (profile && profile.onboardingComplete) {
         closeGoogleAuthPanel();
         return;
       }
@@ -487,7 +523,7 @@
     var body = modal.querySelector('#uts-google-body');
     var user = getCurrentAuthUser();
     if (user && user.provider === 'google') {
-      var needsSecureRefresh = !user.secureSession || !getAuthToken() || !user.isAdmin;
+      var needsSecureRefresh = !user.secureSession || !getAuthToken();
       body.innerHTML = renderLoginBrand('CUENTA CONECTADA - GOOGLE') +
         '<div class="uts-google-user">' +
         (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<div class="uts-g-mark">G</div>') +
@@ -580,22 +616,30 @@
     })).join('');
   }
 
-  function renderCepreProfileForm(profile) {
+  function renderCepreProfileForm(profile, community, user) {
     profile = profile || {};
-    var track = profile.academicTrack || (profile.cepreMember || profile.cepreCode || profile.cepreCycle ? 'cepreuni' : '');
+    community = community || {};
+    if (profile.onboardingComplete && community.username) {
+      return '<div class="uts-cepre-head"><div><b>Perfil conectado</b><span>Tu configuraci\u00f3n acad\u00e9mica ya qued\u00f3 guardada en esta cuenta.</span></div><i>Completado</i></div>' +
+        '<div class="uts-google-data"><div><dt>Usuario</dt><dd>@' + safeText(community.username) + '</dd></div>' +
+        '<div><dt>Perfil</dt><dd>' + safeText(community.displayName || user && user.name || 'Estudiante Universe') + '</dd></div>' +
+        '<div><dt>Preparaci\u00f3n</dt><dd>' + safeText(profile.academicTrack === 'academy' ? profile.academyName : profile.academicTrack || 'Registrado') + '</dd></div></div>' +
+        '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Editar en Mi cuenta</button></div>';
+    }
+    var track = profile.academicTrack || '';
     var cycle = profile.cepreCycle || CURRENT_CEPRE_CYCLE;
-    var code = normalizeCepreCode(profile.cepreCode || '');
-    var locked = track === 'cepreuni' && cycle === CURRENT_CEPRE_CYCLE && !!code;
-    return '<div class="uts-cepre-head"><div><b>Perfil acad\u00e9mico</b><span>Dinos si eres CEPREUNI, estudiante UNI, San Marcos, academia o estudiante independiente.</span></div>' + (locked ? '<i>C\u00f3digo bloqueado</i>' : '') + '</div>' +
+    var displayName = community.displayName || user && user.name || '';
+    return '<div class="uts-cepre-head"><div><b>Completa tu perfil una sola vez</b><span>Estos datos quedar\u00e1n conectados a tu cuenta Google y podr\u00e1s editarlos luego desde Mi cuenta.</span></div></div>' +
       '<div class="uts-cepre-grid">' +
+      '<label>Nombre de usuario<input id="uts-community-username" maxlength="24" placeholder="Ejemplo: criss_uni" value="' + safeText(community.username || '') + '"></label>' +
+      '<label>Nombre visible<input id="uts-community-name" maxlength="40" placeholder="C\u00f3mo quieres que te llamen" value="' + safeText(displayName) + '"></label>' +
       '<label>Tipo de estudiante<select id="uts-academic-track"><option value=""' + (!track ? ' selected' : '') + '>Selecciona una opci\u00f3n</option><option value="cepreuni"' + (track === 'cepreuni' ? ' selected' : '') + '>Soy CEPREUNI</option><option value="uni-student"' + (track === 'uni-student' ? ' selected' : '') + '>Soy estudiante UNI</option><option value="san-marcos"' + (track === 'san-marcos' ? ' selected' : '') + '>Postulo a San Marcos</option><option value="academy"' + (track === 'academy' ? ' selected' : '') + '>Estoy en una academia</option><option value="independent"' + (track === 'independent' ? ' selected' : '') + '>Soy estudiante independiente</option></select></label>' +
       '<label id="uts-academy-wrap">Academia preuniversitaria<select id="uts-academy-name">' + academyOptions(profile.academyName || '') + '</select></label>' +
       '<label id="uts-cepre-cycle-wrap">Ciclo CEPREUNI<select id="uts-cepre-cycle">' + cycleOptions(cycle) + '</select></label>' +
-      '<label id="uts-cepre-code-wrap">C\u00f3digo del ciclo actual<input id="uts-cepre-code" maxlength="9" placeholder="Ejemplo: 2612345F" value="' + safeText(code) + '"' + (locked ? ' disabled' : '') + '></label>' +
-      '</div>' +
-      '<p class="uts-cepre-mini" id="uts-cepre-explain"></p>' +
-      '<div class="uts-google-actions"><button class="uts-google-primary" type="button" id="uts-cepre-save">Guardar perfil acad\u00e9mico</button></div>' +
-      '<div class="uts-google-hint" id="uts-cepre-status">' + (locked ? 'Tu c\u00f3digo ' + safeText(code) + ' ya est\u00e1 vinculado a esta cuenta.' : 'Si eliges CEPREUNI actual, verificaremos que el c\u00f3digo exista y que no lo use otra cuenta.') + '</div>';
+      '<label>Objetivo<select id="uts-community-target"><option value="">Selecciona una opci\u00f3n</option><option value="UNI">UNI</option><option value="San Marcos">San Marcos</option><option value="Otra universidad">Otra universidad</option><option value="A\u00fan no lo decido">A\u00fan no lo decido</option></select></label>' +
+      '</div><p class="uts-cepre-mini" id="uts-cepre-explain"></p>' +
+      '<div class="uts-google-actions"><button class="uts-google-primary" type="button" id="uts-cepre-save">Guardar y continuar</button></div>' +
+      '<div class="uts-google-hint" id="uts-cepre-status">Tu correo, tel\u00e9fono y permisos nunca se mostrar\u00e1n en UNITALK.</div>';
   }
 
   function toggleCepreModalFields(profile) {
@@ -604,102 +648,85 @@
     var cycle = document.getElementById('uts-cepre-cycle');
     var academyWrap = document.getElementById('uts-academy-wrap');
     var cycleWrap = document.getElementById('uts-cepre-cycle-wrap');
-    var codeWrap = document.getElementById('uts-cepre-code-wrap');
     var explain = document.getElementById('uts-cepre-explain');
-    if (!track || !cycle || !academyWrap || !cycleWrap || !codeWrap || !explain) return;
+    if (!track || !cycle || !academyWrap || !cycleWrap || !explain) return;
     var value = track.value;
     var isCepre = value === 'cepreuni';
     var isCurrent = cycle.value === CURRENT_CEPRE_CYCLE;
-    var locked = !!(profile.cepreCode && (profile.cepreCycle || CURRENT_CEPRE_CYCLE) === CURRENT_CEPRE_CYCLE);
     academyWrap.hidden = value !== 'academy';
     cycleWrap.hidden = !isCepre;
-    codeWrap.hidden = !isCepre || !isCurrent;
-    explain.textContent = value === 'cepreuni' ? (isCurrent ? 'Para el ciclo actual necesitamos tu c\u00f3digo CEPREUNI. As\u00ed evitamos que dos cuentas reclamen el mismo c\u00f3digo.' : 'Para ciclos anteriores basta registrar el ciclo; los c\u00f3digos pueden repetirse entre procesos distintos.') :
+    explain.textContent = value === 'cepreuni' ? (isCurrent ? 'Guardaremos tu ciclo. El c\u00f3digo CEPREUNI se vincula despu\u00e9s desde Mi cuenta para validarlo con seguridad.' : 'Para ciclos anteriores basta registrar el ciclo.') :
       value === 'uni-student' ? 'Guardaremos tu perfil como estudiante de la Universidad Nacional de Ingenier\u00eda.' :
       value === 'san-marcos' ? 'Guardaremos tu perfil como postulante San Marcos para personalizar temario y simulacros.' :
       value === 'academy' ? 'Selecciona tu academia preuniversitaria para ordenar mejor tus recursos.' :
       value === 'independent' ? 'Tu perfil quedar\u00e1 como estudiante independiente o aut\u00f3nomo.' :
       'Elige tu perfil acad\u00e9mico para personalizar tu experiencia.';
-    if (locked) codeWrap.hidden = false;
   }
 
   function hydrateCepreProfileBox(user) {
     var box = document.getElementById('uts-cepre-box');
     var id = googleProfileId(user);
     if (!box || !id) return;
-    siteApi('/profiles/' + id, 'GET').catch(function () { return null; }).then(function (profile) {
-      profile = profile || {};
-      box.innerHTML = renderCepreProfileForm(profile);
+    Promise.all([
+      siteApi('/profiles/' + id, 'GET').catch(function () { return null; }),
+      unitalkApi('/me', 'GET').catch(function () { return null; })
+    ]).then(function (results) {
+      var profile = results[0] || {};
+      var community = results[1] && results[1].profile || {};
+      box.innerHTML = renderCepreProfileForm(profile, community, user);
+      var accountPage = box.querySelector('[data-uts-account-page]');
+      if (accountPage) { accountPage.addEventListener('click', goAccountPage); return; }
       var member = document.getElementById('uts-academic-track');
       var cycle = document.getElementById('uts-cepre-cycle');
       if (member) member.addEventListener('change', function () { toggleCepreModalFields(profile); });
       if (cycle) cycle.addEventListener('change', function () { toggleCepreModalFields(profile); });
       var save = document.getElementById('uts-cepre-save');
-      if (save) save.addEventListener('click', function () { saveCepreProfileFromModal(user, profile); });
+      if (save) save.addEventListener('click', function () { saveCepreProfileFromModal(user, profile, community); });
       toggleCepreModalFields(profile);
     });
   }
 
-  async function saveCepreProfileFromModal(user, profile) {
+  async function saveCepreProfileFromModal(user, profile, community) {
     profile = profile || {};
+    community = community || {};
     var status = document.getElementById('uts-cepre-status');
     var trackEl = document.getElementById('uts-academic-track');
     var academyEl = document.getElementById('uts-academy-name');
     var cycle = document.getElementById('uts-cepre-cycle');
-    var input = document.getElementById('uts-cepre-code');
+    var usernameEl = document.getElementById('uts-community-username');
+    var nameEl = document.getElementById('uts-community-name');
+    var targetEl = document.getElementById('uts-community-target');
     var id = googleProfileId(user);
     if (!id || !trackEl || !cycle) return;
     var track = trackEl.value || '';
     var selectedCycle = track === 'cepreuni' ? String(cycle.value || CURRENT_CEPRE_CYCLE) : '';
-    var currentCode = normalizeCepreCode(profile.cepreCode || '');
     var payload = {
+      username: String(usernameEl && usernameEl.value || '').trim().toLowerCase(),
+      displayName: String(nameEl && nameEl.value || '').trim(),
+      target: String(targetEl && targetEl.value || ''),
       academicTrack: track,
       academyName: track === 'academy' && academyEl ? academyEl.value : '',
-      cepreMember: track === 'cepreuni',
       cepreCycle: selectedCycle,
-      updatedAt: Date.now(),
-      email: user.email || '',
-      googleName: user.name || '',
-      avatar: user.avatar || ''
+      avatar: community.avatar || user.avatar || '',
+      profileVisibility: 'public',
+      showAvatar: true,
+      showAcademy: true,
+      showCycle: true,
+      showTarget: true
     };
+    if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(payload.username)) { if (status) status.textContent = 'El nombre de usuario debe tener entre 3 y 24 caracteres y usar letras, n\u00fameros, guion o guion bajo.'; return; }
+    if (!payload.displayName) { if (status) status.textContent = 'Escribe el nombre que quieres mostrar.'; return; }
     if (!track) { if (status) status.textContent = 'Elige si eres CEPREUNI, estudiante UNI, San Marcos, academia o estudiante independiente.'; return; }
     if (track === 'academy' && !payload.academyName) { if (status) status.textContent = 'Selecciona tu academia preuniversitaria.'; return; }
-    if (track !== 'cepreuni') {
-      if (currentCode) { if (status) status.textContent = 'Tu cuenta ya tiene un c\u00f3digo CEPREUNI actual; no se elimina desde este acceso r\u00e1pido.'; return; }
-      payload.cepreCode = '';
-      await siteApi('/profiles/' + id, 'PATCH', payload);
-      if (status) status.textContent = 'Perfil acad\u00e9mico guardado correctamente.';
-      hydrateCepreProfileBox(user);
-      return;
+    if (!payload.target) { if (status) status.textContent = 'Selecciona a d\u00f3nde est\u00e1s postulando.'; return; }
+    try {
+      await unitalkApi('/onboarding', 'POST', payload);
+      if (status) status.textContent = 'Perfil conectado correctamente. Ya puedes participar en UNITALK.';
+      if (UniverseGoogleAuth.refresh) await UniverseGoogleAuth.refresh().catch(function () {});
+      setTimeout(function () { closeGoogleAuthPanel(); }, 650);
+    } catch (error) {
+      if (status) status.textContent = error.message === 'username_taken' ? 'Ese nombre de usuario ya est\u00e1 ocupado.' : 'No se pudo guardar el perfil. Revisa los datos e int\u00e9ntalo nuevamente.';
     }
-    if (selectedCycle !== CURRENT_CEPRE_CYCLE) {
-      payload.cepreCode = '';
-      await siteApi('/profiles/' + id, 'PATCH', payload);
-      if (status) status.textContent = 'Ciclo CEPREUNI anterior guardado. No se pidi\u00f3 c\u00f3digo porque puede repetirse entre ciclos.';
-      hydrateCepreProfileBox(user);
-      return;
-    }
-    var code = normalizeCepreCode(input && input.value || currentCode);
-    if (currentCode && code !== currentCode) { if (status) status.textContent = 'Tu cuenta ya tiene un c\u00f3digo registrado y no se puede cambiar desde aqu\u00ed.'; return; }
-    if (!code) { if (status) status.textContent = 'Escribe tu c\u00f3digo CEPREUNI del ciclo actual.'; return; }
-    var valid = await loadCepreCodes();
-    var validSet = {};
-    (valid || []).forEach(function (v) { validSet[normalizeCepreCode(v)] = true; });
-    if (!validSet[code]) { if (status) status.textContent = 'Ese c\u00f3digo no existe en el ranking CEPREUNI actual cargado en Universe.'; return; }
-    var ownerRoute = '/codeOwnersByCycle/' + cleanAccountId(selectedCycle) + '/' + cleanAccountId(code);
-    var owner = await siteApi(ownerRoute, 'GET').catch(function () { return null; });
-    var legacyOwner = await siteApi('/codeOwners/' + cleanAccountId(code), 'GET').catch(function () { return null; });
-    if ((owner && owner.userId && owner.userId !== id) || (legacyOwner && legacyOwner.userId && legacyOwner.userId !== id)) { if (status) status.textContent = 'Este c\u00f3digo del ciclo actual ya fue registrado por otra cuenta de Gmail.'; return; }
-    if (!currentCode) {
-      var ok = confirm('\u00bfEst\u00e1s seguro de que este es tu c\u00f3digo CEPREUNI del ciclo ' + selectedCycle + '?\n\nC\u00f3digo: ' + code + '\n\nNo se volver\u00e1 a cambiar para este ciclo. Las notificaciones de promedio y beneficios asociados llegar\u00e1n a tu cuenta: ' + (user.email || ''));
-      if (!ok) return;
-    }
-    payload.cepreCode = code;
-    await siteApi(ownerRoute, 'PUT', { userId: id, email: user.email || '', cycle: selectedCycle, createdAt: Date.now() });
-    await siteApi('/codeOwners/' + cleanAccountId(code), 'PUT', { userId: id, email: user.email || '', cycle: selectedCycle, createdAt: Date.now() });
-    await siteApi('/profiles/' + id, 'PATCH', payload);
-    if (status) status.textContent = 'Datos CEPREUNI guardados. Tu c\u00f3digo queda vinculado para el ciclo actual.';
-    hydrateCepreProfileBox(user);
   }
 
   function openGoogleAuthPanel(options) {

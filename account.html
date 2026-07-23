@@ -58,12 +58,20 @@
     .admin-panel{display:none}.admin-panel.active{display:grid;gap:18px}
     .admin-event-list{display:grid;gap:8px;margin-top:10px}.admin-event{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;padding:10px 12px}.admin-event small{color:#64748b}
     .announcement-preview{display:none;margin-top:10px;max-width:100%;border-radius:18px;border:1px solid #dbeafe}
+    .account-community{grid-column:1/-1}
+    .account-community-grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:22px;align-items:start}
+    .account-avatar-editor{text-align:center}.account-avatar-editor .account-avatar{width:112px;height:112px;margin:0 auto 12px;font-size:2.2rem}
+    .account-avatar-editor small{display:block;color:#64748b;line-height:1.45}
+    .privacy-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+    .privacy-option{display:flex;gap:9px;align-items:center;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;padding:10px 12px;color:#334155;font-size:.86rem}
+    .privacy-option input{width:18px;height:18px;accent-color:#2563eb}
     html[data-universe-theme='dark'] body{background:#020202;color:#f8fafc}
     html[data-universe-theme='dark'] .account-page{background:radial-gradient(circle at 15% 8%,rgba(37,99,235,.20),transparent 30%),linear-gradient(180deg,#020202,#07111f)}
     html[data-universe-theme='dark'] .account-hero,html[data-universe-theme='dark'] .account-card{background:#050505;color:#f8fafc;border-color:#2b3544;box-shadow:0 20px 60px rgba(0,0,0,.42)}
     html[data-universe-theme='dark'] .account-hero p,html[data-universe-theme='dark'] .account-card p,html[data-universe-theme='dark'] .account-email{color:#cbd5e1}
     html[data-universe-theme='dark'] .account-field input,html[data-universe-theme='dark'] .account-field textarea,html[data-universe-theme='dark'] .account-field select,html[data-universe-theme='dark'] .admin-event{background:#080808;color:#f8fafc;border-color:#334155}
-    @media(max-width:860px){.account-grid{grid-template-columns:1fr}.account-form{grid-template-columns:1fr}}
+    html[data-universe-theme='dark'] .privacy-option{background:#080808;color:#e2e8f0;border-color:#334155}
+    @media(max-width:860px){.account-grid{grid-template-columns:1fr}.account-form{grid-template-columns:1fr}.account-community-grid{grid-template-columns:1fr}.privacy-options{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -167,9 +175,48 @@
         <div class="account-actions"><button class="account-btn" type="button" data-register-code>Guardar perfil académico</button></div>
         <div id="code-status" class="account-status warn">Si eres del ciclo actual, verificaremos que el código exista y que nadie lo haya registrado para este ciclo.</div>
       </aside>
+
+      <section class="account-card account-community">
+        <span class="account-kicker">UNITALK</span>
+        <h2>Perfil público y privacidad</h2>
+        <p>Este es el perfil que verán otras personas en UNITALK. Tu Gmail, teléfono y permisos de cuenta nunca se muestran.</p>
+        <div class="account-community-grid">
+          <div class="account-avatar-editor">
+            <div class="account-avatar" id="community-avatar">U</div>
+            <label class="account-btn secondary" for="community-avatar-file">Cambiar foto</label>
+            <input id="community-avatar-file" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+            <small>La imagen se reduce antes de guardarse. Máximo 5 MB.</small>
+          </div>
+          <div>
+            <div class="account-form">
+              <div class="account-field"><label>Nombre de usuario</label><input id="community-username" maxlength="24" placeholder="ejemplo: criss_uni" autocomplete="username"></div>
+              <div class="account-field"><label>Nombre visible</label><input id="community-display-name" maxlength="40" placeholder="Cómo quieres que te llamen"></div>
+              <div class="account-field"><label>¿A dónde postulas?</label><select id="community-target"><option value="">Selecciona una opción</option><option>UNI</option><option>San Marcos</option><option>Otra universidad</option><option>Aún no lo decido</option></select></div>
+              <div class="account-field"><label>Quién puede ver tu perfil</label><select id="community-visibility"><option value="public">Todas las personas</option><option value="members">Solo usuarios con cuenta</option><option value="private">Datos académicos privados</option></select></div>
+              <div class="account-field full"><label>Descripción breve</label><textarea id="community-bio" maxlength="160" placeholder="Cuéntale a la comunidad qué estás estudiando o cuál es tu meta."></textarea></div>
+            </div>
+            <div class="privacy-options">
+              <label class="privacy-option"><input id="community-show-avatar" type="checkbox" checked> Mostrar mi foto</label>
+              <label class="privacy-option"><input id="community-show-academy" type="checkbox" checked> Mostrar academia o institución</label>
+              <label class="privacy-option"><input id="community-show-cycle" type="checkbox" checked> Mostrar ciclo</label>
+              <label class="privacy-option"><input id="community-show-target" type="checkbox" checked> Mostrar objetivo de postulación</label>
+            </div>
+            <div class="account-actions"><button class="account-btn" type="button" data-save-community>Guardar perfil público</button><a class="account-btn ghost" href="/unitalk">Abrir UNITALK</a></div>
+            <div id="community-status" class="account-status">El nombre de usuario debe tener entre 3 y 24 caracteres: letras, números, guion o guion bajo.</div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <section id="admin-panel" class="admin-panel">
+      <article class="account-card">
+        <span class="account-kicker">Administrador</span>
+        <h2>Moderación de UNITALK</h2>
+        <p>Reportes recientes enviados por la comunidad. Los correos de los usuarios no se muestran aquí.</p>
+        <div id="unitalk-report-list" class="admin-event-list"><div class="account-status">Cargando reportes...</div></div>
+        <div id="unitalk-report-status" class="account-status">Puedes revisar la publicación en UNITALK y marcar el reporte como atendido o descartado.</div>
+      </article>
+
       <article class="account-card">
         <span class="account-kicker">Administrador</span>
         <h2>Comunicado emergente del inicio</h2>
@@ -213,7 +260,7 @@
 </main>
 
 <script src="cepre-codes.js?v=account-5"></script>
-<script src="/universe-polish.js?v=security-2" defer></script>
-<script src="account.js?v=security-2" defer></script>
+<script src="/universe-polish.js?v=unitalk-1" defer></script>
+<script src="account.js?v=unitalk-1" defer></script>
 </body>
 </html>

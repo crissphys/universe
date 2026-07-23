@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" data-universe-page="unitalk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UNITALK | Universe to Study</title>
+  <meta name="description" content="Comunidad académica de Universe to Study para compartir avances, dudas y consejos entre postulantes.">
+  <link rel="canonical" href="https://universetostudy.com/unitalk">
+  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
+  <meta name="theme-color" content="#020617">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=unitalk-1">
+  <link rel="stylesheet" href="/universe-polish.css?v=unitalk-1">
+  <link rel="stylesheet" href="/unitalk.css?v=unitalk-1">
+  <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">Universe to Study</a>
+  <ul class="nav-links">
+    <li><a data-route="home" href="/">Inicio</a></li>
+    <li><a data-route="admission" href="/admision">Admisión</a></li>
+    <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
+    <li><a data-route="syllabus" href="/temario">Temario</a></li>
+    <li><a data-route="classes" href="/clases">Clases</a></li>
+    <li><a data-route="unitalk" class="active" href="/unitalk">UNITALK</a></li>
+    <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
+    <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
+    <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
+  </ul>
+  <div class="nav-actions"><button id="universe-theme-toggle" aria-label="Cambiar tema" class="nav-theme-toggle" onclick="toggleUniverseTheme()" type="button">☾</button></div>
+</nav>
+
+<main class="unitalk-page">
+  <section class="unitalk-hero">
+    <div>
+      <span class="unitalk-kicker">Comunidad académica Universe</span>
+      <h1>UNITALK</h1>
+      <p>Comparte avances, dudas y consejos con otros postulantes. Tu correo y tus datos privados nunca aparecen en las publicaciones.</p>
+    </div>
+    <a class="unitalk-profile-cta" href="/account">Configurar mi perfil</a>
+  </section>
+
+  <div class="unitalk-layout">
+    <section class="unitalk-main-column">
+      <article class="unitalk-composer" id="unitalk-composer">
+        <div class="unitalk-composer-user" id="unitalk-composer-user">
+          <span class="unitalk-avatar">U</span>
+          <div><strong>Participa en UNITALK</strong><small>Necesitas una cuenta Google y un nombre de usuario.</small></div>
+        </div>
+        <textarea id="unitalk-post-text" maxlength="400" placeholder="Comparte una duda, avance o consejo de estudio..." aria-label="Texto de la publicación"></textarea>
+        <div class="unitalk-composer-actions">
+          <span><b id="unitalk-char-count">0</b>/400 caracteres</span>
+          <button id="unitalk-publish" type="button">Publicar</button>
+        </div>
+        <div class="unitalk-status" id="unitalk-composer-status" aria-live="polite"></div>
+      </article>
+
+      <div class="unitalk-feed-head">
+        <div><span>Conversaciones</span><h2>Publicaciones recientes</h2></div>
+        <button id="unitalk-refresh" type="button" aria-label="Actualizar publicaciones">Actualizar</button>
+      </div>
+      <section id="unitalk-feed" class="unitalk-feed" aria-live="polite">
+        <div class="unitalk-loading">Cargando publicaciones...</div>
+      </section>
+    </section>
+
+    <aside class="unitalk-sidebar">
+      <section class="unitalk-side-card" id="unitalk-my-card">
+        <span class="unitalk-side-label">Tu espacio</span>
+        <h2>Tu perfil académico</h2>
+        <p>Elige qué datos quieres mostrar: academia, ciclo, objetivo y foto.</p>
+        <a href="/account">Administrar perfil y privacidad</a>
+      </section>
+      <section class="unitalk-side-card">
+        <span class="unitalk-side-label">Convivencia</span>
+        <h2>Hablemos con respeto</h2>
+        <ul>
+          <li>Comparte contenido relacionado con el estudio.</li>
+          <li>No publiques datos personales de terceros.</li>
+          <li>No se permiten amenazas, acoso, spam ni contenido sexual.</li>
+          <li>Reporta lo que incumpla estas reglas.</li>
+        </ul>
+        <a href="/terminos#unitalk">Ver normas de UNITALK</a>
+      </section>
+      <section class="unitalk-side-card unitalk-privacy-card">
+        <span class="unitalk-side-label">Privacidad</span>
+        <h2>Tú decides qué mostrar</h2>
+        <p>El perfil público usa tu nombre de usuario. Gmail, teléfono y permisos administrativos permanecen privados.</p>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<div class="unitalk-modal" id="unitalk-profile-modal" hidden>
+  <button class="unitalk-modal-backdrop" type="button" data-close-profile aria-label="Cerrar perfil"></button>
+  <section class="unitalk-profile-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-profile-name">
+    <button class="unitalk-profile-close" type="button" data-close-profile aria-label="Cerrar">×</button>
+    <div id="unitalk-profile-content"><div class="unitalk-loading">Cargando perfil...</div></div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo">Universe to Study</div><div class="footer-tagline">Clases, recursos y comunidad para postulantes UNI y estudiantes CEPREUNI.</div></div>
+    <div class="footer-links"><h4>Páginas</h4><ul><li><a href="/">Inicio</a></li><li><a href="/admision">Admisión</a></li><li><a href="/cepreuni">CEPREUNI</a></li><li><a href="/clases">Clases</a></li><li><a href="/unitalk">UNITALK</a></li><li><a href="/biblioteca">Biblioteca</a></li></ul></div>
+    <div class="footer-links"><h4>Confianza</h4><ul><li><a href="/nosotros">Nosotros</a></li><li><a href="/metodologia-editorial">Metodología editorial</a></li><li><a href="/correcciones">Correcciones</a></li><li><a href="/contacto">Contacto</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 Universe to Study.</div><div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div></div>
+</footer>
+
+<script src="/unitalk.js?v=unitalk-1" defer></script>
+<script src="/universe-polish.js?v=unitalk-1" defer></script>
+</body>
+</html>
