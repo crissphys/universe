@@ -1,0 +1,140 @@
+:root{
+  --talk-blue:#2563eb;
+  --talk-sky:#60a5fa;
+  --talk-ink:#0f172a;
+  --talk-muted:#64748b;
+  --talk-card:rgba(255,255,255,.94);
+  --talk-line:rgba(148,163,184,.25);
+  --talk-soft:#eff6ff;
+  --talk-shadow:0 22px 70px rgba(15,23,42,.11);
+}
+body{margin:0;background:#f7fbff;color:var(--talk-ink);font-family:'DM Sans',sans-serif}
+.unitalk-page{
+  min-height:100svh;
+  padding:clamp(5.6rem,9vw,7.2rem) clamp(.75rem,2.5vw,2.5rem) clamp(3rem,6vw,5rem);
+  background:
+    linear-gradient(rgba(37,99,235,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,99,235,.035) 1px,transparent 1px),
+    radial-gradient(circle at 12% 5%,rgba(96,165,250,.18),transparent 27%),
+    linear-gradient(180deg,#f7fbff,#fff);
+  background-size:38px 38px,38px 38px,auto,auto;
+}
+.unitalk-hero,.unitalk-layout{width:min(1420px,100%);margin-inline:auto}
+.unitalk-hero{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1.5rem;align-items:center;
+  padding:clamp(1.35rem,3.4vw,2.5rem);box-sizing:border-box;border:1px solid var(--talk-line);
+  border-radius:30px;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(239,246,255,.94));
+  box-shadow:var(--talk-shadow);overflow:hidden;position:relative;
+}
+.unitalk-hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-110px;top:-150px;background:rgba(37,99,235,.1)}
+.unitalk-kicker,.unitalk-side-label{
+  display:inline-flex;color:var(--talk-blue);font:700 .77rem/1 'Rajdhani',sans-serif;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.unitalk-hero h1{margin:.35rem 0 .25rem;font:400 clamp(3rem,8vw,6.2rem)/.9 'Bebas Neue',sans-serif;letter-spacing:.035em}
+.unitalk-hero p{margin:0;max-width:850px;color:#475569;line-height:1.65;font-size:clamp(.94rem,1.6vw,1.08rem)}
+.unitalk-profile-cta,.unitalk-side-card a{
+  position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+  border-radius:999px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff;
+  padding:.78rem 1.15rem;font:700 .9rem/1 'Rajdhani',sans-serif;letter-spacing:.03em;
+  box-shadow:0 12px 28px rgba(37,99,235,.25)
+}
+.unitalk-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:1rem;margin-top:1rem;align-items:start}
+.unitalk-main-column{min-width:0;display:grid;gap:1rem}
+.unitalk-composer,.unitalk-side-card,.unitalk-post,.unitalk-feed-head{
+  border:1px solid var(--talk-line);border-radius:24px;background:var(--talk-card);box-shadow:var(--talk-shadow)
+}
+.unitalk-composer{padding:1.15rem}
+.unitalk-composer-user,.unitalk-post-user,.unitalk-comment-user{display:flex;gap:.75rem;align-items:center}
+.unitalk-avatar{
+  flex:0 0 auto;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(135deg,#1d4ed8,#38bdf8);color:#fff;font:700 1.05rem 'Rajdhani',sans-serif;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)
+}
+.unitalk-avatar img{width:100%;height:100%;object-fit:cover}
+.unitalk-composer-user strong,.unitalk-composer-user small{display:block}
+.unitalk-composer-user small{margin-top:.18rem;color:var(--talk-muted)}
+#unitalk-post-text{
+  width:100%;min-height:118px;box-sizing:border-box;margin-top:1rem;padding:1rem;border:1px solid #d7e4f4;
+  border-radius:18px;background:#f8fbff;color:var(--talk-ink);font:500 1rem/1.55 'DM Sans',sans-serif;resize:vertical;outline:none
+}
+#unitalk-post-text:focus{border-color:#60a5fa;box-shadow:0 0 0 4px rgba(96,165,250,.14)}
+.unitalk-composer-actions{display:flex;justify-content:space-between;gap:1rem;align-items:center;margin-top:.7rem}
+.unitalk-composer-actions span{color:var(--talk-muted);font-size:.8rem}
+.unitalk-composer-actions button,.unitalk-feed-head button,.unitalk-action,.unitalk-comment-send,.unitalk-mini-button{
+  border:0;border-radius:999px;background:#eaf2ff;color:#174d91;padding:.64rem .9rem;
+  font:700 .82rem/1 'Rajdhani',sans-serif;cursor:pointer;transition:.18s ease
+}
+.unitalk-composer-actions button{background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff;padding:.76rem 1.2rem}
+.unitalk-composer-actions button:hover,.unitalk-action:hover,.unitalk-feed-head button:hover{transform:translateY(-1px)}
+.unitalk-composer-actions button:disabled,.unitalk-action:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.unitalk-status{min-height:1.2rem;margin-top:.55rem;color:var(--talk-muted);font-size:.82rem}
+.unitalk-status.error{color:#b91c1c}.unitalk-status.good{color:#166534}
+.unitalk-feed-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.15rem}
+.unitalk-feed-head span{color:var(--talk-blue);font:700 .72rem 'Rajdhani',sans-serif;text-transform:uppercase;letter-spacing:.12em}
+.unitalk-feed-head h2{margin:.12rem 0 0;font:600 1.25rem 'Rajdhani',sans-serif}
+.unitalk-feed{display:grid;gap:.85rem}
+.unitalk-loading,.unitalk-empty{
+  border:1px dashed #bfdbfe;border-radius:22px;background:rgba(255,255,255,.72);
+  padding:2rem;text-align:center;color:var(--talk-muted)
+}
+.unitalk-post{padding:1rem 1.05rem}
+.unitalk-post-head{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
+.unitalk-user-link{border:0;background:transparent;padding:0;color:inherit;text-align:left;cursor:pointer;min-width:0}
+.unitalk-user-link strong,.unitalk-user-link small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.unitalk-user-link strong{font-size:.94rem}.unitalk-user-link small{margin-top:.15rem;color:var(--talk-muted);font-size:.76rem}
+.unitalk-time{color:var(--talk-muted);font-size:.75rem;white-space:nowrap}
+.unitalk-post-text{margin:.9rem 0;color:#1e293b;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.63;font-size:.98rem}
+.unitalk-post-actions{display:flex;flex-wrap:wrap;gap:.48rem;border-top:1px solid rgba(148,163,184,.2);padding-top:.75rem}
+.unitalk-action.active-like{background:#dcfce7;color:#166534}.unitalk-action.active-dislike{background:#fee2e2;color:#991b1b}
+.unitalk-action.danger{margin-left:auto;color:#991b1b;background:#fff1f2}
+.unitalk-comments{margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(148,163,184,.2)}
+.unitalk-comments-list{display:grid;gap:.55rem}
+.unitalk-comment{border-radius:16px;background:#f8fbff;padding:.75rem}
+.unitalk-comment-user .unitalk-avatar{width:32px;height:32px;font-size:.8rem}
+.unitalk-comment p{margin:.5rem 0 0;white-space:pre-wrap;overflow-wrap:anywhere;color:#334155;line-height:1.5;font-size:.88rem}
+.unitalk-comment-compose{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.55rem;margin-top:.7rem}
+.unitalk-comment-compose input{min-width:0;border:1px solid #d7e4f4;border-radius:999px;padding:.7rem .9rem;background:#fff;color:inherit;outline:none}
+.unitalk-comment-send{background:#2563eb;color:#fff}
+.unitalk-sidebar{display:grid;gap:.85rem;position:sticky;top:5.7rem}
+.unitalk-side-card{padding:1.15rem}
+.unitalk-side-card h2{margin:.28rem 0 .45rem;font:600 1.18rem 'Rajdhani',sans-serif}
+.unitalk-side-card p,.unitalk-side-card li{color:#536579;line-height:1.55;font-size:.88rem}
+.unitalk-side-card ul{padding-left:1.15rem;margin:.55rem 0 .9rem}
+.unitalk-side-card a{box-shadow:none;padding:.65rem .9rem;font-size:.8rem}
+.unitalk-privacy-card{background:linear-gradient(145deg,#eff6ff,#fff)}
+.unitalk-modal{position:fixed;inset:0;z-index:2147482700;display:grid;place-items:center;padding:1rem}
+.unitalk-modal[hidden]{display:none}
+.unitalk-modal-backdrop{position:absolute;inset:0;border:0;background:rgba(2,6,23,.58);backdrop-filter:blur(7px)}
+.unitalk-profile-panel{position:relative;z-index:1;width:min(92vw,520px);max-height:min(88svh,760px);overflow:auto;border-radius:28px;background:#fff;box-shadow:0 34px 100px rgba(2,6,23,.38);padding:1.35rem}
+.unitalk-profile-close{position:absolute;right:.8rem;top:.8rem;width:36px;height:36px;border:0;border-radius:50%;background:#eef2f7;color:#64748b;font-size:1.35rem;cursor:pointer}
+.unitalk-profile-hero{text-align:center;padding:1.4rem .5rem .8rem}
+.unitalk-profile-hero .unitalk-avatar{width:86px;height:86px;margin:0 auto .8rem;font-size:1.8rem}
+.unitalk-profile-hero h2{margin:0;font:600 1.55rem 'Rajdhani',sans-serif}
+.unitalk-profile-hero .handle{display:block;color:var(--talk-blue);font-weight:700;margin-top:.15rem}
+.unitalk-profile-hero p{color:var(--talk-muted);line-height:1.55}
+.unitalk-profile-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.unitalk-profile-fact{border:1px solid #dbeafe;border-radius:16px;background:#f8fbff;padding:.75rem}
+.unitalk-profile-fact span,.unitalk-profile-fact strong{display:block}.unitalk-profile-fact span{color:var(--talk-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}.unitalk-profile-fact strong{margin-top:.2rem;font-size:.87rem}
+
+html[data-universe-theme='dark'] body{background:#020202;color:#f8fafc}
+html[data-universe-theme='dark'] .unitalk-page{
+  background:linear-gradient(rgba(59,130,246,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.055) 1px,transparent 1px),radial-gradient(circle at 12% 5%,rgba(37,99,235,.24),transparent 27%),linear-gradient(180deg,#020202,#07111f);
+  background-size:38px 38px,38px 38px,auto,auto
+}
+html[data-universe-theme='dark'] .unitalk-hero,html[data-universe-theme='dark'] .unitalk-composer,html[data-universe-theme='dark'] .unitalk-side-card,html[data-universe-theme='dark'] .unitalk-post,html[data-universe-theme='dark'] .unitalk-feed-head,html[data-universe-theme='dark'] .unitalk-profile-panel{background:#050505;color:#f8fafc;border-color:#26364a;box-shadow:0 22px 70px rgba(0,0,0,.38)}
+html[data-universe-theme='dark'] .unitalk-hero p,html[data-universe-theme='dark'] .unitalk-side-card p,html[data-universe-theme='dark'] .unitalk-side-card li,html[data-universe-theme='dark'] .unitalk-post-text,html[data-universe-theme='dark'] .unitalk-comment p{color:#cbd5e1}
+html[data-universe-theme='dark'] #unitalk-post-text,html[data-universe-theme='dark'] .unitalk-comment,html[data-universe-theme='dark'] .unitalk-comment-compose input,html[data-universe-theme='dark'] .unitalk-profile-fact{background:#080d14;color:#f8fafc;border-color:#334155}
+html[data-universe-theme='dark'] .unitalk-loading,html[data-universe-theme='dark'] .unitalk-empty{background:#050505;border-color:#334155}
+
+@media(max-width:980px){.unitalk-layout{grid-template-columns:1fr}.unitalk-sidebar{position:static;grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){
+  .unitalk-page{padding-top:5.2rem}
+  .unitalk-hero{grid-template-columns:1fr;border-radius:24px}
+  .unitalk-profile-cta{justify-self:start}
+  .unitalk-sidebar{grid-template-columns:1fr}
+  .unitalk-post-head{align-items:center}
+  .unitalk-time{font-size:.68rem}
+  .unitalk-post-actions{gap:.35rem}.unitalk-action{padding:.62rem .72rem}
+}
+@media(max-width:460px){.unitalk-comment-compose{grid-template-columns:1fr}.unitalk-comment-send{justify-self:end}.unitalk-profile-facts{grid-template-columns:1fr}}

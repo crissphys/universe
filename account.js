@@ -4,7 +4,7 @@
   var CURRENT_CEPRE_CYCLE = '2026-2';
   var CEPRE_CYCLES = ['2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
   var ACADEMIES = ['Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI', 'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Integral Class', 'Academia Prisma', 'Otra academia'];
-  var state = { user: null, profile: null, public: {}, announcementImage: '', extraEvents: [] };
+  var state = { user: null, profile: null, community: null, communityAvatar: '', public: {}, reports: [], announcementImage: '', extraEvents: [] };
 
   function $(id) { return document.getElementById(id); }
   function cleanId(v) { return String(v || '').replace(/[^a-zA-Z0-9_-]/g, ''); }
@@ -21,6 +21,24 @@
     return fetch(API_BASE + route, opt).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return method === 'DELETE' ? null : r.json();
+    });
+  }
+  function communityApi(route, method, data) {
+    var headers = { 'Content-Type': 'application/json' };
+    try {
+      var token = localStorage.getItem(AUTH_TOKEN_KEY);
+      if (token) headers.Authorization = 'Bearer ' + token;
+    } catch (error) {}
+    var opt = { method: method || 'GET', cache: 'no-store', headers: headers };
+    if (data !== undefined) opt.body = JSON.stringify(data);
+    return fetch('/api/unitalk' + route, opt).then(async function (r) {
+      var payload = await r.json().catch(function () { return {}; });
+      if (!r.ok) {
+        var error = new Error(payload.error || 'request_failed');
+        error.status = r.status;
+        throw error;
+      }
+      return payload;
     });
   }
   function status(id, msg, type) {
@@ -90,7 +108,8 @@
     fillSelect('academy-name', ACADEMIES, p.academyName || '', 'Selecciona academia');
     fillSelect('cepre-cycle', CEPRE_CYCLES, p.cepreCycle || CURRENT_CEPRE_CYCLE);
     var avatar = $('account-avatar');
-    avatar.innerHTML = u.avatar ? '<img alt="" src="' + safe(u.avatar) + '">' : safe((u.name || 'U').charAt(0).toUpperCase());
+    var avatarSrc = state.community && state.community.avatar || u.avatar || '';
+    avatar.innerHTML = avatarSrc ? '<img alt="" src="' + safe(avatarSrc) + '">' : safe((u.name || 'U').charAt(0).toUpperCase());
     var code = normalizeCode(p.cepreCode || '');
     if (code) {
       $('code-current').innerHTML = '<p><span class="code-lock">Código registrado: ' + safe(code) + ' · ' + safe(p.cepreCycle || CURRENT_CEPRE_CYCLE) + '</span></p>';
@@ -105,6 +124,46 @@
     }
     toggleAcademicFields();
   }
+  function fillCommunity() {
+    var p = state.community || {};
+    var fallbackName = [state.profile && state.profile.firstName, state.profile && state.profile.lastName].filter(Boolean).join(' ') || state.user && state.user.name || '';
+    $('community-username').value = p.username || '';
+    $('community-display-name').value = p.displayName || fallbackName;
+    $('community-target').value = p.target || state.profile && state.profile.target || '';
+    $('community-visibility').value = p.profileVisibility || 'public';
+    $('community-bio').value = p.bio || '';
+    $('community-show-avatar').checked = p.showAvatar !== false;
+    $('community-show-academy').checked = p.showAcademy !== false;
+    $('community-show-cycle').checked = p.showCycle !== false;
+    $('community-show-target').checked = p.showTarget !== false;
+    state.communityAvatar = p.avatar || state.user && state.user.avatar || '';
+    var avatar = $('community-avatar');
+    avatar.innerHTML = state.communityAvatar ? '<img alt="" src="' + safe(state.communityAvatar) + '">' : safe((fallbackName || 'U').charAt(0).toUpperCase());
+  }
+  function communityPayload() {
+    return {
+      username: $('community-username').value.trim().toLowerCase(),
+      displayName: $('community-display-name').value.trim(),
+      target: $('community-target').value,
+      bio: $('community-bio').value.trim(),
+      avatar: state.communityAvatar || '',
+      profileVisibility: $('community-visibility').value,
+      showAvatar: $('community-show-avatar').checked,
+      showAcademy: $('community-show-academy').checked,
+      showCycle: $('community-show-cycle').checked,
+      showTarget: $('community-show-target').checked
+    };
+  }
+  function communityError(error) {
+    return {
+      invalid_username: 'El nombre de usuario debe tener entre 3 y 24 caracteres y usar solo letras, números, guion o guion bajo.',
+      username_taken: 'Ese nombre de usuario ya está siendo utilizado.',
+      username_change_wait: 'Por seguridad, el nombre de usuario solo puede cambiarse una vez cada 30 días.',
+      academic_track_required: 'Selecciona primero tu tipo de estudiante.',
+      academy_required: 'Selecciona tu academia.',
+      target_required: 'Selecciona a dónde estás postulando.'
+    }[String(error && error.message || '')] || 'No se pudo guardar el perfil. Inténtalo nuevamente.';
+  }
   async function loadProfile() {
     if (!window.UniverseGoogleAuth) { setTimeout(loadProfile, 180); return; }
     if (UniverseGoogleAuth.refresh) await UniverseGoogleAuth.refresh().catch(function () {});
@@ -112,8 +171,14 @@
     if (!state.user || state.user.provider !== 'google') { showLogin(); return; }
     $('account-login-card').hidden = true;
     $('account-content').hidden = false;
-    state.profile = await api('/profiles/' + uid(), 'GET').catch(function () { return null; }) || {};
+    var results = await Promise.all([
+      api('/profiles/' + uid(), 'GET').catch(function () { return null; }),
+      communityApi('/me', 'GET').catch(function () { return null; })
+    ]);
+    state.profile = results[0] || {};
+    state.community = results[1] && results[1].profile || null;
     fillProfile();
+    fillCommunity();
     if (isAdmin()) { $('admin-panel').classList.add('active'); await loadAdmin(); }
     else $('admin-panel').classList.remove('active');
   }
@@ -145,6 +210,8 @@
       academyName: track === 'academy' ? $('academy-name').value : '',
       cepreMember: track === 'cepreuni',
       cepreCycle: track === 'cepreuni' ? cycle : '',
+      target: $('community-target').value,
+      onboardingComplete: true,
       email: state.user.email || '',
       googleName: state.user.name || '',
       avatar: state.user.avatar || '',
@@ -153,20 +220,34 @@
 
     if (!track) { status('code-status', 'Elige si eres CEPREUNI, estudiante UNI, San Marcos, academia o estudiante independiente.', 'bad'); return; }
     if (track === 'academy' && !data.academyName) { status('code-status', 'Selecciona tu academia.', 'bad'); return; }
+    var publicData = communityPayload();
+    if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(publicData.username)) {
+      status('code-status', 'Antes de guardar, crea tu nombre de usuario en la sección Perfil público y privacidad.', 'bad');
+      $('community-username').focus();
+      return;
+    }
     if (track !== 'cepreuni') {
       if (existing) { status('code-status', 'Tu cuenta ya tiene un código CEPREUNI del ciclo actual; no se elimina desde aquí.', 'bad'); return; }
       data.cepreCode = '';
-      await api('/profiles/' + uid(), 'PATCH', data);
-      state.profile = Object.assign({}, state.profile || {}, data);
+      try {
+        var onboarding = await communityApi('/onboarding', 'POST', Object.assign({}, publicData, data));
+        state.community = onboarding.profile || state.community;
+        state.profile = Object.assign({}, state.profile || {}, data, { onboardingComplete: true });
+      } catch (error) { status('code-status', communityError(error), 'bad'); return; }
       fillProfile();
+      fillCommunity();
       status('code-status', 'Perfil académico guardado correctamente.', 'good');
       return;
     }
     if (cycle !== CURRENT_CEPRE_CYCLE) {
       data.cepreCode = '';
-      await api('/profiles/' + uid(), 'PATCH', data);
-      state.profile = Object.assign({}, state.profile || {}, data);
+      try {
+        var previousOnboarding = await communityApi('/onboarding', 'POST', Object.assign({}, publicData, data));
+        state.community = previousOnboarding.profile || state.community;
+        state.profile = Object.assign({}, state.profile || {}, data, { onboardingComplete: true });
+      } catch (error) { status('code-status', communityError(error), 'bad'); return; }
       fillProfile();
+      fillCommunity();
       status('code-status', 'Ciclo CEPREUNI anterior guardado. No se pidió código porque puede repetirse entre ciclos.', 'good');
       return;
     }
@@ -185,15 +266,60 @@
       if (!ok) return;
     }
     data.cepreCode = code;
-    await api(ownerRoute, 'PUT', { userId: uid(), email: state.user.email || '', cycle: cycle, createdAt: Date.now() });
-    await api('/codeOwners/' + cleanId(code), 'PUT', { userId: uid(), email: state.user.email || '', cycle: cycle, createdAt: Date.now() });
-    await api('/profiles/' + uid(), 'PATCH', data);
+    try {
+      await api(ownerRoute, 'PUT', { cycle: cycle });
+      await api('/codeOwners/' + cleanId(code), 'PUT', { cycle: cycle });
+      var currentOnboarding = await communityApi('/onboarding', 'POST', Object.assign({}, publicData, data));
+      state.community = currentOnboarding.profile || state.community;
+      await api('/profiles/' + uid(), 'PATCH', data);
+    } catch (error) {
+      status('code-status', error.status === 409 ? 'Este código ya fue registrado por otra cuenta.' : communityError(error), 'bad');
+      return;
+    }
     state.profile = Object.assign({}, state.profile || {}, data);
     fillProfile();
+    fillCommunity();
     status('code-status', 'Datos CEPREUNI guardados. Tu código queda vinculado para el ciclo actual.', 'good');
   }
+  async function saveCommunityProfile() {
+    if (!state.user) return;
+    var payload = communityPayload();
+    if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(payload.username)) {
+      status('community-status', communityError(new Error('invalid_username')), 'bad');
+      return;
+    }
+    if (!payload.displayName) { status('community-status', 'Escribe un nombre visible.', 'bad'); return; }
+    try {
+      var result;
+      if (!(state.profile && state.profile.onboardingComplete)) {
+        payload.academicTrack = $('academic-track').value;
+        payload.academyName = $('academy-name').value;
+        payload.cepreCycle = $('cepre-cycle').value;
+        if (!payload.academicTrack) {
+          status('community-status', 'Selecciona también tu tipo de estudiante para completar el registro una sola vez.', 'bad');
+          return;
+        }
+        result = await communityApi('/onboarding', 'POST', payload);
+        state.profile = Object.assign({}, state.profile || {}, result.academic || {}, { onboardingComplete: true });
+      } else {
+        result = await communityApi('/me', 'PUT', payload);
+      }
+      state.community = result.profile || state.community;
+      fillProfile();
+      fillCommunity();
+      status('community-status', 'Perfil público y preferencias de privacidad guardados.', 'good');
+    } catch (error) {
+      status('community-status', communityError(error), 'bad');
+    }
+  }
   async function loadAdmin() {
-    state.public = await api('/public', 'GET').catch(function () { return null; }) || {};
+    var adminData = await Promise.all([
+      api('/public', 'GET').catch(function () { return null; }),
+      communityApi('/moderation/reports', 'GET').catch(function () { return null; })
+    ]);
+    state.public = adminData[0] || {};
+    state.reports = adminData[1] && adminData[1].reports || [];
+    renderReports();
     var a = state.public.announcement || {}, s = state.public.schedule || {}, c = s.countdowns || {};
     $('ann-active').value = String(a.active !== false);
     $('ann-title').value = a.title || '';
@@ -209,6 +335,28 @@
     $('adm-label').value = (c.admision && c.admision.label) || 'Lun. 10 ago - 9:00 AM';
     state.extraEvents = Array.isArray(s.extraEvents) ? s.extraEvents : [];
     renderEvents();
+  }
+  function renderReports() {
+    var root = $('unitalk-report-list');
+    if (!root) return;
+    var reports = state.reports.filter(function (report) { return report.status === 'open'; });
+    root.innerHTML = reports.length ? reports.map(function (report) {
+      return '<div class="admin-event" data-report-id="' + safe(report.id) + '"><div><strong>' + safe(report.targetType || 'Contenido') + ' · ' + safe(report.targetId) + '</strong><br><small>' + safe(report.reason || 'Sin detalle') + ' · ' + new Date(report.createdAt || 0).toLocaleString('es-PE') + '</small></div><div class="account-actions"><button class="account-btn secondary" type="button" data-report-action="reviewed">Atendido</button><button class="account-btn danger" type="button" data-report-action="dismissed">Descartar</button></div></div>';
+    }).join('') : '<div class="account-status good">No hay reportes pendientes.</div>';
+    root.querySelectorAll('[data-report-action]').forEach(function (button) {
+      button.onclick = async function () {
+        var row = button.closest('[data-report-id]');
+        try {
+          await communityApi('/moderation/reports/' + encodeURIComponent(row.dataset.reportId), 'PATCH', { status: button.dataset.reportAction });
+          state.reports = state.reports.map(function (report) {
+            if (report.id === row.dataset.reportId) report.status = button.dataset.reportAction;
+            return report;
+          });
+          renderReports();
+          status('unitalk-report-status', 'Reporte actualizado.', 'good');
+        } catch (error) { status('unitalk-report-status', 'No se pudo actualizar el reporte.', 'bad'); }
+      };
+    });
   }
   function renderEvents() {
     var root = $('event-list');
@@ -249,14 +397,45 @@
     await api('/public/schedule', 'PUT', data);
     status('schedule-status', 'Fechas y calendario publicados para todos.', 'good');
   }
+  function prepareCommunityAvatar(file) {
+    if (!file || !/^image\/(?:png|jpeg|webp)$/i.test(file.type)) {
+      status('community-status', 'Selecciona una imagen PNG, JPG o WebP.', 'bad');
+      return;
+    }
+    if (file.size > 5000000) {
+      status('community-status', 'La imagen original no puede pesar más de 5 MB.', 'bad');
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function () {
+      var image = new Image();
+      image.onload = function () {
+        var size = 320;
+        var canvas = document.createElement('canvas');
+        canvas.width = size; canvas.height = size;
+        var ctx = canvas.getContext('2d');
+        var crop = Math.min(image.naturalWidth, image.naturalHeight);
+        var sx = Math.max(0, (image.naturalWidth - crop) / 2);
+        var sy = Math.max(0, (image.naturalHeight - crop) / 2);
+        ctx.drawImage(image, sx, sy, crop, crop, 0, 0, size, size);
+        state.communityAvatar = canvas.toDataURL('image/jpeg', .78);
+        $('community-avatar').innerHTML = '<img alt="" src="' + safe(state.communityAvatar) + '">';
+        status('community-status', 'Foto preparada. Presiona Guardar perfil público.', 'warn');
+      };
+      image.onerror = function () { status('community-status', 'No se pudo leer la imagen.', 'bad'); };
+      image.src = String(reader.result || '');
+    };
+    reader.readAsDataURL(file);
+  }
   function bind() {
     var login = document.querySelector('[data-login]');
     if (login) login.onclick = function () { UniverseGoogleAuth.open({ account: true }); };
     document.querySelector('[data-save-profile]').onclick = saveProfile;
+    document.querySelector('[data-save-community]').onclick = saveCommunityProfile;
     document.querySelector('[data-register-code]').onclick = saveAcademicProfile;
     document.querySelector('[data-logout]').onclick = function () {
       if (window.UniverseGoogleAuth) UniverseGoogleAuth.signOut();
-      state.user = null; state.profile = null; showLogin();
+      state.user = null; state.profile = null; state.community = null; showLogin();
       status('profile-status', 'Sesión cerrada.', 'warn');
     };
     ['academic-track', 'academy-name', 'cepre-cycle'].forEach(function (id) {
@@ -272,6 +451,11 @@
       var r = new FileReader();
       r.onload = function () { state.announcementImage = String(r.result || ''); $('ann-preview').src = state.announcementImage; $('ann-preview').style.display = 'block'; };
       r.readAsDataURL(f);
+    };
+    $('community-avatar-file').onchange = function () {
+      var file = this.files && this.files[0];
+      if (file) prepareCommunityAvatar(file);
+      this.value = '';
     };
     window.addEventListener('universe-google-auth', function () { setTimeout(loadProfile, 80); });
   }
