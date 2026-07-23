@@ -25,6 +25,25 @@
 .classes-shell {
   width: 100%;
   color: var(--classes-ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.classes-shell h1,
+.classes-shell h2 {
+  font-family: 'Bebas Neue', 'Rajdhani', sans-serif;
+  font-weight: 400;
+  letter-spacing: .025em;
+}
+
+.classes-kicker,
+.classes-pill,
+.classes-button,
+.classes-login-button,
+.classes-back,
+.classes-topic-meta,
+.classes-channel,
+.classes-question-card h3 {
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .classes-hero,
@@ -148,6 +167,98 @@
   gap: 1rem;
 }
 
+.classes-explorer {
+  display: grid;
+  gap: 1rem;
+}
+
+.classes-bank-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border: 1px solid rgba(37, 99, 235, .25);
+  border-radius: 24px;
+  color: var(--classes-ink);
+  background: linear-gradient(125deg, rgba(219, 234, 254, .96), rgba(238, 242, 255, .94));
+  box-shadow: 0 18px 55px rgba(37, 99, 235, .1);
+  text-decoration: none;
+}
+
+.classes-bank-banner span,
+.classes-bank-banner strong {
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--classes-blue);
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.classes-bank-banner h2 {
+  margin: .18rem 0 .25rem;
+  font-size: clamp(1.45rem, 2.5vw, 2.4rem);
+}
+
+.classes-bank-banner p {
+  margin: 0;
+  color: var(--classes-muted);
+}
+
+.classes-bank-panel {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+}
+
+.classes-explorer-controls {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(210px, 320px) auto;
+  gap: .8rem;
+  align-items: end;
+  padding: 1rem;
+  border: 1px solid var(--classes-border);
+  border-radius: 22px;
+  background: var(--classes-card);
+  box-shadow: var(--classes-shadow);
+}
+
+.classes-explorer-controls label {
+  display: grid;
+  gap: .4rem;
+  color: var(--classes-muted);
+  font: 800 .82rem/1 'Rajdhani', sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.classes-explorer-controls input,
+.classes-explorer-controls select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--classes-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .9);
+  color: var(--classes-ink);
+  padding: 0 .9rem;
+  font: 500 .96rem/1 'DM Sans', sans-serif;
+  outline: none;
+}
+
+.classes-explorer-controls input:focus,
+.classes-explorer-controls select:focus {
+  border-color: var(--classes-blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, .1);
+}
+
+.classes-explorer-controls strong {
+  min-height: 46px;
+  display: grid;
+  place-items: center;
+  color: var(--classes-blue);
+  font: 900 .9rem/1 'Rajdhani', sans-serif;
+}
+
 .classes-course-card,
 .classes-topic-card {
   min-height: 220px;
@@ -194,7 +305,7 @@
 .classes-topic-card h2 {
   margin: 1rem 0 .45rem;
   font-size: clamp(1.3rem, 1.9vw, 2rem);
-  letter-spacing: -.035em;
+  line-height: 1.05;
 }
 
 .classes-course-card p,
@@ -219,6 +330,50 @@
   color: var(--classes-muted);
   font-size: .78rem;
   font-weight: 800;
+}
+
+.classes-video-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.classes-video-grid .classes-topic-card {
+  min-height: 0;
+  padding: .8rem;
+}
+
+.classes-video-grid .classes-topic-card h2 {
+  margin: .75rem .2rem .45rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+  line-height: 1.25;
+  text-transform: none;
+}
+
+.classes-video-thumb {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  background: #020617;
+}
+
+.classes-video-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .25s ease;
+}
+
+.classes-topic-card:hover .classes-video-thumb img {
+  transform: scale(1.035);
+}
+
+.classes-load-more {
+  justify-self: center;
+  min-width: 220px;
 }
 
 .classes-topic-layout {
@@ -422,6 +577,20 @@ body.dark-mode .classes-question-card {
   background: rgba(15, 23, 42, .7);
 }
 
+.theme-dark .classes-bank-banner,
+html[data-universe-theme="dark"] .classes-bank-banner,
+html[data-theme="dark"] .classes-bank-banner,
+body.dark-mode .classes-bank-banner {
+  background: linear-gradient(125deg, rgba(15, 23, 42, .95), rgba(30, 41, 59, .92));
+  color: #f8fafc;
+}
+
+html[data-universe-theme="dark"] .classes-explorer-controls input,
+html[data-universe-theme="dark"] .classes-explorer-controls select {
+  background: #071426;
+  color: #f8fafc;
+}
+
 .theme-dark .classes-login-box,
 html[data-universe-theme="dark"] .classes-login-box,
 html[data-theme="dark"] .classes-login-box,
@@ -476,6 +645,15 @@ body.dark-mode .classes-error {
 
   .classes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .classes-explorer-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .classes-bank-banner {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .classes-course-card,
