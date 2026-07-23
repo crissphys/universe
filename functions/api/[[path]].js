@@ -305,7 +305,7 @@ async function handleClasses(request, env, subpath) {
     course = cleanSlug(body.course || course);
     topic = cleanSlug(body.topic || topic);
     if (!course || !topic) return json({ error: 'missing_course_or_topic' }, 400);
-    var input = Array.isArray(body.questions) ? body.questions.slice(0, 400) : [];
+    var input = Array.isArray(body.questions) ? body.questions.slice(0, 1200) : [];
     var safeQuestions = input.map(sanitizeQuestion).filter(function (q) {
       return q.stem && q.choices && q.choices.length;
     });

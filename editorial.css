@@ -8,6 +8,7 @@
 
 body[data-universe-page="editorial"] {
   color: var(--editorial-ink);
+  font-family: 'DM Sans', sans-serif;
 }
 
 .editorial-wrap {
@@ -28,6 +29,7 @@ body[data-universe-page="editorial"] {
 }
 
 .editorial-kicker {
+  font-family: 'Rajdhani', sans-serif !important;
   color: var(--editorial-blue) !important;
   font-size: .78rem !important;
   font-weight: 950 !important;
@@ -36,10 +38,11 @@ body[data-universe-page="editorial"] {
 }
 
 .editorial-hero h1 {
-  font-family: inherit !important;
+  font-family: 'Bebas Neue', 'Rajdhani', sans-serif !important;
+  font-weight: 400 !important;
   font-size: clamp(2.4rem, 5.8vw, 5.8rem) !important;
   line-height: .92 !important;
-  letter-spacing: -.07em !important;
+  letter-spacing: .025em !important;
   color: var(--editorial-ink) !important;
 }
 
@@ -70,7 +73,8 @@ body[data-universe-page="editorial"] {
 
 .article-card h2,
 .side-card h2 {
-  font-family: inherit !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
   margin: 2rem 0 .75rem !important;
   color: #102a56 !important;
   font-size: clamp(1.45rem, 2.2vw, 2.15rem) !important;
