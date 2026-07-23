@@ -4,7 +4,19 @@
   var CURRENT_CEPRE_CYCLE = '2026-2';
   var CEPRE_CYCLES = ['2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
   var ACADEMIES = ['Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI', 'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Integral Class', 'Academia Prisma', 'Otra academia'];
-  var state = { user: null, profile: null, community: null, communityAvatar: '', public: {}, reports: [], announcementImage: '', extraEvents: [] };
+  var state = {
+    user: null,
+    profile: null,
+    community: null,
+    communityAvatar: '',
+    communityDirty: false,
+    profileLoading: false,
+    secureSessionRefreshed: false,
+    public: {},
+    reports: [],
+    announcementImage: '',
+    extraEvents: []
+  };
 
   function $(id) { return document.getElementById(id); }
   function cleanId(v) { return String(v || '').replace(/[^a-zA-Z0-9_-]/g, ''); }
@@ -135,7 +147,8 @@
     }
     toggleAcademicFields();
   }
-  function fillCommunity() {
+  function fillCommunity(force) {
+    if (state.communityDirty && !force) return;
     var p = state.community || {};
     var fallbackName = repairText([state.profile && state.profile.firstName, state.profile && state.profile.lastName].filter(Boolean).join(' ') || state.user && state.user.name || '');
     $('community-username').value = p.username || '';
@@ -177,21 +190,30 @@
   }
   async function loadProfile() {
     if (!window.UniverseGoogleAuth) { setTimeout(loadProfile, 180); return; }
-    if (UniverseGoogleAuth.refresh) await UniverseGoogleAuth.refresh().catch(function () {});
-    state.user = user();
-    if (!state.user || state.user.provider !== 'google') { showLogin(); return; }
-    $('account-login-card').hidden = true;
-    $('account-content').hidden = false;
-    var results = await Promise.all([
-      api('/profiles/' + uid(), 'GET').catch(function () { return null; }),
-      communityApi('/me', 'GET').catch(function () { return null; })
-    ]);
-    state.profile = results[0] || {};
-    state.community = results[1] && results[1].profile || null;
-    fillProfile();
-    fillCommunity();
-    if (isAdmin()) { $('admin-panel').classList.add('active'); await loadAdmin(); }
-    else $('admin-panel').classList.remove('active');
+    if (state.profileLoading) return;
+    state.profileLoading = true;
+    try {
+      if (!state.secureSessionRefreshed && UniverseGoogleAuth.refresh) {
+        state.secureSessionRefreshed = true;
+        await UniverseGoogleAuth.refresh().catch(function () {});
+      }
+      state.user = user();
+      if (!state.user || state.user.provider !== 'google') { showLogin(); return; }
+      $('account-login-card').hidden = true;
+      $('account-content').hidden = false;
+      var results = await Promise.all([
+        api('/profiles/' + uid(), 'GET').catch(function () { return null; }),
+        communityApi('/me', 'GET').catch(function () { return null; })
+      ]);
+      state.profile = results[0] || {};
+      state.community = results[1] && results[1].profile || null;
+      fillProfile();
+      fillCommunity();
+      if (isAdmin()) { $('admin-panel').classList.add('active'); await loadAdmin(); }
+      else $('admin-panel').classList.remove('active');
+    } finally {
+      state.profileLoading = false;
+    }
   }
   async function saveProfile() {
     if (!state.user) return;
@@ -315,9 +337,10 @@
       } else {
         result = await communityApi('/me', 'PUT', payload);
       }
-      state.community = result.profile || state.community;
+      state.community = Object.assign({}, state.community || {}, payload, result.profile || {});
+      state.communityDirty = false;
       fillProfile();
-      fillCommunity();
+      fillCommunity(true);
       status('community-status', 'Perfil público y preferencias de privacidad guardados.', 'good');
     } catch (error) {
       status('community-status', communityError(error), 'bad');
@@ -468,6 +491,21 @@
       if (file) prepareCommunityAvatar(file);
       this.value = '';
     };
+    [
+      'community-username',
+      'community-display-name',
+      'community-target',
+      'community-visibility',
+      'community-bio',
+      'community-show-avatar',
+      'community-show-academy',
+      'community-show-cycle',
+      'community-show-target'
+    ].forEach(function (id) {
+      if (!$(id)) return;
+      $(id).addEventListener('input', function () { state.communityDirty = true; });
+      $(id).addEventListener('change', function () { state.communityDirty = true; });
+    });
     window.addEventListener('universe-google-auth', function () { setTimeout(loadProfile, 80); });
   }
   function boot() { bind(); setTimeout(loadProfile, 350); }
