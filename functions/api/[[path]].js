@@ -206,7 +206,7 @@ async function signSession(env, user) {
     avatar: user.avatar,
     admin: user.isAdmin === true,
     iat: now,
-    exp: now + 60 * 60 * 24 * 7
+    exp: now + 60 * 60 * 24 * 30
   }));
   return payload + '.' + await hmac(env.SESSION_SECRET, payload);
 }
