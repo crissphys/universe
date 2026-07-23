@@ -1,0 +1,163 @@
+:root {
+  --editorial-blue: #2563eb;
+  --editorial-ink: #0f172a;
+  --editorial-muted: #64748b;
+  --editorial-card: rgba(255, 255, 255, .92);
+  --editorial-line: rgba(148, 163, 184, .24);
+}
+
+body[data-universe-page="editorial"] {
+  color: var(--editorial-ink);
+}
+
+.editorial-wrap {
+  width: min(1240px, calc(100vw - 1.25rem)) !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+  padding: clamp(1rem, 2vw, 2rem) 0 clamp(4rem, 7vw, 6rem) !important;
+}
+
+.editorial-hero {
+  border: 1px solid rgba(37, 99, 235, .18) !important;
+  border-radius: 34px !important;
+  padding: clamp(1.35rem, 3vw, 3rem) !important;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(96, 165, 250, .28), transparent 35%),
+    linear-gradient(135deg, rgba(255, 255, 255, .96), rgba(239, 246, 255, .9)) !important;
+  box-shadow: 0 28px 90px rgba(15, 23, 42, .11) !important;
+}
+
+.editorial-kicker {
+  color: var(--editorial-blue) !important;
+  font-size: .78rem !important;
+  font-weight: 950 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+}
+
+.editorial-hero h1 {
+  font-family: inherit !important;
+  font-size: clamp(2.4rem, 5.8vw, 5.8rem) !important;
+  line-height: .92 !important;
+  letter-spacing: -.07em !important;
+  color: var(--editorial-ink) !important;
+}
+
+.editorial-lead {
+  max-width: 900px !important;
+  color: #334155 !important;
+  font-size: clamp(1.02rem, 1.4vw, 1.22rem) !important;
+  line-height: 1.75 !important;
+}
+
+.article-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 360px) !important;
+  gap: clamp(1rem, 2vw, 1.7rem) !important;
+  margin-top: clamp(1rem, 2vw, 1.7rem) !important;
+  align-items: start !important;
+}
+
+.article-card,
+.side-card {
+  background: var(--editorial-card) !important;
+  border: 1px solid var(--editorial-line) !important;
+  border-radius: 28px !important;
+  padding: clamp(1.15rem, 2vw, 2rem) !important;
+  box-shadow: 0 22px 70px rgba(15, 23, 42, .08) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+.article-card h2,
+.side-card h2 {
+  font-family: inherit !important;
+  margin: 2rem 0 .75rem !important;
+  color: #102a56 !important;
+  font-size: clamp(1.45rem, 2.2vw, 2.15rem) !important;
+  letter-spacing: -.04em !important;
+}
+
+.article-card h2:first-child,
+.side-card h2:first-child {
+  margin-top: 0 !important;
+}
+
+.article-card h3 {
+  color: #1d4ed8 !important;
+  font-size: 1.08rem !important;
+  margin: 1.25rem 0 .55rem !important;
+}
+
+.article-card p,
+.article-card li,
+.side-card p,
+.side-card li {
+  color: #334155 !important;
+  font-size: 1rem !important;
+  line-height: 1.82 !important;
+}
+
+.article-card ul,
+.side-card ul {
+  padding-left: 1.25rem !important;
+}
+
+.note-box,
+.warning-box,
+.example-box {
+  border-radius: 22px !important;
+  padding: 1rem 1.1rem !important;
+  border: 1px solid rgba(37, 99, 235, .16) !important;
+  background: rgba(239, 246, 255, .78) !important;
+  color: #1e3a8a !important;
+}
+
+.side-card a,
+.article-card a {
+  color: #1d4ed8 !important;
+  font-weight: 850 !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
+}
+
+html[data-universe-theme="dark"] body[data-universe-page="editorial"],
+html[data-universe-theme="dark"] {
+  --editorial-ink: #eef5ff;
+  --editorial-muted: #aab8cc;
+  --editorial-card: rgba(2, 6, 23, .82);
+  --editorial-line: rgba(148, 163, 184, .2);
+}
+
+html[data-universe-theme="dark"] .editorial-hero {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(96, 165, 250, .18), transparent 38%),
+    linear-gradient(135deg, rgba(2, 6, 23, .92), rgba(15, 23, 42, .88)) !important;
+}
+
+html[data-universe-theme="dark"] .editorial-hero h1,
+html[data-universe-theme="dark"] .article-card h2,
+html[data-universe-theme="dark"] .side-card h2 {
+  color: #f8fafc !important;
+}
+
+html[data-universe-theme="dark"] .editorial-lead,
+html[data-universe-theme="dark"] .article-card p,
+html[data-universe-theme="dark"] .article-card li,
+html[data-universe-theme="dark"] .side-card p,
+html[data-universe-theme="dark"] .side-card li {
+  color: #cbd5e1 !important;
+}
+
+html[data-universe-theme="dark"] .note-box,
+html[data-universe-theme="dark"] .warning-box,
+html[data-universe-theme="dark"] .example-box {
+  background: rgba(37, 99, 235, .12) !important;
+  color: #bfdbfe !important;
+  border-color: rgba(96, 165, 250, .22) !important;
+}
+
+@media (max-width: 900px) {
+  .article-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
