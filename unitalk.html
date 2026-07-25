@@ -8,113 +8,135 @@
   <link rel="canonical" href="https://universetostudy.com/unitalk">
   <link rel="icon" href="/favicon.ico?v=1" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
-  <meta name="theme-color" content="#020617">
+  <meta name="theme-color" content="#eaf2ff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=unitalk-1">
-  <link rel="stylesheet" href="/universe-polish.css?v=unitalk-1">
-  <link rel="stylesheet" href="/unitalk.css?v=unitalk-1">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=unitalk-app-1">
+  <link rel="stylesheet" href="/universe-polish.css?v=unitalk-app-1">
+  <link rel="stylesheet" href="/unitalk.css?v=unitalk-app-2">
   <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
 </head>
-<body>
-<nav>
-  <a class="nav-logo" href="/">Universe to Study</a>
-  <ul class="nav-links">
-    <li><a data-route="home" href="/">Inicio</a></li>
-    <li><a data-route="admission" href="/admision">Admisión</a></li>
-    <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
-    <li><a data-route="syllabus" href="/temario">Temario</a></li>
-    <li><a data-route="classes" href="/clases">Clases</a></li>
-    <li><a data-route="unitalk" class="active" href="/unitalk">UNITALK</a></li>
-    <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
-    <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
-    <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
-  </ul>
-  <div class="nav-actions"><button id="universe-theme-toggle" aria-label="Cambiar tema" class="nav-theme-toggle" onclick="toggleUniverseTheme()" type="button">☾</button></div>
-</nav>
+<body class="unitalk-body">
+  <div class="unitalk-ambient-line" aria-hidden="true"></div>
+  <div class="unitalk-floating unitalk-floating-like" aria-hidden="true"><span>👍</span><div><strong>Me gusta</strong><small>Comparte apoyo</small></div></div>
+  <div class="unitalk-floating unitalk-floating-question" aria-hidden="true"><span>💡</span><div><strong>Ideas</strong><small>Resuelve dudas</small></div></div>
+  <div class="unitalk-floating unitalk-floating-community" aria-hidden="true"><span>💬</span><div><strong>Comunidad</strong><small>Estudia acompañado</small></div></div>
 
-<main class="unitalk-page">
-  <section class="unitalk-hero">
-    <div>
-      <span class="unitalk-kicker">Comunidad académica Universe</span>
-      <h1>UNITALK</h1>
-      <p>Comparte avances, dudas y consejos con otros postulantes. Tu correo y tus datos privados nunca aparecen en las publicaciones.</p>
-    </div>
-    <a class="unitalk-profile-cta" href="/account">Configurar mi perfil</a>
-  </section>
+  <main class="unitalk-stage">
+    <section class="unitalk-device" aria-label="Plataforma UNITALK">
+      <div class="unitalk-app">
+        <header class="unitalk-topbar">
+          <button class="unitalk-mobile-menu" id="unitalk-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+          <a class="unitalk-brand" href="/unitalk" aria-label="Ir al inicio de UNITALK">UNITALK <small>Universe to Study</small></a>
+          <label class="unitalk-search" for="unitalk-search-input">
+            <span aria-hidden="true">⌕</span>
+            <input id="unitalk-search-input" type="search" maxlength="80" placeholder="Buscar en UNITALK" autocomplete="off">
+            <button id="unitalk-search-clear" type="button" aria-label="Limpiar búsqueda" hidden>×</button>
+          </label>
+          <div class="unitalk-top-actions">
+            <a class="unitalk-top-help" href="/terminos#unitalk" aria-label="Normas de UNITALK">?</a>
+            <button class="unitalk-account-button" id="unitalk-account-button" type="button" aria-expanded="false">
+              <span class="unitalk-account-avatar" id="unitalk-top-avatar">U</span>
+              <span id="unitalk-top-name">Mi cuenta</span><b aria-hidden="true">⌄</b>
+            </button>
+            <div class="unitalk-account-menu" id="unitalk-account-menu" hidden>
+              <a href="/account">Mi cuenta y perfil</a>
+              <button type="button" data-view="saved">Publicaciones guardadas</button>
+              <button type="button" data-view="settings">Ajustes de la vista</button>
+              <a href="/">Volver a Universe to Study</a>
+            </div>
+          </div>
+        </header>
 
-  <div class="unitalk-layout">
-    <section class="unitalk-main-column">
-      <article class="unitalk-composer" id="unitalk-composer">
-        <div class="unitalk-composer-user" id="unitalk-composer-user">
-          <span class="unitalk-avatar">U</span>
-          <div><strong>Participa en UNITALK</strong><small>Necesitas una cuenta Google y un nombre de usuario.</small></div>
-        </div>
-        <textarea id="unitalk-post-text" maxlength="400" placeholder="Comparte una duda, avance o consejo de estudio..." aria-label="Texto de la publicación"></textarea>
-        <div class="unitalk-composer-actions">
-          <span><b id="unitalk-char-count">0</b>/400 caracteres</span>
-          <button id="unitalk-publish" type="button">Publicar</button>
-        </div>
-        <div class="unitalk-status" id="unitalk-composer-status" aria-live="polite"></div>
-      </article>
+        <aside class="unitalk-sidebar" id="unitalk-sidebar">
+          <nav class="unitalk-nav" aria-label="Navegación de UNITALK">
+            <button class="unitalk-nav-item active" type="button" data-view="home"><span>⌂</span> Inicio</button>
+            <button class="unitalk-nav-item" type="button" data-view="explore"><span>⌕</span> Explorar</button>
+            <button class="unitalk-nav-item" type="button" data-view="saved"><span>▮</span> Guardados</button>
+            <button class="unitalk-nav-item" type="button" data-view="profile"><span>♙</span> Perfil</button>
+            <button class="unitalk-nav-item" type="button" data-view="settings"><span>⚙</span> Ajustes</button>
+          </nav>
+          <section class="unitalk-sidebar-card">
+            <span>Tu espacio académico</span>
+            <strong>Comparte y aprende con tu comunidad.</strong>
+            <button id="unitalk-sidebar-publish" type="button">Crear publicación</button>
+          </section>
+          <a class="unitalk-sidebar-link" href="/">← Todas las herramientas Universe</a>
+        </aside>
+        <button class="unitalk-sidebar-overlay" id="unitalk-sidebar-overlay" type="button" aria-label="Cerrar menú"></button>
 
-      <div class="unitalk-feed-head">
-        <div><span>Conversaciones</span><h2>Publicaciones recientes</h2></div>
-        <button id="unitalk-refresh" type="button" aria-label="Actualizar publicaciones">Actualizar</button>
+        <section class="unitalk-feed-shell" id="unitalk-scroll-area">
+          <section class="unitalk-home-view" id="unitalk-home-view">
+            <article class="unitalk-composer" id="unitalk-composer">
+              <div class="unitalk-composer-top">
+                <span class="unitalk-avatar unitalk-composer-avatar" id="unitalk-composer-avatar">U</span>
+                <textarea id="unitalk-post-text" maxlength="400" rows="2" placeholder="¿Qué quieres compartir con la comunidad?" aria-label="Texto de la publicación"></textarea>
+              </div>
+              <div class="unitalk-composer-tools">
+                <span class="unitalk-mode-chip" id="unitalk-mode-chip" hidden>💬 Publicación de discusión</span>
+                <span><b id="unitalk-char-count">0</b>/400 caracteres</span>
+              </div>
+              <div class="unitalk-composer-actions">
+                <button class="unitalk-compose-action" id="unitalk-discussion" type="button">💬 <span>Discutir</span></button>
+                <button class="unitalk-compose-action" id="unitalk-profile-action" type="button">👤 <span>Mi perfil</span></button>
+                <button class="unitalk-publish" id="unitalk-publish" type="button">Publicar</button>
+              </div>
+              <div class="unitalk-status" id="unitalk-composer-status" aria-live="polite"></div>
+            </article>
+
+            <div class="unitalk-tabs" role="tablist" aria-label="Filtros de publicaciones">
+              <button class="unitalk-tab active" type="button" data-filter="all">Para ti</button>
+              <button class="unitalk-tab" type="button" data-filter="recent">Recientes</button>
+              <button class="unitalk-tab" type="button" data-filter="mine">Mis publicaciones</button>
+            </div>
+            <div class="unitalk-feed-summary" id="unitalk-feed-summary">Publicaciones recomendadas</div>
+            <section id="unitalk-feed" class="unitalk-feed" aria-live="polite"><div class="unitalk-loading">Cargando publicaciones...</div></section>
+          </section>
+          <section class="unitalk-page-view" id="unitalk-page-view" hidden></section>
+        </section>
+
+        <aside class="unitalk-rightbar">
+          <section class="unitalk-side-panel">
+            <div class="unitalk-panel-title">Actividad reciente</div>
+            <div id="unitalk-recent-activity" class="unitalk-recent-activity"><div class="unitalk-activity-empty">Actualiza el feed para ver las publicaciones recientes.</div></div>
+            <button class="unitalk-panel-button" data-view="explore" type="button">Explorar conversaciones</button>
+          </section>
+          <section class="unitalk-side-panel">
+            <div class="unitalk-panel-title">Comunidad que construimos</div>
+            <div class="unitalk-community-number" id="unitalk-community-count">—</div>
+            <div class="unitalk-community-label">publicaciones compartidas</div>
+            <div class="unitalk-faces" aria-hidden="true"><span>U</span><span>π</span><span>Σ</span><span>+</span></div>
+            <button class="unitalk-panel-button" id="unitalk-join-button" type="button">Únete y participa</button>
+          </section>
+          <button class="unitalk-privacy-card" data-view="settings" type="button"><span>🛡</span><span><strong>Tu privacidad importa</strong><small>Tú decides qué datos muestra tu perfil.</small></span></button>
+        </aside>
       </div>
-      <section id="unitalk-feed" class="unitalk-feed" aria-live="polite">
-        <div class="unitalk-loading">Cargando publicaciones...</div>
-      </section>
     </section>
+  </main>
 
-    <aside class="unitalk-sidebar">
-      <section class="unitalk-side-card" id="unitalk-my-card">
-        <span class="unitalk-side-label">Tu espacio</span>
-        <h2>Tu perfil académico</h2>
-        <p>Elige qué datos quieres mostrar: academia, ciclo, objetivo y foto.</p>
-        <a href="/account">Administrar perfil y privacidad</a>
-      </section>
-      <section class="unitalk-side-card">
-        <span class="unitalk-side-label">Convivencia</span>
-        <h2>Hablemos con respeto</h2>
-        <ul>
-          <li>Comparte contenido relacionado con el estudio.</li>
-          <li>No publiques datos personales de terceros.</li>
-          <li>No se permiten amenazas, acoso, spam ni contenido sexual.</li>
-          <li>Reporta lo que incumpla estas reglas.</li>
-        </ul>
-        <a href="/terminos#unitalk">Ver normas de UNITALK</a>
-      </section>
-      <section class="unitalk-side-card unitalk-privacy-card">
-        <span class="unitalk-side-label">Privacidad</span>
-        <h2>Tú decides qué mostrar</h2>
-        <p>El perfil público usa tu nombre de usuario. Gmail, teléfono y permisos administrativos permanecen privados.</p>
-      </section>
-    </aside>
+  <div class="unitalk-modal" id="unitalk-conversation-modal" hidden>
+    <button class="unitalk-modal-backdrop" type="button" data-close-modal="unitalk-conversation-modal" aria-label="Cerrar conversación"></button>
+    <section class="unitalk-conversation-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-conversation-title">
+      <header><strong id="unitalk-conversation-title">Conversación</strong><button type="button" data-close-modal="unitalk-conversation-modal" aria-label="Cerrar">×</button></header>
+      <div id="unitalk-conversation-content" class="unitalk-conversation-content"><div class="unitalk-loading">Cargando conversación...</div></div>
+      <footer class="unitalk-comment-compose"><textarea id="unitalk-comment-input" maxlength="250" placeholder="Escribe un comentario respetuoso..." aria-label="Comentario"></textarea><button id="unitalk-comment-send" type="button">Comentar</button></footer>
+    </section>
   </div>
-</main>
 
-<div class="unitalk-modal" id="unitalk-profile-modal" hidden>
-  <button class="unitalk-modal-backdrop" type="button" data-close-profile aria-label="Cerrar perfil"></button>
-  <section class="unitalk-profile-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-profile-name">
-    <button class="unitalk-profile-close" type="button" data-close-profile aria-label="Cerrar">×</button>
-    <div id="unitalk-profile-content"><div class="unitalk-loading">Cargando perfil...</div></div>
-  </section>
-</div>
-
-<footer>
-  <div class="footer-top">
-    <div><div class="footer-logo">Universe to Study</div><div class="footer-tagline">Clases, recursos y comunidad para postulantes UNI y estudiantes CEPREUNI.</div></div>
-    <div class="footer-links"><h4>Páginas</h4><ul><li><a href="/">Inicio</a></li><li><a href="/admision">Admisión</a></li><li><a href="/cepreuni">CEPREUNI</a></li><li><a href="/clases">Clases</a></li><li><a href="/unitalk">UNITALK</a></li><li><a href="/biblioteca">Biblioteca</a></li></ul></div>
-    <div class="footer-links"><h4>Confianza</h4><ul><li><a href="/nosotros">Nosotros</a></li><li><a href="/metodologia-editorial">Metodología editorial</a></li><li><a href="/correcciones">Correcciones</a></li><li><a href="/contacto">Contacto</a></li></ul></div>
+  <div class="unitalk-modal" id="unitalk-profile-modal" hidden>
+    <button class="unitalk-modal-backdrop" type="button" data-close-modal="unitalk-profile-modal" aria-label="Cerrar perfil"></button>
+    <section class="unitalk-profile-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-profile-name">
+      <button class="unitalk-modal-close" type="button" data-close-modal="unitalk-profile-modal" aria-label="Cerrar">×</button>
+      <div id="unitalk-profile-content"><div class="unitalk-loading">Cargando perfil...</div></div>
+    </section>
   </div>
-  <div class="footer-bottom"><div class="footer-copy">© 2026 Universe to Study.</div><div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div></div>
-</footer>
 
-<script src="/unitalk.js?v=unitalk-1" defer></script>
-<script src="/universe-polish.js?v=unitalk-2" defer></script>
+  <div id="unitalk-toast" class="unitalk-toast" role="status" aria-live="polite"></div>
+
+  <script src="/unitalk.js?v=unitalk-app-2" defer></script>
+  <script src="/universe-polish.js?v=unitalk-2" defer></script>
 </body>
 </html>
