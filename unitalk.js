@@ -1,15 +1,40 @@
 (function () {
   'use strict';
+
   var TOKEN_KEY = 'universe_auth_token';
-  var state = { me: null, academic: null, posts: [], loading: false };
+  var SAVED_KEY = 'unitalk_saved_posts_v1';
+  var COMPACT_KEY = 'unitalk_compact_view';
+  var MOTION_KEY = 'unitalk_reduce_motion';
+  var state = {
+    me: null,
+    academic: null,
+    posts: [],
+    loading: false,
+    view: 'home',
+    filter: 'all',
+    search: '',
+    discussion: false,
+    activePostId: '',
+    saved: new Set(readList(SAVED_KEY))
+  };
 
   function $(id) { return document.getElementById(id); }
   function safe(value) {
-    return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
     });
   }
+  function readList(key) {
+    try {
+      var data = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(data) ? data : [];
+    } catch (error) { return []; }
+  }
+  function writeList(key, list) { try { localStorage.setItem(key, JSON.stringify(list)); } catch (error) {} }
+  function readFlag(key) { try { return localStorage.getItem(key) === '1'; } catch (error) { return false; } }
+  function writeFlag(key, value) { try { localStorage.setItem(key, value ? '1' : '0'); } catch (error) {} }
   function token() { try { return localStorage.getItem(TOKEN_KEY) || ''; } catch (error) { return ''; } }
+  function currentGoogleUser() { return window.UniverseGoogleAuth && UniverseGoogleAuth.user ? UniverseGoogleAuth.user() : null; }
   function api(path, method, data) {
     var headers = { 'Content-Type': 'application/json' };
     var currentToken = token();
@@ -26,281 +51,378 @@
       return payload;
     });
   }
-  function currentGoogleUser() {
-    return window.UniverseGoogleAuth && UniverseGoogleAuth.user ? UniverseGoogleAuth.user() : null;
-  }
-  function avatar(profile, sizeClass) {
-    var label = String(profile && (profile.displayName || profile.username) || 'U').charAt(0).toUpperCase();
-    return '<span class="unitalk-avatar ' + (sizeClass || '') + '">' +
-      (profile && profile.avatar ? '<img alt="" src="' + safe(profile.avatar) + '">' : safe(label)) + '</span>';
-  }
   function relativeTime(value) {
     var time = Number(value) || 0;
     if (!time) return '';
     var seconds = Math.max(1, Math.floor((Date.now() - time) / 1000));
-    if (seconds < 60) return 'hace unos segundos';
+    if (seconds < 60) return 'ahora';
     if (seconds < 3600) return 'hace ' + Math.floor(seconds / 60) + ' min';
     if (seconds < 86400) return 'hace ' + Math.floor(seconds / 3600) + ' h';
     if (seconds < 604800) return 'hace ' + Math.floor(seconds / 86400) + ' d';
-    return new Date(time).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' });
+    return new Date(time).toLocaleDateString('es-PE', { day: '2-digit', month: 'short' });
+  }
+  function initial(profile) { return String(profile && (profile.displayName || profile.username) || 'U').charAt(0).toUpperCase(); }
+  function avatar(profile, extraClass) {
+    return '<span class="unitalk-avatar ' + safe(extraClass || '') + '">' +
+      (profile && profile.avatar ? '<img alt="" src="' + safe(profile.avatar) + '">' : safe(initial(profile))) + '</span>';
   }
   function academicLabel(profile) {
-    var values = [];
-    if (profile && profile.academy) values.push(profile.academy);
-    if (profile && profile.cycle) values.push(profile.cycle);
-    if (profile && profile.target) values.push('Postula a ' + profile.target);
-    return values.join(' · ') || 'Estudiante Universe';
+    var parts = [];
+    if (profile && profile.academy) parts.push(profile.academy);
+    if (profile && profile.cycle) parts.push(profile.cycle);
+    if (profile && profile.target) parts.push('Postula a ' + profile.target);
+    return parts.join(' · ') || 'Miembro de UNITALK';
   }
   function errorText(error) {
     var key = String(error && error.message || '');
     return {
       login_required: 'Inicia sesión con Google para continuar.',
-      profile_required: 'Primero completa tu nombre de usuario y perfil académico en Cuenta.',
+      profile_required: 'Completa tu perfil público y académico antes de participar.',
       rate_limited: 'Estás realizando acciones muy rápido. Espera un momento.',
-      contenido_no_permitido: 'La publicación contiene texto que incumple las normas de convivencia.',
+      contenido_no_permitido: 'El texto incumple las normas de convivencia.',
       demasiados_enlaces: 'Solo se permiten hasta dos enlaces.',
       contenido_vacio: 'Escribe un mensaje antes de publicar.',
-      post_not_found: 'La publicación ya no está disponible.'
+      post_not_found: 'La publicación ya no está disponible.',
+      forbidden: 'No tienes permiso para realizar esta acción.'
     }[key] || 'No se pudo completar la acción. Inténtalo nuevamente.';
   }
-  function requireAccount(error) {
-    if (error && (error.message === 'login_required' || error.status === 401)) {
-      if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true });
-      return true;
-    }
-    if (error && (error.message === 'profile_required' || error.status === 403)) {
-      if (confirm('Para participar necesitas completar tu nombre de usuario y perfil académico. ¿Abrir tu cuenta ahora?')) location.href = '/account';
-      return true;
-    }
-    return false;
+  function toast(message) {
+    var root = $('unitalk-toast');
+    if (!root) return;
+    root.textContent = message;
+    root.classList.add('show');
+    clearTimeout(window.unitalkToastTimer);
+    window.unitalkToastTimer = setTimeout(function () { root.classList.remove('show'); }, 2800);
   }
-
+  function requireAccount(error) {
+    if (!error || (error.message !== 'login_required' && error.status !== 401)) return false;
+    if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true });
+    else toast('Inicia sesión con Google para participar.');
+    return true;
+  }
+  function requireProfile(error) {
+    if (!error || (error.message !== 'profile_required' && error.status !== 403)) return false;
+    toast('Completa tu perfil antes de participar.');
+    setTimeout(function () { location.href = '/account'; }, 750);
+    return true;
+  }
+  function isMine(post) {
+    return !!(state.me && post.author && state.me.username && post.author.username === state.me.username);
+  }
+  function setBodyPreferences() {
+    document.body.classList.toggle('unitalk-compact', readFlag(COMPACT_KEY));
+    document.body.classList.toggle('unitalk-reduce-motion', readFlag(MOTION_KEY));
+  }
+  function renderIdentity() {
+    var google = currentGoogleUser();
+    var profile = state.me || google || {};
+    $('unitalk-top-avatar').innerHTML = profile.avatar ? '<img alt="" src="' + safe(profile.avatar) + '">' : safe(initial(profile));
+    $('unitalk-composer-avatar').innerHTML = profile.avatar ? '<img alt="" src="' + safe(profile.avatar) + '">' : safe(initial(profile));
+    $('unitalk-top-name').textContent = state.me && state.me.username ? 'Hola, ' + String(state.me.displayName || state.me.username).split(/\s+/)[0] : google ? 'Completa tu perfil' : 'Iniciar sesión';
+  }
   async function loadMe() {
-    if (!token()) {
-      state.me = null;
-      renderComposerUser();
-      return;
-    }
+    if (!token()) { state.me = null; state.academic = null; renderIdentity(); return; }
     try {
       var payload = await api('/me', 'GET');
       state.me = payload.profile || null;
       state.academic = payload.academic || null;
-    } catch (error) {
-      state.me = null;
-      state.academic = null;
-    }
-    renderComposerUser();
+    } catch (error) { state.me = null; state.academic = null; }
+    renderIdentity();
   }
-  function renderComposerUser() {
-    var root = $('unitalk-composer-user');
-    if (!root) return;
-    if (state.me && state.me.username) {
-      root.innerHTML = avatar(state.me) + '<div><strong>' + safe(state.me.displayName) + '</strong><small>@' + safe(state.me.username) + ' · ' + safe(academicLabel(state.me)) + '</small></div>';
-      $('unitalk-post-text').disabled = false;
-      $('unitalk-publish').disabled = false;
-    } else {
-      var google = currentGoogleUser();
-      root.innerHTML = '<span class="unitalk-avatar">U</span><div><strong>' + (google ? 'Completa tu perfil para participar' : 'Participa en UNITALK') + '</strong><small>' +
-        (google ? 'Crea un nombre de usuario desde tu cuenta.' : 'Necesitas una cuenta Google y un nombre de usuario.') + '</small></div>';
-      $('unitalk-post-text').disabled = false;
-      $('unitalk-publish').disabled = false;
-    }
+  function visiblePosts() {
+    var query = state.search.toLowerCase();
+    return state.posts.filter(function (post) {
+      if (state.filter === 'mine' && !isMine(post)) return false;
+      if (state.filter === 'recent' && Number(post.createdAt || 0) < Date.now() - 7 * 86400000) return false;
+      if (!query) return true;
+      var author = post.author || {};
+      return [post.text, author.displayName, author.username, academicLabel(author)].join(' ').toLowerCase().indexOf(query) !== -1;
+    });
   }
-
-  function renderPost(post) {
+  function postMarkup(post, compact) {
     var author = post.author || {};
-    var username = author.username || 'usuario';
+    var saved = state.saved.has(post.id);
     return '<article class="unitalk-post" data-post-id="' + safe(post.id) + '">' +
-      '<div class="unitalk-post-head"><button class="unitalk-user-link unitalk-post-user" type="button" data-profile="' + safe(username) + '">' +
-      avatar(author) + '<span><strong>' + safe(author.displayName || 'Estudiante Universe') + '</strong><small>@' + safe(username) + ' · ' + safe(academicLabel(author)) + '</small></span></button>' +
-      '<time class="unitalk-time" datetime="' + new Date(post.createdAt || 0).toISOString() + '">' + safe(relativeTime(post.createdAt)) + '</time></div>' +
+      '<div class="unitalk-post-head"><button class="unitalk-user-link" type="button" data-profile="' + safe(author.username || '') + '">' +
+      avatar(author) + '<span><strong>' + safe(author.displayName || 'Estudiante Universe') + '</strong><small>@' + safe(author.username || 'usuario') + ' · ' + safe(academicLabel(author)) + '</small></span></button>' +
+      '<time class="unitalk-time">' + safe(relativeTime(post.createdAt)) + '</time></div>' +
+      (post.discussion ? '<span class="unitalk-post-label">💬 Discusión académica</span>' : '') +
       '<p class="unitalk-post-text">' + safe(post.text) + '</p>' +
       '<div class="unitalk-post-actions">' +
-      '<button class="unitalk-action ' + (post.myReaction === 'like' ? 'active-like' : '') + '" type="button" data-react="like">Me gusta <b>' + Number(post.likes || 0) + '</b></button>' +
-      '<button class="unitalk-action ' + (post.myReaction === 'dislike' ? 'active-dislike' : '') + '" type="button" data-react="dislike">No me gusta <b>' + Number(post.dislikes || 0) + '</b></button>' +
-      '<button class="unitalk-action" type="button" data-comments>Comentar <b>' + Number(post.comments || 0) + '</b></button>' +
-      '<button class="unitalk-action" type="button" data-report>Reportar</button>' +
-      (post.canDelete ? '<button class="unitalk-action danger" type="button" data-delete-post>Eliminar</button>' : '') +
-      '</div><section class="unitalk-comments" hidden><div class="unitalk-comments-list"></div>' +
-      '<div class="unitalk-comment-compose"><input maxlength="250" placeholder="Escribe un comentario respetuoso..." aria-label="Comentario"><button class="unitalk-comment-send" type="button">Enviar</button></div></section>' +
-      '</article>';
-  }
-  function bindPost(root) {
-    var postId = root.dataset.postId;
-    root.querySelectorAll('[data-profile]').forEach(function (button) {
-      button.onclick = function () { openProfile(button.dataset.profile); };
-    });
-    root.querySelectorAll('[data-react]').forEach(function (button) {
-      button.onclick = async function () {
-        button.disabled = true;
-        try {
-          var result = await api('/posts/' + encodeURIComponent(postId) + '/reaction', 'PUT', { type: button.dataset.react });
-          var like = root.querySelector('[data-react="like"]');
-          var dislike = root.querySelector('[data-react="dislike"]');
-          like.querySelector('b').textContent = result.likes;
-          dislike.querySelector('b').textContent = result.dislikes;
-          like.classList.toggle('active-like', result.myReaction === 'like');
-          dislike.classList.toggle('active-dislike', result.myReaction === 'dislike');
-        } catch (error) {
-          requireAccount(error);
-        } finally { button.disabled = false; }
-      };
-    });
-    var commentsButton = root.querySelector('[data-comments]');
-    commentsButton.onclick = function () {
-      var panel = root.querySelector('.unitalk-comments');
-      panel.hidden = !panel.hidden;
-      if (!panel.hidden && !panel.dataset.loaded) loadComments(root);
-    };
-    root.querySelector('.unitalk-comment-send').onclick = function () { sendComment(root); };
-    root.querySelector('[data-report]').onclick = async function () {
-      if (!token()) { if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); return; }
-      var reason = prompt('Explica brevemente por qué reportas esta publicación:');
-      if (!reason) return;
-      try { await api('/reports', 'POST', { targetType: 'post', targetId: postId, reason: reason }); alert('Reporte enviado. Gracias por ayudar a cuidar UNITALK.'); }
-      catch (error) { alert(errorText(error)); }
-    };
-    var remove = root.querySelector('[data-delete-post]');
-    if (remove) remove.onclick = async function () {
-      if (!confirm('¿Eliminar esta publicación?')) return;
-      try { await api('/posts/' + encodeURIComponent(postId), 'DELETE'); root.remove(); }
-      catch (error) { alert(errorText(error)); }
-    };
+      '<button class="unitalk-action ' + (post.myReaction === 'like' ? 'active-like' : '') + '" type="button" data-post-action="like">👍 <b>' + Number(post.likes || 0) + '</b></button>' +
+      '<button class="unitalk-action ' + (post.myReaction === 'dislike' ? 'active-dislike' : '') + '" type="button" data-post-action="dislike">👎 <b>' + Number(post.dislikes || 0) + '</b></button>' +
+      '<button class="unitalk-action" type="button" data-post-action="comments">💬 <b>' + Number(post.comments || 0) + '</b> comentarios</button>' +
+      '<button class="unitalk-action ' + (saved ? 'save-active' : '') + '" type="button" data-post-action="save">🔖 ' + (saved ? 'Guardado' : 'Guardar') + '</button>' +
+      '<button class="unitalk-action" type="button" data-post-action="report">Reportar</button>' +
+      (post.canDelete ? '<button class="unitalk-action danger" type="button" data-post-action="delete">Eliminar</button>' : '') +
+      '</div></article>';
   }
   function renderFeed() {
     var root = $('unitalk-feed');
-    if (!state.posts.length) {
-      root.innerHTML = '<div class="unitalk-empty"><strong>Aún no hay publicaciones.</strong><br>Inicia la primera conversación académica.</div>';
-      return;
-    }
-    root.innerHTML = state.posts.map(renderPost).join('');
-    root.querySelectorAll('.unitalk-post').forEach(bindPost);
+    var posts = visiblePosts();
+    $('unitalk-feed-summary').textContent = state.search ? 'Resultados para “' + state.search + '”' : state.filter === 'mine' ? 'Tus publicaciones' : state.filter === 'recent' ? 'Publicaciones de los últimos 7 días' : 'Publicaciones recomendadas';
+    root.innerHTML = posts.length ? posts.map(function (post) { return postMarkup(post); }).join('') : '<div class="unitalk-empty"><strong>No hay publicaciones para mostrar.</strong><br>Prueba otro filtro o inicia una conversación.</div>';
+  }
+  function renderActivity() {
+    var root = $('unitalk-recent-activity');
+    var recent = state.posts.slice(0, 3);
+    $('unitalk-community-count').textContent = state.posts.length ? '+' + state.posts.length : '—';
+    root.innerHTML = recent.length ? recent.map(function (post) {
+      var author = post.author || {};
+      return '<div class="unitalk-activity"><span class="unitalk-activity-icon">💬</span><span><strong>' + safe(author.displayName || 'Un estudiante') + ' compartió una publicación.</strong><small>' + safe(relativeTime(post.createdAt)) + '</small></span></div>';
+    }).join('') : '<div class="unitalk-activity-empty">Aún no hay actividad. Sé quien inicie la conversación.</div>';
   }
   async function loadFeed() {
     if (state.loading) return;
     state.loading = true;
     $('unitalk-feed').innerHTML = '<div class="unitalk-loading">Cargando publicaciones...</div>';
     try {
-      var payload = await api('/feed?limit=25', 'GET');
+      var payload = await api('/feed?limit=30', 'GET');
       state.posts = Array.isArray(payload.posts) ? payload.posts : [];
       renderFeed();
+      renderActivity();
     } catch (error) {
       $('unitalk-feed').innerHTML = '<div class="unitalk-empty">No se pudieron cargar las publicaciones. Vuelve a intentarlo.</div>';
     } finally { state.loading = false; }
+  }
+  function updateComposer() {
+    var text = $('unitalk-post-text').value;
+    $('unitalk-char-count').textContent = String(text.length);
+    $('unitalk-mode-chip').hidden = !state.discussion;
+    $('unitalk-discussion').classList.toggle('active', state.discussion);
   }
   async function publish() {
     var text = $('unitalk-post-text').value.trim();
     var status = $('unitalk-composer-status');
     if (!text) { status.textContent = 'Escribe algo antes de publicar.'; status.className = 'unitalk-status error'; return; }
-    $('unitalk-publish').disabled = true;
+    var button = $('unitalk-publish');
+    button.disabled = true;
     try {
-      var result = await api('/posts', 'POST', { text: text });
+      var result = await api('/posts', 'POST', { text: text, discussion: state.discussion });
       $('unitalk-post-text').value = '';
-      $('unitalk-char-count').textContent = '0';
+      state.discussion = false;
+      updateComposer();
       status.textContent = 'Publicación compartida correctamente.';
       status.className = 'unitalk-status good';
       state.posts.unshift(result.post);
       renderFeed();
+      renderActivity();
+      toast('Tu publicación ya aparece en UNITALK.');
     } catch (error) {
-      requireAccount(error);
+      requireAccount(error) || requireProfile(error);
       status.textContent = errorText(error);
       status.className = 'unitalk-status error';
-    } finally { $('unitalk-publish').disabled = false; }
-  }
-  async function loadComments(postRoot) {
-    var list = postRoot.querySelector('.unitalk-comments-list');
-    list.innerHTML = '<div class="unitalk-loading">Cargando comentarios...</div>';
-    try {
-      var payload = await api('/posts/' + encodeURIComponent(postRoot.dataset.postId) + '/comments', 'GET');
-      renderComments(postRoot, payload.comments || []);
-      postRoot.querySelector('.unitalk-comments').dataset.loaded = '1';
-    } catch (error) { list.innerHTML = '<div class="unitalk-empty">No se pudieron cargar los comentarios.</div>'; }
-  }
-  function renderComments(postRoot, comments) {
-    var list = postRoot.querySelector('.unitalk-comments-list');
-    list.innerHTML = comments.length ? comments.map(function (comment) {
-      var author = comment.author || {};
-      return '<article class="unitalk-comment" data-comment-id="' + safe(comment.id) + '"><div class="unitalk-comment-user">' + avatar(author) +
-        '<button class="unitalk-user-link" type="button" data-profile="' + safe(author.username || 'usuario') + '"><strong>' + safe(author.displayName || 'Estudiante Universe') + '</strong><small>@' + safe(author.username || 'usuario') + ' · ' + safe(relativeTime(comment.createdAt)) + '</small></button>' +
-        (comment.canDelete ? '<button class="unitalk-mini-button" type="button" data-delete-comment>Eliminar</button>' : '') + '</div><p>' + safe(comment.text) + '</p></article>';
-    }).join('') : '<div class="unitalk-empty">Sé la primera persona en comentar.</div>';
-    list.querySelectorAll('[data-profile]').forEach(function (button) { button.onclick = function () { openProfile(button.dataset.profile); }; });
-    list.querySelectorAll('[data-delete-comment]').forEach(function (button) {
-      button.onclick = async function () {
-        var row = button.closest('[data-comment-id]');
-        if (!confirm('¿Eliminar este comentario?')) return;
-        try { await api('/posts/' + encodeURIComponent(postRoot.dataset.postId) + '/comments/' + encodeURIComponent(row.dataset.commentId), 'DELETE'); row.remove(); }
-        catch (error) { alert(errorText(error)); }
-      };
-    });
-  }
-  async function sendComment(postRoot) {
-    var input = postRoot.querySelector('.unitalk-comment-compose input');
-    var text = input.value.trim();
-    if (!text) return;
-    var button = postRoot.querySelector('.unitalk-comment-send');
-    button.disabled = true;
-    try {
-      await api('/posts/' + encodeURIComponent(postRoot.dataset.postId) + '/comments', 'POST', { text: text });
-      input.value = '';
-      await loadComments(postRoot);
-      var count = postRoot.querySelector('[data-comments] b');
-      count.textContent = String(Number(count.textContent || 0) + 1);
-    } catch (error) {
-      requireAccount(error);
-      alert(errorText(error));
     } finally { button.disabled = false; }
   }
-
-  function profileFact(label, value) {
-    return value ? '<div class="unitalk-profile-fact"><span>' + safe(label) + '</span><strong>' + safe(value) + '</strong></div>' : '';
+  function postById(postId) { return state.posts.find(function (post) { return post.id === postId; }); }
+  async function react(post, type) {
+    try {
+      var result = await api('/posts/' + encodeURIComponent(post.id) + '/reaction', 'PUT', { type: type });
+      post.likes = result.likes;
+      post.dislikes = result.dislikes;
+      post.myReaction = result.myReaction;
+      renderFeed();
+    } catch (error) { requireAccount(error) || requireProfile(error) || toast(errorText(error)); }
   }
+  function savePost(postId) {
+    if (state.saved.has(postId)) state.saved.delete(postId);
+    else state.saved.add(postId);
+    writeList(SAVED_KEY, Array.from(state.saved));
+    renderFeed();
+    toast(state.saved.has(postId) ? 'Publicación guardada.' : 'Publicación retirada de guardados.');
+  }
+  async function deletePost(post) {
+    if (!confirm('¿Eliminar esta publicación? Esta acción no se puede deshacer.')) return;
+    try {
+      await api('/posts/' + encodeURIComponent(post.id), 'DELETE');
+      state.posts = state.posts.filter(function (item) { return item.id !== post.id; });
+      state.saved.delete(post.id);
+      writeList(SAVED_KEY, Array.from(state.saved));
+      renderFeed();
+      renderActivity();
+      toast('Publicación eliminada.');
+    } catch (error) { toast(errorText(error)); }
+  }
+  async function reportPost(post) {
+    if (!token()) { requireAccount({ message: 'login_required' }); return; }
+    var reason = prompt('Explica brevemente por qué reportas esta publicación:');
+    if (!reason) return;
+    try { await api('/reports', 'POST', { targetType: 'post', targetId: post.id, reason: reason }); toast('Reporte enviado. Gracias por ayudar a cuidar UNITALK.'); }
+    catch (error) { toast(errorText(error)); }
+  }
+  function commentMarkup(comment) {
+    var author = comment.author || {};
+    return '<article class="unitalk-comment" data-comment-id="' + safe(comment.id) + '"><div class="unitalk-comment-head">' + avatar(author) +
+      '<button class="unitalk-user-link" type="button" data-profile="' + safe(author.username || '') + '"><span><strong>' + safe(author.displayName || 'Estudiante Universe') + '</strong><small>@' + safe(author.username || 'usuario') + ' · ' + safe(relativeTime(comment.createdAt)) + '</small></span></button>' +
+      (comment.canDelete ? '<button class="unitalk-mini-button" type="button" data-comment-action="delete">Eliminar</button>' : '') + '</div><p>' + safe(comment.text) + '</p></article>';
+  }
+  async function loadConversation(postId) {
+    var post = postById(postId);
+    if (!post) return;
+    state.activePostId = postId;
+    $('unitalk-conversation-modal').hidden = false;
+    $('unitalk-conversation-content').innerHTML = postMarkup(post) + '<div class="unitalk-post-comments"><div class="unitalk-loading">Cargando comentarios...</div></div>';
+    try {
+      var payload = await api('/posts/' + encodeURIComponent(postId) + '/comments', 'GET');
+      var comments = payload.comments || [];
+      $('unitalk-conversation-content').querySelector('.unitalk-post-comments').innerHTML = '<div class="unitalk-comments-list">' + (comments.length ? comments.map(commentMarkup).join('') : '<div class="unitalk-empty">Sé la primera persona en comentar.</div>') + '</div>';
+    } catch (error) {
+      $('unitalk-conversation-content').querySelector('.unitalk-post-comments').innerHTML = '<div class="unitalk-empty">No se pudieron cargar los comentarios.</div>';
+    }
+  }
+  async function sendComment() {
+    var postId = state.activePostId;
+    var text = $('unitalk-comment-input').value.trim();
+    if (!postId || !text) return;
+    var button = $('unitalk-comment-send');
+    button.disabled = true;
+    try {
+      var result = await api('/posts/' + encodeURIComponent(postId) + '/comments', 'POST', { text: text });
+      $('unitalk-comment-input').value = '';
+      var post = postById(postId);
+      if (post) post.comments = result.comments;
+      await loadConversation(postId);
+      renderFeed();
+    } catch (error) { requireAccount(error) || requireProfile(error) || toast(errorText(error)); }
+    finally { button.disabled = false; }
+  }
+  async function deleteComment(button) {
+    var row = button.closest('[data-comment-id]');
+    if (!row || !state.activePostId || !confirm('¿Eliminar este comentario?')) return;
+    try {
+      await api('/posts/' + encodeURIComponent(state.activePostId) + '/comments/' + encodeURIComponent(row.dataset.commentId), 'DELETE');
+      await loadConversation(state.activePostId);
+      var post = postById(state.activePostId);
+      if (post) post.comments = Math.max(0, Number(post.comments || 0) - 1);
+      renderFeed();
+    } catch (error) { toast(errorText(error)); }
+  }
+  function profileFact(label, value) { return value ? '<div class="unitalk-profile-fact"><span>' + safe(label) + '</span><strong>' + safe(value) + '</strong></div>' : ''; }
   async function openProfile(username, push) {
     username = String(username || '').toLowerCase();
-    var modal = $('unitalk-profile-modal');
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
+    if (!username) return;
+    $('unitalk-profile-modal').hidden = false;
     $('unitalk-profile-content').innerHTML = '<div class="unitalk-loading">Cargando perfil...</div>';
     try {
       var payload = await api('/profile/' + encodeURIComponent(username), 'GET');
       var profile = payload.profile || {};
       $('unitalk-profile-content').innerHTML = '<div class="unitalk-profile-hero">' + avatar(profile) +
         '<h2 id="unitalk-profile-name">' + safe(profile.displayName || 'Estudiante Universe') + '</h2><span class="handle">@' + safe(profile.username || username) + '</span>' +
-        (profile.private ? '<p>Esta persona decidió mantener privados sus datos académicos.</p>' : '<p>' + safe(profile.bio || 'Miembro de la comunidad Universe.') + '</p>') +
-        '</div><div class="unitalk-profile-facts">' +
-        profileFact('Academia o institución', profile.academy) + profileFact('Ciclo', profile.cycle) + profileFact('Objetivo', profile.target) +
-        profileFact('Miembro desde', profile.joinedAt ? new Date(profile.joinedAt).toLocaleDateString('es-PE', { month: 'long', year: 'numeric' }) : '') +
-        '</div>';
+        (profile.private ? '<p>Esta persona eligió mantener privados sus datos académicos.</p>' : '<p>' + safe(profile.bio || 'Miembro de la comunidad Universe.') + '</p>') +
+        '</div><div class="unitalk-profile-facts">' + profileFact('Academia o institución', profile.academy) + profileFact('Ciclo', profile.cycle) + profileFact('Objetivo', profile.target) + profileFact('Miembro desde', profile.joinedAt ? new Date(profile.joinedAt).toLocaleDateString('es-PE', { month: 'long', year: 'numeric' }) : '') + '</div>';
       if (push !== false) history.pushState({ unitalkProfile: username }, '', '/unitalk/perfil/' + encodeURIComponent(username));
-    } catch (error) {
-      $('unitalk-profile-content').innerHTML = '<div class="unitalk-empty">Este perfil no existe o no está disponible.</div>';
+    } catch (error) { $('unitalk-profile-content').innerHTML = '<div class="unitalk-empty">Este perfil no existe o no está disponible.</div>'; }
+  }
+  function closeModal(id) {
+    $(id).hidden = true;
+    if (id === 'unitalk-profile-modal' && /^\/unitalk\/perfil\//.test(location.pathname)) history.pushState({}, '', '/unitalk');
+    if (id === 'unitalk-conversation-modal') state.activePostId = '';
+  }
+  function setView(view) {
+    state.view = view;
+    $('unitalk-home-view').hidden = view !== 'home';
+    $('unitalk-page-view').hidden = view === 'home';
+    document.querySelectorAll('.unitalk-nav-item').forEach(function (button) { button.classList.toggle('active', button.dataset.view === view); });
+    $('unitalk-sidebar').classList.remove('open');
+    $('unitalk-sidebar-overlay').classList.remove('show');
+    if (view === 'home') { renderFeed(); return; }
+    renderPage(view);
+  }
+  function renderPage(view) {
+    var root = $('unitalk-page-view');
+    var mine = state.posts.filter(isMine);
+    if (view === 'explore') {
+      root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Explorar</h1><p>Busca temas y conversaciones de la comunidad.</p></div></div>' +
+        '<section class="unitalk-page-card"><h2>Temas para conversar</h2><div class="unitalk-explore-grid"><div class="unitalk-topic-card"><strong>Matemática</strong><span>Comparte métodos, dudas y ejercicios.</span></div><div class="unitalk-topic-card"><strong>Ciencias</strong><span>Física, Química y razonamiento científico.</span></div><div class="unitalk-topic-card"><strong>Humanidades</strong><span>Lecturas, ideas y estrategias de repaso.</span></div><div class="unitalk-topic-card"><strong>Vida preuniversitaria</strong><span>Organización, motivación y metas.</span></div></div></section>' +
+        '<section class="unitalk-page-card"><h2>Publicaciones recientes</h2><div class="unitalk-feed">' + (state.posts.length ? state.posts.map(postMarkup).join('') : '<div class="unitalk-empty">Aún no hay publicaciones.</div>') + '</div></section>';
+      return;
+    }
+    if (view === 'saved') {
+      var savedPosts = state.posts.filter(function (post) { return state.saved.has(post.id); });
+      root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Guardados</h1><p>Publicaciones que quieres revisar después.</p></div></div><section class="unitalk-feed">' + (savedPosts.length ? savedPosts.map(postMarkup).join('') : '<div class="unitalk-empty">Todavía no guardaste publicaciones.</div>') + '</section>';
+      return;
+    }
+    if (view === 'profile') {
+      var profile = state.me || currentGoogleUser() || {};
+      root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Mi perfil</h1><p>Así te verá la comunidad de UNITALK.</p></div></div><section class="unitalk-page-card"><div class="unitalk-profile-summary">' + avatar(profile) + '<div><h2>' + safe(profile.displayName || profile.name || 'Tu perfil') + '</h2><span class="unitalk-handle">' + (state.me && state.me.username ? '@' + safe(state.me.username) : 'Completa tu perfil público') + '</span><p>' + safe(state.me && state.me.bio || 'Configura tus datos visibles y preferencias de privacidad desde tu cuenta.') + '</p></div></div><a class="unitalk-profile-cta" href="/account">Administrar mi perfil</a></section><section class="unitalk-page-card"><h2>Mis publicaciones</h2><div class="unitalk-feed">' + (mine.length ? mine.map(postMarkup).join('') : '<div class="unitalk-empty">Aún no has publicado en UNITALK.</div>') + '</div></section>';
+      return;
+    }
+    if (view === 'settings') {
+      var dark = document.documentElement.getAttribute('data-universe-theme') === 'dark';
+      root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Ajustes</h1><p>Personaliza tu experiencia sin cambiar la privacidad de tu cuenta.</p></div></div><section class="unitalk-page-card"><div class="unitalk-settings-list">' +
+        settingRow('dark', 'Modo oscuro', 'Aplica el mismo tema a todo Universe to Study.', dark) + settingRow('compact', 'Vista compacta', 'Muestra más publicaciones en la pantalla.', readFlag(COMPACT_KEY)) + settingRow('motion', 'Reducir animaciones', 'Desactiva efectos decorativos de la interfaz.', readFlag(MOTION_KEY)) +
+        '</div></section><section class="unitalk-page-card"><h2>Privacidad y convivencia</h2><p>Tu Gmail, teléfono y permisos de administrador nunca aparecen en UNITALK. Elige los datos visibles desde tu cuenta.</p><a class="unitalk-profile-cta" href="/account">Ir a privacidad del perfil</a></section>';
     }
   }
-  function closeProfile() {
-    $('unitalk-profile-modal').hidden = true;
-    document.body.style.overflow = '';
-    if (/^\/unitalk\/perfil\//.test(location.pathname)) history.pushState({}, '', '/unitalk');
+  function settingRow(key, title, description, active) {
+    return '<div class="unitalk-setting"><div><strong>' + safe(title) + '</strong><small>' + safe(description) + '</small></div><button class="unitalk-switch ' + (active ? 'active' : '') + '" type="button" data-setting="' + safe(key) + '" aria-label="Cambiar ' + safe(title) + '"></button></div>';
   }
-  function bootDeepProfile() {
-    var match = location.pathname.match(/^\/unitalk\/perfil\/([a-zA-Z0-9_-]+)$/);
-    if (match) openProfile(match[1], false);
+  function switchSetting(key) {
+    if (key === 'dark') {
+      if (window.toggleUniverseTheme) window.toggleUniverseTheme();
+      else document.documentElement.toggleAttribute('data-universe-theme');
+    } else if (key === 'compact') writeFlag(COMPACT_KEY, !readFlag(COMPACT_KEY));
+    else if (key === 'motion') writeFlag(MOTION_KEY, !readFlag(MOTION_KEY));
+    setBodyPreferences();
+    renderPage('settings');
   }
-
+  function handlePostAction(button) {
+    var postRoot = button.closest('[data-post-id]');
+    var post = postRoot && postById(postRoot.dataset.postId);
+    if (!post) return;
+    var action = button.dataset.postAction;
+    if (action === 'like' || action === 'dislike') react(post, action);
+    else if (action === 'comments') loadConversation(post.id);
+    else if (action === 'save') savePost(post.id);
+    else if (action === 'report') reportPost(post);
+    else if (action === 'delete') deletePost(post);
+  }
   function bind() {
-    $('unitalk-post-text').addEventListener('input', function () { $('unitalk-char-count').textContent = String(this.value.length); });
+    $('unitalk-post-text').addEventListener('input', updateComposer);
     $('unitalk-publish').onclick = publish;
-    $('unitalk-refresh').onclick = loadFeed;
-    document.querySelectorAll('[data-close-profile]').forEach(function (button) { button.onclick = closeProfile; });
+    $('unitalk-discussion').onclick = function () { state.discussion = !state.discussion; updateComposer(); };
+    $('unitalk-profile-action').onclick = function () { location.href = '/account'; };
+    $('unitalk-sidebar-publish').onclick = function () { setView('home'); setTimeout(function () { $('unitalk-post-text').focus(); }, 0); };
+    $('unitalk-join-button').onclick = function () { if (!currentGoogleUser() && window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); else { setView('home'); $('unitalk-post-text').focus(); } };
+    $('unitalk-menu-toggle').onclick = function () { $('unitalk-sidebar').classList.toggle('open'); $('unitalk-sidebar-overlay').classList.toggle('show'); };
+    $('unitalk-sidebar-overlay').onclick = function () { $('unitalk-sidebar').classList.remove('open'); $('unitalk-sidebar-overlay').classList.remove('show'); };
+    $('unitalk-account-button').onclick = function () {
+      if (!currentGoogleUser()) { if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); return; }
+      $('unitalk-account-menu').hidden = !$('unitalk-account-menu').hidden;
+    };
+    $('unitalk-search-input').addEventListener('input', function () { state.search = this.value.trim(); $('unitalk-search-clear').hidden = !state.search; if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); });
+    $('unitalk-search-clear').onclick = function () { $('unitalk-search-input').value = ''; state.search = ''; this.hidden = true; if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); };
+    document.querySelectorAll('.unitalk-tab').forEach(function (button) { button.onclick = function () { state.filter = button.dataset.filter; document.querySelectorAll('.unitalk-tab').forEach(function (tab) { tab.classList.toggle('active', tab === button); }); renderFeed(); }; });
+    $('unitalk-comment-send').onclick = sendComment;
+    $('unitalk-comment-input').addEventListener('keydown', function (event) { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') sendComment(); });
+    document.addEventListener('click', function (event) {
+      var viewButton = event.target.closest('[data-view]');
+      if (viewButton) { event.preventDefault(); setView(viewButton.dataset.view); $('unitalk-account-menu').hidden = true; return; }
+      var profileButton = event.target.closest('[data-profile]');
+      if (profileButton) { openProfile(profileButton.dataset.profile); return; }
+      var actionButton = event.target.closest('[data-post-action]');
+      if (actionButton) { handlePostAction(actionButton); return; }
+      var closeButton = event.target.closest('[data-close-modal]');
+      if (closeButton) { closeModal(closeButton.dataset.closeModal); return; }
+      var deleteCommentButton = event.target.closest('[data-comment-action="delete"]');
+      if (deleteCommentButton) { deleteComment(deleteCommentButton); return; }
+      var settingButton = event.target.closest('[data-setting]');
+      if (settingButton) { switchSetting(settingButton.dataset.setting); return; }
+      if (!$('unitalk-account-menu').contains(event.target) && !$('unitalk-account-button').contains(event.target)) $('unitalk-account-menu').hidden = true;
+    });
+    window.addEventListener('universe-google-auth', function () { setTimeout(function () { loadMe(); loadFeed(); }, 120); });
     window.addEventListener('popstate', function () {
       var match = location.pathname.match(/^\/unitalk\/perfil\/([a-zA-Z0-9_-]+)$/);
       if (match) openProfile(match[1], false);
-      else { $('unitalk-profile-modal').hidden = true; document.body.style.overflow = ''; }
+      else $('unitalk-profile-modal').hidden = true;
     });
-    window.addEventListener('universe-google-auth', function () { setTimeout(function () { loadMe(); loadFeed(); }, 120); });
   }
+  function bootDeepProfile() { var match = location.pathname.match(/^\/unitalk\/perfil\/([a-zA-Z0-9_-]+)$/); if (match) openProfile(match[1], false); }
   function boot() {
+    setBodyPreferences();
     bind();
-    renderComposerUser();
+    renderIdentity();
+    updateComposer();
     loadFeed();
     setTimeout(loadMe, 500);
     bootDeepProfile();
