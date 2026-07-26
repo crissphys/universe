@@ -183,6 +183,41 @@ function extractHashtags(value) {
   return tags;
 }
 
+function sanitizeNewPoll(value) {
+  if (!value) return { poll: null };
+  if (typeof value !== 'object' || !Array.isArray(value.options) || value.options.length < 2 || value.options.length > 4) return { error: 'poll_invalid' };
+  var options = [];
+  var seen = new Set();
+  for (var i = 0; i < value.options.length; i += 1) {
+    var moderated = moderateText(value.options[i], 80);
+    if (!moderated.allowed || /https?:\/\/|www\./i.test(moderated.text)) return { error: 'poll_invalid' };
+    var comparable = moderated.text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    if (seen.has(comparable)) return { error: 'poll_invalid' };
+    seen.add(comparable);
+    options.push({ id: 'o' + (i + 1), text: moderated.text, votes: 0 });
+  }
+  return { poll: { options, totalVotes: 0 } };
+}
+
+function publicPoll(value, myVote) {
+  value = value && typeof value === 'object' ? value : {};
+  if (!Array.isArray(value.options) || value.options.length < 2 || value.options.length > 4) return null;
+  var options = value.options.map(function (option, index) {
+    return {
+      id: cleanId(option && option.id) || 'o' + (index + 1),
+      text: cleanText(option && option.text, 80),
+      votes: Math.max(0, Number(option && option.votes) || 0)
+    };
+  }).filter(function (option) { return option.text; });
+  if (options.length < 2) return null;
+  var validIds = options.map(function (option) { return option.id; });
+  return {
+    options,
+    totalVotes: options.reduce(function (sum, option) { return sum + option.votes; }, 0),
+    myVote: validIds.includes(cleanId(myVote)) ? cleanId(myVote) : ''
+  };
+}
+
 function publicProfile(profile, viewer) {
   profile = profile && typeof profile === 'object' ? profile : {};
   var visibility = ['public', 'members', 'private'].includes(profile.profileVisibility) ? profile.profileVisibility : 'public';
@@ -797,12 +832,14 @@ async function postView(env, post, viewer, profileCache) {
   var authorId = cleanId(post.authorId);
   if (!profileCache[authorId]) profileCache[authorId] = await communityProfileById(env, authorId) || {};
   var myReaction = viewer ? await firebase(env, UNIT_ROOT + '/reactions/' + cleanId(post.id) + '/' + viewer.id, 'GET') : null;
+  var myPollVote = viewer && post.poll ? await firebase(env, UNIT_ROOT + '/pollVotes/' + cleanId(post.id) + '/' + viewer.id, 'GET') : null;
   return {
     id: cleanId(post.id),
     text: cleanText(post.text, 400),
     discussion: post.discussion === true,
     hashtags: Array.isArray(post.hashtags) ? post.hashtags.map(cleanSlug).filter(Boolean).slice(0, 8) : extractHashtags(post.text),
     attachment: publicAttachment(post.attachment),
+    poll: publicPoll(post.poll, myPollVote && myPollVote.optionId),
     createdAt: Number(post.createdAt) || 0,
     updatedAt: Number(post.updatedAt) || 0,
     likes: Math.max(0, Number(post.likes) || 0),
@@ -922,8 +959,11 @@ async function handleUnitalk(request, env, subpath) {
     if (member.error) return json({ error: member.error }, member.status);
     var preparedAttachment = sanitizeNewAttachment(body.attachment);
     if (preparedAttachment.error) return json({ error: preparedAttachment.error }, 400);
+    var preparedPoll = sanitizeNewPoll(body.poll);
+    if (preparedPoll.error) return json({ error: preparedPoll.error }, 400);
     var moderated = moderateText(body.text, 400);
     if (!moderated.allowed && !(moderated.reason === 'contenido_vacio' && preparedAttachment.attachment)) return json({ error: moderated.reason }, 400);
+    if (preparedPoll.poll && !moderated.allowed) return json({ error: 'contenido_vacio' }, 400);
     var postId = newCommunityId('p');
     var post = {
       id: postId,
@@ -938,6 +978,7 @@ async function handleUnitalk(request, env, subpath) {
       createdAt: Date.now(),
       updatedAt: Date.now()
     };
+    if (preparedPoll.poll) post.poll = preparedPoll.poll;
     var savedMediaId = '';
     if (preparedAttachment.attachment) {
       savedMediaId = newCommunityId('m');
@@ -990,6 +1031,7 @@ async function handleUnitalk(request, env, subpath) {
       await firebase(env, UNIT_ROOT + '/media/' + deletedAttachment.id, 'DELETE').catch(function () {});
       if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(deletedAttachment.id).catch(function () {});
     }
+    if (deletePost.poll) await firebase(env, UNIT_ROOT + '/pollVotes/' + cleanId(postMatch[1]), 'DELETE').catch(function () {});
     return json({ ok: true });
   }
 
@@ -1015,6 +1057,34 @@ async function handleUnitalk(request, env, subpath) {
     await firebase(env, UNIT_ROOT + '/posts/' + reactionPostId, 'PATCH', { likes: counts.like, dislikes: counts.dislike, updatedAt: Date.now() });
     var activeReaction = await firebase(env, reactionPath, 'GET');
     return json({ ok: true, likes: counts.like, dislikes: counts.dislike, myReaction: activeReaction && activeReaction.type || '' });
+  }
+
+  var pollVoteMatch = path.match(/^\/posts\/([a-zA-Z0-9_-]+)\/poll-vote$/);
+  if (pollVoteMatch && method === 'PUT') {
+    if (!rateLimit(request, 'unitalk-poll-vote', 30, 60000)) return json({ error: 'rate_limited' }, 429);
+    var votingMember = await requireCommunityMember(env, auth);
+    if (votingMember.error) return json({ error: votingMember.error }, votingMember.status);
+    var pollPostId = cleanId(pollVoteMatch[1]);
+    var pollPost = await firebase(env, UNIT_ROOT + '/posts/' + pollPostId, 'GET');
+    if (!pollPost || pollPost.status === 'removed' || !pollPost.poll) return json({ error: 'poll_not_found' }, 404);
+    var currentPoll = publicPoll(pollPost.poll, '');
+    if (!currentPoll) return json({ error: 'poll_not_found' }, 404);
+    var optionId = cleanId(body.optionId);
+    if (!currentPoll.options.some(function (option) { return option.id === optionId; })) return json({ error: 'poll_option_invalid' }, 400);
+    await firebase(env, UNIT_ROOT + '/pollVotes/' + pollPostId + '/' + auth.id, 'PUT', { optionId, updatedAt: Date.now() });
+    var voteRows = await firebase(env, UNIT_ROOT + '/pollVotes/' + pollPostId, 'GET') || {};
+    var voteCounts = {};
+    currentPoll.options.forEach(function (option) { voteCounts[option.id] = 0; });
+    Object.keys(voteRows).forEach(function (userId) {
+      var votedOption = cleanId(voteRows[userId] && voteRows[userId].optionId);
+      if (Object.prototype.hasOwnProperty.call(voteCounts, votedOption)) voteCounts[votedOption] += 1;
+    });
+    var updatedPoll = {
+      options: currentPoll.options.map(function (option) { return { id: option.id, text: option.text, votes: voteCounts[option.id] || 0 }; }),
+      totalVotes: Object.keys(voteCounts).reduce(function (sum, id) { return sum + voteCounts[id]; }, 0)
+    };
+    await firebase(env, UNIT_ROOT + '/posts/' + pollPostId, 'PATCH', { poll: updatedPoll, updatedAt: Date.now() });
+    return json({ ok: true, poll: publicPoll(updatedPoll, optionId) });
   }
 
   var commentsMatch = path.match(/^\/posts\/([a-zA-Z0-9_-]+)\/comments$/);
