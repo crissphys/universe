@@ -691,6 +691,7 @@ async function postView(env, post, viewer, profileCache) {
   return {
     id: cleanId(post.id),
     text: cleanText(post.text, 400),
+    discussion: post.discussion === true,
     createdAt: Number(post.createdAt) || 0,
     updatedAt: Number(post.updatedAt) || 0,
     likes: Math.max(0, Number(post.likes) || 0),
@@ -792,6 +793,7 @@ async function handleUnitalk(request, env, subpath) {
       id: postId,
       authorId: auth.id,
       text: moderated.text,
+      discussion: body.discussion === true,
       likes: 0,
       dislikes: 0,
       comments: 0,
