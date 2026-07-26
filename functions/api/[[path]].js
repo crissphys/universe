@@ -74,6 +74,115 @@ function safeAvatar(value) {
   return '';
 }
 
+const UNIT_ATTACHMENT_RULES = {
+  image: { types: ['image/jpeg', 'image/png', 'image/webp'], max: 1200000 },
+  video: { types: ['video/mp4', 'video/webm'], max: 6000000 },
+  pdf: { types: ['application/pdf'], max: 3000000 }
+};
+
+function cleanFileName(value) {
+  return cleanText(value, 90).replace(/[\\/:*?"<>|]/g, '_').replace(/\s{2,}/g, ' ') || 'archivo';
+}
+
+function decodeBase64(value) {
+  var binary = atob(value);
+  var bytes = new Uint8Array(binary.length);
+  for (var i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+function validAttachmentSignature(kind, mime, bytes) {
+  if (!bytes || !bytes.length) return false;
+  if (kind === 'pdf') return bytes.length > 4 && bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46;
+  if (mime === 'image/jpeg') return bytes.length > 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  if (mime === 'image/png') return bytes.length > 8 && bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47;
+  if (mime === 'image/webp') return bytes.length > 12 && String.fromCharCode(...bytes.slice(0, 4)) === 'RIFF' && String.fromCharCode(...bytes.slice(8, 12)) === 'WEBP';
+  if (mime === 'video/mp4') return bytes.length > 12 && String.fromCharCode(...bytes.slice(4, 8)) === 'ftyp';
+  if (mime === 'video/webm') return bytes.length > 4 && bytes[0] === 0x1a && bytes[1] === 0x45 && bytes[2] === 0xdf && bytes[3] === 0xa3;
+  return false;
+}
+
+function sanitizeNewAttachment(value) {
+  if (!value) return { attachment: null, bytes: null, data: '' };
+  if (typeof value !== 'object') return { error: 'attachment_invalid' };
+  var kind = cleanText(value.kind, 10).toLowerCase();
+  var mime = cleanText(value.mime, 40).toLowerCase();
+  var rule = UNIT_ATTACHMENT_RULES[kind];
+  if (!rule || !rule.types.includes(mime)) return { error: 'attachment_invalid' };
+  var source = String(value.dataUrl || '');
+  var match = source.match(/^data:([a-z0-9.+/-]+);base64,([a-z0-9+/=]+)$/i);
+  if (!match || match[1].toLowerCase() !== mime) return { error: 'attachment_invalid' };
+  var estimatedSize = Math.max(0, Math.floor(match[2].length * 3 / 4) - (match[2].endsWith('==') ? 2 : match[2].endsWith('=') ? 1 : 0));
+  if (!estimatedSize || estimatedSize > rule.max) return { error: 'attachment_too_large' };
+  var bytes;
+  try { bytes = decodeBase64(match[2]); } catch (error) { return { error: 'attachment_invalid' }; }
+  if (bytes.length !== estimatedSize || !validAttachmentSignature(kind, mime, bytes)) return { error: 'attachment_invalid' };
+  return {
+    attachment: { kind, mime, name: cleanFileName(value.name), size: bytes.length },
+    bytes,
+    data: match[2]
+  };
+}
+
+function publicAttachment(value) {
+  value = value && typeof value === 'object' ? value : {};
+  var id = cleanId(value.id);
+  var kind = cleanText(value.kind, 10).toLowerCase();
+  var mime = cleanText(value.mime, 40).toLowerCase();
+  var rule = UNIT_ATTACHMENT_RULES[kind];
+  if (!id || !rule || !rule.types.includes(mime)) return null;
+  return {
+    id,
+    kind,
+    mime,
+    name: cleanFileName(value.name),
+    size: Math.max(0, Math.min(rule.max, Number(value.size) || 0)),
+    url: '/api/unitalk/media/' + encodeURIComponent(id)
+  };
+}
+
+function mediaResponse(bytes, media, request) {
+  var total = bytes.length;
+  var start = 0;
+  var end = Math.max(0, total - 1);
+  var status = 200;
+  var range = request.headers.get('Range') || '';
+  var match = range.match(/^bytes=(\d*)-(\d*)$/);
+  if (match && total) {
+    start = match[1] ? Math.min(total - 1, Number(match[1])) : 0;
+    end = match[2] ? Math.min(total - 1, Number(match[2])) : end;
+    if (start > end) return new Response(null, { status: 416, headers: { 'Content-Range': 'bytes */' + total } });
+    status = 206;
+  }
+  var fileName = cleanFileName(media.name).replace(/[^\x20-\x7e]/g, '_');
+  var headers = {
+    'Content-Type': media.mime,
+    'Content-Length': String(end - start + 1),
+    'Content-Disposition': 'inline; filename="' + fileName.replace(/"/g, '_') + '"',
+    'Accept-Ranges': 'bytes',
+    'Cache-Control': 'private, max-age=300',
+    'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'none'; sandbox"
+  };
+  if (status === 206) headers['Content-Range'] = 'bytes ' + start + '-' + end + '/' + total;
+  return new Response(bytes.slice(start, end + 1), { status, headers });
+}
+
+function normalizeHashtag(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9_]/g, '').replace(/_+/g, '_').replace(/^_|_$/g, '').slice(0, 30);
+}
+
+function extractHashtags(value) {
+  var tags = [];
+  String(value || '').replace(/(^|\s)#([\p{L}\p{N}_]{2,30})/gu, function (_, prefix, tag) {
+    tag = normalizeHashtag(tag);
+    if (tag.length >= 2 && !tags.includes(tag) && tags.length < 8) tags.push(tag);
+    return _;
+  });
+  return tags;
+}
+
 function publicProfile(profile, viewer) {
   profile = profile && typeof profile === 'object' ? profile : {};
   var visibility = ['public', 'members', 'private'].includes(profile.profileVisibility) ? profile.profileVisibility : 'public';
@@ -692,6 +801,8 @@ async function postView(env, post, viewer, profileCache) {
     id: cleanId(post.id),
     text: cleanText(post.text, 400),
     discussion: post.discussion === true,
+    hashtags: Array.isArray(post.hashtags) ? post.hashtags.map(cleanSlug).filter(Boolean).slice(0, 8) : extractHashtags(post.text),
+    attachment: publicAttachment(post.attachment),
     createdAt: Number(post.createdAt) || 0,
     updatedAt: Number(post.updatedAt) || 0,
     likes: Math.max(0, Number(post.likes) || 0),
@@ -765,6 +876,29 @@ async function handleUnitalk(request, env, subpath) {
     return json({ profile: publicProfile(foundProfile, auth) });
   }
 
+  var mediaMatch = path.match(/^\/media\/([a-zA-Z0-9_-]+)$/);
+  if (mediaMatch && method === 'GET') {
+    if (!rateLimit(request, 'unitalk-media', 160, 60000)) return json({ error: 'rate_limited' }, 429);
+    var mediaId = cleanId(mediaMatch[1]);
+    var media = await firebase(env, UNIT_ROOT + '/media/' + mediaId, 'GET');
+    if (!media || media.status === 'removed') return json({ error: 'media_not_found' }, 404);
+    var mediaPost = await firebase(env, UNIT_ROOT + '/posts/' + cleanId(media.postId), 'GET');
+    if (!mediaPost || mediaPost.status === 'removed') return json({ error: 'media_not_found' }, 404);
+    var mediaInfo = publicAttachment({ id: mediaId, kind: media.kind, mime: media.mime, name: media.name, size: media.size });
+    if (!mediaInfo) return json({ error: 'media_not_found' }, 404);
+    var mediaBytes;
+    if (media.storage === 'r2' && env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.get === 'function') {
+      var storedObject = await env.UNITALK_MEDIA.get(mediaId);
+      if (!storedObject) return json({ error: 'media_not_found' }, 404);
+      mediaBytes = new Uint8Array(await storedObject.arrayBuffer());
+    } else {
+      try { mediaBytes = decodeBase64(String(media.data || '')); }
+      catch (error) { return json({ error: 'media_not_found' }, 404); }
+    }
+    if (!validAttachmentSignature(mediaInfo.kind, mediaInfo.mime, mediaBytes)) return json({ error: 'media_not_found' }, 404);
+    return mediaResponse(mediaBytes, mediaInfo, request);
+  }
+
   if (path === '/feed' && method === 'GET') {
     if (!rateLimit(request, 'unitalk-feed', 100, 60000)) return json({ error: 'rate_limited' }, 429);
     var url = new URL(request.url);
@@ -774,7 +908,7 @@ async function handleUnitalk(request, env, subpath) {
       var post = postsObject[id] || {};
       post.id = cleanId(post.id || id);
       return post;
-    }).filter(function (post) { return post.status !== 'removed' && post.text; })
+    }).filter(function (post) { return post.status !== 'removed' && (post.text || post.attachment); })
       .sort(function (a, b) { return Number(b.createdAt) - Number(a.createdAt); }).slice(0, limit);
     var cache = {};
     var output = [];
@@ -786,14 +920,17 @@ async function handleUnitalk(request, env, subpath) {
     if (!rateLimit(request, 'unitalk-post', 6, 60000)) return json({ error: 'rate_limited' }, 429);
     var member = await requireCommunityMember(env, auth);
     if (member.error) return json({ error: member.error }, member.status);
+    var preparedAttachment = sanitizeNewAttachment(body.attachment);
+    if (preparedAttachment.error) return json({ error: preparedAttachment.error }, 400);
     var moderated = moderateText(body.text, 400);
-    if (!moderated.allowed) return json({ error: moderated.reason }, 400);
+    if (!moderated.allowed && !(moderated.reason === 'contenido_vacio' && preparedAttachment.attachment)) return json({ error: moderated.reason }, 400);
     var postId = newCommunityId('p');
     var post = {
       id: postId,
       authorId: auth.id,
-      text: moderated.text,
+      text: moderated.allowed ? moderated.text : '',
       discussion: body.discussion === true,
+      hashtags: moderated.allowed ? extractHashtags(moderated.text) : [],
       likes: 0,
       dislikes: 0,
       comments: 0,
@@ -801,7 +938,43 @@ async function handleUnitalk(request, env, subpath) {
       createdAt: Date.now(),
       updatedAt: Date.now()
     };
-    await firebase(env, UNIT_ROOT + '/posts/' + postId, 'PUT', post);
+    var savedMediaId = '';
+    if (preparedAttachment.attachment) {
+      savedMediaId = newCommunityId('m');
+      post.attachment = { id: savedMediaId, ...preparedAttachment.attachment };
+      var mediaRecord = {
+        id: savedMediaId,
+        postId,
+        authorId: auth.id,
+        ...preparedAttachment.attachment,
+        status: 'visible',
+        createdAt: Date.now()
+      };
+      if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.put === 'function') {
+        await env.UNITALK_MEDIA.put(savedMediaId, preparedAttachment.bytes, {
+          httpMetadata: { contentType: preparedAttachment.attachment.mime }
+        });
+        mediaRecord.storage = 'r2';
+      } else {
+        mediaRecord.storage = 'firebase';
+        mediaRecord.data = preparedAttachment.data;
+      }
+      try {
+        await firebase(env, UNIT_ROOT + '/media/' + savedMediaId, 'PUT', mediaRecord);
+      } catch (error) {
+        if (mediaRecord.storage === 'r2' && env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(savedMediaId).catch(function () {});
+        throw error;
+      }
+    }
+    try {
+      await firebase(env, UNIT_ROOT + '/posts/' + postId, 'PUT', post);
+    } catch (error) {
+      if (savedMediaId) {
+        await firebase(env, UNIT_ROOT + '/media/' + savedMediaId, 'DELETE').catch(function () {});
+        if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(savedMediaId).catch(function () {});
+      }
+      throw error;
+    }
     return json({ ok: true, post: await postView(env, post, auth, { [auth.id]: member.profile }) }, 201);
   }
 
@@ -812,6 +985,11 @@ async function handleUnitalk(request, env, subpath) {
     if (!deletePost) return json({ error: 'post_not_found' }, 404);
     if (!auth.admin && deletePost.authorId !== auth.id) return json({ error: 'forbidden' }, 403);
     await firebase(env, UNIT_ROOT + '/posts/' + cleanId(postMatch[1]), 'PATCH', { status: 'removed', removedAt: Date.now(), removedBy: auth.id });
+    var deletedAttachment = publicAttachment(deletePost.attachment);
+    if (deletedAttachment) {
+      await firebase(env, UNIT_ROOT + '/media/' + deletedAttachment.id, 'DELETE').catch(function () {});
+      if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(deletedAttachment.id).catch(function () {});
+    }
     return json({ ok: true });
   }
 
