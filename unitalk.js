@@ -14,14 +14,69 @@
     filter: 'all',
     search: '',
     discussion: false,
+    attachment: null,
+    hashtagPanel: false,
     activePostId: '',
     saved: new Set(readList(SAVED_KEY))
+  };
+  var ATTACHMENT_RULES = {
+    image: { types: ['image/jpeg', 'image/png', 'image/webp'], max: 1200000, label: 'foto' },
+    video: { types: ['video/mp4', 'video/webm'], max: 6000000, label: 'video' },
+    pdf: { types: ['application/pdf'], max: 3000000, label: 'PDF' }
   };
 
   function $(id) { return document.getElementById(id); }
   function safe(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
+  }
+  function bytesLabel(value) {
+    var size = Math.max(0, Number(value) || 0);
+    if (size < 1024) return size + ' B';
+    if (size < 1048576) return (size / 1024).toFixed(1) + ' KB';
+    return (size / 1048576).toFixed(1) + ' MB';
+  }
+  function hashtagValue(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase().replace(/^#+/, '').trim().replace(/\s+/g, '_')
+      .replace(/[^a-z0-9_]/g, '').replace(/_+/g, '_').replace(/^_|_$/g, '').slice(0, 30);
+  }
+  function textWithHashtags(value) {
+    return safe(value).replace(/(^|\s)#([\p{L}\p{N}_]{2,30})/gu, function (_, prefix, tag) {
+      return prefix + '<button class="unitalk-hashtag" type="button" data-hashtag="' + safe(hashtagValue(tag)) + '">#' + safe(tag) + '</button>';
+    });
+  }
+  function fileToDataUrl(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(String(reader.result || '')); };
+      reader.onerror = function () { reject(new Error('archivo_no_legible')); };
+      reader.readAsDataURL(file);
+    });
+  }
+  function compressImage(file) {
+    return fileToDataUrl(file).then(function (source) {
+      return new Promise(function (resolve, reject) {
+        var image = new Image();
+        image.onload = function () {
+          var limit = 1600;
+          var scale = Math.min(1, limit / Math.max(image.naturalWidth || 1, image.naturalHeight || 1));
+          var canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+          canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+          var context = canvas.getContext('2d', { alpha: false });
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(function (blob) {
+            if (!blob) { reject(new Error('imagen_no_procesada')); return; }
+            fileToDataUrl(blob).then(function (dataUrl) {
+              resolve({ dataUrl: dataUrl, size: blob.size, mime: blob.type || 'image/jpeg' });
+            }, reject);
+          }, file.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.84);
+        };
+        image.onerror = function () { reject(new Error('imagen_no_valida')); };
+        image.src = source;
+      });
     });
   }
   function readList(key) {
@@ -83,7 +138,10 @@
       demasiados_enlaces: 'Solo se permiten hasta dos enlaces.',
       contenido_vacio: 'Escribe un mensaje antes de publicar.',
       post_not_found: 'La publicación ya no está disponible.',
-      forbidden: 'No tienes permiso para realizar esta acción.'
+      forbidden: 'No tienes permiso para realizar esta acción.',
+      attachment_invalid: 'El archivo no es válido o su formato no está permitido.',
+      attachment_too_large: 'El archivo supera el tamaño permitido.',
+      media_not_found: 'El archivo adjunto ya no está disponible.'
     }[key] || 'No se pudo completar la acción. Inténtalo nuevamente.';
   }
   function toast(message) {
@@ -136,8 +194,23 @@
       if (state.filter === 'recent' && Number(post.createdAt || 0) < Date.now() - 7 * 86400000) return false;
       if (!query) return true;
       var author = post.author || {};
-      return [post.text, author.displayName, author.username, academicLabel(author)].join(' ').toLowerCase().indexOf(query) !== -1;
+      return [post.text, (post.hashtags || []).map(function (tag) { return '#' + tag; }).join(' '), author.displayName, author.username, academicLabel(author)].join(' ').toLowerCase().indexOf(query) !== -1;
     });
+  }
+  function attachmentMarkup(attachment) {
+    if (!attachment || !attachment.url) return '';
+    var name = safe(attachment.name || (attachment.kind === 'pdf' ? 'Documento PDF' : 'Archivo adjunto'));
+    var url = safe(attachment.url);
+    if (attachment.kind === 'image') {
+      return '<div class="unitalk-post-media"><img src="' + url + '" alt="' + name + '" loading="lazy"><div class="unitalk-media-note">🖼️ ' + name + '</div></div>';
+    }
+    if (attachment.kind === 'video') {
+      return '<div class="unitalk-post-media"><video src="' + url + '" controls preload="none" playsinline aria-label="' + name + '"></video><div class="unitalk-media-note">🎬 ' + name + ' · ' + safe(bytesLabel(attachment.size)) + '</div></div>';
+    }
+    if (attachment.kind === 'pdf') {
+      return '<div class="unitalk-post-media"><a class="unitalk-post-file" href="' + url + '" target="_blank" rel="noopener"><span>📄</span><span><strong>' + name + '</strong><small>PDF · ' + safe(bytesLabel(attachment.size)) + ' · Abrir documento</small></span></a></div>';
+    }
+    return '';
   }
   function postMarkup(post, compact) {
     var author = post.author || {};
@@ -147,7 +220,8 @@
       avatar(author) + '<span><strong>' + safe(author.displayName || 'Estudiante Universe') + '</strong><small>@' + safe(author.username || 'usuario') + ' · ' + safe(academicLabel(author)) + '</small></span></button>' +
       '<time class="unitalk-time">' + safe(relativeTime(post.createdAt)) + '</time></div>' +
       (post.discussion ? '<span class="unitalk-post-label">💬 Discusión académica</span>' : '') +
-      '<p class="unitalk-post-text">' + safe(post.text) + '</p>' +
+      (post.text ? '<p class="unitalk-post-text">' + textWithHashtags(post.text) + '</p>' : '') +
+      attachmentMarkup(post.attachment) +
       '<div class="unitalk-post-actions">' +
       '<button class="unitalk-action ' + (post.myReaction === 'like' ? 'active-like' : '') + '" type="button" data-post-action="like">👍 <b>' + Number(post.likes || 0) + '</b></button>' +
       '<button class="unitalk-action ' + (post.myReaction === 'dislike' ? 'active-dislike' : '') + '" type="button" data-post-action="dislike">👎 <b>' + Number(post.dislikes || 0) + '</b></button>' +
@@ -190,17 +264,105 @@
     $('unitalk-char-count').textContent = String(text.length);
     $('unitalk-mode-chip').hidden = !state.discussion;
     $('unitalk-discussion').classList.toggle('active', state.discussion);
+    $('unitalk-hashtag-panel').hidden = !state.hashtagPanel;
+    $('unitalk-hashtag-toggle').classList.toggle('active', state.hashtagPanel);
+    document.querySelectorAll('[data-attachment-kind]').forEach(function (button) {
+      button.classList.toggle('active', !!state.attachment && button.dataset.attachmentKind === state.attachment.kind);
+    });
+    renderAttachmentPreview();
+  }
+  function renderAttachmentPreview() {
+    var panel = $('unitalk-attachment-panel');
+    var root = $('unitalk-attachment-preview');
+    var attachment = state.attachment;
+    panel.hidden = !attachment;
+    if (!attachment) { root.innerHTML = ''; return; }
+    var name = safe(attachment.name);
+    if (attachment.kind === 'image') root.innerHTML = '<div class="unitalk-attachment-preview"><img src="' + safe(attachment.dataUrl) + '" alt="' + name + '"></div>';
+    else if (attachment.kind === 'video') root.innerHTML = '<div class="unitalk-attachment-preview"><video src="' + safe(attachment.dataUrl) + '" controls preload="metadata" playsinline></video></div>';
+    else root.innerHTML = '<div class="unitalk-attachment-file"><span>📄</span><span><strong>' + name + '</strong><small>' + safe(bytesLabel(attachment.size)) + '</small></span></div>';
+  }
+  async function chooseAttachment(kind, file) {
+    var rule = ATTACHMENT_RULES[kind];
+    var status = $('unitalk-composer-status');
+    if (!rule || !file || rule.types.indexOf(file.type) === -1) {
+      status.textContent = 'Ese formato no está permitido.';
+      status.className = 'unitalk-status error';
+      return;
+    }
+    status.textContent = 'Preparando ' + rule.label + '...';
+    status.className = 'unitalk-status';
+    try {
+      var prepared;
+      if (kind === 'image') prepared = await compressImage(file);
+      else {
+        if (file.size > rule.max) throw new Error('attachment_too_large');
+        prepared = { dataUrl: await fileToDataUrl(file), size: file.size, mime: file.type };
+      }
+      if (prepared.size > rule.max) throw new Error('attachment_too_large');
+      state.attachment = {
+        kind: kind,
+        name: String(file.name || rule.label).slice(0, 90),
+        mime: prepared.mime,
+        size: prepared.size,
+        dataUrl: prepared.dataUrl
+      };
+      status.textContent = 'Archivo listo. Puedes añadir un texto o publicarlo directamente.';
+      status.className = 'unitalk-status good';
+      updateComposer();
+    } catch (error) {
+      state.attachment = null;
+      status.textContent = error.message === 'attachment_too_large'
+        ? 'Tamaño máximo: fotos 1.2 MB, PDF 3 MB y video 6 MB.'
+        : 'No se pudo preparar el archivo seleccionado.';
+      status.className = 'unitalk-status error';
+      updateComposer();
+    }
+  }
+  function addHashtag() {
+    var input = $('unitalk-hashtag-input');
+    var tag = hashtagValue(input.value);
+    var status = $('unitalk-composer-status');
+    if (tag.length < 2) {
+      status.textContent = 'Escribe un hashtag de al menos dos caracteres.';
+      status.className = 'unitalk-status error';
+      return;
+    }
+    var textarea = $('unitalk-post-text');
+    var tokenText = '#' + tag;
+    var current = textarea.value;
+    if (new RegExp('(^|\\s)#' + tag + '(?=\\s|$)', 'i').test(current)) {
+      status.textContent = 'Ese hashtag ya está incluido.';
+      status.className = 'unitalk-status';
+      return;
+    }
+    var insertion = (current && !/\s$/.test(current) ? ' ' : '') + tokenText;
+    if (current.length + insertion.length > 400) {
+      status.textContent = 'No queda espacio suficiente para ese hashtag.';
+      status.className = 'unitalk-status error';
+      return;
+    }
+    textarea.value = current + insertion;
+    input.value = '';
+    state.hashtagPanel = false;
+    status.textContent = tokenText + ' añadido.';
+    status.className = 'unitalk-status good';
+    updateComposer();
+    textarea.focus();
   }
   async function publish() {
     var text = $('unitalk-post-text').value.trim();
     var status = $('unitalk-composer-status');
-    if (!text) { status.textContent = 'Escribe algo antes de publicar.'; status.className = 'unitalk-status error'; return; }
+    if (!text && !state.attachment) { status.textContent = 'Escribe algo o selecciona un archivo antes de publicar.'; status.className = 'unitalk-status error'; return; }
     var button = $('unitalk-publish');
     button.disabled = true;
     try {
-      var result = await api('/posts', 'POST', { text: text, discussion: state.discussion });
+      var result = await api('/posts', 'POST', { text: text, discussion: state.discussion, attachment: state.attachment });
       $('unitalk-post-text').value = '';
       state.discussion = false;
+      state.attachment = null;
+      state.hashtagPanel = false;
+      ['unitalk-image-input', 'unitalk-video-input', 'unitalk-pdf-input'].forEach(function (id) { $(id).value = ''; });
       updateComposer();
       status.textContent = 'Publicación compartida correctamente.';
       status.className = 'unitalk-status good';
@@ -381,6 +543,37 @@
     $('unitalk-post-text').addEventListener('input', updateComposer);
     $('unitalk-publish').onclick = publish;
     $('unitalk-discussion').onclick = function () { state.discussion = !state.discussion; updateComposer(); };
+    $('unitalk-hashtag-toggle').onclick = function () {
+      state.hashtagPanel = !state.hashtagPanel;
+      updateComposer();
+      if (state.hashtagPanel) setTimeout(function () { $('unitalk-hashtag-input').focus(); }, 0);
+    };
+    $('unitalk-hashtag-add').onclick = addHashtag;
+    $('unitalk-hashtag-input').addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') { event.preventDefault(); addHashtag(); }
+    });
+    $('unitalk-attachment-remove').onclick = function () {
+      state.attachment = null;
+      ['unitalk-image-input', 'unitalk-video-input', 'unitalk-pdf-input'].forEach(function (id) { $(id).value = ''; });
+      $('unitalk-composer-status').textContent = 'Archivo retirado.';
+      $('unitalk-composer-status').className = 'unitalk-status';
+      updateComposer();
+    };
+    document.querySelectorAll('[data-attachment-kind]').forEach(function (button) {
+      button.onclick = function () {
+        var target = button.dataset.attachmentKind === 'image' ? 'unitalk-image-input' : button.dataset.attachmentKind === 'video' ? 'unitalk-video-input' : 'unitalk-pdf-input';
+        $(target).click();
+      };
+    });
+    [
+      ['unitalk-image-input', 'image'],
+      ['unitalk-video-input', 'video'],
+      ['unitalk-pdf-input', 'pdf']
+    ].forEach(function (entry) {
+      $(entry[0]).addEventListener('change', function () {
+        if (this.files && this.files[0]) chooseAttachment(entry[1], this.files[0]);
+      });
+    });
     $('unitalk-profile-action').onclick = function () { location.href = '/account'; };
     $('unitalk-sidebar-publish').onclick = function () { setView('home'); setTimeout(function () { $('unitalk-post-text').focus(); }, 0); };
     $('unitalk-join-button').onclick = function () { if (!currentGoogleUser() && window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); else { setView('home'); $('unitalk-post-text').focus(); } };
@@ -400,6 +593,15 @@
       if (viewButton) { event.preventDefault(); setView(viewButton.dataset.view); $('unitalk-account-menu').hidden = true; return; }
       var profileButton = event.target.closest('[data-profile]');
       if (profileButton) { openProfile(profileButton.dataset.profile); return; }
+      var hashtagButton = event.target.closest('[data-hashtag]');
+      if (hashtagButton) {
+        state.search = '#' + hashtagButton.dataset.hashtag;
+        $('unitalk-search-input').value = state.search;
+        $('unitalk-search-clear').hidden = false;
+        setView('home');
+        renderFeed();
+        return;
+      }
       var actionButton = event.target.closest('[data-post-action]');
       if (actionButton) { handlePostAction(actionButton); return; }
       var closeButton = event.target.closest('[data-close-modal]');
