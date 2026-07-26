@@ -15,7 +15,8 @@
     search: '',
     discussion: false,
     attachment: null,
-    hashtagPanel: false,
+    pollActive: false,
+    pollOptions: ['', ''],
     activePostId: '',
     saved: new Set(readList(SAVED_KEY))
   };
@@ -44,7 +45,7 @@
   }
   function textWithHashtags(value) {
     return safe(value).replace(/(^|\s)#([\p{L}\p{N}_]{2,30})/gu, function (_, prefix, tag) {
-      return prefix + '<button class="unitalk-hashtag" type="button" data-hashtag="' + safe(hashtagValue(tag)) + '">#' + safe(tag) + '</button>';
+      return prefix + '<a class="unitalk-hashtag" href="/unitalk?tag=' + encodeURIComponent(hashtagValue(tag)) + '" data-hashtag="' + safe(hashtagValue(tag)) + '">#' + safe(tag) + '</a>';
     });
   }
   function fileToDataUrl(file) {
@@ -141,7 +142,10 @@
       forbidden: 'No tienes permiso para realizar esta acción.',
       attachment_invalid: 'El archivo no es válido o su formato no está permitido.',
       attachment_too_large: 'El archivo supera el tamaño permitido.',
-      media_not_found: 'El archivo adjunto ya no está disponible.'
+      media_not_found: 'El archivo adjunto ya no está disponible.',
+      poll_invalid: 'La encuesta necesita entre 2 y 4 alternativas diferentes.',
+      poll_not_found: 'La encuesta ya no está disponible.',
+      poll_option_invalid: 'Selecciona una alternativa válida.'
     }[key] || 'No se pudo completar la acción. Inténtalo nuevamente.';
   }
   function toast(message) {
@@ -212,6 +216,18 @@
     }
     return '';
   }
+  function pollMarkup(poll) {
+    if (!poll || !Array.isArray(poll.options) || poll.options.length < 2) return '';
+    var total = Math.max(0, Number(poll.totalVotes) || 0);
+    return '<section class="unitalk-poll" aria-label="Encuesta"><div class="unitalk-poll-title">📊 Encuesta</div><div class="unitalk-poll-options">' +
+      poll.options.map(function (option) {
+        var votes = Math.max(0, Number(option.votes) || 0);
+        var percent = total ? Math.round(votes * 100 / total) : 0;
+        var selected = poll.myVote === option.id;
+        return '<button class="unitalk-poll-option ' + (selected ? 'selected' : '') + '" type="button" data-poll-option="' + safe(option.id) + '" style="--poll-percent:' + percent + '%">' +
+          '<span class="unitalk-poll-bar" aria-hidden="true"></span><span class="unitalk-poll-option-text">' + safe(option.text) + '</span><span class="unitalk-poll-result">' + percent + '%</span></button>';
+      }).join('') + '</div><small>' + total + (total === 1 ? ' voto' : ' votos') + (poll.myVote ? ' · Tu voto está marcado' : '') + '</small></section>';
+  }
   function postMarkup(post, compact) {
     var author = post.author || {};
     var saved = state.saved.has(post.id);
@@ -222,6 +238,7 @@
       (post.discussion ? '<span class="unitalk-post-label">💬 Discusión académica</span>' : '') +
       (post.text ? '<p class="unitalk-post-text">' + textWithHashtags(post.text) + '</p>' : '') +
       attachmentMarkup(post.attachment) +
+      pollMarkup(post.poll) +
       '<div class="unitalk-post-actions">' +
       '<button class="unitalk-action ' + (post.myReaction === 'like' ? 'active-like' : '') + '" type="button" data-post-action="like">👍 <b>' + Number(post.likes || 0) + '</b></button>' +
       '<button class="unitalk-action ' + (post.myReaction === 'dislike' ? 'active-dislike' : '') + '" type="button" data-post-action="dislike">👎 <b>' + Number(post.dislikes || 0) + '</b></button>' +
@@ -264,8 +281,8 @@
     $('unitalk-char-count').textContent = String(text.length);
     $('unitalk-mode-chip').hidden = !state.discussion;
     $('unitalk-discussion').classList.toggle('active', state.discussion);
-    $('unitalk-hashtag-panel').hidden = !state.hashtagPanel;
-    $('unitalk-hashtag-toggle').classList.toggle('active', state.hashtagPanel);
+    $('unitalk-poll-panel').hidden = !state.pollActive;
+    $('unitalk-poll-toggle').classList.toggle('active', state.pollActive);
     document.querySelectorAll('[data-attachment-kind]').forEach(function (button) {
       button.classList.toggle('active', !!state.attachment && button.dataset.attachmentKind === state.attachment.kind);
     });
@@ -319,50 +336,52 @@
       updateComposer();
     }
   }
-  function addHashtag() {
-    var input = $('unitalk-hashtag-input');
-    var tag = hashtagValue(input.value);
-    var status = $('unitalk-composer-status');
-    if (tag.length < 2) {
-      status.textContent = 'Escribe un hashtag de al menos dos caracteres.';
-      status.className = 'unitalk-status error';
-      return;
-    }
-    var textarea = $('unitalk-post-text');
-    var tokenText = '#' + tag;
-    var current = textarea.value;
-    if (new RegExp('(^|\\s)#' + tag + '(?=\\s|$)', 'i').test(current)) {
-      status.textContent = 'Ese hashtag ya está incluido.';
-      status.className = 'unitalk-status';
-      return;
-    }
-    var insertion = (current && !/\s$/.test(current) ? ' ' : '') + tokenText;
-    if (current.length + insertion.length > 400) {
-      status.textContent = 'No queda espacio suficiente para ese hashtag.';
-      status.className = 'unitalk-status error';
-      return;
-    }
-    textarea.value = current + insertion;
-    input.value = '';
-    state.hashtagPanel = false;
-    status.textContent = tokenText + ' añadido.';
-    status.className = 'unitalk-status good';
-    updateComposer();
-    textarea.focus();
+  function renderPollBuilder() {
+    var panel = $('unitalk-poll-panel');
+    var root = $('unitalk-poll-options');
+    panel.hidden = !state.pollActive;
+    $('unitalk-poll-toggle').classList.toggle('active', state.pollActive);
+    if (!state.pollActive) { root.innerHTML = ''; return; }
+    root.innerHTML = state.pollOptions.map(function (option, index) {
+      return '<label class="unitalk-poll-builder-option"><span>' + (index + 1) + '</span><input type="text" maxlength="80" value="' + safe(option) + '" placeholder="Alternativa ' + (index + 1) + '" data-poll-builder-index="' + index + '">' +
+        (state.pollOptions.length > 2 ? '<button type="button" data-poll-remove="' + index + '" aria-label="Quitar alternativa ' + (index + 1) + '">×</button>' : '') + '</label>';
+    }).join('');
+    $('unitalk-poll-add-option').hidden = state.pollOptions.length >= 4;
+    root.querySelectorAll('[data-poll-builder-index]').forEach(function (input) {
+      input.addEventListener('input', function () { state.pollOptions[Number(input.dataset.pollBuilderIndex)] = input.value; });
+    });
+    root.querySelectorAll('[data-poll-remove]').forEach(function (button) {
+      button.onclick = function () {
+        state.pollOptions.splice(Number(button.dataset.pollRemove), 1);
+        renderPollBuilder();
+      };
+    });
+  }
+  function pollPayload() {
+    if (!state.pollActive) return null;
+    var options = state.pollOptions.map(function (option) { return String(option || '').trim(); });
+    var normalized = options.map(function (option) { return option.toLowerCase(); });
+    if (options.length < 2 || options.length > 4 || options.some(function (option) { return !option; }) || new Set(normalized).size !== options.length) return false;
+    return { options: options };
   }
   async function publish() {
     var text = $('unitalk-post-text').value.trim();
     var status = $('unitalk-composer-status');
+    var poll = pollPayload();
+    if (state.pollActive && !text) { status.textContent = 'Escribe la pregunta de la encuesta en la publicación.'; status.className = 'unitalk-status error'; return; }
+    if (poll === false) { status.textContent = 'Completa entre 2 y 4 alternativas diferentes.'; status.className = 'unitalk-status error'; return; }
     if (!text && !state.attachment) { status.textContent = 'Escribe algo o selecciona un archivo antes de publicar.'; status.className = 'unitalk-status error'; return; }
     var button = $('unitalk-publish');
     button.disabled = true;
     try {
-      var result = await api('/posts', 'POST', { text: text, discussion: state.discussion, attachment: state.attachment });
+      var result = await api('/posts', 'POST', { text: text, discussion: state.discussion, attachment: state.attachment, poll: poll });
       $('unitalk-post-text').value = '';
       state.discussion = false;
       state.attachment = null;
-      state.hashtagPanel = false;
+      state.pollActive = false;
+      state.pollOptions = ['', ''];
       ['unitalk-image-input', 'unitalk-video-input', 'unitalk-pdf-input'].forEach(function (id) { $(id).value = ''; });
+      renderPollBuilder();
       updateComposer();
       status.textContent = 'Publicación compartida correctamente.';
       status.className = 'unitalk-status good';
@@ -384,6 +403,14 @@
       post.dislikes = result.dislikes;
       post.myReaction = result.myReaction;
       renderFeed();
+    } catch (error) { requireAccount(error) || requireProfile(error) || toast(errorText(error)); }
+  }
+  async function votePoll(post, optionId) {
+    try {
+      var result = await api('/posts/' + encodeURIComponent(post.id) + '/poll-vote', 'PUT', { optionId: optionId });
+      post.poll = result.poll;
+      renderFeed();
+      if (state.activePostId === post.id) await loadConversation(post.id);
     } catch (error) { requireAccount(error) || requireProfile(error) || toast(errorText(error)); }
   }
   function savePost(postId) {
@@ -543,15 +570,17 @@
     $('unitalk-post-text').addEventListener('input', updateComposer);
     $('unitalk-publish').onclick = publish;
     $('unitalk-discussion').onclick = function () { state.discussion = !state.discussion; updateComposer(); };
-    $('unitalk-hashtag-toggle').onclick = function () {
-      state.hashtagPanel = !state.hashtagPanel;
+    $('unitalk-poll-toggle').onclick = function () {
+      state.pollActive = !state.pollActive;
+      if (state.pollActive && state.pollOptions.length < 2) state.pollOptions = ['', ''];
+      renderPollBuilder();
       updateComposer();
-      if (state.hashtagPanel) setTimeout(function () { $('unitalk-hashtag-input').focus(); }, 0);
     };
-    $('unitalk-hashtag-add').onclick = addHashtag;
-    $('unitalk-hashtag-input').addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') { event.preventDefault(); addHashtag(); }
-    });
+    $('unitalk-poll-close').onclick = function () { state.pollActive = false; state.pollOptions = ['', '']; renderPollBuilder(); updateComposer(); };
+    $('unitalk-poll-add-option').onclick = function () {
+      if (state.pollOptions.length < 4) state.pollOptions.push('');
+      renderPollBuilder();
+    };
     $('unitalk-attachment-remove').onclick = function () {
       state.attachment = null;
       ['unitalk-image-input', 'unitalk-video-input', 'unitalk-pdf-input'].forEach(function (id) { $(id).value = ''; });
@@ -584,7 +613,7 @@
       $('unitalk-account-menu').hidden = !$('unitalk-account-menu').hidden;
     };
     $('unitalk-search-input').addEventListener('input', function () { state.search = this.value.trim(); $('unitalk-search-clear').hidden = !state.search; if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); });
-    $('unitalk-search-clear').onclick = function () { $('unitalk-search-input').value = ''; state.search = ''; this.hidden = true; if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); };
+    $('unitalk-search-clear').onclick = function () { $('unitalk-search-input').value = ''; state.search = ''; this.hidden = true; if (location.search) history.replaceState({}, '', location.pathname); if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); };
     document.querySelectorAll('.unitalk-tab').forEach(function (button) { button.onclick = function () { state.filter = button.dataset.filter; document.querySelectorAll('.unitalk-tab').forEach(function (tab) { tab.classList.toggle('active', tab === button); }); renderFeed(); }; });
     $('unitalk-comment-send').onclick = sendComment;
     $('unitalk-comment-input').addEventListener('keydown', function (event) { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') sendComment(); });
@@ -595,11 +624,20 @@
       if (profileButton) { openProfile(profileButton.dataset.profile); return; }
       var hashtagButton = event.target.closest('[data-hashtag]');
       if (hashtagButton) {
+        event.preventDefault();
         state.search = '#' + hashtagButton.dataset.hashtag;
         $('unitalk-search-input').value = state.search;
         $('unitalk-search-clear').hidden = false;
+        history.replaceState({}, '', '/unitalk?tag=' + encodeURIComponent(hashtagButton.dataset.hashtag));
         setView('home');
         renderFeed();
+        return;
+      }
+      var pollButton = event.target.closest('[data-poll-option]');
+      if (pollButton) {
+        var pollRoot = pollButton.closest('[data-post-id]');
+        var pollPost = pollRoot && postById(pollRoot.dataset.postId);
+        if (pollPost) votePoll(pollPost, pollButton.dataset.pollOption);
         return;
       }
       var actionButton = event.target.closest('[data-post-action]');
@@ -623,6 +661,12 @@
   function boot() {
     setBodyPreferences();
     bind();
+    var initialTag = hashtagValue(new URLSearchParams(location.search).get('tag'));
+    if (initialTag) {
+      state.search = '#' + initialTag;
+      $('unitalk-search-input').value = state.search;
+      $('unitalk-search-clear').hidden = false;
+    }
     renderIdentity();
     updateComposer();
     loadFeed();

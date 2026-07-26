@@ -361,9 +361,9 @@
     $('ann-image-url').value = a.image && String(a.image).indexOf('data:') !== 0 ? a.image : '';
     state.announcementImage = a.image || '';
     if (a.image) { $('ann-preview').src = a.image; $('ann-preview').style.display = 'block'; }
-    $('pc7-title').value = (c.pc7 && c.pc7.title) || '7.ª prueba calificada CEPREUNI';
-    $('pc7-target').value = fromIso(c.pc7 && c.pc7.target) || '2026-07-26T09:00';
-    $('pc7-label').value = (c.pc7 && c.pc7.label) || 'Dom. 26 jul - 9:00 AM';
+    $('final-title').value = (c.final && c.final.title) || 'Examen final CEPREUNI';
+    $('final-target').value = fromIso(c.final && c.final.target) || '2026-08-02T09:00';
+    $('final-label').value = (c.final && c.final.label) || 'Dom. 2 ago - 9:00 AM';
     $('adm-title').value = (c.admision && c.admision.title) || 'Admisión UNI 2026-2';
     $('adm-target').value = fromIso(c.admision && c.admision.target) || '2026-08-10T09:00';
     $('adm-label').value = (c.admision && c.admision.label) || 'Lun. 10 ago - 9:00 AM';
@@ -421,7 +421,7 @@
     if (!isAdmin()) return;
     var data = {
       countdowns: {
-        pc7: { title: $('pc7-title').value.trim(), target: toPeruIso($('pc7-target').value), label: $('pc7-label').value.trim() },
+        final: { title: $('final-title').value.trim(), target: toPeruIso($('final-target').value), label: $('final-label').value.trim() },
         admision: { title: $('adm-title').value.trim(), target: toPeruIso($('adm-target').value), label: $('adm-label').value.trim() }
       },
       extraEvents: state.extraEvents,

@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v=unitalk-app-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unitalk-app-1">
-  <link rel="stylesheet" href="/unitalk.css?v=unitalk-app-3">
+  <link rel="stylesheet" href="/unitalk.css?v=unitalk-app-4">
   <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
@@ -83,20 +83,17 @@
                 <div id="unitalk-attachment-preview"></div>
                 <button id="unitalk-attachment-remove" type="button" aria-label="Quitar archivo">×</button>
               </section>
-              <section class="unitalk-hashtag-panel" id="unitalk-hashtag-panel" hidden>
-                <label for="unitalk-hashtag-input">Añadir hashtag</label>
-                <div>
-                  <span>#</span>
-                  <input id="unitalk-hashtag-input" type="text" maxlength="30" placeholder="fisica_uni" autocomplete="off">
-                  <button id="unitalk-hashtag-add" type="button">Añadir</button>
-                </div>
-                <small>Usa una palabra o separa varias con guion bajo, por ejemplo: #plan_de_estudio.</small>
+              <section class="unitalk-poll-panel" id="unitalk-poll-panel" hidden>
+                <div class="unitalk-poll-builder-head"><strong>Nueva encuesta</strong><button id="unitalk-poll-close" type="button" aria-label="Quitar encuesta">×</button></div>
+                <p>El texto de la publicación será la pregunta. Añade entre 2 y 4 alternativas.</p>
+                <div class="unitalk-poll-builder-options" id="unitalk-poll-options"></div>
+                <button class="unitalk-poll-add-option" id="unitalk-poll-add-option" type="button">+ Añadir alternativa</button>
               </section>
               <div class="unitalk-composer-actions">
                 <button class="unitalk-compose-action" type="button" data-attachment-kind="image">🖼️ <span>Foto</span></button>
                 <button class="unitalk-compose-action" type="button" data-attachment-kind="video">🎬 <span>Video</span></button>
                 <button class="unitalk-compose-action" type="button" data-attachment-kind="pdf">📄 <span>PDF</span></button>
-                <button class="unitalk-compose-action" id="unitalk-hashtag-toggle" type="button"># <span>Hashtag</span></button>
+                <button class="unitalk-compose-action" id="unitalk-poll-toggle" type="button">📊 <span>Encuesta</span></button>
                 <button class="unitalk-compose-action" id="unitalk-discussion" type="button">💬 <span>Discutir</span></button>
                 <button class="unitalk-compose-action" id="unitalk-profile-action" type="button">👤 <span>Mi perfil</span></button>
                 <button class="unitalk-publish" id="unitalk-publish" type="button">Publicar</button>
@@ -156,7 +153,7 @@
 
   <div id="unitalk-toast" class="unitalk-toast" role="status" aria-live="polite"></div>
 
-  <script src="/unitalk.js?v=unitalk-app-3" defer></script>
+  <script src="/unitalk.js?v=unitalk-app-4" defer></script>
   <script src="/universe-polish.js?v=unitalk-2" defer></script>
 </body>
 </html>
