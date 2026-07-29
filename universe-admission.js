@@ -4,6 +4,9 @@
   var AD = window.UNIVERSE_ADMISSION_DATA || {};
   var DATA = AD.DATA || {};
   var TOTALS = AD.TOTALS || {};
+  var MODALITY_TOTALS = {
+    '2025-2': {ordinaryEntrants:832, cepreEntrants:337, totalEntrants:1275}
+  };
   var SOURCE_URLS = AD.SOURCE_URLS || {};
   var EXTRA_SOURCES = AD.EXTRA_SOURCES || {};
   var CAREERS = AD.CAREERS || [];
@@ -48,6 +51,10 @@
       ['Cantidad de postulantes',total?nf0.format(total):'Sin dato',cycle==='2026-2'?'referencia histórica/proceso vigente':'total del concurso'],
       ['Corte mínimo bajo',low?score(low.minRaw):'Sin dato',low?low.career:'']
     ];
+    var modality=MODALITY_TOTALS[cycle];
+    if(modality){
+      kpis.splice(5,0,['Ingresantes por examen ordinario',nf0.format(modality.ordinaryEntrants),nf0.format(modality.cepreEntrants)+' ingresaron por CEPREUNI · '+nf0.format(modality.totalEntrants)+' en todas las modalidades']);
+    }
     box.innerHTML=kpis.map(function(k){return '<article><span>'+safe(k[0])+'</span><strong>'+safe(k[1])+'</strong><small>'+safe(k[2])+'</small></article>'}).join('')}
   function renderBars(rows){var box=$('#scoreBars');if(!box)return;var list=rows.slice().sort(function(a,b){return (b.minRaw||0)-(a.minRaw||0)});box.innerHTML=list.map(function(r){var min=clamp((r.minRaw||0)/MAX_SCORE*100,0,100),max=clamp((r.maxRaw||0)/MAX_SCORE*100,0,100);return '<div class="bar-row"><div class="label" title="'+safe(r.career)+'">'+safe(r.career)+'</div><div class="bar-track"><i style="width:'+max+'%"></i><b style="width:'+min+'%"></b></div><div class="value">'+score(r.minRaw)+' / '+score(r.maxRaw)+'</div></div>'}).join('')}
   function renderDemand(rows){var box=$('#demandChart');if(!box)return;var list=rows.filter(function(r){return r.applicants!=null}).sort(function(a,b){return (b.applicants||0)-(a.applicants||0)});var top=list.slice(0,12);var max=top.length?top[0].applicants||1:1;box.innerHTML=top.map(function(r){var pct=clamp((r.applicants||0)/max*100,0,100);return '<div class="demand-item"><b title="'+safe(r.career)+'">'+safe(r.career)+'</b><small>'+nf0.format(r.applicants||0)+'</small><div class="demand-pill"><span style="width:'+pct+'%"></span></div></div>'}).join('')||'<p class="admission-note">No hay postulantes publicados para este ciclo.</p>'}
