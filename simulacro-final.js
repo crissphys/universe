@@ -29,7 +29,8 @@
     ticking: null,
     monitoring: false,
     lastIncidentAt: 0,
-    joinedRunId: ''
+    joinedRunId: '',
+    saveChain: Promise.resolve()
   };
 
   function esc(value) {
@@ -124,6 +125,8 @@
       exam_time_expired: 'El tiempo del examen terminó y el envío ya fue cerrado.',
       already_submitted: 'Este intento ya fue enviado.',
       exam_blocked: 'El intento está bloqueado.',
+      no_session: 'No hay una sesión activa para finalizar.',
+      invalid_answer: 'No se pudo guardar esa alternativa.',
       justification_too_short: 'Explica el motivo con al menos 12 caracteres.',
       rate_limited: 'Se realizaron demasiadas acciones seguidas. Espera unos segundos.'
     };
@@ -140,6 +143,17 @@
     var key = answerStorageKey();
     if (!key) return;
     try { sessionStorage.setItem(key, JSON.stringify(state.answers)); } catch (error) {}
+  }
+
+  function queueAnswerSave(id, answer) {
+    state.saveChain = state.saveChain
+      .catch(function () {})
+      .then(function () {
+        return api('save', 'POST', { id: id, answer: answer });
+      })
+      .catch(function (error) {
+        if (error && (error.status === 409 || error.status === 423)) return loadState(true);
+      });
   }
 
   function restoreAnswers() {
@@ -210,24 +224,30 @@
     });
   }
 
-  function adminParticipantRows(participants, published) {
+  function adminParticipantTable(participants) {
     if (!participants.length) return '<p class="ufe-muted">Aún no hay estudiantes registrados en esta sala.</p>';
-    return participants.map(function (p) {
+    var sorted = participants.slice().sort(function (a, b) {
+      var scoreA = a.result ? Number(a.result.percentage) || 0 : -1;
+      var scoreB = b.result ? Number(b.result.percentage) || 0 : -1;
+      if (scoreA !== scoreB) return scoreB - scoreA;
+      if (a.blocked !== b.blocked) return a.blocked ? 1 : -1;
+      return String(a.code || '').localeCompare(String(b.code || ''));
+    });
+    var rows = sorted.map(function (p, index) {
       var result = p.result;
       var justification = p.justification;
       var review = justification && justification.status === 'pending'
         ? '<div class="ufe-actions"><button class="ufe-btn" data-review="approved" data-user="' + esc(p.userId) + '">Aprobar</button><button class="ufe-btn ufe-btn-danger" data-review="rejected" data-user="' + esc(p.userId) + '">Rechazar</button></div>'
         : '';
-      return [
-        '<div class="ufe-admin-row">',
-        '<div class="ufe-admin-person"><strong>' + esc(p.code) + ' · ' + esc(p.name) + '</strong><small>' + esc(p.email || '') + '</small>',
-        '<small>' + (p.submittedAt ? 'Enviado' : p.blocked ? 'Bloqueado' : 'En curso o en espera') + ' · ' + p.violations + '/2 incidencias' + (result ? ' · ' + result.correct + '/60 correctas' : '') + '</small>',
-        justification ? '<small><strong>Justificación:</strong> ' + esc(justification.text) + ' · ' + esc(justification.status) + '</small>' : '',
-        '</div>',
-        review,
-        '</div>'
-      ].join('');
+      var score = p.blocked ? '0/0' : result ? result.correct + '/60' : 'Pendiente';
+      var percentage = p.blocked ? '0 %' : result ? result.percentage + ' %' : '—';
+      var status = p.blocked ? 'Bloqueado' : p.submittedAt ? 'Finalizado' : 'En curso o en espera';
+      var justificationMarkup = justification
+        ? '<div class="ufe-ranking-note"><span>' + esc(justification.text) + '</span><small>' + esc(justification.status) + '</small>' + review + '</div>'
+        : '—';
+      return '<tr class="' + (p.blocked ? 'is-blocked' : '') + '"><td><strong>' + (index + 1) + '</strong></td><td><strong>' + esc(p.code) + '</strong><br><span class="ufe-muted">' + esc(p.name) + '</span><br><small class="ufe-muted">' + esc(p.email || '') + '</small></td><td>' + esc(status) + '</td><td class="ufe-ranking-score"><strong>' + esc(score) + '</strong><span>' + esc(percentage) + '</span></td><td>' + p.violations + '/2</td><td>' + justificationMarkup + '</td></tr>';
     }).join('');
+    return '<div class="ufe-table-wrap"><table class="ufe-table ufe-ranking-table"><thead><tr><th>Puesto</th><th>Código y estudiante</th><th>Estado</th><th>Nota</th><th>Incidencias</th><th>Justificación</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
   function renderAdmin() {
@@ -238,6 +258,7 @@
     var submitted = participants.filter(function (p) { return p.submittedAt; }).length;
     var blocked = participants.filter(function (p) { return p.blocked; }).length;
     var canActivate = session.status === 'waiting';
+    var canFinish = participants.length > 0 && ['waiting', 'countdown', 'active'].includes(session.status);
     renderShell([
       '<section class="ufe-screen" aria-label="Panel del administrador">',
       '<div class="ufe-live-strip" aria-label="Conexiones en tiempo real">',
@@ -251,22 +272,28 @@
       '</div>',
       '<div class="ufe-card ufe-stack">',
       '<div class="ufe-result-head"><div class="ufe-stack"><span class="ufe-badge">' + esc(statusLabel(session)) + '</span><h1 class="ufe-title">Control del examen final</h1></div>',
-      '<div class="ufe-actions"><button class="ufe-btn" id="ufe-open-room" type="button">Abrir nueva sala</button><button class="ufe-btn ufe-btn-primary" id="ufe-activate" type="button" ' + (canActivate ? '' : 'disabled') + '>Activar 30 segundos</button><button class="ufe-btn" id="ufe-publish" type="button" ' + (submitted ? '' : 'disabled') + '>Publicar notas</button></div></div>',
+      '<div class="ufe-actions"><button class="ufe-btn" id="ufe-open-room" type="button">Abrir nueva sala</button><button class="ufe-btn ufe-btn-primary" id="ufe-activate" type="button" ' + (canActivate ? '' : 'disabled') + '>Activar 30 segundos</button><button class="ufe-btn ufe-btn-danger" id="ufe-finish-all" type="button" ' + (canFinish ? '' : 'disabled') + '>Finalizar para todos</button><button class="ufe-btn" id="ufe-publish" type="button" ' + (submitted ? '' : 'disabled') + '>Publicar notas</button></div></div>',
       '<p class="ufe-muted">Al activar, todos los estudiantes registrados ven la misma cuenta regresiva y disponen de tres horas. Las preguntas y alternativas cambian de orden para cada código sin mezclar los cursos.</p>',
       '</div>',
-      '<div class="ufe-card ufe-stack"><div class="ufe-result-head"><h2>Participantes y justificaciones</h2><span class="ufe-badge">' + participants.length + ' registrados</span></div>',
-      '<div class="ufe-admin-list">' + adminParticipantRows(participants, Boolean(session.publishedAt)) + '</div></div>',
+      '<div class="ufe-card ufe-stack"><div class="ufe-result-head"><h2>Ranking completo</h2><span class="ufe-badge">' + participants.length + ' registrados</span></div>',
+      '<p class="ufe-muted">Ordenado de mayor a menor nota. Los intentos bloqueados figuran con 0/0.</p>',
+      '<div class="ufe-admin-list">' + adminParticipantTable(participants) + '</div></div>',
       '</section>'
     ].join(''));
 
     var open = document.getElementById('ufe-open-room');
     var activate = document.getElementById('ufe-activate');
+    var finishAll = document.getElementById('ufe-finish-all');
     var publish = document.getElementById('ufe-publish');
     if (open) open.addEventListener('click', function () {
       if (!window.confirm('Se abrirá una nueva sala y la sesión anterior dejará de ser la activa. ¿Continuar?')) return;
       adminAction('admin/open');
     });
     if (activate) activate.addEventListener('click', function () { adminAction('admin/activate'); });
+    if (finishAll) finishAll.addEventListener('click', function () {
+      if (!window.confirm('Se cerrará el examen para todos y se corregirán las respuestas guardadas hasta este instante. Los bloqueados tendrán 0/0. ¿Continuar?')) return;
+      adminAction('admin/finish');
+    });
     if (publish) publish.addEventListener('click', function () {
       if (!window.confirm('¿Publicar ahora las notas y soluciones para los estudiantes que entregaron?')) return;
       adminAction('admin/publish');
@@ -436,6 +463,7 @@
       button.addEventListener('click', function () {
         state.answers[q.id] = decodeURIComponent(button.getAttribute('data-option'));
         saveAnswers();
+        queueAnswerSave(q.id, state.answers[q.id]);
         if (state.current < state.order.length - 1) state.current += 1;
         renderExam();
       });
@@ -530,6 +558,7 @@
     state.monitoring = false;
     state.error = '';
     try {
+      await state.saveChain.catch(function () {});
       await api('submit', 'POST', { answers: state.answers });
       clearAnswers();
       await loadState(true);

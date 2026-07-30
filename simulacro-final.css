@@ -545,6 +545,46 @@ html[data-universe-theme="dark"] .ufe-card {
   font-weight: 700;
 }
 
+.ufe-ranking-table {
+  min-width: 920px;
+}
+
+.ufe-ranking-table tr.is-blocked {
+  background: var(--ufe-danger-soft);
+}
+
+.ufe-ranking-score strong,
+.ufe-ranking-score span,
+.ufe-ranking-note,
+.ufe-ranking-note > span,
+.ufe-ranking-note > small {
+  display: block;
+}
+
+.ufe-ranking-score strong {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.08rem;
+}
+
+.ufe-ranking-score span,
+.ufe-ranking-note > small {
+  color: var(--ufe-muted);
+  font-size: .76rem;
+}
+
+.ufe-ranking-note {
+  min-width: 210px;
+}
+
+.ufe-ranking-note .ufe-actions {
+  margin-top: 7px;
+}
+
+.ufe-ranking-note .ufe-btn {
+  min-height: 34px;
+  padding: 6px 9px;
+}
+
 .ufe-course-score {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

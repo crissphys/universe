@@ -1260,6 +1260,15 @@ function examPresencePhase(session, participant) {
 
 function examPresenceSummary(values, session) {
   values = values && typeof values === 'object' ? values : {};
+  if (!session || !['waiting', 'countdown', 'active'].includes(session.status)) {
+    return {
+      connected: 0,
+      waiting: 0,
+      taking: 0,
+      observedAt: Date.now(),
+      staleAfterSeconds: EXAM_PRESENCE_WINDOW_MS / 1000
+    };
+  }
   var cutoff = Date.now() - EXAM_PRESENCE_WINDOW_MS;
   var waiting = 0;
   var taking = 0;
@@ -1423,6 +1432,24 @@ async function handleExam(request, env, subpath) {
     return json({ participant: publicExamParticipant(incidentParticipant, false) });
   }
 
+  if (path === '/save' && method === 'POST') {
+    if (session.status !== 'active') return json({ error: 'exam_not_active' }, 409);
+    var savePath = EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id;
+    var saveParticipant = await firebase(env, savePath, 'GET');
+    if (!saveParticipant) return json({ error: 'not_joined' }, 409);
+    if (saveParticipant.blocked) return json({ error: 'exam_blocked' }, 423);
+    if (saveParticipant.submittedAt) return json({ error: 'already_submitted' }, 409);
+    var answerId = cleanId(body.id);
+    var answerValue = cleanText(body.answer, 300);
+    if (!EXAM_KEY[answerId] || !answerValue) return json({ error: 'invalid_answer' }, 400);
+    var savedAnswers = saveParticipant.answers && typeof saveParticipant.answers === 'object'
+      ? saveParticipant.answers
+      : {};
+    savedAnswers[answerId] = answerValue;
+    await firebase(env, savePath, 'PATCH', { answers: savedAnswers, lastAnswerAt: Date.now() });
+    return json({ ok: true, id: Number(answerId) });
+  }
+
   if (path === '/justify' && method === 'POST') {
     var justificationPath = EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id;
     var justificationParticipant = await firebase(env, justificationPath, 'GET');
@@ -1489,6 +1516,61 @@ async function handleExam(request, env, subpath) {
     var publishedAt = Date.now();
     await firebase(env, EXAM_ROOT + '/session', 'PATCH', { publishedAt, updatedAt: publishedAt });
     return json({ ok: true, publishedAt });
+  }
+
+  if (path === '/admin/finish' && method === 'POST') {
+    if (!session.runId) return json({ error: 'no_session' }, 409);
+    if (storedSession.finalizedAt) {
+      return json({
+        ok: true,
+        finalizedAt: Math.max(0, Number(storedSession.finalizedAt) || 0),
+        alreadyFinalized: true
+      });
+    }
+    var finishPath = EXAM_ROOT + '/runs/' + session.runId + '/participants';
+    var finishParticipants = await firebase(env, finishPath, 'GET') || {};
+    var finalizedAt = Date.now();
+    var finishPatch = {};
+    Object.keys(finishParticipants).forEach(function (id) {
+      var row = finishParticipants[id] && typeof finishParticipants[id] === 'object'
+        ? finishParticipants[id]
+        : {};
+      if (row.submittedAt && row.result) {
+        finishPatch[id] = row;
+        return;
+      }
+      var result = row.blocked ? {
+        correct: 0,
+        incorrect: 0,
+        unanswered: 0,
+        percentage: 0,
+        courseBreakdown: {},
+        missed: [],
+        status: 'blocked',
+        display: '0/0'
+      } : Object.assign(gradeExamAnswers(row.answers), {
+        status: 'finished_by_admin',
+        display: ''
+      });
+      finishPatch[id] = Object.assign({}, row, {
+        result,
+        submittedAt: finalizedAt,
+        finishedByAdmin: true
+      });
+    });
+    if (Object.keys(finishPatch).length) await firebase(env, finishPath, 'PATCH', finishPatch);
+    await firebase(env, EXAM_ROOT + '/session', 'PATCH', {
+      status: 'closed',
+      endAt: finalizedAt,
+      finalizedAt,
+      finalizedBy: auth.id,
+      updatedAt: finalizedAt
+    });
+    return json({
+      ok: true,
+      finalizedAt,
+      participants: Object.keys(finishPatch).length
+    });
   }
 
   if (path === '/admin/review' && method === 'POST') {
