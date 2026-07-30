@@ -1193,6 +1193,7 @@ async function handleAi(request, env) {
 
 const EXAM_ROOT = '/exam/finalV1';
 const EXAM_DURATION_MS = 3 * 60 * 60 * 1000;
+const EXAM_PRESENCE_WINDOW_MS = 15000;
 
 function publicExamSession(value) {
   value = value && typeof value === 'object' ? value : {};
@@ -1247,6 +1248,34 @@ function publicExamParticipant(value, includePrivate, includeResult) {
     };
   }
   return output;
+}
+
+function examPresencePhase(session, participant) {
+  if (!session || !session.runId) return 'idle';
+  if (participant && (participant.blocked || participant.submittedAt)) return 'idle';
+  if (session.status === 'waiting' || session.status === 'countdown') return 'waiting';
+  if (session.status === 'active' && participant) return 'taking';
+  return 'idle';
+}
+
+function examPresenceSummary(values, session) {
+  values = values && typeof values === 'object' ? values : {};
+  var cutoff = Date.now() - EXAM_PRESENCE_WINDOW_MS;
+  var waiting = 0;
+  var taking = 0;
+  Object.keys(values).forEach(function (id) {
+    var value = values[id] && typeof values[id] === 'object' ? values[id] : {};
+    if (cleanId(value.runId) !== session.runId || Number(value.lastSeenAt) < cutoff) return;
+    if (value.phase === 'waiting') waiting += 1;
+    if (value.phase === 'taking') taking += 1;
+  });
+  return {
+    connected: waiting + taking,
+    waiting,
+    taking,
+    observedAt: Date.now(),
+    staleAfterSeconds: EXAM_PRESENCE_WINDOW_MS / 1000
+  };
 }
 
 async function nextExamCode(env) {
@@ -1323,6 +1352,14 @@ async function handleExam(request, env, subpath) {
     var participant = session.runId
       ? await firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id, 'GET')
       : null;
+    if (!auth.admin && session.runId) {
+      await firebase(env, EXAM_ROOT + '/presence/' + session.runId + '/' + auth.id, 'PATCH', {
+        userId: auth.id,
+        runId: session.runId,
+        phase: examPresencePhase(session, participant),
+        lastSeenAt: Date.now()
+      }).catch(function () {});
+    }
     var includeResult = auth.admin || Boolean(session.publishedAt);
     var response = {
       session,
@@ -1330,10 +1367,18 @@ async function handleExam(request, env, subpath) {
       participant: participant ? publicExamParticipant(participant, auth.admin === true, includeResult) : null
     };
     if (auth.admin && session.runId) {
-      var participants = await firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants', 'GET') || {};
+      var adminState = await Promise.all([
+        firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants', 'GET'),
+        firebase(env, EXAM_ROOT + '/presence/' + session.runId, 'GET')
+      ]);
+      var participants = adminState[0] || {};
       response.participants = Object.keys(participants).map(function (id) {
         return publicExamParticipant(participants[id], true);
       }).sort(function (a, b) { return a.joinedAt - b.joinedAt; });
+      response.presence = examPresenceSummary(adminState[1], session);
+    } else if (auth.admin) {
+      response.participants = [];
+      response.presence = examPresenceSummary({}, session);
     }
     return json(response);
   }

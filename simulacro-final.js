@@ -234,11 +234,16 @@
     state.monitoring = false;
     var session = state.server.session || {};
     var participants = state.server.participants || [];
+    var presence = state.server.presence || { connected: 0, waiting: 0, taking: 0 };
     var submitted = participants.filter(function (p) { return p.submittedAt; }).length;
     var blocked = participants.filter(function (p) { return p.blocked; }).length;
     var canActivate = session.status === 'waiting';
     renderShell([
       '<section class="ufe-screen" aria-label="Panel del administrador">',
+      '<div class="ufe-live-strip" aria-label="Conexiones en tiempo real">',
+      '<div class="ufe-live-total"><span class="ufe-live-dot" aria-hidden="true"></span><span><strong>En vivo</strong><small>Solo en Simulacros</small></span><strong class="ufe-live-number">' + presence.connected + '</strong><span class="ufe-muted">conectados ahora</span></div>',
+      '<div class="ufe-live-detail"><span><strong>' + presence.waiting + '</strong> esperando</span><span><strong>' + presence.taking + '</strong> rindiendo</span></div>',
+      '</div>',
       '<div class="ufe-stats">',
       '<div class="ufe-stat"><span class="ufe-muted">Estudiantes</span><strong>' + participants.length + '</strong><span>códigos únicos asignados</span></div>',
       '<div class="ufe-stat"><span class="ufe-muted">Entregas</span><strong>' + submitted + '</strong><span>de ' + participants.length + ' intentos</span></div>',
