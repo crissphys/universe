@@ -1,3 +1,5 @@
+import { EXAM_KEY, EXAM_COUNT } from '../exam-data.js';
+
 const RATE = new Map();
 
 function json(data, status = 200, extra = {}) {
@@ -1189,6 +1191,286 @@ async function handleAi(request, env) {
   return json({ error: 'model_endpoint_ready_but_not_enabled_in_client' }, 501);
 }
 
+const EXAM_ROOT = '/exam/finalV1';
+const EXAM_DURATION_MS = 3 * 60 * 60 * 1000;
+
+function publicExamSession(value) {
+  value = value && typeof value === 'object' ? value : {};
+  var now = Date.now();
+  var startAt = Math.max(0, Number(value.startAt) || 0);
+  var endAt = Math.max(0, Number(value.endAt) || 0);
+  var status = cleanText(value.status || 'closed', 20);
+  if (status === 'countdown' && startAt && now >= startAt) status = endAt && now >= endAt ? 'closed' : 'active';
+  if (status === 'active' && endAt && now >= endAt) status = 'closed';
+  return {
+    runId: cleanId(value.runId),
+    status,
+    startAt,
+    endAt,
+    durationSeconds: EXAM_DURATION_MS / 1000,
+    publishedAt: Math.max(0, Number(value.publishedAt) || 0),
+    updatedAt: Math.max(0, Number(value.updatedAt) || 0)
+  };
+}
+
+function publicExamParticipant(value, includePrivate, includeResult) {
+  value = value && typeof value === 'object' ? value : {};
+  var result = value.result && typeof value.result === 'object' ? value.result : null;
+  var output = {
+    userId: cleanId(value.userId),
+    code: cleanText(value.code, 12),
+    name: cleanText(value.name, 80),
+    avatar: safeAvatar(value.avatar),
+    joinedAt: Math.max(0, Number(value.joinedAt) || 0),
+    violations: Math.max(0, Math.min(2, Number(value.violations) || 0)),
+    blocked: value.blocked === true,
+    submittedAt: Math.max(0, Number(value.submittedAt) || 0),
+    justification: value.justification ? {
+      text: cleanText(value.justification.text, 1200),
+      sentAt: Math.max(0, Number(value.justification.sentAt) || 0),
+      status: cleanText(value.justification.status || 'pending', 20),
+      reviewedAt: Math.max(0, Number(value.justification.reviewedAt) || 0)
+    } : null
+  };
+  if (includePrivate) {
+    output.email = cleanText(value.email, 180);
+    output.answers = value.answers && typeof value.answers === 'object' ? value.answers : {};
+    output.result = result;
+  } else if (includeResult && result) {
+    output.result = {
+      correct: Math.max(0, Number(result.correct) || 0),
+      incorrect: Math.max(0, Number(result.incorrect) || 0),
+      unanswered: Math.max(0, Number(result.unanswered) || 0),
+      percentage: Math.max(0, Math.min(100, Number(result.percentage) || 0)),
+      courseBreakdown: result.courseBreakdown || {},
+      missed: Array.isArray(result.missed) ? result.missed.slice(0, EXAM_COUNT) : []
+    };
+  }
+  return output;
+}
+
+async function nextExamCode(env) {
+  var path = EXAM_ROOT + '/counter';
+  var url = new URL(env.FIREBASE_DATABASE_URL.replace(/\/+$/, '') + path + '.json');
+  url.searchParams.set('auth', env.FIREBASE_DATABASE_SECRET);
+  for (var attempt = 0; attempt < 12; attempt += 1) {
+    var current = await fetch(url.toString(), { headers: { 'X-Firebase-ETag': 'true' }, cache: 'no-store' });
+    if (!current.ok) throw new Error('Firebase HTTP ' + current.status);
+    var value = Math.max(0, Number(await current.json()) || 0) + 1;
+    var saved = await fetch(url.toString(), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'If-Match': current.headers.get('ETag') || 'null_etag'
+      },
+      body: JSON.stringify(value)
+    });
+    if (saved.status === 412) continue;
+    if (!saved.ok) throw new Error('Firebase HTTP ' + saved.status);
+    return 'UNI' + String(value).padStart(4, '0');
+  }
+  throw new Error('exam_code_contention');
+}
+
+function gradeExamAnswers(value) {
+  value = value && typeof value === 'object' ? value : {};
+  var correct = 0;
+  var unanswered = 0;
+  var missed = [];
+  var courseBreakdown = {};
+  Object.keys(EXAM_KEY).forEach(function (id) {
+    var key = EXAM_KEY[id];
+    var selected = cleanText(value[id], 300);
+    var course = cleanText(key.course, 80);
+    if (!courseBreakdown[course]) courseBreakdown[course] = { correct: 0, total: 0 };
+    courseBreakdown[course].total += 1;
+    if (!selected) unanswered += 1;
+    if (selected === key.answer) {
+      correct += 1;
+      courseBreakdown[course].correct += 1;
+    } else {
+      missed.push({
+        id: Number(id),
+        course,
+        topic: cleanText(key.topic, 120),
+        selected: selected || 'Sin responder',
+        correct: cleanText(key.answer, 300),
+        solution: cleanText(key.solution, 3000)
+      });
+    }
+  });
+  return {
+    correct,
+    incorrect: EXAM_COUNT - correct - unanswered,
+    unanswered,
+    percentage: Math.round(correct * 10000 / EXAM_COUNT) / 100,
+    courseBreakdown,
+    missed
+  };
+}
+
+async function handleExam(request, env, subpath) {
+  if (!rateLimit(request, 'exam', 180, 60000)) return json({ error: 'rate_limited' }, 429);
+  var auth = await verifySession(request, env);
+  if (!auth) return json({ error: 'login_required' }, 401);
+  var method = request.method.toUpperCase();
+  var path = '/' + subpath.replace(/^\/+/, '').replace(/\.json$/i, '');
+  var body = method === 'GET' ? {} : await request.json().catch(function () { return {}; });
+  var storedSession = await firebase(env, EXAM_ROOT + '/session', 'GET') || {};
+  var session = publicExamSession(storedSession);
+
+  if (path === '/state' && method === 'GET') {
+    var participant = session.runId
+      ? await firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id, 'GET')
+      : null;
+    var includeResult = auth.admin || Boolean(session.publishedAt);
+    var response = {
+      session,
+      isAdmin: auth.admin === true,
+      participant: participant ? publicExamParticipant(participant, auth.admin === true, includeResult) : null
+    };
+    if (auth.admin && session.runId) {
+      var participants = await firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants', 'GET') || {};
+      response.participants = Object.keys(participants).map(function (id) {
+        return publicExamParticipant(participants[id], true);
+      }).sort(function (a, b) { return a.joinedAt - b.joinedAt; });
+    }
+    return json(response);
+  }
+
+  if (path === '/join' && method === 'POST') {
+    if (!session.runId || !['waiting', 'countdown'].includes(session.status)) return json({ error: 'room_closed' }, 409);
+    if (session.startAt && Date.now() >= session.startAt) return json({ error: 'exam_started' }, 409);
+    var participantPath = EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id;
+    var existing = await firebase(env, participantPath, 'GET');
+    if (!existing) {
+      existing = {
+        userId: auth.id,
+        code: await nextExamCode(env),
+        name: cleanText(auth.name || 'Estudiante Universe', 80),
+        email: cleanText(auth.email, 180),
+        avatar: safeAvatar(auth.avatar),
+        joinedAt: Date.now(),
+        violations: 0,
+        blocked: false,
+        submittedAt: 0
+      };
+      await firebase(env, participantPath, 'PUT', existing);
+    }
+    return json({ participant: publicExamParticipant(existing, false), session });
+  }
+
+  if (path === '/incident' && method === 'POST') {
+    if (session.status !== 'active') return json({ error: 'exam_not_active' }, 409);
+    var incidentPath = EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id;
+    var incidentParticipant = await firebase(env, incidentPath, 'GET');
+    if (!incidentParticipant) return json({ error: 'not_joined' }, 409);
+    if (incidentParticipant.submittedAt) return json({ error: 'already_submitted' }, 409);
+    var violations = Math.min(2, Math.max(0, Number(incidentParticipant.violations) || 0) + 1);
+    await firebase(env, incidentPath, 'PATCH', {
+      violations,
+      blocked: violations >= 2,
+      lastIncidentAt: Date.now(),
+      lastIncidentReason: cleanText(body.reason || 'focus_lost', 80)
+    });
+    incidentParticipant.violations = violations;
+    incidentParticipant.blocked = violations >= 2;
+    return json({ participant: publicExamParticipant(incidentParticipant, false) });
+  }
+
+  if (path === '/justify' && method === 'POST') {
+    var justificationPath = EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id;
+    var justificationParticipant = await firebase(env, justificationPath, 'GET');
+    if (!justificationParticipant || !justificationParticipant.blocked) return json({ error: 'not_blocked' }, 409);
+    var justificationText = cleanText(body.text, 1200);
+    if (justificationText.length < 12) return json({ error: 'justification_too_short' }, 400);
+    var justification = { text: justificationText, sentAt: Date.now(), status: 'pending' };
+    await firebase(env, justificationPath, 'PATCH', { justification });
+    return json({ ok: true, justification });
+  }
+
+  if (path === '/submit' && method === 'POST') {
+    var submitPath = EXAM_ROOT + '/runs/' + session.runId + '/participants/' + auth.id;
+    var submitParticipant = await firebase(env, submitPath, 'GET');
+    if (!submitParticipant) return json({ error: 'not_joined' }, 409);
+    if (submitParticipant.blocked) return json({ error: 'exam_blocked' }, 423);
+    if (submitParticipant.submittedAt) return json({ error: 'already_submitted' }, 409);
+    if (!['active', 'closed'].includes(session.status)) return json({ error: 'exam_not_active' }, 409);
+    if (session.endAt && Date.now() > session.endAt + 60000) return json({ error: 'exam_time_expired' }, 409);
+    var answers = {};
+    Object.keys(body.answers || {}).slice(0, EXAM_COUNT).forEach(function (id) {
+      if (EXAM_KEY[id]) answers[id] = cleanText(body.answers[id], 300);
+    });
+    var result = gradeExamAnswers(answers);
+    var submittedAt = Date.now();
+    await firebase(env, submitPath, 'PATCH', { answers, result, submittedAt });
+    return json({ ok: true, submittedAt, code: cleanText(submitParticipant.code, 12) });
+  }
+
+  if (!auth.admin) return json({ error: 'admin_required' }, 403);
+
+  if (path === '/admin/open' && method === 'POST') {
+    var runId = 'run_' + Date.now().toString(36);
+    var opened = {
+      runId,
+      status: 'waiting',
+      startAt: 0,
+      endAt: 0,
+      publishedAt: 0,
+      openedAt: Date.now(),
+      openedBy: auth.id,
+      updatedAt: Date.now()
+    };
+    await firebase(env, EXAM_ROOT + '/session', 'PUT', opened);
+    return json({ session: publicExamSession(opened) });
+  }
+
+  if (path === '/admin/activate' && method === 'POST') {
+    if (!session.runId || session.status !== 'waiting') return json({ error: 'room_not_waiting' }, 409);
+    var startAt = Date.now() + 30000;
+    var activated = {
+      status: 'countdown',
+      startAt,
+      endAt: startAt + EXAM_DURATION_MS,
+      updatedAt: Date.now(),
+      activatedBy: auth.id
+    };
+    await firebase(env, EXAM_ROOT + '/session', 'PATCH', activated);
+    return json({ session: publicExamSession(Object.assign({}, storedSession, activated)) });
+  }
+
+  if (path === '/admin/publish' && method === 'POST') {
+    if (!session.runId) return json({ error: 'no_session' }, 409);
+    var publishedAt = Date.now();
+    await firebase(env, EXAM_ROOT + '/session', 'PATCH', { publishedAt, updatedAt: publishedAt });
+    return json({ ok: true, publishedAt });
+  }
+
+  if (path === '/admin/review' && method === 'POST') {
+    var reviewUserId = cleanId(body.userId);
+    var action = body.action === 'approved' ? 'approved' : body.action === 'rejected' ? 'rejected' : '';
+    if (!reviewUserId || !action) return json({ error: 'invalid_review' }, 400);
+    var reviewPath = EXAM_ROOT + '/runs/' + session.runId + '/participants/' + reviewUserId;
+    var reviewParticipant = await firebase(env, reviewPath, 'GET');
+    if (!reviewParticipant || !reviewParticipant.justification) return json({ error: 'justification_missing' }, 404);
+    var reviewPatch = {
+      justification: Object.assign({}, reviewParticipant.justification, {
+        status: action,
+        reviewedAt: Date.now(),
+        reviewedBy: auth.id
+      })
+    };
+    if (action === 'approved') {
+      reviewPatch.blocked = false;
+      reviewPatch.violations = 1;
+    }
+    await firebase(env, reviewPath, 'PATCH', reviewPatch);
+    return json({ ok: true, action });
+  }
+
+  return json({ error: 'not_found' }, 404);
+}
+
 export async function onRequest(context) {
   var request = context.request;
   if (request.method === 'OPTIONS') return json({ ok: true });
@@ -1200,6 +1482,7 @@ export async function onRequest(context) {
     if (apiPath.startsWith('site/')) return handleSite(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('support/')) return handleSupport(request, context.env, apiPath.slice(8));
     if (apiPath.startsWith('classes/')) return handleClasses(request, context.env, apiPath.slice(8));
+    if (apiPath.startsWith('exam/')) return handleExam(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('unitalk/')) return handleUnitalk(request, context.env, apiPath.slice(8));
     if (apiPath === 'ai/support') return handleAi(request, context.env);
     return json({ error: 'not_found' }, 404);
