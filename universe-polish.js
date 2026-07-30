@@ -7,6 +7,7 @@
   var GUEST_KEY = 'universe_guest_mode';
   var FIRST_GATE_KEY = 'universe_entry_gate_seen';
   var API_BASE = '/api';
+  var GOOGLE_IDENTITY_INITIALIZED = false;
   var CURRENT_CEPRE_CYCLE = '2026-2';
   var CEPRE_CYCLES = ['2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
   var ACADEMIES = ['Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI', 'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Integral Class', 'Academia Prisma', 'Otra academia'];
@@ -801,22 +802,27 @@
     if (!slot || !(window.google && google.accounts && google.accounts.id)) return;
     slot.innerHTML = '';
     try {
-      google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: function (response) {
-          try {
-            var profile = decodeGoogleJwt(response && response.credential);
-            persistGoogleUser(profile, response && response.credential).catch(function () {
-              slot.innerHTML = '<p class="uts-google-hint">No se pudo validar con el servidor privado. Inténtalo otra vez.</p>';
-            });
-          } catch (error) {
-            slot.innerHTML = '<p class="uts-google-hint">No se pudo leer la respuesta de Google. Inténtalo otra vez.</p>';
-          }
-        },
-        auto_select: false,
-        cancel_on_tap_outside: true,
-        ux_mode: 'popup'
-      });
+      if (!GOOGLE_IDENTITY_INITIALIZED) {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: function (response) {
+            var currentSlot = document.getElementById('uts-google-signin-slot');
+            if (!currentSlot) return;
+            try {
+              var profile = decodeGoogleJwt(response && response.credential);
+              persistGoogleUser(profile, response && response.credential).catch(function () {
+                currentSlot.innerHTML = '<p class="uts-google-hint">No se pudo validar con el servidor privado. Inténtalo otra vez.</p>';
+              });
+            } catch (error) {
+              currentSlot.innerHTML = '<p class="uts-google-hint">No se pudo leer la respuesta de Google. Inténtalo otra vez.</p>';
+            }
+          },
+          auto_select: false,
+          cancel_on_tap_outside: true,
+          ux_mode: 'popup'
+        });
+        GOOGLE_IDENTITY_INITIALIZED = true;
+      }
       google.accounts.id.renderButton(slot, {
         type: 'standard',
         theme: 'outline',
