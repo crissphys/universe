@@ -393,7 +393,9 @@ async function isAdminEmail(env, email) {
     .filter(Boolean)
   if (emails.includes(normalized)) return true;
   var emailHash = await sha256HexText(normalized);
-  return String(env.ADMIN_EMAIL_SHA256 || '')
+  return [env.ADMIN_EMAIL_SHA256, env.ADMIN_EMAIL_SHA256_EXTRA]
+    .filter(Boolean)
+    .join(',')
     .split(',')
     .map(function (v) { return v.trim().toLowerCase(); })
     .filter(Boolean)
