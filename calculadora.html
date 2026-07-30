@@ -404,6 +404,9 @@ html[data-universe-page='calculator'] .universe-page-stage{padding-inline:clamp(
 .cp-field input::placeholder{color:#9aa8b9}
 .cp-field small{color:#7a889a;font-size:.72rem;font-weight:600;letter-spacing:0}
 .cp-top-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:.85rem}
+.cp-history-picker{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:1rem;align-items:center;margin-top:1rem;padding:1rem;border:1px solid #cfe1fb;border-radius:16px;background:linear-gradient(135deg,#f7fbff,#edf5ff)}
+.cp-history-picker h3{margin:0 0 .25rem;font-size:.95rem;letter-spacing:-.01em}
+.cp-history-picker p{margin:0;color:var(--muted);font-size:.78rem;line-height:1.45}
 .cp-code-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.65rem;margin-top:1rem}
 .cp-primary{min-height:48px;padding:.72rem 1rem;border:0;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-weight:900;cursor:pointer;box-shadow:0 9px 22px rgba(23,92,211,.22)}
 .cp-primary:hover{transform:translateY(-1px)}
@@ -446,6 +449,16 @@ html[data-universe-page='calculator'] .universe-page-stage{padding-inline:clamp(
 .cp-status.equal{background:var(--amber-bg);color:var(--amber)}
 .cp-status.low{background:var(--red-bg);color:var(--red)}
 .cp-status strong{font-weight:900}
+.cp-history-result{margin-top:.8rem;padding:.9rem;border:1px solid var(--line);border-radius:14px;background:#fff}
+.cp-history-result-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.7rem}
+.cp-history-result-head span{color:var(--muted);font-size:.67rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+.cp-history-result-head strong{font-size:.78rem;text-align:right}
+.cp-history-track{position:relative;height:12px;margin:1rem 0 .45rem;border-radius:999px;background:#e7edf5}
+.cp-history-track i{position:absolute;top:0;height:100%;border-radius:999px;background:linear-gradient(90deg,#6fb6ff,#32c48d);box-shadow:0 0 0 3px rgba(23,92,211,.08)}
+.cp-history-track b{position:absolute;top:50%;width:4px;height:24px;transform:translate(-50%,-50%);border-radius:999px;background:#10213b;box-shadow:0 0 0 4px #fff,0 4px 12px rgba(16,33,59,.24)}
+.cp-history-scale{display:flex;justify-content:space-between;gap:.75rem;color:var(--muted);font-size:.68rem;font-weight:700}
+.cp-history-scale b{color:var(--ink)}
+.cp-history-verdict{margin:.65rem 0 0;color:#41536d;font-size:.78rem;line-height:1.45}
 .cp-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.8rem}
 .cp-metric{padding:.8rem;border:1px solid var(--line);border-radius:13px;background:#fff}
 .cp-metric span{display:block;color:var(--muted);font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
@@ -465,9 +478,13 @@ html[data-universe-page='calculator'] .universe-page-stage{padding-inline:clamp(
 .cp-hidden{display:none!important}
 html[data-universe-theme='dark'][data-universe-page='calculator'] .cepre-planner{--ink:#f7f9fc;--muted:#a9b7ca;--line:#28384e;--card:#0d1726;--soft:#111f32;--sky:#102a4c}
 html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-hero{border-color:#24436d;background:linear-gradient(135deg,#0d1726,#112845)}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-field input,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-field select,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-mode-tab.active,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-metric,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-method-card{background:#0d1726;color:#f7f9fc}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-field input,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-field select,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-mode-tab.active,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-metric,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-method-card,html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-result{background:#0d1726;color:#f7f9fc}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-picker{border-color:#24436d;background:linear-gradient(135deg,#0d1726,#112845)}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-track{background:#26364a}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-track b{background:#fff;box-shadow:0 0 0 4px #0d1726,0 4px 12px rgba(0,0,0,.45)}
+html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-verdict{color:#cbd5e1}
 @media(max-width:1050px){.cp-workspace{grid-template-columns:1fr}.cp-results{position:relative;top:auto}.cp-hero{grid-template-columns:1fr}.cp-formula-stack{grid-template-columns:1fr 1fr}.cp-note-strip{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:720px){.cepre-planner{padding-top:.4rem}.cp-hero{border-radius:20px}.cp-hero h1{font-size:clamp(2rem,11vw,3.15rem)}.cp-formula-stack,.cp-top-fields,.cp-code-row{grid-template-columns:1fr}.cp-notes-grid,.cp-workshop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-note-strip{grid-template-columns:repeat(2,1fr)}.cp-method{grid-template-columns:1fr}.cp-results{border-radius:20px}.cp-mode-tab{font-size:.8rem}.cp-architecture-head{display:block}.cp-arch-badge{display:inline-flex;margin-top:.65rem}}
+@media(max-width:720px){.cepre-planner{padding-top:.4rem}.cp-hero{border-radius:20px}.cp-hero h1{font-size:clamp(2rem,11vw,3.15rem)}.cp-formula-stack,.cp-top-fields,.cp-code-row,.cp-history-picker{grid-template-columns:1fr}.cp-notes-grid,.cp-workshop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-note-strip{grid-template-columns:repeat(2,1fr)}.cp-method{grid-template-columns:1fr}.cp-results{border-radius:20px}.cp-mode-tab{font-size:.8rem}.cp-architecture-head{display:block}.cp-arch-badge{display:inline-flex;margin-top:.65rem}.cp-history-result-head{display:block}.cp-history-result-head strong{display:block;margin-top:.25rem;text-align:left}}
 </style>
 
 <section class="cepre-planner" id="herramientas" aria-labelledby="cp-title">
@@ -496,7 +513,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
       <div class="cp-top-fields">
         <label class="cp-field">Carrera a comparar
           <select id="cp-career"><option value="">Selecciona tu carrera</option></select>
-          <small>Referencia: nota mínima del ciclo anterior.</small>
+          <small>La carrera se compara con el ciclo y sede que elijas abajo.</small>
         </label>
         <div id="cp-code-panel">
           <label class="cp-field">Código CEPREUNI
@@ -505,6 +522,17 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
           <div class="cp-inline-alert" id="cp-alert" role="alert"></div>
         </div>
       </div>
+
+      <section class="cp-history-picker" aria-labelledby="cp-history-picker-title">
+        <div>
+          <h3 id="cp-history-picker-title">¿Cómo voy frente a ciclos pasados?</h3>
+          <p>Elige un proceso CEPREUNI. Compararemos tu promedio con el mínimo y máximo registrados para la carrera seleccionada.</p>
+        </div>
+        <label class="cp-field">Ciclo y sede de referencia
+          <select id="cp-cycle"></select>
+          <small>Comparación histórica referencial; no garantiza una vacante.</small>
+        </label>
+      </section>
 
       <div class="cp-note-readout" id="cp-note-readout">
         <div class="cp-divider"></div>
@@ -527,13 +555,19 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
     <aside class="cp-card cp-results" aria-live="polite">
       <div class="cp-result-top">
         <div class="cp-result-kicker">Tu resultado comparado</div>
-        <div class="cp-result-explain">A la izquierda está tu promedio estimado. A la derecha, la nota mínima referencial del ciclo anterior.</div>
+        <div class="cp-result-explain">A la izquierda está tu promedio estimado. A la derecha, el mínimo histórico de la carrera, ciclo y sede elegidos.</div>
         <div class="cp-result-label">Tu promedio ponderado actual</div>
         <div class="cp-score-line"><div class="cp-score" id="cp-score">-<small>/20</small></div><div class="cp-target">Mínimo referencial de la carrera<strong id="cp-cutoff">-</strong></div></div>
         <div class="cp-gauge" aria-hidden="true"><span id="cp-gauge"></span></div>
       </div>
       <div class="cp-result-body">
         <div class="cp-status" id="cp-status">Elige una carrera y carga tus notas para ver tu diagnóstico.</div>
+        <div class="cp-history-result" id="cp-history-result">
+          <div class="cp-history-result-head"><span>Cómo voy en el rango histórico</span><strong id="cp-history-label">Selecciona una carrera</strong></div>
+          <div class="cp-history-track" aria-hidden="true"><i id="cp-history-band" style="left:0;width:0"></i><b id="cp-history-marker" style="left:0"></b></div>
+          <div class="cp-history-scale"><span>Mínimo: <b id="cp-history-min">—</b></span><span>Tu promedio: <b id="cp-history-score">—</b></span><span>Máximo: <b id="cp-history-max">—</b></span></div>
+          <p class="cp-history-verdict" id="cp-history-verdict">Carga tus notas y selecciona una carrera para ver la comparación.</p>
+        </div>
         <div class="cp-metrics">
           <div class="cp-metric"><span>Promedio actual en escala CEPRE</span><strong id="cp-raw">-</strong></div>
           <div class="cp-metric"><span>Distancia frente al mínimo</span><strong id="cp-difference">-</strong></div>
@@ -559,6 +593,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   </div>
 </section>
 
+<script src="cepre-cutoffs.js"></script>
 <script id="cepre-planner-v3-script">//<![CDATA[
 (function(){
   'use strict';
@@ -566,6 +601,8 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   var CAREERS=[
     ['A1','Arquitectura',13.079],['A2','Urbanismo',9.668],['C1','Ingeniería Civil',14.304],['M3','Ingeniería Mecánica',12.718],['M4','Ingeniería Mecánica Eléctrica',12.449],['M5','Ingeniería Naval',12.519],['M6','Ingeniería Mecatrónica',14.550],['M7','Ingeniería Aeroespacial',14.051],['N1','Física',10.879],['N2','Matemática',9.451],['N3','Química',10.305],['N5','Ingeniería Física',8.748],['N6','Ciencia de la Computación',12.468],['L1','Ingeniería Eléctrica',13.119],['L2','Ingeniería Electrónica',12.493],['L3','Ingeniería de Telecomunicaciones',11.887],['L4','Ingeniería de Ciberseguridad',12.368],['L5','Ingeniería Biomédica',9.068],['I1','Ingeniería Industrial',13.302],['I2','Ingeniería de Sistemas',14.536],['I3','Ingeniería de Software',14.776],['I4','Ingeniería de Inteligencia Artificial',11.629],['G1','Ingeniería Geológica',9.895],['G2','Ingeniería Metalúrgica',11.298],['G3','Ingeniería de Minas',12.766],['S1','Ingeniería Sanitaria',10.301],['S2','Ingeniería de Higiene y Seguridad Industrial',9.474],['S3','Ingeniería Ambiental',9.439],['E1','Ingeniería Económica',11.936],['E3','Ingeniería Estadística',10.986],['Q1','Ingeniería Química',9.807],['Q2','Ingeniería Textil',9.110],['P2','Ingeniería Petroquímica',9.047],['P3','Ingeniería de Petróleo y Gas Natural',9.685]
   ];
+  var CUTOFFS=window.UNIVERSE_CEPRE_CUTOFFS||{};
+  var CYCLE_ORDER=['2026-1|Lima','2025-2|Lima','2024-2|Lima','2024-2|Juliaca'];
   var NOTE_LABELS=['1.ª PC','2.ª PC','1.er examen parcial (EP1)','3.ª PC','4.ª PC','2.º examen parcial (EP2)','5.ª PC','6.ª PC','7.ª PC','Examen final'];
   var PC_INDEXES=[0,1,3,4,6,7],EP1_INDEX=2,EP2_INDEX=5,PC7_INDEX=8,EF_INDEX=9,EXAM_ORDER=[0,1,2,3,4,5,6,7,8,9];
   var state={mode:'code',notes:null,student:null};
@@ -574,7 +611,21 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   function clamp(value,min,max){return Math.min(max,Math.max(min,value))}
   function fmt(value,digits){return Number.isFinite(value)?value.toFixed(digits==null?2:digits):'-'}
   function career(){var code=byId('cp-career').value;return CAREERS.find(function(item){return item[0]===code})||null}
-  function addOptions(){var select=byId('cp-career');CAREERS.forEach(function(item){var option=document.createElement('option');option.value=item[0];option.textContent=item[0]+' - '+item[1];select.appendChild(option)})}
+  function selectedCycle(){var key=byId('cp-cycle').value||CYCLE_ORDER[0],entry=CUTOFFS[key]||null;return{key:key,entry:entry}}
+  function reference(){
+    var selected=career(),cycle=selectedCycle();
+    if(!selected||!cycle.entry)return null;
+    var values=cycle.entry.values&&cycle.entry.values[selected[0]];
+    if(!values)return{cycle:cycle.key,label:cycle.entry.label,source:cycle.entry.source,available:false};
+    var min=number(values[0]),max=number(values[1]),single=false;
+    if(min===null&&max!==null){min=max;single=true}
+    if(max===null&&min!==null)max=min;
+    return{cycle:cycle.key,label:cycle.entry.label,source:cycle.entry.source,min:min,max:max,single:single,available:min!==null||max!==null};
+  }
+  function addOptions(){
+    var select=byId('cp-career');CAREERS.forEach(function(item){var option=document.createElement('option');option.value=item[0];option.textContent=item[0]+' - '+item[1];select.appendChild(option)});
+    var cycleSelect=byId('cp-cycle');CYCLE_ORDER.forEach(function(key){var item=CUTOFFS[key];if(!item)return;var option=document.createElement('option');option.value=key;option.textContent=item.label;cycleSelect.appendChild(option)})
+  }
   function addInputs(){
     var grid=byId('cp-manual-grid');NOTE_LABELS.forEach(function(label,index){var wrap=document.createElement('label');wrap.className='cp-field';wrap.textContent=label;var input=document.createElement('input');input.type='number';input.min='0';input.max='150';input.step='.01';input.placeholder='0-150';input.dataset.note=index;input.addEventListener('input',manualChanged);wrap.appendChild(input);grid.appendChild(wrap)});
     var workshops=byId('cp-workshop-grid');for(var i=0;i<6;i++){var w=document.createElement('label');w.className='cp-field';w.textContent='Taller '+(i+1);var wi=document.createElement('input');wi.type='number';wi.min='0';wi.max='90';wi.step='.01';wi.placeholder='0-90';wi.dataset.workshop=i;wi.addEventListener('input',render);w.appendChild(wi);workshops.appendChild(w)}
@@ -600,9 +651,45 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-formula,ht
   function goalText(value,max,suffix){if(value===null)return 'Completo';if(value===Infinity||value>max+1e-6)return 'No alcanza';return fmt(clamp(value,0,max),2)+(suffix||'')}
   function architectureProjection(calc,cutoff20){var values=workshopScores(),pvd=number(byId('cp-pvd-input').value),vocational=svFor(values)+(pvd||0),sv=svFor(values),pidEstimate=calc.pidEstimate,pad=pidEstimate+1.54*vocational,targetPad=cutoff20/20*3701,targetSv=(targetPad-pidEstimate)/1.54-(pvd||0),workshopNeed=solveWorkshop(values,targetSv),pvdNeed=(targetPad-pidEstimate)/1.54-sv,targetAcademic20=((targetPad-1.54*vocational)/2700*150)/7.5,nextGoal=neededForNext(state.notes,targetAcademic20);return{sv:sv,pad:pad,pad20:pad/3701*20,workshopNeed:workshopNeed,pvdNeed:pvdNeed,needed:nextGoal?nextGoal.needed:null}}
   function renderArchitecture(projection){var panel=byId('cp-arch-results');panel.classList.add('show');byId('cp-sv').textContent=fmt(projection.sv,2)+' /450';byId('cp-pad').textContent=fmt(projection.pad20,3)+' /20';byId('cp-workshop-needed').textContent=goalText(projection.workshopNeed,90,' /90');byId('cp-pvd-needed').textContent=goalText(projection.pvdNeed,200,' /200')}
-  function resetResult(message){var selected=career();byId('cp-score').innerHTML='-<small>/20</small>';byId('cp-cutoff').textContent=selected?selected[2].toFixed(3):'10.000';byId('cp-gauge').style.width='0';byId('cp-status').className='cp-status';byId('cp-status').textContent=message;byId('cp-raw').textContent='-';byId('cp-difference').textContent='-';byId('cp-next').textContent='-';byId('cp-next-copy').textContent='Selecciona tu carrera y/o completa tus notas para calcular la meta.';byId('cp-arch-results').classList.remove('show')}
-  function render(){var selected=career(),target=selected?selected[2]:10,isArch=selected&&selected[0]==='A1';byId('cp-architecture').classList.toggle('show',!!isArch);if(!state.notes||!hasAny(state.notes)){resetResult(state.mode==='code'?'Busca tu código para cargar las notas del ranking.':'Ingresa al menos una nota para calcular tu avance.');return}var invalid=state.notes.some(function(v){return v!==null&&(!Number.isFinite(v)||v<0||v>150)});if(invalid){resetResult('Todas las notas deben estar entre 0 y 150 puntos.');return}var calc=calculate(state.notes,target);if(!Number.isFinite(calc.current20)){resetResult('Ingresa al menos una nota válida para calcular tu avance.');return}var comparison={score20:calc.current20,diff:calc.diff,needed:calc.needed,next:calc.next},tolerance=.0005,status=byId('cp-status');if(isArch){var projection=architectureProjection(calc,target);comparison.score20=projection.pad20;comparison.diff=projection.pad20-target;comparison.needed=projection.needed;renderArchitecture(projection)}else byId('cp-arch-results').classList.remove('show');byId('cp-score').innerHTML=fmt(comparison.score20,3)+'<small>/20</small>';byId('cp-cutoff').textContent=target.toFixed(3);byId('cp-gauge').style.width=clamp(comparison.score20/target*100,0,100)+'%';byId('cp-raw').textContent=fmt(calc.raw,3);byId('cp-difference').textContent=(comparison.diff>=0?'+':'')+fmt(comparison.diff,3);status.className='cp-status '+(comparison.diff>tolerance?'good':comparison.diff<-tolerance?'low':'equal');if(!selected)status.innerHTML='<strong>Selecciona tu carrera.</strong> Por ahora comparo tu promedio con 10/20 como referencia básica de aprobación.';else if(comparison.diff>tolerance)status.innerHTML='<strong>Tu nota está muy bien.</strong> Estás '+fmt(comparison.diff,3)+' puntos sobre la referencia de '+selected[1]+'. Sigue cuidando el margen.';else if(comparison.diff<-tolerance)status.innerHTML='<strong>Tu nota está por debajo de la referencia.</strong> Necesitas mejorar para acercarte al mínimo del ciclo anterior de '+selected[1]+'.';else status.innerHTML='<strong>Tu nota es exactamente igual a la referencia.</strong> Mantén el ritmo y evita bajar del objetivo en la siguiente prueba.';if(!comparison.next){byId('cp-next').textContent='Cálculo completo';byId('cp-next-copy').textContent='Ya ingresaste todos los exámenes principales. Revisa tu promedio final estimado.'}else if(comparison.needed===Infinity){byId('cp-next').textContent='Más de 150 /150';byId('cp-next-copy').textContent='Aunque saques 150 en '+comparison.next.label+', no alcanzaría la referencia. Necesitas recuperar en los siguientes exámenes.'}else{byId('cp-next').textContent=fmt(clamp(comparison.needed,0,150),2)+' /150';byId('cp-next-copy').textContent=(Math.abs(comparison.diff)<=tolerance?'No saques menos de ':'Apunta como mínimo a ')+fmt(clamp(comparison.needed,0,150),2)+' en '+comparison.next.label+' para quedar en el margen de referencia.'}}
-  function init(){addOptions();addInputs();document.querySelectorAll('.cp-mode-tab').forEach(function(btn){btn.addEventListener('click',function(){setMode(btn.dataset.mode)})});byId('cp-find').addEventListener('click',findStudent);byId('cp-code').addEventListener('keydown',function(event){if(event.key==='Enter'){event.preventDefault();findStudent()}});byId('cp-career').addEventListener('change',render);render()}
+  function renderHistoryResult(score,ref,selected){
+    var label=byId('cp-history-label'),band=byId('cp-history-band'),marker=byId('cp-history-marker'),verdict=byId('cp-history-verdict');
+    byId('cp-history-score').textContent=Number.isFinite(score)?fmt(score,3):'—';
+    marker.style.left=Number.isFinite(score)?clamp(score/20*100,0,100)+'%':'0';
+    if(!selected){label.textContent='Selecciona una carrera';byId('cp-history-min').textContent='—';byId('cp-history-max').textContent='—';band.style.left='0';band.style.width='0';verdict.textContent='Carga tus notas y selecciona una carrera para ver la comparación.';return}
+    label.textContent=ref&&ref.label?ref.label:selected[1];
+    if(!ref||!ref.available||!Number.isFinite(ref.min)||!Number.isFinite(ref.max)){byId('cp-history-min').textContent='Sin dato';byId('cp-history-max').textContent='Sin dato';band.style.left='0';band.style.width='0';verdict.textContent='No hay un rango de ingresantes disponible para '+selected[1]+' en este ciclo y sede. Prueba otra referencia.';return}
+    byId('cp-history-min').textContent=fmt(ref.min,3);byId('cp-history-max').textContent=fmt(ref.max,3);
+    band.style.left=clamp(ref.min/20*100,0,100)+'%';band.style.width=Math.max((ref.max-ref.min)/20*100,1)+'%';
+    if(!Number.isFinite(score)){verdict.textContent='El rango histórico está listo. Ingresa tus notas para ubicar tu promedio.';return}
+    if(ref.single)verdict.textContent=score>=ref.max?'Estás '+fmt(score-ref.max,3)+' puntos sobre el único ingreso registrado.':'Te faltan '+fmt(ref.max-score,3)+' puntos para alcanzar el único ingreso registrado.';
+    else if(score<ref.min)verdict.textContent='Estás '+fmt(ref.min-score,3)+' puntos por debajo del mínimo histórico.';
+    else if(score>ref.max)verdict.textContent='Superas el máximo histórico por '+fmt(score-ref.max,3)+' puntos.';
+    else{var position=ref.max>ref.min?(score-ref.min)/(ref.max-ref.min)*100:100;verdict.textContent='Estás dentro del rango histórico, aproximadamente al '+fmt(position,0)+'% del tramo entre el mínimo y el máximo.'}
+  }
+  function resetResult(message){var selected=career(),ref=reference(),hasRef=ref&&ref.available&&Number.isFinite(ref.min);byId('cp-score').innerHTML='-<small>/20</small>';byId('cp-cutoff').textContent=hasRef?ref.min.toFixed(3):selected?'Sin dato':'10.000';byId('cp-gauge').style.width='0';byId('cp-status').className='cp-status';byId('cp-status').textContent=message;byId('cp-raw').textContent='-';byId('cp-difference').textContent='-';byId('cp-next').textContent='-';byId('cp-next-copy').textContent='Selecciona tu carrera y/o completa tus notas para calcular la meta.';byId('cp-arch-results').classList.remove('show');renderHistoryResult(NaN,ref,selected)}
+  function render(){
+    var selected=career(),ref=reference(),hasRef=ref&&ref.available&&Number.isFinite(ref.min),target=hasRef?ref.min:10,isArch=selected&&selected[0]==='A1';
+    byId('cp-architecture').classList.toggle('show',!!isArch);
+    if(!state.notes||!hasAny(state.notes)){resetResult(state.mode==='code'?'Busca tu código para cargar las notas del ranking.':'Ingresa al menos una nota para calcular tu avance.');return}
+    var invalid=state.notes.some(function(v){return v!==null&&(!Number.isFinite(v)||v<0||v>150)});
+    if(invalid){resetResult('Todas las notas deben estar entre 0 y 150 puntos.');return}
+    var calc=calculate(state.notes,target);
+    if(!Number.isFinite(calc.current20)){resetResult('Ingresa al menos una nota válida para calcular tu avance.');return}
+    var comparison={score20:calc.current20,diff:calc.diff,needed:calc.needed,next:calc.next},tolerance=.0005,status=byId('cp-status');
+    if(isArch){var projection=architectureProjection(calc,target);comparison.score20=projection.pad20;comparison.diff=projection.pad20-target;comparison.needed=projection.needed;renderArchitecture(projection)}else byId('cp-arch-results').classList.remove('show');
+    byId('cp-score').innerHTML=fmt(comparison.score20,3)+'<small>/20</small>';byId('cp-cutoff').textContent=hasRef?target.toFixed(3):'Sin dato';byId('cp-gauge').style.width=hasRef?clamp(comparison.score20/target*100,0,100)+'%':clamp(comparison.score20/20*100,0,100)+'%';byId('cp-raw').textContent=fmt(calc.raw,3);byId('cp-difference').textContent=hasRef?(comparison.diff>=0?'+':'')+fmt(comparison.diff,3):'—';renderHistoryResult(comparison.score20,ref,selected);
+    if(!selected){status.className='cp-status';status.innerHTML='<strong>Selecciona tu carrera.</strong> Tu promedio ya está calculado, pero falta la carrera para compararlo.'}
+    else if(!hasRef){status.className='cp-status';status.innerHTML='<strong>No hay rango disponible para esta combinación.</strong> Conservamos tu promedio, pero elige otro ciclo o sede para compararlo con datos históricos.'}
+    else if(comparison.score20>ref.max+tolerance){status.className='cp-status good';status.innerHTML='<strong>Vas por encima del rango histórico.</strong> Superas el máximo de '+selected[1]+' en '+ref.label+' por '+fmt(comparison.score20-ref.max,3)+' puntos.'}
+    else if(comparison.diff<-tolerance){status.className='cp-status low';status.innerHTML='<strong>Vas por debajo del mínimo histórico.</strong> Te faltan '+fmt(-comparison.diff,3)+' puntos para alcanzar el mínimo de '+selected[1]+' en '+ref.label+'.'}
+    else if(Math.abs(comparison.diff)<=tolerance){status.className='cp-status equal';status.innerHTML='<strong>Estás exactamente en el mínimo histórico.</strong> Mantén el ritmo y evita bajar del objetivo en la siguiente prueba.'}
+    else{status.className='cp-status good';status.innerHTML='<strong>Vas dentro del rango histórico.</strong> Tu promedio está entre '+fmt(ref.min,3)+' y '+fmt(ref.max,3)+' para '+selected[1]+' en '+ref.label+'.'}
+    if(!hasRef){byId('cp-next').textContent='Sin meta histórica';byId('cp-next-copy').textContent='Selecciona otra combinación de ciclo, sede y carrera para calcular la meta del siguiente examen.'}
+    else if(!comparison.next){byId('cp-next').textContent='Cálculo completo';byId('cp-next-copy').textContent='Ya ingresaste todos los exámenes principales. Revisa tu promedio final estimado.'}
+    else if(comparison.needed===Infinity){byId('cp-next').textContent='Más de 150 /150';byId('cp-next-copy').textContent='Aunque saques 150 en '+comparison.next.label+', no alcanzarías el mínimo histórico elegido solo con esa prueba. Necesitas recuperar en los siguientes exámenes.'}
+    else{byId('cp-next').textContent=fmt(clamp(comparison.needed,0,150),2)+' /150';byId('cp-next-copy').textContent=(Math.abs(comparison.diff)<=tolerance?'No saques menos de ':'Apunta como mínimo a ')+fmt(clamp(comparison.needed,0,150),2)+' en '+comparison.next.label+' para alcanzar o conservar el mínimo de '+ref.label+'.'}
+  }
+  function init(){addOptions();addInputs();document.querySelectorAll('.cp-mode-tab').forEach(function(btn){btn.addEventListener('click',function(){setMode(btn.dataset.mode)})});byId('cp-find').addEventListener('click',findStudent);byId('cp-code').addEventListener('keydown',function(event){if(event.key==='Enter'){event.preventDefault();findStudent()}});byId('cp-career').addEventListener('change',render);byId('cp-cycle').addEventListener('change',render);render()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 //]]></script>
