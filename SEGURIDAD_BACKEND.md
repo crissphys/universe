@@ -16,7 +16,9 @@ Variables privadas que debes configurar en Cloudflare, nunca en archivos públic
 Para archivos de UNITalk, configura un bucket R2 como binding privado con el nombre
 `UNITALK_MEDIA`. Los archivos se cargan por partes y las publicaciones solo guardan
 la referencia del objeto; el contenido binario no se almacena en Firebase ni en el
-JavaScript público.
+JavaScript público. R2 incluye una cuota gratuita, pero Cloudflare puede cobrar el
+uso que la supere; activa la suscripción y sus límites de gasto antes de agregar el
+binding.
 
 Los correos del Simulacro Final se envían únicamente al publicar un examen ya
 finalizado. El backend registra cada envío por participante para evitar duplicados.
