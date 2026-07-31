@@ -21,9 +21,9 @@
     saved: new Set(readList(SAVED_KEY))
   };
   var ATTACHMENT_RULES = {
-    image: { types: ['image/jpeg', 'image/png', 'image/webp'], label: 'foto' },
-    video: { types: ['video/mp4', 'video/webm'], label: 'video' },
-    pdf: { types: ['application/pdf'], label: 'PDF' }
+    image: { types: ['image/jpeg', 'image/png', 'image/webp'], legacyMax: 1200000, label: 'foto' },
+    video: { types: ['video/mp4', 'video/webm'], legacyMax: 6000000, label: 'video' },
+    pdf: { types: ['application/pdf'], legacyMax: 3000000, label: 'PDF' }
   };
 
   function $(id) { return document.getElementById(id); }
@@ -52,6 +52,52 @@
     if (attachment && attachment.previewUrl && /^blob:/.test(attachment.previewUrl)) {
       try { URL.revokeObjectURL(attachment.previewUrl); } catch (error) {}
     }
+  }
+  function fileToDataUrl(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(String(reader.result || '')); };
+      reader.onerror = function () { reject(new Error('attachment_invalid')); };
+      reader.readAsDataURL(file);
+    });
+  }
+  function compressLegacyImage(file) {
+    return fileToDataUrl(file).then(function (source) {
+      return new Promise(function (resolve, reject) {
+        var image = new Image();
+        image.onload = function () {
+          var limit = 1600;
+          var scale = Math.min(1, limit / Math.max(image.naturalWidth || 1, image.naturalHeight || 1));
+          var canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+          canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+          var context = canvas.getContext('2d', { alpha: false });
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(function (blob) {
+            if (!blob) { reject(new Error('attachment_invalid')); return; }
+            fileToDataUrl(blob).then(function (dataUrl) {
+              resolve({ dataUrl: dataUrl, size: blob.size, mime: blob.type || 'image/jpeg' });
+            }, reject);
+          }, file.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.84);
+        };
+        image.onerror = function () { reject(new Error('attachment_invalid')); };
+        image.src = source;
+      });
+    });
+  }
+  async function legacyAttachmentPayload(attachment) {
+    var rule = ATTACHMENT_RULES[attachment.kind];
+    var prepared = attachment.kind === 'image'
+      ? await compressLegacyImage(attachment.blob)
+      : { dataUrl: await fileToDataUrl(attachment.blob), size: attachment.size, mime: attachment.mime };
+    if (!rule || prepared.size > rule.legacyMax) throw new Error('media_storage_unavailable');
+    return {
+      kind: attachment.kind,
+      name: attachment.name,
+      mime: prepared.mime,
+      size: prepared.size,
+      dataUrl: prepared.dataUrl
+    };
   }
   function readList(key) {
     try {
@@ -100,12 +146,18 @@
     });
   }
   async function uploadAttachment(attachment, status) {
-    var started = await api('/uploads/start', 'POST', {
-      kind: attachment.kind,
-      mime: attachment.mime,
-      name: attachment.name,
-      size: attachment.size
-    });
+    var started;
+    try {
+      started = await api('/uploads/start', 'POST', {
+        kind: attachment.kind,
+        mime: attachment.mime,
+        name: attachment.name,
+        size: attachment.size
+      });
+    } catch (error) {
+      if (error.message === 'media_storage_unavailable') return legacyAttachmentPayload(attachment);
+      throw error;
+    }
     var partSize = Math.max(1, Number(started.partSize) || (8 * 1024 * 1024));
     var parts = [];
     try {
