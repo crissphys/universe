@@ -77,10 +77,12 @@ function safeAvatar(value) {
 }
 
 const UNIT_ATTACHMENT_RULES = {
-  image: { types: ['image/jpeg', 'image/png', 'image/webp'], max: 1200000 },
-  video: { types: ['video/mp4', 'video/webm'], max: 6000000 },
-  pdf: { types: ['application/pdf'], max: 3000000 }
+  image: { types: ['image/jpeg', 'image/png', 'image/webp'], legacyMax: 1200000 },
+  video: { types: ['video/mp4', 'video/webm'], legacyMax: 6000000 },
+  pdf: { types: ['application/pdf'], legacyMax: 3000000 }
 };
+const UNIT_UPLOAD_PART_BYTES = 8 * 1024 * 1024;
+const UNIT_UPLOAD_MAX_PARTS = 10000;
 
 function cleanFileName(value) {
   return cleanText(value, 90).replace(/[\\/:*?"<>|]/g, '_').replace(/\s{2,}/g, ' ') || 'archivo';
@@ -115,7 +117,7 @@ function sanitizeNewAttachment(value) {
   var match = source.match(/^data:([a-z0-9.+/-]+);base64,([a-z0-9+/=]+)$/i);
   if (!match || match[1].toLowerCase() !== mime) return { error: 'attachment_invalid' };
   var estimatedSize = Math.max(0, Math.floor(match[2].length * 3 / 4) - (match[2].endsWith('==') ? 2 : match[2].endsWith('=') ? 1 : 0));
-  if (!estimatedSize || estimatedSize > rule.max) return { error: 'attachment_too_large' };
+  if (!estimatedSize || estimatedSize > rule.legacyMax) return { error: 'attachment_too_large' };
   var bytes;
   try { bytes = decodeBase64(match[2]); } catch (error) { return { error: 'attachment_invalid' }; }
   if (bytes.length !== estimatedSize || !validAttachmentSignature(kind, mime, bytes)) return { error: 'attachment_invalid' };
@@ -138,9 +140,50 @@ function publicAttachment(value) {
     kind,
     mime,
     name: cleanFileName(value.name),
-    size: Math.max(0, Math.min(rule.max, Number(value.size) || 0)),
+    size: Math.max(0, Math.min(Number.MAX_SAFE_INTEGER, Number(value.size) || 0)),
     url: '/api/unitalk/media/' + encodeURIComponent(id)
   };
+}
+
+function uploadAttachmentReference(value) {
+  if (!value || typeof value !== 'object') return '';
+  return cleanId(value.uploadId || value.id);
+}
+
+function parseMediaRange(value, total) {
+  var match = String(value || '').match(/^bytes=(\d*)-(\d*)$/);
+  if (!match || !total) return null;
+  var start;
+  var end;
+  if (!match[1] && match[2]) {
+    var suffix = Math.max(1, Math.min(total, Number(match[2]) || 0));
+    start = total - suffix;
+    end = total - 1;
+  } else {
+    start = Math.max(0, Number(match[1]) || 0);
+    end = match[2] ? Math.min(total - 1, Number(match[2]) || 0) : total - 1;
+  }
+  if (start >= total || start > end) return { invalid: true };
+  return { start, end, length: end - start + 1 };
+}
+
+function r2MediaResponse(storedObject, media, request, requestedRange) {
+  var total = Math.max(0, Number(media.size) || Number(storedObject.size) || 0);
+  var status = requestedRange ? 206 : 200;
+  var start = requestedRange ? requestedRange.start : 0;
+  var end = requestedRange ? requestedRange.end : Math.max(0, total - 1);
+  var fileName = cleanFileName(media.name).replace(/[^\x20-\x7e]/g, '_');
+  var headers = {
+    'Content-Type': media.mime,
+    'Content-Length': String(requestedRange ? requestedRange.length : total),
+    'Content-Disposition': 'inline; filename="' + fileName.replace(/"/g, '_') + '"',
+    'Accept-Ranges': 'bytes',
+    'Cache-Control': 'private, max-age=300',
+    'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'none'; sandbox"
+  };
+  if (status === 206) headers['Content-Range'] = 'bytes ' + start + '-' + end + '/' + total;
+  return new Response(storedObject.body, { status, headers });
 }
 
 function mediaResponse(bytes, media, request) {
@@ -446,6 +489,38 @@ async function firebaseReserve(env, path, data) {
       'If-Match': current.headers.get('ETag') || 'null_etag'
     },
     body: JSON.stringify(data)
+  });
+  if (saved.status === 412) return false;
+  if (!saved.ok) throw new Error('Firebase HTTP ' + saved.status);
+  return true;
+}
+
+async function claimUnitalkUpload(env, mediaId, authorId, postId) {
+  if (!env.FIREBASE_DATABASE_URL || !env.FIREBASE_DATABASE_SECRET) throw new Error('Firebase backend secrets missing');
+  var path = UNIT_ROOT + '/uploads/' + cleanId(mediaId);
+  var url = new URL(env.FIREBASE_DATABASE_URL.replace(/\/+$/, '') + path + '.json');
+  url.searchParams.set('auth', env.FIREBASE_DATABASE_SECRET);
+  var current = await fetch(url.toString(), {
+    headers: { 'X-Firebase-ETag': 'true' },
+    cache: 'no-store'
+  });
+  if (!current.ok) throw new Error('Firebase HTTP ' + current.status);
+  var value = await current.json();
+  if (!value || value.authorId !== authorId || value.status !== 'ready' || value.usedAt) return false;
+  var claimedAt = Date.now();
+  var claimed = Object.assign({}, value, {
+    status: 'claimed',
+    postId: cleanId(postId),
+    claimedAt,
+    updatedAt: claimedAt
+  });
+  var saved = await fetch(url.toString(), {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'If-Match': current.headers.get('ETag') || 'null_etag'
+    },
+    body: JSON.stringify(claimed)
   });
   if (saved.status === 412) return false;
   if (!saved.ok) throw new Error('Firebase HTTP ' + saved.status);
@@ -872,7 +947,10 @@ async function handleUnitalk(request, env, subpath) {
   var auth = await verifySession(request, env);
   var method = request.method.toUpperCase();
   var path = '/' + subpath.replace(/^\/+/, '').replace(/\.json$/i, '');
-  var body = method === 'GET' || method === 'DELETE' ? {} : await request.json().catch(function () { return {}; });
+  var rawUploadPart = method === 'PUT' && /^\/uploads\/[a-zA-Z0-9_-]+\/parts\/\d+$/.test(path);
+  var body = method === 'GET' || method === 'DELETE' || rawUploadPart
+    ? {}
+    : await request.json().catch(function () { return {}; });
 
   if (path === '/onboarding' && method === 'POST') {
     if (!auth) return json({ error: 'login_required' }, 401);
@@ -917,6 +995,167 @@ async function handleUnitalk(request, env, subpath) {
     return json({ profile: publicProfile(foundProfile, auth) });
   }
 
+  if (path === '/uploads/start' && method === 'POST') {
+    if (!rateLimit(request, 'unitalk-upload-start', 8, 60000)) return json({ error: 'rate_limited' }, 429);
+    var uploadingMember = await requireCommunityMember(env, auth);
+    if (uploadingMember.error) return json({ error: uploadingMember.error }, uploadingMember.status);
+    if (!env.UNITALK_MEDIA || typeof env.UNITALK_MEDIA.createMultipartUpload !== 'function') {
+      return json({ error: 'media_storage_unavailable' }, 503);
+    }
+    var uploadKind = cleanText(body.kind, 10).toLowerCase();
+    var uploadMime = cleanText(body.mime, 40).toLowerCase();
+    var uploadRule = UNIT_ATTACHMENT_RULES[uploadKind];
+    var uploadSize = Math.floor(Number(body.size) || 0);
+    if (!uploadRule || !uploadRule.types.includes(uploadMime) || uploadSize < 1 || !Number.isSafeInteger(uploadSize)) {
+      return json({ error: 'attachment_invalid' }, 400);
+    }
+    var expectedParts = Math.ceil(uploadSize / UNIT_UPLOAD_PART_BYTES);
+    if (expectedParts < 1 || expectedParts > UNIT_UPLOAD_MAX_PARTS) return json({ error: 'attachment_too_large' }, 413);
+    var uploadMediaId = newCommunityId('m');
+    var multipartUpload = await env.UNITALK_MEDIA.createMultipartUpload(uploadMediaId, {
+      httpMetadata: { contentType: uploadMime },
+      customMetadata: {
+        authorId: auth.id,
+        kind: uploadKind,
+        originalName: cleanFileName(body.name)
+      }
+    });
+    var uploadRecord = {
+      id: uploadMediaId,
+      authorId: auth.id,
+      uploadId: multipartUpload.uploadId,
+      kind: uploadKind,
+      mime: uploadMime,
+      name: cleanFileName(body.name),
+      size: uploadSize,
+      partSize: UNIT_UPLOAD_PART_BYTES,
+      expectedParts,
+      status: 'uploading',
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    };
+    try {
+      await firebase(env, UNIT_ROOT + '/uploads/' + uploadMediaId, 'PUT', uploadRecord);
+    } catch (error) {
+      await multipartUpload.abort().catch(function () {});
+      throw error;
+    }
+    return json({
+      id: uploadMediaId,
+      partSize: UNIT_UPLOAD_PART_BYTES,
+      expectedParts
+    }, 201);
+  }
+
+  var uploadPartMatch = path.match(/^\/uploads\/([a-zA-Z0-9_-]+)\/parts\/(\d+)$/);
+  if (uploadPartMatch && method === 'PUT') {
+    if (!auth) return json({ error: 'login_required' }, 401);
+    if (!rateLimit(request, 'unitalk-upload-part-' + auth.id, 180, 60000)) return json({ error: 'rate_limited' }, 429);
+    if (!env.UNITALK_MEDIA || typeof env.UNITALK_MEDIA.resumeMultipartUpload !== 'function') {
+      return json({ error: 'media_storage_unavailable' }, 503);
+    }
+    var partMediaId = cleanId(uploadPartMatch[1]);
+    var partNumber = Number(uploadPartMatch[2]);
+    var partRecord = await firebase(env, UNIT_ROOT + '/uploads/' + partMediaId, 'GET');
+    if (!partRecord || partRecord.authorId !== auth.id || partRecord.status !== 'uploading') {
+      return json({ error: 'upload_not_found' }, 404);
+    }
+    if (!Number.isInteger(partNumber) || partNumber < 1 || partNumber > Number(partRecord.expectedParts)) {
+      return json({ error: 'upload_part_invalid' }, 400);
+    }
+    var contentLength = Number(request.headers.get('Content-Length')) || 0;
+    if (!request.body || contentLength < 1 || contentLength > UNIT_UPLOAD_PART_BYTES) {
+      return json({ error: 'upload_part_invalid' }, 400);
+    }
+    var expectedLength = partNumber < Number(partRecord.expectedParts)
+      ? UNIT_UPLOAD_PART_BYTES
+      : Number(partRecord.size) - UNIT_UPLOAD_PART_BYTES * (Number(partRecord.expectedParts) - 1);
+    if (contentLength !== expectedLength) return json({ error: 'upload_part_invalid' }, 400);
+    var resumedUpload = env.UNITALK_MEDIA.resumeMultipartUpload(partMediaId, cleanText(partRecord.uploadId, 256));
+    var uploadedPart = await resumedUpload.uploadPart(partNumber, request.body);
+    return json({ partNumber: uploadedPart.partNumber, etag: uploadedPart.etag });
+  }
+
+  var uploadCompleteMatch = path.match(/^\/uploads\/([a-zA-Z0-9_-]+)\/complete$/);
+  if (uploadCompleteMatch && method === 'POST') {
+    if (!auth) return json({ error: 'login_required' }, 401);
+    if (!rateLimit(request, 'unitalk-upload-complete-' + auth.id, 12, 60000)) return json({ error: 'rate_limited' }, 429);
+    if (!env.UNITALK_MEDIA || typeof env.UNITALK_MEDIA.resumeMultipartUpload !== 'function') {
+      return json({ error: 'media_storage_unavailable' }, 503);
+    }
+    var completedMediaId = cleanId(uploadCompleteMatch[1]);
+    var completedRecord = await firebase(env, UNIT_ROOT + '/uploads/' + completedMediaId, 'GET');
+    if (!completedRecord || completedRecord.authorId !== auth.id || completedRecord.status !== 'uploading') {
+      return json({ error: 'upload_not_found' }, 404);
+    }
+    var completedParts = Array.isArray(body.parts) ? body.parts.map(function (part) {
+      return {
+        partNumber: Math.floor(Number(part && part.partNumber) || 0),
+        etag: cleanText(part && part.etag, 160)
+      };
+    }).sort(function (a, b) { return a.partNumber - b.partNumber; }) : [];
+    if (completedParts.length !== Number(completedRecord.expectedParts) || completedParts.some(function (part, index) {
+      return part.partNumber !== index + 1 || !part.etag;
+    })) return json({ error: 'upload_incomplete' }, 400);
+    var completingUpload = env.UNITALK_MEDIA.resumeMultipartUpload(completedMediaId, cleanText(completedRecord.uploadId, 256));
+    var completedObject = await completingUpload.complete(completedParts);
+    if (Number(completedObject.size) !== Number(completedRecord.size)) {
+      await env.UNITALK_MEDIA.delete(completedMediaId).catch(function () {});
+      await firebase(env, UNIT_ROOT + '/uploads/' + completedMediaId, 'PATCH', { status: 'invalid', updatedAt: Date.now() });
+      return json({ error: 'upload_size_mismatch' }, 400);
+    }
+    var signatureObject = await env.UNITALK_MEDIA.get(completedMediaId, { range: { offset: 0, length: 16 } });
+    var signatureBytes = signatureObject ? new Uint8Array(await signatureObject.arrayBuffer()) : null;
+    if (!validAttachmentSignature(completedRecord.kind, completedRecord.mime, signatureBytes)) {
+      await env.UNITALK_MEDIA.delete(completedMediaId).catch(function () {});
+      await firebase(env, UNIT_ROOT + '/uploads/' + completedMediaId, 'PATCH', { status: 'invalid', updatedAt: Date.now() });
+      return json({ error: 'attachment_invalid' }, 400);
+    }
+    var readyAt = Date.now();
+    var completedMedia = {
+      id: completedMediaId,
+      postId: '',
+      authorId: auth.id,
+      kind: completedRecord.kind,
+      mime: completedRecord.mime,
+      name: completedRecord.name,
+      size: Number(completedRecord.size),
+      storage: 'r2',
+      status: 'ready',
+      createdAt: Number(completedRecord.createdAt) || readyAt,
+      updatedAt: readyAt
+    };
+    await Promise.all([
+      firebase(env, UNIT_ROOT + '/media/' + completedMediaId, 'PUT', completedMedia),
+      firebase(env, UNIT_ROOT + '/uploads/' + completedMediaId, 'PATCH', { status: 'ready', readyAt, updatedAt: readyAt })
+    ]);
+    return json({
+      ok: true,
+      attachment: publicAttachment(completedMedia)
+    });
+  }
+
+  var uploadDeleteMatch = path.match(/^\/uploads\/([a-zA-Z0-9_-]+)$/);
+  if (uploadDeleteMatch && method === 'DELETE') {
+    if (!auth) return json({ error: 'login_required' }, 401);
+    var abandonedMediaId = cleanId(uploadDeleteMatch[1]);
+    var abandonedRecord = await firebase(env, UNIT_ROOT + '/uploads/' + abandonedMediaId, 'GET');
+    if (!abandonedRecord || abandonedRecord.authorId !== auth.id) return json({ error: 'upload_not_found' }, 404);
+    if (abandonedRecord.status === 'claimed' || abandonedRecord.status === 'used') {
+      return json({ error: 'upload_already_used' }, 409);
+    }
+    if (abandonedRecord.status === 'uploading' && env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.resumeMultipartUpload === 'function') {
+      var abandonedUpload = env.UNITALK_MEDIA.resumeMultipartUpload(abandonedMediaId, cleanText(abandonedRecord.uploadId, 256));
+      await abandonedUpload.abort().catch(function () {});
+    }
+    if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(abandonedMediaId).catch(function () {});
+    await Promise.all([
+      firebase(env, UNIT_ROOT + '/uploads/' + abandonedMediaId, 'DELETE').catch(function () {}),
+      firebase(env, UNIT_ROOT + '/media/' + abandonedMediaId, 'DELETE').catch(function () {})
+    ]);
+    return json({ ok: true });
+  }
+
   var mediaMatch = path.match(/^\/media\/([a-zA-Z0-9_-]+)$/);
   if (mediaMatch && method === 'GET') {
     if (!rateLimit(request, 'unitalk-media', 160, 60000)) return json({ error: 'rate_limited' }, 429);
@@ -927,15 +1166,20 @@ async function handleUnitalk(request, env, subpath) {
     if (!mediaPost || mediaPost.status === 'removed') return json({ error: 'media_not_found' }, 404);
     var mediaInfo = publicAttachment({ id: mediaId, kind: media.kind, mime: media.mime, name: media.name, size: media.size });
     if (!mediaInfo) return json({ error: 'media_not_found' }, 404);
-    var mediaBytes;
     if (media.storage === 'r2' && env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.get === 'function') {
-      var storedObject = await env.UNITALK_MEDIA.get(mediaId);
+      var requestedRange = parseMediaRange(request.headers.get('Range'), Number(media.size) || 0);
+      if (requestedRange && requestedRange.invalid) {
+        return new Response(null, { status: 416, headers: { 'Content-Range': 'bytes */' + (Number(media.size) || 0) } });
+      }
+      var storedObject = await env.UNITALK_MEDIA.get(mediaId, requestedRange ? {
+        range: { offset: requestedRange.start, length: requestedRange.length }
+      } : undefined);
       if (!storedObject) return json({ error: 'media_not_found' }, 404);
-      mediaBytes = new Uint8Array(await storedObject.arrayBuffer());
-    } else {
-      try { mediaBytes = decodeBase64(String(media.data || '')); }
-      catch (error) { return json({ error: 'media_not_found' }, 404); }
+      return r2MediaResponse(storedObject, mediaInfo, request, requestedRange);
     }
+    var mediaBytes;
+    try { mediaBytes = decodeBase64(String(media.data || '')); }
+    catch (error) { return json({ error: 'media_not_found' }, 404); }
     if (!validAttachmentSignature(mediaInfo.kind, mediaInfo.mime, mediaBytes)) return json({ error: 'media_not_found' }, 404);
     return mediaResponse(mediaBytes, mediaInfo, request);
   }
@@ -961,7 +1205,29 @@ async function handleUnitalk(request, env, subpath) {
     if (!rateLimit(request, 'unitalk-post', 6, 60000)) return json({ error: 'rate_limited' }, 429);
     var member = await requireCommunityMember(env, auth);
     if (member.error) return json({ error: member.error }, member.status);
-    var preparedAttachment = sanitizeNewAttachment(body.attachment);
+    var referencedUploadId = uploadAttachmentReference(body.attachment);
+    var referencedUpload = null;
+    var preparedAttachment;
+    if (referencedUploadId) {
+      referencedUpload = await firebase(env, UNIT_ROOT + '/uploads/' + referencedUploadId, 'GET');
+      var referencedMedia = await firebase(env, UNIT_ROOT + '/media/' + referencedUploadId, 'GET');
+      if (!referencedUpload || !referencedMedia || referencedUpload.authorId !== auth.id ||
+          referencedUpload.status !== 'ready' || referencedUpload.usedAt || referencedMedia.status !== 'ready') {
+        return json({ error: 'upload_not_found' }, 404);
+      }
+      preparedAttachment = {
+        attachment: {
+          kind: referencedMedia.kind,
+          mime: referencedMedia.mime,
+          name: referencedMedia.name,
+          size: Number(referencedMedia.size) || 0
+        },
+        bytes: null,
+        data: ''
+      };
+    } else {
+      preparedAttachment = sanitizeNewAttachment(body.attachment);
+    }
     if (preparedAttachment.error) return json({ error: preparedAttachment.error }, 400);
     var preparedPoll = sanitizeNewPoll(body.poll);
     if (preparedPoll.error) return json({ error: preparedPoll.error }, 400);
@@ -969,6 +1235,11 @@ async function handleUnitalk(request, env, subpath) {
     if (!moderated.allowed && !(moderated.reason === 'contenido_vacio' && preparedAttachment.attachment)) return json({ error: moderated.reason }, 400);
     if (preparedPoll.poll && !moderated.allowed) return json({ error: 'contenido_vacio' }, 400);
     var postId = newCommunityId('p');
+    var referencedUploadClaimed = false;
+    if (referencedUploadId) {
+      referencedUploadClaimed = await claimUnitalkUpload(env, referencedUploadId, auth.id, postId);
+      if (!referencedUploadClaimed) return json({ error: 'upload_not_found' }, 409);
+    }
     var post = {
       id: postId,
       authorId: auth.id,
@@ -984,41 +1255,60 @@ async function handleUnitalk(request, env, subpath) {
     };
     if (preparedPoll.poll) post.poll = preparedPoll.poll;
     var savedMediaId = '';
+    var legacyMediaCreated = false;
     if (preparedAttachment.attachment) {
-      savedMediaId = newCommunityId('m');
+      savedMediaId = referencedUploadId || newCommunityId('m');
       post.attachment = { id: savedMediaId, ...preparedAttachment.attachment };
-      var mediaRecord = {
-        id: savedMediaId,
-        postId,
-        authorId: auth.id,
-        ...preparedAttachment.attachment,
-        status: 'visible',
-        createdAt: Date.now()
-      };
-      if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.put === 'function') {
-        await env.UNITALK_MEDIA.put(savedMediaId, preparedAttachment.bytes, {
-          httpMetadata: { contentType: preparedAttachment.attachment.mime }
-        });
-        mediaRecord.storage = 'r2';
-      } else {
-        mediaRecord.storage = 'firebase';
-        mediaRecord.data = preparedAttachment.data;
-      }
-      try {
-        await firebase(env, UNIT_ROOT + '/media/' + savedMediaId, 'PUT', mediaRecord);
-      } catch (error) {
-        if (mediaRecord.storage === 'r2' && env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(savedMediaId).catch(function () {});
-        throw error;
+      if (!referencedUploadId) {
+        legacyMediaCreated = true;
+        var mediaRecord = {
+          id: savedMediaId,
+          postId,
+          authorId: auth.id,
+          ...preparedAttachment.attachment,
+          status: 'visible',
+          createdAt: Date.now()
+        };
+        if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.put === 'function') {
+          await env.UNITALK_MEDIA.put(savedMediaId, preparedAttachment.bytes, {
+            httpMetadata: { contentType: preparedAttachment.attachment.mime }
+          });
+          mediaRecord.storage = 'r2';
+        } else {
+          mediaRecord.storage = 'firebase';
+          mediaRecord.data = preparedAttachment.data;
+        }
+        try {
+          await firebase(env, UNIT_ROOT + '/media/' + savedMediaId, 'PUT', mediaRecord);
+        } catch (error) {
+          if (mediaRecord.storage === 'r2' && env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(savedMediaId).catch(function () {});
+          throw error;
+        }
       }
     }
     try {
       await firebase(env, UNIT_ROOT + '/posts/' + postId, 'PUT', post);
     } catch (error) {
-      if (savedMediaId) {
+      if (referencedUploadClaimed) {
+        await firebase(env, UNIT_ROOT + '/uploads/' + referencedUploadId, 'PATCH', {
+          status: 'ready',
+          postId: '',
+          claimedAt: 0,
+          updatedAt: Date.now()
+        }).catch(function () {});
+      }
+      if (savedMediaId && legacyMediaCreated) {
         await firebase(env, UNIT_ROOT + '/media/' + savedMediaId, 'DELETE').catch(function () {});
         if (env.UNITALK_MEDIA && typeof env.UNITALK_MEDIA.delete === 'function') await env.UNITALK_MEDIA.delete(savedMediaId).catch(function () {});
       }
       throw error;
+    }
+    if (referencedUploadId) {
+      var usedAt = Date.now();
+      await Promise.all([
+        firebase(env, UNIT_ROOT + '/media/' + referencedUploadId, 'PATCH', { postId, status: 'visible', updatedAt: usedAt }),
+        firebase(env, UNIT_ROOT + '/uploads/' + referencedUploadId, 'PATCH', { postId, status: 'used', usedAt, updatedAt: usedAt })
+      ]);
     }
     return json({ ok: true, post: await postView(env, post, auth, { [auth.id]: member.profile }) }, 201);
   }
@@ -1349,6 +1639,144 @@ function gradeExamAnswers(value) {
   };
 }
 
+function escapeEmailHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+  });
+}
+
+function validResultEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(value || '').trim());
+}
+
+function examRankingRows(participants) {
+  participants = participants && typeof participants === 'object' ? participants : {};
+  return Object.keys(participants).map(function (id) {
+    var row = participants[id] && typeof participants[id] === 'object' ? participants[id] : {};
+    return Object.assign({ userId: cleanId(row.userId || id) }, row);
+  }).filter(function (row) {
+    return row.submittedAt && row.result && !row.blocked;
+  }).sort(function (a, b) {
+    var percentageDifference = (Number(b.result.percentage) || 0) - (Number(a.result.percentage) || 0);
+    if (percentageDifference) return percentageDifference;
+    var correctDifference = (Number(b.result.correct) || 0) - (Number(a.result.correct) || 0);
+    if (correctDifference) return correctDifference;
+    var submittedDifference = (Number(a.submittedAt) || 0) - (Number(b.submittedAt) || 0);
+    if (submittedDifference) return submittedDifference;
+    return String(a.code || '').localeCompare(String(b.code || ''));
+  });
+}
+
+function examResultEmail(env, participant, rank) {
+  var topTen = rank > 0 && rank <= 10;
+  var name = cleanText(participant.name || 'Estudiante', 80);
+  var correct = Math.max(0, Number(participant.result && participant.result.correct) || 0);
+  var percentage = Math.max(0, Math.min(100, Number(participant.result && participant.result.percentage) || 0));
+  var siteUrl = /^https:\/\/[a-z0-9.-]+(?::\d+)?(?:\/.*)?$/i.test(String(env.PUBLIC_SITE_URL || ''))
+    ? String(env.PUBLIC_SITE_URL).replace(/\/+$/, '')
+    : 'https://universetostudy.com';
+  var subject = topTen
+    ? '¡Felicitaciones! Puesto ' + rank + ' en el Simulacro Final de UNIverse'
+    : 'Tu resultado del Simulacro Final de UNIverse';
+  var title = topTen
+    ? '¡Quedaste entre los 10 primeros!'
+    : 'Este resultado es un paso más en tu preparación';
+  var message = topTen
+    ? 'Tu constancia dio resultado: alcanzaste el puesto <strong>' + rank + '</strong> del ranking final. ¡Felicitaciones por este logro!'
+    : 'Esta posición no define todo lo que puedes conseguir. Úsala para reconocer tus avances, ubicar los temas que necesitan refuerzo y volver con una estrategia más clara.';
+  var rankLine = rank > 0
+    ? '<p style="margin:8px 0 0;color:#475569">Puesto final: <strong style="color:#0f172a">' + rank + '</strong></p>'
+    : '<p style="margin:8px 0 0;color:#475569">Este intento no fue incluido en el ranking final.</p>';
+  var text = topTen
+    ? 'Hola ' + name + '. Quedaste en el puesto ' + rank + ' del Simulacro Final de UNIverse con ' + correct + '/' + EXAM_COUNT + ' respuestas correctas (' + percentage + '%). ¡Felicitaciones!'
+    : 'Hola ' + name + '. Tu resultado del Simulacro Final de UNIverse fue ' + correct + '/' + EXAM_COUNT + ' respuestas correctas (' + percentage + '%)' + (rank ? ' y el puesto ' + rank : '') + '. Sigue adelante: revisa tus temas más débiles y convierte este resultado en tu próximo avance.';
+  return {
+    from: cleanText(env.SIMULACRO_EMAIL_FROM || 'UNIverse to Study <resultados@universetostudy.com>', 180),
+    to: [cleanText(participant.email, 180)],
+    subject,
+    html: '<!doctype html><html lang="es"><body style="margin:0;background:#f4f7fb;font-family:Arial,sans-serif;color:#0f172a">' +
+      '<div style="max-width:620px;margin:0 auto;padding:32px 16px"><div style="background:#fff;border:1px solid #dbe7f5;border-radius:20px;overflow:hidden">' +
+      '<div style="padding:22px 28px;background:linear-gradient(135deg,#0b4fbd,#2376e8);color:#fff"><div style="font-size:13px;letter-spacing:2px;font-weight:700">UNIVERSE TO STUDY</div><h1 style="font-size:25px;line-height:1.2;margin:10px 0 0">' + escapeEmailHtml(title) + '</h1></div>' +
+      '<div style="padding:28px"><p style="font-size:17px;margin:0 0 16px">Hola, <strong>' + escapeEmailHtml(name) + '</strong>.</p>' +
+      '<p style="line-height:1.65;margin:0 0 20px">' + message + '</p>' +
+      '<div style="padding:18px;border-radius:14px;background:#eef6ff;border:1px solid #cfe3ff"><p style="margin:0;color:#475569">Resultado</p>' +
+      '<p style="font-size:24px;font-weight:800;margin:5px 0;color:#0b4fbd">' + correct + '/' + EXAM_COUNT + ' · ' + percentage + '%</p>' + rankLine + '</div>' +
+      (topTen ? '<p style="line-height:1.65;margin:22px 0 0">Sigue cuidando ese ritmo y comparte este logro con las personas que te acompañan en tu preparación.</p>' :
+        '<p style="line-height:1.65;margin:22px 0 0">Te recomendamos revisar tus respuestas, escoger tres temas prioritarios y practicar nuevamente. Cada intento bien analizado te acerca a tu meta.</p>') +
+      '<p style="margin:24px 0 0"><a href="' + escapeEmailHtml(siteUrl + '/simulacros') + '" style="display:inline-block;padding:12px 18px;border-radius:12px;background:#0b63ce;color:#fff;text-decoration:none;font-weight:700">Ver mis resultados</a></p>' +
+      '</div></div><p style="text-align:center;color:#64748b;font-size:12px;line-height:1.5;margin:18px 0">Este correo informa el resultado de un simulacro que rendiste en UNIverse to Study.</p></div></body></html>',
+    text,
+    tags: [
+      { name: 'category', value: 'simulacro_final' },
+      { name: 'result', value: topTen ? 'top_10' : 'participant' }
+    ]
+  };
+}
+
+async function sendExamResultNotifications(env, runId, participants) {
+  var ranked = examRankingRows(participants);
+  var rankByUserId = {};
+  ranked.forEach(function (participant, index) {
+    rankByUserId[cleanId(participant.userId)] = index + 1;
+  });
+  var allRows = Object.keys(participants || {}).map(function (id) {
+    var row = participants[id] && typeof participants[id] === 'object' ? participants[id] : {};
+    return Object.assign({ userId: cleanId(row.userId || id) }, row);
+  });
+  var pending = allRows.filter(function (participant) {
+    return participant.submittedAt && participant.result && validResultEmail(participant.email) &&
+      !(participant.notification && participant.notification.emailSentAt);
+  });
+  var alreadySent = allRows.filter(function (participant) {
+    return participant.notification && participant.notification.emailSentAt;
+  }).length;
+  if (!pending.length) return { configured: true, sent: 0, skipped: alreadySent, failed: 0 };
+  if (!env.RESEND_API_KEY || !env.SIMULACRO_EMAIL_FROM) {
+    return { configured: false, sent: 0, skipped: alreadySent, failed: pending.length };
+  }
+  var sent = 0;
+  var failed = 0;
+  for (var offset = 0; offset < pending.length; offset += 100) {
+    var batchRows = pending.slice(offset, offset + 100);
+    var batchPayload = batchRows.map(function (participant) {
+      return examResultEmail(env, participant, rankByUserId[cleanId(participant.userId)] || 0);
+    });
+    var batchFingerprint = (await sha256HexText(batchRows.map(function (participant) {
+      return cleanId(participant.userId);
+    }).join(','))).slice(0, 20);
+    var emailResponse = await fetch('https://api.resend.com/emails/batch', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + env.RESEND_API_KEY,
+        'Content-Type': 'application/json',
+        'Idempotency-Key': 'simulacro-final-' + cleanId(runId) + '-' + batchFingerprint
+      },
+      body: JSON.stringify(batchPayload)
+    });
+    var emailResult = await emailResponse.json().catch(function () { return {}; });
+    if (!emailResponse.ok) {
+      failed += batchRows.length;
+      continue;
+    }
+    var providerRows = Array.isArray(emailResult.data) ? emailResult.data : [];
+    var sentAt = Date.now();
+    var notificationPatch = {};
+    batchRows.forEach(function (participant, index) {
+      var participantId = cleanId(participant.userId);
+      notificationPatch[participantId + '/notification'] = {
+        emailSentAt: sentAt,
+        provider: 'resend',
+        providerId: cleanText(providerRows[index] && providerRows[index].id, 120),
+        rank: rankByUserId[participantId] || 0,
+        type: rankByUserId[participantId] && rankByUserId[participantId] <= 10 ? 'top_10' : 'motivation'
+      };
+    });
+    await firebase(env, EXAM_ROOT + '/runs/' + cleanId(runId) + '/participants', 'PATCH', notificationPatch);
+    sent += batchRows.length;
+  }
+  return { configured: true, sent, skipped: alreadySent, failed };
+}
+
 async function handleExam(request, env, subpath) {
   if (!rateLimit(request, 'exam', 180, 60000)) return json({ error: 'rate_limited' }, 429);
   var auth = await verifySession(request, env);
@@ -1515,9 +1943,25 @@ async function handleExam(request, env, subpath) {
 
   if (path === '/admin/publish' && method === 'POST') {
     if (!session.runId) return json({ error: 'no_session' }, 409);
-    var publishedAt = Date.now();
-    await firebase(env, EXAM_ROOT + '/session', 'PATCH', { publishedAt, updatedAt: publishedAt });
-    return json({ ok: true, publishedAt });
+    if (!storedSession.finalizedAt) return json({ error: 'exam_not_finalized' }, 409);
+    var publishParticipants = await firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants', 'GET') || {};
+    var notifications = await sendExamResultNotifications(env, session.runId, publishParticipants);
+    var publishedAt = Math.max(0, Number(storedSession.publishedAt) || 0) || Date.now();
+    var notificationAttemptAt = Date.now();
+    await firebase(env, EXAM_ROOT + '/session', 'PATCH', {
+      publishedAt,
+      updatedAt: notificationAttemptAt,
+      notificationAttemptAt,
+      notificationSent: notifications.sent,
+      notificationFailed: notifications.failed,
+      notificationConfigured: notifications.configured
+    });
+    return json({
+      ok: true,
+      publishedAt,
+      alreadyPublished: Boolean(storedSession.publishedAt),
+      notifications
+    });
   }
 
   if (path === '/admin/finish' && method === 'POST') {
