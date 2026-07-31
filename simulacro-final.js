@@ -126,6 +126,7 @@
       already_submitted: 'Este intento ya fue enviado.',
       exam_blocked: 'El intento está bloqueado.',
       no_session: 'No hay una sesión activa para finalizar.',
+      exam_not_finalized: 'Finaliza el examen para todos antes de publicar el ranking y enviar los correos.',
       invalid_answer: 'No se pudo guardar esa alternativa.',
       justification_too_short: 'Explica el motivo con al menos 12 caracteres.',
       rate_limited: 'Se realizaron demasiadas acciones seguidas. Espera unos segundos.'
@@ -295,7 +296,7 @@
       adminAction('admin/finish');
     });
     if (publish) publish.addEventListener('click', function () {
-      if (!window.confirm('¿Publicar ahora las notas y soluciones para los estudiantes que entregaron?')) return;
+      if (!window.confirm('¿Publicar ahora el ranking y las soluciones? También se enviará a cada participante un correo según su puesto final.')) return;
       adminAction('admin/publish');
     });
     root.querySelectorAll('[data-review]').forEach(function (button) {
@@ -313,7 +314,16 @@
     state.busy = true;
     state.error = '';
     try {
-      await api(route, 'POST', data || {});
+      var response = await api(route, 'POST', data || {});
+      if (route === 'admin/publish' && response.notifications) {
+        if (!response.notifications.configured) {
+          window.alert('Las notas se publicaron, pero el servicio privado de correo aún no está configurado. No se envió ningún mensaje.');
+        } else if (response.notifications.sent) {
+          window.alert('Ranking publicado. Se enviaron ' + response.notifications.sent + ' correos y se omitieron ' + response.notifications.skipped + ' ya enviados.');
+        } else {
+          window.alert('Ranking publicado. Todos los correos correspondientes ya habían sido enviados.');
+        }
+      }
       await loadState(true);
     } catch (error) {
       state.error = errorMessage(error);

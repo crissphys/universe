@@ -21,9 +21,9 @@
     saved: new Set(readList(SAVED_KEY))
   };
   var ATTACHMENT_RULES = {
-    image: { types: ['image/jpeg', 'image/png', 'image/webp'], max: 1200000, label: 'foto' },
-    video: { types: ['video/mp4', 'video/webm'], max: 6000000, label: 'video' },
-    pdf: { types: ['application/pdf'], max: 3000000, label: 'PDF' }
+    image: { types: ['image/jpeg', 'image/png', 'image/webp'], label: 'foto' },
+    video: { types: ['video/mp4', 'video/webm'], label: 'video' },
+    pdf: { types: ['application/pdf'], label: 'PDF' }
   };
 
   function $(id) { return document.getElementById(id); }
@@ -48,37 +48,10 @@
       return prefix + '<a class="unitalk-hashtag" href="/unitalk?tag=' + encodeURIComponent(hashtagValue(tag)) + '" data-hashtag="' + safe(hashtagValue(tag)) + '">#' + safe(tag) + '</a>';
     });
   }
-  function fileToDataUrl(file) {
-    return new Promise(function (resolve, reject) {
-      var reader = new FileReader();
-      reader.onload = function () { resolve(String(reader.result || '')); };
-      reader.onerror = function () { reject(new Error('archivo_no_legible')); };
-      reader.readAsDataURL(file);
-    });
-  }
-  function compressImage(file) {
-    return fileToDataUrl(file).then(function (source) {
-      return new Promise(function (resolve, reject) {
-        var image = new Image();
-        image.onload = function () {
-          var limit = 1600;
-          var scale = Math.min(1, limit / Math.max(image.naturalWidth || 1, image.naturalHeight || 1));
-          var canvas = document.createElement('canvas');
-          canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
-          canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
-          var context = canvas.getContext('2d', { alpha: false });
-          context.drawImage(image, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob(function (blob) {
-            if (!blob) { reject(new Error('imagen_no_procesada')); return; }
-            fileToDataUrl(blob).then(function (dataUrl) {
-              resolve({ dataUrl: dataUrl, size: blob.size, mime: blob.type || 'image/jpeg' });
-            }, reject);
-          }, file.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.84);
-        };
-        image.onerror = function () { reject(new Error('imagen_no_valida')); };
-        image.src = source;
-      });
-    });
+  function releaseAttachment(attachment) {
+    if (attachment && attachment.previewUrl && /^blob:/.test(attachment.previewUrl)) {
+      try { URL.revokeObjectURL(attachment.previewUrl); } catch (error) {}
+    }
   }
   function readList(key) {
     try {
@@ -106,6 +79,50 @@
       }
       return payload;
     });
+  }
+  function rawApi(path, body) {
+    var headers = { 'Content-Type': 'application/octet-stream' };
+    var currentToken = token();
+    if (currentToken) headers.Authorization = 'Bearer ' + currentToken;
+    return fetch('/api/unitalk' + path, {
+      method: 'PUT',
+      cache: 'no-store',
+      headers: headers,
+      body: body
+    }).then(async function (response) {
+      var payload = await response.json().catch(function () { return {}; });
+      if (!response.ok) {
+        var error = new Error(payload.error || 'request_failed');
+        error.status = response.status;
+        throw error;
+      }
+      return payload;
+    });
+  }
+  async function uploadAttachment(attachment, status) {
+    var started = await api('/uploads/start', 'POST', {
+      kind: attachment.kind,
+      mime: attachment.mime,
+      name: attachment.name,
+      size: attachment.size
+    });
+    var partSize = Math.max(1, Number(started.partSize) || (8 * 1024 * 1024));
+    var parts = [];
+    try {
+      for (var offset = 0, partNumber = 1; offset < attachment.size; offset += partSize, partNumber += 1) {
+        var chunk = attachment.blob.slice(offset, Math.min(attachment.size, offset + partSize));
+        var uploaded = await rawApi('/uploads/' + encodeURIComponent(started.id) + '/parts/' + partNumber, chunk);
+        parts.push({ partNumber: uploaded.partNumber, etag: uploaded.etag });
+        var percent = Math.min(100, Math.round(Math.min(attachment.size, offset + chunk.size) * 100 / attachment.size));
+        status.textContent = 'Subiendo ' + attachment.name + ': ' + percent + '%';
+        status.className = 'unitalk-status';
+      }
+      await api('/uploads/' + encodeURIComponent(started.id) + '/complete', 'POST', { parts: parts });
+      return { uploadId: started.id };
+    } catch (error) {
+      await api('/uploads/' + encodeURIComponent(started.id), 'DELETE').catch(function () {});
+      throw error;
+    }
   }
   function relativeTime(value) {
     var time = Number(value) || 0;
@@ -142,6 +159,11 @@
       forbidden: 'No tienes permiso para realizar esta acción.',
       attachment_invalid: 'El archivo no es válido o su formato no está permitido.',
       attachment_too_large: 'El archivo supera el tamaño permitido.',
+      media_storage_unavailable: 'El almacenamiento de archivos no está disponible en este momento.',
+      upload_not_found: 'La carga caducó o ya fue utilizada. Selecciona el archivo nuevamente.',
+      upload_part_invalid: 'Una parte del archivo no se pudo cargar. Inténtalo de nuevo.',
+      upload_incomplete: 'El archivo no terminó de subir. Inténtalo de nuevo.',
+      upload_size_mismatch: 'El archivo recibido no coincide con el original.',
       media_not_found: 'El archivo adjunto ya no está disponible.',
       poll_invalid: 'La encuesta necesita entre 2 y 4 alternativas diferentes.',
       poll_not_found: 'La encuesta ya no está disponible.',
@@ -295,8 +317,8 @@
     panel.hidden = !attachment;
     if (!attachment) { root.innerHTML = ''; return; }
     var name = safe(attachment.name);
-    if (attachment.kind === 'image') root.innerHTML = '<div class="unitalk-attachment-preview"><img src="' + safe(attachment.dataUrl) + '" alt="' + name + '"></div>';
-    else if (attachment.kind === 'video') root.innerHTML = '<div class="unitalk-attachment-preview"><video src="' + safe(attachment.dataUrl) + '" controls preload="metadata" playsinline></video></div>';
+    if (attachment.kind === 'image') root.innerHTML = '<div class="unitalk-attachment-preview"><img src="' + safe(attachment.previewUrl) + '" alt="' + name + '"></div>';
+    else if (attachment.kind === 'video') root.innerHTML = '<div class="unitalk-attachment-preview"><video src="' + safe(attachment.previewUrl) + '" controls preload="metadata" playsinline></video></div>';
     else root.innerHTML = '<div class="unitalk-attachment-file"><span>📄</span><span><strong>' + name + '</strong><small>' + safe(bytesLabel(attachment.size)) + '</small></span></div>';
   }
   async function chooseAttachment(kind, file) {
@@ -310,28 +332,23 @@
     status.textContent = 'Preparando ' + rule.label + '...';
     status.className = 'unitalk-status';
     try {
-      var prepared;
-      if (kind === 'image') prepared = await compressImage(file);
-      else {
-        if (file.size > rule.max) throw new Error('attachment_too_large');
-        prepared = { dataUrl: await fileToDataUrl(file), size: file.size, mime: file.type };
-      }
-      if (prepared.size > rule.max) throw new Error('attachment_too_large');
+      if (!file.size) throw new Error('attachment_invalid');
+      releaseAttachment(state.attachment);
       state.attachment = {
         kind: kind,
         name: String(file.name || rule.label).slice(0, 90),
-        mime: prepared.mime,
-        size: prepared.size,
-        dataUrl: prepared.dataUrl
+        mime: file.type,
+        size: file.size,
+        blob: file,
+        previewUrl: URL.createObjectURL(file)
       };
-      status.textContent = 'Archivo listo. Puedes añadir un texto o publicarlo directamente.';
+      status.textContent = 'Archivo listo (' + bytesLabel(file.size) + '). Puedes añadir un texto o publicarlo directamente.';
       status.className = 'unitalk-status good';
       updateComposer();
     } catch (error) {
+      releaseAttachment(state.attachment);
       state.attachment = null;
-      status.textContent = error.message === 'attachment_too_large'
-        ? 'Tamaño máximo: fotos 1.2 MB, PDF 3 MB y video 6 MB.'
-        : 'No se pudo preparar el archivo seleccionado.';
+      status.textContent = errorText(error);
       status.className = 'unitalk-status error';
       updateComposer();
     }
@@ -372,11 +389,16 @@
     if (poll === false) { status.textContent = 'Completa entre 2 y 4 alternativas diferentes.'; status.className = 'unitalk-status error'; return; }
     if (!text && !state.attachment) { status.textContent = 'Escribe algo o selecciona un archivo antes de publicar.'; status.className = 'unitalk-status error'; return; }
     var button = $('unitalk-publish');
+    var uploadedAttachmentPayload = null;
     button.disabled = true;
     try {
-      var result = await api('/posts', 'POST', { text: text, discussion: state.discussion, attachment: state.attachment, poll: poll });
+      var selectedAttachment = state.attachment;
+      uploadedAttachmentPayload = selectedAttachment ? await uploadAttachment(selectedAttachment, status) : null;
+      var result = await api('/posts', 'POST', { text: text, discussion: state.discussion, attachment: uploadedAttachmentPayload, poll: poll });
+      uploadedAttachmentPayload = null;
       $('unitalk-post-text').value = '';
       state.discussion = false;
+      releaseAttachment(selectedAttachment);
       state.attachment = null;
       state.pollActive = false;
       state.pollOptions = ['', ''];
@@ -390,6 +412,9 @@
       renderActivity();
       toast('Tu publicación ya aparece en UNITALK.');
     } catch (error) {
+      if (uploadedAttachmentPayload && uploadedAttachmentPayload.uploadId) {
+        await api('/uploads/' + encodeURIComponent(uploadedAttachmentPayload.uploadId), 'DELETE').catch(function () {});
+      }
       requireAccount(error) || requireProfile(error);
       status.textContent = errorText(error);
       status.className = 'unitalk-status error';
@@ -582,6 +607,7 @@
       renderPollBuilder();
     };
     $('unitalk-attachment-remove').onclick = function () {
+      releaseAttachment(state.attachment);
       state.attachment = null;
       ['unitalk-image-input', 'unitalk-video-input', 'unitalk-pdf-input'].forEach(function (id) { $(id).value = ''; });
       $('unitalk-composer-status').textContent = 'Archivo retirado.';
