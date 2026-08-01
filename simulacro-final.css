@@ -125,6 +125,22 @@ html[data-universe-theme="dark"] .universe-page-simulators {
   padding: clamp(16px, 2.5vw, 24px);
 }
 
+.ufe-admin-exam-picker {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(260px, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+  padding: 16px;
+  border: 1px solid var(--ufe-border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--ufe-primary) 5%, var(--ufe-card));
+}
+
+.ufe-preview-question {
+  width: min(980px, 100%);
+  margin-inline: auto;
+}
+
 html[data-universe-theme="dark"] .ufe-card {
   box-shadow: 0 20px 52px rgba(0, 0, 0, .34);
 }
@@ -705,6 +721,11 @@ html[data-universe-theme="dark"] .ufe-card {
 }
 
 @media (max-width: 700px) {
+  .ufe-admin-exam-picker {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
   #uni-final-app {
     padding-inline: 10px;
   }

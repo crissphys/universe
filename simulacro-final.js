@@ -8,10 +8,13 @@
     'Física', 'Química', 'Álgebra', 'Aritmética', 'Geometría',
     'Trigonometría', 'Razonamiento matemático', 'Razonamiento verbal', 'Humanidades'
   ];
-  var questions = Array.isArray(window.UNIVERSE_FINAL_EXAM_QUESTIONS)
-    ? window.UNIVERSE_FINAL_EXAM_QUESTIONS
-    : [];
-  var examTotal = questions.length || 65;
+  var examBanks = window.UNIVERSE_EXAM_BANKS && typeof window.UNIVERSE_EXAM_BANKS === 'object'
+    ? window.UNIVERSE_EXAM_BANKS
+    : {};
+  var defaultExamId = 'admision-uni-2027-1';
+  var currentExamId = defaultExamId;
+  var questions = [];
+  var examTotal = 0;
   var state = {
     auth: null,
     user: null,
@@ -31,8 +34,37 @@
     monitoring: false,
     lastIncidentAt: 0,
     joinedRunId: '',
+    previewActive: false,
+    previewExamId: '',
+    previewAnswers: {},
     saveChain: Promise.resolve()
   };
+
+  function examBank(examId) {
+    return examBanks[examId] || examBanks[defaultExamId] || {
+      id: defaultExamId,
+      title: 'Simulacro de admisión UNI',
+      shortTitle: 'Admisión UNI',
+      status: 'draft',
+      durationSeconds: 10800,
+      questions: []
+    };
+  }
+
+  function applyExamBank(examId) {
+    var bank = examBank(examId);
+    currentExamId = bank.id || defaultExamId;
+    questions = Array.isArray(bank.questions) ? bank.questions : [];
+    examTotal = questions.length;
+    return bank;
+  }
+
+  function activeExamBank() {
+    var session = state.server && state.server.session;
+    return applyExamBank(state.previewActive ? state.previewExamId : (session && session.examId));
+  }
+
+  applyExamBank(defaultExamId);
 
   function esc(value) {
     return String(value == null ? '' : value)
@@ -192,10 +224,12 @@
 
   function renderShell(content) {
     var session = state.server && state.server.session;
+    var bank = activeExamBank();
+    var hours = Math.max(1, Math.round((Number(bank.durationSeconds) || 10800) / 3600));
     root.innerHTML = [
       '<div class="ufe-shell">',
       '<header class="ufe-topbar">',
-      '<div class="ufe-brand"><span class="ufe-brand-mark">UNI</span><span class="ufe-brand-copy"><strong>CEPREUNI · Examen final</strong><small>Simulacro integral · ' + examTotal + ' preguntas · 3 horas</small></span></div>',
+      '<div class="ufe-brand"><span class="ufe-brand-mark">UNI</span><span class="ufe-brand-copy"><strong>' + esc(bank.shortTitle || bank.title) + '</strong><small>' + examTotal + ' preguntas · ' + hours + ' horas</small></span></div>',
       state.user ? '<div class="ufe-user-line"><span class="ufe-badge">' + esc(state.isAdmin ? 'Administrador' : (state.server && state.server.participant ? state.server.participant.code : 'Cuenta Google')) + '</span><span class="ufe-muted">' + esc(state.user.name || state.user.email || '') + '</span></div>' : '',
       '</header>',
       state.error ? '<div class="ufe-error" role="alert">' + esc(state.error) + '</div>' : '',
@@ -261,6 +295,12 @@
     var blocked = participants.filter(function (p) { return p.blocked; }).length;
     var canActivate = session.status === 'waiting';
     var canFinish = participants.length > 0 && ['waiting', 'countdown', 'active'].includes(session.status);
+    var selectedExamId = session.examId && examBanks[session.examId] ? session.examId : defaultExamId;
+    var bankOptions = Object.keys(examBanks).map(function (id) {
+      var bank = examBanks[id];
+      var suffix = bank.status === 'archived' ? ' · Archivado' : bank.status === 'draft' ? ' · En desarrollo' : '';
+      return '<option value="' + esc(id) + '" ' + (id === selectedExamId ? 'selected' : '') + '>' + esc(bank.title + suffix) + '</option>';
+    }).join('');
     renderShell([
       '<section class="ufe-screen" aria-label="Panel del administrador">',
       '<div class="ufe-live-strip" aria-label="Conexiones en tiempo real">',
@@ -273,8 +313,9 @@
       '<div class="ufe-stat"><span class="ufe-muted">Bloqueos</span><strong>' + blocked + '</strong><span>justificables en tiempo real</span></div>',
       '</div>',
       '<div class="ufe-card ufe-stack">',
-      '<div class="ufe-result-head"><div class="ufe-stack"><span class="ufe-badge">' + esc(statusLabel(session)) + '</span><h1 class="ufe-title">Control del examen final</h1></div>',
-      '<div class="ufe-actions"><button class="ufe-btn" id="ufe-open-room" type="button">Abrir nueva sala</button><button class="ufe-btn ufe-btn-primary" id="ufe-activate" type="button" ' + (canActivate ? '' : 'disabled') + '>Activar 30 segundos</button><button class="ufe-btn ufe-btn-danger" id="ufe-finish-all" type="button" ' + (canFinish ? '' : 'disabled') + '>Finalizar para todos</button><button class="ufe-btn" id="ufe-publish" type="button" ' + (submitted ? '' : 'disabled') + '>Publicar notas</button></div></div>',
+      '<div class="ufe-result-head"><div class="ufe-stack"><span class="ufe-badge">' + esc(statusLabel(session)) + '</span><h1 class="ufe-title">Control de simulacros</h1></div></div>',
+      '<div class="ufe-admin-exam-picker"><label class="ufe-stack" for="ufe-exam-select"><strong>Examen que se realizará</strong><span class="ufe-muted">El banco anterior está conservado como archivo. El nuevo banco corresponde a Admisión UNI.</span></label><select class="ufe-input" id="ufe-exam-select">' + bankOptions + '</select><div class="ufe-actions"><button class="ufe-btn" id="ufe-preview-exam" type="button">Prueba previa</button><button class="ufe-btn ufe-btn-primary" id="ufe-open-room" type="button">Abrir sala con este examen</button></div></div>',
+      '<div class="ufe-actions"><button class="ufe-btn ufe-btn-primary" id="ufe-activate" type="button" ' + (canActivate ? '' : 'disabled') + '>Activar 30 segundos</button><button class="ufe-btn ufe-btn-danger" id="ufe-finish-all" type="button" ' + (canFinish ? '' : 'disabled') + '>Finalizar para todos</button><button class="ufe-btn" id="ufe-publish" type="button" ' + (submitted ? '' : 'disabled') + '>Publicar notas</button></div>',
       '<p class="ufe-muted">Al activar, todos los estudiantes registrados ven la misma cuenta regresiva y disponen de tres horas. Las preguntas y alternativas cambian de orden para cada código sin mezclar los cursos.</p>',
       '</div>',
       '<div class="ufe-card ufe-stack"><div class="ufe-result-head"><h2>Ranking completo</h2><span class="ufe-badge">' + participants.length + ' registrados</span></div>',
@@ -284,12 +325,23 @@
     ].join(''));
 
     var open = document.getElementById('ufe-open-room');
+    var preview = document.getElementById('ufe-preview-exam');
+    var examSelect = document.getElementById('ufe-exam-select');
     var activate = document.getElementById('ufe-activate');
     var finishAll = document.getElementById('ufe-finish-all');
     var publish = document.getElementById('ufe-publish');
     if (open) open.addEventListener('click', function () {
       if (!window.confirm('Se abrirá una nueva sala y la sesión anterior dejará de ser la activa. ¿Continuar?')) return;
-      adminAction('admin/open');
+      adminAction('admin/open', { examId: examSelect && examSelect.value || defaultExamId });
+    });
+    if (preview) preview.addEventListener('click', function () {
+      state.previewActive = true;
+      state.previewExamId = examSelect && examSelect.value || defaultExamId;
+      state.previewAnswers = {};
+      state.current = 0;
+      applyExamBank(state.previewExamId);
+      prepareExam('ADMIN-PREVIEW-' + state.previewExamId);
+      renderAdminPreview();
     });
     if (activate) activate.addEventListener('click', function () { adminAction('admin/activate'); });
     if (finishAll) finishAll.addEventListener('click', function () {
@@ -306,6 +358,51 @@
           userId: button.getAttribute('data-user'),
           action: button.getAttribute('data-review')
         });
+      });
+    });
+  }
+
+  function renderAdminPreview() {
+    state.monitoring = false;
+    var bank = activeExamBank();
+    if (!state.order.length) prepareExam('ADMIN-PREVIEW-' + currentExamId);
+    state.current = Math.max(0, Math.min(state.order.length - 1, state.current));
+    var q = state.order[state.current];
+    if (!q) {
+      renderShell('<section class="ufe-card ufe-centered ufe-stack"><span class="ufe-badge">Vista previa</span><h1 class="ufe-title">Este banco todavía no tiene preguntas</h1><button class="ufe-btn" id="ufe-preview-exit" type="button">Volver al panel</button></section>');
+    } else {
+      var options = state.prepared.get(q.id) || q.choices;
+      var passage = q.passage ? '<div class="ufe-passage">' + esc(q.passage) + '</div>' : '';
+      var visual = q.visual ? '<div class="ufe-question-visual">' + q.visual + '</div>' : '';
+      var optionMarkup = options.map(function (option, index) {
+        var selected = state.previewAnswers[q.id] === option;
+        return '<button class="ufe-option" type="button" data-preview-option="' + encodeURIComponent(option) + '" aria-pressed="' + selected + '"><span class="ufe-option-letter">' + String.fromCharCode(65 + index) + '.</span><span>' + esc(option) + '</span></button>';
+      }).join('');
+      renderShell([
+        '<section class="ufe-screen" aria-label="Vista previa del examen">',
+        '<div class="ufe-card ufe-result-head"><div class="ufe-stack"><span class="ufe-badge">Prueba previa · no guarda resultados</span><h1 class="ufe-title">' + esc(bank.title) + '</h1></div><button class="ufe-btn" id="ufe-preview-exit" type="button">Volver al panel</button></div>',
+        '<article class="ufe-card ufe-question ufe-preview-question"><span class="ufe-muted">Pregunta ' + (state.current + 1) + ' de ' + examTotal + '</span><div class="ufe-meta"><span class="ufe-badge">' + esc(q.course) + '</span><span class="ufe-muted">' + esc(q.topic) + '</span></div>',
+        passage, '<div class="ufe-question-copy">' + trustedQuestionText(q.text) + '</div>', visual,
+        '<fieldset class="ufe-options" aria-label="Alternativas">' + optionMarkup + '</fieldset>',
+        '<div class="ufe-question-actions"><button class="ufe-btn" id="ufe-preview-prev" type="button" ' + (state.current === 0 ? 'disabled' : '') + '>Anterior</button><button class="ufe-btn ufe-btn-primary" id="ufe-preview-next" type="button" ' + (state.current === state.order.length - 1 ? 'disabled' : '') + '>Siguiente</button></div></article></section>'
+      ].join(''));
+    }
+    var exit = document.getElementById('ufe-preview-exit');
+    if (exit) exit.addEventListener('click', function () {
+      state.previewActive = false;
+      state.previewExamId = '';
+      state.order = [];
+      applyExamBank(state.server && state.server.session && state.server.session.examId);
+      renderAdmin();
+    });
+    var prev = document.getElementById('ufe-preview-prev');
+    var next = document.getElementById('ufe-preview-next');
+    if (prev) prev.addEventListener('click', function () { state.current -= 1; renderAdminPreview(); });
+    if (next) next.addEventListener('click', function () { state.current += 1; renderAdminPreview(); });
+    root.querySelectorAll('[data-preview-option]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        state.previewAnswers[q.id] = decodeURIComponent(button.getAttribute('data-preview-option'));
+        renderAdminPreview();
       });
     });
   }
@@ -709,7 +806,8 @@
       renderLoading();
       return;
     }
-    if (state.isAdmin) renderAdmin();
+    if (state.isAdmin && state.previewActive) renderAdminPreview();
+    else if (state.isAdmin) renderAdmin();
     else routeStudent();
   }
 
@@ -724,6 +822,7 @@
       var oldParticipant = state.server && state.server.participant;
       state.server = payload;
       state.isAdmin = payload.isAdmin === true;
+      applyExamBank(payload.session && payload.session.examId);
       state.error = '';
       var changed = !oldStatus || oldStatus !== payload.session.status ||
         !oldParticipant || !payload.participant ||
