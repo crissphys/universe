@@ -11,6 +11,7 @@
   var questions = Array.isArray(window.UNIVERSE_FINAL_EXAM_QUESTIONS)
     ? window.UNIVERSE_FINAL_EXAM_QUESTIONS
     : [];
+  var examTotal = questions.length || 65;
   var state = {
     auth: null,
     user: null,
@@ -194,7 +195,7 @@
     root.innerHTML = [
       '<div class="ufe-shell">',
       '<header class="ufe-topbar">',
-      '<div class="ufe-brand"><span class="ufe-brand-mark">UNI</span><span class="ufe-brand-copy"><strong>CEPREUNI · Examen final</strong><small>Simulacro integral · 60 preguntas · 3 horas</small></span></div>',
+      '<div class="ufe-brand"><span class="ufe-brand-mark">UNI</span><span class="ufe-brand-copy"><strong>CEPREUNI · Examen final</strong><small>Simulacro integral · ' + examTotal + ' preguntas · 3 horas</small></span></div>',
       state.user ? '<div class="ufe-user-line"><span class="ufe-badge">' + esc(state.isAdmin ? 'Administrador' : (state.server && state.server.participant ? state.server.participant.code : 'Cuenta Google')) + '</span><span class="ufe-muted">' + esc(state.user.name || state.user.email || '') + '</span></div>' : '',
       '</header>',
       state.error ? '<div class="ufe-error" role="alert">' + esc(state.error) + '</div>' : '',
@@ -240,7 +241,7 @@
       var review = justification && justification.status === 'pending'
         ? '<div class="ufe-actions"><button class="ufe-btn" data-review="approved" data-user="' + esc(p.userId) + '">Aprobar</button><button class="ufe-btn ufe-btn-danger" data-review="rejected" data-user="' + esc(p.userId) + '">Rechazar</button></div>'
         : '';
-      var score = p.blocked ? '0/0' : result ? result.correct + '/60' : 'Pendiente';
+      var score = p.blocked ? '0/0' : result ? result.correct + '/' + examTotal : 'Pendiente';
       var percentage = p.blocked ? '0 %' : result ? result.percentage + ' %' : '—';
       var status = p.blocked ? 'Bloqueado' : p.submittedAt ? 'Finalizado' : 'En curso o en espera';
       var justificationMarkup = justification
@@ -448,12 +449,12 @@
 
     renderShell([
       '<section class="ufe-screen" aria-label="Examen en curso">',
-      '<div class="ufe-card ufe-meta"><span class="ufe-code">' + esc(participant.code) + '</span><strong id="ufe-timer">' + formatTime(remaining) + '</strong><span class="ufe-muted">' + answered + '/60 respondidas</span><span class="ufe-muted">' + participant.violations + '/2 incidencias</span><button class="ufe-btn" id="ufe-finish" type="button">Finalizar</button></div>',
-      '<div class="ufe-progress" aria-label="' + answered + ' de 60 respondidas"><span style="width:' + (answered / 60 * 100) + '%"></span></div>',
+      '<div class="ufe-card ufe-meta"><span class="ufe-code">' + esc(participant.code) + '</span><strong id="ufe-timer">' + formatTime(remaining) + '</strong><span class="ufe-muted">' + answered + '/' + examTotal + ' respondidas</span><span class="ufe-muted">' + participant.violations + '/2 incidencias</span><button class="ufe-btn" id="ufe-finish" type="button">Finalizar</button></div>',
+      '<div class="ufe-progress" aria-label="' + answered + ' de ' + examTotal + ' respondidas"><span style="width:' + (answered / examTotal * 100) + '%"></span></div>',
       '<div class="ufe-exam-layout">',
       '<aside class="ufe-card ufe-navigator" aria-label="Navegador de preguntas"><strong>Preguntas por curso</strong><span class="ufe-muted">Subrayada: respondida</span><div class="ufe-course-groups">' + nav + '</div></aside>',
       '<article class="ufe-card ufe-question">',
-      '<div class="ufe-result-head"><div class="ufe-stack"><span class="ufe-muted">Pregunta ' + (state.current + 1) + ' de 60</span><div class="ufe-meta"><span class="ufe-badge">' + esc(q.course) + '</span><span class="ufe-muted">' + esc(q.topic) + ' · ' + frequencyText(q.frequency) + '</span></div></div></div>',
+      '<div class="ufe-result-head"><div class="ufe-stack"><span class="ufe-muted">Pregunta ' + (state.current + 1) + ' de ' + examTotal + '</span><div class="ufe-meta"><span class="ufe-badge">' + esc(q.course) + '</span><span class="ufe-muted">' + esc(q.topic) + ' · ' + frequencyText(q.frequency) + '</span></div></div></div>',
       passage,
       '<div class="ufe-question-copy">' + trustedQuestionText(q.text) + '</div>',
       visual,
@@ -487,7 +488,7 @@
       renderExam();
     });
     document.getElementById('ufe-finish').addEventListener('click', function () {
-      if (!window.confirm('Has respondido ' + answered + ' de 60 preguntas. ¿Deseas enviar el examen?')) return;
+      if (!window.confirm('Has respondido ' + answered + ' de ' + examTotal + ' preguntas. ¿Deseas enviar el examen?')) return;
       submitExam();
     });
     startTicking();
@@ -609,14 +610,14 @@
       return '<div><strong>' + esc(name) + '</strong><span>' + row.correct + ' de ' + row.total + ' correctas</span></div>';
     }).join('');
     var missed = (result.missed || []).map(function (item) {
-      return '<tr><td>' + item.id + '</td><td><strong>' + esc(item.course) + '</strong><br><span class="ufe-muted">' + esc(item.topic) + '</span></td><td>' + esc(item.selected) + '</td><td>' + esc(item.correct) + '</td><td>' + esc(item.solution) + '</td></tr>';
+      return '<tr><td>' + item.id + '</td><td><strong>' + esc(item.course) + '</strong><br><span class="ufe-muted">' + esc(item.topic) + '</span></td><td>' + esc(item.selected) + '</td></tr>';
     }).join('');
     renderShell([
       '<section class="ufe-screen" aria-label="Resultado publicado">',
-      '<div class="ufe-stats"><div class="ufe-stat"><span class="ufe-muted">Código</span><strong>' + esc(participant.code) + '</strong><span>identificador del intento</span></div><div class="ufe-stat"><span class="ufe-muted">Aciertos</span><strong>' + result.correct + '/60</strong><span>' + result.percentage + ' %</span></div><div class="ufe-stat"><span class="ufe-muted">Sin responder</span><strong>' + result.unanswered + '</strong><span>' + result.incorrect + ' incorrectas</span></div></div>',
+      '<div class="ufe-stats"><div class="ufe-stat"><span class="ufe-muted">Código</span><strong>' + esc(participant.code) + '</strong><span>identificador del intento</span></div><div class="ufe-stat"><span class="ufe-muted">Aciertos</span><strong>' + result.correct + '/' + examTotal + '</strong><span>' + result.percentage + ' %</span></div><div class="ufe-stat"><span class="ufe-muted">Sin responder</span><strong>' + result.unanswered + '</strong><span>' + result.incorrect + ' incorrectas</span></div></div>',
       '<div class="ufe-card ufe-stack"><h2>Rendimiento por curso</h2><div class="ufe-course-score">' + course + '</div></div>',
       '<div class="ufe-card ufe-stack"><div class="ufe-result-head"><h2>Preguntas por corregir</h2><span class="ufe-badge">' + result.missed.length + ' revisiones</span></div>',
-      result.missed.length ? '<div class="ufe-table-wrap"><table class="ufe-table"><thead><tr><th>N.º</th><th>Curso y tema</th><th>Marcaste</th><th>Clave</th><th>Explicación</th></tr></thead><tbody>' + missed + '</tbody></table></div>' : '<p class="ufe-badge ufe-status-success">No hubo errores.</p>',
+      result.missed.length ? '<div class="ufe-table-wrap"><table class="ufe-table"><thead><tr><th>N.º</th><th>Curso y tema</th><th>Tu respuesta</th></tr></thead><tbody>' + missed + '</tbody></table></div>' : '<p class="ufe-badge ufe-status-success">No hubo errores.</p>',
       '</div></section>'
     ].join(''));
   }

@@ -436,6 +436,40 @@ html[data-universe-theme="dark"] .ufe-card {
   font-weight: 700;
 }
 
+.ufe-equation-stack,
+.ufe-statement-list {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--ufe-border);
+  border-radius: 14px;
+  background: var(--ufe-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.08em;
+  font-weight: 500;
+}
+
+.ufe-equation-stack span {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+}
+
+.ufe-display-equation {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 14px auto 2px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--ufe-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.12em;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
 .ufe-passage {
   border-left: 4px solid var(--ufe-primary);
   background: var(--ufe-soft);
@@ -453,6 +487,53 @@ html[data-universe-theme="dark"] .ufe-card {
 .ufe-question-visual svg {
   width: min(100%, 500px);
   height: auto;
+}
+
+.ufe-question-visual .ufe-main-diagram {
+  width: min(100%, 680px);
+}
+
+.ufe-graph-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(100%, 680px);
+  gap: 10px;
+}
+
+.ufe-graph-choice-grid figure {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: start;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid var(--ufe-border);
+  border-radius: 12px;
+  background: var(--ufe-soft);
+}
+
+.ufe-graph-choice-grid figure:last-child {
+  grid-column: 1 / -1;
+  width: calc(50% - 5px);
+  justify-self: center;
+}
+
+.ufe-graph-choice-grid svg {
+  width: 100%;
+  min-width: 0;
+  color: var(--ufe-text);
+}
+
+.ufe-graph-choice-grid svg > path,
+.ufe-graph-choice-grid svg > circle,
+.ufe-graph-choice-grid svg > ellipse {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.ufe-graph-choice-grid svg text {
+  fill: currentColor;
+  font-size: 12px;
 }
 
 .ufe-options {
@@ -650,6 +731,20 @@ html[data-universe-theme="dark"] .ufe-card {
 }
 
 @media (max-width: 430px) {
+  .ufe-graph-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ufe-graph-choice-grid figure:last-child {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  .ufe-equation-stack span {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
   .ufe-live-strip,
   .ufe-live-total,
   .ufe-live-detail {
