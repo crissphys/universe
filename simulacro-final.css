@@ -466,10 +466,33 @@ html[data-universe-theme="dark"] .ufe-card {
   font-weight: 500;
 }
 
-.ufe-equation-stack span {
+.ufe-equation-stack > .ufe-equation-row {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 18px;
+  align-items: baseline;
+}
+
+.ufe-equation-body {
+  display: inline;
+  white-space: normal;
+  word-spacing: normal;
+}
+
+.ufe-radical {
+  display: inline-flex;
+  align-items: flex-start;
+  white-space: nowrap;
+  font-size: 1.12em;
+  line-height: 1;
+}
+
+.ufe-radicand {
+  display: inline-block;
+  margin-left: 1px;
+  padding: 2px 4px 0;
+  border-top: 1.7px solid currentColor;
+  font-size: .9em;
 }
 
 .ufe-display-equation {
@@ -560,6 +583,16 @@ html[data-universe-theme="dark"] .ufe-card {
 .ufe-question-visual svg {
   width: min(100%, 500px);
   height: auto;
+}
+
+.ufe-source-question-image {
+  display: block;
+  width: min(100%, 520px);
+  height: auto;
+  border: 1px solid var(--ufe-border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(15, 35, 61, .10);
 }
 
 .ufe-question-visual .ufe-main-diagram {
@@ -818,9 +851,9 @@ html[data-universe-theme="dark"] .ufe-card {
     width: 100%;
   }
 
-  .ufe-equation-stack span {
-    grid-template-columns: 1fr;
-    gap: 2px;
+  .ufe-equation-stack > .ufe-equation-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
   }
 
   .ufe-live-strip,
