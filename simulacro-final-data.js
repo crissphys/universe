@@ -15,7 +15,7 @@
       "topic": "Curvas paramétricas",
       "frequency": "alta",
       "passage": "",
-      "text": "Grafique la curva definida por las ecuaciones paramétricas dadas:<span class=\"ufe-equation-stack\"><span><i>x</i> = sen <i>t</i> + cos <i>t</i> <b>(1)</b></span><span><i>y</i> = sen <i>t</i> − cos <i>t</i> <b>(2)</b></span></span>",
+      "text": "Grafique la curva definida por las ecuaciones paramétricas dadas:<span class=\"ufe-equation-stack\"><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\"><i>x</i> = sen <i>t</i> + cos <i>t</i></span><b>(1)</b></span><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\"><i>y</i> = sen <i>t</i> − cos <i>t</i></span><b>(2)</b></span></span>",
       "choices": [
         "Gráfico A",
         "Gráfico B",
@@ -31,7 +31,7 @@
       "topic": "Ecuaciones con funciones trigonométricas inversas",
       "frequency": "alta",
       "passage": "",
-      "text": "Calcule el número de soluciones de la ecuación:<span class=\"ufe-display-equation\">| arccsc (<i>x</i>/2) | = √(<i>x</i>² − 2)</span>",
+      "text": "Calcule el número de soluciones de la ecuación:<span class=\"ufe-display-equation\">| arccsc (<i>x</i>/2) | = <span class=\"ufe-radical\">√<span class=\"ufe-radicand\"><i>x</i>² − 2</span></span></span>",
       "choices": [
         "3",
         "2",
@@ -47,7 +47,7 @@
       "topic": "Transformaciones trigonométricas",
       "frequency": "alta",
       "passage": "",
-      "text": "Si se cumple las siguientes condiciones:<span class=\"ufe-equation-stack\"><span>cos 2θ = cot <i>y</i> + tan <i>x</i> <b>(1)</b></span><span>cot 2θ = cot <i>x</i> + tan <i>y</i> <b>(2)</b></span></span>halle el valor de:<span class=\"ufe-display-equation\">csc(2<i>x</i> − 2<i>y</i>) + 2/(1 + tan θ) + cot(2<i>y</i> − 2<i>x</i>)</span>",
+      "text": "Si se cumple las siguientes condiciones:<span class=\"ufe-equation-stack\"><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\">cos 2θ = cot <i>y</i> + tan <i>x</i></span><b>(1)</b></span><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\">cot 2θ = cot <i>x</i> + tan <i>y</i></span><b>(2)</b></span></span>halle el valor de:<span class=\"ufe-display-equation\">csc(2<i>x</i> − 2<i>y</i>) + 2/(1 + tan θ) + cot(2<i>y</i> − 2<i>x</i>)</span>",
       "choices": [
         "1/2",
         "1/4",
@@ -103,7 +103,7 @@
         "120°",
         "117°"
       ],
-      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 680 360\" role=\"img\" aria-label=\"Configuración geométrica con los puntos A, B, C, D, E, F, G y H\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M45 305H635L430 40L45 305Z\"/><path d=\"M45 305L215 38L635 305\"/><path d=\"M215 38V305M430 40V305\"/><path d=\"M45 305L430 206M215 172L635 305\"/><path d=\"M202 292H215V305M417 292H430V305\"/><path d=\"M197 67A33 33 0 0 0 211 92M414 72A34 34 0 0 1 430 96M436 98A35 35 0 0 1 457 73\"/><path d=\"M66 300A28 28 0 0 1 70 294M73 293A39 39 0 0 1 82 286\"/></g><g fill=\"currentColor\" font-size=\"22\" font-weight=\"600\"><text x=\"26\" y=\"329\">A</text><text x=\"202\" y=\"28\">B</text><text x=\"426\" y=\"27\">C</text><text x=\"642\" y=\"326\">D</text><text x=\"421\" y=\"329\">E</text><text x=\"206\" y=\"329\">F</text><text x=\"196\" y=\"166\">G</text><text x=\"437\" y=\"207\">H</text><text x=\"165\" y=\"105\">40°</text><text x=\"384\" y=\"105\">70°</text><text x=\"447\" y=\"122\">40°</text></g></svg>"
+      "visual": "<img class=\"ufe-source-question-image\" src=\"/assets/simulacros/admision/trig-calculo-angulos-original.jpg?v=1\" alt=\"Gráfico original de la configuración geométrica con los puntos A, B, C, D, E, F, G y H\" loading=\"lazy\" decoding=\"async\">"
     },
     {
       "id": 7,
