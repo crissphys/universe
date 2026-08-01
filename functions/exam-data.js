@@ -5,10 +5,10 @@ export const EXAM_BANKS = {
     "id": "admision-uni-2027-1",
     "title": "Simulacro de admisión UNI 2027-1",
     "shortTitle": "Admisión UNI 2027-1",
-    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría y Física.",
+    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física y Química.",
     "status": "draft",
     "durationMs": 10800000,
-    "questionCount": 46,
+    "questionCount": 56,
     "key": {
       "1": {
         "course": "Trigonometría",
@@ -239,6 +239,56 @@ export const EXAM_BANKS = {
         "course": "Física",
         "topic": "Espejos esféricos",
         "answer": "7,5"
+      },
+      "47": {
+        "course": "Química",
+        "topic": "Celdas galvánicas y potenciales de reducción",
+        "answer": "Zn, Ag₂O"
+      },
+      "48": {
+        "course": "Química",
+        "topic": "Funciones orgánicas en las penicilinas",
+        "answer": "solo III"
+      },
+      "49": {
+        "course": "Química",
+        "topic": "Equilibrio químico y principio de Le Châtelier",
+        "answer": "solo III"
+      },
+      "50": {
+        "course": "Química",
+        "topic": "Electrólisis y ley de Faraday",
+        "answer": "0,91"
+      },
+      "51": {
+        "course": "Química",
+        "topic": "Química ambiental y capa de ozono",
+        "answer": "FVV"
+      },
+      "52": {
+        "course": "Química",
+        "topic": "Ecuación de los gases ideales",
+        "answer": "1,12"
+      },
+      "53": {
+        "course": "Química",
+        "topic": "Constante de acidez",
+        "answer": "8,3 × 10⁻⁸"
+      },
+      "54": {
+        "course": "Química",
+        "topic": "Propiedades periódicas",
+        "answer": "La energía de ionización, también denominada potencial de ionización, disminuye a medida que el número atómico aumenta en un grupo en la tabla periódica."
+      },
+      "55": {
+        "course": "Química",
+        "topic": "Propiedades intensivas y extensivas",
+        "answer": "0, 4"
+      },
+      "56": {
+        "course": "Química",
+        "topic": "Nomenclatura de compuestos aromáticos",
+        "answer": "1-etil-3-metilbenceno"
       }
     }
   },
