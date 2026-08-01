@@ -1,4 +1,4 @@
-import { EXAM_KEY, EXAM_COUNT } from '../exam-data.js';
+import { EXAM_BANKS, DEFAULT_EXAM_ID, getExamBank } from '../exam-data.js';
 
 const RATE = new Map();
 
@@ -1484,11 +1484,11 @@ async function handleAi(request, env) {
 }
 
 const EXAM_ROOT = '/exam/finalV1';
-const EXAM_DURATION_MS = 3 * 60 * 60 * 1000;
 const EXAM_PRESENCE_WINDOW_MS = 15000;
 
 function publicExamSession(value) {
   value = value && typeof value === 'object' ? value : {};
+  var bank = getExamBank(value.examId || DEFAULT_EXAM_ID);
   var now = Date.now();
   var startAt = Math.max(0, Number(value.startAt) || 0);
   var endAt = Math.max(0, Number(value.endAt) || 0);
@@ -1500,7 +1500,11 @@ function publicExamSession(value) {
     status,
     startAt,
     endAt,
-    durationSeconds: EXAM_DURATION_MS / 1000,
+    examId: bank.id,
+    examTitle: bank.title,
+    examStatus: bank.status,
+    questionCount: bank.questionCount,
+    durationSeconds: bank.durationMs / 1000,
     publishedAt: Math.max(0, Number(value.publishedAt) || 0),
     updatedAt: Math.max(0, Number(value.updatedAt) || 0)
   };
@@ -1536,7 +1540,7 @@ function publicExamParticipant(value, includePrivate, includeResult) {
       unanswered: Math.max(0, Number(result.unanswered) || 0),
       percentage: Math.max(0, Math.min(100, Number(result.percentage) || 0)),
       courseBreakdown: result.courseBreakdown || {},
-      missed: Array.isArray(result.missed) ? result.missed.slice(0, EXAM_COUNT).map(function (item) {
+      missed: Array.isArray(result.missed) ? result.missed.slice(0, Math.max(0, Number(result.total) || 200)).map(function (item) {
         item = item && typeof item === 'object' ? item : {};
         return {
           id: Math.max(0, Number(item.id) || 0),
@@ -1610,14 +1614,17 @@ async function nextExamCode(env) {
   throw new Error('exam_code_contention');
 }
 
-function gradeExamAnswers(value) {
+function gradeExamAnswers(value, bank) {
   value = value && typeof value === 'object' ? value : {};
+  bank = bank || getExamBank(DEFAULT_EXAM_ID);
+  var examKey = bank.key || {};
+  var examCount = Math.max(0, Number(bank.questionCount) || Object.keys(examKey).length);
   var correct = 0;
   var unanswered = 0;
   var missed = [];
   var courseBreakdown = {};
-  Object.keys(EXAM_KEY).forEach(function (id) {
-    var key = EXAM_KEY[id];
+  Object.keys(examKey).forEach(function (id) {
+    var key = examKey[id];
     var selected = cleanText(value[id], 300);
     var course = cleanText(key.course, 80);
     if (!courseBreakdown[course]) courseBreakdown[course] = { correct: 0, total: 0 };
@@ -1637,9 +1644,10 @@ function gradeExamAnswers(value) {
   });
   return {
     correct,
-    incorrect: EXAM_COUNT - correct - unanswered,
+    total: examCount,
+    incorrect: examCount - correct - unanswered,
     unanswered,
-    percentage: Math.round(correct * 10000 / EXAM_COUNT) / 100,
+    percentage: examCount ? Math.round(correct * 10000 / examCount) / 100 : 0,
     courseBreakdown,
     missed
   };
@@ -1673,7 +1681,10 @@ function examRankingRows(participants) {
   });
 }
 
-function examResultEmail(env, participant, rank) {
+function examResultEmail(env, participant, rank, bank) {
+  bank = bank || getExamBank(DEFAULT_EXAM_ID);
+  var examCount = Math.max(0, Number(bank.questionCount) || 0);
+  var examTitle = cleanText(bank.title || 'Simulacro UNIverse', 120);
   var topTen = rank > 0 && rank <= 10;
   var name = cleanText(participant.name || 'Estudiante', 80);
   var correct = Math.max(0, Number(participant.result && participant.result.correct) || 0);
@@ -1682,8 +1693,8 @@ function examResultEmail(env, participant, rank) {
     ? String(env.PUBLIC_SITE_URL).replace(/\/+$/, '')
     : 'https://universetostudy.com';
   var subject = topTen
-    ? '¡Felicitaciones! Puesto ' + rank + ' en el Simulacro Final de UNIverse'
-    : 'Tu resultado del Simulacro Final de UNIverse';
+    ? '¡Felicitaciones! Puesto ' + rank + ' en ' + examTitle
+    : 'Tu resultado en ' + examTitle;
   var title = topTen
     ? '¡Quedaste entre los 10 primeros!'
     : 'Este resultado es un paso más en tu preparación';
@@ -1694,8 +1705,8 @@ function examResultEmail(env, participant, rank) {
     ? '<p style="margin:8px 0 0;color:#475569">Puesto final: <strong style="color:#0f172a">' + rank + '</strong></p>'
     : '<p style="margin:8px 0 0;color:#475569">Este intento no fue incluido en el ranking final.</p>';
   var text = topTen
-    ? 'Hola ' + name + '. Quedaste en el puesto ' + rank + ' del Simulacro Final de UNIverse con ' + correct + '/' + EXAM_COUNT + ' respuestas correctas (' + percentage + '%). ¡Felicitaciones!'
-    : 'Hola ' + name + '. Tu resultado del Simulacro Final de UNIverse fue ' + correct + '/' + EXAM_COUNT + ' respuestas correctas (' + percentage + '%)' + (rank ? ' y el puesto ' + rank : '') + '. Sigue adelante: revisa tus temas más débiles y convierte este resultado en tu próximo avance.';
+    ? 'Hola ' + name + '. Quedaste en el puesto ' + rank + ' de ' + examTitle + ' con ' + correct + '/' + examCount + ' respuestas correctas (' + percentage + '%). ¡Felicitaciones!'
+    : 'Hola ' + name + '. Tu resultado en ' + examTitle + ' fue ' + correct + '/' + examCount + ' respuestas correctas (' + percentage + '%)' + (rank ? ' y el puesto ' + rank : '') + '. Sigue adelante: revisa tus temas más débiles y convierte este resultado en tu próximo avance.';
   return {
     from: cleanText(env.SIMULACRO_EMAIL_FROM || 'UNIverse to Study <resultados@universetostudy.com>', 180),
     to: [cleanText(participant.email, 180)],
@@ -1706,7 +1717,7 @@ function examResultEmail(env, participant, rank) {
       '<div style="padding:28px"><p style="font-size:17px;margin:0 0 16px">Hola, <strong>' + escapeEmailHtml(name) + '</strong>.</p>' +
       '<p style="line-height:1.65;margin:0 0 20px">' + message + '</p>' +
       '<div style="padding:18px;border-radius:14px;background:#eef6ff;border:1px solid #cfe3ff"><p style="margin:0;color:#475569">Resultado</p>' +
-      '<p style="font-size:24px;font-weight:800;margin:5px 0;color:#0b4fbd">' + correct + '/' + EXAM_COUNT + ' · ' + percentage + '%</p>' + rankLine + '</div>' +
+      '<p style="font-size:24px;font-weight:800;margin:5px 0;color:#0b4fbd">' + correct + '/' + examCount + ' · ' + percentage + '%</p>' + rankLine + '</div>' +
       (topTen ? '<p style="line-height:1.65;margin:22px 0 0">Sigue cuidando ese ritmo y comparte este logro con las personas que te acompañan en tu preparación.</p>' :
         '<p style="line-height:1.65;margin:22px 0 0">Te recomendamos revisar tus respuestas, escoger tres temas prioritarios y practicar nuevamente. Cada intento bien analizado te acerca a tu meta.</p>') +
       '<p style="margin:24px 0 0"><a href="' + escapeEmailHtml(siteUrl + '/simulacros') + '" style="display:inline-block;padding:12px 18px;border-radius:12px;background:#0b63ce;color:#fff;text-decoration:none;font-weight:700">Ver mis resultados</a></p>' +
@@ -1719,7 +1730,7 @@ function examResultEmail(env, participant, rank) {
   };
 }
 
-async function sendExamResultNotifications(env, runId, participants) {
+async function sendExamResultNotifications(env, runId, participants, bank) {
   var ranked = examRankingRows(participants);
   var rankByUserId = {};
   ranked.forEach(function (participant, index) {
@@ -1745,7 +1756,7 @@ async function sendExamResultNotifications(env, runId, participants) {
   for (var offset = 0; offset < pending.length; offset += 100) {
     var batchRows = pending.slice(offset, offset + 100);
     var batchPayload = batchRows.map(function (participant) {
-      return examResultEmail(env, participant, rankByUserId[cleanId(participant.userId)] || 0);
+      return examResultEmail(env, participant, rankByUserId[cleanId(participant.userId)] || 0, bank);
     });
     var batchFingerprint = (await sha256HexText(batchRows.map(function (participant) {
       return cleanId(participant.userId);
@@ -1792,6 +1803,7 @@ async function handleExam(request, env, subpath) {
   var body = method === 'GET' ? {} : await request.json().catch(function () { return {}; });
   var storedSession = await firebase(env, EXAM_ROOT + '/session', 'GET') || {};
   var session = publicExamSession(storedSession);
+  var selectedBank = getExamBank(session.examId);
 
   if (path === '/state' && method === 'GET') {
     var participant = session.runId
@@ -1877,7 +1889,7 @@ async function handleExam(request, env, subpath) {
     if (saveParticipant.submittedAt) return json({ error: 'already_submitted' }, 409);
     var answerId = cleanId(body.id);
     var answerValue = cleanText(body.answer, 300);
-    if (!EXAM_KEY[answerId] || !answerValue) return json({ error: 'invalid_answer' }, 400);
+    if (!selectedBank.key[answerId] || !answerValue) return json({ error: 'invalid_answer' }, 400);
     var savedAnswers = saveParticipant.answers && typeof saveParticipant.answers === 'object'
       ? saveParticipant.answers
       : {};
@@ -1906,10 +1918,10 @@ async function handleExam(request, env, subpath) {
     if (!['active', 'closed'].includes(session.status)) return json({ error: 'exam_not_active' }, 409);
     if (session.endAt && Date.now() > session.endAt + 60000) return json({ error: 'exam_time_expired' }, 409);
     var answers = {};
-    Object.keys(body.answers || {}).slice(0, EXAM_COUNT).forEach(function (id) {
-      if (EXAM_KEY[id]) answers[id] = cleanText(body.answers[id], 300);
+    Object.keys(body.answers || {}).slice(0, selectedBank.questionCount).forEach(function (id) {
+      if (selectedBank.key[id]) answers[id] = cleanText(body.answers[id], 300);
     });
-    var result = gradeExamAnswers(answers);
+    var result = gradeExamAnswers(answers, selectedBank);
     var submittedAt = Date.now();
     await firebase(env, submitPath, 'PATCH', { answers, result, submittedAt });
     return json({ ok: true, submittedAt, code: cleanText(submitParticipant.code, 12) });
@@ -1918,9 +1930,15 @@ async function handleExam(request, env, subpath) {
   if (!auth.admin) return json({ error: 'admin_required' }, 403);
 
   if (path === '/admin/open' && method === 'POST') {
+    var requestedExamId = cleanId(body.examId || DEFAULT_EXAM_ID);
+    if (!EXAM_BANKS[requestedExamId]) return json({ error: 'invalid_exam' }, 400);
+    var requestedBank = EXAM_BANKS[requestedExamId];
     var runId = 'run_' + Date.now().toString(36);
     var opened = {
       runId,
+      examId: requestedBank.id,
+      examTitle: requestedBank.title,
+      questionCount: requestedBank.questionCount,
       status: 'waiting',
       startAt: 0,
       endAt: 0,
@@ -1939,7 +1957,7 @@ async function handleExam(request, env, subpath) {
     var activated = {
       status: 'countdown',
       startAt,
-      endAt: startAt + EXAM_DURATION_MS,
+      endAt: startAt + selectedBank.durationMs,
       updatedAt: Date.now(),
       activatedBy: auth.id
     };
@@ -1951,7 +1969,7 @@ async function handleExam(request, env, subpath) {
     if (!session.runId) return json({ error: 'no_session' }, 409);
     if (!storedSession.finalizedAt) return json({ error: 'exam_not_finalized' }, 409);
     var publishParticipants = await firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants', 'GET') || {};
-    var notifications = await sendExamResultNotifications(env, session.runId, publishParticipants);
+    var notifications = await sendExamResultNotifications(env, session.runId, publishParticipants, selectedBank);
     var publishedAt = Math.max(0, Number(storedSession.publishedAt) || 0) || Date.now();
     var notificationAttemptAt = Date.now();
     await firebase(env, EXAM_ROOT + '/session', 'PATCH', {
@@ -2000,7 +2018,7 @@ async function handleExam(request, env, subpath) {
         missed: [],
         status: 'blocked',
         display: '0/0'
-      } : Object.assign(gradeExamAnswers(row.answers), {
+      } : Object.assign(gradeExamAnswers(row.answers, selectedBank), {
         status: 'finished_by_admin',
         display: ''
       });
