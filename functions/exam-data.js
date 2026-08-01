@@ -5,10 +5,10 @@ export const EXAM_BANKS = {
     "id": "admision-uni-2027-1",
     "title": "Simulacro de admisión UNI 2027-1",
     "shortTitle": "Admisión UNI 2027-1",
-    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra y Geometría.",
+    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría y Física.",
     "status": "draft",
     "durationMs": 10800000,
-    "questionCount": 36,
+    "questionCount": 46,
     "key": {
       "1": {
         "course": "Trigonometría",
@@ -189,6 +189,56 @@ export const EXAM_BANKS = {
         "course": "Geometría",
         "topic": "Rectas y planos en el espacio",
         "answer": "Si L₁ y L₂ son rectas paralelas y sean π₁ y π₂ planos que las contienen, respectivamente, de modo que se intersectan. Entonces la recta de intersección es paralela a L₁ y L₂."
+      },
+      "37": {
+        "course": "Física",
+        "topic": "Trabajo de una fuerza variable",
+        "answer": "21"
+      },
+      "38": {
+        "course": "Física",
+        "topic": "Nivel de intensidad sonora",
+        "answer": "1"
+      },
+      "39": {
+        "course": "Física",
+        "topic": "Principio de Arquímedes",
+        "answer": "4,7"
+      },
+      "40": {
+        "course": "Física",
+        "topic": "Movimiento de una carga en un campo magnético",
+        "answer": "2,8"
+      },
+      "41": {
+        "course": "Física",
+        "topic": "Asociación de resistencias",
+        "answer": "8"
+      },
+      "42": {
+        "course": "Física",
+        "topic": "Calorimetría y cambios de fase",
+        "answer": "132,9"
+      },
+      "43": {
+        "course": "Física",
+        "topic": "Efecto fotoeléctrico",
+        "answer": "5chλ/(6ch − λE)"
+      },
+      "44": {
+        "course": "Física",
+        "topic": "Teorema trabajo-energía",
+        "answer": "−2,00"
+      },
+      "45": {
+        "course": "Física",
+        "topic": "Campo magnético de un solenoide",
+        "answer": "2,5"
+      },
+      "46": {
+        "course": "Física",
+        "topic": "Espejos esféricos",
+        "answer": "7,5"
       }
     }
   },

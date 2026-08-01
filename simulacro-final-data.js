@@ -5,7 +5,7 @@
   "id": "admision-uni-2027-1",
   "title": "Simulacro de admisión UNI 2027-1",
   "shortTitle": "Admisión UNI 2027-1",
-  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra y Geometría.",
+  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría y Física.",
   "status": "draft",
   "durationSeconds": 10800,
   "questions": [
@@ -421,6 +421,106 @@
       "passage": "",
       "text": "¿Cuál de las siguientes proposiciones es verdadera?",
       "choices": ["Si L₁ y L₂ son rectas paralelas y sean π₁ y π₂ planos que las contienen, respectivamente, de modo que se intersectan. Entonces la recta de intersección es paralela a L₁ y L₂.", "Si 2 planos son intersectados por un tercer plano, entonces las rectas de intersección son paralelas.", "Si los planos π₁ y π₂ son perpendiculares a las rectas L₁ y L₂, respectivamente, entonces dichos planos son secantes.", "Si L₁ y L₂ son rectas paralelas y sean π₁ y π₂ planos que las contienen, respectivamente, de modo que se intersectan. Entonces la recta de intersección es paralela solo a L₁ o solo a L₂.", "Si desde un punto exterior a un plano se traza una recta L perpendicular a una recta contenida en el plano, entonces la recta es perpendicular al plano."],
+      "visual": ""
+    },
+    {
+      "id": 37,
+      "course": "Física",
+      "topic": "Trabajo de una fuerza variable",
+      "frequency": "alta",
+      "passage": "",
+      "text": "A un bloque de masa <i>M</i> en reposo sobre una superficie horizontal lisa y ubicado en el origen de coordenadas, se le aplica una fuerza de la forma <span class=\"ufe-display-equation\"><i>F</i>⃗(<i>x</i>) = (10 − 2<i>x</i>) î N</span>que varía con la posición <i>x</i> expresada en metros. ¿Cuál es el trabajo (en J) realizado por la fuerza <i>F</i>⃗ desde <i>x</i> = 0 m hasta <i>x</i> = 7 m?",
+      "choices": ["14", "17", "21", "23", "25"],
+      "visual": ""
+    },
+    {
+      "id": 38,
+      "course": "Física",
+      "topic": "Nivel de intensidad sonora",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un decibelímetro mide un nivel de intensidad sonora de 120 decibeles. ¿Cuál es el valor correspondiente de la intensidad sonora en W/m²?",
+      "choices": ["10⁻⁴", "10⁻³", "10⁻²", "10⁻¹", "1"],
+      "visual": ""
+    },
+    {
+      "id": 39,
+      "course": "Física",
+      "topic": "Principio de Arquímedes",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un trozo de madera con 0,60 m de largo, 0,25 m de ancho y 0,08 m de espesor, cuya densidad es 600 kg/m³, flota parcialmente en la superficie del agua. Determine aproximadamente el volumen (en unidades de 10⁻⁴ m³) de un trozo de plomo (ρ<sub>plomo</sub> = 11 300 kg/m³) que debe sujetarse en la base de la madera para hundirla de modo que la cara superior de la madera se encuentre al mismo nivel del agua. Considere: ρ<sub>agua</sub> = 1000 kg/m³.",
+      "choices": ["3,2", "3,9", "4,7", "5,6", "6,7"],
+      "visual": ""
+    },
+    {
+      "id": 40,
+      "course": "Física",
+      "topic": "Movimiento de una carga en un campo magnético",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un electrón cuya velocidad es <span class=\"ufe-display-equation\"><i>v</i>⃗ = (3î + 4ĵ) × 10⁵ m/s</span>ingresa a una región donde el campo magnético es <span class=\"ufe-display-equation\"><i>B</i>⃗ = 10⁻³ k̂ T.</span>Calcule aproximadamente el radio de curvatura (en mm) de la trayectoria que describe el electrón. Considere la carga del electrón igual a 1,6 × 10⁻¹⁹ C y la masa del electrón igual a 9,11 × 10⁻³¹ kg.",
+      "choices": ["1,7", "2,3", "2,8", "3,9", "5,4"],
+      "visual": ""
+    },
+    {
+      "id": 41,
+      "course": "Física",
+      "topic": "Asociación de resistencias",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Calcule la intensidad de corriente <i>I</i> (en A) que circula a través de la rama superior de la red de resistencias que se muestra en la figura. La batería tiene resistencia despreciable. Considere <i>R</i> = 3 Ω.",
+      "choices": ["4", "6", "8", "10", "12"],
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 680 310\" role=\"img\" aria-label=\"Circuito con dos ramas paralelas, cada una con dos resistencias R, conectado a una batería de 48 voltios\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M95 75H145l12-18 20 36 20-36 20 36 20-36 12 18h92l12-18 20 36 20-36 20 36 20-36 12 18h90V235H385\"/><path d=\"M95 75V155h50l12-18 20 36 20-36 20 36 20-36 12 18h92l12-18 20 36 20-36 20 36 20-36 12 18h90V75\"/><path d=\"M95 155V235H295\"/><path d=\"M295 213V257M323 222V248M323 235H385\"/></g><g fill=\"currentColor\" font-size=\"25\" font-weight=\"600\"><text x=\"190\" y=\"48\">R</text><text x=\"386\" y=\"48\">R</text><text x=\"190\" y=\"133\">R</text><text x=\"386\" y=\"133\">R</text><text x=\"294\" y=\"293\">48 V</text><text x=\"112\" y=\"61\">I</text></g><path d=\"M110 52h42\" stroke=\"currentColor\" stroke-width=\"3\"/><path d=\"M152 52l-12-7v14z\" fill=\"currentColor\"/></svg>"
+    },
+    {
+      "id": 42,
+      "course": "Física",
+      "topic": "Calorimetría y cambios de fase",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Calcule la masa mínima aproximada (en g) de vapor de agua que se necesita para descongelar 400 g de hielo a 0 °C y llevarlo hasta 100 °C (sin convertirse en vapor).<span class=\"ufe-equation-stack\"><span><i>L</i><sub>f</sub> = 333 kJ/kg</span><span><i>L</i><sub>v</sub> = 2260 kJ/kg</span><span><i>c</i> = 4,18 kJ/(kg · K)</span></span>",
+      "choices": ["102,9", "112,9", "122,9", "132,9", "142,9"],
+      "visual": ""
+    },
+    {
+      "id": 43,
+      "course": "Física",
+      "topic": "Efecto fotoeléctrico",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Cuando sobre una superficie metálica inciden ondas electromagnéticas con longitud de onda λ, la energía de los electrones más energéticos es <i>E</i>. Para que la energía cinética de los electrones más energéticos siga siendo <i>E</i>, encuentre la longitud de onda de la radiación que debe incidir sobre otra superficie metálica, cuya función trabajo es 20 % mayor que la anterior. Considere que <i>h</i> es la constante de Planck y <i>c</i> la velocidad de la luz en el vacío.",
+      "choices": ["chλ/(5ch − λE)", "5chλ/(5ch + λE)", "5chλ/(5ch − λE)", "chλ/(6ch − λE)", "5chλ/(6ch − λE)"],
+      "visual": ""
+    },
+    {
+      "id": 44,
+      "course": "Física",
+      "topic": "Teorema trabajo-energía",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un bloque de 10 kg de masa se mueve sobre una superficie horizontal sin fricción, con rapidez constante de 20 m/s, hasta que ingresa a una superficie horizontal rugosa. Determine el trabajo realizado por la fuerza de fricción (en kJ), hasta que el bloque se detenga.",
+      "choices": ["−2,00", "−2,50", "−1,50", "−1,00", "−0,50"],
+      "visual": ""
+    },
+    {
+      "id": 45,
+      "course": "Física",
+      "topic": "Campo magnético de un solenoide",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Se tiene un solenoide de 90 cm de longitud y de 1,2 cm de radio. Si por cada centímetro de longitud se tienen 100 vueltas, calcule, en A, la corriente eléctrica en el solenoide sabiendo que en su eje el campo magnético es de 10π mT. Considere μ₀ = 4π × 10⁻⁷ T · m/A.",
+      "choices": ["0,5", "1,5", "2,5", "3,5", "4,5"],
+      "visual": ""
+    },
+    {
+      "id": 46,
+      "course": "Física",
+      "topic": "Espejos esféricos",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un objeto se coloca frente a un espejo convexo de 5 cm de distancia focal y la imagen se forma a 3 cm del vértice. Calcule en centímetros la distancia del objeto al vértice del espejo.",
+      "choices": ["5,5", "6,5", "7,5", "8,5", "9,5"],
       "visual": ""
     }
   ]
