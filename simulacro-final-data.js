@@ -5,7 +5,7 @@
   "id": "admision-uni-2027-1",
   "title": "Simulacro de admisión UNI 2027-1",
   "shortTitle": "Admisión UNI 2027-1",
-  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene el bloque de Trigonometría.",
+  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría y Aritmética.",
   "status": "draft",
   "durationSeconds": 10800,
   "questions": [
@@ -152,6 +152,96 @@
         "2ℓ sen γ sen(30° + α)/sen(30° − γ)"
       ],
       "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 660 330\" role=\"img\" aria-label=\"Triángulo CDA con B sobre CA, CD igual a l y ángulos alfa, gamma y treinta grados\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M55 285H610L270 38Z\"/><path d=\"M270 38L342 285\"/><path d=\"M254 64A31 31 0 0 1 273 70M278 70A33 33 0 0 1 299 61\"/><path d=\"M310 285A32 32 0 0 1 333 256\"/></g><g fill=\"currentColor\" font-size=\"23\" font-weight=\"600\"><text x=\"37\" y=\"308\">C</text><text x=\"262\" y=\"28\">D</text><text x=\"332\" y=\"310\">B</text><text x=\"618\" y=\"307\">A</text><text x=\"150\" y=\"151\">ℓ</text><text x=\"246\" y=\"85\">α</text><text x=\"292\" y=\"88\">γ</text><text x=\"297\" y=\"261\">30°</text></g></svg>"
+    },
+    {
+      "id": 10,
+      "course": "Aritmética",
+      "topic": "Media ponderada y sistemas de numeración",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Se seleccionó una muestra representativa de las generaciones Baby Boomers, Generación X, Millennials y Generación Z. Se encontró que los promedios de las horas semanales de conexión a redes sociales fueron, respectivamente, <i>m</i>, <i>p</i>, <i>a</i> y <i>k</i>. La distribución poblacional de estos grupos es la siguiente:<span class=\"ufe-display-equation\">Como dato adicional se sabe que <span class=\"ufe-overline\">pqr</span><sub>(k)</sub> − <span class=\"ufe-overline\">rqp</span><sub>(k)</sub> = <span class=\"ufe-overline\">a(a+2)m</span><sub>(k)</sub>, donde <i>k</i> es igual a 8.</span>Determine la media ponderada de las horas semanales de conexión a redes sociales del total de los grupos en estudio.",
+      "choices": ["5,1", "5,4", "5,6", "5,7", "6,4"],
+      "visual": "<svg class=\"ufe-main-diagram ufe-pie-diagram\" viewBox=\"0 0 520 400\" role=\"img\" aria-label=\"Gráfico circular de Baby Boomers, Generación X, Millennials y Generación Z\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"250\" cy=\"195\" r=\"145\"/><path d=\"M250 195V50M250 195L335.2 77.7M250 195L367.3 280.2M250 195L164.8 312.3\"/><path d=\"M250 160A35 35 0 0 1 270.6 166.7\"/><path d=\"M222 216A35 35 0 0 1 216.7 184.2\"/></g><g fill=\"currentColor\" font-size=\"22\" text-anchor=\"middle\"><text x=\"278\" y=\"101\"><tspan x=\"278\">Baby</tspan><tspan x=\"278\" dy=\"23\">boomers</tspan></text><text x=\"346\" y=\"190\"><tspan x=\"346\">Generación X</tspan></text><text x=\"272\" y=\"280\"><tspan x=\"272\">Millennials</tspan><tspan x=\"272\" dy=\"24\">25 %</tspan></text><text x=\"151\" y=\"170\"><tspan x=\"151\">Generación Z</tspan><tspan x=\"151\" dy=\"24\">40 %</tspan></text><text x=\"263\" y=\"155\" font-size=\"19\">α°</text><text x=\"208\" y=\"216\" font-size=\"19\">(4α)°</text></g></svg>"
+    },
+    {
+      "id": 11,
+      "course": "Aritmética",
+      "topic": "Distribución de frecuencias",
+      "frequency": "alta",
+      "passage": "",
+      "text": "La tabla de distribución de frecuencias muestra la cantidad de obreros con defectos visuales, según su edad:<span class=\"ufe-statement-list\"><span>Determine si las siguientes proposiciones son verdaderas (V) o falsas (F):</span><span><b>I.</b> Los obreros con defectos visuales comprendidos de 30 a 39 años representan el 20 % del total de obreros con defectos visuales.</span><span><b>II.</b> La cantidad de obreros de 40 o más años son más de la mitad del total de obreros.</span><span><b>III.</b> La cantidad de obreros con defectos visuales es 500.</span></span>Señale la secuencia correcta.",
+      "choices": ["VFF", "FFF", "VFV", "VVF", "VVV"],
+      "visual": "<div class=\"ufe-data-table-wrap\"><table class=\"ufe-data-table\" aria-label=\"Distribución de frecuencias de obreros por edad\"><thead><tr><th>Edad</th><th>Frecuencia</th></tr></thead><tbody><tr><td>18–19</td><td>40</td></tr><tr><td>20–29</td><td>70</td></tr><tr><td>30–39</td><td>80</td></tr><tr><td>40–49</td><td>100</td></tr><tr><td>50–59</td><td>110</td></tr></tbody></table></div>"
+    },
+    {
+      "id": 12,
+      "course": "Aritmética",
+      "topic": "Números decimales periódicos",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Si <span class=\"ufe-display-equation\"><span class=\"ufe-frac\"><span><i>a</i></span><span>37</span></span> + <span class=\"ufe-frac\"><span><i>n</i></span><span>9</span></span> = 0,<span class=\"ufe-overline\">(n+1)a0</span></span>calcule el valor de <i>n</i> + <i>a</i>.",
+      "choices": ["5", "6", "8", "10", "11"],
+      "visual": ""
+    },
+    {
+      "id": 13,
+      "course": "Aritmética",
+      "topic": "Media aritmética y media geométrica",
+      "frequency": "alta",
+      "passage": "",
+      "text": "La media aritmética de dos números naturales es 15 y su media geométrica es 12. Halle la diferencia de dichos números.",
+      "choices": ["12", "16", "18", "24", "30"],
+      "visual": ""
+    },
+    {
+      "id": 14,
+      "course": "Aritmética",
+      "topic": "Media aritmética y varianza",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Debido a un reclamo efectuado por un grupo de alumnos del curso de química se ha decidido aumentarles 5 puntos en el examen final. Respecto a las nuevas notas (puntajes) indique el valor de verdad de las siguientes proposiciones:<span class=\"ufe-statement-list\"><span><b>I.</b> La varianza disminuye.</span><span><b>II.</b> La media aritmética aumenta.</span><span><b>III.</b> El cociente VAR/MA aumenta (MA: Media Aritmética y VAR: Varianza).</span></span>",
+      "choices": ["FVF", "FVV", "VFV", "VVF", "VVV"],
+      "visual": ""
+    },
+    {
+      "id": 15,
+      "course": "Aritmética",
+      "topic": "Interés simple",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Sophia impone un capital a una tasa de interés simple del 6 % anual, recibiendo al cabo de 4 años un monto de 12 400 dólares. Calcule el valor del capital en dólares.",
+      "choices": ["1000", "12 000", "5000", "10 000", "14 000"],
+      "visual": ""
+    },
+    {
+      "id": 16,
+      "course": "Aritmética",
+      "topic": "Vencimiento común",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Determina el tiempo de vencimiento común de tres letras de cambio de valores nominales iguales cuyos tiempos de vencimiento son: 24 días, 72 días y 5 meses.",
+      "choices": ["86", "82", "85", "83", "84"],
+      "visual": ""
+    },
+    {
+      "id": 17,
+      "course": "Aritmética",
+      "topic": "Series telescópicas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Considere <span class=\"ufe-display-equation\"><i>a</i>(<i>n</i>) = 1/2 + 1/6 + 1/12 + 1/20 + ⋯ <small>(<i>n</i> − 1 sumandos)</small></span>Determine el valor de <i>a</i>(50) − 0,01.",
+      "choices": ["0,96", "0,98", "0,95", "0,99", "0,97"],
+      "visual": ""
+    },
+    {
+      "id": 18,
+      "course": "Aritmética",
+      "topic": "Numeración y raíz cúbica",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Al extraer la raíz cúbica del número <span class=\"ufe-overline\">abc</span> se obtiene <i>p</i> de raíz y 37 de residuo, pero al extraer la raíz cúbica del número <span class=\"ufe-overline\">cba</span> se obtiene (<i>p</i> + 1) de raíz y 45 de residuo. Entonces el valor de <span class=\"ufe-display-equation\"><i>S</i> = |2<i>a</i> − <i>b</i> − <i>c</i> + <i>p</i>|</span> es:",
+      "choices": ["4", "0", "2", "1", "3"],
+      "visual": ""
     }
   ]
 };
