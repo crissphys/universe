@@ -5,10 +5,10 @@ export const EXAM_BANKS = {
     "id": "admision-uni-2027-1",
     "title": "Simulacro de admisión UNI 2027-1",
     "shortTitle": "Admisión UNI 2027-1",
-    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física y Química.",
+    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química y Razonamiento Matemático.",
     "status": "draft",
     "durationMs": 10800000,
-    "questionCount": 56,
+    "questionCount": 67,
     "key": {
       "1": {
         "course": "Trigonometría",
@@ -289,6 +289,61 @@ export const EXAM_BANKS = {
         "course": "Química",
         "topic": "Nomenclatura de compuestos aromáticos",
         "answer": "1-etil-3-metilbenceno"
+      },
+      "57": {
+        "course": "Razonamiento matemático",
+        "topic": "Lógica proposicional y contrapositiva",
+        "answer": "(p → q) → (¬q → ¬p)"
+      },
+      "58": {
+        "course": "Razonamiento matemático",
+        "topic": "Interpretación de gráficos estadísticos",
+        "answer": "FVF"
+      },
+      "59": {
+        "course": "Razonamiento matemático",
+        "topic": "Distribuciones gráficas numéricas",
+        "answer": "38"
+      },
+      "60": {
+        "course": "Razonamiento matemático",
+        "topic": "Numeración y cifras invertidas",
+        "answer": "12"
+      },
+      "61": {
+        "course": "Razonamiento matemático",
+        "topic": "Desarrollo y plegado de cubos",
+        "answer": "4, 5"
+      },
+      "62": {
+        "course": "Razonamiento matemático",
+        "topic": "Ordenamiento de información",
+        "answer": "E será designada al Mimdes."
+      },
+      "63": {
+        "course": "Razonamiento matemático",
+        "topic": "Operación definida por tabla",
+        "answer": "I y II"
+      },
+      "64": {
+        "course": "Razonamiento matemático",
+        "topic": "Sucesiones exponenciales",
+        "answer": "15 625"
+      },
+      "65": {
+        "course": "Razonamiento matemático",
+        "topic": "Función escalón unitario",
+        "answer": "4 − 2μ₋₁(t) + 2μ₃(t)"
+      },
+      "66": {
+        "course": "Razonamiento matemático",
+        "topic": "Calendarios y conteo de días",
+        "answer": "martes"
+      },
+      "67": {
+        "course": "Razonamiento matemático",
+        "topic": "Equivalencias lógicas",
+        "answer": "Juan no ingresará a la UNI o estudiará Ingeniería Civil."
       }
     }
   },
