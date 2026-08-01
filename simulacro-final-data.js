@@ -5,7 +5,7 @@
   "id": "admision-uni-2027-1",
   "title": "Simulacro de admisión UNI 2027-1",
   "shortTitle": "Admisión UNI 2027-1",
-  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética y Álgebra.",
+  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra y Geometría.",
   "status": "draft",
   "durationSeconds": 10800,
   "questions": [
@@ -331,6 +331,96 @@
       "passage": "",
       "text": "Dado el problema:<span class=\"ufe-display-equation\">min<sub>x̄∈P</sub> <i>f</i>(x̄)</span>donde <i>P</i> es una pirámide <i>A</i> − <i>BCDE</i>. Si <span class=\"ufe-display-equation\">min<sub>x̄∈P</sub> <i>f</i>(x̄) = <i>f</i>(<i>A</i>)</span>siendo <i>f</i> una función lineal de la forma <i>f</i>(x̄) = <i>ax</i> + <i>by</i> + <i>cz</i> y además se cumple que:<span class=\"ufe-display-equation\"><i>f</i>(<i>A</i>) = <i>f</i>(<i>B</i>) = <i>f</i>(<i>C</i>)</span>Indique cuál de las siguientes proposiciones es correcta:",
       "choices": ["mínimo en P de f(x̄) = máximo en P de f(x̄) = f(A)", "mínimo en P de f(x̄) = f(A) < máximo en P de f(x̄)", "f(A) = f(B) = f(C) < f(x̄), para x̄ ∉ {A, B, C}", "f(A) < f(x̄), para todo x̄ ∈ P", "f(A) = f(B) = f(C) > f(x̄), para x̄ ∉ {A, B, C}"],
+      "visual": ""
+    },
+    {
+      "id": 28,
+      "course": "Geometría",
+      "topic": "Circunferencias y pentágono regular",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un pentágono regular <i>ABCDE</i> está inscrito en una circunferencia de centro <i>O</i>. Con centro en el vértice <i>A</i> y radio <i>AO</i> se traza la circunferencia <i>C</i>₁ que interseca el arco <i>AE</i> en el punto <i>P</i>. Del vértice <i>E</i> se traza el segmento tangente <i>EQ</i> a la circunferencia <i>C</i>₁ (<i>Q</i> punto de tangencia). Y con centro en <i>E</i> y radio <i>EQ</i>, se traza la circunferencia <i>C</i>₂ que interseca el arco <i>ED</i> en el punto <i>M</i>. Calcule en grados sexagesimales la medida del arco <i>MEP</i>.",
+      "choices": ["12", "24", "30", "36", "48"],
+      "visual": ""
+    },
+    {
+      "id": 29,
+      "course": "Geometría",
+      "topic": "Poliedros y fórmula de Euler",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un poliedro convexo está formado por seis regiones cuadrangulares y doce regiones triangulares. ¿Cuál es el número de vértices de este poliedro?",
+      "choices": ["10", "11", "12", "13", "14"],
+      "visual": ""
+    },
+    {
+      "id": 30,
+      "course": "Geometría",
+      "topic": "Medianas de un triángulo rectángulo",
+      "frequency": "alta",
+      "passage": "",
+      "text": "En un triángulo rectángulo, la mediana relativa a un cateto interseca perpendicularmente a la mediana relativa a la hipotenusa. Si la longitud de la hipotenusa es 5√3 <i>u</i>, entonces la longitud (en <i>u</i>) de uno de los catetos es:",
+      "choices": ["2", "3", "5", "6", "10"],
+      "visual": ""
+    },
+    {
+      "id": 31,
+      "course": "Geometría",
+      "topic": "Volumen de una pirámide regular",
+      "frequency": "alta",
+      "passage": "",
+      "text": "En una pirámide cuadrangular regular, la arista lateral y la arista básica miden cada una 2<i>a</i>. Calcule el volumen del sólido limitado por la pirámide.",
+      "choices": ["4√2a³", "(8/3)a³", "(4√3/3)a³", "(4√2/3)a³", "(√2/3)a³"],
+      "visual": ""
+    },
+    {
+      "id": 32,
+      "course": "Geometría",
+      "topic": "Semejanza y transversal en triángulo isósceles",
+      "frequency": "alta",
+      "passage": "",
+      "text": "En un triángulo <i>ABC</i> isósceles (<i>AB</i> = <i>BC</i>), el lado <i>BC</i> se prolonga hasta el punto <i>D</i> y al trazar desde <i>D</i> un segmento adecuado, interseca a los lados <i>AC</i> y <i>AB</i> en los puntos <i>F</i> y <i>E</i>, respectivamente. De este modo, <i>AE</i> = 50 cm, <i>EF</i> = 80 cm y <i>CD</i> = 60 cm. Calcule la longitud (en cm) del segmento <i>DF</i>.",
+      "choices": ["96", "98", "100", "92", "94"],
+      "visual": ""
+    },
+    {
+      "id": 33,
+      "course": "Geometría",
+      "topic": "Volumen de un tronco de cono",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Una cuerda trazada en la base de un cono circular recto de 4 m de altura mide 8 m y la distancia de la cuerda al centro del círculo es 2 m, luego a 2 m de la base se traza un plano paralelo a dicha base, obteniéndose un tronco de cono. Calcule el volumen (en m³) del tronco de cono.",
+      "choices": ["20π/3", "35π/3", "40π/3", "70π/3", "71π/3"],
+      "visual": ""
+    },
+    {
+      "id": 34,
+      "course": "Geometría",
+      "topic": "Segmento entre puntos medios",
+      "frequency": "alta",
+      "passage": "",
+      "text": "En la figura, si m∠<i>BAD</i> = α, m∠<i>ADC</i> = 90° − α, <i>AB</i> = 6 cm y <i>CD</i> = 8 cm, calcule (en cm) la longitud de <i>MN</i>.",
+      "choices": ["5", "4", "7", "1", "3"],
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 680 390\" role=\"img\" aria-label=\"Figura geométrica con A, N y D colineales; M punto medio de BC\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M75 320H605L515 70L330 95L175 115L75 320Z\"/><path d=\"M175 115L330 320L515 70\"/><path d=\"M330 95V320\"/><path d=\"M238 98l4 13M245 96l4 13M410 76l4 13M417 75l4 13\"/></g><g fill=\"currentColor\"><circle cx=\"205\" cy=\"320\" r=\"5\"/><circle cx=\"455\" cy=\"320\" r=\"5\"/></g><g fill=\"currentColor\" font-size=\"24\" font-weight=\"600\"><text x=\"52\" y=\"348\">A</text><text x=\"158\" y=\"108\">B</text><text x=\"516\" y=\"57\">C</text><text x=\"610\" y=\"348\">D</text><text x=\"312\" y=\"88\">M</text><text x=\"318\" y=\"350\">N</text></g></svg>"
+    },
+    {
+      "id": 35,
+      "course": "Geometría",
+      "topic": "Hexágono regular y áreas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Un hacendado compra un terreno en forma de hexágono regular de área total 18√3 m². Luego se cerca el terreno que se encuentra dentro del polígono que se obtiene al unir los puntos medios de los lados consecutivos del terreno original. Una vez cercado el terreno, contrata a un pintor para pintar la parte exterior del cerco que tiene 2 m de altura. Sabiendo que 1 galón de pintura alcanza para 4 m², determine la cantidad de galones que se necesitan para pintar lo solicitado por el hacendado.",
+      "choices": ["3√3", "18", "9", "15", "18√3"],
+      "visual": ""
+    },
+    {
+      "id": 36,
+      "course": "Geometría",
+      "topic": "Rectas y planos en el espacio",
+      "frequency": "alta",
+      "passage": "",
+      "text": "¿Cuál de las siguientes proposiciones es verdadera?",
+      "choices": ["Si L₁ y L₂ son rectas paralelas y sean π₁ y π₂ planos que las contienen, respectivamente, de modo que se intersectan. Entonces la recta de intersección es paralela a L₁ y L₂.", "Si 2 planos son intersectados por un tercer plano, entonces las rectas de intersección son paralelas.", "Si los planos π₁ y π₂ son perpendiculares a las rectas L₁ y L₂, respectivamente, entonces dichos planos son secantes.", "Si L₁ y L₂ son rectas paralelas y sean π₁ y π₂ planos que las contienen, respectivamente, de modo que se intersectan. Entonces la recta de intersección es paralela solo a L₁ o solo a L₂.", "Si desde un punto exterior a un plano se traza una recta L perpendicular a una recta contenida en el plano, entonces la recta es perpendicular al plano."],
       "visual": ""
     }
   ]
