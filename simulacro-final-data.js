@@ -5,7 +5,7 @@
   "id": "admision-uni-2027-1",
   "title": "Simulacro de admisión UNI 2027-1",
   "shortTitle": "Admisión UNI 2027-1",
-  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría y Física.",
+  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física y Química.",
   "status": "draft",
   "durationSeconds": 10800,
   "questions": [
@@ -522,6 +522,106 @@
       "text": "Un objeto se coloca frente a un espejo convexo de 5 cm de distancia focal y la imagen se forma a 3 cm del vértice. Calcule en centímetros la distancia del objeto al vértice del espejo.",
       "choices": ["5,5", "6,5", "7,5", "8,5", "9,5"],
       "visual": ""
+    },
+    {
+      "id": 47,
+      "course": "Química",
+      "topic": "Celdas galvánicas y potenciales de reducción",
+      "frequency": "alta",
+      "passage": "",
+      "text": "La celda de óxido de plata-zinc que se emplea en los aparatos auditivos y en los relojes eléctricos se basa en las siguientes semirreacciones:<span class=\"ufe-equation-stack\"><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\">Zn²⁺<sub>(ac)</sub> + 2e⁻ → Zn<sub>(s)</sub></span><b>E° = −0,763 V</b></span><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\">Ag₂O<sub>(s)</sub> + H₂O<sub>(ℓ)</sub> + 2e⁻ → 2Ag<sub>(s)</sub> + 2OH⁻<sub>(ac)</sub></span><b>E° = +0,344 V</b></span></span>Indique la especie química que se oxida y la especie química que se reduce, respectivamente, en la celda durante la descarga.",
+      "choices": ["Ag, Zn²⁺", "Zn, Ag", "Zn, H₂O", "Ag₂O, Zn²⁺", "Zn, Ag₂O"],
+      "visual": ""
+    },
+    {
+      "id": 48,
+      "course": "Química",
+      "topic": "Funciones orgánicas en las penicilinas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Algunas penicilinas comunes son la amoxicilina y la penicilina G, cuyas estructuras se presentan a continuación. Dadas las siguientes proposiciones respecto a las estructuras mostradas:<span class=\"ufe-statement-list\"><span><b>I.</b> En una estructura aparece la función alcohol y en la otra no.</span><span><b>II.</b> En ambas estructuras aparece la función aldehído.</span><span><b>III.</b> Una estructura contiene una amina primaria y la otra no.</span></span>Indique la alternativa correcta.",
+      "choices": ["solo I", "solo II", "solo III", "I y II", "I, II y III"],
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 100 405 420\" role=\"img\" aria-label=\"Estructuras químicas de la amoxicilina y la penicilina G\"><image href=\"/assets/simulacros/admision/quimica-penicilinas-estructuras.png?v=1\" x=\"0\" y=\"0\" width=\"405\" height=\"810\" preserveAspectRatio=\"xMidYMid meet\"/></svg>"
+    },
+    {
+      "id": 49,
+      "course": "Química",
+      "topic": "Equilibrio químico y principio de Le Châtelier",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Dada la siguiente reacción química:<span class=\"ufe-display-equation\">2NH₃<sub>(g)</sub> ⇌ N₂<sub>(g)</sub> + 3H₂<sub>(g)</sub></span>con constante de equilibrio <i>K</i><sub>c</sub> = 0,83 a 375 °C, se establecen las siguientes proposiciones:<span class=\"ufe-statement-list\"><span><b>I.</b> La constante <i>K</i><sub>p</sub> es igual a la constante <i>K</i><sub>c</sub>.</span><span><b>II.</b> Si se adiciona un catalizador al sistema en equilibrio, la reacción se desplaza hacia la izquierda.</span><span><b>III.</b> Al duplicar el volumen del sistema en equilibrio, la reacción se desplaza hacia la derecha.</span></span>Indique la alternativa correcta.",
+      "choices": ["solo II", "solo III", "I y II", "I y III", "II y III"],
+      "visual": ""
+    },
+    {
+      "id": 50,
+      "course": "Química",
+      "topic": "Electrólisis y ley de Faraday",
+      "frequency": "alta",
+      "passage": "",
+      "text": "El niquelado es un proceso utilizado con la finalidad de proteger a piezas metálicas contra la corrosión, teniendo el valor agregado de un mejor acabado. Calcule la masa (en gramos) de níquel depositada sobre una placa metálica, si ella se sumerge dentro de una celda electrolítica que contiene una solución acuosa de NiCl₂, por la cual pasa una corriente de 5 A durante 10 minutos.<span class=\"ufe-equation-stack\"><span>Datos: masa atómica del Ni = 58,7</span><span>1 F = 96 500 C</span></span>",
+      "choices": ["0,03", "0,91", "1,25", "1,50", "2,00"],
+      "visual": ""
+    },
+    {
+      "id": 51,
+      "course": "Química",
+      "topic": "Química ambiental y capa de ozono",
+      "frequency": "alta",
+      "passage": "",
+      "text": "El ingeniero químico mexicano Mario Molina recibió el premio Nobel de Química (año 1995), debido al estudio de la destrucción de la capa de ozono. Con respecto a la capa de ozono, determine verdadero (V) o falso (F) para cada una de las siguientes proposiciones:<span class=\"ufe-statement-list\"><span><b>I.</b> Nos protege de la radiación infrarroja.</span><span><b>II.</b> Se destruye debido a los radicales del cloro.</span><span><b>III.</b> Su destrucción genera en los humanos problemas en la piel.</span></span>Marque la alternativa correcta.",
+      "choices": ["VVV", "VFV", "VFF", "FFF", "FVV"],
+      "visual": ""
+    },
+    {
+      "id": 52,
+      "course": "Química",
+      "topic": "Ecuación de los gases ideales",
+      "frequency": "alta",
+      "passage": "",
+      "text": "La atmósfera de Marte está formada principalmente por dióxido de carbono (CO₂). Si una muestra de 17,6 g de este gas es atrapada por el Mars Exploration Rover en un recipiente de 8,2 L a 7 °C, calcule la presión en atm que ejerce dicho gas en el recipiente.<span class=\"ufe-equation-stack\"><span>Datos: <i>R</i> = 0,082 atm · L · mol⁻¹ · K⁻¹</span><span>Masa molar del CO₂ = 44 g/mol</span></span>",
+      "choices": ["13,56", "49,28", "2,24", "1,12", "1,23"],
+      "visual": ""
+    },
+    {
+      "id": 53,
+      "course": "Química",
+      "topic": "Constante de acidez",
+      "frequency": "alta",
+      "passage": "",
+      "text": "En un experimento realizado para determinar la constante de acidez de una solución 3 × 10⁻² M de un ácido monoprótico, se encontró que la concentración de H₃O⁺ es 5 × 10⁻⁵ M. Calcule la constante de acidez.",
+      "choices": ["8,3 × 10⁻⁸", "8,3 × 10⁻⁷", "8,3 × 10⁻⁶", "8,3 × 10⁻⁵", "8,3 × 10⁻⁴"],
+      "visual": ""
+    },
+    {
+      "id": 54,
+      "course": "Química",
+      "topic": "Propiedades periódicas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Respecto a las propiedades periódicas, ¿cuál de las siguientes proposiciones es la correcta?",
+      "choices": ["El radio atómico se mantiene constante en todos los elementos de un mismo período.", "La electronegatividad es la energía que un átomo libera cuando atrae electrones hacia sí mismo, estando químicamente enlazado a otro átomo.", "La energía de ionización, también denominada potencial de ionización, disminuye a medida que el número atómico aumenta en un grupo en la tabla periódica.", "El carácter metálico aumenta en un período de izquierda a derecha.", "Para un elemento A, se cumple que el radio del catión A⁺ es mayor que el radio del átomo A."],
+      "visual": ""
+    },
+    {
+      "id": 55,
+      "course": "Química",
+      "topic": "Propiedades intensivas y extensivas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "El ácido acetilsalicílico «aspirina» es un compuesto que puede ser sintetizado en el laboratorio, obteniéndose como un sólido de color blanco, cuyo punto de fusión es de 138 °C, su solubilidad en el agua es de 1 mg/mL a 20 °C, presenta una densidad de 1,4 g/cm³ y una masa molar de 180,16 g/mol. Considerando las propiedades subrayadas, indique cuántas propiedades extensivas e intensivas existen, respectivamente.",
+      "choices": ["4, 0", "0, 4", "3, 1", "1, 3", "2, 2"],
+      "visual": ""
+    },
+    {
+      "id": 56,
+      "course": "Química",
+      "topic": "Nomenclatura de compuestos aromáticos",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Se consideran compuestos aromáticos a aquellos que, generalmente, derivan del benceno. Indique el nombre del siguiente compuesto orgánico:",
+      "choices": ["1-etil-5-metilbenceno", "3-metil-1-etilbenceno", "1-etil-3-metilbenceno", "1-metil-3-etilbenceno", "3-etil-1-metilbenceno"],
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 600 330\" role=\"img\" aria-label=\"Anillo de benceno con grupos etilo y metilo en posiciones meta\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M260 70H340L382 140L340 210H260L218 140Z\"/><path d=\"M273 87H327M358 142l-28 48M250 190l-27-46\"/><path d=\"M260 70L220 25\"/><path d=\"M260 210L205 250L145 235\"/></g></svg>"
     }
   ]
 };
