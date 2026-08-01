@@ -5,10 +5,10 @@ export const EXAM_BANKS = {
     "id": "admision-uni-2027-1",
     "title": "Simulacro de admisión UNI 2027-1",
     "shortTitle": "Admisión UNI 2027-1",
-    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética y Álgebra.",
+    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra y Geometría.",
     "status": "draft",
     "durationMs": 10800000,
-    "questionCount": 27,
+    "questionCount": 36,
     "key": {
       "1": {
         "course": "Trigonometría",
@@ -144,6 +144,51 @@ export const EXAM_BANKS = {
         "course": "Álgebra",
         "topic": "Programación lineal en poliedros",
         "answer": "mínimo en P de f(x̄) = f(A) < máximo en P de f(x̄)"
+      },
+      "28": {
+        "course": "Geometría",
+        "topic": "Circunferencias y pentágono regular",
+        "answer": "48"
+      },
+      "29": {
+        "course": "Geometría",
+        "topic": "Poliedros y fórmula de Euler",
+        "answer": "14"
+      },
+      "30": {
+        "course": "Geometría",
+        "topic": "Medianas de un triángulo rectángulo",
+        "answer": "5"
+      },
+      "31": {
+        "course": "Geometría",
+        "topic": "Volumen de una pirámide regular",
+        "answer": "(4√2/3)a³"
+      },
+      "32": {
+        "course": "Geometría",
+        "topic": "Semejanza y transversal en triángulo isósceles",
+        "answer": "96"
+      },
+      "33": {
+        "course": "Geometría",
+        "topic": "Volumen de un tronco de cono",
+        "answer": "70π/3"
+      },
+      "34": {
+        "course": "Geometría",
+        "topic": "Segmento entre puntos medios",
+        "answer": "5"
+      },
+      "35": {
+        "course": "Geometría",
+        "topic": "Hexágono regular y áreas",
+        "answer": "9"
+      },
+      "36": {
+        "course": "Geometría",
+        "topic": "Rectas y planos en el espacio",
+        "answer": "Si L₁ y L₂ son rectas paralelas y sean π₁ y π₂ planos que las contienen, respectivamente, de modo que se intersectan. Entonces la recta de intersección es paralela a L₁ y L₂."
       }
     }
   },
