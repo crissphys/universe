@@ -5,10 +5,10 @@ export const EXAM_BANKS = {
     "id": "admision-uni-2027-1",
     "title": "Simulacro de admisión UNI 2027-1",
     "shortTitle": "Admisión UNI 2027-1",
-    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene el bloque de Trigonometría.",
+    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría y Aritmética.",
     "status": "draft",
     "durationMs": 10800000,
-    "questionCount": 9,
+    "questionCount": 18,
     "key": {
       "1": {
         "course": "Trigonometría",
@@ -54,6 +54,51 @@ export const EXAM_BANKS = {
         "course": "Trigonometría",
         "topic": "Ley de senos",
         "answer": "2ℓ sen γ sen(30° + α)/sen(30° − γ)"
+      },
+      "10": {
+        "course": "Aritmética",
+        "topic": "Media ponderada y sistemas de numeración",
+        "answer": "6,4"
+      },
+      "11": {
+        "course": "Aritmética",
+        "topic": "Distribución de frecuencias",
+        "answer": "VVF"
+      },
+      "12": {
+        "course": "Aritmética",
+        "topic": "Números decimales periódicos",
+        "answer": "8"
+      },
+      "13": {
+        "course": "Aritmética",
+        "topic": "Media aritmética y media geométrica",
+        "answer": "18"
+      },
+      "14": {
+        "course": "Aritmética",
+        "topic": "Media aritmética y varianza",
+        "answer": "FVF"
+      },
+      "15": {
+        "course": "Aritmética",
+        "topic": "Interés simple",
+        "answer": "10 000"
+      },
+      "16": {
+        "course": "Aritmética",
+        "topic": "Vencimiento común",
+        "answer": "82"
+      },
+      "17": {
+        "course": "Aritmética",
+        "topic": "Series telescópicas",
+        "answer": "0,97"
+      },
+      "18": {
+        "course": "Aritmética",
+        "topic": "Numeración y raíz cúbica",
+        "answer": "1"
       }
     }
   },
