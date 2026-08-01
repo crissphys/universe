@@ -31,7 +31,7 @@
       "topic": "Ecuaciones con funciones trigonométricas inversas",
       "frequency": "alta",
       "passage": "",
-      "text": "Calcule el número de soluciones de la ecuación:<span class=\"ufe-display-equation\">| arccsc (<i>x</i>/2) | = <span class=\"ufe-radical\">√<span class=\"ufe-radicand\"><i>x</i>² − 2</span></span></span>",
+      "text": "Calcule el número de soluciones de la ecuación:<span class=\"ufe-display-equation\">| arccsc (<i>x</i>/2) | = <span class=\"ufe-radical\">√<span class=\"ufe-radicand\"><i>x</i>²</span></span> − 2</span>",
       "choices": [
         "3",
         "2",
@@ -621,7 +621,7 @@
       "passage": "",
       "text": "Se consideran compuestos aromáticos a aquellos que, generalmente, derivan del benceno. Indique el nombre del siguiente compuesto orgánico:",
       "choices": ["1-etil-5-metilbenceno", "3-metil-1-etilbenceno", "1-etil-3-metilbenceno", "1-metil-3-etilbenceno", "3-etil-1-metilbenceno"],
-      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 600 330\" role=\"img\" aria-label=\"Anillo de benceno con grupos etilo y metilo en posiciones meta\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M260 70H340L382 140L340 210H260L218 140Z\"/><path d=\"M273 87H327M358 142l-28 48M250 190l-27-46\"/><path d=\"M260 70L220 25\"/><path d=\"M260 210L205 250L145 235\"/></g></svg>"
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 600 330\" role=\"img\" aria-label=\"Anillo de benceno con grupos etilo y metilo en posiciones meta\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M260 70H340L382 140L340 210H260L218 140Z\"/><path d=\"M273 87H327M358 142l-28 48M267 190l-28-46\"/><path d=\"M260 70L220 25\"/><path d=\"M260 210L205 250L145 235\"/></g></svg>"
     }
   ]
 };
