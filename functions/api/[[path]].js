@@ -1623,9 +1623,7 @@ function gradeExamAnswers(value) {
         id: Number(id),
         course,
         topic: cleanText(key.topic, 120),
-        selected: selected || 'Sin responder',
-        correct: cleanText(key.answer, 300),
-        solution: cleanText(key.solution, 3000)
+        selected: selected || 'Sin responder'
       });
     }
   });

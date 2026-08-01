@@ -1,4 +1,4 @@
-export const EXAM_COUNT = 60;
+export const EXAM_COUNT = 65;
 export const EXAM_KEY = {
   "1": {
     "course": "Física",
@@ -158,27 +158,23 @@ export const EXAM_KEY = {
   },
   "27": {
     "course": "Trigonometría",
-    "topic": "Identidades de suma y diferencia",
-    "answer": "3/4",
-    "solution": "De la condición, a/r=−tan74°. Al sustituir, la expresión se transforma en (1+tan74°tan21°)/(tan74°−tan21°)=cot(74°−21°)=cot53°≈3/4."
+    "topic": "Curvas paramétricas",
+    "answer": "Gráfico A"
   },
   "28": {
     "course": "Trigonometría",
-    "topic": "Ecuaciones trigonométricas",
-    "answer": "7π/4−arctan(1/2)",
-    "solution": "cosx≠0 en las soluciones. Al dividir entre cos²x: 2tan²x+3tanx+1=0, de donde tanx=−1 o tanx=−1/2. En [0,π) las soluciones son 3π/4 y π−arctan(1/2); su suma es 7π/4−arctan(1/2)."
+    "topic": "Ecuaciones con funciones trigonométricas inversas",
+    "answer": "2"
   },
   "29": {
     "course": "Trigonometría",
-    "topic": "Resolución de triángulos",
-    "answer": "2√7",
-    "solution": "El tercer lado es √(8²+10²−160cos60°)=2√21. El área es 20√3. Así, R=abc/(4Δ)=2√7."
+    "topic": "Transformaciones trigonométricas",
+    "answer": "1"
   },
   "30": {
     "course": "Trigonometría",
-    "topic": "Razones de ángulo mitad",
-    "answer": "1/2",
-    "solution": "Por Herón, el área es 84, el semiperímetro 21 y el inradio r=84/21=4. Como tan(A/2)=r/(s−a), resulta 4/(21−13)=1/2."
+    "topic": "Curvas de rodadura",
+    "answer": "(R + r) sen(2πr/(R + r))"
   },
   "31": {
     "course": "Razonamiento matemático",
@@ -359,5 +355,30 @@ export const EXAM_KEY = {
     "topic": "Literatura peruana",
     "answer": "La comunidad andina defiende una práctica cultural frente a autoridades que intentan imponer una modernización externa",
     "solution": "La novela representa el choque entre la comunidad de Puquio y las autoridades que prohíben la corrida indígena, conflicto que articula tradición andina, poder estatal y modernización."
+  },
+  "61": {
+    "course": "Trigonometría",
+    "topic": "Funciones trigonométricas inversas",
+    "answer": "1"
+  },
+  "62": {
+    "course": "Trigonometría",
+    "topic": "Cálculo de ángulos",
+    "answer": "100°"
+  },
+  "63": {
+    "course": "Trigonometría",
+    "topic": "Área de un cuadrilátero",
+    "answer": "arctan(4S/(a² + b² − c² − d²))"
+  },
+  "64": {
+    "course": "Trigonometría",
+    "topic": "Resolución de triángulos oblicuángulos",
+    "answer": "ab sen θ/√(a² + b² − 2ab cos θ)"
+  },
+  "65": {
+    "course": "Trigonometría",
+    "topic": "Ley de senos",
+    "answer": "2ℓ sen γ sen(30° + α)/sen(30° − γ)"
   }
 };
