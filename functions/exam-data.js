@@ -5,10 +5,10 @@ export const EXAM_BANKS = {
     "id": "admision-uni-2027-1",
     "title": "Simulacro de admisión UNI 2027-1",
     "shortTitle": "Admisión UNI 2027-1",
-    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría y Aritmética.",
+    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética y Álgebra.",
     "status": "draft",
     "durationMs": 10800000,
-    "questionCount": 18,
+    "questionCount": 27,
     "key": {
       "1": {
         "course": "Trigonometría",
@@ -99,6 +99,51 @@ export const EXAM_BANKS = {
         "course": "Aritmética",
         "topic": "Numeración y raíz cúbica",
         "answer": "1"
+      },
+      "19": {
+        "course": "Álgebra",
+        "topic": "Rango de una función cuadrática",
+        "answer": "0"
+      },
+      "20": {
+        "course": "Álgebra",
+        "topic": "Sistemas lineales con infinitas soluciones",
+        "answer": "solo III"
+      },
+      "21": {
+        "course": "Álgebra",
+        "topic": "Valores propios de matrices",
+        "answer": "I y III"
+      },
+      "22": {
+        "course": "Álgebra",
+        "topic": "Ecuaciones matriciales",
+        "answer": "Matriz B"
+      },
+      "23": {
+        "course": "Álgebra",
+        "topic": "Series geométricas infinitas",
+        "answer": "13/3"
+      },
+      "24": {
+        "course": "Álgebra",
+        "topic": "Funciones exponencial y logarítmica",
+        "answer": "FFF"
+      },
+      "25": {
+        "course": "Álgebra",
+        "topic": "Sucesiones y convergencia",
+        "answer": "No es convergente."
+      },
+      "26": {
+        "course": "Álgebra",
+        "topic": "Ecuaciones logarítmicas",
+        "answer": "{2; 3}"
+      },
+      "27": {
+        "course": "Álgebra",
+        "topic": "Programación lineal en poliedros",
+        "answer": "mínimo en P de f(x̄) = f(A) < máximo en P de f(x̄)"
       }
     }
   },
