@@ -5,7 +5,7 @@
   "id": "admision-uni-2027-1",
   "title": "Simulacro de admisión UNI 2027-1",
   "shortTitle": "Admisión UNI 2027-1",
-  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física y Química.",
+  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química y Razonamiento Matemático.",
   "status": "draft",
   "durationSeconds": 10800,
   "questions": [
@@ -622,6 +622,116 @@
       "text": "Se consideran compuestos aromáticos a aquellos que, generalmente, derivan del benceno. Indique el nombre del siguiente compuesto orgánico:",
       "choices": ["1-etil-5-metilbenceno", "3-metil-1-etilbenceno", "1-etil-3-metilbenceno", "1-metil-3-etilbenceno", "3-etil-1-metilbenceno"],
       "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 600 330\" role=\"img\" aria-label=\"Anillo de benceno con grupos etilo y metilo en posiciones meta\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M260 70H340L382 140L340 210H260L218 140Z\"/><path d=\"M273 87H327M358 142l-28 48M267 190l-28-46\"/><path d=\"M260 70L220 25\"/><path d=\"M260 210L205 250L145 235\"/></g></svg>"
+    },
+    {
+      "id": 57,
+      "course": "Razonamiento matemático",
+      "topic": "Lógica proposicional y contrapositiva",
+      "frequency": "alta",
+      "passage": "",
+      "text": "De la sección económica de un diario se toma la siguiente expresión: «Si el aumento de la inflación implica la disminución de la balanza de pagos; entonces, si no disminuye la balanza de pagos, no aumenta la inflación». Tenga en cuenta lo siguiente:<span class=\"ufe-statement-list\"><span><i>p</i>: Aumenta la inflación.</span><span><i>q</i>: Disminuye la balanza de pagos.</span></span>Entonces, ¿cuál es la simbología correcta para el enunciado dado?",
+      "choices": ["(p → q) → (¬q → ¬p)", "(p ∧ q) → (q) ∨ ¬p", "(p → q) → (¬q ∨ ¬p)", "(p ∧ q) → (q ∨ ¬p)", "(p → q) → (¬q ∧ ¬p)"],
+      "visual": ""
+    },
+    {
+      "id": 58,
+      "course": "Razonamiento matemático",
+      "topic": "Interpretación de gráficos estadísticos",
+      "frequency": "alta",
+      "passage": "",
+      "text": "La siguiente gráfica muestra los datos obtenidos cuando se preguntó a un grupo de personas por su tipo de película favorita. Cada persona solo votó por un solo tipo de película. En base a ello, señale la alternativa que presenta la secuencia correcta después de determinar si cada proposición es verdadera (V) o falsa (F).<span class=\"ufe-statement-list\"><span><b>I.</b> El porcentaje de los que eligieron Acción o Terror es 36,7 % aproximadamente.</span><span><b>II.</b> La razón de los que eligieron Drama a Suspenso es 4:3.</span><span><b>III.</b> El total de los que eligen ya sea Suspenso, Acción o Terror son más de la mitad del total de encuestados.</span></span>",
+      "choices": ["VFV", "FVV", "VVV", "FVF", "FFF"],
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 700 470\" role=\"img\" aria-label=\"Gráfico de barras de encuesta de películas: Comedia 20, Suspenso 30, Acción 25, Terror 15, Drama 40 y Otro 20\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"85\" y=\"45\" width=\"550\" height=\"340\"/><path d=\"M145 330H600M145 300H600M145 270H600M145 240H600M145 210H600M145 180H600M145 150H600M145 120H600M145 90H600M145 60H600\" opacity=\".32\"/><path d=\"M145 60V330H600\"/></g><g fill=\"currentColor\" opacity=\".18\"><rect x=\"165\" y=\"210\" width=\"48\" height=\"120\"/><rect x=\"245\" y=\"150\" width=\"48\" height=\"180\"/><rect x=\"325\" y=\"180\" width=\"48\" height=\"150\"/><rect x=\"405\" y=\"240\" width=\"48\" height=\"90\"/><rect x=\"485\" y=\"90\" width=\"48\" height=\"240\"/><rect x=\"565\" y=\"210\" width=\"48\" height=\"120\"/></g><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><rect x=\"165\" y=\"210\" width=\"48\" height=\"120\"/><rect x=\"245\" y=\"150\" width=\"48\" height=\"180\"/><rect x=\"325\" y=\"180\" width=\"48\" height=\"150\"/><rect x=\"405\" y=\"240\" width=\"48\" height=\"90\"/><rect x=\"485\" y=\"90\" width=\"48\" height=\"240\"/><rect x=\"565\" y=\"210\" width=\"48\" height=\"120\"/></g><g fill=\"currentColor\" font-size=\"19\" text-anchor=\"middle\"><text x=\"360\" y=\"32\" font-size=\"27\" font-weight=\"700\">Encuesta de películas</text><text x=\"189\" y=\"360\">Comedia</text><text x=\"269\" y=\"360\">Suspenso</text><text x=\"349\" y=\"360\">Acción</text><text x=\"429\" y=\"360\">Terror</text><text x=\"509\" y=\"360\">Drama</text><text x=\"589\" y=\"360\">Otro</text><text x=\"370\" y=\"420\" font-size=\"22\">Tipo de película</text></g><g fill=\"currentColor\" font-size=\"16\" text-anchor=\"end\"><text x=\"137\" y=\"335\">0</text><text x=\"137\" y=\"305\">5</text><text x=\"137\" y=\"275\">10</text><text x=\"137\" y=\"245\">15</text><text x=\"137\" y=\"215\">20</text><text x=\"137\" y=\"185\">25</text><text x=\"137\" y=\"155\">30</text><text x=\"137\" y=\"125\">35</text><text x=\"137\" y=\"95\">40</text><text x=\"137\" y=\"65\">45</text></g><text x=\"35\" y=\"225\" fill=\"currentColor\" font-size=\"21\" text-anchor=\"middle\" transform=\"rotate(-90 35 225)\">Número de personas</text></svg>"
+    },
+    {
+      "id": 59,
+      "course": "Razonamiento matemático",
+      "topic": "Distribuciones gráficas numéricas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Halle el valor de <i>x</i> en la siguiente distribución gráfica:",
+      "choices": ["44", "36", "38", "33", "32"],
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 0 700 300\" role=\"img\" aria-label=\"Tres relojes de arena con los pares 2 y 11, 4 y 22, 7 y x\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M70 35H190L130 145L70 255H190L130 145Z\"/><path d=\"M290 35H410L350 145L290 255H410L350 145Z\"/><path d=\"M510 35H630L570 145L510 255H630L570 145Z\"/><circle cx=\"130\" cy=\"72\" r=\"23\"/><circle cx=\"130\" cy=\"218\" r=\"23\"/><circle cx=\"350\" cy=\"72\" r=\"23\"/><circle cx=\"350\" cy=\"218\" r=\"23\"/><circle cx=\"570\" cy=\"72\" r=\"23\"/><circle cx=\"570\" cy=\"218\" r=\"23\"/></g><g fill=\"currentColor\" font-size=\"26\" text-anchor=\"middle\"><text x=\"130\" y=\"81\">2</text><text x=\"130\" y=\"227\">11</text><text x=\"350\" y=\"81\">4</text><text x=\"350\" y=\"227\">22</text><text x=\"570\" y=\"81\">7</text><text x=\"570\" y=\"227\"><tspan font-style=\"italic\">x</tspan></text></g></svg>"
+    },
+    {
+      "id": 60,
+      "course": "Razonamiento matemático",
+      "topic": "Numeración y cifras invertidas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Calcule el mayor número de dos dígitos tal que, si invertimos los dígitos (decenas en unidades y unidades en decenas), el nuevo número es 75 % mayor al número original. Indique como respuesta la suma de los dígitos del número.",
+      "choices": ["3", "9", "6", "12", "10"],
+      "visual": ""
+    },
+    {
+      "id": 61,
+      "course": "Razonamiento matemático",
+      "topic": "Desarrollo y plegado de cubos",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Cuando se dobla el cubo de la figura mostrada, establezca cuál(es) de los sólidos 1 a 5 se producen:",
+      "choices": ["1, 3", "3", "1, 2", "4, 5", "3, 4"],
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 95 498 380\" role=\"img\" aria-label=\"Desarrollo de un cubo y cinco posibles sólidos plegados\"><image href=\"/assets/simulacros/admision/rm-desarrollo-cubo.png?v=1\" x=\"0\" y=\"0\" width=\"498\" height=\"578\" preserveAspectRatio=\"xMidYMid meet\"/></svg>"
+    },
+    {
+      "id": 62,
+      "course": "Razonamiento matemático",
+      "topic": "Ordenamiento de información",
+      "frequency": "alta",
+      "passage": "",
+      "text": "A, B, C, D y E son profesionales tales que:<span class=\"ufe-statement-list\"><span>• A puede encargarse del Mimdes o Minedu.</span><span>• B puede dirigir el Mintra, MEF o Minedu.</span><span>• C podría ser designada en el Mintra, Mimdes o Minsa.</span><span>• D está capacitada para encargarse del Mimdes o Minsa.</span><span>• E tiene conocimiento de gestión para encargarse del MEF o Minedu.</span></span>Si B se encarga del Mintra, ¿cuál de las siguientes afirmaciones nunca será verdadera?",
+      "choices": ["A será asignada al Mimdes y C al Minsa.", "A será encargada en el Minedu y E se encargará del MEF.", "C dirigirá el Mimdes.", "D se encargará del Mimdes.", "E será designada al Mimdes."],
+      "visual": ""
+    },
+    {
+      "id": 63,
+      "course": "Razonamiento matemático",
+      "topic": "Operación definida por tabla",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Se define la operación ∗ según la tabla. Sabiendo que el elemento neutro es 1, ¿cuál o cuáles de estas afirmaciones son verdaderas?<span class=\"ufe-statement-list\"><span><b>I.</b> Se cumple la propiedad conmutativa.</span><span><b>II.</b> Si <i>a</i>⁻¹ es el inverso de <i>a</i>, según esta operación, entonces 3 ∗ 5⁻¹ = 7⁻¹.</span></span>",
+      "choices": ["solo I", "I y II", "Las dos son falsas", "solo II", "falta información"],
+      "visual": "<div class=\"ufe-data-table-wrap\"><table class=\"ufe-data-table\" aria-label=\"Tabla de la operación estrella\"><thead><tr><th>∗</th><th>1</th><th>3</th><th>5</th><th>7</th></tr></thead><tbody><tr><th>1</th><td>1</td><td>3</td><td>5</td><td>7</td></tr><tr><th>3</th><td>3</td><td>1</td><td>7</td><td>5</td></tr><tr><th>5</th><td>5</td><td>7</td><td>1</td><td>3</td></tr><tr><th>7</th><td>7</td><td>5</td><td>3</td><td>1</td></tr></tbody></table></div>"
+    },
+    {
+      "id": 64,
+      "course": "Razonamiento matemático",
+      "topic": "Sucesiones exponenciales",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Determine el término que continúa en la sucesión:<span class=\"ufe-display-equation\">0; 1; 8; 81; 1024; …</span>",
+      "choices": ["7812", "9062", "9531", "13 656", "15 625"],
+      "visual": ""
+    },
+    {
+      "id": 65,
+      "course": "Razonamiento matemático",
+      "topic": "Función escalón unitario",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Se define:<span class=\"ufe-equation-stack\"><span>μ<sub>a</sub>(<i>t</i>) = 0, si <i>t</i> &lt; <i>a</i>; &nbsp; μ<sub>a</sub>(<i>t</i>) = 1, si <i>t</i> ≥ <i>a</i>.</span><span><i>g</i>(<i>t</i>) = 1, si <i>t</i> &lt; 3; &nbsp; <i>g</i>(<i>t</i>) = 3, si <i>t</i> ≥ 3.</span><span><i>h</i>(<i>t</i>) = −3, si <i>t</i> &lt; −1; &nbsp; <i>h</i>(<i>t</i>) = −1, si <i>t</i> ≥ −1.</span></span>La representación de <i>g</i>(<i>t</i>) − <i>h</i>(<i>t</i>) será:",
+      "choices": ["−2 + 2μ₋₁(t) + 2μ₃(t)", "2 − 2μ₋₁(t) + 2μ₃(t)", "4 − 2μ₋₁(t) + 2μ₃(t)", "4 − 2μ₋₁(t) + 4μ₃(t)", "4 + 2μ₋₁(t) + 4μ₃(t)"],
+      "visual": ""
+    },
+    {
+      "id": 66,
+      "course": "Razonamiento matemático",
+      "topic": "Calendarios y conteo de días",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Si el 6 de enero de 2020 fue lunes, ¿qué día de la semana fue el 28 de julio de 2020?",
+      "choices": ["lunes", "martes", "miércoles", "jueves", "viernes"],
+      "visual": ""
+    },
+    {
+      "id": 67,
+      "course": "Razonamiento matemático",
+      "topic": "Equivalencias lógicas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "¿Cuál es la equivalencia lógica de «Si Juan ingresa a la UNI, entonces estudiará Ingeniería Civil»?",
+      "choices": ["Juan no ingresará a la UNI o estudiará Ingeniería Civil.", "Si Juan estudiará Ingeniería Civil, entonces Juan ingresará a la UNI.", "Juan ingresará a la UNI y estudiará Ingeniería Civil.", "Juan no ingresará a la UNI o no estudiará Ingeniería Civil.", "Juan no ingresará a la UNI y no estudiará Ingeniería Civil."],
+      "visual": ""
     }
   ]
 };
