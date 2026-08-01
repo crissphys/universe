@@ -103,7 +103,7 @@
         "120°",
         "117°"
       ],
-      "visual": "<img class=\"ufe-source-question-image\" src=\"/assets/simulacros/admision/trig-calculo-angulos-original.jpg?v=1\" alt=\"Gráfico original de la configuración geométrica con los puntos A, B, C, D, E, F, G y H\" loading=\"lazy\" decoding=\"async\">"
+      "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 55 441 275\" role=\"img\" aria-label=\"Gráfico original de la configuración geométrica con los puntos A, B, C, D, E, F, G y H\"><image href=\"/assets/simulacros/admision/trig-calculo-angulos-original.jpg?v=1\" x=\"0\" y=\"0\" width=\"441\" height=\"387\" preserveAspectRatio=\"xMidYMid meet\"/></svg>"
     },
     {
       "id": 7,
