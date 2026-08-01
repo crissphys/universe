@@ -222,14 +222,23 @@
     });
   }
 
+  function examDurationLabel(bank) {
+    var minutes = Math.max(1, Math.round((Number(bank && bank.durationSeconds) || 10800) / 60));
+    if (minutes % 60 === 0) {
+      var hours = minutes / 60;
+      return hours + ' ' + (hours === 1 ? 'hora' : 'horas');
+    }
+    return minutes + ' minutos';
+  }
+
   function renderShell(content) {
     var session = state.server && state.server.session;
     var bank = activeExamBank();
-    var hours = Math.max(1, Math.round((Number(bank.durationSeconds) || 10800) / 3600));
+    var durationLabel = examDurationLabel(bank);
     root.innerHTML = [
       '<div class="ufe-shell">',
       '<header class="ufe-topbar">',
-      '<div class="ufe-brand"><span class="ufe-brand-mark">UNI</span><span class="ufe-brand-copy"><strong>' + esc(bank.shortTitle || bank.title) + '</strong><small>' + examTotal + ' preguntas · ' + hours + ' horas</small></span></div>',
+      '<div class="ufe-brand"><span class="ufe-brand-mark">UNI</span><span class="ufe-brand-copy"><strong>' + esc(bank.shortTitle || bank.title) + '</strong><small>' + examTotal + ' preguntas · ' + esc(durationLabel) + '</small></span></div>',
       state.user ? '<div class="ufe-user-line"><span class="ufe-badge">' + esc(state.isAdmin ? 'Administrador' : (state.server && state.server.participant ? state.server.participant.code : 'Cuenta Google')) + '</span><span class="ufe-muted">' + esc(state.user.name || state.user.email || '') + '</span></div>' : '',
       '</header>',
       state.error ? '<div class="ufe-error" role="alert">' + esc(state.error) + '</div>' : '',
@@ -316,7 +325,7 @@
       '<div class="ufe-result-head"><div class="ufe-stack"><span class="ufe-badge">' + esc(statusLabel(session)) + '</span><h1 class="ufe-title">Control de simulacros</h1></div></div>',
       '<div class="ufe-admin-exam-picker"><label class="ufe-stack" for="ufe-exam-select"><strong>Examen que se realizará</strong><span class="ufe-muted">El banco anterior está conservado como archivo. El nuevo banco corresponde a Admisión UNI.</span></label><select class="ufe-input" id="ufe-exam-select">' + bankOptions + '</select><div class="ufe-actions"><button class="ufe-btn" id="ufe-preview-exam" type="button">Prueba previa</button><button class="ufe-btn ufe-btn-primary" id="ufe-open-room" type="button">Abrir sala con este examen</button></div></div>',
       '<div class="ufe-actions"><button class="ufe-btn ufe-btn-primary" id="ufe-activate" type="button" ' + (canActivate ? '' : 'disabled') + '>Activar 30 segundos</button><button class="ufe-btn ufe-btn-danger" id="ufe-finish-all" type="button" ' + (canFinish ? '' : 'disabled') + '>Finalizar para todos</button><button class="ufe-btn" id="ufe-publish" type="button" ' + (submitted ? '' : 'disabled') + '>Publicar notas</button></div>',
-      '<p class="ufe-muted">Al activar, todos los estudiantes registrados ven la misma cuenta regresiva y disponen de tres horas. Las preguntas y alternativas cambian de orden para cada código sin mezclar los cursos.</p>',
+      '<p class="ufe-muted">Al activar, todos los estudiantes registrados ven la misma cuenta regresiva y disponen del tiempo configurado para el examen elegido. Las preguntas y alternativas cambian de orden para cada código sin mezclar los cursos.</p>',
       '</div>',
       '<div class="ufe-card ufe-stack"><div class="ufe-result-head"><h2>Ranking completo</h2><span class="ufe-badge">' + participants.length + ' registrados</span></div>',
       '<p class="ufe-muted">Ordenado de mayor a menor nota. Los intentos bloqueados figuran con 0/0.</p>',
@@ -492,12 +501,13 @@
     state.monitoring = false;
     var session = state.server.session;
     var participant = state.server.participant;
+    var durationLabel = examDurationLabel(activeExamBank());
     var seconds = Math.max(0, Math.ceil((session.startAt - Date.now()) / 1000));
     renderShell([
       '<section class="ufe-card ufe-centered ufe-stack" aria-label="Cuenta regresiva">',
       '<div class="ufe-result-head"><span class="ufe-badge">Inicia en</span><span class="ufe-code">' + esc(participant.code) + '</span></div>',
       '<div class="ufe-countdown" id="ufe-countdown">' + seconds + '</div>',
-      '<p class="ufe-muted">Al llegar a cero se iniciará automáticamente el cronómetro de tres horas.</p>',
+      '<p class="ufe-muted">Al llegar a cero se iniciará automáticamente el cronómetro de ' + esc(durationLabel) + '.</p>',
       '<div class="ufe-progress"><span id="ufe-countdown-bar" style="width:' + Math.max(0, Math.min(100, (30 - seconds) / 30 * 100)) + '%"></span></div>',
       '</section>'
     ].join(''));
