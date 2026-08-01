@@ -7,7 +7,7 @@ export const EXAM_BANKS = {
     "shortTitle": "Admisión UNI 2027-1",
     "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química, Razonamiento Matemático y Razonamiento Verbal.",
     "status": "draft",
-    "durationMs": 10800000,
+    "durationMs": 3600000,
     "questionCount": 78,
     "key": {
       "1": {

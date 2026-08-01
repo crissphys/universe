@@ -7,7 +7,7 @@
   "shortTitle": "Admisión UNI 2027-1",
   "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química, Razonamiento Matemático y Razonamiento Verbal.",
   "status": "draft",
-  "durationSeconds": 10800,
+  "durationSeconds": 3600,
   "questions": [
     {
       "id": 1,
