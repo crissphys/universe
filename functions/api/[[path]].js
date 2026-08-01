@@ -1536,7 +1536,15 @@ function publicExamParticipant(value, includePrivate, includeResult) {
       unanswered: Math.max(0, Number(result.unanswered) || 0),
       percentage: Math.max(0, Math.min(100, Number(result.percentage) || 0)),
       courseBreakdown: result.courseBreakdown || {},
-      missed: Array.isArray(result.missed) ? result.missed.slice(0, EXAM_COUNT) : []
+      missed: Array.isArray(result.missed) ? result.missed.slice(0, EXAM_COUNT).map(function (item) {
+        item = item && typeof item === 'object' ? item : {};
+        return {
+          id: Math.max(0, Number(item.id) || 0),
+          course: cleanText(item.course, 80),
+          topic: cleanText(item.topic, 120),
+          selected: cleanText(item.selected || 'Sin responder', 300)
+        };
+      }) : []
     };
   }
   return output;
