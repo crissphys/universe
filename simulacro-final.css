@@ -453,7 +453,8 @@ html[data-universe-theme="dark"] .ufe-card {
 }
 
 .ufe-equation-stack,
-.ufe-statement-list {
+.ufe-statement-list,
+.ufe-parametric-list {
   display: grid;
   gap: 8px;
   margin: 14px 0 4px;
@@ -464,6 +465,12 @@ html[data-universe-theme="dark"] .ufe-card {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.08em;
   font-weight: 500;
+}
+
+.ufe-parametric-list span {
+  display: block;
+  padding-block: 3px;
+  line-height: 1.55;
 }
 
 .ufe-equation-stack > .ufe-equation-row {
@@ -687,6 +694,58 @@ html[data-universe-theme="dark"] .ufe-card {
   text-align: center;
 }
 
+.ufe-matrix-equation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 620px);
+  padding: 16px;
+  border: 1px solid var(--ufe-border);
+  border-radius: 16px;
+  background: var(--ufe-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.18rem;
+}
+
+.ufe-matrix-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 12px;
+  width: min(100%, 680px);
+}
+
+.ufe-matrix-choice-grid > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  padding: 12px;
+  border: 1px solid var(--ufe-border);
+  border-radius: 14px;
+  background: var(--ufe-card);
+}
+
+.ufe-sum {
+  display: inline-grid;
+  grid-template-rows: auto auto auto;
+  margin-inline: 7px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: .86;
+}
+
+.ufe-sum b {
+  font-size: 1.8em;
+  font-weight: 500;
+}
+
+.ufe-sum span {
+  font-size: .68em;
+}
+
 .ufe-admin-list {
   margin-top: 4px;
 }
@@ -811,6 +870,10 @@ html[data-universe-theme="dark"] .ufe-card {
 }
 
 @media (max-width: 700px) {
+  .ufe-matrix-choice-grid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+
   .ufe-admin-exam-picker {
     grid-template-columns: 1fr;
     align-items: stretch;
@@ -842,6 +905,10 @@ html[data-universe-theme="dark"] .ufe-card {
 }
 
 @media (max-width: 430px) {
+  .ufe-matrix-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
   .ufe-graph-choice-grid {
     grid-template-columns: 1fr;
   }

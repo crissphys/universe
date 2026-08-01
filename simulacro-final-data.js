@@ -5,7 +5,7 @@
   "id": "admision-uni-2027-1",
   "title": "Simulacro de admisión UNI 2027-1",
   "shortTitle": "Admisión UNI 2027-1",
-  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría y Aritmética.",
+  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética y Álgebra.",
   "status": "draft",
   "durationSeconds": 10800,
   "questions": [
@@ -241,6 +241,96 @@
       "passage": "",
       "text": "Al extraer la raíz cúbica del número <span class=\"ufe-overline\">abc</span> se obtiene <i>p</i> de raíz y 37 de residuo, pero al extraer la raíz cúbica del número <span class=\"ufe-overline\">cba</span> se obtiene (<i>p</i> + 1) de raíz y 45 de residuo. Entonces el valor de <span class=\"ufe-display-equation\"><i>S</i> = |2<i>a</i> − <i>b</i> − <i>c</i> + <i>p</i>|</span> es:",
       "choices": ["4", "0", "2", "1", "3"],
+      "visual": ""
+    },
+    {
+      "id": 19,
+      "course": "Álgebra",
+      "topic": "Rango de una función cuadrática",
+      "frequency": "alta",
+      "passage": "",
+      "text": "La función <i>f</i>: ℝ → ℝ definida por <i>f</i>(<i>x</i>) = 2<i>x</i>² + 4<i>x</i> + 1, es tal que Ran(<i>f</i>) = [<i>a</i>, +∞). Determine <i>a</i>³ + <i>a</i>².",
+      "choices": ["−2", "−1", "0", "1", "3"],
+      "visual": ""
+    },
+    {
+      "id": 20,
+      "course": "Álgebra",
+      "topic": "Sistemas lineales con infinitas soluciones",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Dado el sistema:<span class=\"ufe-equation-stack\"><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\">2<i>x</i>₁ + 3<i>x</i>₂ + 10<i>x</i>₃ = 1</span></span><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\">−2<i>x</i>₁ + 2<i>x</i>₂ + 12<i>x</i>₃ = 2</span></span><span class=\"ufe-equation-row\"><span class=\"ufe-equation-body\">4<i>x</i>₁ + <i>x</i>₂ − 2<i>x</i>₃ = −1</span></span></span>Determine cuál de las siguientes expresiones paramétricas representa al conjunto solución:<span class=\"ufe-parametric-list\"><span><b>I.</b> <i>x</i>₁ = −2/5 − <i>t</i>; &nbsp; <i>x</i>₂ = −13/5 + 2<i>t</i>; &nbsp; <i>x</i>₃ = −5<i>t</i>; &nbsp; <i>t</i> ∈ ℝ</span><span><b>II.</b> <i>x</i>₁ = −2/5 + <i>t</i>; &nbsp; <i>x</i>₂ = 8/5 − <i>t</i>; &nbsp; <i>x</i>₃ = −5<i>t</i> + 1; &nbsp; <i>t</i> ∈ ℝ</span><span><b>III.</b> <i>x</i>₁ = −2/5 + (8/5)<i>t</i>; &nbsp; <i>x</i>₂ = 3/5 − (22/5)<i>t</i>; &nbsp; <i>x</i>₃ = <i>t</i>; &nbsp; <i>t</i> ∈ ℝ</span></span>Indique la alternativa correcta.",
+      "choices": ["solo I", "solo II", "solo III", "I y II", "II y III"],
+      "visual": ""
+    },
+    {
+      "id": 21,
+      "course": "Álgebra",
+      "topic": "Valores propios de matrices",
+      "frequency": "alta",
+      "passage": "",
+      "text": "En una matriz cuadrada <i>A</i>, se denomina valor propio de <i>A</i>, a los valores <i>x</i>, que resuelvan la ecuación siguiente:<span class=\"ufe-display-equation\">|<i>A</i> − <i>xI</i>| = 0</span>donde <i>I</i> es la matriz identidad. Dadas las siguientes proposiciones:<span class=\"ufe-statement-list\"><span><b>I.</b> <i>A</i> y <i>A</i><sup>T</sup> poseen los mismos valores propios.</span><span><b>II.</b> <i>A</i> = <span class=\"ufe-matrix\"><span>3</span><span>0</span><span>0</span><span>3</span></span> y <i>B</i> = <span class=\"ufe-matrix\"><span>5</span><span>0</span><span>0</span><span>5</span></span> tienen los mismos valores propios.</span><span><b>III.</b> Toda matriz simétrica, de términos reales no nulos de orden 2 × 2, posee dos valores propios reales y diferentes.</span></span>Indique la alternativa correcta.",
+      "choices": ["solo I", "solo II", "solo III", "I, II y III", "I y III"],
+      "visual": ""
+    },
+    {
+      "id": 22,
+      "course": "Álgebra",
+      "topic": "Ecuaciones matriciales",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Dada la siguiente ecuación matricial, determine <i>X</i>.",
+      "choices": ["Matriz A", "Matriz B", "Matriz C", "Matriz D", "Matriz E"],
+      "visual": "<div class=\"ufe-matrix-equation\"><span class=\"ufe-matrix\"><span>1</span><span>1</span><span>0</span><span>1</span></span><i>X</i><span class=\"ufe-matrix\"><span>0</span><span>1</span><span>1</span><span>1</span></span><span>=</span><span class=\"ufe-matrix\"><span>1</span><span>2</span><span>3</span><span>4</span></span></div><div class=\"ufe-matrix-choice-grid\"><div><b>A</b><span class=\"ufe-matrix\"><span>−4</span><span>2</span><span>−1</span><span>3</span></span></div><div><b>B</b><span class=\"ufe-matrix\"><span>0</span><span>−2</span><span>1</span><span>3</span></span></div><div><b>C</b><span class=\"ufe-matrix\"><span>0</span><span>−2</span><span>−1</span><span>−3</span></span></div><div><b>D</b><span class=\"ufe-matrix\"><span>−4</span><span>−2</span><span>−1</span><span>3</span></span></div><div><b>E</b><span class=\"ufe-matrix\"><span>0</span><span>2</span><span>1</span><span>3</span></span></div></div>"
+    },
+    {
+      "id": 23,
+      "course": "Álgebra",
+      "topic": "Series geométricas infinitas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "La suma de:<span class=\"ufe-display-equation\"><span class=\"ufe-sum\"><span>∞</span><b>∑</b><span><i>i</i>=1</span></span>(1/4)<sup><i>i</i></sup> + <span class=\"ufe-sum\"><span>∞</span><b>∑</b><span><i>i</i>=0</span></span>(3/4)<sup><i>i</i></sup></span>es:",
+      "choices": ["13/3", "11/3", "19/3", "8/3", "17/3"],
+      "visual": ""
+    },
+    {
+      "id": 24,
+      "course": "Álgebra",
+      "topic": "Funciones exponencial y logarítmica",
+      "frequency": "alta",
+      "passage": "",
+      "text": "<i>g</i>(<i>x</i>) = Ln(<i>x</i>), indique la secuencia correcta después de determinar si la proposición es verdadera (V) o falsa (F).<span class=\"ufe-statement-list\"><span><b>I.</b> Para todo <i>x</i> &gt; 0 se tiene Log₄(2<i>x</i> + 1) &gt; Log₂(<i>x</i> + 1).</span><span><b>II.</b> La función logaritmo es creciente.</span><span><b>III.</b> La función exponencial es creciente.</span></span>",
+      "choices": ["VFF", "VFV", "VVV", "FFF", "FVF"],
+      "visual": ""
+    },
+    {
+      "id": 25,
+      "course": "Álgebra",
+      "topic": "Sucesiones y convergencia",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Dada la siguiente sucesión (donde [<i>x</i>] representa el máximo entero de <i>x</i>):<span class=\"ufe-display-equation\"><i>x</i>ₙ = ⌊<i>n</i>(−1)<sup><i>n</i></sup>/<i>e</i><sup><i>n</i></sup>⌋</span>¿Cuál de las siguientes afirmaciones es verdadera con respecto a <i>x</i>ₙ?",
+      "choices": ["Es constante a partir de cierto n.", "Es decreciente.", "No es convergente.", "Es creciente.", "Converge a 0."],
+      "visual": ""
+    },
+    {
+      "id": 26,
+      "course": "Álgebra",
+      "topic": "Ecuaciones logarítmicas",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Determine el conjunto solución de la ecuación:<span class=\"ufe-display-equation\">Log<sub>(5−<i>x</i>)</sub>(35 − <i>x</i>³) = 3</span>",
+      "choices": ["∅", "{2; 3; 4; 6}", "{3; 4}", "{2; 3}", "{2; 3; 4}"],
+      "visual": ""
+    },
+    {
+      "id": 27,
+      "course": "Álgebra",
+      "topic": "Programación lineal en poliedros",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Dado el problema:<span class=\"ufe-display-equation\">min<sub>x̄∈P</sub> <i>f</i>(x̄)</span>donde <i>P</i> es una pirámide <i>A</i> − <i>BCDE</i>. Si <span class=\"ufe-display-equation\">min<sub>x̄∈P</sub> <i>f</i>(x̄) = <i>f</i>(<i>A</i>)</span>siendo <i>f</i> una función lineal de la forma <i>f</i>(x̄) = <i>ax</i> + <i>by</i> + <i>cz</i> y además se cumple que:<span class=\"ufe-display-equation\"><i>f</i>(<i>A</i>) = <i>f</i>(<i>B</i>) = <i>f</i>(<i>C</i>)</span>Indique cuál de las siguientes proposiciones es correcta:",
+      "choices": ["mínimo en P de f(x̄) = máximo en P de f(x̄) = f(A)", "mínimo en P de f(x̄) = f(A) < máximo en P de f(x̄)", "f(A) = f(B) = f(C) < f(x̄), para x̄ ∉ {A, B, C}", "f(A) < f(x̄), para todo x̄ ∈ P", "f(A) = f(B) = f(C) > f(x̄), para x̄ ∉ {A, B, C}"],
       "visual": ""
     }
   ]
