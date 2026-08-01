@@ -5,10 +5,10 @@ export const EXAM_BANKS = {
     "id": "admision-uni-2027-1",
     "title": "Simulacro de admisión UNI 2027-1",
     "shortTitle": "Admisión UNI 2027-1",
-    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química y Razonamiento Matemático.",
+    "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química, Razonamiento Matemático y Razonamiento Verbal.",
     "status": "draft",
     "durationMs": 10800000,
-    "questionCount": 67,
+    "questionCount": 78,
     "key": {
       "1": {
         "course": "Trigonometría",
@@ -344,6 +344,61 @@ export const EXAM_BANKS = {
         "course": "Razonamiento matemático",
         "topic": "Equivalencias lógicas",
         "answer": "Juan no ingresará a la UNI o estudiará Ingeniería Civil."
+      },
+      "68": {
+        "course": "Razonamiento verbal",
+        "topic": "Inclusión de enunciado",
+        "answer": "Además, al hombre se le considera un animal político y social."
+      },
+      "69": {
+        "course": "Razonamiento verbal",
+        "topic": "Analogías",
+        "answer": "tren : locomotora"
+      },
+      "70": {
+        "course": "Razonamiento verbal",
+        "topic": "Plan de redacción",
+        "answer": "IV - III - I - V - II"
+      },
+      "71": {
+        "course": "Razonamiento verbal",
+        "topic": "Información eliminada",
+        "answer": "V"
+      },
+      "72": {
+        "course": "Razonamiento verbal",
+        "topic": "Comprensión de lectura: incompatibilidad",
+        "answer": "Los términos «economía» y «crematística» son una herencia de una lengua neolatina."
+      },
+      "73": {
+        "course": "Razonamiento verbal",
+        "topic": "Definiciones",
+        "answer": "Protervo"
+      },
+      "74": {
+        "course": "Razonamiento verbal",
+        "topic": "Plan de redacción",
+        "answer": "II - V - IV - III - I"
+      },
+      "75": {
+        "course": "Razonamiento verbal",
+        "topic": "Precisión léxica",
+        "answer": "determinaron"
+      },
+      "76": {
+        "course": "Razonamiento verbal",
+        "topic": "Conectores lógicos",
+        "answer": "A pesar de que - por lo que"
+      },
+      "77": {
+        "course": "Razonamiento verbal",
+        "topic": "Ordenamiento de enunciados",
+        "answer": "III - IV - V - I - II"
+      },
+      "78": {
+        "course": "Razonamiento verbal",
+        "topic": "Definiciones",
+        "answer": "Malquistar"
       }
     }
   },

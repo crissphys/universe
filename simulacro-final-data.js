@@ -5,7 +5,7 @@
   "id": "admision-uni-2027-1",
   "title": "Simulacro de admisión UNI 2027-1",
   "shortTitle": "Admisión UNI 2027-1",
-  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química y Razonamiento Matemático.",
+  "description": "Nuevo simulacro de admisión en desarrollo. Actualmente contiene los bloques de Trigonometría, Aritmética, Álgebra, Geometría, Física, Química, Razonamiento Matemático y Razonamiento Verbal.",
   "status": "draft",
   "durationSeconds": 10800,
   "questions": [
@@ -731,6 +731,116 @@
       "passage": "",
       "text": "¿Cuál es la equivalencia lógica de «Si Juan ingresa a la UNI, entonces estudiará Ingeniería Civil»?",
       "choices": ["Juan no ingresará a la UNI o estudiará Ingeniería Civil.", "Si Juan estudiará Ingeniería Civil, entonces Juan ingresará a la UNI.", "Juan ingresará a la UNI y estudiará Ingeniería Civil.", "Juan no ingresará a la UNI o no estudiará Ingeniería Civil.", "Juan no ingresará a la UNI y no estudiará Ingeniería Civil."],
+      "visual": ""
+    },
+    {
+      "id": 68,
+      "course": "Razonamiento verbal",
+      "topic": "Inclusión de enunciado",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija la oración que, al insertarse en el espacio en blanco, complete de manera lógica la información global del texto.<span class=\"ufe-statement-list\"><span><b>I.</b> La definición clásica de hombre señala que este es un animal racional.</span><span><b>II.</b> El hombre es capaz de abstraer o pensar nociones universales o de distinguir lo verdadero de lo falso.</span><span><b>III.</b> Esta determinación del hombre como animal racional ha tenido una duración de más de dos mil años.</span><span><b>IV.</b> ………………………………………</span><span><b>V.</b> Todo lo anterior se le atribuye a Aristóteles.</span></span>",
+      "choices": ["Además, al hombre se le considera un animal político y social.", "Empero, en ocasiones, el hombre prescinde del raciocinio bajo la perspectiva aristotélica.", "También, el hombre es capaz de discernir lo que es verdad de lo que no es.", "Esto es, los filósofos de todas las épocas han cuestionado esta racionalidad.", "No obstante, Descartes planteaba un dualismo antropológico."],
+      "visual": ""
+    },
+    {
+      "id": 69,
+      "course": "Razonamiento verbal",
+      "topic": "Analogías",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija el par análogo al par base escrito en mayúsculas.<span class=\"ufe-display-equation\">LÁMPARA : CASQUILLO ::</span>",
+      "choices": ["tren : locomotora", "madera : aserradero", "electrodo : bombilla", "ladrillo : paracascos", "microscopio : medición"],
+      "visual": ""
+    },
+    {
+      "id": 70,
+      "course": "Razonamiento verbal",
+      "topic": "Plan de redacción",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija el orden correcto que deben seguir los enunciados para que el texto sea coherente y cohesivo.<span class=\"ufe-statement-list\"><span><b>I.</b> Luis Dejean construyó el circo Napoleón, actual circo de Invierno, en 1852.</span><span><b>II.</b> Actualmente, la mayor parte de los circos son sociedades o razones sociales.</span><span><b>III.</b> El veneciano Antonio Franco y sus hijos se hicieron cargo después de la Revolución Francesa.</span><span><b>IV.</b> El creador del circo fue el inglés Philip Astley, quien abrió uno en París en 1783.</span><span><b>V.</b> Han desarrollado un nuevo circo con colectivos de artistas y compañías de teatro acrobático.</span></span>",
+      "choices": ["II - V - IV - I - III", "IV - I - III - V - II", "IV - III - I - V - II", "II - III - IV - I - V", "III - I - V - II - IV"],
+      "visual": ""
+    },
+    {
+      "id": 71,
+      "course": "Razonamiento verbal",
+      "topic": "Información eliminada",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Señale el enunciado que no es pertinente con el contenido global del texto.<span class=\"ufe-statement-list\"><span><b>I.</b> Los actores griegos, durante su presentación, utilizaban máscaras, complicados ropajes para causar una mayor impresión en el público.</span><span><b>II.</b> Los dramas litúrgicos medievales eran representados por sacerdotes y coros de niños en el interior de las iglesias y fuera de ellas.</span><span><b>III.</b> Durante el Renacimiento y el Barroco, el vestuario y los decorados alcanzaron una gran aparatosidad al momento de la escenificación.</span><span><b>IV.</b> El teatro realista del siglo XIX procuró abandonar los decorados permanentes y el amaneramiento a favor de una mayor verosimilitud, cuando se debía llevar a cabo una representación.</span><span><b>V.</b> Bertold Brecht hizo resurgir el teatro político, mientras que Beckett y otros crearon el teatro del absurdo.</span></span>",
+      "choices": ["V", "II", "III", "I", "IV"],
+      "visual": ""
+    },
+    {
+      "id": 72,
+      "course": "Razonamiento verbal",
+      "topic": "Comprensión de lectura: incompatibilidad",
+      "frequency": "alta",
+      "passage": "La ciencia económica ha ido emborronando conceptualmente dos términos, heredados del griego, que Aristóteles distinguía con precisión: «economía» y «crematística». Para Aristóteles, la «economía» es el arte de administrar bien los bienes de la casa, mientras que la «crematística» se ocupaba tan solo de una parte de esos bienes: los que podían comprarse y venderse. Si en la definición aristotélica de economía sustituyéramos el término «casa» por «planeta», obtendríamos una buena definición de la moderna economía ecológica. Forzar la valoración en unidades monetarias de los llamados bienes intangibles, para acabar gestionando todo tipo de valores desde la lógica de mercado, suele conducir a cometer graves errores. No todos los bienes son ni deben ser mercantilizables, particularmente en lo que se refiere a bienes ambientales.",
+      "text": "¿Cuál de los siguientes enunciados resulta incompatible con lo afirmado en el texto?",
+      "choices": ["Se ha ido perdiendo las definiciones precisas de la economía y de la crematística.", "Es posible una definición moderna de economía ecológica sobre la definición aristotélica.", "Los términos «economía» y «crematística» son una herencia de una lengua neolatina.", "La crematística se ocupaba de administrar solo los bienes que podían valorarse en dinero.", "Los bienes ambientales no deberían ser mercantilizables de ninguna forma en el mundo."],
+      "visual": ""
+    },
+    {
+      "id": 73,
+      "course": "Razonamiento verbal",
+      "topic": "Definiciones",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija la alternativa que se ajusta adecuadamente a la definición presentada:<span class=\"ufe-display-equation\">…………: Perverso, obstinado en la maldad.</span>",
+      "choices": ["Protervo", "Vil", "Monstruoso", "Canalla", "Porfiado"],
+      "visual": ""
+    },
+    {
+      "id": 74,
+      "course": "Razonamiento verbal",
+      "topic": "Plan de redacción",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija la alternativa que mantiene la secuencia correcta que deben seguir los enunciados para que la estructura del texto sea adecuada.<span class=\"ufe-display-equation\">MATEMÁTICAS DIVERTIDAS CON LOS POLIOMINÓS</span><span class=\"ufe-statement-list\"><span><b>I.</b> Otra forma de definirlos es como un grupo de cuadrados unidos por los lados, de forma que cada dos de ellos tienen al menos un lado común.</span><span><b>II.</b> Los poliominós fueron creados por el matemático norteamericano Salomón W. Golomb.</span><span><b>III.</b> Por su parte, Martin Gardner y otros matemáticos ayudaron a su divulgación alusiva a ellos.</span><span><b>IV.</b> Golomb definió a los poliominós como las configuraciones que recubren cuadros adyacentes de un tablero de ajedrez.</span><span><b>V.</b> Él los presentó en su artículo «Tableros de damas y poliominós» en 1954.</span></span>",
+      "choices": ["II - IV - III - V - I", "III - V - II - I - IV", "II - V - III - IV - I", "II - V - IV - III - I", "III - I - II - IV - V"],
+      "visual": ""
+    },
+    {
+      "id": 75,
+      "course": "Razonamiento verbal",
+      "topic": "Precisión léxica",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija la alternativa que, al sustituir la palabra subrayada, precise mejor el sentido del texto.<span class=\"ufe-display-equation\">Después de un análisis exhaustivo, se <u>tuvieron</u> dos causas fundamentales del fenómeno de deserción.</span>",
+      "choices": ["ubicaron", "determinaron", "discutieron", "asociaron", "posicionaron"],
+      "visual": ""
+    },
+    {
+      "id": 76,
+      "course": "Razonamiento verbal",
+      "topic": "Conectores lógicos",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija la alternativa que, al insertarse en los espacios en blanco, dé sentido lógico y preciso a la oración.<span class=\"ufe-display-equation\">………… todavía esta vacuna contra el zika se encuentra en fase experimental, se ha demostrado que el 90 % de los participantes en el ensayo respondieron de forma positiva, ………… se espera que pronto sea formalizada como la primera vacuna para prevenir el contagio de este virus.</span>",
+      "choices": ["En consecuencia - así mismo", "De hecho - tan pronto como", "De ahí que - por consiguiente", "A pesar de que - por lo que", "Aunque - sin lugar a dudas"],
+      "visual": ""
+    },
+    {
+      "id": 77,
+      "course": "Razonamiento verbal",
+      "topic": "Ordenamiento de enunciados",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija el orden correcto que deben seguir los enunciados para que el párrafo del texto mantenga una cohesión adecuada.<span class=\"ufe-statement-list\"><span><b>I.</b> Tales ecosistemas se ubican en áreas remotas donde apenas coinciden los reptiles con las personas.</span><span><b>II.</b> Los cocodrilos de hocico delgado fueron descritos por primera vez en 1824 por el naturalista francés Georges Cuvier (1769-1832).</span><span><b>III.</b> Los cocodrilos de hocico delgado tienen un tamaño mediano.</span><span><b>IV.</b> Se caracterizan por su hocico largo y delgado.</span><span><b>V.</b> Estos animales viven en hábitats de agua dulce.</span></span>",
+      "choices": ["III - IV - V - I - II", "III - II - I - IV - V", "III - II - IV - V - I", "III - I - V - II - IV", "III - V - II - IV - I"],
+      "visual": ""
+    },
+    {
+      "id": 78,
+      "course": "Razonamiento verbal",
+      "topic": "Definiciones",
+      "frequency": "alta",
+      "passage": "",
+      "text": "Elija la alternativa que se ajusta a la siguiente definición:<span class=\"ufe-display-equation\">…………: indisponer o enemistar a una persona con otra u otras.</span>",
+      "choices": ["Malcriar", "Apartarse", "Malquistar", "Desechar", "Aturdir"],
       "visual": ""
     }
   ]
