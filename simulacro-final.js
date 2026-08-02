@@ -719,12 +719,20 @@
     var missed = (result.missed || []).map(function (item) {
       return '<tr><td>' + item.id + '</td><td><strong>' + esc(item.course) + '</strong><br><span class="ufe-muted">' + esc(item.topic) + '</span></td><td>' + esc(item.selected) + '</td></tr>';
     }).join('');
+    var review = (result.review || []).map(function (item) {
+      var statusClass = item.correct ? 'ufe-status-success' : 'ufe-status-danger';
+      var statusText = item.correct ? 'Correcta' : 'Incorrecta';
+      return '<details class="ufe-review-item"><summary><span><strong>Pregunta ' + item.id + '</strong><small>' + esc(item.course) + ' · ' + esc(item.topic) + '</small></span><span class="ufe-badge ' + statusClass + '">' + statusText + '</span></summary>' +
+        '<div class="ufe-review-body"><div class="ufe-review-answers"><p><span>Tu respuesta</span><strong>' + esc(item.selected) + '</strong></p><p><span>Respuesta correcta</span><strong>' + esc(item.answer) + '</strong></p></div>' +
+        '<div><span class="ufe-muted">Desarrollo</span><p>' + esc(item.solution) + '</p></div>' +
+        (item.auditSource ? '<small class="ufe-review-source">Fuente de verificación: ' + esc(item.auditSource) + '</small>' : '') + '</div></details>';
+    }).join('');
     renderShell([
       '<section class="ufe-screen" aria-label="Resultado publicado">',
       '<div class="ufe-stats"><div class="ufe-stat"><span class="ufe-muted">Código</span><strong>' + esc(participant.code) + '</strong><span>identificador del intento</span></div><div class="ufe-stat"><span class="ufe-muted">Aciertos</span><strong>' + result.correct + '/' + examTotal + '</strong><span>' + result.percentage + ' %</span></div><div class="ufe-stat"><span class="ufe-muted">Sin responder</span><strong>' + result.unanswered + '</strong><span>' + result.incorrect + ' incorrectas</span></div></div>',
       '<div class="ufe-card ufe-stack"><h2>Rendimiento por curso</h2><div class="ufe-course-score">' + course + '</div></div>',
-      '<div class="ufe-card ufe-stack"><div class="ufe-result-head"><h2>Preguntas por corregir</h2><span class="ufe-badge">' + result.missed.length + ' revisiones</span></div>',
-      result.missed.length ? '<div class="ufe-table-wrap"><table class="ufe-table"><thead><tr><th>N.º</th><th>Curso y tema</th><th>Tu respuesta</th></tr></thead><tbody>' + missed + '</tbody></table></div>' : '<p class="ufe-badge ufe-status-success">No hubo errores.</p>',
+      '<div class="ufe-card ufe-stack"><div class="ufe-result-head"><h2>Solucionario auditado</h2><span class="ufe-badge">' + (result.review ? result.review.length : result.missed.length) + ' preguntas</span></div>',
+      review ? '<div class="ufe-review-list">' + review + '</div>' : (result.missed.length ? '<div class="ufe-table-wrap"><table class="ufe-table"><thead><tr><th>N.º</th><th>Curso y tema</th><th>Tu respuesta</th></tr></thead><tbody>' + missed + '</tbody></table></div>' : '<p class="ufe-badge ufe-status-success">No hubo errores.</p>'),
       '</div></section>'
     ].join(''));
   }

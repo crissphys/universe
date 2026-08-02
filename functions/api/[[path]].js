@@ -1653,6 +1653,25 @@ function gradeExamAnswers(value, bank) {
   };
 }
 
+function examReviewAnswers(value, bank) {
+  value = value && typeof value === 'object' ? value : {};
+  bank = bank || getExamBank(DEFAULT_EXAM_ID);
+  return Object.keys(bank.key || {}).map(function (id) {
+    var key = bank.key[id] || {};
+    var selected = cleanText(value[id], 300);
+    return {
+      id: Number(id),
+      course: cleanText(key.course, 80),
+      topic: cleanText(key.topic, 120),
+      selected: selected || 'Sin responder',
+      correct: selected === key.answer,
+      answer: cleanText(key.answer, 500),
+      solution: cleanText(key.solution, 2400),
+      auditSource: cleanText(key.auditSource, 500)
+    };
+  });
+}
+
 function escapeEmailHtml(value) {
   return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
@@ -1823,6 +1842,9 @@ async function handleExam(request, env, subpath) {
       isAdmin: auth.admin === true,
       participant: participant ? publicExamParticipant(participant, auth.admin === true, includeResult) : null
     };
+    if (response.participant && response.participant.result && includeResult) {
+      response.participant.result.review = examReviewAnswers(participant.answers, selectedBank);
+    }
     if (auth.admin && session.runId) {
       var adminState = await Promise.all([
         firebase(env, EXAM_ROOT + '/runs/' + session.runId + '/participants', 'GET'),

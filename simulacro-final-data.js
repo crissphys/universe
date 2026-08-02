@@ -670,7 +670,7 @@
       "frequency": "alta",
       "passage": "",
       "text": "Cuando se dobla el cubo de la figura mostrada, establezca cuál(es) de los sólidos 1 a 5 se producen:",
-      "choices": ["1, 3", "3", "1, 2", "4, 5", "3, 4"],
+      "choices": ["1, 3", "Solo 4", "1, 2", "4, 5", "3, 4"],
       "visual": "<svg class=\"ufe-main-diagram\" viewBox=\"0 95 498 380\" role=\"img\" aria-label=\"Desarrollo de un cubo y cinco posibles sólidos plegados\"><image href=\"/assets/simulacros/admision/rm-desarrollo-cubo.png?v=1\" x=\"0\" y=\"0\" width=\"498\" height=\"578\" preserveAspectRatio=\"xMidYMid meet\"/></svg>"
     },
     {
@@ -760,7 +760,7 @@
       "frequency": "alta",
       "passage": "",
       "text": "Elija el orden correcto que deben seguir los enunciados para que el texto sea coherente y cohesivo.<span class=\"ufe-statement-list\"><span><b>I.</b> Luis Dejean construyó el circo Napoleón, actual circo de Invierno, en 1852.</span><span><b>II.</b> Actualmente, la mayor parte de los circos son sociedades o razones sociales.</span><span><b>III.</b> El veneciano Antonio Franco y sus hijos se hicieron cargo después de la Revolución Francesa.</span><span><b>IV.</b> El creador del circo fue el inglés Philip Astley, quien abrió uno en París en 1783.</span><span><b>V.</b> Han desarrollado un nuevo circo con colectivos de artistas y compañías de teatro acrobático.</span></span>",
-      "choices": ["II - V - IV - I - III", "IV - I - III - V - II", "IV - III - I - V - II", "II - III - IV - I - V", "III - I - V - II - IV"],
+      "choices": ["II - V - IV - I - III", "IV - I - III - V - II", "IV - III - I - II - V", "II - III - IV - I - V", "III - I - V - II - IV"],
       "visual": ""
     },
     {
