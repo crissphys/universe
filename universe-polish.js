@@ -156,10 +156,21 @@
       item.innerHTML = '<a href="/unitalk">UNITALK</a>';
       list.appendChild(item);
     });
+    document.querySelectorAll('footer .footer-links').forEach(function (group) {
+      var heading = group.querySelector('h4');
+      var list = group.querySelector('ul');
+      if (!heading || !list || !/^cepreuni$/i.test(heading.textContent.trim()) || list.querySelector('a[href="/fijas-cepreuni"]')) return;
+      var item = document.createElement('li');
+      item.innerHTML = '<a href="/fijas-cepreuni">Fijas CEPREUNI</a>';
+      var calculator = list.querySelector('a[href="/calculadora"]');
+      if (calculator && calculator.parentElement) calculator.parentElement.insertAdjacentElement('afterend', item);
+      else list.appendChild(item);
+    });
     var grouped = {
       ranking: 'cepre',
       calculator: 'cepre',
       'docentes-cepreuni': 'cepre',
+      'fijas-cepreuni': 'cepre',
       exams: 'simulators',
       'admission-results': 'admission'
     };
