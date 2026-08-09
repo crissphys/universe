@@ -171,6 +171,7 @@
       calculator: 'cepre',
       'docentes-cepreuni': 'cepre',
       'fijas-cepreuni': 'cepre',
+      'ingresantes-cepreuni': 'cepre',
       exams: 'simulators',
       'admission-results': 'admission'
     };
