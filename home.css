@@ -654,6 +654,19 @@ html[data-universe-theme="dark"] .home-footer { background: rgba(3, 14, 36, .65)
 .home-footer-bottom > span:last-child { display: flex; gap: 18px; }
 .home-footer-bottom a, .home-footer-bottom button { border: 0; background: none; color: inherit !important; font: inherit; text-decoration: none !important; cursor: pointer; }
 
+/* Keep the footer content comfortably left-aligned on wide screens. */
+@media (min-width: 761px) {
+  html[data-universe-page="home"] .home-footer {
+    width: calc(100vw - 28px);
+    padding-inline: clamp(36px, 4.5vw, 92px);
+  }
+  .home-footer-main,
+  .home-footer-bottom {
+    width: min(1240px, 100%);
+    margin-right: auto;
+  }
+}
+
 /* Portada informativa: accesos, fechas y datos oficiales */
 .home-channels { padding-top:28px; padding-bottom:42px; }
 .home-channels .home-section-head { margin-bottom: 28px; }
