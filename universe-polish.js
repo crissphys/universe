@@ -1,4 +1,38 @@
 (function () {
+  function installUniverseDesignV2() {
+    if (!document.head) return;
+    if (!document.getElementById('uts-fonts-v2')) {
+      var fonts = document.createElement('link');
+      fonts.id = 'uts-fonts-v2';
+      fonts.rel = 'stylesheet';
+      fonts.href = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap';
+      document.head.appendChild(fonts);
+    }
+    if (!document.getElementById('uts-design-v2')) {
+      var design = document.createElement('link');
+      design.id = 'uts-design-v2';
+      design.rel = 'stylesheet';
+      design.href = '/universe-design-v2.css?v=system-4';
+      document.head.appendChild(design);
+    }
+
+    function keepDesignLast() {
+      var sheet = document.getElementById('uts-design-v2');
+      if (sheet && document.body && sheet !== document.body.lastElementChild) {
+        document.body.appendChild(sheet);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', keepDesignLast, { once: true });
+    } else {
+      keepDesignLast();
+    }
+    window.addEventListener('load', keepDesignLast, { once: true });
+  }
+
+  installUniverseDesignV2();
+
   var GOOGLE_CLIENT_ID = '410302293146-nr50k7kovcpd5kuekfd49ddqc041612g.apps.googleusercontent.com';
   var GOOGLE_SCRIPT_ID = 'uts-google-identity-script';
   var AUTH_KEY = 'universe_google_user';
@@ -148,6 +182,11 @@
       if (library && library.parentElement) list.insertBefore(item, library.parentElement);
       else list.appendChild(item);
     });
+    document.querySelectorAll('nav .nav-links a[data-route="privacy"]').forEach(function (link) {
+      var item = link.closest('li');
+      if (item) item.remove();
+      else link.remove();
+    });
     document.querySelectorAll('footer .footer-links').forEach(function (group) {
       var heading = group.querySelector('h4');
       var list = group.querySelector('ul');
@@ -180,6 +219,7 @@
       link.classList.toggle('active', link.getAttribute('data-route') === active);
     });
     ensureUnifiedNavigation();
+    ensureUnifiedFooter();
   }
 
   var UNIVERSE_PAGE_META = {
@@ -215,6 +255,28 @@
         logo.innerHTML = universeBrandMarkup();
         logo.setAttribute('aria-label', 'Universe to Study - Inicio');
       }
+      var menuButton = nav.querySelector('.uts-menu-toggle');
+      if (!menuButton) {
+        menuButton = document.createElement('button');
+        menuButton.className = 'uts-menu-toggle';
+        menuButton.type = 'button';
+        menuButton.setAttribute('aria-label', 'Abrir menú');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.innerHTML = '<span></span><span></span><span></span>';
+        var navLinks = nav.querySelector('.nav-links');
+        if (navLinks) nav.insertBefore(menuButton, navLinks);
+        menuButton.addEventListener('click', function () {
+          var open = nav.classList.toggle('uts-menu-open');
+          menuButton.setAttribute('aria-expanded', String(open));
+          menuButton.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        });
+        if (navLinks) navLinks.addEventListener('click', function (event) {
+          if (!event.target.closest('a')) return;
+          nav.classList.remove('uts-menu-open');
+          menuButton.setAttribute('aria-expanded', 'false');
+          menuButton.setAttribute('aria-label', 'Abrir menú');
+        });
+      }
       var slot = nav.querySelector('.uts-nav-account-slot');
       if (!slot) {
         slot = document.createElement('div');
@@ -225,7 +287,32 @@
       var button = document.getElementById('uts-google-auth-button');
       if (button && button.parentElement !== slot) slot.appendChild(button);
     });
-    ensurePageContextBar(page);
+    var context = document.getElementById('uts-page-context');
+    if (context) context.remove();
+  }
+
+  function ensureUnifiedFooter() {
+    var page = document.documentElement.getAttribute('data-universe-page') || '';
+    if (page === 'home' || page === 'unitalk') return;
+    var footer = document.querySelector('body > footer');
+    if (!footer) {
+      footer = document.createElement('footer');
+      document.body.appendChild(footer);
+    }
+    if (footer.dataset.utsUnified === 'true') return;
+    footer.dataset.utsUnified = 'true';
+    footer.className = 'uts-site-footer';
+    footer.innerHTML = '<div class="uts-footer-main">' +
+      '<div class="uts-footer-brand"><a href="/">Universe to Study</a><p>Recursos, herramientas y comunidad para una preparación preuniversitaria con orden.</p></div>' +
+      '<div><h3>Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/clases">Clases</a><a href="/biblioteca">Biblioteca</a></div>' +
+      '<div><h3>Practica</h3><a href="/simulacros">Simulacros</a><a href="/temario">Temario</a><a href="/unitalk">UNITALK</a><a href="/calculadora">Calculadora</a></div>' +
+      '<div><h3>Confianza</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a></div>' +
+      '</div><div class="uts-footer-bottom"><span>© <b>2026</b> Universe to Study</span><span><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><button id="uts-footer-support" type="button">Soporte</button></span></div>';
+    var support = footer.querySelector('#uts-footer-support');
+    if (support) support.addEventListener('click', function () {
+      if (window.UniverseSupport && typeof window.UniverseSupport.open === 'function') window.UniverseSupport.open();
+      else if (typeof window.openUniverseSupportChat === 'function') window.openUniverseSupportChat();
+    });
   }
 
   function ensurePageContextBar(page) {
