@@ -56,5 +56,5 @@ html[data-universe-theme='dark'] body.unitalk-body{background:#080d15}html[data-
   .unitalk-tab{flex:0 0 auto}
   .unitalk-action{min-height:38px}
   .unitalk-comment-compose button{min-height:42px;justify-self:stretch}
-  #support-v2-panel{left:8px!important;right:8px!important;top:8px!important;bottom:8px!important;width:auto!important;height:auto!important;max-width:none!important;max-height:none!important}
+  html[data-universe-page="unitalk"] body.unitalk-body #support-v2-panel{left:8px!important;right:8px!important;top:8px!important;bottom:8px!important;width:auto!important;height:auto!important;max-width:none!important;max-height:none!important;border-radius:18px!important}
 }
