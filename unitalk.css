@@ -30,3 +30,30 @@ html[data-universe-theme='dark'] body.unitalk-body{background:#080d15}html[data-
 @media(max-width:1400px){.unitalk-app{grid-template-columns:215px minmax(500px,1fr) 285px}.unitalk-topbar{grid-template-columns:215px minmax(220px,1fr) 270px}.unitalk-sidebar{padding-inline:10px}.unitalk-nav-item{padding-inline:13px}}
 @media(max-width:1080px){.unitalk-app{grid-template-columns:minmax(0,1fr);grid-template-rows:70px minmax(0,1fr)}.unitalk-topbar{grid-column:1;grid-template-columns:48px minmax(0,1fr) auto;padding:0 16px}.unitalk-mobile-menu{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:12px;background:#edf4ff;color:#2469e9;font-size:19px;cursor:pointer}.unitalk-brand{font-size:25px}.unitalk-brand small{display:none}.unitalk-search{display:none}.unitalk-top-help{display:none}.unitalk-top-actions{gap:0}.unitalk-account-button>span:not(.unitalk-account-avatar),.unitalk-account-button>b{display:none}.unitalk-sidebar{position:fixed;z-index:90;left:0;top:70px;bottom:0;width:268px;translate:-105% 0;transition:.22s ease;box-shadow:15px 0 40px rgba(44,72,126,.18)}.unitalk-sidebar.open{translate:0 0}.unitalk-sidebar-overlay{position:fixed;z-index:80;inset:70px 0 0;border:0;background:rgba(12,25,48,.38);display:none}.unitalk-sidebar-overlay.show{display:block}.unitalk-feed-shell{grid-column:1;grid-row:2;padding:22px max(18px,calc((100vw - 780px)/2)) 55px}.unitalk-rightbar{display:none}}
 @media(max-width:620px){.unitalk-topbar{padding:0 12px}.unitalk-feed-shell{padding:16px 12px 48px}.unitalk-composer{padding:14px}.unitalk-composer textarea{font-size:14px}.unitalk-composer-tools{margin-left:51px}.unitalk-composer-actions{gap:1px;flex-wrap:wrap}.unitalk-compose-action{padding:9px 8px}.unitalk-compose-action span{display:none}.unitalk-publish{padding:10px 18px}.unitalk-attachment-panel,.unitalk-poll-panel{margin-left:0}.unitalk-tabs{gap:22px;margin-top:20px}.unitalk-tab{font-size:13px}.unitalk-post{padding:15px}.unitalk-post-text{font-size:13px}.unitalk-time{font-size:9px}.unitalk-post-actions{gap:5px}.unitalk-action{padding:7px 9px;font-size:10px}.unitalk-profile-facts,.unitalk-explore-grid{grid-template-columns:1fr}.unitalk-comment-compose{grid-template-columns:1fr}.unitalk-comment-compose button{justify-self:end}.unitalk-modal{padding:0}.unitalk-conversation-panel{width:100%;height:100%;max-height:100%;border-radius:0}.unitalk-profile-panel{width:min(94vw,520px);padding:25px 18px}}
+
+/* Mobile integrity: isolate UNITALK from generic site navigation rules. */
+.unitalk-sidebar .unitalk-nav{position:static!important;inset:auto!important;z-index:auto!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-auto-flow:row!important;grid-auto-rows:auto!important;align-items:stretch!important;align-content:start!important;justify-content:stretch!important;width:100%!important;height:auto!important;min-height:0!important;max-width:none!important;margin:0!important;padding:0!important;gap:4px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;transform:none!important;flex-wrap:nowrap!important}
+.unitalk-sidebar .unitalk-nav-item{grid-column:1!important;width:100%!important;min-width:0!important}
+.unitalk-feed-shell,.unitalk-home-view,.unitalk-page-view,.unitalk-feed,.unitalk-composer,.unitalk-post,.unitalk-page-card{min-width:0}
+.unitalk-home-view[hidden],.unitalk-page-view[hidden]{display:none!important}
+.unitalk-feed{grid-template-columns:minmax(0,1fr)}
+.unitalk-composer,.unitalk-post,.unitalk-page-card{width:100%;max-width:100%}
+.unitalk-composer-top,.unitalk-composer textarea{min-width:0}
+.unitalk-attachment-file,.unitalk-post-file{width:100%;max-width:100%;overflow:hidden}
+.unitalk-attachment-file>span:last-child,.unitalk-post-file>span:last-child{flex:1 1 auto;min-width:0}
+
+@media(max-width:620px){
+  .unitalk-app{grid-template-rows:118px minmax(0,1fr)}
+  .unitalk-topbar{grid-template-columns:44px minmax(0,1fr) auto;grid-template-rows:62px 44px;align-content:center;gap:0 8px;padding:0 12px 10px}
+  .unitalk-mobile-menu,.unitalk-brand,.unitalk-top-actions{grid-row:1}
+  .unitalk-search{grid-column:1/-1;grid-row:2;display:flex;width:100%;height:40px}
+  .unitalk-sidebar{top:118px}
+  .unitalk-sidebar-overlay{inset:118px 0 0}
+  .unitalk-compose-action{display:grid;place-items:center;min-width:42px;min-height:42px;padding:8px;font-size:16px}
+  .unitalk-publish{min-height:42px}
+  .unitalk-tabs{overflow-x:auto;scrollbar-width:none}
+  .unitalk-tabs::-webkit-scrollbar{display:none}
+  .unitalk-tab{flex:0 0 auto}
+  .unitalk-action{min-height:38px}
+  .unitalk-comment-compose button{min-height:42px;justify-self:stretch}
+}

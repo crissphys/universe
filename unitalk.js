@@ -353,6 +353,7 @@
   function updateComposer() {
     var text = $('unitalk-post-text').value;
     $('unitalk-char-count').textContent = String(text.length);
+    $('unitalk-publish').disabled = !text.trim() && !state.attachment;
     $('unitalk-mode-chip').hidden = !state.discussion;
     $('unitalk-discussion').classList.toggle('active', state.discussion);
     $('unitalk-poll-panel').hidden = !state.pollActive;
@@ -470,7 +471,7 @@
       requireAccount(error) || requireProfile(error);
       status.textContent = errorText(error);
       status.className = 'unitalk-status error';
-    } finally { button.disabled = false; }
+    } finally { updateComposer(); }
   }
   function postById(postId) { return state.posts.find(function (post) { return post.id === postId; }); }
   async function react(post, type) {
@@ -591,16 +592,19 @@
     document.querySelectorAll('.unitalk-nav-item').forEach(function (button) { button.classList.toggle('active', button.dataset.view === view); });
     $('unitalk-sidebar').classList.remove('open');
     $('unitalk-sidebar-overlay').classList.remove('show');
+    $('unitalk-menu-toggle').setAttribute('aria-expanded', 'false');
+    $('unitalk-scroll-area').scrollTop = 0;
     if (view === 'home') { renderFeed(); return; }
     renderPage(view);
   }
   function renderPage(view) {
     var root = $('unitalk-page-view');
     var mine = state.posts.filter(isMine);
+    var matching = visiblePosts();
     if (view === 'explore') {
       root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Explorar</h1><p>Busca temas y conversaciones de la comunidad.</p></div></div>' +
         '<section class="unitalk-page-card"><h2>Temas para conversar</h2><div class="unitalk-explore-grid"><div class="unitalk-topic-card"><strong>Matemática</strong><span>Comparte métodos, dudas y ejercicios.</span></div><div class="unitalk-topic-card"><strong>Ciencias</strong><span>Física, Química y razonamiento científico.</span></div><div class="unitalk-topic-card"><strong>Humanidades</strong><span>Lecturas, ideas y estrategias de repaso.</span></div><div class="unitalk-topic-card"><strong>Vida preuniversitaria</strong><span>Organización, motivación y metas.</span></div></div></section>' +
-        '<section class="unitalk-page-card"><h2>Publicaciones recientes</h2><div class="unitalk-feed">' + (state.posts.length ? state.posts.map(postMarkup).join('') : '<div class="unitalk-empty">Aún no hay publicaciones.</div>') + '</div></section>';
+        '<section class="unitalk-page-card"><h2>Publicaciones recientes</h2><div class="unitalk-feed">' + (matching.length ? matching.map(postMarkup).join('') : '<div class="unitalk-empty">No encontramos publicaciones con esa búsqueda.</div>') + '</div></section>';
       return;
     }
     if (view === 'saved') {
@@ -684,11 +688,18 @@
     $('unitalk-profile-action').onclick = function () { location.href = '/account'; };
     $('unitalk-sidebar-publish').onclick = function () { setView('home'); setTimeout(function () { $('unitalk-post-text').focus(); }, 0); };
     $('unitalk-join-button').onclick = function () { if (!currentGoogleUser() && window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); else { setView('home'); $('unitalk-post-text').focus(); } };
-    $('unitalk-menu-toggle').onclick = function () { $('unitalk-sidebar').classList.toggle('open'); $('unitalk-sidebar-overlay').classList.toggle('show'); };
-    $('unitalk-sidebar-overlay').onclick = function () { $('unitalk-sidebar').classList.remove('open'); $('unitalk-sidebar-overlay').classList.remove('show'); };
+    $('unitalk-menu-toggle').onclick = function () {
+      var open = !$('unitalk-sidebar').classList.contains('open');
+      $('unitalk-sidebar').classList.toggle('open', open);
+      $('unitalk-sidebar-overlay').classList.toggle('show', open);
+      this.setAttribute('aria-expanded', String(open));
+    };
+    $('unitalk-sidebar-overlay').onclick = function () { $('unitalk-sidebar').classList.remove('open'); $('unitalk-sidebar-overlay').classList.remove('show'); $('unitalk-menu-toggle').setAttribute('aria-expanded', 'false'); };
     $('unitalk-account-button').onclick = function () {
       if (!currentGoogleUser()) { if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); return; }
-      $('unitalk-account-menu').hidden = !$('unitalk-account-menu').hidden;
+      var open = $('unitalk-account-menu').hidden;
+      $('unitalk-account-menu').hidden = !open;
+      this.setAttribute('aria-expanded', String(open));
     };
     $('unitalk-search-input').addEventListener('input', function () { state.search = this.value.trim(); $('unitalk-search-clear').hidden = !state.search; if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); });
     $('unitalk-search-clear').onclick = function () { $('unitalk-search-input').value = ''; state.search = ''; this.hidden = true; if (location.search) history.replaceState({}, '', location.pathname); if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); };
@@ -697,7 +708,7 @@
     $('unitalk-comment-input').addEventListener('keydown', function (event) { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') sendComment(); });
     document.addEventListener('click', function (event) {
       var viewButton = event.target.closest('[data-view]');
-      if (viewButton) { event.preventDefault(); setView(viewButton.dataset.view); $('unitalk-account-menu').hidden = true; return; }
+      if (viewButton) { event.preventDefault(); setView(viewButton.dataset.view); $('unitalk-account-menu').hidden = true; $('unitalk-account-button').setAttribute('aria-expanded', 'false'); return; }
       var profileButton = event.target.closest('[data-profile]');
       if (profileButton) { openProfile(profileButton.dataset.profile); return; }
       var hashtagButton = event.target.closest('[data-hashtag]');
@@ -726,7 +737,17 @@
       if (deleteCommentButton) { deleteComment(deleteCommentButton); return; }
       var settingButton = event.target.closest('[data-setting]');
       if (settingButton) { switchSetting(settingButton.dataset.setting); return; }
-      if (!$('unitalk-account-menu').contains(event.target) && !$('unitalk-account-button').contains(event.target)) $('unitalk-account-menu').hidden = true;
+      if (!$('unitalk-account-menu').contains(event.target) && !$('unitalk-account-button').contains(event.target)) { $('unitalk-account-menu').hidden = true; $('unitalk-account-button').setAttribute('aria-expanded', 'false'); }
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape') return;
+      $('unitalk-sidebar').classList.remove('open');
+      $('unitalk-sidebar-overlay').classList.remove('show');
+      $('unitalk-menu-toggle').setAttribute('aria-expanded', 'false');
+      $('unitalk-account-menu').hidden = true;
+      $('unitalk-account-button').setAttribute('aria-expanded', 'false');
+      if (!$('unitalk-conversation-modal').hidden) closeModal('unitalk-conversation-modal');
+      if (!$('unitalk-profile-modal').hidden) closeModal('unitalk-profile-modal');
     });
     window.addEventListener('universe-google-auth', function () { setTimeout(function () { loadMe(); loadFeed(); }, 120); });
     window.addEventListener('popstate', function () {
