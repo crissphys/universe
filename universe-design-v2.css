@@ -1,0 +1,835 @@
+/*
+  Universe to Study - visual system v2
+  The homepage is the source of truth for typography, spacing and surface quality.
+*/
+
+:root {
+  --uts2-display: "Sora", "Manrope", system-ui, sans-serif;
+  --uts2-body: "Manrope", system-ui, sans-serif;
+  --uts2-ink: #0b1b38;
+  --uts2-muted: #526681;
+  --uts2-line: rgba(43, 104, 196, .14);
+  --uts2-blue: #1764dd;
+  --uts2-blue-dark: #102d79;
+  --uts2-cyan: #55bdff;
+  --uts2-panel: rgba(255, 255, 255, .82);
+  --uts2-panel-solid: #ffffff;
+  --uts2-soft: #eef6ff;
+  --uts2-shadow: 0 18px 48px rgba(48, 89, 158, .12);
+  --uts2-shadow-hover: 0 24px 58px rgba(37, 83, 153, .17);
+  --uts2-max: 1500px;
+  --uts2-wide: 1840px;
+}
+
+html[data-universe-theme="dark"] {
+  --uts2-ink: #f5f9ff;
+  --uts2-muted: #b7c8e2;
+  --uts2-line: rgba(120, 170, 244, .17);
+  --uts2-panel: rgba(6, 21, 51, .82);
+  --uts2-panel-solid: #07162f;
+  --uts2-soft: #0a1a38;
+  --uts2-shadow: 0 20px 54px rgba(0, 0, 0, .3);
+  --uts2-shadow-hover: 0 25px 62px rgba(0, 0, 0, .4);
+}
+
+html[data-universe-page]:not([data-universe-page="home"]),
+html[data-universe-page]:not([data-universe-page="home"]) body {
+  min-height: 100%;
+  color: var(--uts2-ink) !important;
+  font-family: var(--uts2-body) !important;
+  font-size: 16px;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) body {
+  background-color: #f4f8ff !important;
+  background-image:
+    radial-gradient(circle at 8% 7%, rgba(var(--uts-accent-rgb), .18), transparent 29rem),
+    radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--uts-accent-2) 16%, transparent), transparent 28rem),
+    radial-gradient(circle at 50% 95%, rgba(99, 161, 255, .13), transparent 34rem),
+    linear-gradient(rgba(42, 106, 202, .043) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 106, 202, .043) 1px, transparent 1px),
+    linear-gradient(145deg, #f8fbff, #eef6ff 52%, #f7f5ff) !important;
+  background-size: auto, auto, auto, 42px 42px, 42px 42px, auto !important;
+  background-attachment: fixed !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) body {
+  background-color: #020a1c !important;
+  background-image:
+    radial-gradient(circle at 8% 7%, rgba(var(--uts-accent-rgb), .2), transparent 30rem),
+    radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--uts-accent-2) 17%, transparent), transparent 29rem),
+    radial-gradient(circle at 50% 96%, rgba(29, 78, 170, .15), transparent 35rem),
+    linear-gradient(rgba(117, 169, 255, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(117, 169, 255, .045) 1px, transparent 1px),
+    linear-gradient(145deg, #020817, #06132b 52%, #0a0e26) !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(h1, h2, h3, h4, h5, .section-title, .ufe-title, .cp-title) {
+  color: var(--uts2-ink) !important;
+  font-family: var(--uts2-display) !important;
+  font-weight: 800 !important;
+  letter-spacing: -.035em !important;
+}
+
+/* Keep the homepage as the typography source of truth as well. */
+html[data-universe-page="home"] :where(h1, h2, h3, h4, h5, .home-section-title) {
+  font-family: var(--uts2-display) !important;
+  letter-spacing: -.04em !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(p, li, label, input, select, textarea, button, a, td, th, small, span, strong, b, em) {
+  font-family: var(--uts2-body) !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(p, .section-sub, .ufe-muted, .admission-note) {
+  text-wrap: pretty;
+}
+
+/* Header: same geometry and type system as the homepage. */
+html[data-universe-page]:not([data-universe-page="home"]) body > nav.uts-unified-nav {
+  position: sticky !important;
+  inset: auto !important;
+  top: 14px !important;
+  z-index: 1200 !important;
+  display: grid !important;
+  grid-template-columns: minmax(205px, 1fr) auto minmax(112px, 1fr) !important;
+  align-items: center !important;
+  gap: 18px !important;
+  width: min(var(--uts2-max), calc(100vw - 32px)) !important;
+  max-width: none !important;
+  min-height: 62px !important;
+  height: auto !important;
+  margin: 14px auto 0 !important;
+  padding: 8px 10px 8px 18px !important;
+  overflow: visible !important;
+  border: 1px solid rgba(255, 255, 255, .72) !important;
+  border-radius: 22px !important;
+  background: rgba(245, 250, 255, .78) !important;
+  box-shadow: var(--uts2-shadow) !important;
+  backdrop-filter: blur(20px) saturate(145%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
+  transform: none !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) body > nav.uts-unified-nav {
+  border-color: var(--uts2-line) !important;
+  background: rgba(5, 20, 53, .82) !important;
+}
+
+html[data-universe-page] .uts-unified-nav .nav-logo {
+  grid-column: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: max-content !important;
+  max-width: none !important;
+  color: var(--uts2-ink) !important;
+  font: 800 clamp(.88rem, 1.15vw, 1.06rem)/1 var(--uts2-display) !important;
+  letter-spacing: -.025em !important;
+  white-space: nowrap !important;
+}
+
+html[data-universe-page] .uts-brand-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(135deg, #102d79, #1d6df0 58%, #55bdff);
+  box-shadow: 0 9px 22px rgba(32, 101, 229, .28), inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+
+html[data-universe-page] .uts-brand-mark svg { width: 25px; height: 25px; }
+html[data-universe-page] .uts-brand-label b { color: var(--uts2-blue); font-weight: 800; }
+
+html[data-universe-page] .uts-unified-nav .nav-links {
+  grid-column: 2 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  width: max-content !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  list-style: none !important;
+}
+
+html[data-universe-page] .uts-unified-nav .nav-links a {
+  min-height: 38px !important;
+  padding: 0 11px !important;
+  border: 1px solid transparent !important;
+  border-radius: 12px !important;
+  color: #425b79 !important;
+  font: 700 .72rem/1 var(--uts2-body) !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+}
+
+html[data-universe-page] .uts-unified-nav .nav-links a:hover,
+html[data-universe-page] .uts-unified-nav .nav-links a.active {
+  color: var(--uts2-blue) !important;
+  border-color: rgba(45, 114, 225, .15) !important;
+  background: rgba(255, 255, 255, .68) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-links a { color: #b5c7e5 !important; }
+html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-links a:hover,
+html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-links a.active { background: rgba(91, 150, 241, .12) !important; }
+
+html[data-universe-page] .uts-nav-account-slot {
+  grid-column: 3 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  min-width: 112px !important;
+}
+
+html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button {
+  position: static !important;
+  inset: auto !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  transform: none !important;
+  border-color: rgba(35, 99, 199, .17) !important;
+  background: rgba(255, 255, 255, .72) !important;
+  box-shadow: 0 12px 28px rgba(34, 76, 143, .12) !important;
+  font-family: var(--uts2-body) !important;
+}
+
+.uts-menu-toggle { display: none; }
+
+/* Page rhythm and shared surfaces. */
+html[data-universe-page]:not([data-universe-page="home"]):not([data-universe-page="unitalk"]) :where(.universe-page-stage, .universe-static-page, .admission-page, .account-page, .entrants-page) {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) .universe-page-stage {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: clamp(34px, 5vw, 72px) clamp(14px, 3vw, 34px) clamp(70px, 8vw, 112px) !important;
+  overflow: visible !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) .universe-page-stage-inner {
+  width: min(var(--uts2-max), 100%) !important;
+  height: auto !important;
+  margin-inline: auto !important;
+  overflow: visible !important;
+}
+
+html[data-universe-page="ranking"] .universe-page-stage-inner,
+html[data-universe-page="library"] .universe-page-stage-inner { width: min(var(--uts2-wide), 100%) !important; }
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(
+  .section, .feature-card, .subject-card, .tool-card, .sim-card,
+  .cepre-v2-shell, .cepre-v2-controls, .cepre-v2-summary,
+  .cp-card, .cp-method-card, .cp-results, .cp-architecture,
+  .libv4-panel, .libv4-viewer, .libv4-tip,
+  .syv4-hero, .syv4-group, .syv4-output, .syv4-guide-card,
+  .admission-card, .admission-hero-copy, .admission-hero-card, .ideal-card, .selector-panel, .result-panel, .sources-card,
+  .cepre-hub-card, .account-card, .account-hero, .admin-panel,
+  .legal-card, .editorial-card, .editorial-hero, .classes-shell, .entrants-search-card, .entrants-card
+) {
+  border: 1px solid var(--uts2-line) !important;
+  color: var(--uts2-ink) !important;
+  background: linear-gradient(145deg, rgba(255, 255, 255, .92), rgba(246, 251, 255, .74)) !important;
+  box-shadow: var(--uts2-shadow) !important;
+  backdrop-filter: blur(16px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) :where(
+  .section, .feature-card, .subject-card, .tool-card, .sim-card,
+  .cepre-v2-shell, .cepre-v2-controls, .cepre-v2-summary,
+  .cp-card, .cp-method-card, .cp-results, .cp-architecture,
+  .libv4-panel, .libv4-viewer, .libv4-tip,
+  .syv4-hero, .syv4-group, .syv4-output, .syv4-guide-card,
+  .admission-card, .admission-hero-copy, .admission-hero-card, .ideal-card, .selector-panel, .result-panel, .sources-card,
+  .cepre-hub-card, .account-card, .account-hero, .admin-panel,
+  .legal-card, .editorial-card, .editorial-hero, .classes-shell, .entrants-search-card, .entrants-card
+) {
+  border-color: var(--uts2-line) !important;
+  background: linear-gradient(145deg, rgba(7, 23, 54, .94), rgba(4, 15, 38, .82)) !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(.section-label, .admission-kicker, .cp-eyebrow, .libv4-kicker, .syv4-kicker, .account-kicker, .editorial-kicker, .ranking-v3-eyebrow) {
+  color: var(--uts-accent) !important;
+  font: 800 .7rem/1 var(--uts2-body) !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(button, .btn, .admission-btn, .account-btn, .cp-primary, .libv4-open, .cepre-v2-show-all) {
+  font-family: var(--uts2-body) !important;
+  font-weight: 800 !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(input, select, textarea, .cepre-v2-search, .libv4-search) {
+  color: var(--uts2-ink) !important;
+  font-family: var(--uts2-body) !important;
+  border-color: var(--uts2-line) !important;
+}
+
+/* Admission and CEPREUNI: editorial hero + ordered tool grid. */
+html[data-universe-page="admission"] .admission-page,
+html[data-universe-page="cepre"] .admission-page {
+  width: min(var(--uts2-max), calc(100vw - 32px)) !important;
+  margin: clamp(34px, 5vw, 72px) auto 96px !important;
+  padding: 0 !important;
+  font-family: var(--uts2-body) !important;
+}
+
+html[data-universe-page] .admission-hero {
+  grid-template-columns: minmax(0, 1.55fr) minmax(310px, .68fr) !important;
+  gap: 18px !important;
+  margin: 0 0 20px !important;
+}
+
+html[data-universe-page] .admission-hero-copy {
+  min-height: 360px;
+  padding: clamp(34px, 5vw, 70px) !important;
+  border-radius: 32px !important;
+}
+
+html[data-universe-page] .admission-hero-card {
+  padding: clamp(26px, 3vw, 38px) !important;
+  border-radius: 32px !important;
+}
+
+html[data-universe-page] .admission-hero h1 {
+  max-width: 900px !important;
+  margin: 0 0 18px !important;
+  color: var(--uts2-ink) !important;
+  font: 800 clamp(3rem, 5.6vw, 5.4rem)/.98 var(--uts2-display) !important;
+  letter-spacing: -.055em !important;
+}
+
+html[data-universe-page] .admission-hero p {
+  color: var(--uts2-muted) !important;
+  font: 500 clamp(.98rem, 1.2vw, 1.08rem)/1.72 var(--uts2-body) !important;
+}
+
+html[data-universe-page] .admission-kicker {
+  min-height: 30px;
+  padding: 0 11px !important;
+  border-radius: 999px !important;
+}
+
+html[data-universe-page] .admission-btn {
+  min-height: 46px !important;
+  padding: 0 18px !important;
+  border-radius: 14px !important;
+  font: 800 .78rem/1 var(--uts2-body) !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+html[data-universe-page] .admission-grid-links {
+  gap: 14px !important;
+  margin: 18px 0 22px !important;
+}
+
+html[data-universe-page] .admission-grid-links a {
+  position: relative;
+  min-height: 142px;
+  padding: 24px !important;
+  overflow: hidden;
+  border-radius: 24px !important;
+  box-shadow: 0 14px 34px rgba(45, 88, 151, .09) !important;
+}
+
+html[data-universe-page] .admission-grid-links a::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--ad-link-accent, var(--uts-accent));
+}
+
+html[data-universe-page] .admission-grid-links a:nth-child(2) { --ad-link-accent: #12a87c; }
+html[data-universe-page] .admission-grid-links a:nth-child(3) { --ad-link-accent: #7c3aed; }
+html[data-universe-page] .admission-grid-links a:nth-child(4) { --ad-link-accent: #f59e0b; }
+html[data-universe-page] .admission-grid-links b,
+html[data-universe-page] .cepre-hub-card b {
+  color: var(--uts2-ink) !important;
+  font: 800 1.08rem/1.25 var(--uts2-display) !important;
+  letter-spacing: -.025em !important;
+}
+
+html[data-universe-page] .admission-grid-links span,
+html[data-universe-page] .cepre-hub-card p { color: var(--uts2-muted) !important; font: 500 .9rem/1.58 var(--uts2-body) !important; }
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(.admission-card, .sources-card) {
+  margin-top: 18px !important;
+  padding: clamp(24px, 3.2vw, 44px) !important;
+  border-radius: 28px !important;
+}
+
+html[data-universe-page] .section-head.clean h2 {
+  font: 800 clamp(2rem, 3.7vw, 3.55rem)/1.03 var(--uts2-display) !important;
+  letter-spacing: -.05em !important;
+}
+
+html[data-universe-page] .target-box strong,
+html[data-universe-page] .hero-score span {
+  font-family: var(--uts2-display) !important;
+  font-weight: 800 !important;
+  letter-spacing: -.05em !important;
+}
+
+html[data-universe-page="cepre"] .cepre-link-grid {
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+html[data-universe-page="cepre"] .cepre-hub-card {
+  min-height: 210px !important;
+  padding: 28px !important;
+  border-radius: 26px !important;
+  box-shadow: 0 15px 38px rgba(38, 83, 151, .1) !important;
+}
+
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(1),
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(2) { grid-column: span 6; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(3),
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(4),
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(5) { grid-column: span 4; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(6),
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(7) { grid-column: span 6; }
+
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(3) { --card-accent: #0ea5e9; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(4) { --card-accent: #8b5cf6; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(5) { --card-accent: #f59e0b; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(6) { --card-accent: #ec4899; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(7) { --card-accent: #14b8a6; }
+html[data-universe-page="cepre"] .cepre-hub-card > span { background: var(--card-accent, linear-gradient(135deg, var(--uts-accent), var(--uts-accent-2))) !important; font-family: var(--uts2-body) !important; }
+
+/* Ranking: the document scrolls; the table never traps vertical scrolling. */
+html[data-universe-page="ranking"],
+html[data-universe-page="ranking"] body {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+html[data-universe-page="ranking"] .universe-static-page,
+html[data-universe-page="ranking"] .universe-page-stage,
+html[data-universe-page="ranking"] .universe-page-stage-inner,
+html[data-universe-page="ranking"] .ranking-section {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+html[data-universe-page="ranking"] .universe-page-stage { padding: clamp(30px, 4vw, 58px) clamp(12px, 2vw, 28px) 96px !important; }
+html[data-universe-page="ranking"] .ranking-section { padding: 0 !important; }
+
+html[data-universe-page="ranking"] .ranking-v3-layout {
+  display: grid !important;
+  grid-template-columns: clamp(300px, 20vw, 360px) minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  grid-template-areas: "aside heading" "aside content" !important;
+  align-items: start !important;
+  gap: 20px 24px !important;
+  width: min(var(--uts2-wide), 100%) !important;
+  height: auto !important;
+  overflow: visible !important;
+  margin-inline: auto !important;
+  background: transparent !important;
+}
+
+html[data-universe-page="ranking"] .ranking-v3-heading {
+  grid-area: heading !important;
+  padding: 8px 6px 4px !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html[data-universe-page="ranking"] .ranking-v3-heading .section-title {
+  color: var(--uts2-ink) !important;
+  font: 800 clamp(2.6rem, 4.4vw, 4.7rem)/.98 var(--uts2-display) !important;
+  letter-spacing: -.055em !important;
+}
+
+html[data-universe-page="ranking"] .ranking-v3-heading .section-sub {
+  max-width: 950px !important;
+  color: var(--uts2-muted) !important;
+  font: 500 .96rem/1.65 var(--uts2-body) !important;
+}
+
+html[data-universe-page="ranking"] .ranking-v3-insights {
+  grid-area: aside !important;
+  position: sticky !important;
+  top: 96px !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: 24px 20px !important;
+  overflow: visible !important;
+  border: 1px solid var(--uts2-line) !important;
+  border-radius: 28px !important;
+  background: var(--uts2-panel) !important;
+  box-shadow: var(--uts2-shadow) !important;
+}
+
+html[data-universe-page="ranking"] .ranking-v3-content {
+  grid-area: content !important;
+  display: grid !important;
+  grid-template-rows: auto auto !important;
+  gap: 16px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+html[data-universe-page="ranking"] :where(#ranking-v3-current-panel, #ranking-v3-history-panel) {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+html[data-universe-page="ranking"] :where(.cepre-v2-shell, .ranking-v3-history) {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid var(--uts2-line) !important;
+  border-radius: 28px !important;
+  background: var(--uts2-panel-solid) !important;
+  box-shadow: var(--uts2-shadow) !important;
+}
+
+html[data-universe-page="ranking"] .cepre-v2-wrap,
+html[data-universe-page="ranking"] .ranking-v3-history-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  overscroll-behavior: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+html[data-universe-page="ranking"] .cepre-v2-table { width: max(100%, 1280px) !important; }
+html[data-universe-page="ranking"] .ranking-v3-history-table { width: max(100%, 980px) !important; }
+html[data-universe-page="ranking"] .ranking-v3-insights-head h3,
+html[data-universe-page="ranking"] .ranking-v3-history-head h3 { font-family: var(--uts2-display) !important; }
+html[data-universe-page="ranking"] :where(.ranking-v3-insights-head p, .ranking-v3-history-head p, .ranking-v3-history-note) { font-family: var(--uts2-body) !important; }
+
+/* UNITALK uses the whole viewport; its product layout remains intact. */
+html[data-universe-page="unitalk"],
+html[data-universe-page="unitalk"] body.unitalk-body {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+html[data-universe-page="unitalk"] .unitalk-stage,
+html[data-universe-page="unitalk"] .unitalk-device {
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100svh !important;
+  min-height: 100svh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-universe-page="unitalk"] .unitalk-app {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  font-family: var(--uts2-body) !important;
+}
+
+html[data-universe-page="unitalk"] :where(.unitalk-brand, .unitalk-page-heading h1, .unitalk-page-card h2, .unitalk-panel-title, .unitalk-user-link strong) {
+  font-family: var(--uts2-display) !important;
+}
+
+html[data-universe-page="unitalk"] .unitalk-home-view,
+html[data-universe-page="unitalk"] .unitalk-page-view { width: min(100%, 980px) !important; }
+html[data-universe-page="unitalk"] .unitalk-composer,
+html[data-universe-page="unitalk"] .unitalk-post,
+html[data-universe-page="unitalk"] .unitalk-side-panel { border-color: var(--uts2-line) !important; box-shadow: 0 11px 28px rgba(50, 82, 145, .07) !important; }
+
+/* Simulators retain their exam behavior but share the site's hierarchy. */
+html[data-universe-page="simulators"] .universe-static-page,
+html[data-universe-page="simulators"] main#uni-final-app {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+
+html[data-universe-page="simulators"] main#uni-final-app {
+  padding: clamp(34px, 5vw, 70px) clamp(14px, 3vw, 34px) 96px !important;
+  font-family: var(--uts2-body) !important;
+}
+
+html[data-universe-page="simulators"] :where(.ufe-shell, .ufe-screen) {
+  width: min(var(--uts2-max), 100%) !important;
+  margin-inline: auto !important;
+}
+
+html[data-universe-page="simulators"] :where(.ufe-card, .ufe-topbar, .ufe-question, .ufe-navigator, .ufe-live-strip) {
+  border: 1px solid var(--uts2-line) !important;
+  border-radius: 26px !important;
+  color: var(--uts2-ink) !important;
+  background: var(--uts2-panel) !important;
+  box-shadow: var(--uts2-shadow) !important;
+}
+
+html[data-universe-page="simulators"] :where(.ufe-title, .ufe-brand-copy strong, .ufe-course-title) { font-family: var(--uts2-display) !important; }
+html[data-universe-page="simulators"] :where(.ufe-text, .ufe-muted, .ufe-option, .ufe-btn, .ufe-meta) { font-family: var(--uts2-body) !important; }
+
+/* Tables: readable borders and no heavy black frames. */
+html[data-universe-page]:not([data-universe-page="home"]) :where(table, .cepre-v2-table, .ranking-v3-history-table, .schedule-table) {
+  color: var(--uts2-ink) !important;
+  border-color: var(--uts2-line) !important;
+  background: var(--uts2-panel-solid) !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(th) {
+  color: #fff !important;
+  font-family: var(--uts2-body) !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, var(--uts2-blue-dark), var(--uts-accent)) !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) :where(td) {
+  color: var(--uts2-muted) !important;
+  border-color: var(--uts2-line) !important;
+  font-family: var(--uts2-body) !important;
+  font-weight: 500;
+}
+
+/* Shared footer: trust links live here, not in the primary header. */
+html[data-universe-page] body > footer.uts-site-footer {
+  position: relative !important;
+  z-index: 2 !important;
+  display: block !important;
+  width: calc(100vw - 28px) !important;
+  max-width: none !important;
+  margin: 30px 14px 14px !important;
+  padding: 54px clamp(32px, 4.4vw, 86px) 30px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--uts2-line) !important;
+  border-radius: 30px 30px 20px 20px !important;
+  color: var(--uts2-ink) !important;
+  background: linear-gradient(145deg, rgba(255, 255, 255, .86), rgba(238, 247, 255, .78)) !important;
+  box-shadow: var(--uts2-shadow) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] body > footer.uts-site-footer {
+  background: linear-gradient(145deg, rgba(6, 20, 49, .94), rgba(3, 13, 32, .88)) !important;
+}
+
+.uts-footer-main {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.65fr) repeat(3, minmax(145px, .68fr));
+  gap: 42px;
+  width: min(1240px, 100%);
+}
+
+.uts-footer-brand a {
+  color: var(--uts2-ink) !important;
+  font: 800 1.15rem/1 var(--uts2-display) !important;
+  text-decoration: none !important;
+}
+
+.uts-footer-brand p { max-width: 390px; margin: 13px 0 0; color: var(--uts2-muted); font: 500 .76rem/1.65 var(--uts2-body); }
+.uts-footer-main h3 { margin: 0 0 14px; color: var(--uts2-ink) !important; font: 800 .68rem/1 var(--uts2-body) !important; letter-spacing: .06em !important; text-transform: uppercase; }
+.uts-footer-main > div:not(:first-child) a { display: block; width: max-content; margin-top: 10px; color: var(--uts2-muted) !important; font: 600 .74rem/1.2 var(--uts2-body) !important; text-decoration: none !important; }
+.uts-footer-main a:hover { color: var(--uts2-blue) !important; }
+
+.uts-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: min(1240px, 100%);
+  margin-top: 42px;
+  padding-top: 21px;
+  border-top: 1px solid var(--uts2-line);
+  color: var(--uts2-muted);
+  font: 500 .68rem/1.3 var(--uts2-body);
+}
+
+.uts-footer-bottom > span:last-child { display: flex; gap: 18px; }
+.uts-footer-bottom a,
+.uts-footer-bottom button { min-height: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; color: inherit !important; background: transparent !important; box-shadow: none !important; font: inherit !important; text-decoration: none !important; cursor: pointer; }
+
+/* Tablet. */
+@media (max-width: 1120px) {
+  html[data-universe-page]:not([data-universe-page="home"]) body > nav.uts-unified-nav {
+    grid-template-columns: minmax(190px, 1fr) auto !important;
+  }
+  html[data-universe-page] .uts-unified-nav .nav-links {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  html[data-universe-page] .uts-nav-account-slot { grid-column: 2 !important; grid-row: 1 !important; }
+  html[data-universe-page] .admission-hero { grid-template-columns: 1fr !important; }
+  html[data-universe-page="cepre"] .cepre-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  html[data-universe-page="cepre"] .cepre-hub-card { grid-column: auto !important; }
+  html[data-universe-page="ranking"] .ranking-v3-layout {
+    grid-template-columns: minmax(270px, 320px) minmax(0, 1fr) !important;
+  }
+}
+
+/* Mobile. */
+@media (max-width: 760px) {
+  html[data-universe-page]:not([data-universe-page="home"]):not([data-universe-page="unitalk"]) body { padding-top: 0 !important; }
+  html[data-universe-page]:not([data-universe-page="home"]) body > nav.uts-unified-nav {
+    top: 7px !important;
+    grid-template-columns: minmax(0, 1fr) auto auto !important;
+    grid-template-rows: auto auto !important;
+    gap: 6px !important;
+    width: calc(100vw - 14px) !important;
+    min-height: 58px !important;
+    margin-top: 7px !important;
+    padding: 7px 8px !important;
+    border-radius: 19px !important;
+  }
+  html[data-universe-page] .uts-unified-nav .nav-logo { grid-column: 1 !important; grid-row: 1 !important; min-width: 0 !important; font-size: .82rem !important; }
+  html[data-universe-page] .uts-brand-mark { width: 36px; height: 36px; border-radius: 11px; }
+  html[data-universe-page] .uts-brand-mark svg { width: 24px; height: 24px; }
+  .uts-menu-toggle {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid !important;
+    place-content: center;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    padding: 0 !important;
+    border: 1px solid var(--uts2-line) !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, .65) !important;
+    box-shadow: none !important;
+  }
+  .uts-menu-toggle span { display: block; width: 17px; height: 2px; border-radius: 2px; background: var(--uts2-ink); }
+  html[data-universe-page] .uts-nav-account-slot { grid-column: 3 !important; grid-row: 1 !important; min-width: 40px !important; }
+  html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button { width: 40px !important; min-width: 40px !important; min-height: 40px !important; padding: 5px !important; }
+  html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button .uts-g-label { display: none !important; }
+  html[data-universe-page] .uts-unified-nav .nav-links {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    display: none !important;
+    width: 100% !important;
+    padding: 5px 0 2px !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+  }
+  html[data-universe-page] .uts-unified-nav.uts-menu-open .nav-links { display: flex !important; }
+  html[data-universe-page] .uts-unified-nav .nav-links a { min-height: 34px !important; padding: 0 9px !important; font-size: .68rem !important; }
+
+  html[data-universe-page] .universe-page-stage { padding: 28px 8px 76px !important; }
+  html[data-universe-page="admission"] .admission-page,
+  html[data-universe-page="cepre"] .admission-page { width: calc(100vw - 16px) !important; margin: 28px auto 72px !important; }
+  html[data-universe-page] .admission-hero-copy { min-height: 0; padding: 28px 22px !important; border-radius: 24px !important; }
+  html[data-universe-page] .admission-hero-card { padding: 24px 20px !important; border-radius: 24px !important; }
+  html[data-universe-page] .admission-hero h1 { font-size: clamp(2.45rem, 12vw, 3.45rem) !important; line-height: 1 !important; }
+  html[data-universe-page] .admission-grid-links { grid-template-columns: 1fr !important; }
+  html[data-universe-page] .admission-grid-links a { min-height: 0; }
+  html[data-universe-page="cepre"] .cepre-link-grid { grid-template-columns: 1fr !important; }
+
+  html[data-universe-page="ranking"] .universe-page-stage { padding: 28px 8px 76px !important; }
+  html[data-universe-page="ranking"] .ranking-v3-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "heading" "aside" "content" !important;
+    gap: 14px !important;
+  }
+  html[data-universe-page="ranking"] .ranking-v3-heading { padding: 4px 5px 8px !important; }
+  html[data-universe-page="ranking"] .ranking-v3-heading .section-title { font-size: clamp(2.35rem, 12vw, 3.35rem) !important; }
+  html[data-universe-page="ranking"] .ranking-v3-insights { position: static !important; top: auto !important; padding: 20px 15px !important; }
+  html[data-universe-page="ranking"] .cepre-v2-wrap,
+  html[data-universe-page="ranking"] .ranking-v3-history-wrap { height: auto !important; min-height: 0 !important; max-height: none !important; overflow-x: auto !important; overflow-y: visible !important; }
+  html[data-universe-page="ranking"] .cepre-v2-stats { display: grid !important; grid-template-columns: 1fr !important; overflow: visible !important; }
+  html[data-universe-page="ranking"] .cepre-v2-stat { width: 100% !important; min-width: 0 !important; }
+  html[data-universe-page="ranking"] .ranking-v3-benchmarks { display: grid !important; grid-template-columns: 1fr !important; overflow: visible !important; }
+
+  html[data-universe-page="simulators"] main#uni-final-app { padding: 28px 8px 76px !important; }
+
+  html[data-universe-page] body > footer.uts-site-footer {
+    width: calc(100vw - 14px) !important;
+    margin: 18px 7px 7px !important;
+    padding: 38px 18px 24px !important;
+    border-radius: 22px 22px 16px 16px !important;
+  }
+  .uts-footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 18px; }
+  .uts-footer-brand { grid-column: 1 / -1; }
+  .uts-footer-bottom { align-items: flex-start; flex-direction: column; margin-top: 34px; }
+}
+
+@media (max-width: 420px) {
+  .uts-brand-label { max-width: 126px; overflow: hidden; text-overflow: ellipsis; }
+  .uts-footer-main { grid-template-columns: 1fr 1fr; }
+  .uts-footer-bottom > span:last-child { flex-wrap: wrap; gap: 12px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-universe-page] *, html[data-universe-page] *::before, html[data-universe-page] *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* Ranking contains a legacy style block at the end of its body. The doubled
+   attribute intentionally outranks that block so the document, not a nested
+   panel, owns vertical scrolling on every viewport. */
+html[data-universe-page="ranking"][data-universe-page] {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+html[data-universe-page="ranking"][data-universe-page] body {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  font-family: var(--uts2-body) !important;
+}
+
+html[data-universe-page="ranking"][data-universe-page] :where(
+  .universe-static-page, .universe-page-stage, .universe-page-stage-inner,
+  .ranking-section, .ranking-v3-layout, .ranking-v3-content,
+  #ranking-v3-current-panel, #ranking-v3-history-panel
+) {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+html[data-universe-page="ranking"][data-universe-page] :where(.cepre-v2-wrap, .ranking-v3-history-wrap) {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
