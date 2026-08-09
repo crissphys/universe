@@ -27,6 +27,23 @@
     }, { passive: true });
   }
 
+  var accountSlot = document.getElementById('home-account-slot');
+
+  function placeAccountButton() {
+    if (!accountSlot) return false;
+    var button = document.getElementById('uts-google-auth-button') || document.querySelector('[data-uts-account-button="true"]');
+    if (!button) return false;
+    if (button.parentNode !== accountSlot) accountSlot.appendChild(button);
+    return true;
+  }
+
+  if (!placeAccountButton() && document.body && 'MutationObserver' in window) {
+    var accountObserver = new MutationObserver(function () {
+      if (placeAccountButton()) accountObserver.disconnect();
+    });
+    accountObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var revealItems = Array.prototype.slice.call(document.querySelectorAll('.home-reveal'));
   if (reducedMotion || !('IntersectionObserver' in window)) {
@@ -42,38 +59,50 @@
     revealItems.forEach(function (item) { observer.observe(item); });
   }
 
-  var countdown = document.querySelector('.home-countdown[data-target]');
+  var countdowns = Array.prototype.slice.call(document.querySelectorAll('.home-countdown[data-target]'));
   var countdownTimer = 0;
 
   function two(value) { return String(Math.max(0, value)).padStart(2, '0'); }
 
   function renderCountdown() {
-    if (!countdown) return;
-    var target = new Date(countdown.getAttribute('data-target')).getTime();
-    var distance = target - Date.now();
-    var caption = countdown.querySelector('.countdown-caption');
-    var values;
+    if (!countdowns.length) return;
+    var now = Date.now();
+    var nextCountdown = null;
 
-    if (!Number.isFinite(target) || distance <= 0) {
-      values = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-      if (caption) caption.textContent = 'Primera prueba · fecha alcanzada';
-      if (countdownTimer) window.clearInterval(countdownTimer);
-    } else {
-      values = {
-        days: Math.floor(distance / 86400000),
-        hours: Math.floor((distance % 86400000) / 3600000),
-        minutes: Math.floor((distance % 3600000) / 60000),
-        seconds: Math.floor((distance % 60000) / 1000)
-      };
-    }
+    countdowns.forEach(function (countdown) {
+      var target = new Date(countdown.getAttribute('data-target')).getTime();
+      var distance = target - now;
+      var caption = countdown.querySelector('.countdown-caption');
+      var values;
 
-    Object.keys(values).forEach(function (unit) {
-      var node = countdown.querySelector('[data-count="' + unit + '"]');
-      if (node) node.textContent = two(values[unit]);
+      countdown.classList.remove('is-next');
+      if (!Number.isFinite(target) || distance <= 0) {
+        values = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        countdown.classList.add('is-complete');
+        if (caption) caption.textContent = countdown.getAttribute('data-complete') || 'Prueba finalizada';
+      } else {
+        countdown.classList.remove('is-complete');
+        if (!nextCountdown || target < nextCountdown.target) nextCountdown = { node: countdown, target: target };
+        values = {
+          days: Math.floor(distance / 86400000),
+          hours: Math.floor((distance % 86400000) / 3600000),
+          minutes: Math.floor((distance % 3600000) / 60000),
+          seconds: Math.floor((distance % 60000) / 1000)
+        };
+        if (caption) caption.textContent = 'Tiempo restante';
+      }
+
+      Object.keys(values).forEach(function (unit) {
+        var node = countdown.querySelector('[data-count="' + unit + '"]');
+        if (node) node.textContent = two(values[unit]);
+      });
     });
+
+    if (nextCountdown) nextCountdown.node.classList.add('is-next');
+    else if (countdownTimer) window.clearInterval(countdownTimer);
   }
 
-  if (countdown) {
+  if (countdowns.length) {
     renderCountdown();
     countdownTimer = window.setInterval(renderCountdown, 1000);
     document.addEventListener('visibilitychange', function () {
