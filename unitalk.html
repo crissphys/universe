@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v=unitalk-app-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unitalk-app-1">
-  <link rel="stylesheet" href="/unitalk.css?v=unitalk-app-5">
+  <link rel="stylesheet" href="/unitalk.css?v=unitalk-mobile-6">
   <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
@@ -24,7 +24,7 @@
     <section class="unitalk-device" aria-label="Plataforma UNITALK">
       <div class="unitalk-app">
         <header class="unitalk-topbar">
-          <button class="unitalk-mobile-menu" id="unitalk-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+          <button class="unitalk-mobile-menu" id="unitalk-menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
           <a class="unitalk-brand" href="/unitalk" aria-label="Ir al inicio de UNITALK">UNITALK <small>Universe to Study</small></a>
           <label class="unitalk-search" for="unitalk-search-input">
             <span aria-hidden="true">⌕</span>
@@ -33,7 +33,7 @@
           </label>
           <div class="unitalk-top-actions">
             <a class="unitalk-top-help" href="/terminos#unitalk" aria-label="Normas de UNITALK">?</a>
-            <button class="unitalk-account-button" id="unitalk-account-button" type="button" aria-expanded="false">
+            <button class="unitalk-account-button" id="unitalk-account-button" type="button" aria-label="Abrir opciones de cuenta" aria-expanded="false">
               <span class="unitalk-account-avatar" id="unitalk-top-avatar">U</span>
               <span id="unitalk-top-name">Mi cuenta</span><b aria-hidden="true">⌄</b>
             </button>
@@ -85,13 +85,13 @@
                 <button class="unitalk-poll-add-option" id="unitalk-poll-add-option" type="button">+ Añadir alternativa</button>
               </section>
               <div class="unitalk-composer-actions">
-                <button class="unitalk-compose-action" type="button" data-attachment-kind="image">🖼️ <span>Foto</span></button>
-                <button class="unitalk-compose-action" type="button" data-attachment-kind="video">🎬 <span>Video</span></button>
-                <button class="unitalk-compose-action" type="button" data-attachment-kind="pdf">📄 <span>PDF</span></button>
-                <button class="unitalk-compose-action" id="unitalk-poll-toggle" type="button">📊 <span>Encuesta</span></button>
-                <button class="unitalk-compose-action" id="unitalk-discussion" type="button">💬 <span>Discutir</span></button>
-                <button class="unitalk-compose-action" id="unitalk-profile-action" type="button">👤 <span>Mi perfil</span></button>
-                <button class="unitalk-publish" id="unitalk-publish" type="button">Publicar</button>
+                <button class="unitalk-compose-action" type="button" data-attachment-kind="image" aria-label="Adjuntar foto" title="Adjuntar foto">🖼️ <span>Foto</span></button>
+                <button class="unitalk-compose-action" type="button" data-attachment-kind="video" aria-label="Adjuntar video" title="Adjuntar video">🎬 <span>Video</span></button>
+                <button class="unitalk-compose-action" type="button" data-attachment-kind="pdf" aria-label="Adjuntar PDF" title="Adjuntar PDF">📄 <span>PDF</span></button>
+                <button class="unitalk-compose-action" id="unitalk-poll-toggle" type="button" aria-label="Crear encuesta" title="Crear encuesta">📊 <span>Encuesta</span></button>
+                <button class="unitalk-compose-action" id="unitalk-discussion" type="button" aria-label="Marcar como discusión" title="Marcar como discusión">💬 <span>Discutir</span></button>
+                <button class="unitalk-compose-action" id="unitalk-profile-action" type="button" aria-label="Ir a mi perfil" title="Ir a mi perfil">👤 <span>Mi perfil</span></button>
+                <button class="unitalk-publish" id="unitalk-publish" type="button" disabled>Publicar</button>
               </div>
               <input id="unitalk-image-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>
               <input id="unitalk-video-input" type="file" accept="video/mp4,video/webm" hidden>
@@ -148,7 +148,7 @@
 
   <div id="unitalk-toast" class="unitalk-toast" role="status" aria-live="polite"></div>
 
-  <script src="/unitalk.js?v=unitalk-app-5" defer></script>
+  <script src="/unitalk.js?v=unitalk-mobile-6" defer></script>
   <script src="/universe-polish.js?v=unitalk-2" defer></script>
 </body>
 </html>
