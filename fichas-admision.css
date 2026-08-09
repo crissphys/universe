@@ -1,0 +1,73 @@
+.ufa-page {
+  --ufa-blue: #2563eb;
+  --ufa-red: #e5484d;
+  --ufa-green: #0f9f6e;
+  --ufa-ink: #10213b;
+  --ufa-muted: #61728a;
+  width: min(1480px, calc(100% - 1.5rem));
+  margin: 0 auto;
+  padding: clamp(1rem, 2.5vw, 2.4rem) 0 4rem;
+  color: var(--ufa-ink);
+  font-family: "DM Sans", Inter, system-ui, sans-serif;
+}
+
+.ufa-hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 2rem;
+  align-items: center;
+  padding: clamp(1.5rem, 3.5vw, 3.5rem);
+  border: 1px solid rgba(37,99,235,.17);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(59,130,246,.25), transparent 31%),
+    linear-gradient(135deg,#fff,#eff6ff 60%,#e8f2ff);
+  box-shadow: 0 28px 80px rgba(38,78,135,.13);
+}
+.ufa-kicker { color: var(--ufa-blue); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.ufa-hero h1 { max-width: 780px; margin: .6rem 0 0; font-size: clamp(2.3rem,5vw,4.8rem); font-weight: 700; line-height: .98; letter-spacing: -.055em; }
+.ufa-hero p { max-width: 760px; margin: 1rem 0 0; color: var(--ufa-muted); line-height: 1.65; }
+.ufa-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.2rem; }
+.ufa-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .7rem 1rem; border: 1px solid rgba(37,99,235,.2); border-radius: 13px; background: #fff; color: #1d4ed8; font-size: .82rem; font-weight: 800; text-decoration: none; }
+.ufa-btn.primary { border-color: transparent; background: linear-gradient(135deg,#1554bd,#2f7df6); color: #fff; }
+.ufa-hero-mark { display: grid; place-items: center; min-height: 210px; border-radius: 28px; background: rgba(255,255,255,.78); box-shadow: inset 0 0 0 1px rgba(37,99,235,.12); }
+.ufa-hero-mark img { width: min(180px, 72%); max-height: 180px; object-fit: contain; filter: drop-shadow(0 18px 24px rgba(15,23,42,.13)); }
+
+.ufa-controls { display: flex; gap: .7rem; align-items: center; justify-content: space-between; margin: 1.3rem 0; padding: .75rem; border: 1px solid rgba(102,126,161,.2); border-radius: 20px; background: rgba(255,255,255,.88); box-shadow: 0 15px 42px rgba(16,33,59,.06); }
+.ufa-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .5rem; width: min(780px,100%); }
+.ufa-tab { min-height: 48px; padding: .65rem .8rem; border: 1px solid #d9e2ef; border-radius: 13px; background: #f8fafc; color: #42536a; font: inherit; font-size: .79rem; font-weight: 800; cursor: pointer; }
+.ufa-tab.active { border-color: transparent; background: var(--tab-color,#2563eb); color: #fff; box-shadow: 0 10px 24px color-mix(in srgb,var(--tab-color,#2563eb) 25%,transparent); }
+.ufa-method { max-width: 420px; color: var(--ufa-muted); font-size: .72rem; line-height: 1.45; text-align: right; }
+
+.ufa-section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin: 1.8rem 0 1rem; }
+.ufa-section-head h2 { margin: .25rem 0 0; font-size: clamp(1.6rem,3vw,2.55rem); letter-spacing: -.04em; }
+.ufa-section-head p { max-width: 720px; margin: .45rem 0 0; color: var(--ufa-muted); line-height: 1.55; }
+.ufa-summary { padding: .48rem .7rem; border-radius: 999px; background: #edf5ff; color: #1d4ed8; font-size: .72rem; font-weight: 800; white-space: nowrap; }
+
+.ufa-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .9rem; }
+.ufa-card { --accent: var(--ufa-blue); overflow: hidden; border: 1px solid color-mix(in srgb,var(--accent) 24%,#d9e2ef); border-radius: 22px; background: #fff; box-shadow: 0 15px 42px rgba(16,33,59,.06); }
+.ufa-card::before { content: ""; display: block; height: 5px; background: linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 50%,#fff)); }
+.ufa-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .7rem; padding: 1rem 1rem .7rem; }
+.ufa-card-head span { color: var(--accent); font-size: .66rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.ufa-card-head h3 { margin: .2rem 0 0; font-size: 1rem; line-height: 1.25; }
+.ufa-total { flex: 0 0 auto; min-width: 52px; padding: .45rem .5rem; border-radius: 12px; background: color-mix(in srgb,var(--accent) 9%,#fff); color: var(--accent); text-align: center; font-size: .67rem; font-weight: 800; }
+.ufa-total b { display: block; font-size: 1rem; }
+.ufa-topic-list { display: grid; gap: .42rem; margin: 0; padding: 0 1rem 1rem; list-style: none; }
+.ufa-topic { display: grid; grid-template-columns: 30px minmax(0,1fr) auto; gap: .55rem; align-items: center; padding: .58rem; border-radius: 13px; background: #f7f9fc; }
+.ufa-topic-rank { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 10px; background: color-mix(in srgb,var(--accent) 12%,#fff); color: var(--accent); font-size: .68rem; font-weight: 900; }
+.ufa-topic b { display: block; font-size: .74rem; line-height: 1.3; }
+.ufa-topic small { display: block; margin-top: .12rem; color: var(--ufa-muted); font-size: .61rem; }
+.ufa-topic-count { color: var(--accent); font-size: .69rem; font-weight: 900; }
+.ufa-note { margin-top: 1rem; padding: 1rem; border: 1px solid rgba(245,158,11,.24); border-radius: 18px; background: #fffbeb; color: #7c4a03; font-size: .8rem; line-height: 1.55; }
+
+html[data-universe-theme="dark"] .ufa-page { --ufa-ink:#f6f8fc; --ufa-muted:#a9b7ca; }
+html[data-universe-theme="dark"] .ufa-hero { background: radial-gradient(circle at 88% 8%,rgba(59,130,246,.22),transparent 31%),linear-gradient(135deg,#07111f,#0c1b31 60%,#10294a); }
+html[data-universe-theme="dark"] :is(.ufa-controls,.ufa-card,.ufa-hero-mark) { background:#07111f; border-color:rgba(148,163,184,.24); }
+html[data-universe-theme="dark"] .ufa-tab { background:#0c1726; border-color:#2a3a50; color:#cbd5e1; }
+html[data-universe-theme="dark"] .ufa-topic { background:#0c1726; }
+html[data-universe-theme="dark"] .ufa-note { background:#241b08; border-color:#7c4a03; color:#fde68a; }
+
+@media(max-width:1080px){.ufa-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ufa-controls{display:block}.ufa-method{max-width:none;margin-top:.7rem;text-align:left}}
+@media(max-width:760px){.ufa-page{width:min(100% - 1rem,1480px)}.ufa-hero{grid-template-columns:1fr;padding:1.25rem;border-radius:25px}.ufa-hero-mark{min-height:150px}.ufa-hero-mark img{max-height:130px}.ufa-tabs{grid-template-columns:1fr}.ufa-section-head{display:block}.ufa-summary{display:inline-flex;margin-top:.6rem}.ufa-grid{grid-template-columns:1fr}.ufa-actions{display:grid}.ufa-btn{width:100%}}

@@ -5845,7 +5845,6 @@ html[data-universe-theme='dark'] #cronograma-universe .payment-day.has-tooltip::
 html[data-universe-page='syllabus'] #temario,
 html[data-universe-page='syllabus'] #temario-cepreuni,
 html[data-universe-page='syllabus'] #horario-cepreuni,
-html[data-universe-page='syllabus'] #resumenes-humanidades,
 html[data-universe-page='library'] #biblioteca,
 html[data-universe-page='simulators'] #simulacros,
 html[data-universe-page='exams'] #examenes-cepreuni-page {
@@ -5921,7 +5920,6 @@ html[data-universe-page='simulators'] #simulacros,
 html[data-universe-page='syllabus'] #temario,
 html[data-universe-page='syllabus'] #temario-cepreuni,
 html[data-universe-page='syllabus'] #horario-cepreuni,
-html[data-universe-page='syllabus'] #resumenes-humanidades,
 html[data-universe-page='ranking'] #ranking-cepreuni {
   box-sizing:border-box;
   width:100% !important;
