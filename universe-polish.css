@@ -752,3 +752,339 @@ html[data-universe-theme="dark"][data-universe-page] footer {
     transition-duration: .001ms !important;
   }
 }
+
+/* ========================================================================== */
+/* UNIVERSE DESIGN SYSTEM 2026 · continuidad visual con la portada principal */
+/* ========================================================================== */
+
+html[data-universe-page] {
+  --uts-accent: #2563eb;
+  --uts-accent-2: #38bdf8;
+  --uts-accent-rgb: 37, 99, 235;
+  --uts-panel: rgba(255, 255, 255, .78);
+  --uts-panel-strong: rgba(255, 255, 255, .94);
+  --uts-copy: #0b1b38;
+  --uts-copy-soft: #52627a;
+}
+
+html[data-universe-page="admission"] { --uts-accent:#2563eb; --uts-accent-2:#06b6d4; --uts-accent-rgb:37,99,235; }
+html[data-universe-page="cepre"],
+html[data-universe-page="calculator"],
+html[data-universe-page="ranking"],
+html[data-universe-page="docentes-cepreuni"],
+html[data-universe-page="fijas-cepreuni"],
+html[data-universe-page="ingresantes-cepreuni"] { --uts-accent:#0f6fe8; --uts-accent-2:#20c997; --uts-accent-rgb:15,111,232; }
+html[data-universe-page="syllabus"] { --uts-accent:#7c3aed; --uts-accent-2:#2563eb; --uts-accent-rgb:124,58,237; }
+html[data-universe-page="classes"] { --uts-accent:#ef4444; --uts-accent-2:#f59e0b; --uts-accent-rgb:239,68,68; }
+html[data-universe-page="library"] { --uts-accent:#0ea5e9; --uts-accent-2:#22c55e; --uts-accent-rgb:14,165,233; }
+html[data-universe-page="simulators"],
+html[data-universe-page="exams"] { --uts-accent:#8b5cf6; --uts-accent-2:#ec4899; --uts-accent-rgb:139,92,246; }
+html[data-universe-page="unitalk"] { --uts-accent:#2563eb; --uts-accent-2:#8b5cf6; --uts-accent-rgb:37,99,235; }
+html[data-universe-page="account"] { --uts-accent:#0891b2; --uts-accent-2:#2563eb; --uts-accent-rgb:8,145,178; }
+html[data-universe-page="privacy"],
+html[data-universe-page="terms"],
+html[data-universe-page="editorial"] { --uts-accent:#334155; --uts-accent-2:#2563eb; --uts-accent-rgb:51,65,85; }
+
+html[data-universe-theme="dark"][data-universe-page] {
+  --uts-panel: rgba(5, 18, 45, .76);
+  --uts-panel-strong: rgba(4, 15, 38, .94);
+  --uts-copy: #f8fbff;
+  --uts-copy-soft: #b8c8df;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) body {
+  font-family: "Nunito Sans", "DM Sans", Inter, system-ui, sans-serif !important;
+  color: var(--uts-copy) !important;
+  background-color: #eef6ff !important;
+  background-image:
+    radial-gradient(circle at 8% 9%, rgba(var(--uts-accent-rgb), .27), transparent 27rem),
+    radial-gradient(circle at 92% 13%, color-mix(in srgb, var(--uts-accent-2) 22%, transparent), transparent 29rem),
+    radial-gradient(circle at 52% 88%, rgba(56, 189, 248, .17), transparent 32rem),
+    linear-gradient(rgba(var(--uts-accent-rgb), .062) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--uts-accent-rgb), .062) 1px, transparent 1px),
+    linear-gradient(145deg, #f8fbff, #edf6ff 48%, #f6f2ff) !important;
+  background-size: auto, auto, auto, 42px 42px, 42px 42px, auto !important;
+  background-attachment: fixed !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) body {
+  background-color: #020a1b !important;
+  background-image:
+    radial-gradient(circle at 8% 9%, rgba(var(--uts-accent-rgb), .29), transparent 29rem),
+    radial-gradient(circle at 92% 13%, color-mix(in srgb, var(--uts-accent-2) 20%, transparent), transparent 30rem),
+    radial-gradient(circle at 52% 88%, rgba(37, 99, 235, .17), transparent 34rem),
+    linear-gradient(rgba(125, 173, 255, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 173, 255, .055) 1px, transparent 1px),
+    linear-gradient(145deg, #020817, #06132b 50%, #0b1028) !important;
+}
+
+html[data-universe-page]:not([data-universe-page="home"]) body::before,
+html[data-universe-page]:not([data-universe-page="home"]) body::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(2px);
+}
+html[data-universe-page]:not([data-universe-page="home"]) body::before {
+  width: 26rem; height: 26rem; left: -12rem; top: 31vh;
+  border: 1px solid rgba(var(--uts-accent-rgb), .18);
+  box-shadow: 0 0 80px rgba(var(--uts-accent-rgb), .12), inset 0 0 70px rgba(var(--uts-accent-rgb), .08);
+}
+html[data-universe-page]:not([data-universe-page="home"]) body::after {
+  width: 18rem; height: 18rem; right: -8rem; bottom: 10vh;
+  border: 1px solid color-mix(in srgb, var(--uts-accent-2) 25%, transparent);
+  box-shadow: 0 0 70px color-mix(in srgb, var(--uts-accent-2) 10%, transparent);
+}
+
+html[data-universe-page] :where(h1, h2, h3, h4, .section-title, .admission-hero-copy h1, .cp-hero h1, .syv4-hero h1) {
+  font-family: "Nunito Sans", "DM Sans", Inter, system-ui, sans-serif !important;
+  color: var(--uts-copy) !important;
+  letter-spacing: -.035em !important;
+}
+
+/* Header compartido: misma geometria e identidad de la portada */
+html[data-universe-page]:not([data-universe-page="home"]) body > nav.uts-unified-nav {
+  position: sticky !important;
+  top: max(12px, env(safe-area-inset-top)) !important;
+  width: min(1420px, calc(100vw - 28px)) !important;
+  min-height: 70px !important;
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+  gap: clamp(.8rem, 2vw, 1.8rem) !important;
+  margin: max(12px, env(safe-area-inset-top)) auto 0 !important;
+  padding: .62rem .76rem .62rem .66rem !important;
+  border: 1px solid rgba(var(--uts-accent-rgb), .18) !important;
+  border-radius: 25px !important;
+  background: rgba(255, 255, 255, .84) !important;
+  box-shadow: 0 18px 55px rgba(21, 63, 124, .14) !important;
+  backdrop-filter: blur(22px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.35) !important;
+}
+html[data-universe-theme="dark"][data-universe-page] body > nav.uts-unified-nav {
+  background: rgba(3, 13, 34, .84) !important;
+  border-color: rgba(117, 169, 255, .22) !important;
+}
+html[data-universe-page] .uts-unified-nav .nav-logo {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .7rem !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  color: #10213e !important;
+  text-decoration: none !important;
+  letter-spacing: -.02em !important;
+  font: 900 clamp(.9rem, 1.4vw, 1.06rem)/1 "Nunito Sans", sans-serif !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-logo { color: #f7fbff !important; }
+.uts-brand-mark {
+  display: grid; place-items: center; flex: 0 0 auto;
+  width: 43px; height: 43px; border-radius: 14px;
+  color: #fff; background: linear-gradient(145deg, var(--uts-accent), var(--uts-accent-2));
+  box-shadow: 0 10px 24px rgba(var(--uts-accent-rgb), .28), inset 0 1px 0 rgba(255,255,255,.35);
+}
+.uts-brand-mark svg { width: 31px; height: 31px; fill: currentColor; }
+.uts-brand-label b { color: var(--uts-accent); font-weight: 1000; }
+html[data-universe-page] .uts-unified-nav .nav-links {
+  justify-content: center !important;
+  gap: .3rem !important;
+}
+html[data-universe-theme="dark"][data-universe-page] :where(.uts-brand-label b, .uts-context-copy span, .uts-context-home) { color:#75a9ff !important; }
+html[data-universe-page] .uts-unified-nav .nav-links a {
+  min-height: 40px !important;
+  padding: .6rem .78rem !important;
+  border: 1px solid transparent !important;
+  border-radius: 13px !important;
+  color: #46566d !important;
+  font: 850 .74rem/1 "Nunito Sans", sans-serif !important;
+  letter-spacing: .025em !important;
+  text-transform: uppercase !important;
+}
+html[data-universe-page] .uts-unified-nav .nav-links a:hover,
+html[data-universe-page] .uts-unified-nav .nav-links a.active {
+  color: var(--uts-accent) !important;
+  border-color: rgba(var(--uts-accent-rgb), .16) !important;
+  background: rgba(var(--uts-accent-rgb), .085) !important;
+}
+html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-links a { color: #c7d6ec !important; }
+.uts-nav-account-slot { display:flex; align-items:center; justify-content:flex-end; min-width:112px; }
+.uts-nav-account-slot #uts-google-auth-button {
+  position: static !important; inset: auto !important; transform: none !important;
+  min-height: 44px !important; margin: 0 !important; padding: .5rem .82rem !important;
+  background: rgba(255,255,255,.75) !important;
+}
+html[data-universe-theme="dark"] .uts-nav-account-slot #uts-google-auth-button { background: rgba(17,38,73,.72) !important; color:#fff !important; }
+
+/* Barra contextual: orientacion sin repetir el hero */
+.uts-page-context {
+  position: relative; z-index: 4;
+  width: min(1420px, calc(100vw - 28px));
+  min-height: 64px; margin: 10px auto 0; padding: .72rem .9rem .72rem 1rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  border: 1px solid rgba(var(--uts-accent-rgb), .13); border-radius: 20px;
+  background: rgba(255,255,255,.56); box-shadow: 0 12px 34px rgba(23,62,117,.08);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+html[data-universe-theme="dark"] .uts-page-context { background: rgba(4,16,39,.58); border-color: rgba(117,169,255,.16); }
+.uts-context-copy { min-width:0; display:grid; grid-template-columns:auto auto 1fr; align-items:baseline; gap:.25rem .7rem; }
+.uts-context-copy span { color:var(--uts-accent); font-size:.66rem; font-weight:1000; letter-spacing:.13em; text-transform:uppercase; }
+.uts-context-copy strong { font-size:.98rem; color:var(--uts-copy); }
+.uts-context-copy small { color:var(--uts-copy-soft); font-size:.78rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.uts-context-home { display:inline-flex; align-items:center; gap:.45rem; flex:0 0 auto; min-height:38px; padding:0 .78rem; border-radius:12px; background:rgba(var(--uts-accent-rgb),.09); color:var(--uts-accent); font-size:.74rem; font-weight:900; text-decoration:none; }
+
+/* Superficies y espaciado */
+html[data-universe-page]:not([data-universe-page="home"]) :where(.universe-page-stage, main:not(.unitalk-stage), .admission-page, .account-page, .entrants-page) {
+  position: relative; z-index: 2;
+}
+html[data-universe-page] .universe-page-stage { padding-top: clamp(26px, 4vw, 52px) !important; }
+html[data-universe-page] .universe-page-stage-inner { width: min(1460px, 100%) !important; }
+html[data-universe-page="ranking"] .universe-page-stage-inner,
+html[data-universe-page="library"] .universe-page-stage-inner { width: min(1760px, 100%) !important; }
+
+html[data-universe-page] :where(
+  .section, .feature-card, .subject-card, .tool-card, .sim-card,
+  .cepre-v2-shell, .cepre-v2-controls, .cepre-v2-summary,
+  .cp-card, .cp-method-card, .cp-results, .cp-architecture,
+  .libv4-panel, .libv4-viewer, .libv4-tip,
+  .syv4-hero, .syv4-group, .syv4-output, .syv4-guide-card,
+  .admission-card, .admission-hero-card, .ideal-card, .selector-panel, .result-panel, .sources-card,
+  .cepre-hub-card, .account-card, .account-hero, .admin-panel,
+  .legal-card, .editorial-card, .editorial-hero,
+  .ufe-card, .classes-shell, .entrants-search-card, .entrants-card
+) {
+  border: 1px solid rgba(var(--uts-accent-rgb), .15) !important;
+  border-radius: 26px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.91), rgba(247,251,255,.70)) !important;
+  color: var(--uts-copy) !important;
+  box-shadow: 0 22px 58px rgba(24,72,137,.11) !important;
+  backdrop-filter: blur(16px) saturate(1.15) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.15) !important;
+}
+html[data-universe-theme="dark"][data-universe-page] :where(
+  .section, .feature-card, .subject-card, .tool-card, .sim-card,
+  .cepre-v2-shell, .cepre-v2-controls, .cepre-v2-summary,
+  .cp-card, .cp-method-card, .cp-results, .cp-architecture,
+  .libv4-panel, .libv4-viewer, .libv4-tip,
+  .syv4-hero, .syv4-group, .syv4-output, .syv4-guide-card,
+  .admission-card, .admission-hero-card, .ideal-card, .selector-panel, .result-panel, .sources-card,
+  .cepre-hub-card, .account-card, .account-hero, .admin-panel,
+  .legal-card, .editorial-card, .editorial-hero, .ufe-card, .classes-shell
+) {
+  background: linear-gradient(145deg, rgba(7,23,54,.94), rgba(4,15,38,.78)) !important;
+  border-color: rgba(117,169,255,.19) !important;
+}
+
+html[data-universe-page] :where(.admission-hero, .cp-hero, .libv4-hero, .syv4-hero, .account-hero, .editorial-hero) {
+  position: relative; overflow: hidden; border-radius: 32px !important;
+}
+html[data-universe-page] :where(.admission-hero, .cp-hero, .libv4-hero, .syv4-hero, .account-hero, .editorial-hero)::after {
+  content:""; position:absolute; width:18rem; height:18rem; right:-7rem; top:-8rem; pointer-events:none;
+  border-radius:50%; background:radial-gradient(circle, rgba(var(--uts-accent-rgb),.2), transparent 68%);
+}
+
+html[data-universe-page] :where(.section-label, .admission-kicker, .cp-eyebrow, .libv4-kicker, .syv4-kicker, .account-kicker, .editorial-kicker, .ranking-v3-eyebrow) {
+  color: var(--uts-accent) !important;
+  font-weight: 1000 !important; letter-spacing: .13em !important; text-transform: uppercase !important;
+}
+
+html[data-universe-page] :where(button, .btn, .admission-btn, .account-btn, .cp-primary, .libv4-open, .cepre-v2-show-all) {
+  border-radius: 14px !important;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-weight: 900 !important;
+}
+html[data-universe-page] :where(.primary, .cp-primary, .admission-btn.primary, .account-btn.primary, .libv4-open) {
+  color:#fff !important; border-color:transparent !important;
+  background:linear-gradient(135deg,var(--uts-accent),var(--uts-accent-2)) !important;
+  box-shadow:0 12px 28px rgba(var(--uts-accent-rgb),.22) !important;
+}
+html[data-universe-page] :where(input, select, textarea, .cepre-v2-search, .libv4-search) {
+  min-height: 46px !important; border:1px solid rgba(var(--uts-accent-rgb),.18) !important;
+  border-radius:14px !important; background:rgba(255,255,255,.78) !important;
+  color:var(--uts-copy) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.5) !important;
+}
+html[data-universe-theme="dark"][data-universe-page] :where(input,select,textarea,.cepre-v2-search,.libv4-search) { background:rgba(7,24,56,.82) !important; color:#f8fbff !important; }
+html[data-universe-page] :where(input,select,textarea):focus { outline:3px solid rgba(var(--uts-accent-rgb),.13) !important; border-color:var(--uts-accent) !important; }
+
+html[data-universe-page] :where(table, .cepre-v2-table, .ranking-v3-history-table, .schedule-table) {
+  border-collapse: separate !important; border-spacing: 0 !important;
+  background: var(--uts-panel-strong) !important; color:var(--uts-copy) !important;
+}
+html[data-universe-page] :where(th) {
+  background:linear-gradient(135deg, color-mix(in srgb,var(--uts-accent) 94%,#07162d), var(--uts-accent-2)) !important;
+  color:#fff !important; font-weight:950 !important; letter-spacing:.02em !important;
+}
+html[data-universe-page] :where(td) { border-color:rgba(var(--uts-accent-rgb),.10) !important; }
+html[data-universe-page] :where(tbody tr:nth-child(even)) { background:rgba(var(--uts-accent-rgb),.035) !important; }
+html[data-universe-page] :where(tbody tr:hover) { background:rgba(var(--uts-accent-rgb),.085) !important; }
+
+/* Aplicaciones con personalidad propia, pero dentro del mismo sistema */
+html[data-universe-page="ranking"] .ranking-v3-layout { gap:18px !important; }
+html[data-universe-page="ranking"] :where(.ranking-v3-insights,.ranking-v3-content,.ranking-v3-history) { border-radius:28px !important; box-shadow:0 20px 55px rgba(24,72,137,.11) !important; }
+html[data-universe-page="calculator"] .cp-workspace { gap:18px !important; }
+html[data-universe-page="calculator"] .cp-mode-tabs { padding:6px !important; border-radius:18px !important; background:rgba(var(--uts-accent-rgb),.07) !important; }
+html[data-universe-page="library"] .libv4-workspace { gap:18px !important; }
+html[data-universe-page="library"] .libv4-frame { border-radius:20px !important; }
+html[data-universe-page="syllabus"] .syv4-course,
+html[data-universe-page="syllabus"] .syv4-subject,
+html[data-universe-page="syllabus"] .syv4-exam-btn { border-radius:18px !important; transition:transform .2s, box-shadow .2s !important; }
+html[data-universe-page="syllabus"] :where(.syv4-course,.syv4-subject,.syv4-exam-btn):hover { transform:translateY(-3px) !important; box-shadow:0 16px 30px rgba(var(--uts-accent-rgb),.15) !important; }
+html[data-universe-page="unitalk"] .unitalk-app { background:transparent !important; }
+html[data-universe-page="unitalk"] .unitalk-device { width:min(1680px,calc(100vw - 26px)) !important; max-width:none !important; border-radius:30px !important; border:1px solid rgba(var(--uts-accent-rgb),.15) !important; box-shadow:0 30px 90px rgba(19,55,112,.16) !important; }
+html[data-universe-page="unitalk"] :where(.unitalk-topbar,.unitalk-sidebar,.unitalk-rightbar,.unitalk-composer,.unitalk-feed-summary) { background:rgba(255,255,255,.82) !important; backdrop-filter:blur(16px) !important; }
+html[data-universe-page="unitalk"] .unitalk-brand { display:inline-flex !important; align-items:center !important; gap:.65rem !important; color:#10213e !important; font-size:clamp(18px,1.35vw,24px) !important; letter-spacing:-.04em !important; }
+html[data-universe-page="unitalk"] .unitalk-brand-mark { display:grid; place-items:center; width:42px; height:42px; flex:0 0 auto; border-radius:14px; color:#fff; background:linear-gradient(145deg,var(--uts-accent),var(--uts-accent-2)); box-shadow:0 10px 24px rgba(var(--uts-accent-rgb),.25); }
+html[data-universe-page="unitalk"] .unitalk-brand-mark svg { width:30px; height:30px; fill:currentColor; }
+html[data-universe-theme="dark"][data-universe-page="unitalk"] .unitalk-brand { color:#f8fbff !important; }
+
+html[data-universe-page] footer {
+  position:relative; z-index:2; width:min(1420px,calc(100vw - 28px));
+  margin:32px auto 14px !important; border:1px solid rgba(var(--uts-accent-rgb),.14) !important;
+  border-radius:30px 30px 20px 20px !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.84),rgba(238,247,255,.76)) !important;
+  box-shadow:0 22px 55px rgba(20,59,117,.11) !important;
+  overflow:hidden;
+}
+html[data-universe-theme="dark"][data-universe-page] footer { background:linear-gradient(145deg,rgba(6,20,49,.94),rgba(3,13,32,.86)) !important; }
+html[data-universe-page] footer .footer-logo { color:var(--uts-accent) !important; -webkit-text-fill-color:currentColor !important; }
+html[data-universe-page] footer a:hover { color:var(--uts-accent) !important; }
+
+html[data-universe-page] #universe-theme-toggle {
+  width:48px !important; height:48px !important; left:max(12px,env(safe-area-inset-left)) !important;
+  bottom:max(12px,env(safe-area-inset-bottom)) !important; border-radius:16px !important;
+  border:1px solid rgba(var(--uts-accent-rgb),.22) !important; background:rgba(255,255,255,.9) !important;
+  color:var(--uts-accent) !important; box-shadow:0 14px 34px rgba(16,51,103,.18) !important;
+}
+html[data-universe-theme="dark"][data-universe-page] #universe-theme-toggle { background:rgba(5,20,48,.92) !important; }
+
+@media (max-width: 1120px) {
+  html[data-universe-page]:not([data-universe-page="home"]) body > nav.uts-unified-nav { grid-template-columns:auto auto !important; }
+  html[data-universe-page] .uts-unified-nav .nav-links { grid-column:1/-1 !important; grid-row:2 !important; justify-content:flex-start !important; }
+  .uts-nav-account-slot { grid-column:2 !important; grid-row:1 !important; }
+}
+
+@media (max-width: 680px) {
+  html[data-universe-page]:not([data-universe-page="home"]) body > nav.uts-unified-nav {
+    width:calc(100vw - 14px) !important; margin-top:7px !important; top:7px !important;
+    min-height:60px !important; padding:.5rem !important; border-radius:20px !important;
+  }
+  .uts-brand-mark { width:38px; height:38px; border-radius:12px; }
+  .uts-brand-mark svg { width:27px; height:27px; }
+  .uts-brand-label { font-size:.78rem; }
+  .uts-nav-account-slot { min-width:42px; }
+  .uts-nav-account-slot #uts-google-auth-button { width:42px !important; min-width:42px !important; min-height:42px !important; padding:.4rem !important; }
+  .uts-nav-account-slot #uts-google-auth-button .uts-g-label { display:none !important; }
+  html[data-universe-page] .uts-unified-nav .nav-links { padding:.18rem 0 0 !important; }
+  html[data-universe-page] .uts-unified-nav .nav-links a { min-height:36px !important; padding:.52rem .62rem !important; font-size:.67rem !important; }
+  .uts-page-context { width:calc(100vw - 14px); min-height:54px; margin-top:7px; border-radius:16px; padding:.55rem .65rem; }
+  .uts-context-copy { display:flex; flex-direction:column; align-items:flex-start; gap:1px; }
+  .uts-context-copy span,.uts-context-copy small { display:none; }
+  .uts-context-copy strong { font-size:.86rem; }
+  .uts-context-home { min-height:34px; padding:0 .6rem; }
+  html[data-universe-page] .universe-page-stage { padding:20px 8px 76px !important; }
+  html[data-universe-page] :where(.section,.cepre-v2-shell,.cp-card,.cp-results,.libv4-panel,.libv4-viewer,.syv4-hero,.syv4-group,.admission-card,.account-card,.legal-card,.editorial-card,.ufe-card) { border-radius:20px !important; }
+  html[data-universe-page] footer { width:calc(100vw - 14px); margin:18px auto 8px !important; border-radius:22px 22px 16px 16px !important; }
+  html[data-universe-page="unitalk"] .unitalk-device { width:100vw !important; border-radius:0 !important; border-inline:0 !important; }
+  html[data-universe-page="unitalk"] .unitalk-brand-mark { width:34px; height:34px; border-radius:11px; }
+  html[data-universe-page="unitalk"] .unitalk-brand-mark svg { width:24px; height:24px; }
+}

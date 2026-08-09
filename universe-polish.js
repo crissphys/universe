@@ -179,6 +179,66 @@
     document.querySelectorAll('nav a[data-route]').forEach(function (link) {
       link.classList.toggle('active', link.getAttribute('data-route') === active);
     });
+    ensureUnifiedNavigation();
+  }
+
+  var UNIVERSE_PAGE_META = {
+    account: ['Mi cuenta', 'Perfil, preferencias y actividad'],
+    admission: ['Admisión', 'Puntajes, procesos y resultados UNI'],
+    cepre: ['CEPREUNI', 'Herramientas del ciclo preuniversitario'],
+    calculator: ['Calculadora CEPREUNI', 'Proyecta tu promedio con claridad'],
+    ranking: ['Máximos y mínimos', 'Compara el ciclo actual y los anteriores'],
+    syllabus: ['Temario', 'Organiza tu preparación por áreas y pruebas'],
+    classes: ['Clases', 'Videos y práctica organizada por temas'],
+    library: ['Biblioteca', 'Materiales clasificados para estudiar mejor'],
+    simulators: ['Simulacros', 'Practica con tiempo y formato de examen'],
+    exams: ['Exámenes CEPREUNI', 'Recursos y evaluaciones del ciclo'],
+    'docentes-cepreuni': ['Guía de aulas', 'Docentes, salones y horarios'],
+    'fijas-cepreuni': ['Fijas CEPREUNI', 'Recurrencia de temas por examen'],
+    'ingresantes-cepreuni': ['Ingresantes CEPREUNI', 'Resultados del ciclo 2026-2'],
+    privacy: ['Privacidad', 'Cómo protegemos y utilizamos tus datos'],
+    terms: ['Términos', 'Condiciones de uso de Universe to Study'],
+    editorial: ['Universe editorial', 'Información, autores y metodología']
+  };
+
+  function universeBrandMarkup() {
+    return '<span class="uts-brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><path d="M10 9v13.2C10 29.8 14 34 20 34s10-4.2 10-11.8V15h-6.2v7.4c0 3.8-1.3 5.6-3.8 5.6s-3.8-1.8-3.8-5.6V9H10Z"/><path d="M22.5 9H32l-9.5 8V9Z"/></svg></span><span class="uts-brand-label">Universe <b>to Study</b></span>';
+  }
+
+  function ensureUnifiedNavigation() {
+    var page = document.documentElement.getAttribute('data-universe-page') || '';
+    if (page === 'home') return;
+    document.querySelectorAll('body > nav').forEach(function (nav) {
+      nav.classList.add('uts-unified-nav');
+      var logo = nav.querySelector('.nav-logo');
+      if (logo && !logo.querySelector('.uts-brand-mark')) {
+        logo.innerHTML = universeBrandMarkup();
+        logo.setAttribute('aria-label', 'Universe to Study - Inicio');
+      }
+      var slot = nav.querySelector('.uts-nav-account-slot');
+      if (!slot) {
+        slot = document.createElement('div');
+        slot.className = 'uts-nav-account-slot';
+        slot.setAttribute('aria-label', 'Cuenta de usuario');
+        nav.appendChild(slot);
+      }
+      var button = document.getElementById('uts-google-auth-button');
+      if (button && button.parentElement !== slot) slot.appendChild(button);
+    });
+    ensurePageContextBar(page);
+  }
+
+  function ensurePageContextBar(page) {
+    if (!page || page === 'home' || page === 'unitalk' || document.getElementById('uts-page-context')) return;
+    var nav = document.querySelector('body > nav');
+    if (!nav) return;
+    var meta = UNIVERSE_PAGE_META[page] || ['Universe to Study', 'Preparación preuniversitaria organizada'];
+    var bar = document.createElement('div');
+    bar.id = 'uts-page-context';
+    bar.className = 'uts-page-context';
+    bar.innerHTML = '<div class="uts-context-copy"><span>Universe to Study</span><strong>' + safeText(meta[0]) + '</strong><small>' + safeText(meta[1]) + '</small></div>' +
+      '<a href="/" class="uts-context-home" aria-label="Volver al inicio"><span aria-hidden="true">←</span> Inicio</a>';
+    nav.insertAdjacentElement('afterend', bar);
   }
 
   function goAccountPage() {
@@ -497,6 +557,8 @@
       btn.setAttribute('aria-label', 'Abrir cuenta');
       btn.title = 'Abrir cuenta';
     }
+    var accountSlot = document.querySelector('#home-account-slot, .uts-nav-account-slot');
+    if (accountSlot && btn.parentElement !== accountSlot) accountSlot.appendChild(btn);
   }
 
   function ensureGoogleAuthPanel() {
@@ -1079,9 +1141,11 @@
     activateUniverseNav();
     recoverRankingTable();
     initGoogleAuth();
+    ensureUnifiedNavigation();
     initFallbackSupport();
     loadUniversePublicSettings();
     setTimeout(forceRevealVisible, 120);
+    setTimeout(ensureUnifiedNavigation, 160);
     setTimeout(recoverRankingTable, 700);
     window.openUniverseSupportChat = window.openUniverseSupportChat || function () {
       if (window.UniverseSupport && typeof window.UniverseSupport.open === 'function') window.UniverseSupport.open();
