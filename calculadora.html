@@ -525,7 +525,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-ve
 
       <section class="cp-history-picker" aria-labelledby="cp-history-picker-title">
         <div>
-          <h3 id="cp-history-picker-title">¿Cómo voy frente a ciclos pasados?</h3>
+          <h3 id="cp-history-picker-title">¿Cómo voy frente a otros ciclos?</h3>
           <p>Elige un proceso CEPREUNI. Compararemos tu promedio con el mínimo y máximo registrados para la carrera seleccionada.</p>
         </div>
         <label class="cp-field">Ciclo y sede de referencia
@@ -594,6 +594,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-ve
 </section>
 
 <script src="cepre-cutoffs.js"></script>
+<script src="/cepre-2026-2-official.js?v=20260808-1"></script>
 <script id="cepre-planner-v3-script">//<![CDATA[
 (function(){
   'use strict';
@@ -602,9 +603,11 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-ve
     ['A1','Arquitectura',13.079],['A2','Urbanismo',9.668],['C1','Ingeniería Civil',14.304],['M3','Ingeniería Mecánica',12.718],['M4','Ingeniería Mecánica Eléctrica',12.449],['M5','Ingeniería Naval',12.519],['M6','Ingeniería Mecatrónica',14.550],['M7','Ingeniería Aeroespacial',14.051],['N1','Física',10.879],['N2','Matemática',9.451],['N3','Química',10.305],['N5','Ingeniería Física',8.748],['N6','Ciencia de la Computación',12.468],['L1','Ingeniería Eléctrica',13.119],['L2','Ingeniería Electrónica',12.493],['L3','Ingeniería de Telecomunicaciones',11.887],['L4','Ingeniería de Ciberseguridad',12.368],['L5','Ingeniería Biomédica',9.068],['I1','Ingeniería Industrial',13.302],['I2','Ingeniería de Sistemas',14.536],['I3','Ingeniería de Software',14.776],['I4','Ingeniería de Inteligencia Artificial',11.629],['G1','Ingeniería Geológica',9.895],['G2','Ingeniería Metalúrgica',11.298],['G3','Ingeniería de Minas',12.766],['S1','Ingeniería Sanitaria',10.301],['S2','Ingeniería de Higiene y Seguridad Industrial',9.474],['S3','Ingeniería Ambiental',9.439],['E1','Ingeniería Económica',11.936],['E3','Ingeniería Estadística',10.986],['Q1','Ingeniería Química',9.807],['Q2','Ingeniería Textil',9.110],['P2','Ingeniería Petroquímica',9.047],['P3','Ingeniería de Petróleo y Gas Natural',9.685]
   ];
   var CUTOFFS=window.UNIVERSE_CEPRE_CUTOFFS||{};
-  var CYCLE_ORDER=['2026-1|Lima','2025-2|Lima','2024-2|Lima','2024-2|Juliaca'];
+  var CYCLE_ORDER=['2026-2|Lima','2026-2|Juliaca','2026-1|Lima','2025-2|Lima','2024-2|Lima','2024-2|Juliaca'];
   var NOTE_LABELS=['1.ª PC','2.ª PC','1.er examen parcial (EP1)','3.ª PC','4.ª PC','2.º examen parcial (EP2)','5.ª PC','6.ª PC','7.ª PC','Examen final'];
   var PC_INDEXES=[0,1,3,4,6,7],EP1_INDEX=2,EP2_INDEX=5,PC7_INDEX=8,EF_INDEX=9,EXAM_ORDER=[0,1,2,3,4,5,6,7,8,9];
+  var official=window.UNIVERSE_CEPRE_2026_2||{},officialFinal=official.finalScores||{};
+  Object.keys(officialFinal).forEach(function(code){if(STUDENTS[code])STUDENTS[code][11]=Number(officialFinal[code]);});
   var state={mode:'code',notes:null,student:null};
   function byId(id){return document.getElementById(id)}
   function number(value){var n=parseFloat(value);return Number.isFinite(n)?n:null}
@@ -631,13 +634,13 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-ve
     var workshops=byId('cp-workshop-grid');for(var i=0;i<6;i++){var w=document.createElement('label');w.className='cp-field';w.textContent='Taller '+(i+1);var wi=document.createElement('input');wi.type='number';wi.min='0';wi.max='90';wi.step='.01';wi.placeholder='0-90';wi.dataset.workshop=i;wi.addEventListener('input',render);w.appendChild(wi);workshops.appendChild(w)}
     var p=document.createElement('label');p.className='cp-field';p.textContent='Prueba PVD';var pi=document.createElement('input');pi.id='cp-pvd-input';pi.type='number';pi.min='0';pi.max='200';pi.step='.01';pi.placeholder='0-200';pi.addEventListener('input',render);p.appendChild(pi);workshops.appendChild(p)
   }
-  function recordToNotes(record){return record?[record[0],record[1],record[7],record[2],record[3],record[8],record[4],record[5],record[6],null]:null}
+  function recordToNotes(record){return record?[record[0],record[1],record[7],record[2],record[3],record[8],record[4],record[5],record[6],Number(record[11]||0)]:null}
   function setMode(mode){state.mode=mode;document.querySelectorAll('.cp-mode-tab').forEach(function(btn){var active=btn.dataset.mode===mode;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active?'true':'false')});byId('cp-code-panel').classList.toggle('cp-hidden',mode!=='code');byId('cp-manual-panel').classList.toggle('cp-hidden',mode!=='manual');if(mode==='manual')manualChanged();else state.notes=recordToNotes(state.student);showNotes();render()}
   function manualChanged(){state.notes=Array.prototype.map.call(document.querySelectorAll('[data-note]'),function(input){return number(input.value)});showNotes();render()}
   function alertMessage(message){var box=byId('cp-alert');box.textContent=message||'';box.classList.toggle('show',!!message)}
   function findStudent(){var code=byId('cp-code').value.trim().toUpperCase().replace(/\s+/g,'');byId('cp-code').value=code;var record=STUDENTS[code];if(!record){state.student=null;state.notes=null;alertMessage(code?'No encontramos ese código en los 2,824 registros del ranking. Revisa si está completo.':'Escribe tu código CEPREUNI.');showNotes();render();return}state.student=record;state.notes=recordToNotes(record);alertMessage('');showNotes();render()}
   function droppedIndex(notes){var pcs=PC_INDEXES.map(function(idx){return{idx:idx,value:notes[idx]}}).filter(function(item){return known(item.value)});if(pcs.length<6)return-1;pcs.sort(function(a,b){return a.value-b.value});return pcs[0].idx}
-  function showNotes(){var readout=byId('cp-note-readout');if(!state.notes||state.mode!=='code'){readout.classList.remove('show');return}var drop=droppedIndex(state.notes),strip=byId('cp-note-strip');strip.innerHTML='';state.notes.slice(0,9).forEach(function(value,index){var chip=document.createElement('div');chip.className='cp-note-chip'+(index===drop?' dropped':'');chip.innerHTML='<span>'+NOTE_LABELS[index]+'</span><strong>'+fmt(value,2)+'</strong>';strip.appendChild(chip)});var site=state.student?state.student[10]:'';byId('cp-source').innerHTML='<span><b>Código:</b> '+byId('cp-code').value+'</span><span><b>Sede:</b> '+site+'</span><span><b>Ranking provisional:</b> '+fmt(state.student?state.student[9]:NaN,3)+'/150</span>';readout.classList.add('show')}
+  function showNotes(){var readout=byId('cp-note-readout');if(!state.notes||state.mode!=='code'){readout.classList.remove('show');return}var drop=droppedIndex(state.notes),strip=byId('cp-note-strip');strip.innerHTML='';state.notes.slice(0,10).forEach(function(value,index){var chip=document.createElement('div');chip.className='cp-note-chip'+(index===drop?' dropped':'');chip.innerHTML='<span>'+NOTE_LABELS[index]+'</span><strong>'+fmt(value,2)+'</strong>';strip.appendChild(chip)});var site=state.student?state.student[10]:'',calc=completedScore(state.notes,10);byId('cp-source').innerHTML='<span><b>Código:</b> '+byId('cp-code').value+'</span><span><b>Sede:</b> '+site+'</span><span><b>Promedio final estimado:</b> '+fmt(calc.raw,3)+'/150</span>';readout.classList.add('show')}
   function known(v){return Number.isFinite(v)}
   function hasAny(notes){return notes&&notes.some(known)}
   function completedScore(notes,cutoff20){var points=0,max=0,pcVals=PC_INDEXES.map(function(i){return notes[i]}).filter(known);if(pcVals.length>=6){pcVals=pcVals.slice().sort(function(a,b){return b-a});points+=pcVals.slice(0,5).reduce(function(a,b){return a+b},0);max+=750}else{points+=pcVals.reduce(function(a,b){return a+b},0);max+=150*pcVals.length}if(known(notes[PC7_INDEX])){points+=notes[PC7_INDEX];max+=150}if(known(notes[EP1_INDEX])){points+=2*notes[EP1_INDEX];max+=300}if(known(notes[EP2_INDEX])){points+=4*notes[EP2_INDEX];max+=600}if(known(notes[EF_INDEX])){points+=6*notes[EF_INDEX];max+=900}var current20=max?points/max*20:NaN;return{raw:current20*7.5,current20:current20,weighted:points,max:max,pidEstimate:Number.isFinite(current20)?current20/20*2700:NaN,diff:current20-cutoff20}}
