@@ -215,6 +215,7 @@ html[data-universe-page="home"] body.home-page > nav.home-nav {
   background: transparent !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
+  overflow: visible !important;
 }
 
 .home-nav-inner {
@@ -836,7 +837,9 @@ html[data-universe-page="home"] :where(a, button):focus-visible {
   :root { --home-max: calc(100vw - 24px); }
   html[data-universe-page="home"] body.home-page > nav.home-nav { padding-top: max(9px, env(safe-area-inset-top)) !important; }
   .home-nav-inner { display: flex; min-height: 56px; padding: 7px 9px; border-radius: 18px; }
-  .home-brand { font-size: .82rem; }
+  .home-nav-inner { gap: 7px; overflow: visible !important; }
+  .home-brand { flex: 1 1 auto; min-width: 0; font-size: .82rem; }
+  .home-brand span:last-child { max-width: none !important; overflow: visible !important; text-overflow: clip !important; }
   .home-brand-mark { width: 35px; height: 35px; border-radius: 11px; }
   .home-menu-toggle { display: grid; place-content: center; gap: 4px; width: 40px; height: 40px; margin-left: auto; padding: 0; border: 1px solid var(--home-line); border-radius: 12px; background: rgba(255, 255, 255, .54); }
   .home-account-slot { min-width:40px; margin-left:6px; }
@@ -864,11 +867,14 @@ html[data-universe-page="home"] :where(a, button):focus-visible {
     background: rgba(247, 251, 255, .96);
     box-shadow: 0 24px 54px rgba(31, 71, 137, .2);
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: max-height .25s ease, opacity .2s ease, padding .25s ease, border-width .2s ease;
+    z-index: 100;
+    transform: translateY(-8px);
+    transition: max-height .25s ease, opacity .2s ease, transform .2s ease, padding .25s ease, border-width .2s ease, visibility .2s ease;
   }
   html[data-universe-theme="dark"] body.home-page > nav .home-nav-links { background: rgba(5, 20, 53, .97); }
-  html[data-universe-page="home"] body.home-page > nav .home-nav-links.open { max-height: 420px; padding: 10px !important; border-width: 1px; opacity: 1; pointer-events: auto; }
+  html[data-universe-page="home"] body.home-page > nav .home-nav-links.open { max-height: min(420px, calc(100dvh - 86px)); padding: 10px !important; overflow-y: auto !important; border-width: 1px; opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
   html[data-universe-page="home"] body.home-page > nav .home-nav-links a { width: 100%; justify-content: flex-start; min-height: 42px; padding-inline: 12px !important; font-size: .74rem !important; }
   html[data-universe-page="home"] #uts-google-auth-button,
   html[data-universe-page="home"] [data-uts-account-button="true"] { top: max(20px, calc(env(safe-area-inset-top) + 11px)) !important; right: 20px !important; min-width: 40px !important; width: 40px !important; height: 40px !important; padding: 0 !important; }
@@ -914,7 +920,8 @@ html[data-universe-page="home"] :where(a, button):focus-visible {
 }
 
 @media (max-width: 480px) {
-  .home-brand span:last-child { max-width: 112px; overflow: hidden; text-overflow: ellipsis; }
+  .home-brand { font-size: .75rem; }
+  .home-brand span:last-child { max-width: none; overflow: visible; text-overflow: clip; }
   .home-hero { padding-top: 58px; }
   .home-hero h1 { font-size: clamp(2.75rem, 14.5vw, 4.1rem); }
   .home-lead { font-size: .94rem; line-height: 1.65; }
