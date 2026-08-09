@@ -79,14 +79,15 @@
   function initSyllabusSwitch() {
     var d = data(), uni = $('#temario');
     if (!d || !uni || $('#uts-sm-switch-card')) return;
-    var summary = $('#resumenes-humanidades');
+    var switchMount = $('#syv5-university-switch');
     var switchCard = document.createElement('section');
     switchCard.id = 'uts-sm-switch-card';
     switchCard.className = 'uts-sm-switch-card';
     switchCard.innerHTML =
       '<div class="uts-sm-switch-title"><span>Temario personalizado</span><b>Elige la universidad que vas a repasar</b><p>UNI mantiene el temario actual. San Marcos abre el temario 2027-1 organizado por comunicación, matemática, ciencias sociales y ciencias naturales.</p></div>' +
-      '<div class="uts-sm-toggle" role="tablist" aria-label="Cambiar temario"><i aria-hidden="true"></i><button type="button" data-uts-mode="uni">UNI</button><button type="button" data-uts-mode="unmsm">San Marcos</button></div>';
-    uni.parentNode.insertBefore(switchCard, uni);
+      '<div class="uts-sm-toggle" role="tablist" aria-label="Cambiar temario"><i aria-hidden="true"></i><button type="button" data-uts-mode="uni"><img src="/assets/temario/uni-logo.png" alt="">UNI</button><button type="button" data-uts-mode="unmsm"><img src="/assets/temario/san-marcos-logo.png" alt="">San Marcos</button></div>';
+    if (switchMount) switchMount.appendChild(switchCard);
+    else uni.parentNode.insertBefore(switchCard, uni);
 
     var panel = document.createElement('section');
     panel.id = 'uts-unmsm-temario';
@@ -102,7 +103,6 @@
         b.classList.toggle('active', b.getAttribute('data-uts-mode') === mode);
       });
       uni.style.display = mode === 'uni' ? '' : 'none';
-      if (summary) summary.style.display = mode === 'uni' ? '' : 'none';
       panel.classList.toggle('active', mode === 'unmsm');
       try { localStorage.setItem('universe_syllabus_mode', mode); } catch (e) {}
     }

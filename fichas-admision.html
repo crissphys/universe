@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es" data-universe-page="syllabus">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fichas de Admisión UNI | Universe to Study</title>
+  <meta name="description" content="Temas de admisión UNI organizados por examen, curso y frecuencia histórica para orientar el repaso.">
+  <link rel="canonical" href="https://universetostudy.com/fichas-admision">
+  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
+  <meta name="theme-color" content="#020617">
+  <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=syllabus-2026-2">
+  <link rel="stylesheet" href="/universe-polish.css?v=unified-4">
+  <link rel="stylesheet" href="/fichas-admision.css?v=fichas-1">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
+    <ul class="nav-links">
+      <li><a data-route="home" href="/">Inicio</a></li>
+      <li><a data-route="admission" href="/admision">Admisión</a></li>
+      <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
+      <li><a data-route="syllabus" href="/temario">Temario</a></li>
+      <li><a data-route="classes" href="/clases">Clases</a></li>
+      <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
+      <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
+      <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
+    </ul>
+    <div class="nav-actions"><button aria-label="Cambiar tema" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" type="button">◐</button></div>
+  </nav>
+
+  <main class="ufa-page">
+    <section class="ufa-hero">
+      <div>
+        <div class="ufa-kicker">Temario / Fichas de admisión</div>
+        <h1>Prioriza tu repaso con evidencia histórica.</h1>
+        <p>Explora los temas que aparecen con mayor recurrencia en cada curso. Las fichas separan los tres exámenes de admisión para que puedas preparar una ruta concreta.</p>
+        <div class="ufa-actions"><a class="ufa-btn primary" href="#fichas">Explorar fichas</a><a class="ufa-btn" href="/temario">Volver al temario</a><a class="ufa-btn" href="/simulacros">Practicar simulacros</a></div>
+      </div>
+      <div class="ufa-hero-mark"><img src="/assets/temario/uni-logo.png" alt="Escudo de la Universidad Nacional de Ingeniería"></div>
+    </section>
+
+    <section id="fichas" aria-labelledby="ufa-title">
+      <div class="ufa-controls">
+        <div class="ufa-tabs" role="tablist" aria-label="Exámenes de admisión">
+          <button class="ufa-tab active" style="--tab-color:#2563eb" data-ufa-group="matematica" type="button">Matemática</button>
+          <button class="ufa-tab" style="--tab-color:#0f9f6e" data-ufa-group="ciencias" type="button">Física y Química</button>
+          <button class="ufa-tab" style="--tab-color:#e5484d" data-ufa-group="humanidades" type="button">Aptitud y Humanidades</button>
+        </div>
+        <p class="ufa-method">Las frecuencias orientan prioridades, pero no garantizan que un tema aparezca en el siguiente proceso.</p>
+      </div>
+      <div class="ufa-section-head"><div><div class="ufa-kicker">Frecuencia por curso</div><h2 id="ufa-title">Examen de Matemática</h2><p id="ufa-description"></p></div><span class="ufa-summary" id="ufa-summary"></span></div>
+      <div class="ufa-grid" id="ufa-grid"></div>
+      <div class="ufa-note"><strong>Cómo usar estas fichas:</strong> empieza por los primeros temas de cada curso, resuelve preguntas de procesos distintos y registra tus errores. Después completa los temas menos frecuentes para no dejar vacíos en el temario.</div>
+    </section>
+  </main>
+
+  <footer></footer>
+  <script src="/admission-frequency-data.js?v=fichas-1"></script>
+  <script src="/fichas-admision.js?v=fichas-1"></script>
+  <script src="/universe-polish.js?v=unified-10" defer></script>
+</body>
+</html>

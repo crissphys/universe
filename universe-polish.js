@@ -293,8 +293,13 @@
 
   function ensureUnifiedFooter() {
     var page = document.documentElement.getAttribute('data-universe-page') || '';
-    if (page === 'home' || page === 'unitalk') return;
-    var footer = document.querySelector('body > footer');
+    var footers = Array.prototype.slice.call(document.querySelectorAll('footer'));
+    if (page === 'home' || page === 'unitalk') {
+      footers.slice(1).forEach(function (extra) { extra.remove(); });
+      return;
+    }
+    var footer = footers.shift();
+    footers.forEach(function (extra) { extra.remove(); });
     if (!footer) {
       footer = document.createElement('footer');
       document.body.appendChild(footer);
