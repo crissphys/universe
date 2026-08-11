@@ -55,8 +55,19 @@
 .ufa-section-head { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
 .ufa-section-head h2 { margin: .3rem 0 0; font-size: clamp(1.75rem, 3vw, 2.8rem); line-height: 1.05; letter-spacing: -.045em; }
 .ufa-section-head p { max-width: 720px; margin: .5rem 0 0; color: var(--ufa-muted); line-height: 1.55; }
+.ufa-section-meta { display: grid; justify-items: end; gap: .55rem; }
+.ufa-summary { display: inline-flex; align-items: center; min-height: 30px; padding: .35rem .65rem; border: 1px solid rgba(37, 99, 235, .15); border-radius: 999px; background: #edf5ff; color: #1d5bb7; font-size: .65rem; font-weight: 900; }
 .ufa-legend { display: flex; align-items: center; gap: .55rem; max-width: 300px; color: var(--ufa-muted); font-size: .69rem; line-height: 1.35; }
 .ufa-legend i { flex: 0 0 42px; height: 6px; border-radius: 999px; background: linear-gradient(90deg, #1687e8, #10a46f, #f28b22); }
+
+.ufa-exam-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; margin: 1.25rem 0 .7rem; }
+.ufa-exam-tab { display: grid; gap: .12rem; min-height: 88px; padding: .85rem 1rem; border: 1px solid var(--ufa-line); border-radius: 17px; background: #f6f9fd; color: #43566f; font: inherit; text-align: left; cursor: pointer; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.ufa-exam-tab:hover { transform: translateY(-2px); border-color: rgba(37, 99, 235, .3); }
+.ufa-exam-tab span { color: #7a8ca2; font-size: .58rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+.ufa-exam-tab b { font-size: .88rem; line-height: 1.2; }
+.ufa-exam-tab small { color: #7a8ca2; font-size: .62rem; font-weight: 700; }
+.ufa-exam-tab.active { border-color: transparent; background: linear-gradient(135deg, #123f8d, #2876e9); color: #fff; box-shadow: 0 13px 28px rgba(37, 99, 235, .22); }
+.ufa-exam-tab.active :is(span, small) { color: rgba(255, 255, 255, .76); }
 
 .ufa-filters { display: flex; gap: .45rem; margin: 1.25rem 0 1rem; padding: .45rem; border: 1px solid var(--ufa-line); border-radius: 17px; background: #f4f8fd; overflow-x: auto; scrollbar-width: none; }
 .ufa-filters::-webkit-scrollbar { display: none; }
@@ -102,6 +113,8 @@ html[data-universe-theme="dark"] .ufa-page { --ufa-ink: #f5f7fb; --ufa-muted: #a
 html[data-universe-theme="dark"] .ufa-hero { background: radial-gradient(circle at 84% 3%, rgba(45, 126, 226, .24), transparent 31%), radial-gradient(circle at 5% 100%, rgba(111, 86, 231, .13), transparent 34%), linear-gradient(135deg, #07111f, #0b1a30 62%, #102949); }
 html[data-universe-theme="dark"] :is(.ufa-workspace, .ufa-card, .ufa-hero-panel) { background: rgba(7, 17, 31, .94); border-color: rgba(148, 163, 184, .22); }
 html[data-universe-theme="dark"] .ufa-filters { background: #0b1727; }
+html[data-universe-theme="dark"] .ufa-exam-tab { background: #0b1727; color: #d4deeb; }
+html[data-universe-theme="dark"] .ufa-summary { background: #10213a; border-color: #28466d; color: #91c5ff; }
 html[data-universe-theme="dark"] .ufa-filter { color: #a9b7ca; }
 html[data-universe-theme="dark"] .ufa-filter.active { background: #16263c; color: #91c5ff; }
 html[data-universe-theme="dark"] .ufa-topic { background: #0c1828; }
@@ -128,7 +141,11 @@ html[data-universe-theme="dark"] .ufa-note { background: #271d09; border-color: 
   .ufa-panel-number span { display: block; margin-top: .25rem; }
   .ufa-workspace { padding: .75rem; border-radius: 21px; }
   .ufa-section-head { display: block; }
+  .ufa-section-meta { justify-items: start; margin-top: .7rem; }
   .ufa-legend { margin-top: .7rem; }
+  .ufa-exam-tabs { display: flex; margin-inline: -.1rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .ufa-exam-tabs::-webkit-scrollbar { display: none; }
+  .ufa-exam-tab { flex: 0 0 min(82vw, 300px); min-height: 84px; scroll-snap-align: start; }
   .ufa-filters { margin-inline: -.1rem; }
   .ufa-card { border-radius: 20px; }
   .ufa-card-head { grid-template-columns: auto minmax(0, 1fr); padding: .9rem .85rem .75rem; }
