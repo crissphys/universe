@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" data-universe-page="admission-results">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ranking de promedios Admisión UNI 2026-2 | Universe to Study</title>
+  <meta name="description" content="Ranking completo y buscable de la primera prueba de Admisión UNI 2026-2, con puntaje, equivalencia vigesimal y avance acumulado.">
+  <link rel="canonical" href="https://universetostudy.com/ranking-admision">
+  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
+  <meta name="theme-color" content="#020617">
+  <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=reveal-1">
+  <link rel="stylesheet" href="/universe-polish.css?v=unified-4">
+  <link rel="stylesheet" href="/universe-admission.css?v=admission-6">
+  <link rel="stylesheet" href="/admission-dashboard.css?v=adm-ranking-1">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
+  <ul class="nav-links">
+    <li><a data-route="home" href="/">Inicio</a></li>
+    <li><a class="active" data-route="admission" href="/admision">Admisión</a></li>
+    <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
+    <li><a data-route="syllabus" href="/temario">Temario</a></li>
+    <li><a data-route="classes" href="/clases">Clases</a></li>
+    <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
+    <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
+    <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button aria-label="Cambiar tema" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" type="button">
+      <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.8A8.7 8.7 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"></path></svg>
+      <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+    </button>
+  </div>
+</nav>
+
+<main class="admission-ranking-page">
+  <section class="rank-hero">
+    <div>
+      <span class="admission-kicker">Admisión UNI 2026-2 · primera prueba</span>
+      <h1>Ranking de promedios Admisión UNI</h1>
+      <p>Consulta por nombre o código los resultados de Aptitud Académica y Humanidades. El promedio vigente normaliza únicamente las pruebas publicadas; cuando aparezcan Matemática y Física–Química, el cálculo se actualizará sobre las tres pruebas de 600 puntos.</p>
+    </div>
+    <div class="rank-hero-actions">
+      <a class="admission-btn ghost" href="/admision">Volver al análisis</a>
+      <a class="admission-btn primary" href="https://puntajes.admision.uni.edu.pe/admision-aptitud-academica-humanidades.html" target="_blank" rel="noopener noreferrer">Fuente oficial</a>
+    </div>
+  </section>
+
+  <section class="rank-summary-strip" aria-label="Resumen del examen">
+    <article><span>Rindieron</span><strong id="rankPresent">—</strong></article>
+    <article><span>Promedio</span><strong id="rankMean">—</strong></article>
+    <article><span>Puntaje máximo</span><strong id="rankTop">—</strong></article>
+    <article><span>Desviación estándar</span><strong id="rankStdDev">—</strong></article>
+    <article><span>Ausentes</span><strong id="rankAbsent">—</strong></article>
+  </section>
+
+  <section class="rank-toolbar" aria-label="Buscar y filtrar postulantes">
+    <label class="rank-search-wrap"><span class="sr-only">Buscar por nombre o código</span><input class="rank-search" id="admissionRankSearch" type="search" autocomplete="off" placeholder="Buscar por nombre o código"></label>
+    <div class="rank-filters" role="group" aria-label="Estado del postulante">
+      <button class="rank-filter active" data-rank-filter="present" type="button">Rindieron</button>
+      <button class="rank-filter" data-rank-filter="all" type="button">Todos</button>
+      <button class="rank-filter" data-rank-filter="absent" type="button">Ausentes</button>
+    </div>
+    <div class="rank-count"><b id="rankResultCount">0</b> resultados encontrados</div>
+  </section>
+
+  <section class="rank-table-shell">
+    <div class="rank-table-wrap">
+      <table class="admission-rank-table">
+        <thead><tr><th>Puesto</th><th>Código</th><th>Postulante</th><th>Prueba 1</th><th>Promedio vigente</th><th>Aporte al total</th><th>Avance</th></tr></thead>
+        <tbody id="admissionRankBody"></tbody>
+      </table>
+    </div>
+    <div class="rank-card-list" id="admissionRankCards"></div>
+    <div class="rank-pagination"><button id="rankPrev" type="button">Anterior</button><span id="rankPageInfo">Página 1</span><button id="rankNext" type="button">Siguiente</button></div>
+  </section>
+
+  <aside class="rank-method">
+    <strong>Cómo leer el promedio:</strong> con una sola prueba publicada, el promedio vigente es <b>(puntaje ÷ 600) × 20</b>; por eso 450 puntos equivalen a 15,000/20 en el avance actual. “Aporte al total” usa los 1.800 puntos finales y muestra cuánto de la escala vigesimal definitiva ya está acumulado. Los ausentes no reciben puesto.
+  </aside>
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo">Universe to Study</div><div class="footer-tagline">Recursos, seguimiento y comunidad para una preparación preuniversitaria con orden.</div></div>
+    <div class="footer-links"><h4>Plataforma</h4><ul><li><a href="/admision">Admisión</a></li><li><a href="/cepreuni">CEPREUNI</a></li><li><a href="/clases">Clases</a></li><li><a href="/biblioteca">Biblioteca</a></li></ul></div>
+    <div class="footer-links"><h4>Práctica</h4><ul><li><a href="/simulacros">Simulacros</a></li><li><a href="/temario">Temario</a></li><li><a href="/unitalk">UNITALK</a></li><li><a href="/calculadora">Calculadora</a></li></ul></div>
+    <div class="footer-links"><h4>Confianza</h4><ul><li><a href="/nosotros">Nosotros</a></li><li><a href="/metodologia-editorial">Metodología</a></li><li><a href="/correcciones">Correcciones</a></li><li><a href="/contacto">Contacto</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 Universe to Study</div><div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div></div>
+</footer>
+
+<script src="/admission-2026-2-exam1-data.js?v=20260810-1"></script>
+<script src="/admission-ranking.js?v=adm-ranking-1"></script>
+<script src="/universe-polish.js?v=unified-10" defer></script>
+<script>
+(function(){window.applyUniverseTheme=function(t){if(t==='dark')document.documentElement.setAttribute('data-universe-theme','dark');else document.documentElement.removeAttribute('data-universe-theme');try{localStorage.setItem('universe_theme',t)}catch(e){}};window.toggleUniverseTheme=function(){applyUniverseTheme(document.documentElement.getAttribute('data-universe-theme')==='dark'?'light':'dark')}})();
+</script>
+</body>
+</html>

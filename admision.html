@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="/universe-polish.css?v=unified-4">
 <link rel="stylesheet" href="san-marcos-features.css?v=unmsm-2">
 <link rel="stylesheet" href="/universe-admission.css?v=admission-6">
+<link rel="stylesheet" href="/admission-dashboard.css?v=adm-ranking-1">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
 </head>
@@ -76,6 +77,58 @@
   </div>
 </aside>
 <main class="admission-page admission-home">
+  <section class="exam-overview" aria-labelledby="examOverviewTitle">
+    <div class="exam-overview-head">
+      <div>
+        <span class="admission-kicker">Resultados oficiales · 10 de agosto de 2026</span>
+        <h1 id="examOverviewTitle">Primera prueba: Humanidades y Aptitud Académica</h1>
+        <p>Distribución completa de puntajes del primer examen de Admisión UNI 2026-2. La escala vigente de esta prueba es de 0 a 600 puntos; Matemática y Física–Química completarán después el total de 1.800.</p>
+      </div>
+      <span class="exam-status">Resultados publicados</span>
+    </div>
+
+    <div class="exam-dashboard-grid">
+      <article class="score-chart-panel">
+        <div class="chart-title-row">
+          <div><h2>Distribución de puntajes</h2><p>Cantidad de postulantes por intervalos de 50 puntos.</p></div>
+          <span class="chart-scale-pill">0–600 puntos</span>
+        </div>
+        <div class="score-histogram" id="admissionScoreHistogram" aria-label="Gráfica de barras de puntajes"></div>
+        <div class="chart-foot"><span>Pasa el cursor o toca una barra para ver la cantidad exacta.</span><strong id="examMeanCaption">Promedio: —</strong></div>
+      </article>
+
+      <aside class="exam-kpi-panel" aria-label="Indicadores generales de la prueba">
+        <article class="exam-kpi accent wide"><span>Personas que rindieron</span><strong id="examPresent">—</strong><small id="examRegistered">—</small></article>
+        <article class="exam-kpi"><span>Promedio general</span><strong id="examMean">—</strong><small id="examMean20">—</small></article>
+        <article class="exam-kpi"><span>Desviación estándar</span><strong id="examStdDev">—</strong><small id="examStdDevNote">—</small></article>
+        <article class="exam-kpi wide"><span>Lectura de dificultad</span><strong id="examDifficulty">—</strong><small id="examDifficultyNote">—</small></article>
+        <article class="exam-kpi"><span>Mayor puntaje</span><strong id="examTopScore">—</strong><small id="examTopStudent">—</small></article>
+        <article class="exam-kpi"><span>Menor puntaje válido</span><strong id="examLowScore">—</strong><small id="examLowStudent">—</small></article>
+      </aside>
+    </div>
+
+    <div class="scoring-strip" aria-label="Regla de calificación de la primera prueba">
+      <article><span>Total de preguntas</span><strong>100</strong></article>
+      <article class="correct"><span>Respuesta correcta</span><strong>+6 puntos</strong></article>
+      <article class="wrong"><span>Respuesta incorrecta</span><strong>−1,20 puntos</strong></article>
+      <article><span>Pregunta en blanco</span><strong>0 puntos</strong></article>
+    </div>
+
+    <div class="exam-tools">
+      <div class="exam-tools-head"><div><h2>Herramientas para interpretar tu resultado</h2><p>Convierte, ubica y proyecta tu puntaje sin confundir avance actual con nota final.</p></div></div>
+      <div class="exam-tools-grid">
+        <article class="exam-tool"><h3>Equivalencia vigesimal actual</h3><p>Convierte tu primera prueba a la escala 0–20 usando solo el examen ya publicado.</p><label for="scoreConverterInput">Tu puntaje (0–600)</label><input id="scoreConverterInput" type="number" min="0" max="600" step="1.2" value="450"><div class="tool-result"><strong id="scoreConverterResult">—</strong><br><span id="scoreConverterDetail">—</span></div></article>
+        <article class="exam-tool"><h3>Posición y percentil estimados</h3><p>Compara tu nota con los 4.605 postulantes que rindieron esta prueba.</p><label for="percentileInput">Tu puntaje (0–600)</label><input id="percentileInput" type="number" min="0" max="600" step="1.2" value="300"><div class="tool-result"><strong id="percentileResult">—</strong><br><span id="percentileDetail">—</span></div></article>
+        <article class="exam-tool"><h3>Meta para las dos pruebas restantes</h3><p>Calcula cuánto necesitarías, en promedio, en Matemática y Física–Química para llegar a una meta final.</p><label for="targetScoreInput">Puntaje de la primera prueba</label><input id="targetScoreInput" type="number" min="0" max="600" step="1.2" value="300"><label for="targetVigesimalInput">Meta final (0–20)</label><input id="targetVigesimalInput" type="number" min="0" max="20" step="0.1" value="12"><div class="tool-result"><strong id="targetResult">—</strong><br><span id="targetDetail">—</span></div></article>
+      </div>
+    </div>
+
+    <div class="exam-action-row">
+      <div class="exam-action-note"><b>Lectura de dificultad:</b> es una interpretación estadística de Universe to Study basada en el porcentaje del promedio respecto de 600; no es una calificación oficial de la UNI.</div>
+      <a class="admission-btn primary" href="/ranking-admision">Ranking de promedios Admisión UNI</a>
+    </div>
+  </section>
+
   <section class="admission-hero">
     <div class="admission-hero-copy">
       <span class="admission-kicker">Admisión UNI · escala 0 a 1800</span>
@@ -195,6 +248,8 @@
     <div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
   </div>
 </footer>
+<script src="/admission-2026-2-exam1-summary.js?v=20260810-1"></script>
+<script src="/admission-dashboard.js?v=adm-ranking-1"></script>
 <script src="admission-data.js"></script>
 <script src="universe-admission.js?v=security-3"></script>
 <script src="san-marcos-data.js?v=unmsm-1" defer></script>
