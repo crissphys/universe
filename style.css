@@ -6410,7 +6410,7 @@ html[data-universe-theme='dark'] .nav-theme-toggle .theme-icon-sun{display:block
 html[data-universe-page='syllabus'] .syv4-section-head:first-of-type .syv4-kicker{font-size:clamp(1.02rem,1.55vw,1.32rem)!important;letter-spacing:.12em!important;color:#0f5fd2!important;}
 html[data-universe-page='syllabus'] .syv4-section-head:first-of-type h2{font-size:clamp(2rem,3.6vw,3.15rem)!important;}
 html[data-universe-page='syllabus'] .syv4-drawer{z-index:2147482800!important;background:rgba(7,16,31,.62)!important;}
-html[data-universe-page='syllabus'] .syv4-drawer-panel{top:clamp(70px,8vh,88px)!important;right:clamp(.5rem,2vw,1.2rem)!important;width:min(860px,calc(100vw - 1rem))!important;height:calc(100dvh - clamp(84px,10vh,104px))!important;border-radius:24px 0 0 24px!important;}
+html[data-universe-page='syllabus'] .syv4-drawer-panel{position:relative!important;top:auto!important;right:auto!important;width:min(1120px,calc(100vw - 2rem))!important;height:auto!important;max-height:calc(100dvh - 2rem)!important;border-radius:28px!important;overflow-x:hidden!important;}
 html[data-universe-page='syllabus'] .syv4-drawer-head{top:0!important;margin:-1rem -1rem 1rem!important;padding:.78rem .95rem!important;min-height:64px!important;}
 html[data-universe-page='syllabus'] .syv4-drawer-close{position:sticky!important;right:0!important;z-index:5!important;background:#0f5fd2!important;color:#fff!important;border-color:#0f5fd2!important;box-shadow:0 8px 24px rgba(23,92,211,.24)!important;}
 html[data-universe-page='syllabus'] .syv4-exam-btn{background:#fff!important;border:1px solid #c9d8ea!important;color:#10213b!important;}
@@ -6422,7 +6422,7 @@ html[data-universe-page='syllabus'] .syv4-output-badge{background:#edf6ff!import
 html[data-universe-theme='dark'][data-universe-page='syllabus'] .syv4-exam-btn,html[data-universe-theme='dark'][data-universe-page='syllabus'] .syv4-output-head{background:#07111f!important;color:#f8fafc!important;border-color:#60a5fa!important;}
 html[data-universe-theme='dark'][data-universe-page='syllabus'] .syv4-output-head p{color:#cbd5e1!important;}
 html[data-universe-theme='dark'][data-universe-page='syllabus'] .syv4-output-badge{background:#102b4d!important;color:#bfdbfe!important;border-color:#60a5fa!important;}
-@media(max-width:760px){html[data-universe-page='syllabus'] .syv4-drawer-panel{top:0!important;right:0!important;width:100%!important;height:100dvh!important;border-radius:0!important;}html[data-universe-page='syllabus'] .syv4-drawer-head{min-height:58px!important;padding:.65rem .78rem!important;}html[data-universe-page='syllabus'] .syv4-drawer-title b{font-size:.92rem!important;}}
+@media(max-width:760px){html[data-universe-page='syllabus'] .syv4-drawer-panel{top:auto!important;right:auto!important;width:100%!important;height:auto!important;max-height:calc(100dvh - 20px)!important;border-radius:24px!important;}html[data-universe-page='syllabus'] .syv4-drawer-head{min-height:58px!important;padding:.65rem .78rem!important;}html[data-universe-page='syllabus'] .syv4-drawer-title b{font-size:.92rem!important;}}
 /* UNIVERSE_HEADER_THEME_SUPPORT_FIX_END */
 
 /* DOCENTES_CEPREUNI_PAGE_START */
