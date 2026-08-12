@@ -18,7 +18,7 @@
   <meta name="application-name" content="Universe to Study">
   <meta property="og:site_name" content="Universe to Study">
   <meta name="apple-mobile-web-app-title" content="Universe to Study">
-  <link rel="stylesheet" href="/style.css?v=syllabus-2026-2">
+  <link rel="stylesheet" href="/style.css?v=syllabus-modal-2">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <script>
     (function(){
@@ -398,7 +398,7 @@ html[data-universe-theme='dark'][data-universe-page='syllabus'] .syv4{--ink:#f6f
 .syv4-subject{box-shadow:0 8px 22px rgba(16,33,59,.05)}.syv4-subject-head{display:flex;align-items:center;justify-content:center;gap:.65rem;padding:.82rem;text-align:center}.syv4-topic-list{text-align:left}.syv4-topic-actions{display:none!important}
 </style>
 
-<link rel="stylesheet" href="/temario-v5.css?v=temario-5">
+<link rel="stylesheet" href="/temario-v5.css?v=temario-6">
 
 <div class="syv5-shell">
   <header class="syv5-hero">
@@ -492,7 +492,7 @@ html[data-universe-theme='dark'][data-universe-page='syllabus'] .syv4{--ink:#f6f
   function examCourse(subject,evaluation){var isHuman=subject==='Humanidades'||HUMAN_NAMES.indexOf(subject)>=0;if(subject==='Humanidades')return HUMAN_AGG.map(function(name){return{name:name,human:true,topics:cumulative(name,evaluation.humanitiesEnd),note:'Acumulado: semanas 01 a '+String(evaluation.humanitiesEnd).padStart(2,'0')}});var topics=isHuman?cumulative(subject,evaluation.humanitiesEnd):topicsInRange(subject,evaluation.range);return[{name:subject,human:isHuman,topics:topics.length?topics:['Contenido indicado en el sílabo calendarizado.'],note:isHuman?'Acumulado: semanas 01 a '+String(evaluation.humanitiesEnd).padStart(2,'0'):'Contenido de '+rangeText(evaluation.range).toLowerCase()}]}
   function renderExam(index){var evaluation=DATA.evaluations[index];if(!evaluation)return;activeExam=index;document.querySelectorAll('.syv4-exam-btn').forEach(function(button){var active=Number(button.getAttribute('data-index'))===index;button.classList.toggle('active',active);button.setAttribute('aria-selected',active?'true':'false')});var courses=[];evaluation.subjects.forEach(function(subject){courses=courses.concat(examCourse(subject,evaluation))});var seen={};courses=courses.filter(function(course){if(seen[course.name])return false;seen[course.name]=true;return true});byId('syv4-exam-output').innerHTML='<div class="syv4-output-head"><div><h3>'+esc(evaluation.name)+'</h3><p>'+esc(rangeText(evaluation.range))+'. Todos los cursos y todos sus temas se muestran completos a continuación.</p></div><span class="syv4-output-badge">'+courses.length+' cursos</span></div><div class="syv4-subjects">'+courses.map(function(course){return '<article class="syv4-subject'+(course.human?' human':'')+'"><div class="syv4-subject-head"><span class="syv4-subject-emoji">'+(ICONS[course.name]||'📘')+'</span><span class="syv4-subject-name"><b>'+esc(course.name)+'</b><span>'+esc(course.note)+' - '+course.topics.length+' temas</span></span></div><ul class="syv4-topic-list">'+course.topics.map(function(topic){return '<li>'+esc(topic)+'</li>'}).join('')+'</ul></article>'}).join('')+'</div>';byId('syv4-prev').disabled=index===0;byId('syv4-next').disabled=index===DATA.evaluations.length-1;var selected=byId('syv4-exam-track').querySelector('[data-index="'+index+'"]');if(selected)selected.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}
   function renderExamButtons(){byId('syv4-exam-track').innerHTML=DATA.evaluations.map(function(evaluation,index){return '<button class="syv4-exam-btn'+(index===0?' active':'')+'" type="button" role="tab" aria-selected="'+(index===0?'true':'false')+'" data-index="'+index+'"><span>Evaluación '+String(index+1).padStart(2,'0')+'</span><b>'+esc(evaluation.name)+'</b><small>'+esc(rangeText(evaluation.range))+'</small></button>'}).join('');byId('syv4-exam-track').querySelectorAll('[data-index]').forEach(function(button){button.addEventListener('click',function(){renderExam(Number(button.getAttribute('data-index')))})})}
-  function init(){renderGroups();renderExamButtons();renderExam(0);byId('syv4-prev').addEventListener('click',function(){if(activeExam>0)renderExam(activeExam-1)});byId('syv4-next').addEventListener('click',function(){if(activeExam<DATA.evaluations.length-1)renderExam(activeExam+1)});byId('syv4-drawer-close').addEventListener('click',closeCourse);byId('syv4-drawer').addEventListener('click',function(event){if(event.target===byId('syv4-drawer'))closeCourse()});document.addEventListener('keydown',function(event){if(event.key==='Escape'&&byId('syv4-drawer').classList.contains('open'))closeCourse()})}
+  function init(){var drawer=byId('syv4-drawer');if(drawer&&drawer.parentNode!==document.body)document.body.appendChild(drawer);renderGroups();renderExamButtons();renderExam(0);byId('syv4-prev').addEventListener('click',function(){if(activeExam>0)renderExam(activeExam-1)});byId('syv4-next').addEventListener('click',function(){if(activeExam<DATA.evaluations.length-1)renderExam(activeExam+1)});byId('syv4-drawer-close').addEventListener('click',closeCourse);byId('syv4-drawer').addEventListener('click',function(event){if(event.target===byId('syv4-drawer'))closeCourse()});document.addEventListener('keydown',function(event){if(event.key==='Escape'&&byId('syv4-drawer').classList.contains('open'))closeCourse()})}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 //]]></script>
@@ -816,6 +816,6 @@ html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table th:
 <link rel="stylesheet" href="san-marcos-features.css?v=unmsm-1">
   <script src="san-marcos-data.js?v=unmsm-1" defer></script>
 <script src="san-marcos-features.js?v=unmsm-4" defer></script>
-<script src="/universe-polish.js?v=unified-10" defer></script>
+<script src="/universe-polish.js?v=unified-11" defer></script>
 </body>
 </html>
