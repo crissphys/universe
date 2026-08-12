@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es" data-universe-page="admission">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Admisión UNI | Universe to Study</title>
+  <meta name="description" content="Calcula tu avance en los tres exámenes UNI y compáralo con los cortes mínimos históricos de la carrera que deseas.">
+  <link rel="canonical" href="https://universetostudy.com/calculadora-admision">
+  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
+  <meta name="theme-color" content="#071c44">
+  <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=syllabus-modal-2">
+  <link rel="stylesheet" href="/universe-polish.css?v=unified-4">
+  <link rel="stylesheet" href="/admission-calculator.css?v=adm-calc-1">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
+    <ul class="nav-links">
+      <li><a data-route="home" href="/">Inicio</a></li>
+      <li><a class="active" data-route="admission" href="/admision">Admisión</a></li>
+      <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
+      <li><a data-route="syllabus" href="/temario">Temario</a></li>
+      <li><a data-route="classes" href="/clases">Clases</a></li>
+      <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
+      <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
+      <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
+    </ul>
+    <div class="nav-actions"><button aria-label="Cambiar tema" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" type="button">◐</button></div>
+  </nav>
+
+  <main class="uac-page">
+    <section class="uac-hero">
+      <div>
+        <span class="uac-kicker">Admisión UNI · 3 exámenes · 1800 puntos</span>
+        <h1>Calcula tu avance y descubre qué necesitas después.</h1>
+        <p>Ingresa solo las pruebas que ya rendiste. Tu resultado se calculará sobre 600, 1200 o 1800 puntos y se comparará con los cortes ordinarios históricos de tu carrera.</p>
+      </div>
+      <aside>
+        <span>Regla de cálculo</span>
+        <b>600 + 600 + 600</b>
+        <small>La equivalencia final vigesimal se obtiene dividiendo el total entre 90.</small>
+      </aside>
+    </section>
+
+    <section class="uac-workspace" aria-label="Calculadora y análisis de admisión">
+      <form class="uac-calculator" id="admissionCalculator" novalidate>
+        <header>
+          <span class="uac-step">01 · Ingresa tus resultados</span>
+          <h2>Tus tres exámenes</h2>
+          <p>Deja en blanco cualquier prueba que todavía no hayas rendido.</p>
+        </header>
+
+        <div class="uac-exams">
+          <label class="uac-exam" for="admissionExam1">
+            <span><i>1</i><b>Humanidades y Aptitud</b><small>Primer examen</small></span>
+            <span class="uac-input-wrap"><input id="admissionExam1" inputmode="decimal" max="600" min="0" placeholder="Ej. 450" step="0.001" type="number"><em>/ 600</em></span>
+          </label>
+          <label class="uac-exam" for="admissionExam2">
+            <span><i>2</i><b>Matemática</b><small>Segundo examen</small></span>
+            <span class="uac-input-wrap"><input id="admissionExam2" inputmode="decimal" max="600" min="0" placeholder="Aún no rendido" step="0.001" type="number"><em>/ 600</em></span>
+          </label>
+          <label class="uac-exam" for="admissionExam3">
+            <span><i>3</i><b>Física y Química</b><small>Tercer examen</small></span>
+            <span class="uac-input-wrap"><input id="admissionExam3" inputmode="decimal" max="600" min="0" placeholder="Aún no rendido" step="0.001" type="number"><em>/ 600</em></span>
+          </label>
+        </div>
+        <p class="uac-error" id="scoreError" role="alert" hidden>Cada nota debe estar entre 0 y 600 puntos.</p>
+
+        <label class="uac-career" for="admissionCareer">
+          <span class="uac-step">02 · Elige tu carrera</span>
+          <b>Carrera a comparar</b>
+          <select id="admissionCareer"></select>
+          <small>Se usan los cortes mínimos ordinarios registrados entre 2022-2 y 2026-1.</small>
+        </label>
+
+        <div class="uac-live-total" aria-live="polite">
+          <div class="uac-score-ring"><strong id="currentScore">0</strong><span id="currentMax">/ 0</span></div>
+          <div><span>Avance ingresado</span><b id="currentVigesimal">— / 20</b><small id="completedExams">Aún no ingresas una nota</small></div>
+        </div>
+        <div class="uac-progress" aria-hidden="true"><i id="currentProgress"></i></div>
+        <button class="uac-reset" id="resetCalculator" type="button">Limpiar notas</button>
+      </form>
+
+      <section class="uac-analysis" aria-live="polite">
+        <article class="uac-status" id="statusCard" data-state="empty">
+          <div class="uac-status-icon" id="statusIcon">→</div>
+          <div><span id="statusEyebrow">Empieza con tu primera nota</span><h2 id="statusTitle">Tu comparación aparecerá aquí.</h2><p id="statusText">La página actualizará cada cálculo automáticamente mientras escribes.</p></div>
+        </article>
+
+        <div class="uac-metrics">
+          <article><span>Proyección al mismo ritmo</span><strong id="projectedFinal">—</strong><small id="projectedFinal20">de 1800 puntos</small></article>
+          <article><span>Corte histórico más bajo</span><strong id="historicalFloor">—</strong><small id="historicalFloor20">referencia ordinaria</small></article>
+          <article><span>Último corte registrado</span><strong id="latestCutoff">—</strong><small id="latestCutoffCycle">—</small></article>
+          <article><span>Variación histórica</span><strong id="historicalDeviation">—</strong><small id="historicalTrend">—</small></article>
+        </div>
+
+        <article class="uac-next-goal">
+          <header><div><span class="uac-step">Tu siguiente paso</span><h3 id="nextExamName">Próximo examen</h3></div><span class="uac-goal-chip" id="possibilityChip">Esperando notas</span></header>
+          <div class="uac-goal-number"><span>Meta recomendada</span><strong id="nextExamGoal">—</strong><small>de 600 puntos</small></div>
+          <p id="nextExamExplanation">Ingresa una nota para calcular cuánto necesitarías en las pruebas restantes.</p>
+          <div class="uac-survival"><span>Mínimo absoluto para conservar posibilidad</span><b id="survivalGoal">—</b></div>
+        </article>
+
+        <section class="uac-goal-grid" id="comparisonGoals" aria-label="Metas de comparación"></section>
+
+        <article class="uac-history">
+          <header><div><span class="uac-step">Historial de la carrera</span><h3>Cortes mínimos y máximos</h3></div><span>Escala 0–1800</span></header>
+          <div id="careerHistoryChart"></div>
+        </article>
+
+        <aside class="uac-disclaimer"><b>Referencia, no garantía.</b> Los cortes cambian según dificultad, vacantes y competencia. La proyección usa tendencia y dispersión históricas; no reemplaza el resultado oficial de la UNI.</aside>
+      </section>
+    </section>
+  </main>
+
+  <footer></footer>
+  <script src="/admission-data.js?v=adm-calc-1"></script>
+  <script src="/admission-calculator.js?v=adm-calc-1"></script>
+  <script src="/universe-polish.js?v=unified-11" defer></script>
+</body>
+</html>
