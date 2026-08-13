@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "source": "https://puntajes.admision.uni.edu.pe/index.html",
+  "publications": [
+    {
+      "key": "vacantes-juliaca",
+      "title": "ASIGNACIÓN DE VACANTES CEPRE-UNI JULIACA",
+      "campus": "SEDE JULIACA / VACANTES",
+      "site": "Juliaca",
+      "kind": "assignment",
+      "url": "https://puntajes.admision.uni.edu.pe/asignacion-vacantes-juliaca-20260803.json",
+      "sha256": "ce7c27e9b71e9e853d59922fd7f2cc4f94157f81dbc768227af4850dc78eff15",
+      "rows": 48,
+      "firstSeen": "2026-08-12",
+      "lastChanged": "2026-08-03"
+    },
+    {
+      "key": "vacantes-lima",
+      "title": "ASIGNACIÓN DE VACANTES CEPRE-UNI LIMA",
+      "campus": "SEDE LIMA / VACANTES",
+      "site": "Lima",
+      "kind": "assignment",
+      "url": "https://puntajes.admision.uni.edu.pe/asignacion-vacantes-lima-20260803.json",
+      "sha256": "72b97a08ca49c326ede910fbddea26335d12f914d58091861887b56ffec8bfb6",
+      "rows": 2242,
+      "firstSeen": "2026-08-12",
+      "lastChanged": "2026-08-03"
+    }
+  ]
+}

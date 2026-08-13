@@ -1,0 +1,290 @@
+[
+  {
+    "codigo": "00001K",
+    "nombres": "DEL CARPIO TUMI JOSSUE GABRIEL",
+    "puntaje": "1809.175",
+    "especialidad_ingreso": "INGENIERÍA CIVIL"
+  },
+  {
+    "codigo": "00002B",
+    "nombres": "MAMANI SUMIRE VILLANUEVA PIERO",
+    "puntaje": "1883.805",
+    "especialidad_ingreso": "INGENIERÍA CIVIL"
+  },
+  {
+    "codigo": "00003C",
+    "nombres": "SANCHO PACHAURE FERNANDO GABRIEL",
+    "puntaje": "1425.845",
+    "especialidad_ingreso": "INGENIERÍA DE MINAS"
+  },
+  {
+    "codigo": "00004F",
+    "nombres": "COILA RODRÍGUEZ FABRIZIO BENJAMIN",
+    "puntaje": "1752.650",
+    "especialidad_ingreso": "INGENIERÍA DE SISTEMAS"
+  },
+  {
+    "codigo": "00005H",
+    "nombres": "NEIRA BELISARIO LUIS RICARDO GALO",
+    "puntaje": "2203.795",
+    "especialidad_ingreso": "INGENIERÍA DE SOFTWARE"
+  },
+  {
+    "codigo": "00006K",
+    "nombres": "VASQUEZ ROBLES ANGEL GABRIEL",
+    "puntaje": "1681.520",
+    "especialidad_ingreso": "CIENCIA DE LA COMPUTACIÓN"
+  },
+  {
+    "codigo": "00007B",
+    "nombres": "CONDORI APAZA YADHIER GUSTAVO",
+    "puntaje": "1364.995",
+    "especialidad_ingreso": "INGENIERÍA CIVIL"
+  },
+  {
+    "codigo": "00008C",
+    "nombres": "VASQUEZ QUISPE JOEL GABRIEL",
+    "puntaje": "1848.765",
+    "especialidad_ingreso": "INGENIERÍA MECATRÓNICA"
+  },
+  {
+    "codigo": "00009F",
+    "nombres": "BLANCO HUAMANI ANGELY MARCELA",
+    "puntaje": "1645.550",
+    "especialidad_ingreso": "INGENIERÍA CIVIL"
+  },
+  {
+    "codigo": "00010A",
+    "nombres": "ZEA VILCA JHOSEF RAFAEL",
+    "puntaje": "1521.740",
+    "especialidad_ingreso": "INGENIERÍA GEOLÓGICA"
+  },
+  {
+    "codigo": "00013G",
+    "nombres": "MAMANI FLORES FRANK ANTHONY",
+    "puntaje": "1808.530",
+    "especialidad_ingreso": "INGENIERÍA CIVIL"
+  },
+  {
+    "codigo": "00014J",
+    "nombres": "CCOYA HUAYAPA RUSHBEL LEONEL",
+    "puntaje": "863.180",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00015A",
+    "nombres": "UCHAMACO QUISPE DENILSON ANDER",
+    "puntaje": "1154.305",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00022H",
+    "nombres": "CALSIN INQUILLA ANDERSON JOEL",
+    "puntaje": "889.575",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00023K",
+    "nombres": "MOLLEAPAZA VILCA MIGUEL FERNANDO",
+    "puntaje": "1178.925",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00024B",
+    "nombres": "YANQUI QUISPE ROONEY ELVIS",
+    "puntaje": "1387.165",
+    "especialidad_ingreso": "INGENIERÍA CIVIL"
+  },
+  {
+    "codigo": "00026F",
+    "nombres": "QUISPE HURANCCA ALBERT STEPHEN",
+    "puntaje": "1234.375",
+    "especialidad_ingreso": "INGENIERÍA MECÁNICA-ELÉCTRICA"
+  },
+  {
+    "codigo": "00030G",
+    "nombres": "PUMACCAHUA OCON AUGUSTO",
+    "puntaje": "1166.015",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00031J",
+    "nombres": "NINA SAAVEDRA VICTOR MANUEL",
+    "puntaje": "1116.210",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00032A",
+    "nombres": "VILCA PEÑALOZA TONY ALEXIS",
+    "puntaje": "823.300",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00033D",
+    "nombres": "CCORIMANYA TINTA SHELDON GARRY",
+    "puntaje": "1012.125",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00034E",
+    "nombres": "POCOHUANCA ARAPA CESAR JOSUE",
+    "puntaje": "1306.970",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00035G",
+    "nombres": "NAVARRO MEGO MAURO MIKJAEL",
+    "puntaje": "1062.055",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00036J",
+    "nombres": "RAMOS TIZNADO YUBERT BRANDON",
+    "puntaje": "821.950",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00037A",
+    "nombres": "APAZA LARICO BRAYAN JIMMY",
+    "puntaje": "791.005",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00038D",
+    "nombres": "ZEGARRA VALDERRAMA CARMEN AGRIPINA",
+    "puntaje": "1182.545",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00040K",
+    "nombres": "ESPEZUA PALLY ALFREDO",
+    "puntaje": "561.415",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00041B",
+    "nombres": "BENDITA MESTAS ALVARO MARTIN",
+    "puntaje": "956.805",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00042C",
+    "nombres": "CHAMBI CHOQUEHUANCA ROUSS FEINCY",
+    "puntaje": "775.735",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00043F",
+    "nombres": "LLAVILLA CONDORI GERSON ANHELO",
+    "puntaje": "1309.015",
+    "especialidad_ingreso": "INGENIERÍA MECATRÓNICA"
+  },
+  {
+    "codigo": "00044H",
+    "nombres": "CHUMBERIZA JIMENEZ DAYRA MARIANA",
+    "puntaje": "1045.170",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00045K",
+    "nombres": "HUALLPA MAMANI DEYVIS FRANCO",
+    "puntaje": "1035.390",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00046B",
+    "nombres": "CAMBI QUISPE JHEREMY FERNANDO",
+    "puntaje": "554.060",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00047C",
+    "nombres": "CHOQUE MAMANI NILTON",
+    "puntaje": "482.900",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00050D",
+    "nombres": "CCAPA CCAMAQUE ABEL FRANCO",
+    "puntaje": "1300.980",
+    "especialidad_ingreso": "INGENIERÍA DE TELECOMUNICACIONES"
+  },
+  {
+    "codigo": "00051E",
+    "nombres": "HUANCA SURCO JACK JHULIUS",
+    "puntaje": "1170.050",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00052G",
+    "nombres": "MIRAMIRA CONDORI LUIS ALBERTH",
+    "puntaje": "848.080",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00055D",
+    "nombres": "VASQUEZ QUISPE JOEL FRANKLIN",
+    "puntaje": "993.630",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00056E",
+    "nombres": "APAZA CALLISAYA CRISTHIAN MANUEL",
+    "puntaje": "880.345",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00057G",
+    "nombres": "QUISPE ILLAPUMA NICOLE BRIDNEY",
+    "puntaje": "1019.900",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00058J",
+    "nombres": "HUAMAN DIAZ JOAQUIN FABIAN",
+    "puntaje": "934.660",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00059A",
+    "nombres": "CCAPA CCARITA RODRIGO WILLIAM",
+    "puntaje": "502.360",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00060F",
+    "nombres": "MACHACA QUISPE CHRISTIAN JHAIR",
+    "puntaje": "540.175",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00062K",
+    "nombres": "HUILLCA MARCAPURA BRUNO EDUARDO",
+    "puntaje": "736.850",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00066H",
+    "nombres": "CCALLO HUAYTA ALCIDEZ GERMAN",
+    "puntaje": "469.040",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00071A",
+    "nombres": "VELEZ PARICAHUA ALVES NILMAR",
+    "puntaje": "418.020",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00017E",
+    "nombres": "CALCINA UMIRI SHANÍ DANIELA",
+    "puntaje": "1092.094",
+    "especialidad_ingreso": ""
+  },
+  {
+    "codigo": "00039E",
+    "nombres": "TITO COILA ERICK STIF",
+    "puntaje": "1670.645",
+    "especialidad_ingreso": "ARQUITECTURA"
+  }
+]

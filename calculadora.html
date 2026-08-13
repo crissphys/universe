@@ -594,7 +594,7 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-ve
 </section>
 
 <script src="cepre-cutoffs.js"></script>
-<script src="/cepre-2026-2-official.js?v=20260808-1"></script>
+<script src="/cepre-2026-2-official.js?v=auto-1"></script>
 <script id="cepre-planner-v3-script">//<![CDATA[
 (function(){
   'use strict';
@@ -606,8 +606,9 @@ html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-history-ve
   var CYCLE_ORDER=['2026-2|Lima','2026-2|Juliaca','2026-1|Lima','2025-2|Lima','2024-2|Lima','2024-2|Juliaca'];
   var NOTE_LABELS=['1.ª PC','2.ª PC','1.er examen parcial (EP1)','3.ª PC','4.ª PC','2.º examen parcial (EP2)','5.ª PC','6.ª PC','7.ª PC','Examen final'];
   var PC_INDEXES=[0,1,3,4,6,7],EP1_INDEX=2,EP2_INDEX=5,PC7_INDEX=8,EF_INDEX=9,EXAM_ORDER=[0,1,2,3,4,5,6,7,8,9];
-  var official=window.UNIVERSE_CEPRE_2026_2||{},officialFinal=official.finalScores||{};
-  Object.keys(officialFinal).forEach(function(code){if(STUDENTS[code])STUDENTS[code][11]=Number(officialFinal[code]);});
+  var official=window.UNIVERSE_CEPRE_2026_2||{},examScores=official.examScores||{},officialFinal=official.finalScores||{};
+  var studentColumns={pc1:0,pc2:1,pc3:2,pc4:3,pc5:4,pc6:5,pc7:6,ep1:7,ep2:8,ef:11};
+  Object.keys(studentColumns).forEach(function(key){var scores=key==='ef'?(examScores.ef||officialFinal):(examScores[key]||{});Object.keys(scores).forEach(function(code){if(STUDENTS[code])STUDENTS[code][studentColumns[key]]=Number(scores[code]);});});
   var state={mode:'code',notes:null,student:null};
   function byId(id){return document.getElementById(id)}
   function number(value){var n=parseFloat(value);return Number.isFinite(n)?n:null}
