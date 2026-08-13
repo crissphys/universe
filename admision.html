@@ -3,7 +3,7 @@
 <head>
 <title>Admisión UNI y Puntaje Ideal | Universe to Study</title>
   <link rel="canonical" href="https://universetostudy.com/admision">
-<meta name="description" content="Puntaje ideal UNI por carrera, resultados históricos y proyección referencial de admisión en escala 0 a 1800.">
+<meta name="description" content="Resultados de Humanidades y Matemática UNI 2026-2, gráficas estadísticas, puntaje ideal por carrera y proyección referencial en escala 0 a 1800.">
 <meta charset="UTF-8">
   <!-- UNIVERSE_FAVICON_START -->
   <link rel="icon" href="/favicon.ico?v=1" sizes="any">
@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="/universe-polish.css?v=unified-4">
 <link rel="stylesheet" href="san-marcos-features.css?v=unmsm-2">
 <link rel="stylesheet" href="/universe-admission.css?v=admission-7">
-<link rel="stylesheet" href="/admission-dashboard.css?v=adm-ranking-1">
+<link rel="stylesheet" href="/admission-dashboard.css?v=adm-exam2-2">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
 </head>
@@ -80,11 +80,17 @@
   <section class="exam-overview" aria-labelledby="examOverviewTitle">
     <div class="exam-overview-head">
       <div>
-        <span class="admission-kicker">Resultados oficiales · 10 de agosto de 2026</span>
-        <h1 id="examOverviewTitle">Primera prueba: Humanidades y Aptitud Académica</h1>
-        <p>Distribución completa de puntajes del primer examen de Admisión UNI 2026-2. La escala vigente de esta prueba es de 0 a 600 puntos; Matemática y Física–Química completarán después el total de 1.800.</p>
+        <span class="admission-kicker" id="examOverviewKicker">Resultados oficiales · 12 de agosto de 2026</span>
+        <h1 id="examOverviewTitle">Segunda prueba: Matemática</h1>
+        <p id="examOverviewDescription">Distribución completa de la segunda prueba de Admisión UNI 2026-2. Matemática aporta hasta 600 puntos y, junto con Humanidades, completa 1.200 de los 1.800 puntos del proceso.</p>
       </div>
       <span class="exam-status">Resultados publicados</span>
+    </div>
+
+    <div class="exam-result-tabs" aria-label="Seleccionar prueba publicada">
+      <a href="/admision?prueba=humanidades" data-exam-result="humanidades" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('humanidades');history.replaceState(null,'','/admision?prueba=humanidades');return false}"><span>10 AGO</span><b>Humanidades y Aptitud</b><small>Primera prueba · 600 puntos</small></a>
+      <a href="/admision?prueba=matematica" class="active" data-exam-result="matematica" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('matematica');history.replaceState(null,'','/admision?prueba=matematica');return false}"><span>12 AGO</span><b>Matemática</b><small>Segunda prueba · 600 puntos</small></a>
+      <button disabled type="button"><span>14 AGO</span><b>Física y Química</b><small>Resultados pendientes</small></button>
     </div>
 
     <div class="exam-dashboard-grid">
@@ -107,19 +113,24 @@
       </aside>
     </div>
 
-    <div class="scoring-strip" aria-label="Regla de calificación de la primera prueba">
-      <article><span>Total de preguntas</span><strong>100</strong></article>
-      <article class="correct"><span>Respuesta correcta</span><strong>+6 puntos</strong></article>
-      <article class="wrong"><span>Respuesta incorrecta</span><strong>−1,20 puntos</strong></article>
-      <article><span>Pregunta en blanco</span><strong>0 puntos</strong></article>
+    <section class="exam-comparison" aria-labelledby="examComparisonTitle">
+      <header><div><span class="admission-kicker">Comparación de pruebas</span><h2 id="examComparisonTitle">Matemática frente a Humanidades</h2></div><p>Los cambios se calculan sobre los resultados oficiales publicados.</p></header>
+      <div id="examComparison"></div>
+    </section>
+
+    <div class="scoring-strip" aria-label="Regla de calificación de la prueba seleccionada">
+      <article><span>Total de preguntas</span><strong id="scoringQuestionCount">40</strong></article>
+      <article class="correct"><span>Respuesta correcta</span><strong id="scoringCorrect">+15 puntos</strong></article>
+      <article class="wrong"><span>Respuesta incorrecta</span><strong id="scoringWrong">−3 puntos</strong></article>
+      <article><span>Pregunta en blanco</span><strong id="scoringBlank">0 puntos</strong></article>
     </div>
 
     <div class="exam-tools">
       <div class="exam-tools-head"><div><h2>Herramientas para interpretar tu resultado</h2><p>Convierte, ubica y proyecta tu puntaje sin confundir avance actual con nota final.</p></div></div>
       <div class="exam-tools-grid">
-        <article class="exam-tool"><h3>Equivalencia vigesimal actual</h3><p>Convierte tu primera prueba a la escala 0–20 usando solo el examen ya publicado.</p><label for="scoreConverterInput">Tu puntaje (0–600)</label><input id="scoreConverterInput" type="number" min="0" max="600" step="1.2" value="450"><div class="tool-result"><strong id="scoreConverterResult">—</strong><br><span id="scoreConverterDetail">—</span></div></article>
-        <article class="exam-tool"><h3>Posición y percentil estimados</h3><p>Compara tu nota con los 4.605 postulantes que rindieron esta prueba.</p><label for="percentileInput">Tu puntaje (0–600)</label><input id="percentileInput" type="number" min="0" max="600" step="1.2" value="300"><div class="tool-result"><strong id="percentileResult">—</strong><br><span id="percentileDetail">—</span></div></article>
-        <article class="exam-tool"><h3>Meta para las dos pruebas restantes</h3><p>Calcula cuánto necesitarías, en promedio, en Matemática y Física–Química para llegar a una meta final.</p><label for="targetScoreInput">Puntaje de la primera prueba</label><input id="targetScoreInput" type="number" min="0" max="600" step="1.2" value="300"><label for="targetVigesimalInput">Meta final (0–20)</label><input id="targetVigesimalInput" type="number" min="0" max="20" step="0.1" value="12"><div class="tool-result"><strong id="targetResult">—</strong><br><span id="targetDetail">—</span></div></article>
+        <article class="exam-tool"><h3>Equivalencia vigesimal actual</h3><p id="converterDescription">Convierte tu resultado de Matemática a una escala 0–20.</p><label for="scoreConverterInput">Tu puntaje (0–600)</label><input id="scoreConverterInput" type="number" min="0" max="600" step="0.001" value="300"><div class="tool-result"><strong id="scoreConverterResult">—</strong><br><span id="scoreConverterDetail">—</span></div></article>
+        <article class="exam-tool"><h3>Posición y percentil estimados</h3><p id="percentileDescription">Compara tu nota con quienes rindieron Matemática.</p><label for="percentileInput">Tu puntaje (0–600)</label><input id="percentileInput" type="number" min="0" max="600" step="0.001" value="300"><div class="tool-result"><strong id="percentileResult">—</strong><br><span id="percentileDetail">—</span></div></article>
+        <article class="exam-tool"><h3 id="targetToolTitle">Meta para la prueba restante</h3><p id="targetToolDescription">Calcula cuánto necesitarías en Física–Química para llegar a una meta final.</p><label id="targetScoreLabel" for="targetScoreInput">Puntaje acumulado de las dos pruebas</label><input id="targetScoreInput" type="number" min="0" max="1200" step="0.001" value="480"><label for="targetVigesimalInput">Meta final (0–20)</label><input id="targetVigesimalInput" type="number" min="0" max="20" step="0.1" value="12"><div class="tool-result"><strong id="targetResult">—</strong><br><span id="targetDetail">—</span></div></article>
       </div>
     </div>
 
@@ -251,7 +262,8 @@
   </div>
 </footer>
 <script src="/admission-2026-2-exam1-summary.js?v=20260810-1"></script>
-<script src="/admission-dashboard.js?v=adm-ranking-1"></script>
+<script src="/admission-2026-2-exam2-summary.js?v=20260812-1"></script>
+<script src="/admission-dashboard.js?v=adm-exam2-5"></script>
 <script src="admission-data.js"></script>
 <script src="universe-admission.js?v=security-3"></script>
 <script src="san-marcos-data.js?v=unmsm-1" defer></script>
