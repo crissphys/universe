@@ -12,7 +12,7 @@
       var design = document.createElement('link');
       design.id = 'uts-design-v2';
       design.rel = 'stylesheet';
-      design.href = '/universe-design-v2.css?v=system-4';
+      design.href = '/universe-design-v2.css?v=system-5';
       document.head.appendChild(design);
     }
 

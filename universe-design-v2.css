@@ -400,14 +400,29 @@ html[data-universe-page="cepre"] .cepre-hub-card:nth-child(3),
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(4),
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(5) { grid-column: span 4; }
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(6),
-html[data-universe-page="cepre"] .cepre-hub-card:nth-child(7) { grid-column: span 6; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(7),
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(8) { grid-column: span 4; }
 
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(3) { --card-accent: #0ea5e9; }
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(4) { --card-accent: #8b5cf6; }
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(5) { --card-accent: #f59e0b; }
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(6) { --card-accent: #ec4899; }
 html[data-universe-page="cepre"] .cepre-hub-card:nth-child(7) { --card-accent: #14b8a6; }
+html[data-universe-page="cepre"] .cepre-hub-card:nth-child(8) { --card-accent: #2563eb; }
 html[data-universe-page="cepre"] .cepre-hub-card > span { background: var(--card-accent, linear-gradient(135deg, var(--uts-accent), var(--uts-accent-2))) !important; font-family: var(--uts2-body) !important; }
+
+html[data-universe-page="cepre"] .cepre-hub-info {
+  border-color: rgba(37, 99, 235, .3) !important;
+  background: linear-gradient(145deg, rgba(239, 246, 255, .96), rgba(224, 242, 254, .88)) !important;
+}
+html[data-universe-theme="dark"][data-universe-page="cepre"] .cepre-hub-info {
+  border-color: rgba(96, 165, 250, .38) !important;
+  background: linear-gradient(145deg, rgba(10, 28, 52, .96), rgba(8, 47, 73, .88)) !important;
+}
+html[data-universe-page="cepre"] .cepre-hub-info:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, .38) !important;
+  outline-offset: 4px !important;
+}
 
 /* Ranking: the document scrolls; the table never traps vertical scrolling. */
 html[data-universe-page="ranking"],
@@ -695,6 +710,7 @@ html[data-universe-theme="dark"][data-universe-page] body > footer.uts-site-foot
   html[data-universe-page] .admission-hero { grid-template-columns: 1fr !important; }
   html[data-universe-page="cepre"] .cepre-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   html[data-universe-page="cepre"] .cepre-hub-card { grid-column: auto !important; }
+  html[data-universe-page="cepre"] .cepre-hub-info { grid-column: 1 / -1 !important; min-height: 170px !important; }
   html[data-universe-page="ranking"] .ranking-v3-layout {
     grid-template-columns: minmax(270px, 320px) minmax(0, 1fr) !important;
   }
@@ -756,6 +772,8 @@ html[data-universe-theme="dark"][data-universe-page] body > footer.uts-site-foot
   html[data-universe-page] .admission-grid-links { grid-template-columns: 1fr !important; }
   html[data-universe-page] .admission-grid-links a { min-height: 0; }
   html[data-universe-page="cepre"] .cepre-link-grid { grid-template-columns: 1fr !important; }
+  html[data-universe-page="cepre"] .cepre-hub-card,
+  html[data-universe-page="cepre"] .cepre-hub-info { grid-column: auto !important; min-height: 0 !important; padding: 22px !important; }
 
   html[data-universe-page="ranking"] .universe-page-stage { padding: 28px 8px 76px !important; }
   html[data-universe-page="ranking"] .ranking-v3-layout {
