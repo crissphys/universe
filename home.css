@@ -449,6 +449,9 @@ html[data-universe-theme="dark"] .home-hero h1 span { background-image: linear-g
 .home-btn-primary { background: linear-gradient(135deg, #154fc6, #217af0 64%, #52b5f4); color: #fff !important; box-shadow: 0 16px 34px rgba(28, 104, 226, .28); }
 .home-btn-primary:hover { box-shadow: 0 19px 38px rgba(28, 104, 226, .35); }
 .home-btn-ghost { border-color: var(--home-line); background: rgba(255, 255, 255, .55); color: #163e73 !important; backdrop-filter: blur(12px); }
+.home-btn-celebrate { border-color: #86efac; background: linear-gradient(135deg, #dcfce7, #fef3c7); color: #14532d !important; box-shadow: 0 12px 26px rgba(22, 163, 74, .13); }
+.home-btn-celebrate::before { content: "★"; margin-right: 7px; color: #d97706; }
+html[data-universe-theme="dark"] .home-btn-celebrate { border-color: #4ade80; background: linear-gradient(135deg, #14532d, #713f12); color: #ecfdf5 !important; }
 html[data-universe-theme="dark"] .home-btn-ghost { background: rgba(75, 126, 211, .1); color: #d8eaff !important; }
 
 .home-proof { display: flex; flex-wrap: wrap; gap: 14px 22px; margin-top: 30px; color: #49617d; font-size: .78rem; font-weight: 700; }

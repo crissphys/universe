@@ -810,12 +810,13 @@ html[data-universe-page] :is(#support-v2-fab,#peru-clock){position:fixed!importa
       <div>
         <span class="ranking-v3-eyebrow">Comparación histórica</span>
         <h3 id="ranking-v3-history-title">Mínimos y máximos por especialidad</h3>
-        <p>Compara los puntajes mínimos y máximos por especialidad. En 2026-2 se usan los resultados oficiales de asignación de vacantes; todas las referencias se muestran en escala vigesimal.</p>
+        <p>Compara los puntajes mínimos y máximos por especialidad. El ciclo 2026-2 usa resultados oficiales y 2027-1 ofrece una proyección referencial; todas las cifras se muestran en escala vigesimal.</p>
       </div>
       <div class="ranking-v3-history-filters">
         <div>
           <span>Ciclo</span>
           <div class="ranking-v3-segmented" role="group" aria-label="Elegir ciclo histórico">
+            <button type="button" data-history-cycle="2027-1" aria-pressed="false">2027-1 · proyección</button>
             <button type="button" data-history-cycle="2026-2" aria-pressed="true">2026-2</button>
             <button type="button" data-history-cycle="2025-2" aria-pressed="false">2025-2</button>
             <button type="button" data-history-cycle="2026-1" aria-pressed="false">2026-1</button>
@@ -869,6 +870,22 @@ html[data-universe-page] :is(#support-v2-fab,#peru-clock){position:fixed!importa
     history[supplied2025.cycle]={};
     history[supplied2025.cycle][supplied2025.site]=supplied2025.rows;
   }
+  function projectedRows(siteName){
+    var ordered=['2024-2','2025-2','2026-1','2026-2'];
+    var latest=(history['2026-2']&&history['2026-2'][siteName])||[];
+    return latest.map(function(base){
+      var code=base[1],series=[];
+      ordered.forEach(function(key){var rows=history[key]&&history[key][siteName]||[];var row=rows.find(function(item){return item[1]===code});if(row&&Number.isFinite(Number(row[3]))&&Number.isFinite(Number(row[4])))series.push(row)});
+      if(!series.length)return base.slice();
+      var first=series[0],last=series[series.length-1],steps=Math.max(1,series.length-1);
+      var minTrend=Math.max(-.7,Math.min(.7,(Number(last[3])-Number(first[3]))/steps*.55));
+      var maxTrend=Math.max(-.8,Math.min(.8,(Number(last[4])-Number(first[4]))/steps*.55));
+      var projectedMin=Math.max(0,Math.min(20,Number(last[3])+.2+minTrend));
+      var projectedMax=Math.max(projectedMin,Math.min(20,Number(last[4])+.15+maxTrend));
+      return[base[0],base[1],base[2],Number(projectedMin.toFixed(3)),Number(projectedMax.toFixed(3)),base[5],null];
+    });
+  }
+  history['2027-1']={Lima:projectedRows('Lima'),Juliaca:projectedRows('Juliaca')};
   var cycle='2026-2',site='Lima';
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function fmt(v){return Number.isFinite(Number(v))?Number(v).toFixed(3):'—';}
@@ -900,7 +917,10 @@ html[data-universe-page] :is(#support-v2-fab,#peru-clock){position:fixed!importa
     document.getElementById('ranking-v3-history-context').textContent=cycle+' · '+site;
     var entrants=document.getElementById('ranking-v3-history-entrants');
     var entrantsCopy=document.getElementById('ranking-v3-history-entrants-copy');
-    if(cycle==='2026-2'&&official.entrantCount){
+    if(cycle==='2027-1'){
+      entrants.textContent='Proyección';
+      entrantsCopy.textContent='Aún no existen ingresantes oficiales para este ciclo';
+    }else if(cycle==='2026-2'&&official.entrantCount){
       entrants.textContent=Number(official.entrantCount[site]||0).toLocaleString('es-PE')+' CEPREUNI';
       entrantsCopy.textContent=Number(official.evaluated&&official.evaluated[site]||0).toLocaleString('es-PE')+' evaluados en '+site;
     }else if(cycle==='2025-2'&&supplied2025){
@@ -912,7 +932,9 @@ html[data-universe-page] :is(#support-v2-fab,#peru-clock){position:fixed!importa
       entrantsCopy.textContent=detailed?'Suma del desglose disponible':'Sin total oficial incorporado';
     }
     body.innerHTML=rows.length?rows.map(function(r){return rowHTML(r,benchmark.average);}).join(''):'<tr><td colspan="7" class="ranking-v3-history-empty">Las capturas proporcionadas no incluyen datos de '+esc(site)+' para el ciclo '+esc(cycle)+'.</td></tr>';
-    if(cycle==='2026-2'&&official.source){
+    if(cycle==='2027-1'){
+      note.innerHTML='<strong>2027-1 es una proyección referencial:</strong> combina los rangos recientes disponibles, atenúa cambios extremos y añade un margen moderado. No representa un corte oficial ni garantiza una vacante.';
+    }else if(cycle==='2026-2'&&official.source){
       note.innerHTML='<strong>2026-2:</strong> los mínimos, máximos e ingresantes provienen de la asignación oficial de vacantes. La fuente pública no incluye la carrera elegida por quienes no ingresaron, por eso “postulantes por carrera” se muestra como no publicado y no como una estimación. <a href="'+esc(official.source)+'" target="_blank" rel="noopener">Ver publicación oficial</a>.';
     }else if(cycle==='2025-2'&&rows.length&&supplied2025){
       note.innerHTML='<strong>2025-2:</strong> '+supplied2025.officialEntrants.toLocaleString('es-PE')+' ingresantes CEPREUNI y '+supplied2025.ordinaryEntrants.toLocaleString('es-PE')+' ingresantes por examen ordinario. La tabla proporcionada distribuye '+supplied2025.listedVacancies.toLocaleString('es-PE')+' vacantes; el total CEPREUNI no se repartió artificialmente por carrera. <a href="'+esc(supplied2025.officialSource)+'" target="_blank" rel="noopener">Ver estadística oficial</a>.';
