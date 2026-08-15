@@ -197,21 +197,20 @@ function canonicalCareer(raw) {
 
 function buildEntrants(mainRows, architectureRows) {
   const ordinaryApplicants = mainRows.filter((row) => normalize(row.modalidad) === 'ORDINARIO').length + architectureRows.filter((row) => normalize(row.modalidad) === 'ORDINARIO').length;
-  const allEntrants = mainRows.filter((row) => String(row.resultado || '').trim()).length + architectureRows.filter((row) => String(row.resultado || '').trim()).length;
   const admitted = [];
-  mainRows.filter((row) => normalize(row.modalidad) === 'ORDINARIO' && String(row.resultado || '').trim()).forEach((row) => {
+  mainRows.filter((row) => String(row.resultado || '').trim()).forEach((row) => {
     const career = canonicalCareer(row.resultado);
     const score = decimal(row.puntaje);
     if (score == null) throw new Error(`Ingresante sin puntaje: ${row.codigo}`);
     const [facultyCode, faculty] = faculties[career];
-    admitted.push({ code: String(row.codigo).trim(), name: String(row.nombres || '').trim(), career, facultyCode, faculty, score, architectureScore: null, modality: 'ORDINARIO' });
+    admitted.push({ code: String(row.codigo).trim(), name: String(row.nombres || '').trim(), career, facultyCode, faculty, score, architectureScore: null, modality: String(row.modalidad || '').trim() });
   });
-  architectureRows.filter((row) => normalize(row.modalidad) === 'ORDINARIO' && String(row.resultado || '').trim()).forEach((row) => {
+  architectureRows.filter((row) => String(row.resultado || '').trim()).forEach((row) => {
     const career = canonicalCareer(row.resultado);
     const score = decimal(row.puntaje_final);
     if (score == null) throw new Error(`Ingresante FAUA sin puntaje: ${row.codigo}`);
     const [facultyCode, faculty] = faculties[career];
-    admitted.push({ code: String(row.codigo).trim(), name: String(row.nombres || '').trim(), career, facultyCode, faculty, score, architectureScore: decimal(row.puntaje_final_arquitectura), modality: 'ORDINARIO' });
+    admitted.push({ code: String(row.codigo).trim(), name: String(row.nombres || '').trim(), career, facultyCode, faculty, score, architectureScore: decimal(row.puntaje_final_arquitectura), modality: String(row.modalidad || '').trim() });
   });
   const seen = new Set();
   admitted.forEach((row) => {
@@ -232,6 +231,12 @@ function buildEntrants(mainRows, architectureRows) {
     byCareer.get(row.career).push(row);
   });
   byCareer.forEach((rows) => rows.sort((a, b) => b.score - a.score).forEach((row, index) => { row.careerRank = index + 1; }));
+  const ordinaryAdmitted = admitted.filter((row) => normalize(row.modality) === 'ORDINARIO');
+  const ordinaryByCareer = new Map();
+  ordinaryAdmitted.forEach((row) => {
+    if (!ordinaryByCareer.has(row.career)) ordinaryByCareer.set(row.career, []);
+    ordinaryByCareer.get(row.career).push(row);
+  });
   const groupedFaculties = [...new Set(admitted.map((row) => row.facultyCode))].sort().map((code) => {
     const facultyRows = admitted.filter((row) => row.facultyCode === code);
     const careerNames = [...new Set(facultyRows.map((row) => row.career))].sort((a, b) => a.localeCompare(b, 'es'));
@@ -243,7 +248,7 @@ function buildEntrants(mainRows, architectureRows) {
     };
   });
   const cutoffs = {};
-  byCareer.forEach((rows, career) => {
+  ordinaryByCareer.forEach((rows, career) => {
     const scores = rows.map((row) => row.score);
     cutoffs[career] = {
       min20: round(Math.min(...scores) / 90, 6),
@@ -257,17 +262,17 @@ function buildEntrants(mainRows, architectureRows) {
   return {
     dataset: {
       process: 'Admisión UNI 2026-2',
-      modality: 'ORDINARIO',
+      modality: 'TODAS LAS MODALIDADES PUBLICADAS',
       publishedAt: '2026-08-15',
       sources: { concurso: sources.concurso, arquitectura: sources.arquitectura },
-      stats: { applicants: mainRows.length + architectureRows.length, ordinaryApplicants, ordinaryEntrants: admitted.length, allPublishedEntrants: allEntrants, faculties: groupedFaculties.length, careers: byCareer.size },
+      stats: { applicants: mainRows.length + architectureRows.length, ordinaryApplicants, ordinaryEntrants: ordinaryAdmitted.length, otherEntrants: admitted.length - ordinaryAdmitted.length, allPublishedEntrants: admitted.length, faculties: groupedFaculties.length, careers: byCareer.size },
       faculties: groupedFaculties,
       rows: admitted
     },
     cutoffs,
     ordinaryApplicants,
-    ordinaryEntrants: admitted.length,
-    allEntrants
+    ordinaryEntrants: ordinaryAdmitted.length,
+    allEntrants: admitted.length
   };
 }
 
