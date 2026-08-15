@@ -3,7 +3,7 @@
 <head>
 <title>Admisión UNI y Puntaje Ideal | Universe to Study</title>
   <link rel="canonical" href="https://universetostudy.com/admision">
-<meta name="description" content="Resultados de Humanidades y Matemática UNI 2026-2, gráficas estadísticas, puntaje ideal por carrera y proyección referencial en escala 0 a 1800.">
+<meta name="description" content="Resultados de Humanidades, Matemática, Física y Química UNI 2026-2, estadísticas oficiales, ingresantes, cortes por carrera y proyección 2027-1.">
 <meta charset="UTF-8">
   <!-- UNIVERSE_FAVICON_START -->
   <link rel="icon" href="/favicon.ico?v=1" sizes="any">
@@ -80,17 +80,17 @@
   <section class="exam-overview" aria-labelledby="examOverviewTitle">
     <div class="exam-overview-head">
       <div>
-        <span class="admission-kicker" id="examOverviewKicker">Resultados oficiales · 12 de agosto de 2026</span>
-        <h1 id="examOverviewTitle">Segunda prueba: Matemática</h1>
-        <p id="examOverviewDescription">Distribución completa de la segunda prueba de Admisión UNI 2026-2. Matemática aporta hasta 600 puntos y, junto con Humanidades, completa 1.200 de los 1.800 puntos del proceso.</p>
+        <span class="admission-kicker" id="examOverviewKicker">Resultados oficiales · 15 de agosto de 2026</span>
+        <h1 id="examOverviewTitle">Tercera prueba: Física y Química</h1>
+        <p id="examOverviewDescription">Distribución completa de la prueba de Ciencias de Admisión UNI 2026-2. Con esta evaluación se completaron los 1.800 puntos del concurso ordinario.</p>
       </div>
-      <span class="exam-status">Resultados publicados</span>
+      <div class="exam-overview-actions"><span class="exam-status">Resultados publicados</span><a class="admission-btn primary" href="/ingresantes-uni-2026-2">Ingresantes UNI 2026-2</a></div>
     </div>
 
     <div class="exam-result-tabs" aria-label="Seleccionar prueba publicada">
       <a href="/admision?prueba=humanidades" data-exam-result="humanidades" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('humanidades');history.replaceState(null,'','/admision?prueba=humanidades');return false}"><span>10 AGO</span><b>Humanidades y Aptitud</b><small>Primera prueba · 600 puntos</small></a>
-      <a href="/admision?prueba=matematica" class="active" data-exam-result="matematica" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('matematica');history.replaceState(null,'','/admision?prueba=matematica');return false}"><span>12 AGO</span><b>Matemática</b><small>Segunda prueba · 600 puntos</small></a>
-      <button disabled type="button"><span>14 AGO</span><b>Física y Química</b><small>Resultados pendientes</small></button>
+      <a href="/admision?prueba=matematica" data-exam-result="matematica" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('matematica');history.replaceState(null,'','/admision?prueba=matematica');return false}"><span>12 AGO</span><b>Matemática</b><small>Segunda prueba · 600 puntos</small></a>
+      <a href="/admision?prueba=ciencias" class="active" data-exam-result="ciencias" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('ciencias');history.replaceState(null,'','/admision?prueba=ciencias');return false}"><span>15 AGO</span><b>Física y Química</b><small>Tercera prueba · 600 puntos</small></a>
     </div>
 
     <div class="exam-dashboard-grid">
@@ -114,7 +114,7 @@
     </div>
 
     <section class="exam-comparison" aria-labelledby="examComparisonTitle">
-      <header><div><span class="admission-kicker">Comparación de pruebas</span><h2 id="examComparisonTitle">Matemática frente a Humanidades</h2></div><p>Los cambios se calculan sobre los resultados oficiales publicados.</p></header>
+      <header><div><span class="admission-kicker">Comparación de pruebas</span><h2 id="examComparisonTitle">Humanidades, Matemática y Ciencias</h2></div><p>Los indicadores se calculan sobre los resultados oficiales publicados.</p></header>
       <div id="examComparison"></div>
     </section>
 
@@ -130,7 +130,7 @@
       <div class="exam-tools-grid">
         <article class="exam-tool"><h3>Equivalencia vigesimal actual</h3><p id="converterDescription">Convierte tu resultado de Matemática a una escala 0–20.</p><label for="scoreConverterInput">Tu puntaje (0–600)</label><input id="scoreConverterInput" type="number" min="0" max="600" step="0.001" value="300"><div class="tool-result"><strong id="scoreConverterResult">—</strong><br><span id="scoreConverterDetail">—</span></div></article>
         <article class="exam-tool"><h3>Posición y percentil estimados</h3><p id="percentileDescription">Compara tu nota con quienes rindieron Matemática.</p><label for="percentileInput">Tu puntaje (0–600)</label><input id="percentileInput" type="number" min="0" max="600" step="0.001" value="300"><div class="tool-result"><strong id="percentileResult">—</strong><br><span id="percentileDetail">—</span></div></article>
-        <article class="exam-tool"><h3 id="targetToolTitle">Meta para la prueba restante</h3><p id="targetToolDescription">Calcula cuánto necesitarías en Física–Química para llegar a una meta final.</p><label id="targetScoreLabel" for="targetScoreInput">Puntaje acumulado de las dos pruebas</label><input id="targetScoreInput" type="number" min="0" max="1200" step="0.001" value="480"><label for="targetVigesimalInput">Meta final (0–20)</label><input id="targetVigesimalInput" type="number" min="0" max="20" step="0.1" value="12"><div class="tool-result"><strong id="targetResult">—</strong><br><span id="targetDetail">—</span></div></article>
+        <article class="exam-tool"><h3 id="targetToolTitle">Evalúa tu puntaje final</h3><p id="targetToolDescription">Compara el acumulado de las tres pruebas con una meta vigesimal final.</p><label id="targetScoreLabel" for="targetScoreInput">Puntaje final acumulado</label><input id="targetScoreInput" type="number" min="0" max="1800" step="0.001" value="700"><label for="targetVigesimalInput">Meta final (0–20)</label><input id="targetVigesimalInput" type="number" min="0" max="20" step="0.1" value="12"><div class="tool-result"><strong id="targetResult">—</strong><br><span id="targetDetail">—</span></div></article>
       </div>
     </div>
 
@@ -170,7 +170,7 @@
 
   <section class="admission-card ideal-card" id="puntaje-ideal">
     <div class="section-head clean">
-      <div><span class="admission-kicker">Proyección referencial</span><h2>Puntaje ideal por carrera para 2026-2</h2></div>
+      <div><span class="admission-kicker">Proyección referencial</span><h2>Puntaje ideal por carrera para 2027-1</h2></div>
       <div class="institution-switch" aria-label="Universidad">
         <button class="active" data-institution="uni" type="button">UNI</button>
         <button data-institution="unmsm" type="button">San Marcos</button>
@@ -243,7 +243,7 @@
     <div class="quick-ranking" id="quickRanking"></div>
   </section>
 
-  <section class="sources-card" id="fuentes"><h2>Fuentes y criterio</h2><p>Las cifras históricas se toman de estadísticas y cuadros publicados por la Dirección de Admisión UNI. El ciclo 2026-2 aparece como proceso vigente; mientras no exista estadística final publicada, su lectura se mantiene como proyección referencial.</p><div id="sourceList" class="source-list"></div></section>
+  <section class="sources-card" id="fuentes"><h2>Fuentes y criterio</h2><p>Los resultados 2026-2 y sus cortes por carrera se calcularon con las publicaciones finales de la Dirección de Admisión UNI para la modalidad ordinaria. La referencia 2027-1 es una proyección estadística y no garantiza una vacante.</p><div id="sourceList" class="source-list"></div></section>
 </main>
 <footer>
   <div class="footer-top">
@@ -296,7 +296,8 @@
 </footer>
 <script src="/admission-2026-2-exam1-summary.js?v=20260810-1"></script>
 <script src="/admission-2026-2-exam2-summary.js?v=20260812-1"></script>
-<script src="/admission-dashboard.js?v=adm-exam2-5"></script>
+<script src="/admission-2026-2-exam3-summary.js?v=20260815-1"></script>
+<script src="/admission-dashboard.js?v=adm-exam3-1"></script>
 <script src="admission-data.js"></script>
 <script src="universe-admission.js?v=security-3"></script>
 <script src="admission-ideal-tools.js?v=ideal-1"></script>

@@ -12,13 +12,13 @@
   function safe(value) { return String(value == null ? '' : value).replace(/[&<>'"]/g, function (char) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]; }); }
   function normalize(value) { return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim(); }
   function points(value) { return value == null ? '—' : nf3.format(Number(value)); }
-  function isComplete(row) { return row.exam1 != null && row.exam2 != null; }
+  function isComplete(row) { return row.exam1 != null && row.exam2 != null && row.exam3 != null; }
   function scoreState(row) {
     var complete = isComplete(row);
-    var total = Number(row.exam1 || 0) + Number(row.exam2 || 0);
+    var total = Number(row.exam1 || 0) + Number(row.exam2 || 0) + Number(row.exam3 || 0);
     return {
       complete: complete,
-      completed: (row.exam1 != null ? 1 : 0) + (row.exam2 != null ? 1 : 0),
+      completed: (row.exam1 != null ? 1 : 0) + (row.exam2 != null ? 1 : 0) + (row.exam3 != null ? 1 : 0),
       total: total,
       current20: complete ? total / data.provisionalMax * 20 : null,
       finalContribution20: total / data.totalMax * 20
@@ -40,20 +40,21 @@
   function scoreCell(value, missingLabel) {
     return value == null ? '<span class="absent-pill">' + safe(missingLabel || 'Ausente') + '</span>' : '<span class="score-main">' + points(value) + '</span><span class="muted">de 600</span>';
   }
-  function mathMissingLabel(row) { return row.exam2Status === 'not-listed' ? 'Sin registro' : 'Ausente'; }
+  function missingLabel(row, key) { return row[key + 'Status'] === 'not-listed' ? 'Sin registro' : 'Ausente'; }
   function tableRow(row) {
     var s = scoreState(row);
     return '<tr><td>' + rankBadge(row) + '</td><td><strong>' + safe(row.code) + '</strong></td><td><span class="student-name">' + safe(row.name) + '</span></td>' +
       '<td>' + scoreCell(row.exam1, 'Ausente') + '</td>' +
-      '<td>' + scoreCell(row.exam2, mathMissingLabel(row)) + '</td>' +
-      '<td><span class="score-main">' + (s.complete ? points(s.total) : '—') + '</span><span class="muted">de 1.200</span></td>' +
+      '<td>' + scoreCell(row.exam2, missingLabel(row, 'exam2')) + '</td>' +
+      '<td>' + scoreCell(row.exam3, missingLabel(row, 'exam3')) + '</td>' +
+      '<td><span class="score-main">' + (s.complete ? points(s.total) : '—') + '</span><span class="muted">de 1.800</span></td>' +
       '<td><span class="score-main">' + (s.current20 == null ? '—' : points(s.current20)) + '</span><span class="muted">escala 0–20</span></td>' +
       '<td><span class="score-main">' + s.completed + ' / 3</span><span class="muted">pruebas con nota</span></td></tr>';
   }
   function card(row) {
     var s = scoreState(row);
     return '<article class="rank-person-card"><div class="rank-person-head">' + rankBadge(row) + '<div><b>' + safe(row.name) + '</b><small>' + safe(row.code) + '</small></div><div class="rank-person-score">' + (s.complete ? points(s.total) : 'Incompleto') + '</div></div>' +
-      '<div class="rank-person-metrics"><div><span>Humanidades</span><strong>' + (row.exam1 == null ? 'Ausente' : points(row.exam1)) + '</strong></div><div><span>Matemática</span><strong>' + (row.exam2 == null ? mathMissingLabel(row) : points(row.exam2)) + '</strong></div><div><span>Promedio provisional</span><strong>' + (s.current20 == null ? '—' : points(s.current20) + ' / 20') + '</strong></div><div><span>Aporte al total final</span><strong>' + points(s.finalContribution20) + ' / 20</strong></div></div></article>';
+      '<div class="rank-person-metrics"><div><span>Humanidades</span><strong>' + (row.exam1 == null ? 'Ausente' : points(row.exam1)) + '</strong></div><div><span>Matemática</span><strong>' + (row.exam2 == null ? missingLabel(row, 'exam2') : points(row.exam2)) + '</strong></div><div><span>Física y Química</span><strong>' + (row.exam3 == null ? missingLabel(row, 'exam3') : points(row.exam3)) + '</strong></div><div><span>Promedio final</span><strong>' + (s.current20 == null ? '—' : points(s.current20) + ' / 20') + '</strong></div></div></article>';
   }
   function render() {
     var rows = selectedRows();
@@ -72,7 +73,7 @@
   function initSummary() {
     var stats = data.stats;
     set('rankPresent', nf0.format(stats.ranked));
-    set('rankMean', points(stats.meanTotal) + ' / 1.200');
+    set('rankMean', points(stats.meanTotal) + ' / 1.800');
     set('rankMean20', points(stats.mean20) + ' / 20');
     set('rankTop', points(stats.maximum));
     set('rankIncomplete', nf0.format(stats.incomplete));

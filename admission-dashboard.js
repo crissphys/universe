@@ -3,12 +3,13 @@
 
   var exams = {
     humanidades: window.UNIVERSE_ADMISSION_2026_2,
-    matematica: window.UNIVERSE_ADMISSION_2026_2_EXAM2
+    matematica: window.UNIVERSE_ADMISSION_2026_2_EXAM2,
+    ciencias: window.UNIVERSE_ADMISSION_2026_2_EXAM3
   };
-  if (!exams.humanidades || !exams.matematica) return;
+  if (!exams.humanidades || !exams.matematica || !exams.ciencias) return;
 
   var requestedKey = new URLSearchParams(window.location.search).get('prueba');
-  var currentKey = exams[requestedKey] ? requestedKey : 'matematica';
+  var currentKey = exams[requestedKey] ? requestedKey : 'ciencias';
   var data = exams[currentKey];
   var stats = data.stats;
   var nf0 = new Intl.NumberFormat('es-PE', { maximumFractionDigits: 0 });
@@ -42,7 +43,7 @@
         targetDefault: 300
       };
     }
-    return {
+    if (currentKey === 'matematica') return {
       date: 'Resultados oficiales · 12 de agosto de 2026',
       title: 'Segunda prueba: Matemática',
       description: 'Distribución completa de la segunda prueba de Admisión UNI 2026-2. Matemática aporta hasta 600 puntos y, junto con Humanidades, completa 1.200 de los 1.800 puntos del proceso.',
@@ -53,6 +54,18 @@
       targetLabel: 'Puntaje acumulado de las dos pruebas',
       targetMax: 1200,
       targetDefault: 480
+    };
+    return {
+      date: 'Resultados oficiales · 15 de agosto de 2026',
+      title: 'Tercera prueba: Física y Química',
+      description: 'Distribución completa de la prueba de Física y Química de Admisión UNI 2026-2. Con esta evaluación se completaron los 1.800 puntos del concurso ordinario.',
+      converter: 'Convierte tu resultado de Física y Química a una escala 0–20.',
+      percentile: 'Compara tu nota con quienes rindieron la prueba de Ciencias.',
+      targetTitle: 'Evalúa tu puntaje final',
+      targetDescription: 'Ingresa el acumulado de las tres pruebas y compáralo con una meta vigesimal final.',
+      targetLabel: 'Puntaje final acumulado de las tres pruebas',
+      targetMax: 1800,
+      targetDefault: 700
     };
   }
   function difficulty(mean) {
@@ -132,12 +145,21 @@
     if (!container) return;
     var h = exams.humanidades.stats;
     var m = exams.matematica.stats;
+    var c = exams.ciencias.stats;
+    var comparison = [
+      { key: 'Humanidades', stats: h },
+      { key: 'Matemática', stats: m },
+      { key: 'Ciencias', stats: c }
+    ];
+    var hardest = comparison.slice().sort(function (a, b) { return a.stats.mean - b.stats.mean; })[0];
+    var mostVariable = comparison.slice().sort(function (a, b) { return b.stats.standardDeviationPopulation - a.stats.standardDeviationPopulation; })[0];
+    var highestMaximum = comparison.slice().sort(function (a, b) { return b.stats.maximum - a.stats.maximum; })[0];
     var cards = [
-      { title: 'Promedio', delta: signed(m.mean - h.mean, 3) + ' pts', detail: 'Matemática ' + points(m.mean) + ' · Humanidades ' + points(h.mean), tone: 'down' },
-      { title: 'Participantes', delta: signed(m.present - h.present, 0), detail: nf0.format(m.present) + ' rindieron Matemática · ' + nf0.format(h.present) + ' Humanidades', tone: 'neutral' },
-      { title: 'Dispersión', delta: signed(m.standardDeviationPopulation - h.standardDeviationPopulation, 3), detail: 'Mayor variación de resultados en Matemática', tone: 'down' },
-      { title: 'Puntaje máximo', delta: signed(m.maximum - h.maximum, 3) + ' pts', detail: 'Matemática llegó a ' + points(m.maximum) + ' puntos', tone: 'up' },
-      { title: 'Rendimiento medio', delta: nf1.format(m.mean / 600 * 100) + ' %', detail: 'Humanidades: ' + nf1.format(h.mean / 600 * 100) + ' % del máximo', tone: 'down' }
+      { title: 'Promedio de Ciencias', delta: points(c.mean) + ' pts', detail: 'Humanidades ' + points(h.mean) + ' · Matemática ' + points(m.mean), tone: 'neutral' },
+      { title: 'Prueba más exigente', delta: hardest.key, detail: nf1.format(hardest.stats.mean / 600 * 100) + ' % del puntaje máximo', tone: 'down' },
+      { title: 'Mayor dispersión', delta: mostVariable.key, detail: 'Desviación de ' + points(mostVariable.stats.standardDeviationPopulation) + ' puntos', tone: 'neutral' },
+      { title: 'Mayor máximo', delta: highestMaximum.key, detail: points(highestMaximum.stats.maximum) + ' de 600 puntos', tone: 'up' },
+      { title: 'Resultados de Ciencias', delta: nf0.format(c.present), detail: nf0.format(c.registered) + ' registros oficiales publicados', tone: 'neutral' }
     ];
     container.innerHTML = cards.map(function (card) {
       return '<article><span>' + card.title + '</span><strong class="' + card.tone + '">' + card.delta + '</strong><small>' + card.detail + '</small></article>';
@@ -174,7 +196,7 @@
       set('targetDetail', 'El puntaje acumulado ya alcanza los puntos equivalentes a la meta final elegida.');
     } else if (!remainingExams || remaining / remainingExams > data.examMax) {
       set('targetResult', 'Meta no alcanzable');
-      set('targetDetail', remainingExams ? 'Necesitarías ' + points(remaining / remainingExams) + ' por prueba restante, por encima del máximo de 600.' : 'Ya no quedan pruebas para sumar puntaje.');
+      set('targetDetail', remainingExams ? 'Necesitarías ' + points(remaining / remainingExams) + ' por prueba restante, por encima del máximo de 600.' : 'Las tres pruebas ya concluyeron: el resultado ingresado queda por debajo de la meta elegida.');
     } else if (remainingExams === 1) {
       set('targetResult', points(remaining) + ' puntos');
       set('targetDetail', 'Ese es el mínimo necesario en Física–Química para cerrar con ' + nf1.format(goal) + '/20.');
