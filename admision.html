@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="/style.css?v=reveal-1">
 <link rel="stylesheet" href="/universe-polish.css?v=unified-4">
 <link rel="stylesheet" href="san-marcos-features.css?v=unmsm-2">
-<link rel="stylesheet" href="/universe-admission.css?v=admission-7">
+<link rel="stylesheet" href="/universe-admission.css?v=admission-8">
 <link rel="stylesheet" href="/admission-dashboard.css?v=adm-exam2-2">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
@@ -181,6 +181,19 @@
         <label for="careerSelect">Carrera a comparar</label>
         <select id="careerSelect"></select>
         <p class="admission-note">La escala UNI va de 0 a 1800. Para aproximar a escala vigesimal, se divide entre 90.</p>
+        <div class="ideal-score-form" aria-labelledby="idealScoreTitle">
+          <div class="ideal-score-form-head">
+            <div><span>Simula tu resultado</span><strong id="idealScoreTitle">Ingresa tus tres notas</strong></div>
+            <button id="idealScoreReset" type="button">Limpiar</button>
+          </div>
+          <div class="ideal-exam-grid">
+            <label for="idealExam1"><span>Humanidades</span><small>Examen 1 · 600 pts</small><input id="idealExam1" inputmode="decimal" min="0" max="600" step="0.01" placeholder="0–600" type="number"></label>
+            <label for="idealExam2"><span>Matemática</span><small>Examen 2 · 600 pts</small><input id="idealExam2" inputmode="decimal" min="0" max="600" step="0.01" placeholder="0–600" type="number"></label>
+            <label for="idealExam3"><span>Física y Química</span><small>Examen 3 · 600 pts</small><input id="idealExam3" inputmode="decimal" min="0" max="600" step="0.01" placeholder="0–600" type="number"></label>
+          </div>
+          <p id="idealScoreHint">Puedes comenzar con una sola nota. Mientras falten pruebas, verás una proyección provisional sobre 1800 puntos.</p>
+        </div>
+        <div class="history-title"><span>Cortes mínimos recientes</span><small>Escala UNI y vigesimal</small></div>
         <div class="latest-list" id="careerHistory"></div>
       </div>
       <div class="result-panel">
@@ -190,8 +203,8 @@
             <span class="zone-label max" id="zoneMaxLabel">Máximo &mdash;</span>
             <span class="zone-label target" id="targetLabel">Ideal &mdash;</span>
           </div>
-          <div class="score-line"><span>0</span><div class="score-bar" aria-label="Barra de puntaje UNI"><i id="scoreFill"></i><em id="idealZoneBand"></em><b id="latestMarker"></b><strong id="targetMarker"></strong></div><span>1800</span></div>
-          <div class="score-legend"><span><i class="legend-zone"></i> zona ideal aproximada</span><span><i class="legend-target"></i> puntaje ideal sugerido</span><span><i class="legend-latest"></i> último corte incorporado</span></div>
+          <div class="score-line"><span>0</span><div class="score-bar" aria-label="Barra de puntaje UNI"><i id="scoreFill"></i><em id="idealZoneBand"></em><b id="latestMarker"></b><strong id="targetMarker"></strong><span class="personal-score-marker" id="personalScoreMarker" hidden></span></div><span>1800</span></div>
+          <div class="score-legend"><span><i class="legend-zone"></i> zona ideal aproximada</span><span><i class="legend-target"></i> puntaje ideal sugerido</span><span><i class="legend-latest"></i> último corte incorporado</span><span><i class="legend-personal"></i> tu puntaje o proyección</span></div>
         </div>
         <div class="target-box"><span>Zona ideal aproximada</span><strong id="idealZone">&mdash;</strong><small id="idealZone20">&mdash;</small></div>
         <div class="metric-grid">
@@ -200,6 +213,26 @@
           <article><span>Desviación estándar</span><strong id="sdScore">&mdash;</strong><small>variación histórica</small></article>
           <article><span>Último examen</span><strong id="latestScore">&mdash;</strong><small id="latest20">&mdash;</small></article>
         </div>
+        <section class="ideal-probability" aria-live="polite">
+          <div class="probability-summary">
+            <div class="probability-ring" id="admissionProbabilityRing" style="--probability:0">
+              <div><strong id="admissionProbabilityPercent">—</strong><small>referencial</small></div>
+            </div>
+            <div class="probability-copy">
+              <span>Probabilidad histórica referencial</span>
+              <h3 id="admissionProbabilityLabel">Ingresa una nota para calcularla</h3>
+              <p id="admissionProbabilityDescription">El porcentaje indicará cuántos cortes mínimos históricos de la carrera habría superado tu puntaje.</p>
+            </div>
+          </div>
+          <div class="personal-metrics">
+            <article><span id="personalScoreCaption">Tu proyección</span><strong id="personalProjectedScore">—</strong><small id="personalProjected20">—</small></article>
+            <article><span>Frente al último corte</span><strong id="personalLatestDistance">—</strong><small id="personalLatestPercent">—</small></article>
+            <article><span>Cortes superados</span><strong id="historicalCoverage">—</strong><small id="historicalCoverageDetail">de los ciclos disponibles</small></article>
+          </div>
+          <div class="history-visual-head"><div><span>Comparación por ciclo</span><strong id="historyVisualCareer">Carrera seleccionada</strong></div><small>La barra es el corte mínimo; el marcador violeta es tu resultado.</small></div>
+          <div class="admission-history-visual" id="admissionHistoryVisual"></div>
+          <p class="probability-disclaimer">Este porcentaje es una referencia estadística basada en cortes mínimos anteriores. No garantiza una vacante: la dificultad, la demanda y las vacantes cambian en cada proceso.</p>
+        </section>
         <p class="reading" id="readingText">Selecciona una carrera para ver la lectura.</p>
       </div>
     </div>
@@ -266,6 +299,7 @@
 <script src="/admission-dashboard.js?v=adm-exam2-5"></script>
 <script src="admission-data.js"></script>
 <script src="universe-admission.js?v=security-3"></script>
+<script src="admission-ideal-tools.js?v=ideal-1"></script>
 <script src="san-marcos-data.js?v=unmsm-1" defer></script>
 <script src="san-marcos-features.js?v=unmsm-4" defer></script>
 <script src="/universe-polish.js?v=unified-11" defer></script>
