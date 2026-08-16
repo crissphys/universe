@@ -21,6 +21,7 @@ const naturalOverrides = {
   'Mi cuenta': 'My Account',
   'Soporte': 'Help & Support',
   'Soporte por WhatsApp': 'WhatsApp Support',
+  'Contactar por WhatsApp': 'Contact us on WhatsApp',
   'Comunidad en vivo': 'Live community',
   'UNITALK': 'UNITALK',
   'mini': 'mini',

@@ -1272,17 +1272,27 @@
     setTimeout(forceRevealVisible, 120);
     setTimeout(ensureUnifiedNavigation, 160);
     setTimeout(recoverRankingTable, 700);
+    var whatsappSupportUrl = 'https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study';
     window.UniverseSupport = {
-      open: function () { window.open('https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study', '_blank', 'noopener,noreferrer'); },
+      open: function () { window.open(whatsappSupportUrl, '_blank', 'noopener,noreferrer'); },
       close: function () {}
     };
     window.openUniverseSupportChat = window.UniverseSupport.open;
     var supportFab = document.getElementById('support-v2-fab');
-    if (supportFab) {
-      supportFab.setAttribute('aria-label', 'Contactar por WhatsApp');
-      supportFab.setAttribute('title', 'Soporte por WhatsApp');
+    if (!supportFab) {
+      supportFab = document.createElement('a');
+      supportFab.id = 'support-v2-fab';
+      document.body.appendChild(supportFab);
+    }
+    supportFab.setAttribute('aria-label', 'Contactar por WhatsApp');
+    supportFab.setAttribute('title', 'Soporte por WhatsApp');
+    supportFab.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.2c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.1.8.8-3-.2-.3A7.7 7.7 0 1 1 12 19.2Zm4.3-5.5c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.2l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.3-3.2-2.9-.2-.3.2-.5.6-1 .1-.2.1-.3 0-.5l-.7-1.8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.7 1.1 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.2-.3-.2-.5-.3Z"></path></svg><span>WhatsApp</span>';
+    if (supportFab.tagName === 'A') {
+      supportFab.setAttribute('href', whatsappSupportUrl);
+      supportFab.setAttribute('target', '_blank');
+      supportFab.setAttribute('rel', 'noopener noreferrer');
+    } else {
       supportFab.onclick = window.UniverseSupport.open;
-      supportFab.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.2c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.1.8.8-3-.2-.3A7.7 7.7 0 1 1 12 19.2Zm4.3-5.5c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.2l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.3-3.2-2.9-.2-.3.2-.5.6-1 .1-.2.1-.3 0-.5l-.7-1.8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.7 1.1 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.2-.3-.2-.5-.3Z"></path></svg><span>WhatsApp</span>';
     }
   }
 
