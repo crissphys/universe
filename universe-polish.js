@@ -11,7 +11,7 @@
     if (!document.head || document.getElementById('uts-i18n-runtime')) return;
     var runtime = document.createElement('script');
     runtime.id = 'uts-i18n-runtime';
-    runtime.src = '/universe-i18n.js?v=bilingual-11';
+    runtime.src = '/universe-i18n.js?v=bilingual-12';
     runtime.defer = true;
     document.head.appendChild(runtime);
   }
