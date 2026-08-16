@@ -2,6 +2,30 @@
   'use strict';
   var profileButtons=[].slice.call(document.querySelectorAll('[data-ci-profile]'));
   var panels=[].slice.call(document.querySelectorAll('[data-ci-panel]'));
+  var studentWarning=document.getElementById('ci-student-warning');
+  var studentWarningDialog=studentWarning&&studentWarning.querySelector('.ci-warning-dialog');
+  var studentWarningAccepted=false;
+  var pendingStudentScroll=true;
+
+  function openStudentWarning(shouldScroll){
+    pendingStudentScroll=shouldScroll!==false;
+    if(!studentWarning){showProfile('student',pendingStudentScroll);return}
+    studentWarning.hidden=false;
+    document.body.classList.add('ci-warning-open');
+    window.setTimeout(function(){
+      var accept=studentWarning.querySelector('[data-ci-warning-accept]');
+      if(accept) accept.focus();
+      else if(studentWarningDialog) studentWarningDialog.focus();
+    },30);
+  }
+
+  function closeStudentWarning(){
+    if(!studentWarning)return;
+    studentWarning.hidden=true;
+    document.body.classList.remove('ci-warning-open');
+    var studentButton=document.querySelector('[data-ci-profile="student"]');
+    if(studentButton) studentButton.focus();
+  }
 
   function showProfile(profile,shouldScroll){
     panels.forEach(function(panel){
@@ -34,9 +58,23 @@
   }
 
   profileButtons.forEach(function(button){
-    button.addEventListener('click',function(){showProfile(button.getAttribute('data-ci-profile'),true)});
+    button.addEventListener('click',function(){
+      var profile=button.getAttribute('data-ci-profile');
+      if(profile==='student'&&!studentWarningAccepted) openStudentWarning(true);
+      else showProfile(profile,true);
+    });
   });
   [].slice.call(document.querySelectorAll('[data-ci-reset]')).forEach(function(button){button.addEventListener('click',resetProfile)});
+  [].slice.call(document.querySelectorAll('[data-ci-warning-close]')).forEach(function(button){button.addEventListener('click',closeStudentWarning)});
+  var warningAccept=document.querySelector('[data-ci-warning-accept]');
+  if(warningAccept) warningAccept.addEventListener('click',function(){
+    studentWarningAccepted=true;
+    closeStudentWarning();
+    showProfile('student',pendingStudentScroll);
+  });
+  document.addEventListener('keydown',function(event){
+    if(event.key==='Escape'&&studentWarning&&!studentWarning.hidden) closeStudentWarning();
+  });
 
   var docButtons=[].slice.call(document.querySelectorAll('[data-doc]'));
   var docPanels=[].slice.call(document.querySelectorAll('[data-doc-panel]'));
@@ -54,6 +92,6 @@
   });
 
   var hash=location.hash.toLowerCase();
-  if(hash==='#estudiante') showProfile('student',false);
+  if(hash==='#estudiante') openStudentWarning(false);
   if(hash==='#familia'||hash==='#padres') showProfile('family',false);
 })();
