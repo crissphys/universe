@@ -195,6 +195,18 @@ html[data-universe-page="home"] body.home-page :where(a, button) {
 @keyframes home-orbit { to { rotate: 360deg; } }
 @keyframes home-drift { 50% { transform: translate3d(0, -26px, 0) scale(1.05); } }
 @keyframes home-twinkle { 0%, 100% { opacity: .24; transform: scale(.65); } 50% { opacity: 1; transform: scale(1.15); } }
+@keyframes home-desktop-nav-in {
+  from { opacity: 0; transform: translateY(-18px) scale(.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes home-desktop-copy-in {
+  from { opacity: 0; transform: translateY(28px); filter: blur(7px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes home-desktop-card-in {
+  from { opacity: 0; transform: translateX(34px) scale(.97); filter: blur(7px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
 
 html[data-universe-page="home"] body.home-page > :not(.home-ambient):not(.home-skip) {
   position: relative;
@@ -834,6 +846,37 @@ html[data-universe-theme="dark"] .home-world-chat-copy a { color:#8bc8ff; }
 .home-reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.22, 1, .36, 1), transform .7s cubic-bezier(.22, 1, .36, 1); }
 .home-reveal.is-visible { opacity: 1; transform: none; }
 
+/* El tema oscuro antiguo forzaba negro puro sobre cada section. En Inicio las
+   secciones dejan ver el fondo ambiental; solo las tarjetas conservan panel. */
+html[data-universe-theme="dark"][data-universe-page="home"] body.home-page main,
+html[data-universe-theme="dark"][data-universe-page="home"] body.home-page main > :where(.home-hero, .home-section) {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="home"] body.home-page main > .home-final {
+  background: var(--home-panel) !important;
+}
+
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .home-nav-inner {
+    animation: home-desktop-nav-in .68s cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .home-hero-copy > :where(.home-eyebrow, h1, .home-lead, .home-actions, .home-hero-facts) {
+    animation: home-desktop-copy-in .78s cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .home-hero-copy > h1 { animation-delay: .07s; }
+  .home-hero-copy > .home-lead { animation-delay: .14s; }
+  .home-hero-copy > .home-actions { animation-delay: .21s; }
+  .home-hero-copy > .home-hero-facts { animation-delay: .28s; }
+
+  .home-route-card {
+    animation: home-desktop-card-in .9s .16s cubic-bezier(.22, 1, .36, 1) both;
+  }
+}
+
 html[data-universe-page="home"] :where(a, button):focus-visible {
   outline: 3px solid rgba(29, 111, 232, .42) !important;
   outline-offset: 4px !important;
@@ -1046,4 +1089,49 @@ html[data-universe-page="home"] :where(a, button):focus-visible {
 @media (prefers-reduced-transparency: reduce) {
   .home-nav-inner, .home-route-card, .home-channel, .home-module, .home-exam-card, .home-admission-panel, .home-info-links a, .home-current-card, .home-guide, .home-final { backdrop-filter: none; background: #f3f8ff; }
   html[data-universe-theme="dark"] :where(.home-nav-inner, .home-route-card, .home-channel, .home-module, .home-exam-card, .home-admission-panel, .home-info-links a, .home-current-card, .home-guide, .home-final) { background: #071b43; }
+}
+
+/* En Windows algunos navegadores heredan "reducir animaciones" del sistema.
+   El Inicio conserva en escritorio el movimiento visual solicitado, con
+   desplazamientos breves y suaves. */
+@media (min-width: 761px) {
+  html[data-universe-page="home"] .home-nav-inner {
+    animation: home-desktop-nav-in .68s cubic-bezier(.22, 1, .36, 1) both !important;
+  }
+
+  html[data-universe-page="home"] .home-hero-copy > :where(.home-eyebrow, h1, .home-lead, .home-actions, .home-hero-facts) {
+    animation: home-desktop-copy-in .78s cubic-bezier(.22, 1, .36, 1) both !important;
+  }
+
+  html[data-universe-page="home"] .home-hero-copy > h1 { animation-delay: .07s !important; }
+  html[data-universe-page="home"] .home-hero-copy > .home-lead { animation-delay: .14s !important; }
+  html[data-universe-page="home"] .home-hero-copy > .home-actions { animation-delay: .21s !important; }
+  html[data-universe-page="home"] .home-hero-copy > .home-hero-facts { animation-delay: .28s !important; }
+
+  html[data-universe-page="home"] .home-route-card {
+    animation: home-desktop-card-in .9s .16s cubic-bezier(.22, 1, .36, 1) both !important;
+  }
+
+  html[data-universe-page="home"] .home-reveal {
+    opacity: 0 !important;
+    transform: translateY(22px) !important;
+    transition: opacity .7s cubic-bezier(.22, 1, .36, 1), transform .7s cubic-bezier(.22, 1, .36, 1) !important;
+  }
+
+  html[data-universe-page="home"] .home-reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html[data-universe-page="home"] .home-orbit { animation: home-orbit 34s linear infinite !important; }
+  html[data-universe-page="home"] .orbit-two { animation-direction: reverse !important; animation-duration: 48s !important; }
+  html[data-universe-page="home"] .orbit-three { animation-duration: 58s !important; }
+  html[data-universe-page="home"] .home-glow { animation: home-drift 16s ease-in-out infinite !important; }
+  html[data-universe-page="home"] .glow-two { animation-delay: -6s !important; }
+  html[data-universe-page="home"] .home-spark { animation: home-twinkle 4.5s ease-in-out infinite !important; }
+  html[data-universe-page="home"] .spark-two { animation-delay: -1.4s !important; }
+  html[data-universe-page="home"] .spark-three { animation-delay: -2.7s !important; }
+  html[data-universe-page="home"] .spark-four { animation-delay: -.8s !important; }
+  html[data-universe-page="home"] .home-float-chip { animation: home-float 7s ease-in-out infinite !important; }
+  html[data-universe-page="home"] .current-ring { animation: home-ring 15s linear infinite !important; }
 }

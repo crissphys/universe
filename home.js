@@ -55,7 +55,7 @@
     accountObserver.observe(document.body, { childList: true, subtree: true });
   }
 
-  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reducedMotion = window.innerWidth <= 760 && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var revealItems = Array.prototype.slice.call(document.querySelectorAll('.home-reveal'));
   if (reducedMotion || !('IntersectionObserver' in window)) {
     revealItems.forEach(function (item) { item.classList.add('is-visible'); });
