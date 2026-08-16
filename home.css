@@ -787,7 +787,7 @@ html[data-universe-theme="dark"] .home-vacancy-stats article,html[data-universe-
 .home-world-chat-shell::before { content:""; position:absolute; width:280px; height:280px; left:-145px; bottom:-190px; border-radius:50%; background:#635bff; opacity:.12; filter:blur(3px); pointer-events:none; }
 .home-world-chat-intro { position:relative; z-index:1; align-self:center; padding:14px 10px 14px 14px; }
 .home-world-chat-intro h2 { margin:10px 0 10px; font-size:clamp(1.6rem,2.5vw,2.65rem); line-height:1.08; }
-.home-world-chat-brand { display:flex; align-items:center; gap:10px; }
+.home-world-chat-brand { display:flex; align-items:center; gap:10px; min-height:49px; padding-block:2px; line-height:1; }
 .home-world-chat-brand-mark { display:grid; place-items:center; flex:0 0 auto; width:45px; height:45px; border-radius:15px; background:linear-gradient(145deg,#071735,#163b7a); box-shadow:0 11px 25px rgba(9,43,103,.24); color:#fff; }
 .home-world-chat-brand-mark svg { width:31px; height:31px; fill:currentColor; }
 .home-world-chat-brand small { align-self:center; margin-left:-3px; border:1px solid rgba(31,102,226,.18); border-radius:999px; background:rgba(31,102,226,.09); color:var(--home-blue); padding:5px 8px; font-family:"Manrope",sans-serif; font-size:.52rem; font-weight:900; letter-spacing:.12em; line-height:1; text-transform:uppercase; }
@@ -814,7 +814,7 @@ html[data-universe-theme="dark"] .home-vacancy-stats article,html[data-universe-
 .home-world-chat-copy a { color:#1269da; font-weight:850; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
 .home-world-chat-loading,.home-world-chat-empty { display:grid; place-items:center; min-height:175px; padding:20px; color:var(--home-muted); font-size:.68rem; text-align:center; }
 .home-world-chat-form { border-top:1px solid var(--home-line); padding:10px 12px 11px; background:rgba(249,252,255,.85); }
-.home-world-chat-form textarea { display:block; width:100%; min-height:48px; max-height:92px; resize:vertical; border:0; outline:0; background:transparent; color:var(--home-ink); font:600 .72rem/1.45 "Manrope",sans-serif; }
+.home-world-chat-form textarea { display:block; width:100%; min-height:48px; max-height:92px; resize:none; overflow:auto; border:0; outline:0; background:transparent; color:var(--home-ink); font:600 .72rem/1.45 "Manrope",sans-serif; }
 .home-world-chat-form textarea::placeholder { color:#8a9ab3; }
 .home-world-chat-compose-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .home-world-chat-compose-row > span { color:var(--home-muted); font-size:.53rem; font-weight:800; }
@@ -828,6 +828,8 @@ html[data-universe-theme="dark"] .home-world-chat-card { background:rgba(7,26,61
 html[data-universe-theme="dark"] .home-world-chat-message { background:rgba(71,120,203,.12); }
 html[data-universe-theme="dark"] .home-world-chat-form { background:rgba(4,18,46,.72); }
 html[data-universe-theme="dark"] .home-world-chat-head button { background:rgba(70,120,207,.14); }
+html[data-universe-theme="dark"] .home-world-chat-head button:hover { background:rgba(104,160,255,.22); }
+html[data-universe-theme="dark"] .home-world-chat-copy a { color:#8bc8ff; }
 
 .home-reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.22, 1, .36, 1), transform .7s cubic-bezier(.22, 1, .36, 1); }
 .home-reveal.is-visible { opacity: 1; transform: none; }

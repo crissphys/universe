@@ -2284,6 +2284,7 @@ window.UNIVERSE_I18N_CATALOG = Object.freeze({
   "Consultar fuente oficial": "Consult official source",
   "Consultar publicación": "Consult publication",
   "Consumo, ahorro e inversión Funciones de consumo y ahorro": "Consumption, savings and investment Consumption and savings functions",
+  "Contactar por WhatsApp": "Contact us on WhatsApp",
   "Contacto": "Contact",
   "Contacto | Universe to Study": "Contact | Universe to Study",
   "Contaminación ambiental: Aire, suelo y agua. Contaminantes gaseosos y enfermedades respiratorias": "Environmental pollution: Air, soil and water. Gaseous pollutants and respiratory diseases",
