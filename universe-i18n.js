@@ -434,20 +434,40 @@
     switcher.innerHTML = '<span class="uts-language-globe" aria-hidden="true">◎</span>' +
       '<button type="button" data-language="es" aria-label="Usar español">ES</button>' +
       '<button type="button" data-language="en" aria-label="Use English">EN</button>';
-    switcher.addEventListener('click', function (event) {
-      var button = event.target.closest('[data-language]');
-      if (button) setLanguage(button.dataset.language);
+    switcher.querySelectorAll('[data-language]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        setLanguage(button.dataset.language);
+      });
     });
     return switcher;
   }
 
   function ensureSwitch() {
     var nav = document.querySelector('.home-nav, body > nav, .unitalk-topbar');
-    if (!nav) return;
+    var switcher = document.querySelector('.uts-language-switch');
+    var mobile = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+    if (mobile && document.body) {
+      if (!switcher) switcher = createSwitch();
+      switcher.classList.add('uts-language-switch-standalone');
+      if (switcher.parentNode !== document.body) document.body.appendChild(switcher);
+      updateSwitches();
+      return;
+    }
+    if (!nav) {
+      if (!switcher && document.body) {
+        switcher = createSwitch();
+        switcher.classList.add('uts-language-switch-standalone');
+        document.body.appendChild(switcher);
+      }
+      updateSwitches();
+      return;
+    }
     var slot = nav.querySelector('#home-account-slot, .uts-nav-account-slot, .nav-actions, .unitalk-top-actions') || nav;
-    var switcher = nav.querySelector('.uts-language-switch');
     if (!switcher) {
       switcher = createSwitch();
+    }
+    switcher.classList.remove('uts-language-switch-standalone');
+    if (switcher.parentNode !== slot) {
       slot.insertBefore(switcher, slot.firstChild);
     }
     updateSwitches();
@@ -504,11 +524,15 @@
     ensureSwitch();
     if (language === 'en') setLanguage('en');
     else applyLanguage('es');
+    window.setTimeout(ensureSwitch, 300);
+    window.setTimeout(ensureSwitch, 1200);
   }
 
   window.addEventListener('storage', function (event) {
     if (event.key === STORAGE_KEY && SUPPORTED.indexOf(event.newValue) >= 0) setLanguage(event.newValue);
   });
+  window.addEventListener('resize', ensureSwitch);
+  window.addEventListener('orientationchange', ensureSwitch);
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
   else start();
