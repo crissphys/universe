@@ -178,12 +178,75 @@ html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-links
 html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-links a:hover,
 html[data-universe-theme="dark"][data-universe-page] .uts-unified-nav .nav-links a.active { background: rgba(91, 150, 241, .12) !important; }
 
-html[data-universe-page] .uts-nav-account-slot {
+html[data-universe-page] .uts-nav-account-slot,
+html[data-universe-page] .uts-unified-nav .nav-actions {
   grid-column: 3 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: flex-end !important;
   min-width: 112px !important;
+  gap: 8px !important;
+}
+
+.home-account-slot { gap: 8px !important; }
+
+.uts-language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 4px;
+  border: 1px solid rgba(35, 99, 199, .17);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .72);
+  box-shadow: 0 10px 24px rgba(34, 76, 143, .09);
+  font-family: var(--uts2-body, 'Manrope', sans-serif);
+}
+
+html[data-universe-theme="dark"] .uts-language-switch {
+  border-color: rgba(114, 159, 230, .23);
+  background: rgba(10, 29, 64, .82);
+}
+
+.uts-language-globe {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--uts2-blue, #2563eb);
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.uts-language-switch button {
+  min-width: 31px !important;
+  min-height: 31px !important;
+  margin: 0 !important;
+  padding: 0 7px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: var(--uts2-muted, #59708d) !important;
+  box-shadow: none !important;
+  font: 800 .68rem/1 var(--uts2-body, 'Manrope', sans-serif) !important;
+  letter-spacing: .04em !important;
+  cursor: pointer;
+}
+
+.uts-language-switch button:hover { color: var(--uts2-blue, #2563eb) !important; }
+.uts-language-switch button.active {
+  background: linear-gradient(135deg, #1d5ed1, #3188ef) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, .22) !important;
+}
+.uts-language-switch button:focus-visible { outline: 2px solid #60a5fa !important; outline-offset: 2px !important; }
+
+.unitalk-top-actions .uts-language-switch { flex: 0 0 auto; }
+@media (max-width: 1080px) {
+  .unitalk-top-actions .uts-language-switch { min-height: 38px; padding: 3px; border-radius: 12px; }
+  .unitalk-top-actions .uts-language-globe { display: none; }
+  .unitalk-top-actions .uts-language-switch button { min-width: 28px !important; min-height: 30px !important; padding: 0 4px !important; }
 }
 
 html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button {
@@ -706,7 +769,7 @@ html[data-universe-theme="dark"][data-universe-page] body > footer.uts-site-foot
     overflow-x: auto !important;
     scrollbar-width: none !important;
   }
-  html[data-universe-page] .uts-nav-account-slot { grid-column: 2 !important; grid-row: 1 !important; }
+  html[data-universe-page] :is(.uts-nav-account-slot, .uts-unified-nav .nav-actions) { grid-column: 2 !important; grid-row: 1 !important; }
   html[data-universe-page] .admission-hero { grid-template-columns: 1fr !important; }
   html[data-universe-page="cepre"] .cepre-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   html[data-universe-page="cepre"] .cepre-hub-card { grid-column: auto !important; }
@@ -748,9 +811,14 @@ html[data-universe-theme="dark"][data-universe-page] body > footer.uts-site-foot
     box-shadow: none !important;
   }
   .uts-menu-toggle span { display: block; width: 17px; height: 2px; border-radius: 2px; background: var(--uts2-ink); }
-  html[data-universe-page] .uts-nav-account-slot { grid-column: 3 !important; grid-row: 1 !important; min-width: 40px !important; }
+  html[data-universe-page] :is(.uts-nav-account-slot, .uts-unified-nav .nav-actions) { grid-column: 3 !important; grid-row: 1 !important; min-width: 40px !important; }
+  html[data-universe-page] .uts-language-switch { min-height: 40px; padding: 3px; border-radius: 12px; }
+  html[data-universe-page] .uts-language-globe { display: none; }
+  html[data-universe-page] .uts-language-switch button { min-width: 29px !important; min-height: 32px !important; padding: 0 5px !important; }
   html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button { width: 40px !important; min-width: 40px !important; min-height: 40px !important; padding: 5px !important; }
   html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button .uts-g-label { display: none !important; }
+  html[data-universe-page] .uts-unified-nav .nav-actions :is(#uts-google-auth-button, .nav-user-btn) { width: 40px !important; min-width: 40px !important; min-height: 40px !important; padding: 5px !important; overflow: hidden !important; }
+  html[data-universe-page] .uts-unified-nav .nav-actions :is(#uts-google-auth-button, .nav-user-btn) :is(.uts-g-label, span:not(.uts-language-globe)) { display: none !important; }
   html[data-universe-page] .uts-unified-nav .nav-links {
     grid-column: 1 / -1 !important;
     grid-row: 2 !important;
