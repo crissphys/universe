@@ -38,6 +38,9 @@ const ACADEMIES = [
 const ACADEMIC_TRACKS = ['cepreuni', 'uni-student', 'san-marcos', 'academy', 'independent'];
 const TARGETS = ['UNI', 'San Marcos', 'Otra universidad', 'Aún no lo decido'];
 const UNIT_ROOT = '/community/unitalkV1';
+const SITE_ROOT = '/site/universeV1';
+const SITE_PRESENCE_WINDOW_MS = 90000;
+const SITE_PRESENCE_CLEANUP_MS = 10 * 60 * 1000;
 const BLOCKED_TERMS = [
   'pornografía', 'pornografia', 'contenido sexual', 'venta de drogas',
   'amenaza de muerte', 'suicídate', 'suicidate'
@@ -632,9 +635,62 @@ async function handleSite(request, env, subpath) {
   var path = '/' + subpath.replace(/^\/+/, '').replace(/\.json$/i, '');
   var data = method === 'GET' || method === 'DELETE' ? undefined : await request.json().catch(function () { return {}; });
 
-  if (method === 'GET' && path === '/public') return json(sanitizePublicSiteData(await firebase(env, '/site/universeV1/public', 'GET')));
+  if (method === 'GET' && path === '/public') return json(sanitizePublicSiteData(await firebase(env, SITE_ROOT + '/public', 'GET')));
+
+  if (path === '/public/announcement/like' && ['GET', 'POST'].includes(method)) {
+    if (!rateLimit(request, 'announcement-like', method === 'POST' ? 20 : 60, 60000)) return json({ error: 'rate_limited' }, 429);
+    var requestUrl = new URL(request.url);
+    var likeClientId = cleanId(method === 'GET' ? requestUrl.searchParams.get('clientId') : data && data.clientId).slice(0, 64);
+    if (!auth && likeClientId.length < 16) return json({ error: 'client_required' }, 400);
+    var currentPublic = sanitizePublicSiteData(await firebase(env, SITE_ROOT + '/public', 'GET'));
+    var announcementStamp = cleanId(String(currentPublic.announcement.updatedAt || 'current')).slice(0, 32) || 'current';
+    var likeActor = auth && auth.id ? 'u_' + cleanId(auth.id) : 'd_' + likeClientId;
+    var likesRoot = SITE_ROOT + '/announcementLikes/' + announcementStamp;
+    var actorPath = likesRoot + '/' + likeActor;
+    var liked = !!(await firebase(env, actorPath, 'GET'));
+    if (method === 'POST') {
+      if (liked) {
+        await firebase(env, actorPath, 'DELETE');
+        liked = false;
+      } else {
+        await firebase(env, actorPath, 'PUT', { ts: Date.now() });
+        liked = true;
+      }
+    }
+    var likeRows = await firebase(env, likesRoot, 'GET') || {};
+    var likeCount = Object.keys(likeRows).reduce(function (total, key) { return total + (likeRows[key] ? 1 : 0); }, 0);
+    return json({ ok: true, liked: liked, likes: likeCount, announcementId: announcementStamp });
+  }
+
+  if (path === '/presence' && method === 'POST') {
+    if (!rateLimit(request, 'site-presence', 12, 60000)) return json({ error: 'rate_limited' }, 429);
+    var presenceClientId = cleanId(data && data.clientId).slice(0, 64);
+    if (presenceClientId.length < 16) return json({ error: 'client_required' }, 400);
+    var presenceNow = Date.now();
+    var presenceRoot = SITE_ROOT + '/presence';
+    await firebase(env, presenceRoot + '/' + presenceClientId, 'PATCH', {
+      ts: presenceNow,
+      page: cleanText(data && data.page, 120)
+    });
+    var presenceRows = await firebase(env, presenceRoot, 'GET') || {};
+    var activeVisitors = 0;
+    var stalePresence = {};
+    var staleCount = 0;
+    Object.keys(presenceRows).forEach(function (key) {
+      var row = presenceRows[key] || {};
+      var ts = Number(row.ts || row) || 0;
+      if (ts >= presenceNow - SITE_PRESENCE_WINDOW_MS) activeVisitors += 1;
+      else if (ts < presenceNow - SITE_PRESENCE_CLEANUP_MS && staleCount < 150) {
+        stalePresence[key] = null;
+        staleCount += 1;
+      }
+    });
+    if (staleCount) await firebase(env, presenceRoot, 'PATCH', stalePresence);
+    return json({ ok: true, active: activeVisitors, windowSeconds: SITE_PRESENCE_WINDOW_MS / 1000 });
+  }
+
   if (method === 'GET' && path.startsWith('/public/')) {
-    var publicData = sanitizePublicSiteData(await firebase(env, '/site/universeV1/public', 'GET'));
+    var publicData = sanitizePublicSiteData(await firebase(env, SITE_ROOT + '/public', 'GET'));
     return json(path === '/public/announcement' ? publicData.announcement : path === '/public/schedule' ? publicData.schedule : {});
   }
   if (path.startsWith('/public') && (!auth || !auth.admin)) return json({ error: 'admin_required' }, 403);
