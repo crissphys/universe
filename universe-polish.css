@@ -1132,3 +1132,184 @@ html[data-universe-theme="dark"][data-universe-page] #universe-theme-toggle { ba
   html[data-universe-page="unitalk"] .unitalk-brand-mark { width:34px; height:34px; border-radius:11px; }
   html[data-universe-page="unitalk"] .unitalk-brand-mark svg { width:24px; height:24px; }
 }
+
+/* ========================================================================== */
+/* TEMA OSCURO · continuidad del fondo real en todas las páginas              */
+/* ========================================================================== */
+
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) body::before,
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) body::after {
+  background: transparent !important;
+}
+
+/* Neutraliza el antiguo fondo negro de los contenedores de página sin quitar
+   el contraste de tarjetas, controles o tablas. */
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) :where(
+  .universe-static-page,
+  main,
+  main > section,
+  .universe-page-stage-inner > section,
+  .admission-page > section,
+  .cepre-page > section,
+  .exam-overview,
+  .exam-comparison,
+  .admission-hero,
+  .admission-grid-links,
+  .cepre-link-grid,
+  .classes-hero,
+  .classes-explorer,
+  .classes-grid,
+  .unitalk-device,
+  .ci-page,
+  .ci-hero,
+  .ci-selector,
+  .entrants-page,
+  .entrants-hero,
+  .entrants-summary,
+  .entrants-list
+) {
+  background: transparent !important;
+}
+
+/* Las superficies funcionales siguen siendo legibles, pero usan cristal azul
+   translúcido en vez de negro puro. */
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) :where(
+  .section,
+  .feature-card,
+  .subject-card,
+  .tool-card,
+  .sim-card,
+  .cepre-v2-shell,
+  .cepre-v2-controls,
+  .cepre-v2-summary,
+  .cp-card,
+  .cp-method-card,
+  .cp-results,
+  .cp-architecture,
+  .libv4-panel,
+  .libv4-viewer,
+  .libv4-tip,
+  .syv4-hero,
+  .syv4-group,
+  .syv4-output,
+  .syv4-guide-card,
+  .admission-card,
+  .admission-hero-card,
+  .ideal-card,
+  .selector-panel,
+  .result-panel,
+  .sources-card,
+  .cepre-hub-card,
+  .account-card,
+  .account-hero,
+  .admin-panel,
+  .legal-card,
+  .editorial-card,
+  .editorial-hero,
+  .ufe-card,
+  .classes-shell,
+  .ideal-probability,
+  .cp-history-picker,
+  .syv5-pane,
+  .entrants-search-card,
+  .entrants-card,
+  .faculty-group,
+  .unitalk-feed-shell
+) {
+  background: linear-gradient(145deg, rgba(7, 24, 57, .88), rgba(5, 18, 45, .68)) !important;
+  border-color: rgba(117, 169, 255, .20) !important;
+  backdrop-filter: blur(16px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.12) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="ranking"] .cepre-v2-table :where(th, td) {
+  background-color: rgba(5, 18, 45, .86) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="ranking"] .cepre-v2-table thead :where(th, td) {
+  background: rgba(9, 31, 70, .96) !important;
+}
+
+/* Contenedores heredados que todavía pintaban grandes rectángulos negros. */
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) :where(
+  .cp-result-body,
+  .syv5-shell,
+  .ufe-shell,
+  .unitalk-home-view,
+  .unitalk-feed,
+  .uac-analysis,
+  .uac-goal-grid,
+  .fixed-shell,
+  .docentes-shell,
+  .docentes-hero,
+  .universe-legal-shell,
+  .account-shell
+) {
+  background: transparent !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) :where(
+  .score-chart-panel,
+  .exam-kpi-panel,
+  .target-box,
+  .score-axis-card,
+  .upl-card,
+  .cepre-schedule-shell,
+  .syv5-hero,
+  .schedule-table-wrap,
+  .classes-course-card,
+  .libv4-hero,
+  .ufe-topbar,
+  .unitalk-topbar,
+  .unitalk-side-panel,
+  .ufa-card,
+  .ufa-hero-panel,
+  .ufa-section-head,
+  .ufa-card-head,
+  .fixed-course,
+  .fixed-hero,
+  .docentes-hero-copy,
+  .docentes-stat-card,
+  .teachv6,
+  .teachv6-card,
+  .article-card,
+  .side-card,
+  .summary-table-wrap,
+  .summary-table,
+  .summary-source-note,
+  .summary-topic-panel,
+  .summary-course-btn,
+  .summary-topic-btn,
+  .summary-concept,
+  .library-rail-card,
+  .universe-exam-placeholder
+) {
+  background: linear-gradient(145deg, rgba(7, 24, 57, .90), rgba(5, 18, 45, .70)) !important;
+  border-color: rgba(117, 169, 255, .20) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page]:not([data-universe-page="home"]) :where(
+  .exam-comparison,
+  .faculty-group,
+  .entrants-list
+) > header {
+  background: linear-gradient(135deg, rgba(9, 31, 70, .94), rgba(6, 23, 54, .80)) !important;
+  border-color: rgba(117, 169, 255, .20) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="fijas-cepreuni"] body :where(
+  .fixed-top,
+  .fixed-controls,
+  .fixed-kpis,
+  .fixed-course-head,
+  .fixed-section-head
+) {
+  background: linear-gradient(145deg, rgba(7, 24, 57, .92), rgba(5, 18, 45, .74)) !important;
+  border-color: rgba(117, 169, 255, .20) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page="privacy"] body .universe-legal-grid .legal-card,
+html[data-universe-theme="dark"][data-universe-page="terms"] body .universe-legal-grid .legal-card {
+  background: linear-gradient(145deg, rgba(7, 24, 57, .92), rgba(5, 18, 45, .74)) !important;
+  border-color: rgba(117, 169, 255, .20) !important;
+}
