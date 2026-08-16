@@ -242,6 +242,13 @@ html[data-universe-theme="dark"] .uts-language-switch {
 }
 .uts-language-switch button:focus-visible { outline: 2px solid #60a5fa !important; outline-offset: 2px !important; }
 
+.uts-language-switch-standalone {
+  position: fixed !important;
+  left: max(14px, env(safe-area-inset-left)) !important;
+  bottom: max(74px, calc(env(safe-area-inset-bottom) + 74px)) !important;
+  z-index: 2147483600 !important;
+}
+
 .unitalk-top-actions .uts-language-switch { flex: 0 0 auto; }
 @media (max-width: 1080px) {
   .unitalk-top-actions .uts-language-switch { min-height: 38px; padding: 3px; border-radius: 12px; }
@@ -815,6 +822,32 @@ html[data-universe-theme="dark"][data-universe-page] body > footer.uts-site-foot
   html[data-universe-page] .uts-language-switch { min-height: 40px; padding: 3px; border-radius: 12px; }
   html[data-universe-page] .uts-language-globe { display: none; }
   html[data-universe-page] .uts-language-switch button { min-width: 29px !important; min-height: 32px !important; padding: 0 5px !important; }
+  html[data-universe-page] .uts-language-switch {
+    position: fixed !important;
+    inset: auto auto max(74px, calc(env(safe-area-inset-bottom) + 74px)) max(14px, env(safe-area-inset-left)) !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: max(74px, calc(env(safe-area-inset-bottom) + 74px)) !important;
+    left: max(14px, env(safe-area-inset-left)) !important;
+    z-index: 2147483600 !important;
+    display: inline-flex !important;
+    width: auto !important;
+    min-width: 69px !important;
+    min-height: 42px !important;
+    padding: 4px !important;
+    border-color: rgba(37, 99, 235, .28) !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, .96) !important;
+    box-shadow: 0 14px 34px rgba(15, 48, 94, .2) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  html[data-universe-theme="dark"][data-universe-page] .uts-language-switch {
+    border-color: rgba(96, 165, 250, .38) !important;
+    background: rgba(5, 20, 48, .96) !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .5) !important;
+  }
   html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button { width: 40px !important; min-width: 40px !important; min-height: 40px !important; padding: 5px !important; }
   html[data-universe-page] .uts-nav-account-slot #uts-google-auth-button .uts-g-label { display: none !important; }
   html[data-universe-page] .uts-unified-nav .nav-actions :is(#uts-google-auth-button, .nav-user-btn) { width: 40px !important; min-width: 40px !important; min-height: 40px !important; padding: 5px !important; overflow: hidden !important; }
@@ -869,6 +902,12 @@ html[data-universe-theme="dark"][data-universe-page] body > footer.uts-site-foot
   .uts-footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 18px; }
   .uts-footer-brand { grid-column: 1 / -1; }
   .uts-footer-bottom { align-items: flex-start; flex-direction: column; margin-top: 34px; }
+}
+
+html[data-universe-page] body.support-v2-active .uts-language-switch {
+  z-index: 1 !important;
+  opacity: .18 !important;
+  pointer-events: none !important;
 }
 
 @media (max-width: 420px) {
