@@ -42,6 +42,14 @@ const BLOCKED_TERMS = [
   'pornografía', 'pornografia', 'contenido sexual', 'venta de drogas',
   'amenaza de muerte', 'suicídate', 'suicidate'
 ];
+const CENSORED_TERMS = [
+  'hijo de puta', 'hija de puta', 'concha tu madre', 'conchatumadre',
+  'puta', 'puto', 'mierda', 'carajo', 'pendejo', 'pendeja',
+  'huevón', 'huevon', 'webón', 'webon', 'weón', 'weon',
+  'cabrón', 'cabron', 'cojudo', 'cojuda', 'maricón', 'maricon',
+  'imbécil', 'imbecil', 'idiota', 'estúpido', 'estupido',
+  'estúpida', 'estupida', 'verga', 'ctm'
+];
 
 function cleanUsername(value) {
   return String(value || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24);
@@ -55,13 +63,26 @@ function cleanBoolean(value, fallback = false) {
   return value === true || value === 'true' ? true : value === false || value === 'false' ? false : fallback;
 }
 
+function censorText(value) {
+  var text = String(value || '');
+  CENSORED_TERMS.forEach(function (term) {
+    var escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+    var pattern = new RegExp('(^|[^\\p{L}\\p{N}_])(' + escaped + ')(?=$|[^\\p{L}\\p{N}_])', 'giu');
+    text = text.replace(pattern, function (_, prefix, word) {
+      return prefix + word.replace(/\S/g, '•');
+    });
+  });
+  return text;
+}
+
 function moderateText(value, max) {
-  var text = cleanText(value, max).replace(/\s{3,}/g, '  ');
-  var normalized = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  var original = cleanText(value, max).replace(/\s{3,}/g, '  ');
+  var normalized = original.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   var blocked = BLOCKED_TERMS.some(function (term) {
     return normalized.includes(term.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
   });
-  var links = (text.match(/https?:\/\/|www\./gi) || []).length;
+  var links = (original.match(/https?:\/\/|www\./gi) || []).length;
+  var text = censorText(original);
   return {
     text,
     allowed: !!text && !blocked && links <= 2,
@@ -250,7 +271,7 @@ function publicPoll(value, myVote) {
   var options = value.options.map(function (option, index) {
     return {
       id: cleanId(option && option.id) || 'o' + (index + 1),
-      text: cleanText(option && option.text, 80),
+      text: censorText(cleanText(option && option.text, 80)),
       votes: Math.max(0, Number(option && option.votes) || 0)
     };
   }).filter(function (option) { return option.text; });
@@ -270,8 +291,8 @@ function publicProfile(profile, viewer) {
   var canSee = isOwner || visibility === 'public' || (visibility === 'members' && !!viewer);
   var result = {
     username: cleanUsername(profile.username),
-    displayName: cleanText(profile.displayName || 'Estudiante Universe', 40),
-    bio: canSee ? cleanText(profile.bio, 160) : '',
+    displayName: censorText(cleanText(profile.displayName || 'Estudiante Universe', 40)),
+    bio: canSee ? censorText(cleanText(profile.bio, 160)) : '',
     avatar: canSee && profile.showAvatar !== false ? safeAvatar(profile.avatar) : '',
     profileVisibility: visibility,
     joinedAt: Number(profile.joinedAt) || 0
@@ -914,7 +935,7 @@ async function postView(env, post, viewer, profileCache) {
   var myPollVote = viewer && post.poll ? await firebase(env, UNIT_ROOT + '/pollVotes/' + cleanId(post.id) + '/' + viewer.id, 'GET') : null;
   return {
     id: cleanId(post.id),
-    text: cleanText(post.text, 400),
+    text: censorText(cleanText(post.text, 400)),
     discussion: post.discussion === true,
     hashtags: Array.isArray(post.hashtags) ? post.hashtags.map(cleanSlug).filter(Boolean).slice(0, 8) : extractHashtags(post.text),
     attachment: publicAttachment(post.attachment),
@@ -936,7 +957,7 @@ async function commentView(env, comment, viewer, profileCache) {
   if (!profileCache[authorId]) profileCache[authorId] = await communityProfileById(env, authorId) || {};
   return {
     id: cleanId(comment.id),
-    text: cleanText(comment.text, 250),
+    text: censorText(cleanText(comment.text, 250)),
     createdAt: Number(comment.createdAt) || 0,
     author: publicProfile(profileCache[authorId], viewer),
     canDelete: !!(viewer && (viewer.admin || viewer.id === authorId))

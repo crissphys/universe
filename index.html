@@ -26,7 +26,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Sora:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v=reveal-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-4">
-  <link rel="stylesheet" href="/home.css?v=home-6">
+  <link rel="stylesheet" href="/home.css?v=home-7">
 
   <script>
     (function () {
@@ -160,6 +160,36 @@
           </ol>
         </article>
         <div class="home-float-chip chip-community"><b>03</b><span>Conecta</span></div>
+      </div>
+    </section>
+
+    <section class="home-section home-world-chat" aria-labelledby="home-world-chat-title">
+      <div class="home-world-chat-shell home-reveal">
+        <div class="home-world-chat-intro">
+          <span class="home-section-label">Comunidad en vivo</span>
+          <h2 id="home-world-chat-title">Chat mundial Universe</h2>
+          <p>Pregunta, comparte una idea o conversa con la comunidad. Los mensajes aparecen también en UNITALK.</p>
+          <div class="home-world-chat-presence"><i aria-hidden="true"></i><span>Conectado a UNITALK</span></div>
+          <a class="home-btn home-btn-ghost home-world-chat-open" href="/unitalk">Abrir UNITALK <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="home-world-chat-card">
+          <div class="home-world-chat-head">
+            <div><strong>Últimos mensajes</strong><small>Visible para toda la comunidad</small></div>
+            <button id="home-world-chat-refresh" type="button" aria-label="Actualizar mensajes" title="Actualizar mensajes">↻</button>
+          </div>
+          <div class="home-world-chat-feed" id="home-world-chat-feed" aria-live="polite">
+            <div class="home-world-chat-loading">Cargando la conversación…</div>
+          </div>
+          <form class="home-world-chat-form" id="home-world-chat-form">
+            <label class="sr-only" for="home-world-chat-input">Escribe un mensaje para UNITALK</label>
+            <textarea id="home-world-chat-input" maxlength="400" rows="2" placeholder="Escribe algo para la comunidad…"></textarea>
+            <div class="home-world-chat-compose-row">
+              <span id="home-world-chat-count">0/400</span>
+              <button type="submit" id="home-world-chat-send">Publicar</button>
+            </div>
+            <p id="home-world-chat-status">Necesitas una cuenta de Google registrada para publicar.</p>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -344,10 +374,10 @@
       <div><h3>Practica</h3><a href="/simulacros">Simulacros</a><a href="/temario">Temario</a><a href="/unitalk">UNITALK</a><a href="/calculadora">Calculadora</a></div>
       <div><h3>Confianza</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a></div>
     </div>
-    <div class="home-footer-bottom"><span>© <b id="home-year">2026</b> Universe to Study</span><span><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><button type="button" onclick="openUniverseSupportChat()">Soporte</button></span></div>
+    <div class="home-footer-bottom"><span>© <b id="home-year">2026</b> Universe to Study</span><span><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer">Soporte por WhatsApp</a></span></div>
   </footer>
 
-  <script src="/home.js?v=home-4" defer></script>
-<script src="/universe-polish.js?v=unified-28" defer></script>
+  <script src="/home.js?v=home-5" defer></script>
+<script src="/universe-polish.js?v=unified-29" defer></script>
 </body>
 </html>

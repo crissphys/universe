@@ -542,6 +542,8 @@ html[data-universe-page] body > #universe-theme-toggle.universe-theme-toggle {
 html[data-universe-page] #support-v2-fab {
   right: max(16px, env(safe-area-inset-right)) !important;
   bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  background: linear-gradient(135deg, #0aa66b, #21c77a) !important;
+  box-shadow: 0 14px 38px rgba(7, 146, 91, .3) !important;
 }
 
 html[data-universe-page] #support-v2-hint {

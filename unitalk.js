@@ -44,7 +44,23 @@
       .replace(/[^a-z0-9_]/g, '').replace(/_+/g, '_').replace(/^_|_$/g, '').slice(0, 30);
   }
   function textWithHashtags(value) {
-    return safe(value).replace(/(^|\s)#([\p{L}\p{N}_]{2,30})/gu, function (_, prefix, tag) {
+    var source = String(value || '');
+    var output = '';
+    var cursor = 0;
+    source.replace(/https?:\/\/[^\s<>"']+/gi, function (match, offset) {
+      var url = match;
+      var tail = '';
+      while (/[.,!?;:)\]]$/.test(url)) {
+        tail = url.slice(-1) + tail;
+        url = url.slice(0, -1);
+      }
+      output += safe(source.slice(cursor, offset));
+      output += '<a class="unitalk-inline-link" href="' + safe(url) + '" target="_blank" rel="ugc nofollow noopener noreferrer">' + safe(url) + '</a>' + safe(tail);
+      cursor = offset + match.length;
+      return match;
+    });
+    output += safe(source.slice(cursor));
+    return output.replace(/(^|\s)#([\p{L}\p{N}_]{2,30})/gu, function (_, prefix, tag) {
       return prefix + '<a class="unitalk-hashtag" href="/unitalk?tag=' + encodeURIComponent(hashtagValue(tag)) + '" data-hashtag="' + safe(hashtagValue(tag)) + '">#' + safe(tag) + '</a>';
     });
   }
@@ -521,7 +537,7 @@
     var author = comment.author || {};
     return '<article class="unitalk-comment" data-comment-id="' + safe(comment.id) + '"><div class="unitalk-comment-head">' + avatar(author) +
       '<button class="unitalk-user-link" type="button" data-profile="' + safe(author.username || '') + '"><span><strong>' + safe(author.displayName || 'Estudiante Universe') + '</strong><small>@' + safe(author.username || 'usuario') + ' · ' + safe(relativeTime(comment.createdAt)) + '</small></span></button>' +
-      (comment.canDelete ? '<button class="unitalk-mini-button" type="button" data-comment-action="delete">Eliminar</button>' : '') + '</div><p>' + safe(comment.text) + '</p></article>';
+      (comment.canDelete ? '<button class="unitalk-mini-button" type="button" data-comment-action="delete">Eliminar</button>' : '') + '</div><p>' + textWithHashtags(comment.text) + '</p></article>';
   }
   async function loadConversation(postId) {
     var post = postById(postId);
