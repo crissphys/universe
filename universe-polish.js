@@ -11,7 +11,7 @@
     if (!document.head || document.getElementById('uts-i18n-runtime')) return;
     var runtime = document.createElement('script');
     runtime.id = 'uts-i18n-runtime';
-    runtime.src = '/universe-i18n.js?v=bilingual-12';
+    runtime.src = '/universe-i18n.js?v=bilingual-13';
     runtime.defer = true;
     document.head.appendChild(runtime);
   }
@@ -331,12 +331,7 @@
       '<div><h3>Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/clases">Clases</a><a href="/biblioteca">Biblioteca</a></div>' +
       '<div><h3>Practica</h3><a href="/simulacros">Simulacros</a><a href="/temario">Temario</a><a href="/unitalk">UNITALK</a><a href="/calculadora">Calculadora</a></div>' +
       '<div><h3>Confianza</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a></div>' +
-      '</div><div class="uts-footer-bottom"><span>© <b>2026</b> Universe to Study</span><span><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><button id="uts-footer-support" type="button">Soporte</button></span></div>';
-    var support = footer.querySelector('#uts-footer-support');
-    if (support) support.addEventListener('click', function () {
-      if (window.UniverseSupport && typeof window.UniverseSupport.open === 'function') window.UniverseSupport.open();
-      else if (typeof window.openUniverseSupportChat === 'function') window.openUniverseSupportChat();
-    });
+      '</div><div class="uts-footer-bottom"><span>© <b>2026</b> Universe to Study</span><span><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer">Soporte por WhatsApp</a></span></div>';
   }
 
   function ensurePageContextBar(page) {
@@ -1269,15 +1264,26 @@
     recoverRankingTable();
     initGoogleAuth();
     ensureUnifiedNavigation();
-    initFallbackSupport();
+    ['support-v2-root', 'support-v2-overlay', 'support-v2-hint', 'support-v2-panel'].forEach(function (id) {
+      var legacySupport = document.getElementById(id);
+      if (legacySupport) legacySupport.remove();
+    });
     loadUniversePublicSettings();
     setTimeout(forceRevealVisible, 120);
     setTimeout(ensureUnifiedNavigation, 160);
     setTimeout(recoverRankingTable, 700);
-    window.openUniverseSupportChat = window.openUniverseSupportChat || function () {
-      if (window.UniverseSupport && typeof window.UniverseSupport.open === 'function') window.UniverseSupport.open();
-      else openSupportLoginPanel();
+    window.UniverseSupport = {
+      open: function () { window.open('https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study', '_blank', 'noopener,noreferrer'); },
+      close: function () {}
     };
+    window.openUniverseSupportChat = window.UniverseSupport.open;
+    var supportFab = document.getElementById('support-v2-fab');
+    if (supportFab) {
+      supportFab.setAttribute('aria-label', 'Contactar por WhatsApp');
+      supportFab.setAttribute('title', 'Soporte por WhatsApp');
+      supportFab.onclick = window.UniverseSupport.open;
+      supportFab.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.2c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.1.8.8-3-.2-.3A7.7 7.7 0 1 1 12 19.2Zm4.3-5.5c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.2l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.3-3.2-2.9-.2-.3.2-.5.6-1 .1-.2.1-.3 0-.5l-.7-1.8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.7 1.1 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.2-.3-.2-.5-.3Z"></path></svg><span>WhatsApp</span>';
+    }
   }
 
   if (document.readyState === 'loading') {
