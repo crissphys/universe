@@ -97,13 +97,14 @@
   }
 
   function updateHomePresence(count) {
-    var label = document.querySelector('.home-world-chat-presence span');
-    if (!label || !Number.isFinite(Number(count))) return;
+    var value = document.querySelector('[data-active-visitor-count]');
+    var label = document.querySelector('[data-active-visitor-label]');
+    if (!value || !label || !Number.isFinite(Number(count))) return;
     count = Math.max(0, Number(count) || 0);
     var english = document.documentElement.getAttribute('data-universe-language') === 'en';
-    if (english) label.textContent = count === 1 ? '1 person active now' : count.toLocaleString('en-US') + ' people active now';
-    else label.textContent = count === 1 ? '1 persona activa ahora' : count.toLocaleString('es-PE') + ' personas activas ahora';
-    label.closest('.home-world-chat-presence').setAttribute('aria-label', label.textContent);
+    value.textContent = count.toLocaleString(english ? 'en-US' : 'es-PE');
+    label.textContent = english ? (count === 1 ? 'person active' : 'people active') : (count === 1 ? 'persona activa' : 'personas activas');
+    value.closest('.home-active-users').setAttribute('aria-label', value.textContent + ' ' + label.textContent);
   }
 
   function startSitePresence() {
