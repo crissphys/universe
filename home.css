@@ -724,7 +724,7 @@ html[data-universe-theme="dark"] .channel-tiktok { --channel:#f8fbff; --channel-
 .home-exams-heading .home-section-label { color:#d9ecff; }
 .home-exams-heading h2 { margin: 12px 0 14px; color:#fff !important; font-size:clamp(2.2rem,4.4vw,4.7rem); line-height:1.05; }
 .home-exams-heading p { max-width:760px; margin:0 auto; color:rgba(255,255,255,.78); font-size:.93rem; line-height:1.68; }
-.home-exam-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+.home-exam-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; width:min(100%,980px); margin-inline:auto; }
 .home-exam-card { --exam:#6178f2; --exam-soft:rgba(97,120,242,.12); position:relative; min-width:0; padding:25px; overflow:hidden; border:1px solid rgba(255,255,255,.72); border-radius:26px; background:rgba(247,251,255,.9); box-shadow:0 26px 58px rgba(0,40,105,.2); backdrop-filter:blur(22px) saturate(140%); }
 .home-exam-card::after { content:""; position:absolute; width:160px; height:160px; top:-95px; right:-70px; border-radius:50%; background:var(--exam); opacity:.18; filter:blur(4px); }
 .home-exam-card header { display:flex; align-items:center; justify-content:space-between; gap:10px; }
@@ -742,9 +742,8 @@ html[data-universe-theme="dark"] .channel-tiktok { --channel:#f8fbff; --channel-
 .home-exam-card.is-next { outline:3px solid rgba(255,255,255,.76); outline-offset:3px; transform:translateY(-7px); }
 .home-exam-card.is-next::before { content:"SIGUIENTE"; position:absolute; left:0; bottom:0; padding:6px 12px; border-radius:0 12px 0 0; background:var(--exam); color:#fff; font-size:.54rem; font-weight:900; letter-spacing:.08em; }
 .home-exam-card.is-complete { opacity:.68; filter:saturate(.7); }
-.exam-humanities { --exam:#7657e6; --exam-soft:rgba(118,87,230,.12); }
-.exam-math { --exam:#1174df; --exam-soft:rgba(17,116,223,.12); }
-.exam-science { --exam:#07a87a; --exam-soft:rgba(7,168,122,.12); }
+.exam-selection { --exam:#7657e6; --exam-soft:rgba(118,87,230,.12); }
+.exam-classes { --exam:#07a87a; --exam-soft:rgba(7,168,122,.12); }
 .home-exam-official { display:flex; justify-content:space-between; gap:18px; margin-top:16px; padding:15px 20px; border:1px solid rgba(255,255,255,.28); border-radius:18px; background:rgba(3,34,91,.2); color:#fff !important; font-size:.72rem; text-decoration:none !important; backdrop-filter:blur(12px); }
 .home-exam-official b { white-space:nowrap; }
 html[data-universe-theme="dark"] .home-exam-card { border-color:rgba(118,171,255,.24); background:rgba(6,25,61,.9); }
