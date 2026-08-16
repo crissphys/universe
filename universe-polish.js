@@ -60,6 +60,7 @@
   var GUEST_KEY = 'universe_guest_mode';
   var FIRST_GATE_KEY = 'universe_entry_gate_seen';
   var API_BASE = '/api';
+  var PUBLIC_CLIENT_KEY = 'universe_public_client_id';
   var GOOGLE_IDENTITY_INITIALIZED = false;
   var CURRENT_CEPRE_CYCLE = '2026-2';
   var CEPRE_CYCLES = ['2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
@@ -77,6 +78,47 @@
     return fetch(API_BASE + '/site' + route, options).then(function (response) {
       if (!response.ok) throw new Error('HTTP ' + response.status);
       return method === 'DELETE' ? null : response.json();
+    });
+  }
+
+  function getPublicClientId() {
+    try {
+      var saved = localStorage.getItem(PUBLIC_CLIENT_KEY) || '';
+      if (/^[a-zA-Z0-9_-]{16,64}$/.test(saved)) return saved;
+      var generated = typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : 'uts_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 18);
+      localStorage.setItem(PUBLIC_CLIENT_KEY, generated);
+      return generated;
+    } catch (error) {
+      window.__utsPublicClientId = window.__utsPublicClientId || ('uts_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 18));
+      return window.__utsPublicClientId;
+    }
+  }
+
+  function updateHomePresence(count) {
+    var label = document.querySelector('.home-world-chat-presence span');
+    if (!label || !Number.isFinite(Number(count))) return;
+    count = Math.max(0, Number(count) || 0);
+    var english = document.documentElement.getAttribute('data-universe-language') === 'en';
+    if (english) label.textContent = count === 1 ? '1 person active now' : count.toLocaleString('en-US') + ' people active now';
+    else label.textContent = count === 1 ? '1 persona activa ahora' : count.toLocaleString('es-PE') + ' personas activas ahora';
+    label.closest('.home-world-chat-presence').setAttribute('aria-label', label.textContent);
+  }
+
+  function startSitePresence() {
+    if (window.__utsPresenceStarted) return;
+    window.__utsPresenceStarted = true;
+    var heartbeat = function () {
+      if (document.visibilityState === 'hidden') return;
+      siteApi('/presence', 'POST', { clientId: getPublicClientId(), page: location.pathname })
+        .then(function (result) { updateHomePresence(result && result.active); })
+        .catch(function () {});
+    };
+    heartbeat();
+    window.__utsPresenceTimer = window.setInterval(heartbeat, 30000);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') heartbeat();
     });
   }
 
@@ -383,6 +425,7 @@
       '.uts-announcement-layer{position:fixed!important;inset:0!important;z-index:2147482200!important;display:flex!important;align-items:flex-start!important;justify-content:center!important;padding:max(86px,calc(env(safe-area-inset-top) + 86px)) 20px 24px!important;background:rgba(2,12,32,.55)!important;overflow:auto!important;box-sizing:border-box!important;backdrop-filter:blur(10px)!important}',
       '.uts-public-announcement{position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;display:flex!important;flex-direction:column!important;width:min(880px,100%)!important;min-height:min(430px,70dvh)!important;max-height:min(76dvh,760px)!important;border:1px solid rgba(37,99,235,.25)!important;border-radius:30px!important;background:rgba(255,255,255,.98)!important;color:#0f172a!important;box-shadow:0 35px 110px rgba(2,12,32,.42)!important;overflow:auto!important;transform:none!important;font-family:Inter,system-ui,sans-serif!important}',
       '.uts-public-announcement img{display:block;width:100%;max-height:330px;object-fit:cover;background:#eaf4ff}.uts-public-announcement div{padding:clamp(24px,4vw,42px)}.uts-public-announcement span{display:inline-flex;margin-bottom:12px;border-radius:999px;background:#eaf4ff;color:#075dcc;padding:7px 12px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.1em}.uts-public-announcement strong{display:block;padding-right:34px;font-size:clamp(24px,3vw,36px);line-height:1.12;letter-spacing:-.03em}.uts-public-announcement p{margin:15px 0 0;color:#475569;font-size:clamp(15px,1.5vw,18px);line-height:1.65}.uts-ann-close{position:absolute;right:16px;top:16px;z-index:2;width:42px;height:42px;border:1px solid rgba(255,255,255,.24);border-radius:50%;background:rgba(15,23,42,.82);color:#fff;cursor:pointer;font-size:25px;line-height:1;box-shadow:0 9px 24px rgba(15,23,42,.25)}',
+      '.uts-public-announcement .uts-announcement-actions{display:flex!important;align-items:center!important;gap:12px!important;margin-top:24px!important;padding:0!important}.uts-public-announcement .uts-ann-like{display:inline-flex!important;align-items:center!important;gap:8px!important;min-height:46px!important;border:1px solid rgba(37,99,235,.22)!important;border-radius:999px!important;background:#eef6ff!important;color:#075dcc!important;padding:10px 17px!important;font:900 13px/1 Inter,system-ui,sans-serif!important;cursor:pointer!important;box-shadow:0 10px 24px rgba(37,99,235,.10)!important}.uts-public-announcement .uts-ann-like:hover{transform:translateY(-1px)!important;background:#dfeeff!important}.uts-public-announcement .uts-ann-like[aria-pressed="true"]{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important}.uts-public-announcement .uts-ann-like:disabled{cursor:wait!important;opacity:.7!important}.uts-public-announcement .uts-ann-like b{font-size:15px!important}.uts-public-announcement .uts-ann-like-status{padding:0!important;color:#64748b!important;font-size:12px!important}',
       'html[data-universe-theme="dark"] #uts-google-auth-button,html[data-universe-theme="dark"] [data-uts-account-button="true"]{background:rgba(5,5,5,.92)!important;color:#e5f2ff!important;border-color:rgba(96,165,250,.34)!important;box-shadow:0 14px 34px rgba(0,0,0,.54)!important}',
       'html[data-universe-theme="dark"] .uts-google-card{background:#061120;color:#f8fafc;border-color:#1e3a5f}',
       'html[data-universe-theme="dark"] .uts-google-body p,html[data-universe-theme="dark"] .uts-google-user span,html[data-universe-theme="dark"] .uts-google-hint{color:#cbd5e1}',
@@ -390,7 +433,7 @@
       'html[data-universe-theme="dark"] .uts-google-support-note{background:#17110a;border-color:#92400e;color:#fde68a}html[data-universe-theme="dark"] .uts-google-support-note span{color:#fcd34d}',
       'html[data-universe-theme="dark"] .uts-google-data div{background:#071426;border-color:#1e3a5f}html[data-universe-theme="dark"] .uts-google-data dt{color:#93c5fd}html[data-universe-theme="dark"] .uts-google-data dd{color:#f8fafc}',
       'html[data-universe-theme="dark"] .uts-cepre-box{background:#071426;border-color:#1e3a5f}html[data-universe-theme="dark"] .uts-cepre-head span,html[data-universe-theme="dark"] .uts-cepre-mini,html[data-universe-theme="dark"] .uts-cepre-loading{color:#cbd5e1!important}html[data-universe-theme="dark"] .uts-cepre-grid label{color:#93c5fd}html[data-universe-theme="dark"] .uts-cepre-grid select,html[data-universe-theme="dark"] .uts-cepre-grid input{background:#050505;color:#f8fafc;border-color:#334155}',
-      'html[data-universe-theme="dark"] .uts-public-announcement{background:rgba(5,5,5,.96);color:#f8fafc;border-color:rgba(96,165,250,.34);box-shadow:0 24px 70px rgba(0,0,0,.58)}html[data-universe-theme="dark"] .uts-public-announcement p{color:#cbd5e1}',
+      'html[data-universe-theme="dark"] .uts-public-announcement{background:linear-gradient(145deg,rgba(7,24,57,.97),rgba(5,18,45,.94));color:#f8fafc;border-color:rgba(96,165,250,.34);box-shadow:0 24px 70px rgba(0,0,0,.58)}html[data-universe-theme="dark"] .uts-public-announcement p{color:#cbd5e1}html[data-universe-theme="dark"] .uts-public-announcement .uts-ann-like{background:rgba(37,99,235,.14)!important;color:#bfdbfe!important;border-color:rgba(96,165,250,.32)!important}html[data-universe-theme="dark"] .uts-public-announcement .uts-ann-like[aria-pressed="true"]{background:#2563eb!important;color:#fff!important}html[data-universe-theme="dark"] .uts-public-announcement .uts-ann-like-status{color:#94a3b8!important}',
       'body.support-v2-active #uts-google-auth-button,body.support-v2-active [data-uts-account-button="true"]{z-index:2147482400!important;pointer-events:none!important;opacity:.18!important;filter:grayscale(1)!important}',
       '@media(max-width:720px){#uts-google-auth-button,[data-uts-account-button="true"]{top:max(10px,calc(env(safe-area-inset-top) + 10px))!important;right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;padding:.52rem .7rem!important}#uts-google-auth-button .uts-g-label,[data-uts-account-button="true"] .uts-g-label{display:none}.uts-google-card{border-radius:22px}.uts-announcement-layer{padding:max(68px,calc(env(safe-area-inset-top) + 68px)) 10px 12px!important}.uts-public-announcement{width:100%!important;min-height:min(420px,calc(100dvh - 80px))!important;max-height:calc(100dvh - 80px)!important;border-radius:24px!important}.uts-public-announcement img{max-height:260px}.uts-public-announcement div{padding:24px 20px 28px}.uts-public-announcement strong{font-size:24px}.uts-public-announcement p{font-size:15px}.uts-ann-close{right:12px;top:12px;width:38px;height:38px}}',
       '#uts-google-auth-modal{align-items:center!important;justify-content:flex-start!important;padding:clamp(28px,3.4vw,58px)!important;background:#f7fbff!important;backdrop-filter:none!important;overflow:auto!important}',
@@ -1128,12 +1171,41 @@
     card.setAttribute('role', 'dialog');
     card.setAttribute('aria-modal', 'true');
     card.setAttribute('aria-labelledby', 'uts-announcement-title');
+    var announcementEnglish = document.documentElement.getAttribute('data-universe-language') === 'en';
     card.innerHTML =
       '<button type="button" class="uts-ann-close" aria-label="Cerrar comunicado">×</button>' +
       (announcement.image ? '<img alt="Comunicado Universe" src="' + safeText(announcement.image) + '">' : '') +
       '<div><span>Comunicado</span><strong id="uts-announcement-title">' + safeText(announcement.title || 'Universe to Study') + '</strong>' +
-      (announcement.text ? '<p>' + safeText(announcement.text).replace(/\n/g, '<br>') + '</p>' : '') + '</div>';
+      (announcement.text ? '<p>' + safeText(announcement.text).replace(/\n/g, '<br>') + '</p>' : '') +
+      '<div class="uts-announcement-actions"><button type="button" class="uts-ann-like" aria-pressed="false">♥ <b>0</b> ' + (announcementEnglish ? 'Like' : 'Me gusta') + '</button>' +
+      '<small class="uts-ann-like-status" aria-live="polite">' + (announcementEnglish ? 'Be the first to react' : 'Sé la primera persona en reaccionar') + '</small></div></div>';
     layer.appendChild(card);
+    var likeButton = card.querySelector('.uts-ann-like');
+    var likeStatus = card.querySelector('.uts-ann-like-status');
+    function updateAnnouncementLike(result) {
+      result = result || {};
+      var count = Math.max(0, Number(result.likes) || 0);
+      var liked = result.liked === true;
+      likeButton.setAttribute('aria-pressed', liked ? 'true' : 'false');
+      likeButton.querySelector('b').textContent = count.toLocaleString(announcementEnglish ? 'en-US' : 'es-PE');
+      likeStatus.textContent = announcementEnglish
+        ? (liked ? 'You liked this announcement' : count === 1 ? '1 reaction' : count + ' reactions')
+        : (liked ? 'Te gusta este comunicado' : count === 1 ? '1 reacción' : count + ' reacciones');
+    }
+    function loadAnnouncementLike() {
+      return siteApi('/public/announcement/like?clientId=' + encodeURIComponent(getPublicClientId()), 'GET')
+        .then(updateAnnouncementLike)
+        .catch(function () { likeStatus.textContent = announcementEnglish ? 'Reaction unavailable' : 'Reacción no disponible'; });
+    }
+    likeButton.onclick = function () {
+      if (likeButton.disabled) return;
+      likeButton.disabled = true;
+      siteApi('/public/announcement/like', 'POST', { clientId: getPublicClientId() })
+        .then(updateAnnouncementLike)
+        .catch(function () { likeStatus.textContent = announcementEnglish ? 'Could not save your reaction' : 'No se pudo guardar tu reacción'; })
+        .finally(function () { likeButton.disabled = false; });
+    };
+    loadAnnouncementLike();
     function closeAnnouncement() {
       try { if (stamp) localStorage.setItem('uts_announcement_closed', stamp); } catch (error) {}
       layer.remove();
@@ -1269,6 +1341,7 @@
       if (legacySupport) legacySupport.remove();
     });
     loadUniversePublicSettings();
+    startSitePresence();
     setTimeout(forceRevealVisible, 120);
     setTimeout(ensureUnifiedNavigation, 160);
     setTimeout(recoverRankingTable, 700);
