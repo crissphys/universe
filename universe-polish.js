@@ -1,4 +1,23 @@
 (function () {
+  try {
+    var preferredLanguage = localStorage.getItem('universe_language');
+    if (preferredLanguage === 'en' || preferredLanguage === 'es') {
+      document.documentElement.dataset.universeLanguage = preferredLanguage;
+      document.documentElement.lang = preferredLanguage;
+    }
+  } catch (_) {}
+
+  function installUniverseI18n() {
+    if (!document.head || document.getElementById('uts-i18n-runtime')) return;
+    var runtime = document.createElement('script');
+    runtime.id = 'uts-i18n-runtime';
+    runtime.src = '/universe-i18n.js?v=bilingual-7';
+    runtime.defer = true;
+    document.head.appendChild(runtime);
+  }
+
+  installUniverseI18n();
+
   function installUniverseDesignV2() {
     if (!document.head) return;
     if (!document.getElementById('uts-fonts-v2')) {
@@ -12,7 +31,7 @@
       var design = document.createElement('link');
       design.id = 'uts-design-v2';
       design.rel = 'stylesheet';
-      design.href = '/universe-design-v2.css?v=system-5';
+      design.href = '/universe-design-v2.css?v=system-7';
       document.head.appendChild(design);
     }
 
