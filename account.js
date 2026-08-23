@@ -14,7 +14,7 @@
     secureSessionRefreshed: false,
     public: {},
     reports: [],
-    announcementImage: '',
+    announcementImages: [],
     extraEvents: []
   };
 
@@ -358,9 +358,9 @@
     $('ann-active').value = String(a.active !== false);
     $('ann-title').value = a.title || '';
     $('ann-text').value = a.text || '';
-    $('ann-image-url').value = a.image && String(a.image).indexOf('data:') !== 0 ? a.image : '';
-    state.announcementImage = a.image || '';
-    if (a.image) { $('ann-preview').src = a.image; $('ann-preview').style.display = 'block'; }
+    state.announcementImages = Array.isArray(a.images) ? a.images.slice() : (a.image ? [a.image] : []);
+    $('ann-image-url').value = state.announcementImages.filter(function (src) { return String(src).indexOf('data:') !== 0; }).join('\n');
+    renderAnnouncementImages();
     $('final-title').value = (c.final && c.final.title) || 'Examen final CEPREUNI';
     $('final-target').value = fromIso(c.final && c.final.target) || '2026-08-02T09:00';
     $('final-label').value = (c.final && c.final.label) || 'Dom. 2 ago - 9:00 AM';
@@ -411,10 +411,32 @@
     renderEvents();
     status('schedule-status', 'Evento agregado. Presiona Guardar fechas para publicarlo.', 'warn');
   }
+  function announcementUrls() {
+    var value = $('ann-image-url') ? $('ann-image-url').value : '';
+    return String(value || '').split(/\r?\n/).map(function (src) { return src.trim(); }).filter(function (src) { return /^https:\/\/[^\s"'<>]+$/i.test(src); });
+  }
+  function syncAnnouncementUrls() {
+    var uploaded = state.announcementImages.filter(function (src) { return String(src).indexOf('data:image/') === 0; });
+    state.announcementImages = uploaded.concat(announcementUrls()).filter(function (src, index, list) { return list.indexOf(src) === index; });
+  }
+  function renderAnnouncementImages() {
+    var root = $('ann-preview-gallery');
+    if (!root) return;
+    root.innerHTML = state.announcementImages.map(function (src, index) {
+      return '<figure class="announcement-preview-item"><img src="' + safe(src) + '" alt="Vista previa ' + (index + 1) + '"><button type="button" data-remove-ann-image="' + index + '" aria-label="Quitar imagen ' + (index + 1) + '">×</button></figure>';
+    }).join('');
+    root.querySelectorAll('[data-remove-ann-image]').forEach(function (button) {
+      button.onclick = function () {
+        state.announcementImages.splice(Number(button.dataset.removeAnnImage), 1);
+        $('ann-image-url').value = state.announcementImages.filter(function (src) { return String(src).indexOf('data:') !== 0; }).join('\n');
+        renderAnnouncementImages();
+      };
+    });
+  }
   async function saveAnnouncement() {
     if (!isAdmin()) return;
-    var image = $('ann-image-url').value.trim() || state.announcementImage || '';
-    await api('/public/announcement', 'PUT', { active: $('ann-active').value === 'true', title: $('ann-title').value.trim(), text: $('ann-text').value.trim(), image: image, updatedAt: Date.now(), updatedBy: state.user.email });
+    syncAnnouncementUrls();
+    await api('/public/announcement', 'PUT', { active: $('ann-active').value === 'true', title: $('ann-title').value.trim(), text: $('ann-text').value.trim(), image: state.announcementImages[0] || '', images: state.announcementImages, updatedAt: Date.now(), updatedBy: state.user.email });
     status('ann-status', 'Comunicado publicado correctamente.', 'good');
   }
   async function saveSchedule() {
@@ -478,13 +500,26 @@
     document.querySelector('[data-save-ann]').onclick = saveAnnouncement;
     document.querySelector('[data-save-schedule]').onclick = saveSchedule;
     document.querySelector('[data-add-event]').onclick = addEvent;
+    $('ann-image-url').addEventListener('change', function () { syncAnnouncementUrls(); renderAnnouncementImages(); });
     $('ann-image-file').onchange = function () {
-      var f = this.files && this.files[0];
-      if (!f) return;
-      if (f.size > 750000) { status('ann-status', 'La imagen debe pesar menos de 750 KB.', 'bad'); this.value = ''; return; }
-      var r = new FileReader();
-      r.onload = function () { state.announcementImage = String(r.result || ''); $('ann-preview').src = state.announcementImage; $('ann-preview').style.display = 'block'; };
-      r.readAsDataURL(f);
+      var input = this;
+      var files = Array.from(input.files || []);
+      if (!files.length) return;
+      var valid = files.filter(function (file) { return /^image\/(?:png|jpeg|webp)$/i.test(file.type) && file.size <= 750000; });
+      if (valid.length !== files.length) status('ann-status', 'Se omitieron imágenes inválidas o mayores de 750 KB.', 'bad');
+      Promise.all(valid.map(function (file) {
+        return new Promise(function (resolve) {
+          var reader = new FileReader();
+          reader.onload = function () { resolve(String(reader.result || '')); };
+          reader.onerror = function () { resolve(''); };
+          reader.readAsDataURL(file);
+        });
+      })).then(function (images) {
+        state.announcementImages = state.announcementImages.concat(images.filter(Boolean)).filter(function (src, index, list) { return list.indexOf(src) === index; });
+        renderAnnouncementImages();
+        if (valid.length === files.length) status('ann-status', valid.length + (valid.length === 1 ? ' imagen añadida.' : ' imágenes añadidas.'), 'good');
+      });
+      input.value = '';
     };
     $('community-avatar-file').onchange = function () {
       var file = this.files && this.files[0];

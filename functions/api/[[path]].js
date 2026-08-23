@@ -339,13 +339,20 @@ function sanitizePublicSiteData(data) {
   data = data && typeof data === 'object' ? data : {};
   var announcement = data.announcement && typeof data.announcement === 'object' ? data.announcement : {};
   var schedule = data.schedule && typeof data.schedule === 'object' ? data.schedule : {};
-  var publicImage = sanitizeImage(announcement.image);
+  var publicImages = [];
+  var rawImages = Array.isArray(announcement.images) ? announcement.images : [];
+  if (announcement.image) rawImages = [announcement.image].concat(rawImages);
+  rawImages.forEach(function (value) {
+    var publicImage = sanitizeImage(value);
+    if (publicImage && !publicImages.includes(publicImage.src)) publicImages.push(publicImage.src);
+  });
   return {
     announcement: {
       active: announcement.active !== false,
       title: cleanText(announcement.title, 120),
       text: cleanText(announcement.text, 1200),
-      image: publicImage ? publicImage.src : '',
+      image: publicImages[0] || '',
+      images: publicImages,
       updatedAt: Number(announcement.updatedAt) || 0
     },
     schedule: {
