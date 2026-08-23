@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v=unitalk-app-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
-  <link rel="stylesheet" href="/unitalk.css?v=unitalk-mobile-10">
+  <link rel="stylesheet" href="/unitalk.css?v=unitalk-comments-1">
   <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
@@ -134,7 +134,7 @@
     <section class="unitalk-conversation-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-conversation-title">
       <header><strong id="unitalk-conversation-title">Conversación</strong><button type="button" data-close-modal="unitalk-conversation-modal" aria-label="Cerrar">×</button></header>
       <div id="unitalk-conversation-content" class="unitalk-conversation-content"><div class="unitalk-loading">Cargando conversación...</div></div>
-      <footer class="unitalk-comment-compose"><textarea id="unitalk-comment-input" maxlength="250" placeholder="Escribe un comentario respetuoso..." aria-label="Comentario"></textarea><button id="unitalk-comment-send" type="button">Comentar</button></footer>
+      <form class="unitalk-comment-compose" id="unitalk-comment-form"><textarea id="unitalk-comment-input" maxlength="250" placeholder="Escribe un comentario respetuoso..." aria-label="Comentario"></textarea><button id="unitalk-comment-send" type="submit">Comentar</button></form>
     </section>
   </div>
 
@@ -148,7 +148,7 @@
 
   <div id="unitalk-toast" class="unitalk-toast" role="status" aria-live="polite"></div>
 
-  <script src="/unitalk.js?v=unitalk-mobile-7" defer></script>
+  <script src="/unitalk.js?v=unitalk-comments-1" defer></script>
 <script src="/universe-polish.js?v=unified-31" defer></script>
 </body>
 </html>

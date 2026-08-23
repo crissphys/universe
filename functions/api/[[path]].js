@@ -78,7 +78,8 @@ function censorText(value) {
   return text;
 }
 
-function moderateText(value, max) {
+function moderateText(value, max, maxLinks) {
+  if (maxLinks === undefined) maxLinks = 2;
   var original = cleanText(value, max).replace(/\s{3,}/g, '  ');
   var normalized = original.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   var blocked = BLOCKED_TERMS.some(function (term) {
@@ -88,8 +89,8 @@ function moderateText(value, max) {
   var text = censorText(original);
   return {
     text,
-    allowed: !!text && !blocked && links <= 2,
-    reason: blocked ? 'contenido_no_permitido' : links > 2 ? 'demasiados_enlaces' : !text ? 'contenido_vacio' : ''
+    allowed: !!text && !blocked && (!Number.isFinite(maxLinks) || links <= maxLinks),
+    reason: blocked ? 'contenido_no_permitido' : Number.isFinite(maxLinks) && links > maxLinks ? 'demasiados_enlaces' : !text ? 'contenido_vacio' : ''
   };
 }
 
@@ -1488,7 +1489,7 @@ async function handleUnitalk(request, env, subpath) {
     var commentPostId = cleanId(commentsMatch[1]);
     var parentPost = await firebase(env, UNIT_ROOT + '/posts/' + commentPostId, 'GET');
     if (!parentPost || parentPost.status === 'removed') return json({ error: 'post_not_found' }, 404);
-    var commentText = moderateText(body.text, 250);
+    var commentText = moderateText(body.text, 250, Infinity);
     if (!commentText.allowed) return json({ error: commentText.reason }, 400);
     var commentId = newCommunityId('c');
     var newComment = { id: commentId, authorId: auth.id, text: commentText.text, status: 'visible', createdAt: Date.now() };

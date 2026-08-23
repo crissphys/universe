@@ -47,7 +47,7 @@
     var source = String(value || '');
     var output = '';
     var cursor = 0;
-    source.replace(/https?:\/\/[^\s<>"']+/gi, function (match, offset) {
+    source.replace(/(?:https?:\/\/|www\.)[^\s<>"']+/gi, function (match, offset) {
       var url = match;
       var tail = '';
       while (/[.,!?;:)\]]$/.test(url)) {
@@ -55,7 +55,8 @@
         url = url.slice(0, -1);
       }
       output += safe(source.slice(cursor, offset));
-      output += '<a class="unitalk-inline-link" href="' + safe(url) + '" target="_blank" rel="ugc nofollow noopener noreferrer">' + safe(url) + '</a>' + safe(tail);
+      var href = /^www\./i.test(url) ? 'https://' + url : url;
+      output += '<a class="unitalk-inline-link" href="' + safe(href) + '" target="_blank" rel="ugc nofollow noopener noreferrer">' + safe(url) + '</a>' + safe(tail);
       cursor = offset + match.length;
       return match;
     });
@@ -221,7 +222,7 @@
       profile_required: 'Completa tu perfil público y académico antes de participar.',
       rate_limited: 'Estás realizando acciones muy rápido. Espera un momento.',
       contenido_no_permitido: 'El texto incumple las normas de convivencia.',
-      demasiados_enlaces: 'Solo se permiten hasta dos enlaces.',
+      demasiados_enlaces: 'Las publicaciones permiten hasta dos enlaces; los comentarios no tienen ese límite.',
       contenido_vacio: 'Escribe un mensaje antes de publicar.',
       post_not_found: 'La publicación ya no está disponible.',
       forbidden: 'No tienes permiso para realizar esta acción.',
@@ -720,7 +721,7 @@
     $('unitalk-search-input').addEventListener('input', function () { state.search = this.value.trim(); $('unitalk-search-clear').hidden = !state.search; if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); });
     $('unitalk-search-clear').onclick = function () { $('unitalk-search-input').value = ''; state.search = ''; this.hidden = true; if (location.search) history.replaceState({}, '', location.pathname); if (state.view === 'home') renderFeed(); else if (state.view === 'explore') renderPage('explore'); };
     document.querySelectorAll('.unitalk-tab').forEach(function (button) { button.onclick = function () { state.filter = button.dataset.filter; document.querySelectorAll('.unitalk-tab').forEach(function (tab) { tab.classList.toggle('active', tab === button); }); renderFeed(); }; });
-    $('unitalk-comment-send').onclick = sendComment;
+    $('unitalk-comment-form').addEventListener('submit', function (event) { event.preventDefault(); sendComment(); });
     $('unitalk-comment-input').addEventListener('keydown', function (event) { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') sendComment(); });
     document.addEventListener('click', function (event) {
       var viewButton = event.target.closest('[data-view]');
