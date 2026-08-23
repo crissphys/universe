@@ -57,7 +57,12 @@
     .code-lock{display:inline-flex;border-radius:999px;padding:6px 10px;background:#ecfdf5;color:#166534;font-weight:900;font-size:.78rem}
     .admin-panel{display:none}.admin-panel.active{display:grid;gap:18px}
     .admin-event-list{display:grid;gap:8px;margin-top:10px}.admin-event{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;padding:10px 12px}.admin-event small{color:#64748b}
-    .announcement-preview{display:none;margin-top:10px;max-width:100%;border-radius:18px;border:1px solid #dbeafe}
+    .announcement-preview-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+    .announcement-preview-gallery:empty{display:none}
+    .announcement-preview-item{position:relative;overflow:hidden;min-height:130px;margin:0;border-radius:18px;border:1px solid #dbeafe;background:#eef6ff}
+    .announcement-preview-item img{display:block;width:100%;height:150px;object-fit:cover}
+    .announcement-preview-item button{position:absolute;right:8px;top:8px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(15,23,42,.82);color:#fff;font-size:20px;cursor:pointer}
+    .announcement-image-help{grid-column:1/-1;margin:0;color:#64748b;font-size:.78rem;line-height:1.45}
     .account-community{grid-column:1/-1}
     .account-community-grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:22px;align-items:start}
     .account-avatar-editor{text-align:center}.account-avatar-editor .account-avatar{width:112px;height:112px;margin:0 auto 12px;font-size:2.2rem}
@@ -224,10 +229,11 @@
           <div class="account-field"><label>Activo</label><select id="ann-active"><option value="true">Mostrar</option><option value="false">Ocultar</option></select></div>
           <div class="account-field"><label>Título</label><input id="ann-title" placeholder="Nuevo comunicado"></div>
           <div class="account-field full"><label>Mensaje</label><textarea id="ann-text" placeholder="Escribe el comunicado que verán todos."></textarea></div>
-          <div class="account-field"><label>Imagen por URL</label><input id="ann-image-url" placeholder="https://..."></div>
-          <div class="account-field"><label>Subir imagen</label><input id="ann-image-file" type="file" accept="image/png,image/jpeg,image/webp"></div>
+          <div class="account-field"><label>Imágenes por URL</label><textarea id="ann-image-url" placeholder="Una dirección https:// por línea"></textarea></div>
+          <div class="account-field"><label>Subir imágenes</label><input id="ann-image-file" type="file" accept="image/png,image/jpeg,image/webp" multiple></div>
+          <p class="announcement-image-help">Puedes añadir todas las fotos que necesites. Cada archivo debe pesar menos de 750 KB para que el comunicado cargue con rapidez.</p>
         </div>
-        <img id="ann-preview" class="announcement-preview" alt="Vista previa">
+        <div id="ann-preview-gallery" class="announcement-preview-gallery" aria-label="Imágenes del comunicado"></div>
         <div class="account-actions"><button class="account-btn" type="button" data-save-ann>Publicar comunicado</button></div>
         <div id="ann-status" class="account-status">Los usuarios lo verán en la página principal.</div>
       </article>
@@ -260,7 +266,7 @@
 </main>
 
 <script src="cepre-codes.js?v=account-5"></script>
-<script src="/universe-polish.js?v=unified-31" defer></script>
-<script src="account.js?v=unitalk-4" defer></script>
+<script src="/universe-polish.js?v=unified-33" defer></script>
+<script src="account.js?v=announcement-gallery-1" defer></script>
 </body>
 </html>
