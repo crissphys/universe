@@ -3,6 +3,8 @@
 
   var root=document.getElementById('fixed-app');
   var source=window.UNIVERSE_CEPRE_FIXED;
+  var selectionSource=window.UNIVERSE_CEPRE_SELECTION_FIXED;
+  if(source&&Array.isArray(source.examTypes)&&selectionSource&&!source.examTypes.some(function(exam){return exam.id==='seleccion'}))source.examTypes.push(selectionSource);
   if(!root||!source||!source.examTypes||!source.examTypes.length)return;
 
   var state={examType:source.examTypes[0].id,category:'Todos',course:'all',query:'',showAll:false,sort:'frequency'};
