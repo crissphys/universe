@@ -192,14 +192,9 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     exam = build(args.source_dir)
-    payload = (
-        "(function(){\n"
-        "  'use strict';\n"
-        "  var source=window.UNIVERSE_CEPRE_FIXED;\n"
-        "  if(!source||!Array.isArray(source.examTypes)||source.examTypes.some(function(exam){return exam.id==='seleccion'}))return;\n"
-        "  source.examTypes.push(" + json.dumps(exam, ensure_ascii=False, separators=(",", ":")) + ");\n"
-        "})();\n"
-    )
+    payload = "window.UNIVERSE_CEPRE_SELECTION_FIXED = " + json.dumps(
+        exam, ensure_ascii=False, separators=(",", ":")
+    ) + ";\n"
     args.output.write_text(payload, encoding="utf-8")
     print(json.dumps(exam["summary"], ensure_ascii=False))
     for course in exam["courses"]:
