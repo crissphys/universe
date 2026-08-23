@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v=reveal-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
-  <link rel="stylesheet" href="/fijas-cepreuni.css?v=fijas-2">
+  <link rel="stylesheet" href="/fijas-cepreuni.css?v=fijas-4">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
 </head>
@@ -44,11 +44,11 @@
 <main class="fixed-page" id="fixed-app">
   <div class="fixed-shell">
     <section class="fixed-hero">
-      <div class="fixed-hero-copy"><span class="fixed-kicker">CEPREUNI · Historial por tema</span><h1>Fijas CEPREUNI</h1><p>Descubre qué temas aparecieron en evaluaciones anteriores, cuántas preguntas tuvieron y en cuántos ciclos se repitieron. Actualmente se muestran los exámenes finales disponibles; la sección está preparada para incorporar nuevas evaluaciones.</p><div class="fixed-hero-actions"><a class="fixed-btn primary" href="#fixed-controls">Explorar tablas</a><a class="fixed-btn ghost" href="/cepreuni">Volver a CEPREUNI</a></div></div>
+      <div class="fixed-hero-copy"><span class="fixed-kicker">CEPREUNI · Historial por tema</span><h1>Fijas CEPREUNI</h1><p>Compara los temas frecuentes de las pruebas de selección y los exámenes finales. Revisa cuántas veces apareció cada tema, su recurrencia y el tipo de problema habitual.</p><div class="fixed-hero-actions"><a class="fixed-btn primary" href="#fixed-controls">Explorar estadísticas</a><a class="fixed-btn ghost" href="/cepreuni">Volver a CEPREUNI</a></div></div>
       <aside class="fixed-method"><span>Cómo leer los datos</span><strong>Recurrencia no significa garantía</strong><p>Una aparición indica cuántas preguntas de ese tema fueron identificadas en un examen. La presencia indica en cuántos exámenes distintos apareció.</p><small>Úsalo para priorizar tu repaso sin dejar de estudiar el temario oficial completo.</small></aside>
     </section>
 
-    <section class="fixed-kpis" aria-label="Resumen de datos"><article class="fixed-kpi"><span>Exámenes analizados</span><b>8</b><small>Desde 2022-2 hasta 2026-1</small></article><article class="fixed-kpi"><span>Cursos</span><b>15</b><small>Matemática, ciencias y humanidades</small></article><article class="fixed-kpi"><span>Temas con aparición</span><b>134</b><small>De 303 temas revisados</small></article><article class="fixed-kpi"><span>Apariciones registradas</span><b>447</b><small>Conteo total de preguntas</small></article></section>
+    <section class="fixed-kpis" aria-label="Resumen de datos"><article class="fixed-kpi"><span id="fixed-kpi-exams-label">Exámenes analizados</span><b id="fixed-kpi-exams">8</b><small id="fixed-kpi-exams-note">Desde 2022-2 hasta 2026-1</small></article><article class="fixed-kpi"><span>Cursos</span><b id="fixed-kpi-courses">15</b><small id="fixed-kpi-courses-note">Matemática, ciencias y humanidades</small></article><article class="fixed-kpi"><span>Temas con aparición</span><b id="fixed-kpi-topics">134</b><small id="fixed-kpi-topics-note">De 303 temas revisados</small></article><article class="fixed-kpi"><span>Apariciones registradas</span><b id="fixed-kpi-appearances">447</b><small id="fixed-kpi-appearances-note">Conteo total de preguntas</small></article></section>
 
     <section class="fixed-controls" id="fixed-controls" aria-label="Filtros de las tablas">
       <div class="fixed-control-grid"><label class="fixed-field"><span>Buscar tema o curso</span><input id="fixed-search" type="search" placeholder="Ej. electrodinámica, matrices, historia..."></label><label class="fixed-field"><span>Tipo de evaluación</span><select id="fixed-exam"></select></label><label class="fixed-field"><span>Curso</span><select id="fixed-course"></select></label></div>
@@ -56,15 +56,15 @@
       <div class="fixed-control-foot"><label class="fixed-check"><input id="fixed-show-all" type="checkbox"><span>Mostrar también temas sin apariciones</span></label><label class="fixed-field"><span>Ordenar por</span><select class="fixed-sort" id="fixed-sort"><option value="frequency">Más repetidos</option><option value="syllabus">Orden del temario</option><option value="alpha">A–Z</option></select></label><strong class="fixed-result-count" id="fixed-result-count" aria-live="polite"></strong></div>
     </section>
 
-    <section class="fixed-top"><header class="fixed-section-head"><div><span>Lectura rápida</span><h2>Temas con más apariciones</h2></div><p>La lista se actualiza al buscar o filtrar. Presiona un tema para ir directamente a la tabla de su curso.</p></header><div class="fixed-top-grid" id="fixed-top-grid"></div></section>
+    <section class="fixed-top"><header class="fixed-section-head"><div><span>Lectura rápida</span><h2>Temas con más apariciones</h2></div><p id="fixed-top-description">La lista se actualiza al buscar o filtrar. Presiona un tema para ir directamente a la tabla de su curso.</p></header><div class="fixed-top-grid" id="fixed-top-grid"></div></section>
     <div class="fixed-course-nav" id="fixed-course-nav" aria-label="Ir a un curso"></div>
     <div class="fixed-tables" id="fixed-tables"><div class="fixed-empty">Cargando tablas históricas...</div></div>
-    <aside class="fixed-note"><strong>Alcance actual:</strong> datos de exámenes finales CEPREUNI 2022-2, 2023-1, 2023-2, 2024-1, 2024-2, 2025-1, 2025-2 y 2026-1. Los conteos sirven como referencia histórica y no reemplazan el temario oficial.</aside>
+    <aside class="fixed-note" id="fixed-note"><strong>Alcance actual:</strong> datos de exámenes finales CEPREUNI 2022-2, 2023-1, 2023-2, 2024-1, 2024-2, 2025-1, 2025-2 y 2026-1. Los conteos sirven como referencia histórica y no reemplazan el temario oficial.</aside>
     <noscript><div class="fixed-empty">Activa JavaScript para consultar y filtrar las tablas.</div></noscript>
   </div>
 </main>
 
 <footer><div class="footer-top"><div><div class="footer-logo">Universe to Study</div><div class="footer-tagline">Recursos, seguimiento y comunidad para postulantes UNI y estudiantes CEPREUNI.</div></div><div class="footer-links"><h4>Páginas</h4><ul><li><a href="/">Inicio</a></li><li><a href="/admision">Admisión</a></li><li><a href="/cepreuni">CEPREUNI</a></li><li><a href="/temario">Temario</a></li><li><a href="/clases">Clases</a></li><li><a href="/biblioteca">Biblioteca</a></li><li><a href="/simulacros">Simulacros</a></li><li><a href="/privacidad">Privacidad</a></li></ul></div><div class="footer-links"><h4>CEPREUNI</h4><ul><li><a href="/ranking">Ranking de promedios</a></li><li><a href="/calculadora">Calculadora CEPREUNI</a></li><li><a href="/fijas-cepreuni">Fijas CEPREUNI</a></li><li><a href="/temario#temario-cepreuni">Temario CEPREUNI</a></li><li><a href="/examenes">Exámenes CEPREUNI</a></li><li><a href="/docentes-cepreuni">Guía de aulas</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 Universe to Study. Todos los derechos reservados.</div><div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div></div></footer>
-<script src="/fijas-cepreuni-data.js?v=fijas-2"></script><script src="/fijas-cepreuni.js?v=fijas-2" defer></script><script src="/universe-admission.js?v=security-3"></script><script src="/universe-polish.js?v=unified-31" defer></script>
+<script src="/fijas-cepreuni-data.js?v=fijas-2"></script><script src="/fijas-cepreuni-seleccion-data.js?v=fijas-4"></script><script src="/fijas-cepreuni.js?v=fijas-4" defer></script><script src="/universe-admission.js?v=security-3"></script><script src="/universe-polish.js?v=unified-31" defer></script>
 </body>
 </html>
