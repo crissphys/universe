@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/style.css?v=reveal-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
   <link rel="stylesheet" href="/universe-design-v2.css?v=design-2">
-  <link rel="stylesheet" href="/planner.css?v=planner-3">
+  <link rel="stylesheet" href="/planner.css?v=planner-4">
 </head>
 <body>
   <div id="universe-page-loader" role="status" aria-live="polite">
@@ -112,7 +112,10 @@
             <button class="planner-inline-back" type="button" data-profile-choice-back>← <span data-planner-t="back">Atrás</span></button>
             <div class="planner-subheading"><div><h4 data-planner-t="academyQuestion">¿En qué academia estudias?</h4><p data-planner-t="academyHelp">Elige una opción o escribe el nombre de otra academia.</p></div><label class="planner-search"><span>⌕</span><input id="academy-search" type="search" placeholder="Buscar academia"></label></div>
             <div class="academy-grid" id="academy-grid"></div>
-            <label class="planner-field" id="custom-academy-wrap" hidden><span data-planner-t="otherAcademy">Nombre de la otra academia</span><input id="custom-academy" maxlength="60" placeholder="Escribe el nombre completo"></label>
+            <div class="planner-custom-academy" id="custom-academy-wrap" hidden>
+              <label class="planner-field"><span data-planner-t="otherAcademy">Nombre de la otra academia</span><input id="custom-academy" maxlength="60" placeholder="Escribe el nombre completo"></label>
+              <button class="planner-primary planner-subview-continue" id="planner-custom-academy-continue" type="button"><span data-planner-t="continue">Continuar</span> →</button>
+            </div>
           </div>
         </section>
 
@@ -146,12 +149,12 @@
           <div class="planner-plan-preview" id="planner-preview"></div>
         </section>
 
-        <footer class="planner-wizard-actions">
+        <div class="planner-wizard-actions">
           <button class="planner-secondary" id="planner-back" type="button" hidden>← <span data-planner-t="back">Atrás</span></button>
           <p id="planner-setup-status" role="status" aria-live="polite"></p>
           <button class="planner-primary" id="planner-next" type="button"><span data-planner-t="continue">Continuar</span> →</button>
           <button class="planner-primary generate" id="planner-generate" type="submit" hidden><span data-planner-t="generate">Crear mi cronograma</span> <b>✦</b></button>
-        </footer>
+        </div>
       </form>
     </section>
 
@@ -194,7 +197,7 @@
             <div class="planner-view-tabs"><button class="active" data-calendar-view="week" type="button" data-planner-t="week">Semana</button><button data-calendar-view="month" type="button" data-planner-t="month">Mes</button><button class="planner-add-event" id="planner-add-event" type="button">＋ <span data-planner-t="addBlock">Añadir bloque</span></button></div>
           </header>
           <div class="planner-calendar" id="planner-calendar" aria-live="polite"></div>
-          <footer class="planner-calendar-note"><span>i</span><p data-planner-t="calendarNote">Las fechas CEPREUNI de este plan sirven para organizar el estudio. Confírmalas cuando la institución publique el cronograma 2027-1.</p></footer>
+          <div class="planner-calendar-note"><span>i</span><p data-planner-t="calendarNote">Las fechas CEPREUNI de este plan sirven para organizar el estudio. Confírmalas cuando la institución publique el cronograma 2027-1.</p></div>
         </section>
       </div>
     </section>
@@ -212,7 +215,7 @@
         <label class="planner-field full"><span data-planner-t="course">Curso</span><input id="planner-event-course" maxlength="60" required></label>
         <label class="planner-field full"><span data-planner-t="topic">Tema o tarea</span><textarea id="planner-event-topic" maxlength="220" required></textarea></label>
       </div>
-      <footer><button class="planner-danger" id="planner-delete-event" type="button" hidden data-planner-t="delete">Eliminar</button><button class="planner-secondary" id="planner-complete-event" type="button" hidden data-planner-t="markDone">Marcar completado</button><span></span><button class="planner-secondary" value="cancel" type="submit" data-planner-t="cancel">Cancelar</button><button class="planner-primary" id="planner-save-event" type="button" data-planner-t="saveBlock">Guardar bloque</button></footer>
+      <div class="planner-dialog-actions"><button class="planner-danger" id="planner-delete-event" type="button" hidden data-planner-t="delete">Eliminar</button><button class="planner-secondary" id="planner-complete-event" type="button" hidden data-planner-t="markDone">Marcar completado</button><span></span><button class="planner-secondary" value="cancel" type="submit" data-planner-t="cancel">Cancelar</button><button class="planner-primary" id="planner-save-event" type="button" data-planner-t="saveBlock">Guardar bloque</button></div>
     </form>
   </dialog>
 
@@ -247,6 +250,6 @@
   <script src="/universe-i18n.js?v=i18n-4" defer></script>
   <script src="/universe-admission.js?v=security-3"></script>
   <script src="/universe-polish.js?v=unified-36" defer></script>
-  <script src="/planner.js?v=planner-4" defer></script>
+  <script src="/planner.js?v=planner-5" defer></script>
 </body>
 </html>

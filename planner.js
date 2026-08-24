@@ -33,6 +33,10 @@
     language: readLanguage(),
     authMode: 'login',
     profileSubview: '',
+    authRefreshDone: false,
+    authLoading: false,
+    authReady: false,
+    authUserId: '',
     timer: { technique: '50-10', phase: 'focus', remaining: 3000, total: 3000, running: false, interval: null }
   };
 
@@ -285,13 +289,26 @@
     $('planner-student-types').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function advanceFromProfileChoice() {
-    var error = validateStep(1);
-    if (error) {
-      $('planner-setup-status').textContent = error;
-      if (error === tx('invalidUsername')) $('planner-username').focus();
-      return false;
+  function normalizeUsername(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+      .replace(/[^a-z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 24);
+  }
+
+  function ensureDraftUsername() {
+    var input = $('planner-username');
+    var fallback = state.draft.username || state.user && (state.user.name || String(state.user.email || '').split('@')[0]);
+    var username = normalizeUsername(input && input.value || fallback);
+    if (username.length < 3) {
+      var suffix = normalizeUsername(state.user && (state.user.uid || state.user.id || '')).slice(-6);
+      username = ('estudiante' + (suffix ? '_' + suffix : '')).slice(0, 24);
     }
+    state.draft.username = username;
+    if (input) input.value = username;
+    return username;
+  }
+
+  function advanceFromProfileChoice() {
+    ensureDraftUsername();
     $('planner-setup-status').textContent = '';
     setWizardStep(2);
     return true;
@@ -758,6 +775,7 @@
     $('planner-credentials').onsubmit = submitUniverseCredentials;
     qa('[data-auth-mode]').forEach(function (button) { button.onclick = function () { state.authMode = button.dataset.authMode; updateAuthMode(); }; });
     qa('[data-student-type]').forEach(function (button) { button.onclick = function () {
+      ensureDraftUsername();
       state.draft.studentType = button.dataset.studentType;
       if (state.draft.studentType !== 'cepreuni') state.draft.cepreCycle = '';
       if (state.draft.studentType === 'cepreuni' && state.draft.cepreCycle === 'preuniversitario') { state.draft.startDate = CYCLE_START; state.draft.endMode = 'cepre-final'; state.draft.endDate = CEPRE_PLAN_END; }
@@ -774,6 +792,15 @@
     }; });
     qa('[data-profile-choice-back]').forEach(function (button) { button.onclick = returnToStudentTypes; });
     $('academy-search').oninput = function () { renderAcademies(this.value); };
+    $('planner-custom-academy-continue').onclick = function () {
+      state.draft.customAcademy = String($('custom-academy').value || '').trim();
+      if (!state.draft.customAcademy) {
+        $('planner-setup-status').textContent = tx('selectAcademy');
+        $('custom-academy').focus();
+        return;
+      }
+      advanceFromProfileChoice();
+    };
     qa('[data-shift]').forEach(function (button) { button.onclick = function () { state.draft.shift = button.dataset.shift; selectButtons('[data-shift]', state.draft.shift, 'data-shift'); updatePreview(); }; });
     qa('[data-focus]').forEach(function (button) { button.onclick = function () { state.draft.focus = button.dataset.focus; selectButtons('[data-focus]', state.draft.focus, 'data-focus'); updatePreview(); }; });
     qa('[data-end-mode]').forEach(function (button) { button.onclick = function () { updateEndDate(button.dataset.endMode); }; });
@@ -809,38 +836,55 @@
   }
 
   async function checkAuth() {
-    if (!window.UniverseGoogleAuth) return;
-    if (UniverseGoogleAuth.refresh) await UniverseGoogleAuth.refresh().catch(function () {});
-    state.user = UniverseGoogleAuth.user && UniverseGoogleAuth.user();
-    var token = '';
-    try { token = localStorage.getItem(TOKEN_KEY) || ''; } catch (_) {}
-    if (!state.user || !token || state.user.secureSession !== true || !['google', 'universe'].includes(state.user.provider)) {
-      $('planner-auth').hidden = false; $('planner-wizard').hidden = true; $('planner-dashboard').hidden = true; return;
+    if (!window.UniverseGoogleAuth || state.authLoading) return;
+    state.authLoading = true;
+    try {
+      if (!state.authRefreshDone && UniverseGoogleAuth.refresh) {
+        state.authRefreshDone = true;
+        await UniverseGoogleAuth.refresh().catch(function () {});
+      }
+      var nextUser = UniverseGoogleAuth.user && UniverseGoogleAuth.user();
+      var token = '';
+      try { token = localStorage.getItem(TOKEN_KEY) || ''; } catch (_) {}
+      if (!nextUser || !token || nextUser.secureSession !== true || !['google', 'universe'].includes(nextUser.provider)) {
+        state.user = null;
+        state.authReady = false;
+        state.authUserId = '';
+        $('planner-auth').hidden = false; $('planner-wizard').hidden = true; $('planner-dashboard').hidden = true;
+        return;
+      }
+      var nextUserId = String(nextUser.id || nextUser.uid || nextUser.email || 'authenticated');
+      if (state.authReady && state.authUserId === nextUserId) return;
+      state.user = nextUser;
+      state.authUserId = nextUserId;
+      $('planner-welcome').textContent = (state.language === 'en' ? 'Hi, ' : 'Hola, ') + (state.user.name || 'Universe') + '.';
+      var results = await Promise.all([
+        api('/planner', 'GET').catch(function () { return null; }),
+        communityApi('/me', 'GET').catch(function () { return null; })
+      ]);
+      state.community = results[1] && results[1].profile || null;
+      var remote = results[0] && results[0].planner, cached = loadCachedPlanner();
+      state.planner = remote || cached;
+      state.authReady = true;
+      if (state.planner && state.planner.profile && state.planner.events) {
+        cachePlanner();
+        state.calendarDate = startOfWeek(new Date());
+        showDashboard();
+        return;
+      }
+      var suggestedUsername = normalizeUsername(
+        state.community && state.community.username ||
+        state.user.name ||
+        String(state.user.email || '').split('@')[0] ||
+        'estudiante'
+      );
+      if (suggestedUsername.length < 3) suggestedUsername = 'estudiante';
+      state.draft.username = suggestedUsername;
+      $('planner-username').disabled = false;
+      showWizard();
+    } finally {
+      state.authLoading = false;
     }
-    $('planner-welcome').textContent = (state.language === 'en' ? 'Hi, ' : 'Hola, ') + (state.user.name || 'Universe') + '.';
-    var results = await Promise.all([
-      api('/planner', 'GET').catch(function () { return null; }),
-      communityApi('/me', 'GET').catch(function () { return null; })
-    ]);
-    state.community = results[1] && results[1].profile || null;
-    var remote = results[0] && results[0].planner, cached = loadCachedPlanner();
-    state.planner = remote || cached;
-    if (state.planner && state.planner.profile && state.planner.events) {
-      cachePlanner();
-      state.calendarDate = startOfWeek(new Date());
-      showDashboard();
-      return;
-    }
-    var suggestedUsername = String(
-      state.community && state.community.username ||
-      state.user.name ||
-      String(state.user.email || '').split('@')[0] ||
-      'estudiante'
-    ).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 24);
-    if (suggestedUsername.length < 3) suggestedUsername = 'estudiante';
-    state.draft.username = suggestedUsername;
-    $('planner-username').disabled = false;
-    showWizard();
   }
 
   function boot() {
