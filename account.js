@@ -24,6 +24,9 @@
   function safe(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function repairText(value) {
     var text = String(value == null ? '' : value);
+    if (window.UniverseTextEncoding && typeof window.UniverseTextEncoding.repair === 'function') {
+      return window.UniverseTextEncoding.repair(text);
+    }
     if (!/[ÃÂðâ]/.test(text)) return text;
     try {
       var bytes = Uint8Array.from(Array.from(text).map(function (char) { return char.charCodeAt(0); }));

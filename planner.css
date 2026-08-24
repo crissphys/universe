@@ -241,8 +241,13 @@ html[data-universe-page="planner"] button { cursor: pointer; }
 
 .planner-conditional { margin-top: 26px; border: 1px solid var(--planner-line); border-radius: 22px; padding: 22px; background: rgba(244,248,255,.72); }
 .planner-conditional h4 { margin: 0 0 14px; font-family: Sora, sans-serif; }
+.planner-profile-subview { min-height: 250px; margin-top: 0; padding: clamp(22px, 4vw, 38px); animation: planner-subview-in .24s ease both; }
+.planner-profile-subview h4 { margin-top: 28px; font-size: clamp(1.25rem, 2vw, 1.75rem); }
+.planner-inline-back { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; border: 1px solid var(--planner-line); border-radius: 999px; padding: 0 15px; background: rgba(255,255,255,.76); color: var(--planner-blue); font-weight: 850; }
+.planner-inline-back:hover { border-color: rgba(39,118,245,.48); transform: translateX(-2px); }
+@keyframes planner-subview-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .planner-pill-options { display: flex; flex-wrap: wrap; gap: 10px; }
-.planner-pill-options button { min-height: 43px; border: 1px solid var(--planner-line); border-radius: 999px; padding: 0 17px; background: #fff; color: var(--planner-ink); font-weight: 800; }
+.planner-pill-options button { flex: 1 1 210px; min-height: 70px; border: 1px solid var(--planner-line); border-radius: 18px; padding: 12px 18px; background: #fff; color: var(--planner-ink); font-weight: 850; }
 .planner-pill-options button.selected { border-color: var(--planner-blue); background: var(--planner-blue); color: #fff; box-shadow: 0 10px 24px rgba(39,118,245,.24); }
 .planner-subheading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 16px; }
 .planner-subheading h4 { margin-bottom: 5px; }
@@ -479,6 +484,10 @@ html[data-universe-theme="dark"][data-universe-page="planner"] .planner-month-ev
   .planner-question-head { gap: 12px; }
   .planner-question-head > span { flex-basis: 42px; height: 42px; }
   .planner-choice { padding: 20px; }
+  .planner-profile-subview { min-height: 0; padding: 18px 14px; }
+  .planner-profile-subview h4 { margin-top: 22px; }
+  .planner-pill-options { display: grid; grid-template-columns: 1fr; }
+  .planner-pill-options button { width: 100%; min-height: 58px; }
   .planner-subheading { align-items: stretch; flex-direction: column; }
   .planner-search { width: 100%; }
   .academy-grid { grid-template-columns: 1fr; max-height: 270px; }
@@ -514,6 +523,15 @@ html[data-universe-theme="dark"][data-universe-page="planner"] .planner-month-ev
   .planner-technique-options button { min-height: 120px; }
   .planner-timer { grid-template-columns: 1fr; margin: 18px; padding: 18px; }
   .planner-timer-ring { width: 165px; height: 165px; }
+}
+
+@media (max-width: 420px) {
+  html[data-universe-page="planner"] body > footer.uts-site-footer { width: calc(100vw - 10px) !important; margin: 16px 5px 5px !important; padding: 30px 16px max(22px, env(safe-area-inset-bottom)) !important; }
+  html[data-universe-page="planner"] .uts-footer-main { grid-template-columns: 1fr !important; gap: 22px !important; }
+  html[data-universe-page="planner"] .uts-footer-brand { grid-column: auto !important; }
+  html[data-universe-page="planner"] .uts-footer-bottom { width: 100% !important; gap: 14px !important; }
+  html[data-universe-page="planner"] .uts-footer-bottom > span:last-child { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 12px !important; }
+  html[data-universe-page="planner"] .uts-footer-bottom a { overflow-wrap: anywhere; }
 }
 
 @media (prefers-reduced-motion: reduce) {

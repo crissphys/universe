@@ -505,17 +505,141 @@
     return html.replace(/\r?\n/g, '<br>');
   }
 
-  function repairDisplayText(value) {
-    var text = String(value == null ? '' : value);
-    if (!/[ÃÂðâ]/.test(text)) return text;
+  var WINDOWS_1252_BYTES = {
+    '€': 0x80, '‚': 0x82, 'ƒ': 0x83, '„': 0x84, '…': 0x85, '†': 0x86,
+    '‡': 0x87, 'ˆ': 0x88, '‰': 0x89, 'Š': 0x8a, '‹': 0x8b, 'Œ': 0x8c,
+    'Ž': 0x8e, '‘': 0x91, '’': 0x92, '“': 0x93, '”': 0x94, '•': 0x95,
+    '–': 0x96, '—': 0x97, '˜': 0x98, '™': 0x99, 'š': 0x9a, '›': 0x9b,
+    'œ': 0x9c, 'ž': 0x9e, 'Ÿ': 0x9f
+  };
+  var SUSPECT_ENCODING = /[ÃÂðâï]|&(?:amp;)?#(?:x[0-9a-f]+|[0-9]+);?|&(?:amp;)?(?:mdash|ndash|hellip|nbsp|quot|apos);/i;
+
+  function byteForMojibakeCharacter(character) {
+    var code = character.charCodeAt(0);
+    if (code <= 255) return code;
+    return Object.prototype.hasOwnProperty.call(WINDOWS_1252_BYTES, character)
+      ? WINDOWS_1252_BYTES[character]
+      : -1;
+  }
+
+  function decodeUtf8MojibakeFragment(fragment) {
     try {
-      var bytes = Uint8Array.from(Array.from(text).map(function (char) { return char.charCodeAt(0); }));
-      var decoded = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-      return decoded || text;
+      var bytes = Array.from(fragment).map(byteForMojibakeCharacter);
+      if (bytes.some(function (value) { return value < 0; })) return fragment;
+      var decoded = new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(bytes));
+      return decoded && decoded !== fragment && decoded.indexOf('\ufffd') < 0 ? decoded : fragment;
     } catch (error) {
-      return text;
+      return fragment;
     }
   }
+
+  function repairMojibakeRuns(text) {
+    var output = '';
+    for (var index = 0; index < text.length;) {
+      var character = text.charAt(index);
+      if ('ÃÂðâï'.indexOf(character) < 0) {
+        output += character;
+        index += 1;
+        continue;
+      }
+      var runEnd = index + 1;
+      while (runEnd < text.length && text.charCodeAt(runEnd) > 127 && runEnd - index < 14) runEnd += 1;
+      var replacement = character;
+      var consumed = 1;
+      for (var end = runEnd; end > index + 1; end -= 1) {
+        var fragment = text.slice(index, end);
+        var decoded = decodeUtf8MojibakeFragment(fragment);
+        if (decoded !== fragment) {
+          replacement = decoded;
+          consumed = end - index;
+          break;
+        }
+      }
+      output += replacement;
+      index += consumed;
+    }
+    return output;
+  }
+
+  function decodeVisibleEntities(text) {
+    var named = { mdash: '—', ndash: '–', hellip: '…', nbsp: '\u00a0', quot: '"', apos: "'" };
+    text = text.replace(/&(?:amp;)?#(x[0-9a-f]+|[0-9]+);?/gi, function (match, value) {
+      var number = /^x/i.test(value) ? parseInt(value.slice(1), 16) : parseInt(value, 10);
+      if (!Number.isFinite(number) || number < 0 || number > 0x10ffff || (number >= 0xd800 && number <= 0xdfff)) return match;
+      try { return String.fromCodePoint(number); } catch (error) { return match; }
+    });
+    return text.replace(/&(?:amp;)?(mdash|ndash|hellip|nbsp|quot|apos);/gi, function (match, name) {
+      return named[String(name).toLowerCase()] || match;
+    });
+  }
+
+  function repairDisplayText(value) {
+    var text = String(value == null ? '' : value);
+    if (!SUSPECT_ENCODING.test(text) && text.indexOf('Caracter?sticas') < 0) return text;
+    for (var pass = 0; pass < 3; pass += 1) {
+      var previous = text;
+      text = repairMojibakeRuns(decodeVisibleEntities(text)).replace(/Caracter\?sticas/g, 'Características');
+      if (text === previous) break;
+    }
+    return text;
+  }
+
+  function repairUniverseTextNode(node) {
+    if (!node || node.nodeType !== 3 || !node.nodeValue) return;
+    if (!SUSPECT_ENCODING.test(node.nodeValue) && node.nodeValue.indexOf('Caracter?sticas') < 0) return;
+    var parent = node.parentElement;
+    if (parent && parent.closest('script,style,noscript,textarea')) return;
+    var repaired = repairDisplayText(node.nodeValue);
+    if (repaired !== node.nodeValue) node.nodeValue = repaired;
+  }
+
+  function repairUniverseElement(element) {
+    if (!element || element.nodeType !== 1) return;
+    ['title', 'aria-label', 'placeholder', 'alt'].forEach(function (attribute) {
+      if (!element.hasAttribute(attribute)) return;
+      var current = element.getAttribute(attribute) || '';
+      var repaired = repairDisplayText(current);
+      if (repaired !== current) element.setAttribute(attribute, repaired);
+    });
+  }
+
+  function repairUniverseDocument(root) {
+    if (!root) return;
+    if (root.nodeType === 3) {
+      repairUniverseTextNode(root);
+      return;
+    }
+    if (root.nodeType !== 1 || root.matches('script,style,noscript,textarea')) return;
+    repairUniverseElement(root);
+    var visibleText = root.textContent || '';
+    if (!SUSPECT_ENCODING.test(visibleText) && visibleText.indexOf('Caracter?sticas') < 0) return;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var node;
+    while ((node = walker.nextNode())) repairUniverseTextNode(node);
+    root.querySelectorAll('[title],[aria-label],[placeholder],[alt]').forEach(repairUniverseElement);
+  }
+
+  function observeUniverseEncoding() {
+    if (!document.body || window.__universeEncodingObserver) return;
+    repairUniverseDocument(document.body);
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'characterData') repairUniverseTextNode(mutation.target);
+        mutation.addedNodes.forEach(repairUniverseDocument);
+        if (mutation.type === 'attributes') repairUniverseElement(mutation.target);
+      });
+    });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['title', 'aria-label', 'placeholder', 'alt']
+    });
+    window.__universeEncodingObserver = observer;
+  }
+
+  window.UniverseTextEncoding = { repair: repairDisplayText, repairDocument: repairUniverseDocument };
 
   function getStoredGoogleUser() {
     try {
@@ -1392,6 +1516,7 @@
 
   function boot() {
     try { applyUniverseTheme(localStorage.getItem('universe_theme') === 'dark' ? 'dark' : 'light'); } catch (error) {}
+    observeUniverseEncoding();
     forceRevealVisible();
     moveThemeToggleToViewport();
     activateUniverseNav();

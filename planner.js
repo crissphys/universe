@@ -32,6 +32,7 @@
     saveTimer: null,
     language: readLanguage(),
     authMode: 'login',
+    profileSubview: '',
     timer: { technique: '50-10', phase: 'focus', remaining: 3000, total: 3000, running: false, interval: null }
   };
 
@@ -42,7 +43,7 @@
       setup: 'CONFIGURACIÓN INICIAL', buildRoute: 'Construyamos tu ruta de estudio', profile: 'Perfil', schedule: 'Horario', goal: 'Meta',
       studentQuestion: '¿Qué tipo de estudiante eres?', studentHelp: 'Esto define el temario y la forma en que distribuiremos tus semanas.',
       username: 'Nombre de usuario', usernameHelp: 'Entre 3 y 24 caracteres: letras minúsculas, números, guion o guion bajo.',
-      select: 'Seleccionar', preCycle: 'Ciclo preuniversitario', basicCycle: 'Ciclo básico', blocksBreaks: '4 bloques · 3 descansos',
+      select: 'Seleccionar', preCycle: 'Ciclo preuniversitario', basicCycle: 'Ciclo básico', cycleI: 'Ciclo I', blocksBreaks: '4 bloques · 3 descansos',
       cepreDescription: 'Ruta semanal según prácticas y parciales.', academy: 'Academia', academyDescription: 'Preparación basada en el temario de admisión UNI.', independent: 'Autodidacta', independentDescription: 'Una ruta completa para estudiar por tu cuenta.',
       cepreCycleQuestion: '¿Qué ciclo CEPREUNI 2027-1 llevarás?', academyQuestion: '¿En qué academia estudias?', academyHelp: 'Elige una opción o escribe el nombre de otra academia.', otherAcademy: 'Nombre de la otra academia',
       shiftQuestion: '¿En qué horario quieres organizar tus sesiones?', shiftHelp: 'Cada franja incluye cuatro bloques y descansos reales entre ellos.', morning: 'MAÑANA', afternoon: 'TARDE',
@@ -65,7 +66,7 @@
       continueGoogle: 'Continue with Google', authNote: 'We never ask for or store your Gmail password.',
       setup: 'QUICK SETUP', buildRoute: 'Let’s build your study route', profile: 'Profile', schedule: 'Schedule', goal: 'Goal',
       studentQuestion: 'What kind of student are you?', studentHelp: 'This sets the syllabus and the way your weeks will be paced.', username: 'Username', usernameHelp: 'Use 3–24 lowercase letters, numbers, hyphens, or underscores.',
-      select: 'Select', preCycle: 'Pre-university cycle', basicCycle: 'Foundation cycle', blocksBreaks: '4 blocks · 3 breaks',
+      select: 'Select', preCycle: 'Pre-university cycle', basicCycle: 'Foundation cycle', cycleI: 'Cycle I', blocksBreaks: '4 blocks · 3 breaks',
       cepreDescription: 'A weekly route aligned with quizzes and midterms.', academy: 'Academy', academyDescription: 'Prep built around the UNI admission syllabus.', independent: 'Self-study', independentDescription: 'A complete route you can follow on your own.',
       cepreCycleQuestion: 'Which CEPREUNI 2027-1 cycle will you take?', academyQuestion: 'Which academy do you attend?', academyHelp: 'Pick one or enter another academy.', otherAcademy: 'Other academy name',
       shiftQuestion: 'When do you want your study sessions?', shiftHelp: 'Each shift includes four blocks with proper breaks in between.', morning: 'MORNING', afternoon: 'AFTERNOON',
@@ -246,6 +247,7 @@
         state.draft.academyName = button.dataset.academy;
         $('custom-academy-wrap').hidden = state.draft.academyName !== 'Otra academia';
         renderAcademies($('academy-search').value);
+        if (state.draft.academyName !== 'Otra academia') advanceFromProfileChoice();
       };
     });
   }
@@ -261,14 +263,38 @@
     selectButtons('[data-shift]', state.draft.shift, 'data-shift');
     selectButtons('[data-focus]', state.draft.focus, 'data-focus');
     selectButtons('[data-end-mode]', state.draft.endMode, 'data-end-mode');
-    $('planner-cepre-cycle').hidden = state.draft.studentType !== 'cepreuni';
-    $('planner-academies').hidden = state.draft.studentType !== 'academy';
+    $('planner-student-types').hidden = Boolean(state.profileSubview);
+    $('planner-cepre-cycle').hidden = state.profileSubview !== 'cepreuni';
+    $('planner-academies').hidden = state.profileSubview !== 'academy';
     $('custom-academy-wrap').hidden = state.draft.academyName !== 'Otra academia';
     $('custom-academy').value = state.draft.academyName && state.draft.academyName !== 'Otra academia' ? '' : (state.draft.customAcademy || '');
     $('planner-start-date').value = state.draft.startDate || localDate(new Date());
     $('planner-end-date').value = state.draft.endDate || ADMISSION_PLAN_END;
     renderAcademies($('academy-search').value);
     updatePreview();
+  }
+
+  function returnToStudentTypes() {
+    state.profileSubview = '';
+    state.draft.studentType = '';
+    state.draft.cepreCycle = '';
+    state.draft.academyName = '';
+    state.draft.customAcademy = '';
+    $('planner-setup-status').textContent = '';
+    configureWizardFromDraft();
+    $('planner-student-types').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function advanceFromProfileChoice() {
+    var error = validateStep(1);
+    if (error) {
+      $('planner-setup-status').textContent = error;
+      if (error === tx('invalidUsername')) $('planner-username').focus();
+      return false;
+    }
+    $('planner-setup-status').textContent = '';
+    setWizardStep(2);
+    return true;
   }
 
   function setWizardStep(step) {
@@ -451,7 +477,7 @@
 
   async function ensureCommunityProfile() {
     var username = state.community && state.community.username;
-    if (username) { state.draft.username = username; return; }
+    if (username) return;
     var academy = state.draft.academyName === 'Otra academia' ? state.draft.customAcademy : state.draft.academyName;
     var result = await communityApi('/onboarding', 'POST', {
       username: state.draft.username,
@@ -497,7 +523,7 @@
       await ensureCommunityProfile();
       var academy = state.draft.academyName === 'Otra academia' ? state.draft.customAcademy : state.draft.academyName;
       var profile = {
-        username: state.community && state.community.username || state.draft.username,
+        username: state.draft.username,
         studentType: state.draft.studentType,
         cepreCycle: state.draft.studentType === 'cepreuni' ? state.draft.cepreCycle : '',
         academyName: state.draft.studentType === 'academy' ? academy : '',
@@ -518,8 +544,8 @@
   function describeProfile(profile) {
     if (profile.studentType === 'cepreuni') {
       var cycleNames = state.language === 'en'
-        ? { preuniversitario: 'Pre-university cycle', basico: 'Foundation cycle', ien: 'IEN cycle' }
-        : { preuniversitario: 'Ciclo preuniversitario', basico: 'Ciclo básico', ien: 'Ciclo IEN' };
+        ? { preuniversitario: 'Pre-university cycle', basico: 'Foundation cycle', i: 'Cycle I', ien: 'Cycle I' }
+        : { preuniversitario: 'Ciclo preuniversitario', basico: 'Ciclo básico', i: 'Ciclo I', ien: 'Ciclo I' };
       return 'CEPREUNI 2027-1 · ' + (cycleNames[profile.cepreCycle] || '');
     }
     if (profile.studentType === 'academy') return profile.academyName + (state.language === 'en' ? ' · UNI Admission 2027-1' : ' · Admisión UNI 2027-1');
@@ -540,6 +566,7 @@
     $('planner-auth').hidden = true;
     $('planner-dashboard').hidden = true;
     $('planner-wizard').hidden = false;
+    state.profileSubview = '';
     configureWizardFromDraft();
     setWizardStep(1);
   }
@@ -734,14 +761,18 @@
       state.draft.studentType = button.dataset.studentType;
       if (state.draft.studentType !== 'cepreuni') state.draft.cepreCycle = '';
       if (state.draft.studentType === 'cepreuni' && state.draft.cepreCycle === 'preuniversitario') { state.draft.startDate = CYCLE_START; state.draft.endMode = 'cepre-final'; state.draft.endDate = CEPRE_PLAN_END; }
+      state.profileSubview = state.draft.studentType === 'cepreuni' ? 'cepreuni' : (state.draft.studentType === 'academy' ? 'academy' : '');
       configureWizardFromDraft();
+      if (state.draft.studentType === 'independent') advanceFromProfileChoice();
     }; });
     qa('[data-cepre-cycle]').forEach(function (button) { button.onclick = function () {
       state.draft.cepreCycle = button.dataset.cepreCycle;
       if (state.draft.cepreCycle === 'preuniversitario') { state.draft.startDate = CYCLE_START; state.draft.endMode = 'cepre-final'; state.draft.endDate = CEPRE_PLAN_END; }
       else { state.draft.endMode = 'admission'; state.draft.endDate = ADMISSION_PLAN_END; }
       configureWizardFromDraft();
+      advanceFromProfileChoice();
     }; });
+    qa('[data-profile-choice-back]').forEach(function (button) { button.onclick = returnToStudentTypes; });
     $('academy-search').oninput = function () { renderAcademies(this.value); };
     qa('[data-shift]').forEach(function (button) { button.onclick = function () { state.draft.shift = button.dataset.shift; selectButtons('[data-shift]', state.draft.shift, 'data-shift'); updatePreview(); }; });
     qa('[data-focus]').forEach(function (button) { button.onclick = function () { state.draft.focus = button.dataset.focus; selectButtons('[data-focus]', state.draft.focus, 'data-focus'); updatePreview(); }; });
@@ -801,7 +832,7 @@
       return;
     }
     state.draft.username = state.community && state.community.username || (state.user.provider === 'universe' ? state.user.name : '');
-    if (state.draft.username) { $('planner-username').disabled = true; }
+    $('planner-username').disabled = false;
     showWizard();
   }
 
