@@ -32,8 +32,10 @@ function cleanText(value, max = 8000) {
 
 const ACADEMIES = [
   'Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI',
-  'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Integral Class',
-  'Academia Prisma', 'Otra academia'
+  'ASEUNI', 'ADCUNI', 'Academia Ingeniería', 'Formación UNI', 'Aula 20',
+  'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Savia',
+  'Integral Class', 'Academia Prisma', 'Academia Euclides', 'Academia Apolo',
+  'Academia Mendel', 'Otra academia'
 ];
 const ACADEMIC_TRACKS = ['cepreuni', 'uni-student', 'san-marcos', 'academy', 'independent'];
 const TARGETS = ['UNI', 'San Marcos', 'Otra universidad', 'Aún no lo decido'];
@@ -312,7 +314,7 @@ function sanitizeAcademicProfile(data, existing, auth) {
   data = data && typeof data === 'object' ? data : {};
   existing = existing && typeof existing === 'object' ? existing : {};
   var track = ACADEMIC_TRACKS.includes(data.academicTrack) ? data.academicTrack : existing.academicTrack || '';
-  var academy = track === 'academy' && ACADEMIES.includes(data.academyName) ? data.academyName : '';
+  var academy = track === 'academy' ? cleanText(data.academyName, 60) : '';
   var cycle = track === 'cepreuni' ? cleanText(data.cepreCycle, 20) : '';
   var code = track === 'cepreuni' ? cleanText(data.cepreCode || existing.cepreCode, 12).toUpperCase().replace(/\s+/g, '') : '';
   return {
@@ -475,6 +477,77 @@ async function isAdminEmail(env, email) {
     .map(function (v) { return v.trim().toLowerCase(); })
     .filter(Boolean)
     .includes(emailHash);
+}
+
+const PLANNER_STUDENT_TYPES = ['cepreuni', 'academy', 'independent'];
+const PLANNER_CYCLES = ['preuniversitario', 'basico', 'ien'];
+const PLANNER_SHIFTS = ['morning', 'afternoon'];
+const PLANNER_FOCUS = ['math', 'science', 'humanities', 'all'];
+const PLANNER_END_MODES = ['cepre-final', 'admission', 'custom'];
+const PLANNER_AREAS = ['Matemática', 'Ciencias', 'Humanidades', 'General'];
+const PLANNER_EVENT_TYPES = ['study', 'review', 'practice', 'exam', 'custom', 'break'];
+const PLANNER_EVENT_STATUS = ['pending', 'done', 'skipped'];
+
+function plannerDate(value) {
+  var date = cleanText(value, 10);
+  return /^20\d{2}-\d{2}-\d{2}$/.test(date) ? date : '';
+}
+
+function plannerTime(value) {
+  var time = cleanText(value, 5);
+  return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time) ? time : '';
+}
+
+function sanitizePlannerEvent(event, index) {
+  event = event && typeof event === 'object' ? event : {};
+  var date = plannerDate(event.date);
+  var start = plannerTime(event.start);
+  var end = plannerTime(event.end);
+  if (!date || !start || !end) return null;
+  return {
+    id: cleanId(event.id || ('event_' + index)).slice(0, 80) || ('event_' + index),
+    date,
+    start,
+    end,
+    course: cleanText(event.course, 60),
+    area: PLANNER_AREAS.includes(event.area) ? event.area : 'General',
+    topic: cleanText(event.topic, 220),
+    type: PLANNER_EVENT_TYPES.includes(event.type) ? event.type : 'study',
+    status: PLANNER_EVENT_STATUS.includes(event.status) ? event.status : 'pending',
+    source: cleanText(event.source, 40),
+    assessment: cleanText(event.assessment, 60)
+  };
+}
+
+function sanitizePlannerData(data, existing, auth) {
+  data = data && typeof data === 'object' ? data : {};
+  existing = existing && typeof existing === 'object' ? existing : {};
+  var profile = data.profile && typeof data.profile === 'object' ? data.profile : {};
+  var settings = data.settings && typeof data.settings === 'object' ? data.settings : {};
+  var events = Array.isArray(data.events) ? data.events.slice(0, 1400) : [];
+  return {
+    version: 1,
+    userId: auth.id,
+    profile: {
+      username: cleanUsername(profile.username),
+      studentType: PLANNER_STUDENT_TYPES.includes(profile.studentType) ? profile.studentType : '',
+      cepreCycle: PLANNER_CYCLES.includes(profile.cepreCycle) ? profile.cepreCycle : '',
+      academyName: cleanText(profile.academyName, 60),
+      shift: PLANNER_SHIFTS.includes(profile.shift) ? profile.shift : 'morning',
+      focus: PLANNER_FOCUS.includes(profile.focus) ? profile.focus : 'all',
+      startDate: plannerDate(profile.startDate),
+      endMode: PLANNER_END_MODES.includes(profile.endMode) ? profile.endMode : 'admission',
+      endDate: plannerDate(profile.endDate)
+    },
+    settings: {
+      technique: ['20-5', '25-5', '50-10', '90-20'].includes(settings.technique) ? settings.technique : '50-10',
+      notifications: settings.notifications === true,
+      view: ['week', 'month'].includes(settings.view) ? settings.view : 'week'
+    },
+    events: events.map(sanitizePlannerEvent).filter(Boolean),
+    createdAt: Number(existing.createdAt) || Date.now(),
+    updatedAt: Date.now()
+  };
 }
 
 function rateLimit(request, key, max = 90, windowMs = 60000) {
@@ -702,6 +775,23 @@ async function handleSite(request, env, subpath) {
     return json(path === '/public/announcement' ? publicData.announcement : path === '/public/schedule' ? publicData.schedule : {});
   }
   if (path.startsWith('/public') && (!auth || !auth.admin)) return json({ error: 'admin_required' }, 403);
+
+  if (path === '/planner') {
+    if (!auth) return json({ error: 'login_required' }, 401);
+    if (method === 'GET') {
+      return json({ planner: await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'GET') || null });
+    }
+    if (!['PUT', 'PATCH'].includes(method)) return json({ error: 'method_not_allowed' }, 405);
+    if (!rateLimit(request, 'planner-save-' + auth.id, 24, 60000)) return json({ error: 'rate_limited' }, 429);
+    var existingPlanner = await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'GET') || {};
+    var planner = sanitizePlannerData(data, existingPlanner, auth);
+    if (!planner.profile.username || !planner.profile.studentType || !planner.profile.startDate || !planner.profile.endDate) {
+      return json({ error: 'invalid_planner_profile' }, 400);
+    }
+    if (planner.profile.endDate < planner.profile.startDate) return json({ error: 'invalid_date_range' }, 400);
+    await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'PUT', planner);
+    return json({ ok: true, planner });
+  }
 
   if (path.startsWith('/profiles/')) {
     if (!auth) return json({ error: 'login_required' }, 401);

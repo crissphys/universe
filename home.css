@@ -603,7 +603,8 @@ html[data-universe-theme="dark"] .home-strip { background: rgba(5, 22, 56, .52);
 .module-library { background: linear-gradient(145deg, rgba(239, 255, 247, .91), rgba(211, 245, 227, .7)); }
 .module-sim { background: linear-gradient(145deg, rgba(255, 249, 235, .92), rgba(255, 229, 184, .66)); }
 .module-talk { background: linear-gradient(145deg, rgba(255, 240, 247, .91), rgba(242, 218, 255, .65)); }
-html[data-universe-theme="dark"] :where(.module-admission, .module-cepre, .module-classes, .module-library, .module-sim, .module-talk) { background: linear-gradient(145deg, rgba(12, 39, 86, .86), rgba(5, 20, 53, .72)); }
+.module-planner { grid-column: 1 / -1; min-height: 290px; background: linear-gradient(135deg, rgba(228, 241, 255, .95), rgba(224, 255, 245, .82)); }
+html[data-universe-theme="dark"] :where(.module-admission, .module-cepre, .module-classes, .module-library, .module-sim, .module-talk, .module-planner) { background: linear-gradient(145deg, rgba(12, 39, 86, .86), rgba(5, 20, 53, .72)); }
 .module-index { position: absolute; top: 23px; right: 25px; color: rgba(32, 91, 176, .3); font-family: "Sora", sans-serif; font-size: .8rem; font-weight: 800; }
 .module-icon { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: auto; border: 1px solid rgba(52, 119, 221, .15); border-radius: 17px; background: rgba(255, 255, 255, .62); color: var(--home-blue); box-shadow: 0 11px 22px rgba(45, 98, 180, .1); }
 html[data-universe-theme="dark"] .module-icon { background: rgba(83, 145, 238, .1); }
