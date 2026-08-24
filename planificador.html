@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/style.css?v=reveal-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
   <link rel="stylesheet" href="/universe-design-v2.css?v=design-2">
-  <link rel="stylesheet" href="/planner.css?v=planner-1">
+  <link rel="stylesheet" href="/planner.css?v=planner-2">
 </head>
 <body>
   <div id="universe-page-loader" role="status" aria-live="polite">
@@ -48,27 +48,33 @@
   </nav>
 
   <main class="planner-page" id="planner-main" data-i18n-ignore>
-    <section class="planner-hero">
-      <div>
-        <span class="planner-eyebrow" data-planner-t="eyebrow">TU RUTA, BLOQUE POR BLOQUE</span>
-        <h1 data-planner-t="heroTitle">Un cronograma que se adapta a tu preparación.</h1>
-        <p data-planner-t="heroCopy">Organiza todos los temas UNI o las 20 semanas CEPREUNI, distribuye mejor tu enfoque y convierte cada sesión en una tarea clara.</p>
-      </div>
-      <div class="planner-hero-points" aria-label="Funciones principales">
-        <span><b>265</b><small data-planner-t="admissionTopics">temas de admisión</small></span>
-        <span><b>20</b><small data-planner-t="cepreWeeks">semanas CEPREUNI</small></span>
-        <span><b>4</b><small data-planner-t="studyMethods">técnicas de enfoque</small></span>
-      </div>
-    </section>
-
     <section class="planner-auth" id="planner-auth">
-      <div class="planner-auth-art" aria-hidden="true"><span></span><span></span><span></span><div><b>U</b><i></i></div></div>
+      <div class="planner-auth-art" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <div class="planner-orbit orbit-one"><i></i></div><div class="planner-orbit orbit-two"><i></i></div>
+        <div class="planner-u-mark"><b>U</b><i></i></div>
+        <em class="planner-float-card card-calendar">PLAN</em><em class="planner-float-card card-focus">FOCUS</em><em class="planner-float-card card-progress">100%</em>
+      </div>
       <div class="planner-auth-copy">
-        <span class="planner-kicker" data-planner-t="privatePlan">PLAN PRIVADO Y SINCRONIZADO</span>
-        <h2 data-planner-t="signInTitle">Inicia con Google para crear tu horario</h2>
-        <p data-planner-t="signInCopy">Google verifica tu cuenta de forma segura. Universe no solicita, recibe ni guarda tu contraseña de Gmail.</p>
-        <button class="planner-primary" id="planner-login" type="button"><span class="planner-google">G</span><span data-planner-t="continueGoogle">Continuar con Google</span></button>
-        <small data-planner-t="authNote">Tu plan quedará asociado únicamente a tu cuenta.</small>
+        <span class="planner-kicker" data-planner-t="privatePlan">ACCESO PRIVADO Y SINCRONIZADO</span>
+        <h1 data-planner-t="platformTitle">Plataforma Universe</h1>
+        <p data-planner-t="platformCopy">Entra a tu espacio de estudio o crea una cuenta propia de Universe.</p>
+
+        <div class="planner-auth-tabs" role="tablist" aria-label="Tipo de acceso">
+          <button class="active" data-auth-mode="login" type="button" role="tab" aria-selected="true" data-planner-t="signIn">Ingresar</button>
+          <button data-auth-mode="register" type="button" role="tab" aria-selected="false" data-planner-t="createAccount">Crear cuenta</button>
+        </div>
+        <form class="planner-credentials" id="planner-credentials" novalidate>
+          <label><span data-planner-t="username">Nombre de usuario</span><input id="planner-auth-username" name="username" autocomplete="username" maxlength="24" placeholder="tu_usuario" required></label>
+          <label><span data-planner-t="password">Contraseña de Universe</span><input id="planner-auth-password" name="password" type="password" autocomplete="current-password" maxlength="72" placeholder="8 caracteres o más" required></label>
+          <button class="planner-primary planner-credential-submit" id="planner-auth-submit" type="submit" data-planner-t="enterPlatform">Entrar a la plataforma</button>
+          <p class="planner-auth-status" id="planner-auth-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="planner-auth-divider"><span data-planner-t="orGoogle">o continúa con Google</span></div>
+        <h2 class="planner-google-heading" data-planner-t="signInTitle">Inicia con Google para crear tu horario</h2>
+        <button class="planner-google-button" id="planner-login" type="button"><span class="planner-google">G</span><span data-planner-t="continueGoogle">Continuar con Google</span></button>
+        <small data-planner-t="authNote">Nunca solicitamos ni guardamos tu contraseña de Gmail.</small>
       </div>
     </section>
 
@@ -238,7 +244,7 @@
   <script src="/universe-i18n-catalog.js?v=i18n-4" defer></script>
   <script src="/universe-i18n.js?v=i18n-4" defer></script>
   <script src="/universe-admission.js?v=security-3"></script>
-  <script src="/universe-polish.js?v=unified-34" defer></script>
-  <script src="/planner.js?v=planner-1" defer></script>
+  <script src="/universe-polish.js?v=unified-35" defer></script>
+  <script src="/planner.js?v=planner-2" defer></script>
 </body>
 </html>

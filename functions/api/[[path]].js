@@ -41,6 +41,7 @@ const ACADEMIC_TRACKS = ['cepreuni', 'uni-student', 'san-marcos', 'academy', 'in
 const TARGETS = ['UNI', 'San Marcos', 'Otra universidad', 'Aún no lo decido'];
 const UNIT_ROOT = '/community/unitalkV1';
 const SITE_ROOT = '/site/universeV1';
+const AUTH_ROOT = '/private/universeAuthV1';
 const SITE_PRESENCE_WINDOW_MS = 90000;
 const SITE_PRESENCE_CLEANUP_MS = 10 * 60 * 1000;
 const BLOCKED_TERMS = [
@@ -427,6 +428,7 @@ async function signSession(env, user) {
     email: user.email,
     name: user.name,
     avatar: user.avatar,
+    provider: user.provider || 'google',
     admin: user.isAdmin === true,
     iat: now,
     exp: now + 60 * 60 * 24 * 30
@@ -449,6 +451,7 @@ async function verifySession(request, env) {
       email: String(payload.email || '').toLowerCase(),
       name: String(payload.name || 'Usuario Google'),
       avatar: String(payload.avatar || ''),
+      provider: payload.provider === 'universe' ? 'universe' : 'google',
       admin: payload.admin === true
     };
   } catch (error) {
@@ -477,6 +480,39 @@ async function isAdminEmail(env, email) {
     .map(function (v) { return v.trim().toLowerCase(); })
     .filter(Boolean)
     .includes(emailHash);
+}
+
+function randomHex(size = 16) {
+  var bytes = new Uint8Array(size);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+}
+
+function hexBytes(value) {
+  var hex = String(value || '');
+  var bytes = new Uint8Array(Math.floor(hex.length / 2));
+  for (var i = 0; i < bytes.length; i += 1) bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+  return bytes;
+}
+
+async function derivePasswordHash(password, salt, iterations = 210000) {
+  var key = await crypto.subtle.importKey('raw', new TextEncoder().encode(String(password || '')), 'PBKDF2', false, ['deriveBits']);
+  var bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: hexBytes(salt), iterations }, key, 256);
+  return Array.from(new Uint8Array(bits)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+}
+
+function equalSecret(left, right) {
+  left = String(left || '');
+  right = String(right || '');
+  if (left.length !== right.length) return false;
+  var different = 0;
+  for (var i = 0; i < left.length; i += 1) different |= left.charCodeAt(i) ^ right.charCodeAt(i);
+  return different === 0;
+}
+
+function validPassword(value) {
+  var password = String(value || '');
+  return password.length >= 8 && password.length <= 72 && /[A-Za-z]/.test(password) && /\d/.test(password);
 }
 
 const PLANNER_STUDENT_TYPES = ['cepreuni', 'academy', 'independent'];
@@ -649,8 +685,9 @@ async function ensurePrivateProfile(env, user) {
     existing = {
       userId: user.id,
       email: user.email,
-      googleName: user.name,
-      googleAvatar: user.avatar,
+      accountName: user.name,
+      accountAvatar: user.avatar,
+      provider: user.provider || 'google',
       onboardingComplete: false,
       createdAt: Date.now(),
       updatedAt: Date.now()
@@ -660,14 +697,16 @@ async function ensurePrivateProfile(env, user) {
   }
   await firebase(env, path, 'PATCH', {
     email: user.email,
-    googleName: user.name,
-    googleAvatar: user.avatar,
+    accountName: user.name,
+    accountAvatar: user.avatar,
+    provider: user.provider || 'google',
     lastSeenAt: Date.now()
   });
   return existing;
 }
 
 async function googleAuth(request, env) {
+  if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
   if (!rateLimit(request, 'google-auth', 20, 60000)) return json({ error: 'rate_limited' }, 429);
   var body = await request.json().catch(function () { return {}; });
   var credential = String(body.credential || '');
@@ -692,6 +731,72 @@ async function googleAuth(request, env) {
   return json({ user, token: await signSession(env, user) });
 }
 
+async function universeRegister(request, env) {
+  if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
+  if (!rateLimit(request, 'universe-register', 5, 60000)) return json({ error: 'rate_limited' }, 429);
+  var body = await request.json().catch(function () { return {}; });
+  var username = cleanUsername(body.username);
+  var password = String(body.password || '');
+  if (!validUsername(username)) return json({ error: 'invalid_username' }, 400);
+  if (!validPassword(password)) return json({ error: 'weak_password' }, 400);
+  var usernameKey = await sha256HexText(username);
+  var salt = randomHex(16);
+  var iterations = 210000;
+  var userId = 'universe_' + cleanId(crypto.randomUUID());
+  var passwordHash = await derivePasswordHash(password, salt, iterations);
+  var createdAt = Date.now();
+  var reserved = await firebaseReserve(env, AUTH_ROOT + '/credentials/' + usernameKey, {
+    userId,
+    username,
+    salt,
+    iterations,
+    passwordHash,
+    createdAt,
+    updatedAt: createdAt
+  });
+  if (!reserved) return json({ error: 'username_taken' }, 409);
+  var user = {
+    id: userId,
+    name: username,
+    email: '',
+    avatar: '',
+    provider: 'universe',
+    isAdmin: false,
+    createdAt,
+    updatedAt: createdAt
+  };
+  await ensurePrivateProfile(env, user).catch(function () {});
+  return json({ user, token: await signSession(env, user) }, 201);
+}
+
+async function universeLogin(request, env) {
+  if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
+  if (!rateLimit(request, 'universe-login', 10, 60000)) return json({ error: 'rate_limited' }, 429);
+  var body = await request.json().catch(function () { return {}; });
+  var username = cleanUsername(body.username);
+  var password = String(body.password || '');
+  if (!validUsername(username) || !password || password.length > 72) return json({ error: 'invalid_credentials' }, 401);
+  var usernameKey = await sha256HexText(username);
+  var record = await firebase(env, AUTH_ROOT + '/credentials/' + usernameKey, 'GET').catch(function () { return null; });
+  if (!record || !record.salt || !record.passwordHash || !record.userId) return json({ error: 'invalid_credentials' }, 401);
+  var candidate = await derivePasswordHash(password, record.salt, Number(record.iterations) || 210000);
+  if (!equalSecret(candidate, record.passwordHash)) return json({ error: 'invalid_credentials' }, 401);
+  var now = Date.now();
+  var user = {
+    id: cleanId(record.userId),
+    name: cleanUsername(record.username) || username,
+    email: '',
+    avatar: '',
+    provider: 'universe',
+    isAdmin: false,
+    createdAt: Number(record.createdAt) || now,
+    updatedAt: now
+  };
+  await firebase(env, AUTH_ROOT + '/credentials/' + usernameKey, 'PATCH', { lastLoginAt: now, updatedAt: now }).catch(function () {});
+  await ensurePrivateProfile(env, user).catch(function () {});
+  return json({ user, token: await signSession(env, user) });
+}
+
 async function authMe(request, env) {
   var auth = await verifySession(request, env);
   if (!auth) return json({ error: 'login_required' }, 401);
@@ -702,7 +807,7 @@ async function authMe(request, env) {
       name: auth.name,
       email: auth.email,
       avatar: auth.avatar,
-      provider: 'google',
+      provider: auth.provider,
       isAdmin: auth.admin === true,
       secureSession: true,
       onboardingComplete: !!(profile && profile.onboardingComplete)
@@ -2272,6 +2377,8 @@ export async function onRequest(context) {
     var url = new URL(request.url);
     var apiPath = url.pathname.replace(/^\/api\/?/, '');
     if (apiPath === 'auth/google') return googleAuth(request, context.env);
+    if (apiPath === 'auth/register') return universeRegister(request, context.env);
+    if (apiPath === 'auth/login') return universeLogin(request, context.env);
     if (apiPath === 'auth/me') return authMe(request, context.env);
     if (apiPath.startsWith('site/')) return handleSite(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('support/')) return handleSupport(request, context.env, apiPath.slice(8));

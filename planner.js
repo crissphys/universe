@@ -31,16 +31,14 @@
     view: 'week',
     saveTimer: null,
     language: readLanguage(),
+    authMode: 'login',
     timer: { technique: '50-10', phase: 'focus', remaining: 3000, total: 3000, running: false, interval: null }
   };
 
   var TEXT = {
     es: {
-      eyebrow: 'TU RUTA, BLOQUE POR BLOQUE', heroTitle: 'Un cronograma que se adapta a tu preparación.',
-      heroCopy: 'Organiza todos los temas UNI o las 20 semanas CEPREUNI, distribuye mejor tu enfoque y convierte cada sesión en una tarea clara.',
-      admissionTopics: 'temas de admisión', cepreWeeks: 'semanas CEPREUNI', studyMethods: 'técnicas de enfoque',
-      privatePlan: 'PLAN PRIVADO Y SINCRONIZADO', signInTitle: 'Inicia con Google para crear tu horario',
-      signInCopy: 'Google verifica tu cuenta de forma segura. Universe no solicita, recibe ni guarda tu contraseña de Gmail.', continueGoogle: 'Continuar con Google', authNote: 'Tu plan quedará asociado únicamente a tu cuenta.',
+      privatePlan: 'ACCESO PRIVADO Y SINCRONIZADO', platformTitle: 'Plataforma Universe', platformCopy: 'Entra a tu espacio de estudio o crea una cuenta propia de Universe.', signIn: 'Ingresar', createAccount: 'Crear cuenta', password: 'Contraseña de Universe', enterPlatform: 'Entrar a la plataforma', registerPlatform: 'Crear mi cuenta', orGoogle: 'o continúa con Google', signInTitle: 'Inicia con Google para crear tu horario',
+      continueGoogle: 'Continuar con Google', authNote: 'Nunca solicitamos ni guardamos tu contraseña de Gmail.',
       setup: 'CONFIGURACIÓN INICIAL', buildRoute: 'Construyamos tu ruta de estudio', profile: 'Perfil', schedule: 'Horario', goal: 'Meta',
       studentQuestion: '¿Qué tipo de estudiante eres?', studentHelp: 'Esto define el temario y la forma en que distribuiremos tus semanas.',
       username: 'Nombre de usuario', usernameHelp: 'Entre 3 y 24 caracteres: letras minúsculas, números, guion o guion bajo.',
@@ -63,11 +61,8 @@
       calendarDownloaded: 'Calendario exportado.', saved: 'Bloque guardado.', deleted: 'Bloque eliminado.'
     },
     en: {
-      eyebrow: 'YOUR ROUTE, ONE BLOCK AT A TIME', heroTitle: 'A study schedule that adapts to your prep.',
-      heroCopy: 'Organize every UNI topic or the full 20-week CEPREUNI route, give your priority area more time, and turn each session into a clear task.',
-      admissionTopics: 'admission topics', cepreWeeks: 'CEPREUNI weeks', studyMethods: 'focus methods',
-      privatePlan: 'PRIVATE, SYNCED PLAN', signInTitle: 'Sign in with Google to build your schedule',
-      signInCopy: 'Google verifies your account securely. Universe never asks for, receives, or stores your Gmail password.', continueGoogle: 'Continue with Google', authNote: 'Your plan stays linked only to your account.',
+      privatePlan: 'PRIVATE, SYNCED ACCESS', platformTitle: 'Universe Platform', platformCopy: 'Open your study space or create your own Universe account.', signIn: 'Sign in', createAccount: 'Create account', password: 'Universe password', enterPlatform: 'Enter the platform', registerPlatform: 'Create my account', orGoogle: 'or continue with Google', signInTitle: 'Sign in with Google to build your schedule',
+      continueGoogle: 'Continue with Google', authNote: 'We never ask for or store your Gmail password.',
       setup: 'QUICK SETUP', buildRoute: 'Let’s build your study route', profile: 'Profile', schedule: 'Schedule', goal: 'Goal',
       studentQuestion: 'What kind of student are you?', studentHelp: 'This sets the syllabus and the way your weeks will be paced.', username: 'Username', usernameHelp: 'Use 3–24 lowercase letters, numbers, hyphens, or underscores.',
       select: 'Select', preCycle: 'Pre-university cycle', basicCycle: 'Foundation cycle', blocksBreaks: '4 blocks · 3 breaks',
@@ -135,6 +130,19 @@
     });
   }
 
+  function authApi(path, data) {
+    return fetch('/api/auth/' + path, {
+      method: 'POST',
+      cache: 'no-store',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data || {})
+    }).then(async function (response) {
+      var payload = await response.json().catch(function () { return {}; });
+      if (!response.ok) { var error = new Error(payload.error || 'request_failed'); error.status = response.status; throw error; }
+      return payload;
+    });
+  }
+
   function applyLanguage() {
     state.language = readLanguage();
     qa('[data-planner-t]').forEach(function (element) {
@@ -143,9 +151,87 @@
     });
     $('academy-search').placeholder = state.language === 'en' ? 'Search academy' : 'Buscar academia';
     $('custom-academy').placeholder = state.language === 'en' ? 'Enter the full name' : 'Escribe el nombre completo';
+    updateAuthMode();
     if (state.planner) renderDashboard();
     else updatePreview();
     updateTimerUI();
+  }
+
+  function setAuthStatus(message, isError) {
+    var status = $('planner-auth-status');
+    if (!status) return;
+    status.textContent = message || '';
+    status.classList.toggle('error', !!isError);
+  }
+
+  function updateAuthMode() {
+    qa('[data-auth-mode]').forEach(function (button) {
+      var selected = button.dataset.authMode === state.authMode;
+      button.classList.toggle('active', selected);
+      button.setAttribute('aria-selected', selected ? 'true' : 'false');
+    });
+    var password = $('planner-auth-password');
+    if (password) password.autocomplete = state.authMode === 'register' ? 'new-password' : 'current-password';
+    var submit = $('planner-auth-submit');
+    if (submit) submit.textContent = tx(state.authMode === 'register' ? 'registerPlatform' : 'enterPlatform');
+    setAuthStatus('');
+  }
+
+  async function submitUniverseCredentials(event) {
+    event.preventDefault();
+    var username = String($('planner-auth-username').value || '').trim().toLowerCase();
+    var password = String($('planner-auth-password').value || '');
+    if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(username)) {
+      setAuthStatus(state.language === 'en' ? 'Use 3–24 lowercase letters, numbers, hyphens, or underscores.' : 'Usa entre 3 y 24 letras minúsculas, números, guion o guion bajo.', true);
+      return;
+    }
+    if (password.length < 8 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+      setAuthStatus(state.language === 'en' ? 'Use at least 8 characters, including a letter and a number.' : 'Usa al menos 8 caracteres, incluyendo una letra y un número.', true);
+      return;
+    }
+    var submit = $('planner-auth-submit');
+    submit.disabled = true;
+    setAuthStatus(state.language === 'en' ? 'Checking your account…' : 'Verificando tu cuenta…');
+    try {
+      var result = await authApi(state.authMode === 'register' ? 'register' : 'login', { username: username, password: password });
+      $('planner-auth-password').value = '';
+      if (window.UniverseGoogleAuth && UniverseGoogleAuth.acceptSession) UniverseGoogleAuth.acceptSession(result.user, result.token);
+      else {
+        localStorage.setItem(TOKEN_KEY, result.token);
+        localStorage.setItem('universe_google_user', JSON.stringify(Object.assign({}, result.user, { secureSession: true })));
+      }
+      setAuthStatus(state.language === 'en' ? 'All set. Opening your platform…' : 'Listo. Abriendo tu plataforma…');
+      await checkAuth();
+    } catch (error) {
+      var messages = state.language === 'en' ? {
+        username_taken: 'That username is already taken.', invalid_credentials: 'Incorrect username or password.', rate_limited: 'Too many attempts. Try again in one minute.'
+      } : {
+        username_taken: 'Ese nombre de usuario ya está ocupado.', invalid_credentials: 'El usuario o la contraseña son incorrectos.', rate_limited: 'Demasiados intentos. Vuelve a probar en un minuto.'
+      };
+      setAuthStatus(messages[error.message] || (state.language === 'en' ? 'We could not complete the sign-in.' : 'No se pudo completar el acceso.'), true);
+    } finally {
+      submit.disabled = false;
+    }
+  }
+
+  async function enterWithGoogle() {
+    var button = $('planner-login');
+    button.disabled = true;
+    setAuthStatus(state.language === 'en' ? 'Checking your Google session…' : 'Verificando tu sesión de Google…');
+    try {
+      var user = window.UniverseGoogleAuth && UniverseGoogleAuth.refresh ? await UniverseGoogleAuth.refresh().catch(function () { return null; }) : null;
+      user = user || (window.UniverseGoogleAuth && UniverseGoogleAuth.user && UniverseGoogleAuth.user());
+      var token = '';
+      try { token = localStorage.getItem(TOKEN_KEY) || ''; } catch (_) {}
+      if (user && user.secureSession === true && token) {
+        await checkAuth();
+        return;
+      }
+      setAuthStatus('');
+      if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true });
+    } finally {
+      button.disabled = false;
+    }
   }
 
   function renderAcademies(filter) {
@@ -641,7 +727,9 @@
   }
 
   function bindEvents() {
-    $('planner-login').onclick = function () { if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); };
+    $('planner-login').onclick = enterWithGoogle;
+    $('planner-credentials').onsubmit = submitUniverseCredentials;
+    qa('[data-auth-mode]').forEach(function (button) { button.onclick = function () { state.authMode = button.dataset.authMode; updateAuthMode(); }; });
     qa('[data-student-type]').forEach(function (button) { button.onclick = function () {
       state.draft.studentType = button.dataset.studentType;
       if (state.draft.studentType !== 'cepreuni') state.draft.cepreCycle = '';
@@ -693,7 +781,9 @@
     if (!window.UniverseGoogleAuth) return;
     if (UniverseGoogleAuth.refresh) await UniverseGoogleAuth.refresh().catch(function () {});
     state.user = UniverseGoogleAuth.user && UniverseGoogleAuth.user();
-    if (!state.user || state.user.provider !== 'google') {
+    var token = '';
+    try { token = localStorage.getItem(TOKEN_KEY) || ''; } catch (_) {}
+    if (!state.user || !token || state.user.secureSession !== true || !['google', 'universe'].includes(state.user.provider)) {
       $('planner-auth').hidden = false; $('planner-wizard').hidden = true; $('planner-dashboard').hidden = true; return;
     }
     $('planner-welcome').textContent = (state.language === 'en' ? 'Hi, ' : 'Hola, ') + (state.user.name || 'Universe') + '.';
@@ -710,7 +800,7 @@
       showDashboard();
       return;
     }
-    state.draft.username = state.community && state.community.username || '';
+    state.draft.username = state.community && state.community.username || (state.user.provider === 'universe' ? state.user.name : '');
     if (state.draft.username) { $('planner-username').disabled = true; }
     showWizard();
   }

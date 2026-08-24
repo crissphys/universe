@@ -179,7 +179,7 @@
       if (!data || !data.user) return null;
       var previous = getCurrentAuthUser() || {};
       var user = Object.assign({}, previous, data.user, {
-        provider: 'google',
+        provider: data.user.provider || previous.provider || 'google',
         createdAt: previous.createdAt || Date.now(),
         updatedAt: Date.now(),
         secureSession: true
@@ -189,6 +189,11 @@
       return user;
     } catch (error) {
       try { localStorage.removeItem(AUTH_TOKEN_KEY); } catch (error2) {}
+      var stored = getCurrentAuthUser();
+      if (stored) {
+        stored.secureSession = false;
+        storeGoogleUser(stored);
+      }
       return null;
     }
   }
@@ -535,6 +540,17 @@
     return getStoredGoogleUser() || getLegacyUser();
   }
 
+  function acceptSecureSession(user, token) {
+    if (!user || !user.id || !token) return null;
+    try { localStorage.setItem(AUTH_TOKEN_KEY, token); } catch (error) {}
+    user = Object.assign({}, user, { secureSession: true, updatedAt: Date.now() });
+    storeGoogleUser(user);
+    try { localStorage.removeItem(GUEST_KEY); } catch (error) {}
+    try { localStorage.setItem(FIRST_GATE_KEY, '1'); } catch (error) {}
+    notifyAuthUpdated(user);
+    return user;
+  }
+
   function hasGuestMode() {
     try { return localStorage.getItem(GUEST_KEY) === '1'; } catch (error) { return false; }
   }
@@ -634,6 +650,11 @@
   }
 
   function afterGoogleLogin(user) {
+    var plannerOwnLogin = document.documentElement && document.documentElement.dataset.universePage === 'planner';
+    if (plannerOwnLogin) {
+      closeGoogleAuthPanel();
+      return;
+    }
     var fromEntryGate = !!(document.body && document.body.classList.contains('uts-entry-gate'));
     if (!fromEntryGate) {
       renderGoogleAuthPanel();
@@ -725,9 +746,9 @@
     var btn = ensureGoogleAuthButton();
     if (!btn) return;
     var user = getCurrentAuthUser();
-    if (user && user.provider === 'google') {
-      btn.innerHTML = (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<span class="uts-g-mark">G</span>') +
-        '<span class="uts-g-label">' + safeText(repairDisplayText(user.name || 'Cuenta').split(' ')[0]) + '<small>Google conectado</small></span>';
+    if (user && (user.provider === 'google' || user.provider === 'universe')) {
+      btn.innerHTML = (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<span class="uts-g-mark">' + (user.provider === 'google' ? 'G' : 'U') + '</span>') +
+        '<span class="uts-g-label">' + safeText(repairDisplayText(user.name || 'Cuenta').split(' ')[0]) + '<small>' + (user.provider === 'google' ? 'Google conectado' : 'Universe conectado') + '</small></span>';
       btn.setAttribute('aria-label', 'Abrir cuenta');
       btn.title = user.email || 'Abrir cuenta';
     } else if (hasGuestMode()) {
@@ -791,21 +812,22 @@
     var modal = ensureGoogleAuthPanel();
     var body = modal.querySelector('#uts-google-body');
     var user = getCurrentAuthUser();
-    if (user && user.provider === 'google') {
+    if (user && (user.provider === 'google' || user.provider === 'universe')) {
       var needsSecureRefresh = !user.secureSession || !getAuthToken();
-      body.innerHTML = renderLoginBrand('CUENTA CONECTADA - GOOGLE') +
+      var isGoogleProvider = user.provider === 'google';
+      body.innerHTML = renderLoginBrand(isGoogleProvider ? 'CUENTA CONECTADA - GOOGLE' : 'CUENTA CONECTADA - UNIVERSE') +
         '<div class="uts-google-user">' +
-        (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<div class="uts-g-mark">G</div>') +
-        '<div><b>' + safeText(repairDisplayText(user.name || 'Usuario Google')) + '</b><span>' + safeText(user.email || '') + '</span></div></div>' +
-        '<p class="uts-login-desc">Tu cuenta ya está conectada. Indica tu perfil académico o entra a Cuenta para editar tus datos completos.</p>' +
+        (user.avatar ? '<img alt="" src="' + safeText(user.avatar) + '">' : '<div class="uts-g-mark">' + (isGoogleProvider ? 'G' : 'U') + '</div>') +
+        '<div><b>' + safeText(repairDisplayText(user.name || 'Usuario Universe')) + '</b><span>' + safeText(user.email || (isGoogleProvider ? '' : 'Cuenta Universe')) + '</span></div></div>' +
+        '<p class="uts-login-desc">Tu cuenta ya está conectada. Puedes continuar usando la plataforma o editar tus datos desde Cuenta.</p>' +
         (user.isAdmin && user.secureSession ? '<div class="uts-google-support-note"><strong>Administrador verificado</strong><span>El servidor privado reconoció esta cuenta como administradora.</span></div>' : '') +
-        (needsSecureRefresh ? '<div class="uts-google-support-note"><strong>Actualizar permisos con Google</strong><span>Si esta cuenta es administradora, vuelve a continuar con Google para que el backend privado actualice tu rol.</span></div><div id="uts-google-signin-slot"></div>' : '') +
+        (needsSecureRefresh && isGoogleProvider ? '<div class="uts-google-support-note"><strong>Actualizar permisos con Google</strong><span>Vuelve a continuar con Google para actualizar la sesión segura.</span></div><div id="uts-google-signin-slot"></div>' : '') +
         renderCepreAccountBox() +
         '<div class="uts-google-actions"><button class="uts-google-primary" type="button" data-uts-account-page>Abrir cuenta completa</button><button class="uts-google-secondary" type="button" data-uts-close>Cerrar</button><button class="uts-google-danger" type="button" data-uts-signout>Cerrar sesion</button></div>';
       body.querySelector('[data-uts-account-page]').addEventListener('click', goAccountPage);
       body.querySelector('[data-uts-close]').addEventListener('click', closeGoogleAuthPanel);
       body.querySelector('[data-uts-signout]').addEventListener('click', signOutGoogleUser);
-      if (needsSecureRefresh) loadGoogleIdentity(renderGoogleSignInButton);
+      if (needsSecureRefresh && isGoogleProvider) loadGoogleIdentity(renderGoogleSignInButton);
       hydrateCepreProfileBox(user);
     } else if (hasGuestMode()) {
       body.innerHTML = renderLoginBrand('MODO INVITADO - UNI') +
@@ -1103,6 +1125,7 @@
       user: getCurrentAuthUser,
       isAdmin: isAdminGoogleUser,
       refresh: refreshSecureSession,
+      acceptSession: acceptSecureSession,
       siteApi: siteApi,
       cleanId: cleanAccountId,
       isGoogleUser: function () {
@@ -1119,9 +1142,11 @@
     setTimeout(renderGoogleAuthButton, 900);
     setTimeout(renderGoogleAuthButton, 2400);
     setTimeout(function () {
-      var hasUser = !!(getCurrentAuthUser() && getCurrentAuthUser().provider === 'google');
+      var currentUser = getCurrentAuthUser();
+      var hasUser = !!(currentUser && currentUser.secureSession === true && ['google', 'universe'].includes(currentUser.provider));
       var alreadyGuest = hasGuestMode();
-      if (!hasUser && !alreadyGuest) openGoogleAuthPanel({ entryGate: true });
+      var plannerOwnLogin = document.documentElement && document.documentElement.dataset.universePage === 'planner';
+      if (!hasUser && !alreadyGuest && !plannerOwnLogin) openGoogleAuthPanel({ entryGate: true });
     }, 650);
   }
 
