@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/style.css?v=reveal-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
   <link rel="stylesheet" href="/universe-design-v2.css?v=design-2">
-  <link rel="stylesheet" href="/planner.css?v=planner-2">
+  <link rel="stylesheet" href="/planner.css?v=planner-3">
 </head>
 <body>
   <div id="universe-page-loader" role="status" aria-live="polite">
@@ -92,22 +92,24 @@
         <section class="planner-step-panel active" data-step="1">
           <div class="planner-question-head"><span>01</span><div><h3 data-planner-t="studentQuestion">¿Qué tipo de estudiante eres?</h3><p data-planner-t="studentHelp">Esto define el temario y la forma en que distribuiremos tus semanas.</p></div></div>
           <label class="planner-field planner-username"><span data-planner-t="username">Nombre de usuario</span><div><b>@</b><input id="planner-username" autocomplete="username" maxlength="24" pattern="[a-z0-9_-]{3,24}" placeholder="tu_usuario" required></div><small data-planner-t="usernameHelp">Entre 3 y 24 caracteres: letras minúsculas, números, guion o guion bajo.</small></label>
-          <div class="planner-choice-grid student-types">
+          <div class="planner-choice-grid student-types" id="planner-student-types">
             <button class="planner-choice blue" data-student-type="cepreuni" type="button"><span class="choice-icon">C</span><strong>CEPREUNI 2027-1</strong><small data-planner-t="cepreDescription">Ruta semanal según prácticas y parciales.</small><i data-planner-t="select">Seleccionar</i></button>
             <button class="planner-choice red" data-student-type="academy" type="button"><span class="choice-icon">A</span><strong data-planner-t="academy">Academia</strong><small data-planner-t="academyDescription">Preparación basada en el temario de admisión UNI.</small><i data-planner-t="select">Seleccionar</i></button>
             <button class="planner-choice green" data-student-type="independent" type="button"><span class="choice-icon">I</span><strong data-planner-t="independent">Autodidacta</strong><small data-planner-t="independentDescription">Una ruta completa para estudiar por tu cuenta.</small><i data-planner-t="select">Seleccionar</i></button>
           </div>
 
-          <div class="planner-conditional" id="planner-cepre-cycle" hidden>
+          <div class="planner-conditional planner-profile-subview" id="planner-cepre-cycle" hidden>
+            <button class="planner-inline-back" type="button" data-profile-choice-back>← <span data-planner-t="back">Atrás</span></button>
             <h4 data-planner-t="cepreCycleQuestion">¿Qué ciclo CEPREUNI 2027-1 llevarás?</h4>
             <div class="planner-pill-options">
               <button type="button" data-cepre-cycle="preuniversitario" data-planner-t="preCycle">Ciclo preuniversitario</button>
               <button type="button" data-cepre-cycle="basico" data-planner-t="basicCycle">Ciclo básico</button>
-              <button type="button" data-cepre-cycle="ien">Ciclo IEN</button>
+              <button type="button" data-cepre-cycle="i" data-planner-t="cycleI">Ciclo I</button>
             </div>
           </div>
 
-          <div class="planner-conditional" id="planner-academies" hidden>
+          <div class="planner-conditional planner-profile-subview" id="planner-academies" hidden>
+            <button class="planner-inline-back" type="button" data-profile-choice-back>← <span data-planner-t="back">Atrás</span></button>
             <div class="planner-subheading"><div><h4 data-planner-t="academyQuestion">¿En qué academia estudias?</h4><p data-planner-t="academyHelp">Elige una opción o escribe el nombre de otra academia.</p></div><label class="planner-search"><span>⌕</span><input id="academy-search" type="search" placeholder="Buscar academia"></label></div>
             <div class="academy-grid" id="academy-grid"></div>
             <label class="planner-field" id="custom-academy-wrap" hidden><span data-planner-t="otherAcademy">Nombre de la otra academia</span><input id="custom-academy" maxlength="60" placeholder="Escribe el nombre completo"></label>
@@ -244,7 +246,7 @@
   <script src="/universe-i18n-catalog.js?v=i18n-4" defer></script>
   <script src="/universe-i18n.js?v=i18n-4" defer></script>
   <script src="/universe-admission.js?v=security-3"></script>
-  <script src="/universe-polish.js?v=unified-35" defer></script>
-  <script src="/planner.js?v=planner-2" defer></script>
+  <script src="/universe-polish.js?v=unified-36" defer></script>
+  <script src="/planner.js?v=planner-3" defer></script>
 </body>
 </html>
