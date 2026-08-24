@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/style.css?v=reveal-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
   <link rel="stylesheet" href="/universe-design-v2.css?v=design-2">
-  <link rel="stylesheet" href="/planner.css?v=planner-4">
+  <link rel="stylesheet" href="/planner.css?v=planner-5">
 </head>
 <body>
   <div id="universe-page-loader" role="status" aria-live="polite">
@@ -179,6 +179,16 @@
             <i><b id="planner-progress-bar"></b></i>
             <small id="planner-progress-copy"></small>
           </article>
+          <article class="planner-sharing-card">
+            <div class="planner-sharing-head"><span>◎</span><div><strong data-planner-t="planPrivacy">Privacidad del plan</strong><small data-planner-t="planPrivacyHelp">Tú decides si otras personas pueden verlo.</small></div></div>
+            <div class="planner-visibility-options" role="group" aria-label="Privacidad del plan">
+              <button class="active" data-plan-visibility="private" type="button" data-planner-t="privateVisibility">Privado</button>
+              <button data-plan-visibility="public" type="button" data-planner-t="publicVisibility">Público</button>
+            </div>
+            <label class="planner-public-note" id="planner-public-note-wrap" hidden><span data-planner-t="publicComment">Comentario público</span><textarea id="planner-public-note" maxlength="500" placeholder="Cuenta para qué sirve tu plan..."></textarea><small><b id="planner-public-note-count">0</b>/500</small></label>
+            <button class="planner-share-save" id="planner-save-sharing" type="button" data-planner-t="savePrivacy">Guardar privacidad</button>
+            <p id="planner-sharing-status" role="status" aria-live="polite"></p>
+          </article>
           <article class="planner-sidebar-action technique">
             <span>◴</span><div><strong data-planner-t="focusTimer">Cronómetro de enfoque</strong><small id="planner-technique-label">50 min + 10 min</small></div><button id="planner-open-techniques" type="button" data-planner-t="open">Abrir</button>
           </article>
@@ -200,12 +210,17 @@
           <div class="planner-calendar-note"><span>i</span><p data-planner-t="calendarNote">Las fechas CEPREUNI de este plan sirven para organizar el estudio. Confírmalas cuando la institución publique el cronograma 2027-1.</p></div>
         </section>
       </div>
+
+      <section class="planner-community-plans" aria-labelledby="planner-community-title">
+        <header><div><span class="planner-kicker" data-planner-t="communityPlansKicker">PLANES DE LA COMUNIDAD</span><h2 id="planner-community-title" data-planner-t="communityPlansTitle">Mira cómo estudian otras personas</h2><p data-planner-t="communityPlansCopy">Explora planes compartidos voluntariamente por estudiantes de CEPREUNI, academias y preparación autodidacta.</p></div><button id="planner-refresh-public" type="button">↻ <span data-planner-t="refresh">Actualizar</span></button></header>
+        <div class="planner-public-grid" id="planner-public-plans"><p class="planner-public-empty" data-planner-t="loadingPublicPlans">Cargando planes públicos...</p></div>
+      </section>
     </section>
   </main>
 
   <dialog class="planner-dialog" id="planner-event-dialog" data-i18n-ignore>
     <form method="dialog" id="planner-event-form">
-      <header><div><span class="planner-kicker" data-planner-t="editCalendar">EDITAR CALENDARIO</span><h2 id="planner-event-title" data-planner-t="studyBlock">Bloque de estudio</h2></div><button value="cancel" aria-label="Cerrar" type="submit">×</button></header>
+      <header><div><span class="planner-kicker" data-planner-t="editCalendar">EDITAR CALENDARIO</span><h2 id="planner-event-title" data-planner-t="studyBlock">Bloque de estudio</h2></div><button id="planner-event-close" aria-label="Cerrar" type="button">×</button></header>
       <input id="planner-event-id" type="hidden">
       <div class="planner-dialog-grid">
         <label class="planner-field"><span data-planner-t="date">Fecha</span><input id="planner-event-date" type="date" required></label>
@@ -215,8 +230,15 @@
         <label class="planner-field full"><span data-planner-t="course">Curso</span><input id="planner-event-course" maxlength="60" required></label>
         <label class="planner-field full"><span data-planner-t="topic">Tema o tarea</span><textarea id="planner-event-topic" maxlength="220" required></textarea></label>
       </div>
-      <div class="planner-dialog-actions"><button class="planner-danger" id="planner-delete-event" type="button" hidden data-planner-t="delete">Eliminar</button><button class="planner-secondary" id="planner-complete-event" type="button" hidden data-planner-t="markDone">Marcar completado</button><span></span><button class="planner-secondary" value="cancel" type="submit" data-planner-t="cancel">Cancelar</button><button class="planner-primary" id="planner-save-event" type="button" data-planner-t="saveBlock">Guardar bloque</button></div>
+      <div class="planner-dialog-actions"><button class="planner-danger" id="planner-delete-event" type="button" hidden data-planner-t="delete">Eliminar</button><button class="planner-secondary" id="planner-complete-event" type="button" hidden data-planner-t="markDone">Marcar completado</button><span></span><button class="planner-secondary" id="planner-event-cancel" type="button" data-planner-t="cancel">Cancelar</button><button class="planner-primary" id="planner-save-event" type="button" data-planner-t="saveBlock">Guardar bloque</button></div>
     </form>
+  </dialog>
+
+  <dialog class="planner-dialog planner-public-dialog" id="planner-public-dialog" data-i18n-ignore>
+    <div class="planner-public-detail">
+      <header><div><span class="planner-kicker" data-planner-t="publicPlan">PLAN PÚBLICO</span><h2 id="planner-public-dialog-title">Plan de estudio</h2></div><button id="planner-public-dialog-close" aria-label="Cerrar" type="button">×</button></header>
+      <div id="planner-public-dialog-body"></div>
+    </div>
   </dialog>
 
   <dialog class="planner-dialog technique-dialog" id="planner-technique-dialog" data-i18n-ignore>
@@ -250,6 +272,6 @@
   <script src="/universe-i18n.js?v=i18n-4" defer></script>
   <script src="/universe-admission.js?v=security-3"></script>
   <script src="/universe-polish.js?v=unified-36" defer></script>
-  <script src="/planner.js?v=planner-5" defer></script>
+  <script src="/planner.js?v=planner-6" defer></script>
 </body>
 </html>
