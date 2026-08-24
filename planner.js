@@ -831,7 +831,14 @@
       showDashboard();
       return;
     }
-    state.draft.username = state.community && state.community.username || (state.user.provider === 'universe' ? state.user.name : '');
+    var suggestedUsername = String(
+      state.community && state.community.username ||
+      state.user.name ||
+      String(state.user.email || '').split('@')[0] ||
+      'estudiante'
+    ).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 24);
+    if (suggestedUsername.length < 3) suggestedUsername = 'estudiante';
+    state.draft.username = suggestedUsername;
     $('planner-username').disabled = false;
     showWizard();
   }
