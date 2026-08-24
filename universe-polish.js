@@ -11,7 +11,7 @@
     if (!document.head || document.getElementById('uts-i18n-runtime')) return;
     var runtime = document.createElement('script');
     runtime.id = 'uts-i18n-runtime';
-    runtime.src = '/universe-i18n.js?v=bilingual-14';
+    runtime.src = '/universe-i18n.js?v=bilingual-15';
     runtime.defer = true;
     document.head.appendChild(runtime);
   }
@@ -237,6 +237,14 @@
     var root = document.documentElement;
     var page = root && root.getAttribute('data-universe-page') || '';
     document.querySelectorAll('nav .nav-links').forEach(function (list) {
+      if (list.querySelector('a[href="/planificador"]')) return;
+      var item = document.createElement('li');
+      item.innerHTML = '<a data-route="planner" href="/planificador">Planificador</a>';
+      var syllabus = list.querySelector('a[href="/temario"]');
+      if (syllabus && syllabus.parentElement) list.insertBefore(item, syllabus.parentElement);
+      else list.appendChild(item);
+    });
+    document.querySelectorAll('nav .nav-links').forEach(function (list) {
       if (list.querySelector('a[href="/unitalk"]')) return;
       var item = document.createElement('li');
       item.innerHTML = '<a data-route="unitalk" href="/unitalk">UNITALK</a>';
@@ -291,6 +299,7 @@
     calculator: ['Calculadora CEPREUNI', 'Proyecta tu promedio con claridad'],
     ranking: ['Máximos y mínimos', 'Compara el ciclo actual y los anteriores'],
     syllabus: ['Temario', 'Organiza tu preparación por áreas y pruebas'],
+    planner: ['Planificador', 'Tu cronograma personal de estudio'],
     classes: ['Clases', 'Videos y práctica organizada por temas'],
     library: ['Biblioteca', 'Materiales clasificados para estudiar mejor'],
     simulators: ['Simulacros', 'Practica con tiempo y formato de examen'],
@@ -371,7 +380,7 @@
     footer.className = 'uts-site-footer';
     footer.innerHTML = '<div class="uts-footer-main">' +
       '<div class="uts-footer-brand"><a href="/">Universe to Study</a><p>Recursos, herramientas y comunidad para una preparación preuniversitaria con orden.</p></div>' +
-      '<div><h3>Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/clases">Clases</a><a href="/biblioteca">Biblioteca</a></div>' +
+      '<div><h3>Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/planificador">Planificador</a><a href="/clases">Clases</a><a href="/biblioteca">Biblioteca</a></div>' +
       '<div><h3>Practica</h3><a href="/simulacros">Simulacros</a><a href="/temario">Temario</a><a href="/unitalk">UNITALK</a><a href="/calculadora">Calculadora</a></div>' +
       '<div><h3>Confianza</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a></div>' +
       '</div><div class="uts-footer-bottom"><span>© <b>2026</b> Universe to Study</span><span><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer">Soporte por WhatsApp</a></span></div>';
