@@ -37,6 +37,8 @@
     authLoading: false,
     authReady: false,
     authUserId: '',
+    publicPlans: [],
+    publicPlansLoaded: false,
     timer: { technique: '50-10', phase: 'focus', remaining: 3000, total: 3000, running: false, interval: null }
   };
 
@@ -63,7 +65,9 @@
       synced: 'Plan sincronizado con tu cuenta.', localOnly: 'El plan se guardó en este dispositivo; intentaremos sincronizarlo al recuperar la conexión.', noSessions: 'Hoy no tienes bloques programados. Aprovecha para descansar o revisar errores.', completedOf: '{done} de {total} bloques completados', notificationsOn: 'Notificaciones activadas', pageOpenNotice: 'Te avisaremos mientras Universe esté abierto en este dispositivo.',
       exam: 'Evaluación', review: 'Repaso', practice: 'Práctica', study: 'Estudio', topicsScheduled: 'temas programados', weeks: 'semanas', sessions: 'sesiones', hours: 'horas planificadas',
       focus: 'ENFOQUE', break: 'PAUSA', startTimer: '▶ Iniciar', pauseTimer: 'Ⅱ Pausar', timerFinished: 'Bloque completado', breakFinished: 'Pausa terminada. Vuelve a tu siguiente tarea.', confirmReset: '¿Quieres crear un cronograma nuevo? Tus bloques actuales serán reemplazados.',
-      calendarDownloaded: 'Calendario exportado.', saved: 'Bloque guardado.', deleted: 'Bloque eliminado.'
+      calendarDownloaded: 'Calendario exportado.', saved: 'Bloque guardado.', deleted: 'Bloque eliminado.',
+      planPrivacy: 'Privacidad del plan', planPrivacyHelp: 'Tú decides si otras personas pueden verlo.', privateVisibility: 'Privado', publicVisibility: 'Público', publicComment: 'Comentario público', savePrivacy: 'Guardar privacidad', privacySaved: 'Privacidad guardada.', publicCommentPlaceholder: 'Cuenta para qué sirve tu plan...',
+      communityPlansKicker: 'PLANES DE LA COMUNIDAD', communityPlansTitle: 'Mira cómo estudian otras personas', communityPlansCopy: 'Explora planes compartidos voluntariamente por estudiantes de CEPREUNI, academias y preparación autodidacta.', refresh: 'Actualizar', loadingPublicPlans: 'Cargando planes públicos...', noPublicPlans: 'Todavía no hay planes públicos. Puedes compartir el tuyo cuando quieras.', viewFullPlan: 'Ver plan completo', publicPlan: 'PLAN PÚBLICO', sessionsLabel: 'bloques', completedLabel: 'completados', hoursLabel: 'horas', planSchedule: 'Cronograma completo', noPublicNote: 'Sin comentario público.', completeBlock: 'Marcar bloque como completado', pendingBlock: 'Marcar bloque como pendiente'
     },
     en: {
       privatePlan: 'PRIVATE, SYNCED ACCESS', platformTitle: 'Universe Platform', platformCopy: 'Open your study space or create your own Universe account.', signIn: 'Sign in', createAccount: 'Create account', password: 'Universe password', enterPlatform: 'Enter the platform', registerPlatform: 'Create my account', orGoogle: 'or continue with Google', signInTitle: 'Sign in with Google to build your schedule',
@@ -86,7 +90,9 @@
       synced: 'Plan synced to your account.', localOnly: 'Your plan is saved on this device; we will sync it when the connection is back.', noSessions: 'No blocks scheduled for today. Use the time to rest or review mistakes.', completedOf: '{done} of {total} blocks completed', notificationsOn: 'Notifications enabled', pageOpenNotice: 'We will remind you while Universe is open on this device.',
       exam: 'Exam', review: 'Review', practice: 'Practice', study: 'Study', topicsScheduled: 'topics scheduled', weeks: 'weeks', sessions: 'sessions', hours: 'planned hours',
       focus: 'FOCUS', break: 'BREAK', startTimer: '▶ Start', pauseTimer: 'Ⅱ Pause', timerFinished: 'Focus block complete', breakFinished: 'Break is over. Time for your next task.', confirmReset: 'Build a new schedule? Your current blocks will be replaced.',
-      calendarDownloaded: 'Calendar exported.', saved: 'Block saved.', deleted: 'Block deleted.'
+      calendarDownloaded: 'Calendar exported.', saved: 'Block saved.', deleted: 'Block deleted.',
+      planPrivacy: 'Plan privacy', planPrivacyHelp: 'You decide whether other people can view it.', privateVisibility: 'Private', publicVisibility: 'Public', publicComment: 'Public note', savePrivacy: 'Save privacy', privacySaved: 'Privacy saved.', publicCommentPlaceholder: 'Tell others what this plan is for...',
+      communityPlansKicker: 'COMMUNITY PLANS', communityPlansTitle: 'See how other students study', communityPlansCopy: 'Explore plans voluntarily shared by CEPREUNI, academy, and self-study students.', refresh: 'Refresh', loadingPublicPlans: 'Loading public plans...', noPublicPlans: 'There are no public plans yet. You can share yours whenever you want.', viewFullPlan: 'View full plan', publicPlan: 'PUBLIC PLAN', sessionsLabel: 'blocks', completedLabel: 'completed', hoursLabel: 'hours', planSchedule: 'Full schedule', noPublicNote: 'No public note.', completeBlock: 'Mark block complete', pendingBlock: 'Mark block pending'
     }
   };
 
@@ -156,8 +162,9 @@
     });
     $('academy-search').placeholder = state.language === 'en' ? 'Search academy' : 'Buscar academia';
     $('custom-academy').placeholder = state.language === 'en' ? 'Enter the full name' : 'Escribe el nombre completo';
+    if ($('planner-public-note')) $('planner-public-note').placeholder = tx('publicCommentPlaceholder');
     updateAuthMode();
-    if (state.planner) renderDashboard();
+    if (state.planner) { renderDashboard(); renderPublicPlans(); }
     else updatePreview();
     updateTimerUI();
   }
@@ -522,8 +529,10 @@
         var response = await api('/planner', 'PUT', state.planner);
         if (response.planner) state.planner = response.planner;
         document.documentElement.dataset.plannerSync = 'ok';
+        return true;
       } catch (error) {
         document.documentElement.dataset.plannerSync = 'local';
+        return false;
       }
     };
     if (immediate) return run();
@@ -547,7 +556,7 @@
         shift: state.draft.shift, focus: state.draft.focus,
         startDate: state.draft.startDate, endMode: state.draft.endMode, endDate: state.draft.endDate
       };
-      state.planner = { version: 1, profile: profile, settings: { technique: '50-10', notifications: false, view: 'week' }, events: buildSchedule(profile), createdAt: Date.now(), updatedAt: Date.now() };
+      state.planner = { version: 1, profile: profile, settings: { technique: '50-10', notifications: false, view: 'week' }, sharing: { visibility: 'private', note: '' }, events: buildSchedule(profile), createdAt: Date.now(), updatedAt: Date.now() };
       state.view = 'week';
       state.calendarDate = startOfWeek(parseDate(profile.startDate));
       await savePlanner(true);
@@ -569,6 +578,104 @@
     return state.language === 'en' ? 'Self-study · UNI 2027-1' : 'Autodidacta · Admisión UNI 2027-1';
   }
 
+  function normalizeSharing() {
+    if (!state.planner) return { visibility: 'private', note: '' };
+    state.planner.sharing = state.planner.sharing && typeof state.planner.sharing === 'object' ? state.planner.sharing : {};
+    state.planner.sharing.visibility = state.planner.sharing.visibility === 'public' ? 'public' : 'private';
+    state.planner.sharing.note = String(state.planner.sharing.note || '').slice(0, 500);
+    return state.planner.sharing;
+  }
+
+  function renderSharing() {
+    if (!$('planner-save-sharing')) return;
+    var sharing = normalizeSharing();
+    qa('[data-plan-visibility]').forEach(function (button) {
+      var active = button.dataset.planVisibility === sharing.visibility;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    $('planner-public-note-wrap').hidden = sharing.visibility !== 'public';
+    $('planner-public-note').value = sharing.note;
+    $('planner-public-note-count').textContent = String(sharing.note.length);
+  }
+
+  function publicProfileDescription(profile) {
+    profile = profile || {};
+    if (profile.studentType === 'cepreuni') {
+      var cycle = state.language === 'en'
+        ? { preuniversitario: 'Pre-university cycle', basico: 'Foundation cycle', ien: 'Cycle I', i: 'Cycle I' }
+        : { preuniversitario: 'Ciclo preuniversitario', basico: 'Ciclo básico', ien: 'Ciclo I', i: 'Ciclo I' };
+      return 'CEPREUNI 2027-1 · ' + (cycle[profile.cepreCycle] || '');
+    }
+    if (profile.studentType === 'academy') return (profile.academyName || tx('academy')) + ' · ' + (state.language === 'en' ? 'Academy' : 'Academia');
+    return state.language === 'en' ? 'Self-study student' : 'Estudiante autodidacta';
+  }
+
+  function renderPublicPlans() {
+    var container = $('planner-public-plans');
+    if (!container) return;
+    if (!state.publicPlansLoaded) {
+      container.innerHTML = '<p class="planner-public-empty">' + safe(tx('loadingPublicPlans')) + '</p>';
+      return;
+    }
+    if (!state.publicPlans.length) {
+      container.innerHTML = '<p class="planner-public-empty">' + safe(tx('noPublicPlans')) + '</p>';
+      return;
+    }
+    container.innerHTML = state.publicPlans.map(function (plan) {
+      var owner = plan.owner || {}, profile = plan.profile || {}, summary = plan.summary || {};
+      var name = owner.displayName || owner.username || profile.username || 'Universe';
+      var avatar = owner.avatar ? '<img src="' + safe(owner.avatar) + '" alt="">' : safe(name.charAt(0).toUpperCase());
+      return '<article class="planner-public-card"><header><span class="planner-public-avatar">' + avatar + '</span><div><strong>' + safe(name) + '</strong><small>@' + safe(owner.username || profile.username || 'estudiante') + '</small></div></header><p class="planner-public-path">' + safe(publicProfileDescription(profile)) + '</p><blockquote>' + safe(plan.note || tx('noPublicNote')) + '</blockquote><div class="planner-public-stats"><span><b>' + (Number(summary.sessions) || 0) + '</b>' + safe(tx('sessionsLabel')) + '</span><span><b>' + (Number(summary.progress) || 0) + '%</b>' + safe(tx('completedLabel')) + '</span><span><b>' + (Number(summary.hours) || 0) + '</b>' + safe(tx('hoursLabel')) + '</span></div><button class="planner-public-open" data-public-plan-id="' + safe(plan.id) + '" type="button">' + safe(tx('viewFullPlan')) + ' →</button></article>';
+    }).join('');
+    qa('[data-public-plan-id]', container).forEach(function (button) { button.onclick = function () { openPublicPlan(button.dataset.publicPlanId); }; });
+  }
+
+  async function loadPublicPlans(force) {
+    if (state.publicPlansLoaded && !force) return;
+    if ($('planner-public-plans')) $('planner-public-plans').innerHTML = '<p class="planner-public-empty">' + safe(tx('loadingPublicPlans')) + '</p>';
+    try {
+      var response = await api('/planner/public', 'GET');
+      state.publicPlans = Array.isArray(response.plans) ? response.plans : [];
+    } catch (_) { state.publicPlans = []; }
+    state.publicPlansLoaded = true;
+    renderPublicPlans();
+  }
+
+  async function saveSharing() {
+    var sharing = normalizeSharing();
+    sharing.note = String($('planner-public-note').value || '').trim().slice(0, 500);
+    var button = $('planner-save-sharing');
+    button.disabled = true;
+    $('planner-sharing-status').textContent = state.language === 'en' ? 'Saving…' : 'Guardando…';
+    try {
+      var synced = await savePlanner(true);
+      if (!synced) throw new Error('sync_failed');
+      $('planner-sharing-status').textContent = tx('privacySaved');
+      state.publicPlansLoaded = false;
+      await loadPublicPlans(true);
+    } catch (_) {
+      $('planner-sharing-status').textContent = state.language === 'en' ? 'Could not sync this setting.' : 'No se pudo sincronizar esta configuración.';
+    } finally { button.disabled = false; }
+  }
+
+  async function openPublicPlan(id) {
+    var dialog = $('planner-public-dialog'), body = $('planner-public-dialog-body');
+    body.innerHTML = '<p class="planner-public-empty">' + safe(tx('loadingPublicPlans')) + '</p>';
+    dialog.showModal();
+    try {
+      var response = await api('/planner/public/' + encodeURIComponent(id), 'GET'), plan = response.plan || {};
+      var owner = plan.owner || {}, profile = plan.profile || {}, summary = plan.summary || {}, events = Array.isArray(plan.events) ? plan.events : [];
+      $('planner-public-dialog-title').textContent = (owner.displayName || owner.username || profile.username || 'Universe') + ' · ' + tx('planSchedule');
+      var grouped = {};
+      events.forEach(function (event) { (grouped[event.date] = grouped[event.date] || []).push(event); });
+      var schedule = Object.keys(grouped).sort().map(function (date) {
+        return '<section class="planner-public-day"><h3>' + safe(formatDate(date, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + '</h3><div>' + grouped[date].sort(sortEvents).map(function (event) { return '<article class="planner-public-event' + (event.status === 'done' ? ' done' : '') + '"><time>' + safe(event.start + '—' + event.end) + '</time><span style="--event-color:' + areaColor(event.area, event.type) + '"></span><div><strong>' + safe(event.course) + '</strong><p>' + safe(event.topic) + '</p></div></article>'; }).join('') + '</div></section>';
+      }).join('');
+      body.innerHTML = '<div class="planner-public-detail-head"><p>' + safe(publicProfileDescription(profile)) + '</p><blockquote>' + safe(plan.note || tx('noPublicNote')) + '</blockquote><div class="planner-public-stats"><span><b>' + (Number(summary.sessions) || 0) + '</b>' + safe(tx('sessionsLabel')) + '</span><span><b>' + (Number(summary.progress) || 0) + '%</b>' + safe(tx('completedLabel')) + '</span><span><b>' + (Number(summary.hours) || 0) + '</b>' + safe(tx('hoursLabel')) + '</span></div></div><div class="planner-public-schedule">' + schedule + '</div>';
+    } catch (_) { body.innerHTML = '<p class="planner-public-empty">' + (state.language === 'en' ? 'This plan is no longer available.' : 'Este plan ya no está disponible.') + '</p>'; }
+  }
+
   function showDashboard() {
     $('planner-auth').hidden = true;
     $('planner-wizard').hidden = true;
@@ -577,6 +684,7 @@
     setTechnique(state.planner.settings && state.planner.settings.technique || '50-10', false);
     renderDashboard();
     checkNotifications();
+    loadPublicPlans(false);
   }
 
   function showWizard() {
@@ -599,6 +707,7 @@
     renderCalendar();
     renderToday();
     renderProgress();
+    renderSharing();
     var technique = state.planner.settings && state.planner.settings.technique || '50-10';
     $('planner-technique-label').textContent = technique.replace('-', ' min + ') + ' min';
     var notifications = state.planner.settings && state.planner.settings.notifications && window.Notification && Notification.permission === 'granted';
@@ -610,8 +719,10 @@
   function renderToday() {
     var events = eventsOn(localDate(new Date()));
     $('planner-today-list').innerHTML = events.length ? events.slice(0, 5).map(function (event) {
-      return '<div class="planner-today-item"><i style="background:' + areaColor(event.area, event.type) + '"></i><div><b>' + safe(event.start + ' · ' + event.course) + '</b><small>' + safe(event.topic) + '</small></div></div>';
+      var check = event.type === 'exam' ? '' : '<button class="planner-today-check' + (event.status === 'done' ? ' checked' : '') + '" data-event-check="' + safe(event.id) + '" type="button" aria-label="' + safe(event.status === 'done' ? tx('pendingBlock') : tx('completeBlock')) + '">' + (event.status === 'done' ? '✓' : '') + '</button>';
+      return '<div class="planner-today-item"><i style="background:' + areaColor(event.area, event.type) + '"></i><div><b>' + safe(event.start + ' · ' + event.course) + '</b><small>' + safe(event.topic) + '</small></div>' + check + '</div>';
     }).join('') : '<p class="planner-today-empty">' + safe(tx('noSessions')) + '</p>';
+    bindCompletionChecks($('planner-today-list'));
   }
 
   function renderProgress() {
@@ -626,11 +737,24 @@
   function areaColor(area, type) { if (type === 'exam') return '#f2ad36'; if (area === 'Ciencias') return '#20b981'; if (area === 'Humanidades') return '#f0525f'; return '#2776f5'; }
   function eventMarkup(event, month) {
     var classes = (month ? 'planner-month-event' : 'planner-event') + (event.type === 'exam' ? ' exam' : '') + (event.status === 'done' ? ' done' : '');
-    if (month) return '<button class="' + classes + '" data-event-id="' + safe(event.id) + '" data-area="' + safe(event.area) + '" type="button">' + safe(event.start + ' ' + event.course) + '</button>';
-    return '<button class="' + classes + '" data-event-id="' + safe(event.id) + '" data-area="' + safe(event.area) + '" type="button"><time>' + safe(event.start + '—' + event.end) + '</time><strong>' + safe(event.topic) + '</strong><small>' + safe(event.course) + '</small></button>';
+    var check = event.type === 'exam' ? '' : '<button class="planner-event-check' + (event.status === 'done' ? ' checked' : '') + '" data-event-check="' + safe(event.id) + '" type="button" aria-label="' + safe(event.status === 'done' ? tx('pendingBlock') : tx('completeBlock')) + '">' + (event.status === 'done' ? '✓' : '') + '</button>';
+    if (month) return '<div class="' + classes + '" data-event-id="' + safe(event.id) + '" data-area="' + safe(event.area) + '" role="button" tabindex="0"><span>' + safe(event.start + ' ' + event.course) + '</span>' + check + '</div>';
+    return '<article class="' + classes + '" data-event-id="' + safe(event.id) + '" data-area="' + safe(event.area) + '" role="button" tabindex="0"><div class="planner-event-copy"><time>' + safe(event.start + '—' + event.end) + '</time><strong>' + safe(event.topic) + '</strong><small>' + safe(event.course) + '</small></div>' + check + '</article>';
   }
 
-  function bindEventCards() { qa('[data-event-id]', $('planner-calendar')).forEach(function (button) { button.onclick = function () { openEventDialog(button.dataset.eventId); }; }); }
+  function bindCompletionChecks(root) {
+    qa('[data-event-check]', root || document).forEach(function (button) {
+      button.onclick = function (event) { event.preventDefault(); event.stopPropagation(); toggleEventStatus(button.dataset.eventCheck); };
+    });
+  }
+
+  function bindEventCards() {
+    qa('[data-event-id]', $('planner-calendar')).forEach(function (card) {
+      card.onclick = function (event) { if (!event.target.closest('[data-event-check]')) openEventDialog(card.dataset.eventId); };
+      card.onkeydown = function (event) { if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('[data-event-check]')) { event.preventDefault(); openEventDialog(card.dataset.eventId); } };
+    });
+    bindCompletionChecks($('planner-calendar'));
+  }
 
   function renderCalendar() {
     if (state.view === 'month') renderMonth(); else renderWeek();
@@ -676,6 +800,13 @@
     $('planner-event-dialog').showModal();
   }
 
+  function closeEventDialog() {
+    var dialog = $('planner-event-dialog');
+    if (dialog && dialog.open) dialog.close('cancel');
+    if ($('planner-event-form')) $('planner-event-form').reset();
+    $('planner-event-id').value = '';
+  }
+
   function saveEvent() {
     var id = $('planner-event-id').value, existing = id && state.planner.events.find(function (event) { return event.id === id; });
     var event = {
@@ -701,6 +832,14 @@
     if (!event) return;
     event.status = event.status === 'done' ? 'pending' : 'done';
     $('planner-event-dialog').close(); savePlanner(); renderDashboard();
+  }
+
+  function toggleEventStatus(id) {
+    var event = (state.planner.events || []).find(function (item) { return item.id === id; });
+    if (!event || event.type === 'exam') return;
+    event.status = event.status === 'done' ? 'pending' : 'done';
+    savePlanner();
+    renderDashboard();
   }
 
   async function enableNotifications() {
@@ -817,7 +956,15 @@
     $('planner-save-event').onclick = saveEvent;
     $('planner-delete-event').onclick = deleteEvent;
     $('planner-complete-event').onclick = toggleEventDone;
+    $('planner-event-close').onclick = closeEventDialog;
+    $('planner-event-cancel').onclick = closeEventDialog;
+    $('planner-event-dialog').addEventListener('cancel', function () { setTimeout(function () { $('planner-event-form').reset(); $('planner-event-id').value = ''; }, 0); });
     $('planner-enable-notifications').onclick = enableNotifications;
+    qa('[data-plan-visibility]').forEach(function (button) { button.onclick = function () { normalizeSharing().visibility = button.dataset.planVisibility; renderSharing(); }; });
+    $('planner-public-note').oninput = function () { normalizeSharing().note = this.value.slice(0, 500); $('planner-public-note-count').textContent = String(this.value.length); };
+    $('planner-save-sharing').onclick = saveSharing;
+    $('planner-refresh-public').onclick = function () { loadPublicPlans(true); };
+    $('planner-public-dialog-close').onclick = function () { $('planner-public-dialog').close(); };
     $('planner-export').onclick = exportCalendar;
     $('planner-reconfigure').onclick = function () {
       if (!confirm(tx('confirmReset'))) return;
@@ -832,6 +979,8 @@
     $('planner-timer-reset').onclick = function () { setTechnique(state.timer.technique, false); };
     window.addEventListener('universe:languagechange', applyLanguage);
     window.addEventListener('universe-google-auth', function () { setTimeout(checkAuth, 80); });
+    window.addEventListener('focus', checkNotifications);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) checkNotifications(); });
     setInterval(checkNotifications, 30000);
   }
 

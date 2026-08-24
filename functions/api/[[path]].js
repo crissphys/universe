@@ -516,7 +516,7 @@ function validPassword(value) {
 }
 
 const PLANNER_STUDENT_TYPES = ['cepreuni', 'academy', 'independent'];
-const PLANNER_CYCLES = ['preuniversitario', 'basico', 'ien'];
+const PLANNER_CYCLES = ['preuniversitario', 'basico', 'ien', 'i'];
 const PLANNER_SHIFTS = ['morning', 'afternoon'];
 const PLANNER_FOCUS = ['math', 'science', 'humanities', 'all'];
 const PLANNER_END_MODES = ['cepre-final', 'admission', 'custom'];
@@ -560,6 +560,7 @@ function sanitizePlannerData(data, existing, auth) {
   existing = existing && typeof existing === 'object' ? existing : {};
   var profile = data.profile && typeof data.profile === 'object' ? data.profile : {};
   var settings = data.settings && typeof data.settings === 'object' ? data.settings : {};
+  var sharing = data.sharing && typeof data.sharing === 'object' ? data.sharing : {};
   var events = Array.isArray(data.events) ? data.events.slice(0, 1400) : [];
   return {
     version: 1,
@@ -580,10 +581,58 @@ function sanitizePlannerData(data, existing, auth) {
       notifications: settings.notifications === true,
       view: ['week', 'month'].includes(settings.view) ? settings.view : 'week'
     },
+    sharing: {
+      visibility: sharing.visibility === 'public' ? 'public' : 'private',
+      note: censorText(cleanText(sharing.note, 500))
+    },
     events: events.map(sanitizePlannerEvent).filter(Boolean),
     createdAt: Number(existing.createdAt) || Date.now(),
     updatedAt: Date.now()
   };
+}
+
+function plannerPublicSummary(planner) {
+  planner = planner && typeof planner === 'object' ? planner : {};
+  var events = Array.isArray(planner.events) ? planner.events : [];
+  var studyEvents = events.filter(function (event) { return event && event.type !== 'exam'; });
+  var done = studyEvents.filter(function (event) { return event.status === 'done'; }).length;
+  var minutes = studyEvents.reduce(function (total, event) {
+    var start = plannerTime(event.start).split(':').map(Number);
+    var end = plannerTime(event.end).split(':').map(Number);
+    if (start.length !== 2 || end.length !== 2) return total;
+    return total + Math.max(0, (end[0] * 60 + end[1]) - (start[0] * 60 + start[1]));
+  }, 0);
+  return {
+    sessions: studyEvents.length,
+    completed: done,
+    progress: studyEvents.length ? Math.round(done * 100 / studyEvents.length) : 0,
+    hours: Math.round(minutes / 6) / 10,
+    startDate: plannerDate(planner.profile && planner.profile.startDate),
+    endDate: plannerDate(planner.profile && planner.profile.endDate)
+  };
+}
+
+function publicPlannerSnapshot(id, planner, community, includeEvents) {
+  planner = planner && typeof planner === 'object' ? planner : {};
+  var profile = planner.profile && typeof planner.profile === 'object' ? planner.profile : {};
+  var sharing = planner.sharing && typeof planner.sharing === 'object' ? planner.sharing : {};
+  var result = {
+    id: cleanId(id),
+    owner: publicProfile(community || { username: profile.username, displayName: profile.username }, null),
+    profile: {
+      username: cleanUsername(profile.username),
+      studentType: PLANNER_STUDENT_TYPES.includes(profile.studentType) ? profile.studentType : '',
+      cepreCycle: PLANNER_CYCLES.includes(profile.cepreCycle) ? profile.cepreCycle : '',
+      academyName: cleanText(profile.academyName, 60),
+      shift: PLANNER_SHIFTS.includes(profile.shift) ? profile.shift : 'morning',
+      focus: PLANNER_FOCUS.includes(profile.focus) ? profile.focus : 'all'
+    },
+    note: censorText(cleanText(sharing.note, 500)),
+    summary: plannerPublicSummary(planner),
+    updatedAt: Number(planner.updatedAt) || Date.now()
+  };
+  if (includeEvents) result.events = (Array.isArray(planner.events) ? planner.events : []).slice(0, 1400).map(sanitizePlannerEvent).filter(Boolean);
+  return result;
 }
 
 function rateLimit(request, key, max = 90, windowMs = 60000) {
@@ -881,6 +930,26 @@ async function handleSite(request, env, subpath) {
   }
   if (path.startsWith('/public') && (!auth || !auth.admin)) return json({ error: 'admin_required' }, 403);
 
+  if (path === '/planner/public' && method === 'GET') {
+    if (!auth) return json({ error: 'login_required' }, 401);
+    var publicPlannerRows = await firebase(env, SITE_ROOT + '/publicPlanIndex', 'GET') || {};
+    var publicPlans = Object.keys(publicPlannerRows).map(function (key) {
+      var row = publicPlannerRows[key] && typeof publicPlannerRows[key] === 'object' ? publicPlannerRows[key] : {};
+      row.id = cleanId(row.id || key);
+      return row;
+    }).filter(function (row) { return row.id && row.profile && row.summary; });
+    publicPlans.sort(function (left, right) { return (Number(right.updatedAt) || 0) - (Number(left.updatedAt) || 0); });
+    return json({ plans: publicPlans.slice(0, 80) });
+  }
+
+  if (/^\/planner\/public\/[a-zA-Z0-9_-]+$/.test(path) && method === 'GET') {
+    if (!auth) return json({ error: 'login_required' }, 401);
+    var publicPlannerId = cleanId(path.split('/')[3]);
+    var publicPlanner = await firebase(env, SITE_ROOT + '/publicPlans/' + publicPlannerId, 'GET');
+    if (!publicPlanner || !publicPlanner.profile || !Array.isArray(publicPlanner.events)) return json({ error: 'not_found' }, 404);
+    return json({ plan: publicPlanner });
+  }
+
   if (path === '/planner') {
     if (!auth) return json({ error: 'login_required' }, 401);
     if (method === 'GET') {
@@ -895,6 +964,20 @@ async function handleSite(request, env, subpath) {
     }
     if (planner.profile.endDate < planner.profile.startDate) return json({ error: 'invalid_date_range' }, 400);
     await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'PUT', planner);
+    if (planner.sharing.visibility === 'public') {
+      var plannerCommunity = await communityProfileById(env, auth.id).catch(function () { return null; });
+      var plannerIndex = publicPlannerSnapshot(auth.id, planner, plannerCommunity, false);
+      var plannerDetail = publicPlannerSnapshot(auth.id, planner, plannerCommunity, true);
+      await Promise.all([
+        firebase(env, SITE_ROOT + '/publicPlanIndex/' + auth.id, 'PUT', plannerIndex),
+        firebase(env, SITE_ROOT + '/publicPlans/' + auth.id, 'PUT', plannerDetail)
+      ]);
+    } else {
+      await Promise.all([
+        firebase(env, SITE_ROOT + '/publicPlanIndex/' + auth.id, 'DELETE'),
+        firebase(env, SITE_ROOT + '/publicPlans/' + auth.id, 'DELETE')
+      ]);
+    }
     return json({ ok: true, planner });
   }
 
