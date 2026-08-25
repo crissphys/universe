@@ -555,6 +555,25 @@ function sanitizePlannerEvent(event, index) {
   };
 }
 
+function sanitizePlannerEvents(events) {
+  var used = new Set();
+  return (Array.isArray(events) ? events : []).map(sanitizePlannerEvent).filter(Boolean).map(function (event, index) {
+    if (!used.has(event.id)) {
+      used.add(event.id);
+      return event;
+    }
+    var marker = event.date.replace(/-/g, '') + '_' + event.start.replace(':', '') + '_' + index;
+    event.id = ('event_' + marker).slice(0, 80);
+    var counter = 2;
+    while (used.has(event.id)) {
+      event.id = ('event_' + marker + '_' + counter).slice(0, 80);
+      counter += 1;
+    }
+    used.add(event.id);
+    return event;
+  });
+}
+
 function sanitizePlannerData(data, existing, auth) {
   data = data && typeof data === 'object' ? data : {};
   existing = existing && typeof existing === 'object' ? existing : {};
@@ -585,7 +604,7 @@ function sanitizePlannerData(data, existing, auth) {
       visibility: sharing.visibility === 'public' ? 'public' : 'private',
       note: censorText(cleanText(sharing.note, 500))
     },
-    events: events.map(sanitizePlannerEvent).filter(Boolean),
+    events: sanitizePlannerEvents(events),
     createdAt: Number(existing.createdAt) || Date.now(),
     updatedAt: Date.now()
   };
@@ -631,7 +650,7 @@ function publicPlannerSnapshot(id, planner, community, includeEvents) {
     summary: plannerPublicSummary(planner),
     updatedAt: Number(planner.updatedAt) || Date.now()
   };
-  if (includeEvents) result.events = (Array.isArray(planner.events) ? planner.events : []).slice(0, 1400).map(sanitizePlannerEvent).filter(Boolean);
+  if (includeEvents) result.events = sanitizePlannerEvents((Array.isArray(planner.events) ? planner.events : []).slice(0, 1400));
   return result;
 }
 

@@ -30,6 +30,7 @@
     calendarDate: startOfWeek(new Date()),
     view: 'week',
     saveTimer: null,
+    saveVersion: 0,
     language: readLanguage(),
     authMode: 'login',
     profileSubview: '',
@@ -115,6 +116,29 @@
   function startOfWeek(date) { var result = new Date(date); var day = result.getDay(); result.setDate(result.getDate() - (day === 0 ? 6 : day - 1)); result.setHours(12, 0, 0, 0); return result; }
   function daysBetween(start, end) { return Math.floor((parseDate(end) - parseDate(start)) / 86400000); }
   function uid(prefix) { return (prefix || 'event') + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
+  function uniqueEventId(event, index, used) {
+    var original = String(event && event.id || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80);
+    var base = original || 'event_' + index;
+    if (!used.has(base)) return base;
+    var marker = String(event && event.date || '').replace(/-/g, '') + '_' + String(event && event.start || '').replace(':', '') + '_' + index;
+    var candidate = (base.slice(0, Math.max(1, 79 - marker.length)) + '_' + marker).slice(0, 80);
+    var counter = 2;
+    while (used.has(candidate)) {
+      var suffix = '_' + counter;
+      candidate = (base.slice(0, Math.max(1, 80 - marker.length - suffix.length - 1)) + '_' + marker + suffix).slice(0, 80);
+      counter += 1;
+    }
+    return candidate;
+  }
+  function ensureUniqueEventIds(events) {
+    var used = new Set(), changed = false;
+    (Array.isArray(events) ? events : []).forEach(function (event, index) {
+      var nextId = uniqueEventId(event, index, used);
+      if (event.id !== nextId) { event.id = nextId; changed = true; }
+      used.add(nextId);
+    });
+    return changed;
+  }
   function formatDate(value, options) { return parseDate(value).toLocaleDateString(state.language === 'en' ? 'en-US' : 'es-PE', options || { day: 'numeric', month: 'long', year: 'numeric' }); }
   function minutesBetween(start, end) { var a = start.split(':').map(Number), b = end.split(':').map(Number); return (b[0] * 60 + b[1]) - (a[0] * 60 + a[1]); }
 
@@ -521,17 +545,26 @@
 
   async function savePlanner(immediate) {
     if (!state.planner) return;
+    ensureUniqueEventIds(state.planner.events);
     state.planner.updatedAt = Date.now();
     cachePlanner();
     clearTimeout(state.saveTimer);
+    var saveVersion = ++state.saveVersion;
+    var snapshot = JSON.parse(JSON.stringify(state.planner));
     var run = async function () {
       try {
-        var response = await api('/planner', 'PUT', state.planner);
-        if (response.planner) state.planner = response.planner;
-        document.documentElement.dataset.plannerSync = 'ok';
+        var response = await api('/planner', 'PUT', snapshot);
+        if (saveVersion === state.saveVersion) {
+          if (response.planner) {
+            ensureUniqueEventIds(response.planner.events);
+            state.planner = response.planner;
+            cachePlanner();
+          }
+          document.documentElement.dataset.plannerSync = 'ok';
+        }
         return true;
       } catch (error) {
-        document.documentElement.dataset.plannerSync = 'local';
+        if (saveVersion === state.saveVersion) document.documentElement.dataset.plannerSync = 'local';
         return false;
       }
     };
@@ -719,7 +752,7 @@
   function renderToday() {
     var events = eventsOn(localDate(new Date()));
     $('planner-today-list').innerHTML = events.length ? events.slice(0, 5).map(function (event) {
-      var check = event.type === 'exam' ? '' : '<button class="planner-today-check' + (event.status === 'done' ? ' checked' : '') + '" data-event-check="' + safe(event.id) + '" type="button" aria-label="' + safe(event.status === 'done' ? tx('pendingBlock') : tx('completeBlock')) + '">' + (event.status === 'done' ? '✓' : '') + '</button>';
+      var check = event.type === 'exam' ? '' : '<button class="planner-today-check' + (event.status === 'done' ? ' checked' : '') + '" data-event-check="' + safe(event.id) + '" data-event-date="' + safe(event.date) + '" data-event-start="' + safe(event.start) + '" type="button" aria-label="' + safe(event.status === 'done' ? tx('pendingBlock') : tx('completeBlock')) + '">' + (event.status === 'done' ? '✓' : '') + '</button>';
       return '<div class="planner-today-item"><i style="background:' + areaColor(event.area, event.type) + '"></i><div><b>' + safe(event.start + ' · ' + event.course) + '</b><small>' + safe(event.topic) + '</small></div>' + check + '</div>';
     }).join('') : '<p class="planner-today-empty">' + safe(tx('noSessions')) + '</p>';
     bindCompletionChecks($('planner-today-list'));
@@ -737,14 +770,14 @@
   function areaColor(area, type) { if (type === 'exam') return '#f2ad36'; if (area === 'Ciencias') return '#20b981'; if (area === 'Humanidades') return '#f0525f'; return '#2776f5'; }
   function eventMarkup(event, month) {
     var classes = (month ? 'planner-month-event' : 'planner-event') + (event.type === 'exam' ? ' exam' : '') + (event.status === 'done' ? ' done' : '');
-    var check = event.type === 'exam' ? '' : '<button class="planner-event-check' + (event.status === 'done' ? ' checked' : '') + '" data-event-check="' + safe(event.id) + '" type="button" aria-label="' + safe(event.status === 'done' ? tx('pendingBlock') : tx('completeBlock')) + '">' + (event.status === 'done' ? '✓' : '') + '</button>';
+    var check = event.type === 'exam' ? '' : '<button class="planner-event-check' + (event.status === 'done' ? ' checked' : '') + '" data-event-check="' + safe(event.id) + '" data-event-date="' + safe(event.date) + '" data-event-start="' + safe(event.start) + '" type="button" aria-label="' + safe(event.status === 'done' ? tx('pendingBlock') : tx('completeBlock')) + '">' + (event.status === 'done' ? '✓' : '') + '</button>';
     if (month) return '<div class="' + classes + '" data-event-id="' + safe(event.id) + '" data-area="' + safe(event.area) + '" role="button" tabindex="0"><span>' + safe(event.start + ' ' + event.course) + '</span>' + check + '</div>';
     return '<article class="' + classes + '" data-event-id="' + safe(event.id) + '" data-area="' + safe(event.area) + '" role="button" tabindex="0"><div class="planner-event-copy"><time>' + safe(event.start + '—' + event.end) + '</time><strong>' + safe(event.topic) + '</strong><small>' + safe(event.course) + '</small></div>' + check + '</article>';
   }
 
   function bindCompletionChecks(root) {
     qa('[data-event-check]', root || document).forEach(function (button) {
-      button.onclick = function (event) { event.preventDefault(); event.stopPropagation(); toggleEventStatus(button.dataset.eventCheck); };
+      button.onclick = function (event) { event.preventDefault(); event.stopPropagation(); toggleEventStatus(button.dataset.eventCheck, button.dataset.eventDate, button.dataset.eventStart); };
     });
   }
 
@@ -834,10 +867,21 @@
     $('planner-event-dialog').close(); savePlanner(); renderDashboard();
   }
 
-  function toggleEventStatus(id) {
-    var event = (state.planner.events || []).find(function (item) { return item.id === id; });
-    if (!event || event.type === 'exam') return;
+  function findEvent(events, id, date, start) {
+    var matches = (Array.isArray(events) ? events : []).filter(function (item) { return item.id === id; });
+    if (matches.length <= 1) return matches[0] || null;
+    return matches.find(function (item) { return item.date === date && item.start === start; }) || null;
+  }
+
+  function toggleEventInList(events, id, date, start) {
+    var event = findEvent(events, id, date, start);
+    if (!event || event.type === 'exam') return false;
     event.status = event.status === 'done' ? 'pending' : 'done';
+    return true;
+  }
+
+  function toggleEventStatus(id, date, start) {
+    if (!toggleEventInList(state.planner.events, id, date, start)) return;
     savePlanner();
     renderDashboard();
   }
@@ -1016,9 +1060,11 @@
       state.planner = remote || cached;
       state.authReady = true;
       if (state.planner && state.planner.profile && state.planner.events) {
+        var repairedEventIds = ensureUniqueEventIds(state.planner.events);
         cachePlanner();
         state.calendarDate = startOfWeek(new Date());
         showDashboard();
+        if (repairedEventIds) savePlanner();
         return;
       }
       var suggestedUsername = normalizeUsername(
