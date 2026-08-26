@@ -517,7 +517,7 @@ function validPassword(value) {
 
 const PLANNER_STUDENT_TYPES = ['cepreuni', 'academy', 'independent'];
 const PLANNER_CYCLES = ['preuniversitario', 'basico', 'ien', 'i'];
-const PLANNER_SHIFTS = ['morning', 'afternoon'];
+const PLANNER_SHIFTS = ['morning', 'afternoon', 'custom'];
 const PLANNER_FOCUS = ['math', 'science', 'humanities', 'all'];
 const PLANNER_END_MODES = ['cepre-final', 'admission', 'custom'];
 const PLANNER_AREAS = ['Matemática', 'Ciencias', 'Humanidades', 'General'];
@@ -532,6 +532,13 @@ function plannerDate(value) {
 function plannerTime(value) {
   var time = cleanText(value, 5);
   return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time) ? time : '';
+}
+
+function plannerTimeMinutes(value) {
+  var time = plannerTime(value);
+  if (!time) return -1;
+  var parts = time.split(':').map(Number);
+  return parts[0] * 60 + parts[1];
 }
 
 function sanitizePlannerEvent(event, index) {
@@ -590,6 +597,8 @@ function sanitizePlannerData(data, existing, auth) {
       cepreCycle: PLANNER_CYCLES.includes(profile.cepreCycle) ? profile.cepreCycle : '',
       academyName: cleanText(profile.academyName, 60),
       shift: PLANNER_SHIFTS.includes(profile.shift) ? profile.shift : 'morning',
+      customStart: profile.shift === 'custom' ? plannerTime(profile.customStart) : '',
+      customEnd: profile.shift === 'custom' ? plannerTime(profile.customEnd) : '',
       focus: PLANNER_FOCUS.includes(profile.focus) ? profile.focus : 'all',
       startDate: plannerDate(profile.startDate),
       endMode: PLANNER_END_MODES.includes(profile.endMode) ? profile.endMode : 'admission',
@@ -644,6 +653,8 @@ function publicPlannerSnapshot(id, planner, community, includeEvents) {
       cepreCycle: PLANNER_CYCLES.includes(profile.cepreCycle) ? profile.cepreCycle : '',
       academyName: cleanText(profile.academyName, 60),
       shift: PLANNER_SHIFTS.includes(profile.shift) ? profile.shift : 'morning',
+      customStart: profile.shift === 'custom' ? plannerTime(profile.customStart) : '',
+      customEnd: profile.shift === 'custom' ? plannerTime(profile.customEnd) : '',
       focus: PLANNER_FOCUS.includes(profile.focus) ? profile.focus : 'all'
     },
     note: censorText(cleanText(sharing.note, 500)),
@@ -980,6 +991,9 @@ async function handleSite(request, env, subpath) {
     var planner = sanitizePlannerData(data, existingPlanner, auth);
     if (!planner.profile.username || !planner.profile.studentType || !planner.profile.startDate || !planner.profile.endDate) {
       return json({ error: 'invalid_planner_profile' }, 400);
+    }
+    if (planner.profile.shift === 'custom' && plannerTimeMinutes(planner.profile.customEnd) - plannerTimeMinutes(planner.profile.customStart) < 90) {
+      return json({ error: 'invalid_custom_schedule' }, 400);
     }
     if (planner.profile.endDate < planner.profile.startDate) return json({ error: 'invalid_date_range' }, 400);
     await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'PUT', planner);

@@ -5,7 +5,7 @@ const dataSource = fs.readFileSync(new URL('../planner-syllabus-data.js', import
 const plannerSource = fs.readFileSync(new URL('../planner.js', import.meta.url), 'utf8')
   .replace(
     /if \(document\.readyState === 'loading'\)[\s\S]*?else boot\(\);\s*\}\)\(\);\s*$/,
-    "globalThis.__plannerTest = { buildSchedule, evaluationEvents, ensureUniqueEventIds, toggleEventInList, accountCacheKey, plannerBelongsTo }; })();"
+    "globalThis.__plannerTest = { buildSchedule, evaluationEvents, ensureUniqueEventIds, toggleEventInList, accountCacheKey, plannerBelongsTo, customTimeBlocks, blocksForProfile, minutesBetween }; })();"
   );
 
 const context = {
@@ -77,6 +77,58 @@ if (!admissionEvents.length || areaCounts.Matemática <= areaCounts.Ciencias || 
   throw new Error('Mathematics focus is not receiving the largest number of blocks');
 }
 
+const areaMinutes = admissionEvents.reduce((totals, event) => {
+  if (event.type === 'exam') return totals;
+  totals[event.area] = (totals[event.area] || 0) + context.__plannerTest.minutesBetween(event.start, event.end);
+  return totals;
+}, {});
+if (areaMinutes.Matemática < areaMinutes.Ciencias * 2.5 || areaMinutes.Matemática < areaMinutes.Humanidades * 2.5) {
+  throw new Error(`Mathematics priority does not receive substantially more study time: ${JSON.stringify(areaMinutes)}`);
+}
+for (const [focus, priorityArea] of [['science', 'Ciencias'], ['humanities', 'Humanidades']]) {
+  const focusedEvents = context.__plannerTest.buildSchedule({ ...profile, studentType: 'independent', cepreCycle: '', focus, endMode: 'admission', endDate: '2027-02-14' });
+  const focusedMinutes = focusedEvents.reduce((totals, event) => {
+    if (event.type !== 'exam') totals[event.area] = (totals[event.area] || 0) + context.__plannerTest.minutesBetween(event.start, event.end);
+    return totals;
+  }, {});
+  const otherAreas = ['Matemática', 'Ciencias', 'Humanidades'].filter((area) => area !== priorityArea);
+  if (otherAreas.some((area) => focusedMinutes[priorityArea] < focusedMinutes[area] * 2.5)) {
+    throw new Error(`${priorityArea} priority does not receive substantially more study time: ${JSON.stringify(focusedMinutes)}`);
+  }
+}
+
+const balancedEvents = context.__plannerTest.buildSchedule({
+  ...profile,
+  studentType: 'independent',
+  cepreCycle: '',
+  shift: 'custom',
+  customStart: '09:15',
+  customEnd: '15:30',
+  focus: 'all',
+  startDate: '2026-09-01',
+  endMode: 'custom',
+  endDate: '2026-09-12'
+});
+const customBlocks = context.__plannerTest.customTimeBlocks('09:15', '15:30');
+if (customBlocks.length !== 4 || customBlocks[0][0] !== '09:15' || customBlocks.at(-1)[1] !== '15:30') {
+  throw new Error(`Custom blocks do not fill the selected time range: ${JSON.stringify(customBlocks)}`);
+}
+if (context.__plannerTest.customTimeBlocks('14:00', '13:00').length || context.__plannerTest.customTimeBlocks('09:00', '10:00').length) {
+  throw new Error('Invalid or too-short custom schedules were accepted');
+}
+if (balancedEvents.some((event) => event.type !== 'exam' && (event.start < '09:15' || event.end > '15:30'))) {
+  throw new Error('A custom-schedule event falls outside the selected time range');
+}
+const balancedMinutes = balancedEvents.reduce((totals, event) => {
+  if (event.type === 'exam') return totals;
+  totals[event.area] = (totals[event.area] || 0) + context.__plannerTest.minutesBetween(event.start, event.end);
+  return totals;
+}, {});
+const balancedValues = ['Matemática', 'Ciencias', 'Humanidades'].map((area) => balancedMinutes[area] || 0);
+if (Math.min(...balancedValues) === 0 || Math.max(...balancedValues) / Math.min(...balancedValues) > 1.2) {
+  throw new Error(`All-subject priority is not balanced: ${JSON.stringify(balancedMinutes)}`);
+}
+
 const html = fs.readFileSync(new URL('../planificador.html', import.meta.url), 'utf8');
 const referencedIds = [...plannerSource.matchAll(/\$\('([^']+)'\)/g)].map((match) => match[1]);
 const missingIds = [...new Set(referencedIds)].filter((id) => !html.includes(`id="${id}"`));
@@ -89,5 +141,8 @@ console.log(JSON.stringify({
   finalExam: finalExam.date,
   uniqueEventIds: new Set(events.map((event) => event.id)).size,
   isolatedCheckboxUpdate: duplicateEvents.map((event) => event.status),
-  mathFocus: areaCounts
+  mathFocus: areaCounts,
+  mathFocusMinutes: areaMinutes,
+  customBlocks,
+  balancedMinutes
 }));
