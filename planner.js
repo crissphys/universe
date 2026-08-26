@@ -5,19 +5,22 @@
   var LEGACY_CACHE_KEY = 'universe_planner_cache_v1';
   var CACHE_KEY_PREFIX = 'universe_planner_cache_v2_';
   var DATA = window.UNIVERSE_PLANNER_DATA || { admission: [], cepre: [], evaluations: [] };
+  var CEPRE_DATA = window.UNIVERSE_CEPREUNI_2027 || { cycles: {} };
   var ACADEMIES = [
     'Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI',
     'ASEUNI', 'ADCUNI', 'Academia Ingeniería', 'Formación UNI', 'Aula 20',
     'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Savia', 'Integral Class',
     'Academia Prisma', 'Academia Euclides', 'Academia Apolo', 'Academia Mendel', 'Otra academia'
   ];
-  var CYCLE_START = '2026-08-31';
-  var CEPRE_FINAL = '2027-01-24';
-  var CEPRE_PLAN_END = '2027-01-17';
   var ADMISSION_PLAN_END = '2027-02-14';
   var TIME_BLOCKS = {
     morning: [['07:00', '08:20'], ['08:40', '10:00'], ['10:20', '11:40'], ['12:10', '13:30']],
     afternoon: [['14:00', '15:10'], ['15:25', '16:35'], ['16:50', '18:00'], ['18:20', '19:30']]
+  };
+  var FALLBACK_CEPRE_CYCLES = {
+    preuniversitario: { title: 'Ciclo preuniversitario 2027-1', startDate: '2026-08-31', planEnd: '2027-01-31', finalDate: '2027-02-07', endLabel: 'Una semana antes del examen final', endDateLabel: '31 enero 2027', evaluations: [] },
+    basico: { title: 'Ciclo básico 2027-1', startDate: '2026-08-31', planEnd: '2027-01-31', finalDate: '2027-01-31', endLabel: 'Última evaluación calificada', endDateLabel: '31 enero 2027', evaluations: [] },
+    ien: { title: 'Ciclo IEN 2027', startDate: '2026-07-06', planEnd: '2026-11-22', finalDate: '2026-11-29', endLabel: 'Una semana antes del examen final', endDateLabel: '22 noviembre 2026', evaluations: [] }
   };
   var state = {
     user: null,
@@ -52,16 +55,16 @@
       setup: 'CONFIGURACIÓN INICIAL', buildRoute: 'Construyamos tu ruta de estudio', profile: 'Perfil', schedule: 'Horario', goal: 'Meta',
       studentQuestion: '¿Qué tipo de estudiante eres?', studentHelp: 'Esto define el temario y la forma en que distribuiremos tus semanas.',
       username: 'Nombre de usuario', usernameHelp: 'Entre 3 y 24 caracteres: letras minúsculas, números, guion o guion bajo.',
-      select: 'Seleccionar', preCycle: 'Ciclo preuniversitario', basicCycle: 'Ciclo básico', cycleI: 'Ciclo I', blocksBreaks: '4 bloques · 3 descansos',
+      select: 'Seleccionar', preCycle: 'Ciclo preuniversitario', basicCycle: 'Ciclo básico', cycleI: 'Ciclo IEN', blocksBreaks: '4 bloques · 3 descansos',
       cepreDescription: 'Ruta semanal según prácticas y parciales.', academy: 'Academia', academyDescription: 'Preparación basada en el temario de admisión UNI.', independent: 'Autodidacta', independentDescription: 'Una ruta completa para estudiar por tu cuenta.',
       cepreCycleQuestion: '¿Qué ciclo CEPREUNI 2027-1 llevarás?', academyQuestion: '¿En qué academia estudias?', academyHelp: 'Elige una opción o escribe el nombre de otra academia.', otherAcademy: 'Nombre de la otra academia',
       shiftQuestion: '¿En qué horario quieres organizar tus sesiones?', shiftHelp: 'Elige un turno o crea una franja propia; distribuiremos ahí tus bloques y descansos.', morning: 'MAÑANA', afternoon: 'TARDE', customSchedule: 'HORARIO PERSONALIZADO', chooseHours: 'Tú eliges la hora', customScheduleCopy: 'Se ajusta a tu disponibilidad real', customStartTime: 'Quiero empezar a estudiar a las', customEndTime: 'Quiero terminar de estudiar a las', customScheduleSummary: '{blocks} bloques · {breaks} descansos · {hours} h de estudio',
       focusQuestion: '¿Qué área necesita más espacio?', focusHelp: 'Todas seguirán presentes; el área elegida recibirá más bloques.', sciences: 'Ciencias', mathematics: 'Matemáticas', humanities: 'Humanidades', allCourses: 'Todos los cursos', balanced: 'Distribución equilibrada',
       scienceSubjects: 'Física y Química', mathSubjects: 'Aritmética, Álgebra, Geometría y Trigonometría', humanitiesSubjects: 'Lectura, lenguaje y sociedad',
-      datesQuestion: '¿Desde cuándo y hasta qué fecha estudiarás?', datesHelp: 'Puedes cambiar estas fechas después sin perder tus preferencias.', startDate: 'Fecha de inicio', weekBeforeFinal: 'Una semana antes del examen final', admissionGoal: 'Proceso 2027-1', custom: 'PERSONALIZADO', chooseDate: 'Elegir otra fecha', yourOwnGoal: 'Define tu propia meta', endDate: 'Fecha final', officialCheck: 'Podrás ajustarla cuando se publique el cronograma oficial.',
+      datesQuestion: '¿Desde cuándo y hasta qué fecha estudiarás?', datesHelp: 'Puedes cambiar estas fechas después sin perder tus preferencias.', startDate: 'Fecha de inicio', weekBeforeFinal: 'Una semana antes del examen final', admissionGoal: 'Proceso 2027-1', custom: 'PERSONALIZADO', chooseDate: 'Elegir otra fecha', yourOwnGoal: 'Define tu propia meta', endDate: 'Fecha final', officialCheck: 'Fechas tomadas del cronograma académico CEPREUNI 2027. Puedes ajustarlas si se publica una modificación.',
       admissionDate: '14 febrero 2027 · fecha objetivo editable', open: 'Abrir', enable: 'Activar', assessment: 'Evaluación', mathArea: 'Matemática', general: 'General', reset: 'Reiniciar',
       back: 'Atrás', continue: 'Continuar', generate: 'Crear mi cronograma', myPlan: 'MI PLAN DE ESTUDIO', exportCalendar: 'Exportar calendario', reconfigure: 'Reconfigurar', today: 'HOY', progress: 'Progreso del plan', focusTimer: 'Cronómetro de enfoque', reminders: 'Recordatorios', notificationsOff: 'Notificaciones desactivadas', legend: 'Leyenda', todayButton: 'Hoy', week: 'Semana', month: 'Mes', addBlock: 'Añadir bloque',
-      calendarNote: 'Las fechas CEPREUNI de este plan sirven para organizar el estudio. Confírmalas cuando la institución publique el cronograma 2027-1.',
+      calendarNote: 'Las evaluaciones CEPREUNI de este plan usan el cronograma académico 2027 correspondiente al ciclo elegido.',
       editCalendar: 'EDITAR CALENDARIO', studyBlock: 'Bloque de estudio', date: 'Fecha', area: 'Área', start: 'Inicio', end: 'Fin', course: 'Curso', topic: 'Tema o tarea', delete: 'Eliminar', markDone: 'Marcar completado', markPending: 'Marcar pendiente', cancel: 'Cancelar', saveBlock: 'Guardar bloque',
       focusTechniques: 'TÉCNICAS DE ENFOQUE', chooseRhythm: 'Elige un ritmo que puedas sostener', quickStart: 'Inicio ligero', quickStartCopy: '20 minutos de enfoque y 5 de pausa. Útil para empezar o recuperar el hábito.', pomodoroCopy: 'Una tarea concreta, sin interrupciones, seguida de una pausa breve.', deepBlock: 'Bloque profundo', deepBlockCopy: 'Adecuado para teoría más práctica o resolución continua de problemas.', longCycle: 'Ciclo largo', longCycleCopy: 'Para simulacros parciales o temas extensos. Úsalo solo si ya sostienes la atención.', oneTask: 'Una sesión, una tarea.', timerAdvice: 'Antes de iniciar, define qué tema y cuántos ejercicios terminarás. Durante la pausa, levántate, mira lejos de la pantalla y toma agua.',
       loginNeeded: 'Inicia sesión con Google para guardar tu plan.', selectStudent: 'Elige qué tipo de estudiante eres.', selectCycle: 'Elige tu ciclo CEPREUNI.', selectAcademy: 'Elige o escribe tu academia.', invalidUsername: 'Crea un nombre de usuario válido de 3 a 24 caracteres.', selectShiftFocus: 'Elige un horario y un área de enfoque.', invalidCustomSchedule: 'El horario personalizado debe durar por lo menos 1 hora y 30 minutos y terminar después de la hora de inicio.', invalidDates: 'Revisa las fechas: la fecha final debe ser posterior al inicio.',
@@ -77,16 +80,16 @@
       continueGoogle: 'Continue with Google', authNote: 'We never ask for or store your Gmail password.',
       setup: 'QUICK SETUP', buildRoute: 'Let’s build your study route', profile: 'Profile', schedule: 'Schedule', goal: 'Goal',
       studentQuestion: 'What kind of student are you?', studentHelp: 'This sets the syllabus and the way your weeks will be paced.', username: 'Username', usernameHelp: 'Use 3–24 lowercase letters, numbers, hyphens, or underscores.',
-      select: 'Select', preCycle: 'Pre-university cycle', basicCycle: 'Foundation cycle', cycleI: 'Cycle I', blocksBreaks: '4 blocks · 3 breaks',
+      select: 'Select', preCycle: 'Pre-university cycle', basicCycle: 'Foundation cycle', cycleI: 'IEN cycle', blocksBreaks: '4 blocks · 3 breaks',
       cepreDescription: 'A weekly route aligned with quizzes and midterms.', academy: 'Academy', academyDescription: 'Prep built around the UNI admission syllabus.', independent: 'Self-study', independentDescription: 'A complete route you can follow on your own.',
       cepreCycleQuestion: 'Which CEPREUNI 2027-1 cycle will you take?', academyQuestion: 'Which academy do you attend?', academyHelp: 'Pick one or enter another academy.', otherAcademy: 'Other academy name',
       shiftQuestion: 'When do you want your study sessions?', shiftHelp: 'Pick a shift or build your own window; we will fit focused blocks and proper breaks inside it.', morning: 'MORNING', afternoon: 'AFTERNOON', customSchedule: 'CUSTOM SCHEDULE', chooseHours: 'You pick the hours', customScheduleCopy: 'Built around your actual availability', customStartTime: 'I want to start studying at', customEndTime: 'I want to finish studying at', customScheduleSummary: '{blocks} blocks · {breaks} breaks · {hours} study hours',
       focusQuestion: 'Which area needs more room?', focusHelp: 'Every area stays in the plan; your priority gets extra blocks.', sciences: 'Sciences', mathematics: 'Mathematics', humanities: 'Humanities', allCourses: 'All subjects', balanced: 'Balanced schedule',
       scienceSubjects: 'Physics and Chemistry', mathSubjects: 'Arithmetic, Algebra, Geometry and Trigonometry', humanitiesSubjects: 'Reading, language and social studies',
-      datesQuestion: 'When will your plan start and end?', datesHelp: 'You can adjust these dates later without losing your preferences.', startDate: 'Start date', weekBeforeFinal: 'One week before the final exam', admissionGoal: '2027-1 process', custom: 'CUSTOM', chooseDate: 'Choose another date', yourOwnGoal: 'Set your own finish line', endDate: 'End date', officialCheck: 'You can update it when the official calendar is published.',
+      datesQuestion: 'When will your plan start and end?', datesHelp: 'You can adjust these dates later without losing your preferences.', startDate: 'Start date', weekBeforeFinal: 'One week before the final exam', admissionGoal: '2027-1 process', custom: 'CUSTOM', chooseDate: 'Choose another date', yourOwnGoal: 'Set your own finish line', endDate: 'End date', officialCheck: 'Dates come from the official CEPREUNI 2027 academic calendar. You can adjust them if it changes.',
       admissionDate: 'February 14, 2027 · editable target date', open: 'Open', enable: 'Enable', assessment: 'Assessment', mathArea: 'Mathematics', general: 'General', reset: 'Reset',
       back: 'Back', continue: 'Continue', generate: 'Build my schedule', myPlan: 'MY STUDY PLAN', exportCalendar: 'Export calendar', reconfigure: 'Reconfigure', today: 'TODAY', progress: 'Plan progress', focusTimer: 'Focus timer', reminders: 'Reminders', notificationsOff: 'Notifications are off', legend: 'Legend', todayButton: 'Today', week: 'Week', month: 'Month', addBlock: 'Add block',
-      calendarNote: 'CEPREUNI dates in this plan are planning milestones. Confirm them once the institution publishes the official 2027-1 calendar.',
+      calendarNote: 'CEPREUNI assessments in this plan follow the official 2027 calendar for your selected cycle.',
       editCalendar: 'EDIT CALENDAR', studyBlock: 'Study block', date: 'Date', area: 'Area', start: 'Start', end: 'End', course: 'Subject', topic: 'Topic or task', delete: 'Delete', markDone: 'Mark complete', markPending: 'Mark pending', cancel: 'Cancel', saveBlock: 'Save block',
       focusTechniques: 'FOCUS METHODS', chooseRhythm: 'Pick a pace you can actually sustain', quickStart: 'Easy start', quickStartCopy: '20 focused minutes and a 5-minute break. Great when you are rebuilding the habit.', pomodoroCopy: 'One clear task, zero interruptions, then a short reset.', deepBlock: 'Deep-work block', deepBlockCopy: 'Good for theory plus practice or a longer problem set.', longCycle: 'Long cycle', longCycleCopy: 'Best for partial mock exams or long topics. Use it once your focus is solid.', oneTask: 'One session, one task.', timerAdvice: 'Before you start, define the topic and how many exercises you will finish. During the break, stand up, look away from the screen, and drink water.',
       loginNeeded: 'Sign in with Google to save your plan.', selectStudent: 'Choose your student type.', selectCycle: 'Choose your CEPREUNI cycle.', selectAcademy: 'Choose or enter your academy.', invalidUsername: 'Create a valid 3–24 character username.', selectShiftFocus: 'Choose a study shift and a priority area.', invalidCustomSchedule: 'Your custom schedule must last at least 1 hour 30 minutes and end after its start time.', invalidDates: 'Check the dates: the end date must be after the start.',
@@ -166,6 +169,26 @@
     }
     return TIME_BLOCKS[profile && profile.shift] || TIME_BLOCKS.morning;
   }
+  function cepreCycleKey(value) { return value === 'i' ? 'ien' : (value || 'preuniversitario'); }
+  function cepreCycleConfig(value) {
+    var key = cepreCycleKey(value), official = CEPRE_DATA.cycles && CEPRE_DATA.cycles[key];
+    return official || FALLBACK_CEPRE_CYCLES[key] || FALLBACK_CEPRE_CYCLES.preuniversitario;
+  }
+  function updateCepreEndOption() {
+    if (!$('planner-cepre-end-title') || !$('planner-cepre-end-date')) return;
+    var config = cepreCycleConfig(state.draft.cepreCycle);
+    var basic = cepreCycleKey(state.draft.cepreCycle) === 'basico';
+    $('planner-cepre-end-title').textContent = state.language === 'en' ? (basic ? 'Final graded assessment' : 'One week before the final exam') : config.endLabel;
+    $('planner-cepre-end-date').textContent = state.language === 'en' ? formatDate(config.planEnd, { day: 'numeric', month: 'long', year: 'numeric' }) : config.endDateLabel;
+  }
+  function applyCepreCycleDefaults(value) {
+    var key = cepreCycleKey(value), config = cepreCycleConfig(key);
+    state.draft.cepreCycle = key;
+    state.draft.startDate = config.startDate;
+    state.draft.endMode = 'cepre-final';
+    state.draft.endDate = config.planEnd;
+    updateCepreEndOption();
+  }
 
   function api(path, method, data) {
     var headers = { 'Content-Type': 'application/json' };
@@ -213,6 +236,7 @@
     $('custom-academy').placeholder = state.language === 'en' ? 'Enter the full name' : 'Escribe el nombre completo';
     if ($('planner-public-note')) $('planner-public-note').placeholder = tx('publicCommentPlaceholder');
     updateCustomShiftUI();
+    updateCepreEndOption();
     updateAuthMode();
     if (state.planner) { renderDashboard(); renderPublicPlans(); }
     else updatePreview();
@@ -338,6 +362,7 @@
   }
 
   function configureWizardFromDraft() {
+    if (state.draft.cepreCycle === 'i') state.draft.cepreCycle = 'ien';
     $('planner-username').value = state.draft.username || '';
     selectButtons('[data-student-type]', state.draft.studentType, 'data-student-type');
     selectButtons('[data-cepre-cycle]', state.draft.cepreCycle, 'data-cepre-cycle');
@@ -353,6 +378,7 @@
     $('planner-end-date').value = state.draft.endDate || ADMISSION_PLAN_END;
     $('planner-custom-start').value = state.draft.customStart || '08:00';
     $('planner-custom-end').value = state.draft.customEnd || '14:00';
+    updateCepreEndOption();
     updateCustomShiftUI();
     renderAcademies($('academy-search').value);
     updatePreview();
@@ -443,7 +469,7 @@
 
   function updateEndDate(mode) {
     state.draft.endMode = mode;
-    if (mode === 'cepre-final') state.draft.endDate = CEPRE_PLAN_END;
+    if (mode === 'cepre-final') state.draft.endDate = cepreCycleConfig(state.draft.cepreCycle).planEnd;
     if (mode === 'admission') state.draft.endDate = ADMISSION_PLAN_END;
     $('planner-end-date').value = state.draft.endDate;
     selectButtons('[data-end-mode]', mode, 'data-end-mode');
@@ -514,19 +540,16 @@
   }
 
   function evaluationEvents(profile) {
-    if (!(profile.studentType === 'cepreuni' && profile.cepreCycle === 'preuniversitario')) return [];
-    var events = [];
-    (DATA.evaluations || []).forEach(function (evaluation, index) {
-      var endWeek = Number((evaluation.range || [0, 0])[1]) || 0;
-      var date = addDays(parseDate(CYCLE_START), endWeek * 7 - 1);
-      if (/EXAMEN FINAL/i.test(evaluation.name)) date = parseDate(CEPRE_FINAL);
-      events.push({
-        id: 'assessment_' + (index + 1), date: localDate(date), start: '09:00', end: '12:00',
-        course: 'CEPREUNI 2027-1', area: 'General', topic: evaluation.name,
-        type: 'exam', status: 'pending', source: 'Hito de planificación', assessment: evaluation.name
-      });
+    if (profile.studentType !== 'cepreuni') return [];
+    var cycleKey = cepreCycleKey(profile.cepreCycle), cycle = cepreCycleConfig(cycleKey);
+    return (cycle.evaluations || []).map(function (evaluation, index) {
+      return {
+        id: 'assessment_' + cycleKey + '_' + (index + 1), date: evaluation.date, start: '09:00', end: '12:00',
+        course: 'CEPREUNI · ' + (cycle.shortTitle || cycle.title), area: 'General',
+        topic: evaluation.name + (evaluation.mode ? ' · ' + evaluation.mode : ''),
+        type: 'exam', status: 'pending', source: 'Cronograma académico CEPREUNI', assessment: evaluation.name
+      };
     });
-    return events;
   }
 
   function buildSchedule(profile) {
@@ -538,7 +561,8 @@
     if (profile.focus === 'science') weights.Ciencias = 3;
     if (profile.focus === 'humanities') weights.Humanidades = 3;
     var admissionCounts = { 'Matemática': 0, 'Ciencias': 0, 'Humanidades': 0 };
-    var weekCursors = {}, weekCounts = {}, cycleStart = parseDate(CYCLE_START);
+    var cycle = cepreCycleConfig(profile.cepreCycle);
+    var weekCursors = {}, weekCounts = {}, cycleStart = parseDate(cycle.startDate || profile.startDate);
     for (var day = parseDate(profile.startDate), finish = parseDate(profile.endDate); day <= finish; day = addDays(day, 1)) {
       if (day.getDay() === 0) continue;
       var dateKey = localDate(day), blockCount = Math.min(blocks.length, day.getDay() === 6 ? Math.max(1, blocks.length - 1) : blocks.length);
@@ -572,7 +596,7 @@
         });
       }
     }
-    var assessmentEnd = profile.endMode === 'cepre-final' ? CEPRE_FINAL : profile.endDate;
+    var assessmentEnd = profile.endMode === 'cepre-final' ? (cycle.finalDate || profile.endDate) : profile.endDate;
     evaluationEvents(profile).forEach(function (event) {
       if (event.date >= profile.startDate && event.date <= assessmentEnd) events.push(event);
     });
@@ -698,8 +722,8 @@
   function describeProfile(profile) {
     if (profile.studentType === 'cepreuni') {
       var cycleNames = state.language === 'en'
-        ? { preuniversitario: 'Pre-university cycle', basico: 'Foundation cycle', i: 'Cycle I', ien: 'Cycle I' }
-        : { preuniversitario: 'Ciclo preuniversitario', basico: 'Ciclo básico', i: 'Ciclo I', ien: 'Ciclo I' };
+        ? { preuniversitario: 'Pre-university cycle', basico: 'Foundation cycle', i: 'IEN cycle', ien: 'IEN cycle' }
+        : { preuniversitario: 'Ciclo preuniversitario', basico: 'Ciclo básico', i: 'Ciclo IEN', ien: 'Ciclo IEN' };
       return 'CEPREUNI 2027-1 · ' + (cycleNames[profile.cepreCycle] || '');
     }
     if (profile.studentType === 'academy') return profile.academyName + (state.language === 'en' ? ' · UNI Admission 2027-1' : ' · Admisión UNI 2027-1');
@@ -731,8 +755,8 @@
     profile = profile || {};
     if (profile.studentType === 'cepreuni') {
       var cycle = state.language === 'en'
-        ? { preuniversitario: 'Pre-university cycle', basico: 'Foundation cycle', ien: 'Cycle I', i: 'Cycle I' }
-        : { preuniversitario: 'Ciclo preuniversitario', basico: 'Ciclo básico', ien: 'Ciclo I', i: 'Ciclo I' };
+        ? { preuniversitario: 'Pre-university cycle', basico: 'Foundation cycle', ien: 'IEN cycle', i: 'IEN cycle' }
+        : { preuniversitario: 'Ciclo preuniversitario', basico: 'Ciclo básico', ien: 'Ciclo IEN', i: 'Ciclo IEN' };
       return 'CEPREUNI 2027-1 · ' + (cycle[profile.cepreCycle] || '');
     }
     if (profile.studentType === 'academy') return (profile.academyName || tx('academy')) + ' · ' + (state.language === 'en' ? 'Academy' : 'Academia');
@@ -1057,15 +1081,13 @@
       ensureDraftUsername();
       state.draft.studentType = button.dataset.studentType;
       if (state.draft.studentType !== 'cepreuni') state.draft.cepreCycle = '';
-      if (state.draft.studentType === 'cepreuni' && state.draft.cepreCycle === 'preuniversitario') { state.draft.startDate = CYCLE_START; state.draft.endMode = 'cepre-final'; state.draft.endDate = CEPRE_PLAN_END; }
+      if (state.draft.studentType === 'cepreuni' && state.draft.cepreCycle) applyCepreCycleDefaults(state.draft.cepreCycle);
       state.profileSubview = state.draft.studentType === 'cepreuni' ? 'cepreuni' : (state.draft.studentType === 'academy' ? 'academy' : '');
       configureWizardFromDraft();
       if (state.draft.studentType === 'independent') advanceFromProfileChoice();
     }; });
     qa('[data-cepre-cycle]').forEach(function (button) { button.onclick = function () {
-      state.draft.cepreCycle = button.dataset.cepreCycle;
-      if (state.draft.cepreCycle === 'preuniversitario') { state.draft.startDate = CYCLE_START; state.draft.endMode = 'cepre-final'; state.draft.endDate = CEPRE_PLAN_END; }
-      else { state.draft.endMode = 'admission'; state.draft.endDate = ADMISSION_PLAN_END; }
+      applyCepreCycleDefaults(button.dataset.cepreCycle);
       configureWizardFromDraft();
       advanceFromProfileChoice();
     }; });

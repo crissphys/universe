@@ -104,7 +104,7 @@
             <div class="planner-pill-options">
               <button type="button" data-cepre-cycle="preuniversitario" data-planner-t="preCycle">Ciclo preuniversitario</button>
               <button type="button" data-cepre-cycle="basico" data-planner-t="basicCycle">Ciclo básico</button>
-              <button type="button" data-cepre-cycle="i" data-planner-t="cycleI">Ciclo I</button>
+              <button type="button" data-cepre-cycle="ien" data-planner-t="cycleI">Ciclo IEN</button>
             </div>
           </div>
 
@@ -149,7 +149,7 @@
           <div class="planner-date-layout">
             <label class="planner-field"><span data-planner-t="startDate">Fecha de inicio</span><input id="planner-start-date" type="date" required></label>
             <div class="planner-end-options">
-              <button type="button" data-end-mode="cepre-final"><span>CEPREUNI</span><strong data-planner-t="weekBeforeFinal">Una semana antes del examen final</strong><small>17 enero 2027</small></button>
+              <button type="button" data-end-mode="cepre-final"><span>CEPREUNI</span><strong id="planner-cepre-end-title" data-planner-t="weekBeforeFinal">Una semana antes del examen final</strong><small id="planner-cepre-end-date">31 enero 2027</small></button>
               <button type="button" data-end-mode="admission"><span>ADMISIÓN UNI</span><strong data-planner-t="admissionGoal">Proceso 2027-1</strong><small data-planner-t="admissionDate">14 febrero 2027 · fecha objetivo editable</small></button>
               <button type="button" data-end-mode="custom"><span data-planner-t="custom">PERSONALIZADO</span><strong data-planner-t="chooseDate">Elegir otra fecha</strong><small data-planner-t="yourOwnGoal">Define tu propia meta</small></button>
             </div>
@@ -277,10 +277,11 @@
   </footer>
 
   <script src="/planner-syllabus-data.js?v=planner-1"></script>
+  <script src="/cepreuni-2027-data.js?v=cepre-2027-1"></script>
   <script src="/universe-i18n-catalog.js?v=i18n-4" defer></script>
   <script src="/universe-i18n.js?v=i18n-4" defer></script>
   <script src="/universe-admission.js?v=security-3"></script>
   <script src="/universe-polish.js?v=unified-36" defer></script>
-  <script src="/planner.js?v=planner-10" defer></script>
+  <script src="/planner.js?v=planner-11" defer></script>
 </body>
 </html>

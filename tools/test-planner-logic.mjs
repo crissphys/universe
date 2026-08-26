@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const dataSource = fs.readFileSync(new URL('../planner-syllabus-data.js', import.meta.url), 'utf8');
+const cepreSource = fs.readFileSync(new URL('../cepreuni-2027-data.js', import.meta.url), 'utf8');
 const plannerSource = fs.readFileSync(new URL('../planner.js', import.meta.url), 'utf8')
   .replace(
     /if \(document\.readyState === 'loading'\)[\s\S]*?else boot\(\);\s*\}\)\(\);\s*$/,
@@ -22,6 +23,7 @@ const context = {
 context.globalThis = context;
 vm.createContext(context);
 vm.runInContext(dataSource, context);
+vm.runInContext(cepreSource, context);
 vm.runInContext(plannerSource, context);
 
 const profile = {
@@ -33,18 +35,30 @@ const profile = {
   focus: 'all',
   startDate: '2026-08-31',
   endMode: 'cepre-final',
-  endDate: '2027-01-17'
+  endDate: '2027-01-31'
 };
 const events = context.__plannerTest.buildSchedule(profile);
 const exams = events.filter((event) => event.type === 'exam');
-const finalExam = exams.find((event) => event.topic === 'EXAMEN FINAL');
+const finalExam = exams.find((event) => event.assessment === 'Examen final');
 
-if (exams.length !== 10) throw new Error(`Expected 10 assessments, found ${exams.length}`);
-if (!finalExam || finalExam.date !== '2027-01-24') throw new Error('Final exam reminder is missing or has the wrong date');
+if (exams.length !== 11) throw new Error(`Expected 11 pre-university assessments, found ${exams.length}`);
+if (!finalExam || finalExam.date !== '2027-02-07') throw new Error('Official final exam reminder is missing or has the wrong date');
+if (!exams.some((event) => event.assessment === 'Prueba de aptitud vocacional' && event.date === '2027-02-06')) throw new Error('Vocational aptitude test is missing');
 if (events.some((event) => !event.date || !event.start || !event.end || !event.topic)) throw new Error('Invalid planner event found');
 if (new Set(events.map((event) => event.id)).size !== events.length) throw new Error('Generated planner events do not have unique ids');
 if (context.__plannerTest.accountCacheKey('google_a') === context.__plannerTest.accountCacheKey('google_b')) throw new Error('Planner cache is not isolated per account');
 if (context.__plannerTest.plannerBelongsTo({ userId: 'google_a' }, 'google_b')) throw new Error('A planner can be loaded by the wrong account');
+
+const basicExams = context.__plannerTest.evaluationEvents({ ...profile, cepreCycle: 'basico' });
+if (basicExams.length !== 9 || basicExams.at(-1).date !== '2027-01-31') throw new Error('Basic cycle official assessments are incomplete');
+const ienExams = context.__plannerTest.evaluationEvents({ ...profile, cepreCycle: 'ien', startDate: '2026-07-06', endDate: '2026-11-22' });
+if (ienExams.length !== 4 || ienExams.at(-1).date !== '2026-11-29') throw new Error('IEN official assessments are incomplete');
+
+const cepreData = context.window.UNIVERSE_CEPREUNI_2027;
+if (!cepreData || !['preuniversitario', 'basico', 'ien'].every((cycle) => cepreData.cycles[cycle])) throw new Error('Shared CEPREUNI data is incomplete');
+if (cepreData.cycles.preuniversitario.schedule.morning.modules.module1.length !== 6) throw new Error('Pre-university morning schedule is incomplete');
+if (cepreData.cycles.basico.schedule.afternoon.modules.module1.length !== 6) throw new Error('Basic afternoon schedule is incomplete');
+if (cepreData.cycles.ien.schedule.morning.modules.module1.length !== 6) throw new Error('IEN morning schedule is incomplete');
 
 const duplicateEvents = [
   { id: 'study_duplicate', date: '2026-09-01', start: '07:00', type: 'study', status: 'pending' },
@@ -130,6 +144,8 @@ if (Math.min(...balancedValues) === 0 || Math.max(...balancedValues) / Math.min(
 }
 
 const html = fs.readFileSync(new URL('../planificador.html', import.meta.url), 'utf8');
+const cepreHtml = fs.readFileSync(new URL('../cepreuni.html', import.meta.url), 'utf8');
+if (!cepreHtml.includes('id="cepre-schedules-app"') || !cepreHtml.includes('/cepreuni-2027-data.js') || !cepreHtml.includes('/cepreuni-schedules.js')) throw new Error('CEPREUNI schedules are not wired into the page');
 const referencedIds = [...plannerSource.matchAll(/\$\('([^']+)'\)/g)].map((match) => match[1]);
 const missingIds = [...new Set(referencedIds)].filter((id) => !html.includes(`id="${id}"`));
 if (missingIds.length) throw new Error(`Missing HTML ids: ${missingIds.join(', ')}`);
@@ -138,6 +154,8 @@ console.log(JSON.stringify({
   cepreEvents: events.length,
   admissionEvents: admissionEvents.length,
   exams: exams.length,
+  basicExams: basicExams.length,
+  ienExams: ienExams.length,
   finalExam: finalExam.date,
   uniqueEventIds: new Set(events.map((event) => event.id)).size,
   isolatedCheckboxUpdate: duplicateEvents.map((event) => event.status),
