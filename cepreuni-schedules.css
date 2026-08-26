@@ -1,0 +1,68 @@
+.cepre-schedules { width: min(1180px,calc(100% - 32px)); margin: 24px auto 34px; }
+.cepre-schedules-intro { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+.cepre-schedules-intro span { color: #2879ef; font-size: .72rem; font-weight: 900; letter-spacing: .15em; }
+.cepre-schedules-intro h2 { margin: 7px 0 0; color: #071b3e; font-family: 'Bebas Neue',sans-serif; font-size: clamp(2rem,4vw,3.5rem); font-weight: 400; letter-spacing: .02em; line-height: .98; }
+.cepre-schedules-intro p { max-width: 520px; margin: 0; color: #53647f; font-size: .92rem; line-height: 1.65; }
+.cepre-cycle-tabs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 12px; }
+.cepre-cycle-tabs button,.cepre-turn-tabs button,.cepre-module-tabs button { min-height: 46px; border: 1px solid rgba(44,91,155,.2); border-radius: 14px; padding: 0 16px; background: rgba(255,255,255,.78); color: #34506f; font: 800 .79rem 'DM Sans',sans-serif; cursor: pointer; transition: .2s ease; }
+.cepre-cycle-tabs button.active { border-color: #2678ef; background: linear-gradient(135deg,#1266dd,#3b9af5); color: #fff; box-shadow: 0 12px 24px rgba(38,120,239,.22); }
+.cepre-schedule-shell { border: 1px solid rgba(41,91,156,.2); border-radius: 30px; padding: clamp(18px,3vw,30px); background: linear-gradient(145deg,rgba(255,255,255,.91),rgba(239,247,255,.76)); box-shadow: 0 22px 60px rgba(20,63,118,.11); }
+.cepre-schedule-head { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.cepre-schedule-head > div > span { color: #168969; font-size: .68rem; font-weight: 900; letter-spacing: .14em; }
+.cepre-schedule-head h2 { margin: 4px 0; color: #081c3f; font-family: 'DM Sans',sans-serif; font-size: clamp(1.35rem,2.8vw,2rem); line-height: 1.15; }
+.cepre-schedule-head p { margin: 0; color: #65728a; font-size: .82rem; }
+.cepre-schedule-head a { display: inline-flex; align-items: center; gap: 18px; min-height: 48px; border-radius: 15px; padding: 0 18px; background: #071c40; color: #fff; font-size: .78rem; font-weight: 850; text-decoration: none; white-space: nowrap; }
+.cepre-schedule-head a span { color: #65b9ff; font-size: 1rem; }
+.cepre-schedule-controls { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 22px 0 12px; }
+.cepre-turn-tabs,.cepre-module-tabs { display: flex; gap: 8px; padding: 5px; border-radius: 16px; background: rgba(23,77,142,.07); }
+.cepre-turn-tabs button.active,.cepre-module-tabs button.active { border-color: rgba(38,120,239,.28); background: #fff; color: #1266dd; box-shadow: 0 6px 18px rgba(27,74,129,.11); }
+.cepre-schedule-note { display: flex; align-items: center; gap: 10px; min-height: 46px; margin-bottom: 12px; border: 1px solid rgba(22,137,105,.18); border-radius: 14px; padding: 9px 13px; background: rgba(22,178,130,.07); color: #176d58; }
+.cepre-schedule-note > span { display: grid; width: 28px; height: 28px; border-radius: 9px; background: rgba(22,137,105,.12); place-items: center; }
+.cepre-schedule-note b { font-size: .76rem; }
+.cepre-schedule-note p { margin: 0 0 0 auto; font-size: .72rem; }
+.cepre-days-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.cepre-day-card { overflow: hidden; min-width: 0; border: 1px solid rgba(42,91,154,.16); border-radius: 18px; background: rgba(255,255,255,.82); box-shadow: 0 10px 24px rgba(30,68,117,.06); }
+.cepre-day-card header { display: flex; align-items: center; gap: 10px; min-height: 46px; border-bottom: 1px solid rgba(42,91,154,.12); padding: 0 14px; background: rgba(237,245,255,.82); }
+.cepre-day-card header span { width: 8px; height: 8px; border-radius: 50%; background: #2678ef; box-shadow: 0 0 0 5px rgba(38,120,239,.1); }
+.cepre-day-card h3 { margin: 0; color: #0c2145; font: 850 .86rem 'DM Sans',sans-serif; }
+.cepre-day-card > div { display: grid; gap: 8px; padding: 11px; }
+.cepre-session { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 3px 10px; min-height: 56px; border-left: 4px solid #2678ef; border-radius: 11px; padding: 9px 10px; background: rgba(38,120,239,.07); }
+.cepre-session.science { border-color: #13a875; background: rgba(19,168,117,.07); }
+.cepre-session.humanities { border-color: #ef5564; background: rgba(239,85,100,.07); }
+.cepre-session time { color: #637089; font-size: .69rem; font-weight: 800; white-space: nowrap; }
+.cepre-session strong { min-width: 0; color: #102547; font-size: .76rem; overflow-wrap: anywhere; }
+.cepre-session small { grid-column: 1/-1; color: #65728a; font-size: .65rem; line-height: 1.35; }
+.cepre-milestones { margin-top: 16px; border: 1px solid rgba(42,91,154,.16); border-radius: 18px; background: rgba(255,255,255,.72); }
+.cepre-milestones summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; min-height: 62px; padding: 0 18px; cursor: pointer; list-style: none; }
+.cepre-milestones summary::-webkit-details-marker { display: none; }
+.cepre-milestones summary span { color: #2678ef; font-size: .65rem; font-weight: 900; letter-spacing: .12em; }
+.cepre-milestones summary strong { color: #102547; font-size: .82rem; }
+.cepre-milestones summary i { font-style: normal; font-size: 1.2rem; transition: transform .2s ease; }
+.cepre-milestones[open] summary i { transform: rotate(45deg); }
+.cepre-milestones > div { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; padding: 0 14px 14px; }
+.cepre-milestones article { display: grid; grid-template-columns: 112px minmax(0,1fr); gap: 12px; align-items: center; border-radius: 13px; padding: 11px; background: rgba(238,245,255,.82); }
+.cepre-milestones time b,.cepre-milestones time span,.cepre-milestones article div strong,.cepre-milestones article div small { display: block; }
+.cepre-milestones time b { color: #1266dd; font-size: .72rem; }
+.cepre-milestones time span,.cepre-milestones article div small { margin-top: 2px; color: #6c7890; font-size: .65rem; }
+.cepre-milestones article div strong { color: #102547; font-size: .76rem; }
+html[data-universe-theme="dark"] .cepre-schedules-intro h2,html[data-universe-theme="dark"] .cepre-schedule-head h2,html[data-universe-theme="dark"] .cepre-day-card h3,html[data-universe-theme="dark"] .cepre-session strong,html[data-universe-theme="dark"] .cepre-milestones summary strong,html[data-universe-theme="dark"] .cepre-milestones article div strong { color: #f4f8ff; }
+html[data-universe-theme="dark"] .cepre-schedules-intro p,html[data-universe-theme="dark"] .cepre-schedule-head p,html[data-universe-theme="dark"] .cepre-session time,html[data-universe-theme="dark"] .cepre-session small { color: #aab8d0; }
+html[data-universe-theme="dark"] .cepre-schedule-shell { background: linear-gradient(145deg,rgba(6,22,50,.88),rgba(9,35,67,.72)); }
+html[data-universe-theme="dark"] :is(.cepre-cycle-tabs button,.cepre-day-card,.cepre-milestones) { background-color: rgba(8,27,57,.84); }
+html[data-universe-theme="dark"] .cepre-day-card header,html[data-universe-theme="dark"] .cepre-milestones article { background: rgba(16,43,79,.72); }
+html[data-universe-theme="dark"] :is(.cepre-turn-tabs button.active,.cepre-module-tabs button.active) { background: #102c56; color: #86c5ff; }
+@media (max-width:900px) { .cepre-schedules-intro { align-items: flex-start; flex-direction: column; } .cepre-days-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width:620px) {
+  .cepre-schedules { width: calc(100% - 18px); margin-top: 18px; }
+  .cepre-cycle-tabs { display: flex; overflow-x: auto; padding: 2px 1px 7px; scrollbar-width: none; }
+  .cepre-cycle-tabs button { flex: 0 0 auto; min-width: 126px; }
+  .cepre-schedule-head,.cepre-schedule-controls,.cepre-schedule-note { align-items: stretch; flex-direction: column; }
+  .cepre-schedule-head a { justify-content: space-between; }
+  .cepre-turn-tabs,.cepre-module-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .cepre-schedule-note p { margin: 0; }
+  .cepre-days-grid,.cepre-milestones > div { grid-template-columns: 1fr; }
+  .cepre-milestones summary { grid-template-columns: 1fr auto; gap: 3px 10px; padding: 10px 14px; }
+  .cepre-milestones summary span { grid-column: 1; }
+  .cepre-milestones summary strong { grid-column: 1; }
+  .cepre-milestones summary i { grid-column: 2; grid-row: 1/3; }
+}

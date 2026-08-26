@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="/style.css?v=reveal-1">
 <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
 <link rel="stylesheet" href="/universe-admission.css?v=admission-6">
+<link rel="stylesheet" href="/cepreuni-schedules.css?v=schedules-1">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
 </head>
@@ -76,8 +77,12 @@
 </aside>
 <main class="admission-page cepre-page">
   <section class="admission-hero">
-    <div class="admission-hero-copy"><span class="admission-kicker">CEPREUNI</span><h1>CEPREUNI 2026-2</h1><p>Compara máximos y mínimos, celebra a los ingresantes y consulta tus notas finales, la calculadora, las fijas históricas, el temario, los exámenes y la guía de aulas.</p><div class="admission-actions"><a class="admission-btn primary" href="/ranking">Comparar puntajes</a><a class="admission-btn ghost" href="/ingresantes-cepreuni">Ver ingresantes</a></div></div>
+    <div class="admission-hero-copy"><span class="admission-kicker">CEPREUNI</span><h1>CEPREUNI 2027-1</h1><p>Consulta los horarios oficiales por ciclo, organiza tu cronograma y accede al histórico de puntajes, ingresantes, fijas, temarios y exámenes.</p><div class="admission-actions"><a class="admission-btn primary" href="#horarios-cepreuni">Ver horarios 2027-1</a><a class="admission-btn ghost" href="/planificador">Crear mi plan</a></div></div>
     <aside class="admission-hero-card"><strong>Fórmula CEPREUNI</strong><p class="formula">PID = S + 2EP1 + 4EP2 + 6EF</p><p>S considera las mejores 5 de PC1 a PC6 más PC7. Arquitectura suma evaluación vocacional.</p></aside>
+  </section>
+  <section class="cepre-schedules" id="horarios-cepreuni">
+    <div class="cepre-schedules-intro"><div><span>ORGANIZACIÓN ACADÉMICA</span><h2>Horarios CEPREUNI por ciclo</h2></div><p>Selecciona tu ciclo, turno y módulo. Cada horario está reorganizado para leerse correctamente tanto en computadora como en celular.</p></div>
+    <div id="cepre-schedules-app"></div>
   </section>
   <section class="cepre-link-grid">
     <a class="cepre-hub-card" href="/ranking"><span>01</span><b>Máximos y mínimos CEPREUNI 2026-2</b><p>Compara ciclos y consulta puntajes máximos, mínimos e ingresantes por especialidad. El ranking queda como vista secundaria.</p></a>
@@ -143,6 +148,8 @@
     <div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
   </div>
 </footer>
+<script src="/cepreuni-2027-data.js?v=cepre-2027-1"></script>
+<script src="/cepreuni-schedules.js?v=schedules-1"></script>
 <script src="universe-admission.js?v=security-3"></script>
 <script src="/universe-polish.js?v=unified-36" defer></script>
 </body>
