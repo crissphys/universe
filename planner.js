@@ -2,7 +2,8 @@
   'use strict';
 
   var TOKEN_KEY = 'universe_auth_token';
-  var CACHE_KEY = 'universe_planner_cache_v1';
+  var LEGACY_CACHE_KEY = 'universe_planner_cache_v1';
+  var CACHE_KEY_PREFIX = 'universe_planner_cache_v2_';
   var DATA = window.UNIVERSE_PLANNER_DATA || { admission: [], cepre: [], evaluations: [] };
   var ACADEMIES = [
     'Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI',
@@ -540,31 +541,66 @@
     state.community = result.profile || { username: state.draft.username };
   }
 
-  function cachePlanner() { try { localStorage.setItem(CACHE_KEY, JSON.stringify(state.planner)); } catch (_) {} }
-  function loadCachedPlanner() { try { return JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch (_) { return null; } }
+  function accountCacheKey(ownerId) { return CACHE_KEY_PREFIX + encodeURIComponent(String(ownerId || '')); }
+  function plannerBelongsTo(planner, ownerId) {
+    return Boolean(planner && (!planner.userId || String(planner.userId) === String(ownerId || '')));
+  }
+  function cachePlanner(planner, ownerId) {
+    var accountId = String(ownerId || state.authUserId || '');
+    var value = planner || state.planner;
+    if (!accountId || !value) return;
+    try { localStorage.setItem(accountCacheKey(accountId), JSON.stringify({ ownerId: accountId, planner: value })); } catch (_) {}
+  }
+  function loadCachedPlanner(ownerId) {
+    var accountId = String(ownerId || '');
+    if (!accountId) return null;
+    try {
+      var stored = JSON.parse(localStorage.getItem(accountCacheKey(accountId)) || 'null');
+      if (stored && stored.ownerId === accountId && plannerBelongsTo(stored.planner, accountId)) return stored.planner;
+      var legacy = JSON.parse(localStorage.getItem(LEGACY_CACHE_KEY) || 'null');
+      if (legacy && String(legacy.userId || '') === accountId) {
+        cachePlanner(legacy, accountId);
+        localStorage.removeItem(LEGACY_CACHE_KEY);
+        return legacy;
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  function resetPlannerAccountState() {
+    clearTimeout(state.saveTimer);
+    state.saveTimer = null;
+    state.saveVersion += 1;
+    state.planner = null;
+    state.community = null;
+    state.publicPlans = [];
+    state.publicPlansLoaded = false;
+  }
 
   async function savePlanner(immediate) {
-    if (!state.planner) return;
+    var ownerId = String(state.authUserId || '');
+    if (!state.planner || !ownerId) return false;
     ensureUniqueEventIds(state.planner.events);
     state.planner.updatedAt = Date.now();
-    cachePlanner();
+    cachePlanner(state.planner, ownerId);
     clearTimeout(state.saveTimer);
     var saveVersion = ++state.saveVersion;
     var snapshot = JSON.parse(JSON.stringify(state.planner));
     var run = async function () {
+      if (ownerId !== state.authUserId) return false;
       try {
         var response = await api('/planner', 'PUT', snapshot);
-        if (saveVersion === state.saveVersion) {
-          if (response.planner) {
+        if (ownerId === state.authUserId && saveVersion === state.saveVersion) {
+          if (response.planner && plannerBelongsTo(response.planner, ownerId)) {
             ensureUniqueEventIds(response.planner.events);
             state.planner = response.planner;
-            cachePlanner();
+            cachePlanner(state.planner, ownerId);
           }
           document.documentElement.dataset.plannerSync = 'ok';
         }
         return true;
       } catch (error) {
-        if (saveVersion === state.saveVersion) document.documentElement.dataset.plannerSync = 'local';
+        if (ownerId === state.authUserId && saveVersion === state.saveVersion) document.documentElement.dataset.plannerSync = 'local';
         return false;
       }
     };
@@ -1040,6 +1076,7 @@
       var token = '';
       try { token = localStorage.getItem(TOKEN_KEY) || ''; } catch (_) {}
       if (!nextUser || !token || nextUser.secureSession !== true || !['google', 'universe'].includes(nextUser.provider)) {
+        resetPlannerAccountState();
         state.user = null;
         state.authReady = false;
         state.authUserId = '';
@@ -1048,6 +1085,7 @@
       }
       var nextUserId = String(nextUser.id || nextUser.uid || nextUser.email || 'authenticated');
       if (state.authReady && state.authUserId === nextUserId) return;
+      resetPlannerAccountState();
       state.user = nextUser;
       state.authUserId = nextUserId;
       $('planner-welcome').textContent = (state.language === 'en' ? 'Hi, ' : 'Hola, ') + (state.user.name || 'Universe') + '.';
@@ -1055,8 +1093,22 @@
         api('/planner', 'GET').catch(function () { return null; }),
         communityApi('/me', 'GET').catch(function () { return null; })
       ]);
+      var latestUser = UniverseGoogleAuth.user && UniverseGoogleAuth.user();
+      var latestUserId = latestUser && String(latestUser.id || latestUser.uid || latestUser.email || 'authenticated');
+      var latestToken = '';
+      try { latestToken = localStorage.getItem(TOKEN_KEY) || ''; } catch (_) {}
+      if (!latestUser || latestUserId !== nextUserId || latestToken !== token) {
+        resetPlannerAccountState();
+        state.user = null;
+        state.authReady = false;
+        state.authUserId = '';
+        setTimeout(checkAuth, 0);
+        return;
+      }
       state.community = results[1] && results[1].profile || null;
-      var remote = results[0] && results[0].planner, cached = loadCachedPlanner();
+      var remote = results[0] && results[0].planner;
+      if (!plannerBelongsTo(remote, nextUserId)) remote = null;
+      var cached = loadCachedPlanner(nextUserId);
       state.planner = remote || cached;
       state.authReady = true;
       if (state.planner && state.planner.profile && state.planner.events) {

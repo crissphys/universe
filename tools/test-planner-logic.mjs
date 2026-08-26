@@ -5,7 +5,7 @@ const dataSource = fs.readFileSync(new URL('../planner-syllabus-data.js', import
 const plannerSource = fs.readFileSync(new URL('../planner.js', import.meta.url), 'utf8')
   .replace(
     /if \(document\.readyState === 'loading'\)[\s\S]*?else boot\(\);\s*\}\)\(\);\s*$/,
-    "globalThis.__plannerTest = { buildSchedule, evaluationEvents, ensureUniqueEventIds, toggleEventInList }; })();"
+    "globalThis.__plannerTest = { buildSchedule, evaluationEvents, ensureUniqueEventIds, toggleEventInList, accountCacheKey, plannerBelongsTo }; })();"
   );
 
 const context = {
@@ -43,6 +43,8 @@ if (exams.length !== 10) throw new Error(`Expected 10 assessments, found ${exams
 if (!finalExam || finalExam.date !== '2027-01-24') throw new Error('Final exam reminder is missing or has the wrong date');
 if (events.some((event) => !event.date || !event.start || !event.end || !event.topic)) throw new Error('Invalid planner event found');
 if (new Set(events.map((event) => event.id)).size !== events.length) throw new Error('Generated planner events do not have unique ids');
+if (context.__plannerTest.accountCacheKey('google_a') === context.__plannerTest.accountCacheKey('google_b')) throw new Error('Planner cache is not isolated per account');
+if (context.__plannerTest.plannerBelongsTo({ userId: 'google_a' }, 'google_b')) throw new Error('A planner can be loaded by the wrong account');
 
 const duplicateEvents = [
   { id: 'study_duplicate', date: '2026-09-01', start: '07:00', type: 'study', status: 'pending' },
