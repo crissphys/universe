@@ -26,6 +26,7 @@
     wizardStep: 1,
     draft: {
       username: '', studentType: '', cepreCycle: '', academyName: '', shift: '', focus: '',
+      customStart: '08:00', customEnd: '14:00',
       startDate: localDate(new Date()), endMode: 'admission', endDate: ADMISSION_PLAN_END
     },
     calendarDate: startOfWeek(new Date()),
@@ -54,7 +55,7 @@
       select: 'Seleccionar', preCycle: 'Ciclo preuniversitario', basicCycle: 'Ciclo básico', cycleI: 'Ciclo I', blocksBreaks: '4 bloques · 3 descansos',
       cepreDescription: 'Ruta semanal según prácticas y parciales.', academy: 'Academia', academyDescription: 'Preparación basada en el temario de admisión UNI.', independent: 'Autodidacta', independentDescription: 'Una ruta completa para estudiar por tu cuenta.',
       cepreCycleQuestion: '¿Qué ciclo CEPREUNI 2027-1 llevarás?', academyQuestion: '¿En qué academia estudias?', academyHelp: 'Elige una opción o escribe el nombre de otra academia.', otherAcademy: 'Nombre de la otra academia',
-      shiftQuestion: '¿En qué horario quieres organizar tus sesiones?', shiftHelp: 'Cada franja incluye cuatro bloques y descansos reales entre ellos.', morning: 'MAÑANA', afternoon: 'TARDE',
+      shiftQuestion: '¿En qué horario quieres organizar tus sesiones?', shiftHelp: 'Elige un turno o crea una franja propia; distribuiremos ahí tus bloques y descansos.', morning: 'MAÑANA', afternoon: 'TARDE', customSchedule: 'HORARIO PERSONALIZADO', chooseHours: 'Tú eliges la hora', customScheduleCopy: 'Se ajusta a tu disponibilidad real', customStartTime: 'Quiero empezar a estudiar a las', customEndTime: 'Quiero terminar de estudiar a las', customScheduleSummary: '{blocks} bloques · {breaks} descansos · {hours} h de estudio',
       focusQuestion: '¿Qué área necesita más espacio?', focusHelp: 'Todas seguirán presentes; el área elegida recibirá más bloques.', sciences: 'Ciencias', mathematics: 'Matemáticas', humanities: 'Humanidades', allCourses: 'Todos los cursos', balanced: 'Distribución equilibrada',
       scienceSubjects: 'Física y Química', mathSubjects: 'Aritmética, Álgebra, Geometría y Trigonometría', humanitiesSubjects: 'Lectura, lenguaje y sociedad',
       datesQuestion: '¿Desde cuándo y hasta qué fecha estudiarás?', datesHelp: 'Puedes cambiar estas fechas después sin perder tus preferencias.', startDate: 'Fecha de inicio', weekBeforeFinal: 'Una semana antes del examen final', admissionGoal: 'Proceso 2027-1', custom: 'PERSONALIZADO', chooseDate: 'Elegir otra fecha', yourOwnGoal: 'Define tu propia meta', endDate: 'Fecha final', officialCheck: 'Podrás ajustarla cuando se publique el cronograma oficial.',
@@ -63,7 +64,7 @@
       calendarNote: 'Las fechas CEPREUNI de este plan sirven para organizar el estudio. Confírmalas cuando la institución publique el cronograma 2027-1.',
       editCalendar: 'EDITAR CALENDARIO', studyBlock: 'Bloque de estudio', date: 'Fecha', area: 'Área', start: 'Inicio', end: 'Fin', course: 'Curso', topic: 'Tema o tarea', delete: 'Eliminar', markDone: 'Marcar completado', markPending: 'Marcar pendiente', cancel: 'Cancelar', saveBlock: 'Guardar bloque',
       focusTechniques: 'TÉCNICAS DE ENFOQUE', chooseRhythm: 'Elige un ritmo que puedas sostener', quickStart: 'Inicio ligero', quickStartCopy: '20 minutos de enfoque y 5 de pausa. Útil para empezar o recuperar el hábito.', pomodoroCopy: 'Una tarea concreta, sin interrupciones, seguida de una pausa breve.', deepBlock: 'Bloque profundo', deepBlockCopy: 'Adecuado para teoría más práctica o resolución continua de problemas.', longCycle: 'Ciclo largo', longCycleCopy: 'Para simulacros parciales o temas extensos. Úsalo solo si ya sostienes la atención.', oneTask: 'Una sesión, una tarea.', timerAdvice: 'Antes de iniciar, define qué tema y cuántos ejercicios terminarás. Durante la pausa, levántate, mira lejos de la pantalla y toma agua.',
-      loginNeeded: 'Inicia sesión con Google para guardar tu plan.', selectStudent: 'Elige qué tipo de estudiante eres.', selectCycle: 'Elige tu ciclo CEPREUNI.', selectAcademy: 'Elige o escribe tu academia.', invalidUsername: 'Crea un nombre de usuario válido de 3 a 24 caracteres.', selectShiftFocus: 'Elige un horario y un área de enfoque.', invalidDates: 'Revisa las fechas: la fecha final debe ser posterior al inicio.',
+      loginNeeded: 'Inicia sesión con Google para guardar tu plan.', selectStudent: 'Elige qué tipo de estudiante eres.', selectCycle: 'Elige tu ciclo CEPREUNI.', selectAcademy: 'Elige o escribe tu academia.', invalidUsername: 'Crea un nombre de usuario válido de 3 a 24 caracteres.', selectShiftFocus: 'Elige un horario y un área de enfoque.', invalidCustomSchedule: 'El horario personalizado debe durar por lo menos 1 hora y 30 minutos y terminar después de la hora de inicio.', invalidDates: 'Revisa las fechas: la fecha final debe ser posterior al inicio.',
       synced: 'Plan sincronizado con tu cuenta.', localOnly: 'El plan se guardó en este dispositivo; intentaremos sincronizarlo al recuperar la conexión.', noSessions: 'Hoy no tienes bloques programados. Aprovecha para descansar o revisar errores.', completedOf: '{done} de {total} bloques completados', notificationsOn: 'Notificaciones activadas', pageOpenNotice: 'Te avisaremos mientras Universe esté abierto en este dispositivo.',
       exam: 'Evaluación', review: 'Repaso', practice: 'Práctica', study: 'Estudio', topicsScheduled: 'temas programados', weeks: 'semanas', sessions: 'sesiones', hours: 'horas planificadas',
       focus: 'ENFOQUE', break: 'PAUSA', startTimer: '▶ Iniciar', pauseTimer: 'Ⅱ Pausar', timerFinished: 'Bloque completado', breakFinished: 'Pausa terminada. Vuelve a tu siguiente tarea.', confirmReset: '¿Quieres crear un cronograma nuevo? Tus bloques actuales serán reemplazados.',
@@ -79,7 +80,7 @@
       select: 'Select', preCycle: 'Pre-university cycle', basicCycle: 'Foundation cycle', cycleI: 'Cycle I', blocksBreaks: '4 blocks · 3 breaks',
       cepreDescription: 'A weekly route aligned with quizzes and midterms.', academy: 'Academy', academyDescription: 'Prep built around the UNI admission syllabus.', independent: 'Self-study', independentDescription: 'A complete route you can follow on your own.',
       cepreCycleQuestion: 'Which CEPREUNI 2027-1 cycle will you take?', academyQuestion: 'Which academy do you attend?', academyHelp: 'Pick one or enter another academy.', otherAcademy: 'Other academy name',
-      shiftQuestion: 'When do you want your study sessions?', shiftHelp: 'Each shift includes four blocks with proper breaks in between.', morning: 'MORNING', afternoon: 'AFTERNOON',
+      shiftQuestion: 'When do you want your study sessions?', shiftHelp: 'Pick a shift or build your own window; we will fit focused blocks and proper breaks inside it.', morning: 'MORNING', afternoon: 'AFTERNOON', customSchedule: 'CUSTOM SCHEDULE', chooseHours: 'You pick the hours', customScheduleCopy: 'Built around your actual availability', customStartTime: 'I want to start studying at', customEndTime: 'I want to finish studying at', customScheduleSummary: '{blocks} blocks · {breaks} breaks · {hours} study hours',
       focusQuestion: 'Which area needs more room?', focusHelp: 'Every area stays in the plan; your priority gets extra blocks.', sciences: 'Sciences', mathematics: 'Mathematics', humanities: 'Humanities', allCourses: 'All subjects', balanced: 'Balanced schedule',
       scienceSubjects: 'Physics and Chemistry', mathSubjects: 'Arithmetic, Algebra, Geometry and Trigonometry', humanitiesSubjects: 'Reading, language and social studies',
       datesQuestion: 'When will your plan start and end?', datesHelp: 'You can adjust these dates later without losing your preferences.', startDate: 'Start date', weekBeforeFinal: 'One week before the final exam', admissionGoal: '2027-1 process', custom: 'CUSTOM', chooseDate: 'Choose another date', yourOwnGoal: 'Set your own finish line', endDate: 'End date', officialCheck: 'You can update it when the official calendar is published.',
@@ -88,7 +89,7 @@
       calendarNote: 'CEPREUNI dates in this plan are planning milestones. Confirm them once the institution publishes the official 2027-1 calendar.',
       editCalendar: 'EDIT CALENDAR', studyBlock: 'Study block', date: 'Date', area: 'Area', start: 'Start', end: 'End', course: 'Subject', topic: 'Topic or task', delete: 'Delete', markDone: 'Mark complete', markPending: 'Mark pending', cancel: 'Cancel', saveBlock: 'Save block',
       focusTechniques: 'FOCUS METHODS', chooseRhythm: 'Pick a pace you can actually sustain', quickStart: 'Easy start', quickStartCopy: '20 focused minutes and a 5-minute break. Great when you are rebuilding the habit.', pomodoroCopy: 'One clear task, zero interruptions, then a short reset.', deepBlock: 'Deep-work block', deepBlockCopy: 'Good for theory plus practice or a longer problem set.', longCycle: 'Long cycle', longCycleCopy: 'Best for partial mock exams or long topics. Use it once your focus is solid.', oneTask: 'One session, one task.', timerAdvice: 'Before you start, define the topic and how many exercises you will finish. During the break, stand up, look away from the screen, and drink water.',
-      loginNeeded: 'Sign in with Google to save your plan.', selectStudent: 'Choose your student type.', selectCycle: 'Choose your CEPREUNI cycle.', selectAcademy: 'Choose or enter your academy.', invalidUsername: 'Create a valid 3–24 character username.', selectShiftFocus: 'Choose a study shift and a priority area.', invalidDates: 'Check the dates: the end date must be after the start.',
+      loginNeeded: 'Sign in with Google to save your plan.', selectStudent: 'Choose your student type.', selectCycle: 'Choose your CEPREUNI cycle.', selectAcademy: 'Choose or enter your academy.', invalidUsername: 'Create a valid 3–24 character username.', selectShiftFocus: 'Choose a study shift and a priority area.', invalidCustomSchedule: 'Your custom schedule must last at least 1 hour 30 minutes and end after its start time.', invalidDates: 'Check the dates: the end date must be after the start.',
       synced: 'Plan synced to your account.', localOnly: 'Your plan is saved on this device; we will sync it when the connection is back.', noSessions: 'No blocks scheduled for today. Use the time to rest or review mistakes.', completedOf: '{done} of {total} blocks completed', notificationsOn: 'Notifications enabled', pageOpenNotice: 'We will remind you while Universe is open on this device.',
       exam: 'Exam', review: 'Review', practice: 'Practice', study: 'Study', topicsScheduled: 'topics scheduled', weeks: 'weeks', sessions: 'sessions', hours: 'planned hours',
       focus: 'FOCUS', break: 'BREAK', startTimer: '▶ Start', pauseTimer: 'Ⅱ Pause', timerFinished: 'Focus block complete', breakFinished: 'Break is over. Time for your next task.', confirmReset: 'Build a new schedule? Your current blocks will be replaced.',
@@ -142,6 +143,29 @@
   }
   function formatDate(value, options) { return parseDate(value).toLocaleDateString(state.language === 'en' ? 'en-US' : 'es-PE', options || { day: 'numeric', month: 'long', year: 'numeric' }); }
   function minutesBetween(start, end) { var a = start.split(':').map(Number), b = end.split(':').map(Number); return (b[0] * 60 + b[1]) - (a[0] * 60 + a[1]); }
+  function timeFromMinutes(value) { var minutes = Math.max(0, Math.min(1439, Math.round(value))); return String(Math.floor(minutes / 60)).padStart(2, '0') + ':' + String(minutes % 60).padStart(2, '0'); }
+  function validCustomSchedule(start, end) { var pattern = /^(?:[01]\d|2[0-3]):[0-5]\d$/; return pattern.test(start || '') && pattern.test(end || '') && minutesBetween(start, end) >= 90; }
+  function customTimeBlocks(start, end) {
+    if (!validCustomSchedule(start, end)) return [];
+    var total = minutesBetween(start, end), breakMinutes = 15;
+    var count = Math.max(1, Math.min(8, Math.floor((total + breakMinutes) / 90)));
+    var studyTotal = total - breakMinutes * (count - 1);
+    var base = Math.floor(studyTotal / count), extra = studyTotal % count;
+    var parts = start.split(':').map(Number), cursor = parts[0] * 60 + parts[1], blocks = [];
+    for (var index = 0; index < count; index += 1) {
+      var duration = base + (index < extra ? 1 : 0), blockStart = cursor, blockEnd = cursor + duration;
+      blocks.push([timeFromMinutes(blockStart), timeFromMinutes(blockEnd)]);
+      cursor = blockEnd + (index < count - 1 ? breakMinutes : 0);
+    }
+    return blocks;
+  }
+  function blocksForProfile(profile) {
+    if (profile && profile.shift === 'custom') {
+      var custom = customTimeBlocks(profile.customStart || '08:00', profile.customEnd || '14:00');
+      if (custom.length) return custom;
+    }
+    return TIME_BLOCKS[profile && profile.shift] || TIME_BLOCKS.morning;
+  }
 
   function api(path, method, data) {
     var headers = { 'Content-Type': 'application/json' };
@@ -188,6 +212,7 @@
     $('academy-search').placeholder = state.language === 'en' ? 'Search academy' : 'Buscar academia';
     $('custom-academy').placeholder = state.language === 'en' ? 'Enter the full name' : 'Escribe el nombre completo';
     if ($('planner-public-note')) $('planner-public-note').placeholder = tx('publicCommentPlaceholder');
+    updateCustomShiftUI();
     updateAuthMode();
     if (state.planner) { renderDashboard(); renderPublicPlans(); }
     else updatePreview();
@@ -292,6 +317,26 @@
     qa(selector).forEach(function (button) { button.classList.toggle('selected', button.getAttribute(attr) === value); });
   }
 
+  function updateCustomShiftUI() {
+    if (!$('planner-custom-shift')) return;
+    var custom = state.draft.shift === 'custom';
+    $('planner-custom-shift').hidden = !custom;
+    if (!custom) return;
+    var start = $('planner-custom-start').value || state.draft.customStart || '08:00';
+    var end = $('planner-custom-end').value || state.draft.customEnd || '14:00';
+    state.draft.customStart = start;
+    state.draft.customEnd = end;
+    var blocks = customTimeBlocks(start, end), summary = $('planner-custom-summary');
+    if (!blocks.length) {
+      summary.textContent = tx('invalidCustomSchedule');
+      summary.classList.add('error');
+      return;
+    }
+    var minutes = blocks.reduce(function (total, block) { return total + minutesBetween(block[0], block[1]); }, 0);
+    summary.textContent = tx('customScheduleSummary', { blocks: blocks.length, breaks: Math.max(0, blocks.length - 1), hours: (minutes / 60).toLocaleString(state.language === 'en' ? 'en-US' : 'es-PE', { maximumFractionDigits: 1 }) });
+    summary.classList.remove('error');
+  }
+
   function configureWizardFromDraft() {
     $('planner-username').value = state.draft.username || '';
     selectButtons('[data-student-type]', state.draft.studentType, 'data-student-type');
@@ -306,6 +351,9 @@
     $('custom-academy').value = state.draft.academyName && state.draft.academyName !== 'Otra academia' ? '' : (state.draft.customAcademy || '');
     $('planner-start-date').value = state.draft.startDate || localDate(new Date());
     $('planner-end-date').value = state.draft.endDate || ADMISSION_PLAN_END;
+    $('planner-custom-start').value = state.draft.customStart || '08:00';
+    $('planner-custom-end').value = state.draft.customEnd || '14:00';
+    updateCustomShiftUI();
     renderAcademies($('academy-search').value);
     updatePreview();
   }
@@ -377,7 +425,14 @@
         if (!state.draft.academyName || (state.draft.academyName === 'Otra academia' && !state.draft.customAcademy)) return tx('selectAcademy');
       }
     }
-    if (step === 2 && (!state.draft.shift || !state.draft.focus)) return tx('selectShiftFocus');
+    if (step === 2) {
+      if (!state.draft.shift || !state.draft.focus) return tx('selectShiftFocus');
+      if (state.draft.shift === 'custom') {
+        state.draft.customStart = $('planner-custom-start').value;
+        state.draft.customEnd = $('planner-custom-end').value;
+        if (!validCustomSchedule(state.draft.customStart, state.draft.customEnd)) return tx('invalidCustomSchedule');
+      }
+    }
     if (step === 3) {
       state.draft.startDate = $('planner-start-date').value;
       state.draft.endDate = $('planner-end-date').value;
@@ -406,11 +461,15 @@
     var start = $('planner-start-date').value || state.draft.startDate;
     var end = $('planner-end-date').value || state.draft.endDate;
     if (!start || !end || end <= start) { $('planner-preview').innerHTML = ''; return; }
-    var days = countStudyDays(start, end);
-    var sessions = Math.max(0, days * 4 - Math.floor(days / 6));
+    var days = countStudyDays(start, end), blocks = blocksForProfile(state.draft), sessions = 0, totalMinutes = 0;
+    for (var date = parseDate(start), finish = parseDate(end); date <= finish; date = addDays(date, 1)) {
+      if (date.getDay() === 0) continue;
+      var dailyCount = Math.min(blocks.length, date.getDay() === 6 ? Math.max(1, blocks.length - 1) : blocks.length);
+      sessions += dailyCount;
+      totalMinutes += blocks.slice(0, dailyCount).reduce(function (sum, block) { return sum + minutesBetween(block[0], block[1]); }, 0);
+    }
     var weeks = Math.max(1, Math.ceil((daysBetween(start, end) + 1) / 7));
-    var minutes = (TIME_BLOCKS[state.draft.shift || 'morning'] || TIME_BLOCKS.morning).reduce(function (sum, block) { return sum + minutesBetween(block[0], block[1]); }, 0);
-    var hours = Math.round((minutes * days / 60) * 10) / 10;
+    var hours = Math.round((totalMinutes / 60) * 10) / 10;
     var sourceTopics = admissionEntries().length;
     $('planner-preview').innerHTML = [
       [weeks, tx('weeks')], [sessions, tx('sessions')], [hours, tx('hours')], [sourceTopics, tx('topicsScheduled')]
@@ -472,17 +531,17 @@
 
   function buildSchedule(profile) {
     var events = [];
-    var blocks = TIME_BLOCKS[profile.shift] || TIME_BLOCKS.morning;
+    var blocks = blocksForProfile(profile);
     var admission = admissionEntries(), cursors = { 'Matemática': 0, 'Ciencias': 0, 'Humanidades': 0 };
     var weights = { 'Matemática': 1, 'Ciencias': 1, 'Humanidades': 1 };
-    if (profile.focus === 'math') weights.Matemática = 2;
-    if (profile.focus === 'science') weights.Ciencias = 2;
-    if (profile.focus === 'humanities') weights.Humanidades = 2;
+    if (profile.focus === 'math') weights.Matemática = 3;
+    if (profile.focus === 'science') weights.Ciencias = 3;
+    if (profile.focus === 'humanities') weights.Humanidades = 3;
     var admissionCounts = { 'Matemática': 0, 'Ciencias': 0, 'Humanidades': 0 };
     var weekCursors = {}, weekCounts = {}, cycleStart = parseDate(CYCLE_START);
     for (var day = parseDate(profile.startDate), finish = parseDate(profile.endDate); day <= finish; day = addDays(day, 1)) {
       if (day.getDay() === 0) continue;
-      var dateKey = localDate(day), blockCount = day.getDay() === 6 ? 3 : 4;
+      var dateKey = localDate(day), blockCount = Math.min(blocks.length, day.getDay() === 6 ? Math.max(1, blocks.length - 1) : blocks.length);
       var useCepre = profile.studentType === 'cepreuni' && profile.cepreCycle === 'preuniversitario';
       var week = Math.floor((day - cycleStart) / (7 * 86400000)) + 1;
       var weekly = useCepre && week >= 1 && week <= 20 ? cepreWeekEntries(week) : null;
@@ -495,9 +554,7 @@
         var availableAreas = ['Matemática', 'Ciencias', 'Humanidades'].filter(function (candidate) {
           return currentPools[candidate] && currentPools[candidate].length;
         });
-        var areasWithNewTopics = availableAreas.filter(function (candidate) { return (currentCursors[candidate] || 0) < currentPools[candidate].length; });
-        var candidates = areasWithNewTopics.length ? areasWithNewTopics : availableAreas;
-        var area = candidates.sort(function (left, right) {
+        var area = availableAreas.sort(function (left, right) {
           var balance = ((currentCounts[left] || 0) / weights[left]) - ((currentCounts[right] || 0) / weights[right]);
           if (balance) return balance;
           return currentPools[right].length - currentPools[left].length;
@@ -623,6 +680,8 @@
         cepreCycle: state.draft.studentType === 'cepreuni' ? state.draft.cepreCycle : '',
         academyName: state.draft.studentType === 'academy' ? academy : '',
         shift: state.draft.shift, focus: state.draft.focus,
+        customStart: state.draft.shift === 'custom' ? state.draft.customStart : '',
+        customEnd: state.draft.shift === 'custom' ? state.draft.customEnd : '',
         startDate: state.draft.startDate, endMode: state.draft.endMode, endDate: state.draft.endDate
       };
       state.planner = { version: 1, profile: profile, settings: { technique: '50-10', notifications: false, view: 'week' }, sharing: { visibility: 'private', note: '' }, events: buildSchedule(profile), createdAt: Date.now(), updatedAt: Date.now() };
@@ -858,8 +917,9 @@
     var event = eventId ? (state.planner.events || []).find(function (item) { return item.id === eventId; }) : null;
     $('planner-event-id').value = event ? event.id : '';
     $('planner-event-date').value = event ? event.date : (date || localDate(state.calendarDate));
-    $('planner-event-start').value = event ? event.start : (TIME_BLOCKS[state.planner.profile.shift] || TIME_BLOCKS.morning)[0][0];
-    $('planner-event-end').value = event ? event.end : (TIME_BLOCKS[state.planner.profile.shift] || TIME_BLOCKS.morning)[0][1];
+    var defaultBlock = blocksForProfile(state.planner.profile)[0] || TIME_BLOCKS.morning[0];
+    $('planner-event-start').value = event ? event.start : defaultBlock[0];
+    $('planner-event-end').value = event ? event.end : defaultBlock[1];
     $('planner-event-area').value = event ? event.area : 'Matemática';
     $('planner-event-course').value = event ? event.course : '';
     $('planner-event-topic').value = event ? event.topic : '';
@@ -1020,7 +1080,8 @@
       }
       advanceFromProfileChoice();
     };
-    qa('[data-shift]').forEach(function (button) { button.onclick = function () { state.draft.shift = button.dataset.shift; selectButtons('[data-shift]', state.draft.shift, 'data-shift'); updatePreview(); }; });
+    qa('[data-shift]').forEach(function (button) { button.onclick = function () { state.draft.shift = button.dataset.shift; selectButtons('[data-shift]', state.draft.shift, 'data-shift'); updateCustomShiftUI(); updatePreview(); }; });
+    ['planner-custom-start', 'planner-custom-end'].forEach(function (id) { $(id).oninput = function () { state.draft[id === 'planner-custom-start' ? 'customStart' : 'customEnd'] = this.value; updateCustomShiftUI(); updatePreview(); }; });
     qa('[data-focus]').forEach(function (button) { button.onclick = function () { state.draft.focus = button.dataset.focus; selectButtons('[data-focus]', state.draft.focus, 'data-focus'); updatePreview(); }; });
     qa('[data-end-mode]').forEach(function (button) { button.onclick = function () { updateEndDate(button.dataset.endMode); }; });
     $('planner-start-date').onchange = updatePreview;
