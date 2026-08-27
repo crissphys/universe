@@ -113,6 +113,11 @@ body { overflow-x:clip; }
 @keyframes brandPulse { 50%{transform:scale(1.12);opacity:.66} }
 
 .catalog-collection { margin-top:2rem;border:1px solid var(--catalog-line);border-radius:34px;padding:clamp(1.25rem,4vw,3.25rem);background:var(--catalog-panel);box-shadow:0 24px 70px rgba(31,60,104,.1);backdrop-filter:blur(18px); }
+.catalog-collection-esenciales { border-color:rgba(5,150,105,.22);background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(236,253,245,.8)); }
+.catalog-collection-esenciales .collection-number { color:#047857; }
+.catalog-collection-esenciales .collection-count { background:rgba(5,150,105,.1);color:#047857; }
+.catalog-collection-esenciales .book-series { color:#ea580c; }
+.catalog-collection-esenciales .book-card:hover { border-color:rgba(5,150,105,.38);box-shadow:0 22px 42px rgba(4,120,87,.15); }
 .collection-heading { display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;padding-bottom:2rem;border-bottom:1px solid var(--catalog-line); }
 .collection-number { display:block;margin-bottom:.65rem;color:var(--lumbreras-red);font:700 .72rem/1 "DM Sans",sans-serif;letter-spacing:.15em;text-transform:uppercase; }
 .collection-heading h2 { margin:0;color:var(--catalog-ink);font:700 clamp(2.5rem,5vw,4.5rem)/.9 "Bebas Neue",sans-serif;text-transform:uppercase;letter-spacing:.015em; }
@@ -127,6 +132,7 @@ body { overflow-x:clip; }
 .course-rule { height:1px;flex:1;background:linear-gradient(90deg,var(--catalog-line),transparent); }
 .course-heading-secondary { margin-top:3rem;padding-top:2rem;border-top:1px solid var(--catalog-line); }
 .book-grid { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(.8rem,1.6vw,1.25rem); }
+.collection-book-grid { margin-top:2rem; }
 .book-grid-2 { grid-template-columns:repeat(2,minmax(0,278.5px)); }
 .book-grid-4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
 .book-card {

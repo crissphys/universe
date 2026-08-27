@@ -6,8 +6,8 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDir, '..');
 const catalogPath = path.join(root, 'biblioteca', 'lumbreras', 'catalog.json');
 const pagePath = path.join(root, 'biblioteca', 'lumbreras', 'index.html');
-const startMarker = '<!-- LUMBRERAS_COURSES_START -->';
-const endMarker = '<!-- LUMBRERAS_COURSES_END -->';
+const startMarker = '<!-- LUMBRERAS_COLLECTIONS_START -->';
+const endMarker = '<!-- LUMBRERAS_COLLECTIONS_END -->';
 
 const icons = {
   flask: '<svg viewBox="0 0 24 24"><path d="M9 3h6m-4 0v5l-5.5 9.2A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-3.8L13 8V3"></path><path d="M8.2 15h7.6"></path></svg>',
@@ -25,23 +25,45 @@ const escapeHtml = (value) => String(value)
   .replaceAll('"', '&quot;');
 
 const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
-if (!Array.isArray(catalog.courses) || catalog.courses.length === 0) throw new Error('catalog.json debe contener al menos un curso.');
+if (!Array.isArray(catalog.collections) || catalog.collections.length === 0) throw new Error('catalog.json debe contener al menos una colección.');
 
-const seenSlugs = new Set();
+const seenCollections = new Set();
+const seenCourseKeys = new Set();
 const seenUrls = new Set();
-for (const course of catalog.courses) {
-  if (!/^[a-z0-9-]+$/.test(course.slug) || seenSlugs.has(course.slug)) throw new Error(`Slug inválido o duplicado: ${course.slug}`);
-  seenSlugs.add(course.slug);
-  if (!icons[course.icon]) throw new Error(`Icono no soportado: ${course.icon}`);
-  if (!Array.isArray(course.colors) || course.colors.length !== 3) throw new Error(`Colores incompletos en ${course.name}`);
-  if (!course.colors.slice(0, 2).every((color) => /^#[0-9a-f]{6}$/i.test(color)) || !/^rgba\([\d., ]+\)$/.test(course.colors[2])) throw new Error(`Formato de color inválido en ${course.name}`);
-  if (!Array.isArray(course.books) || course.books.length === 0) throw new Error(`No hay libros en ${course.name}`);
-  for (const book of course.books) {
-    if (!book.driveUrl.startsWith('https://drive.google.com/file/d/')) throw new Error(`Enlace de Drive inválido: ${book.driveUrl}`);
-    if (seenUrls.has(book.driveUrl)) throw new Error(`Enlace duplicado: ${book.driveUrl}`);
-    seenUrls.add(book.driveUrl);
-    if (!book.image.startsWith('/assets/library/lumbreras/')) throw new Error(`Ruta de portada inválida: ${book.image}`);
-    if (!fs.existsSync(path.join(root, book.image.slice(1)))) throw new Error(`No existe la portada: ${book.image}`);
+const subjects = new Set();
+
+const validateBook = (book, context) => {
+  if (!book.title || !book.series || !book.aria || !book.alt) throw new Error(`Datos incompletos en ${context}`);
+  if (!book.driveUrl.startsWith('https://drive.google.com/file/d/')) throw new Error(`Enlace de Drive inválido: ${book.driveUrl}`);
+  if (seenUrls.has(book.driveUrl)) throw new Error(`Enlace duplicado: ${book.driveUrl}`);
+  seenUrls.add(book.driveUrl);
+  if (!book.image.startsWith('/assets/library/lumbreras/')) throw new Error(`Ruta de portada inválida: ${book.image}`);
+  if (!fs.existsSync(path.join(root, book.image.slice(1)))) throw new Error(`No existe la portada: ${book.image}`);
+  if (book.course) subjects.add(book.course);
+};
+
+for (const collection of catalog.collections) {
+  if (!/^[a-z0-9-]+$/.test(collection.slug) || seenCollections.has(collection.slug)) throw new Error(`Slug de colección inválido o duplicado: ${collection.slug}`);
+  seenCollections.add(collection.slug);
+  if (!collection.number || !collection.name || !collection.description) throw new Error(`Datos incompletos en la colección ${collection.slug}`);
+  const hasCourses = Array.isArray(collection.courses) && collection.courses.length > 0;
+  const hasBooks = Array.isArray(collection.books) && collection.books.length > 0;
+  if (hasCourses === hasBooks) throw new Error(`La colección ${collection.name} debe usar cursos o libros, no ambos.`);
+
+  if (hasCourses) {
+    for (const course of collection.courses) {
+      const courseKey = `${collection.slug}/${course.slug}`;
+      if (!/^[a-z0-9-]+$/.test(course.slug) || seenCourseKeys.has(courseKey)) throw new Error(`Slug de curso inválido o duplicado: ${courseKey}`);
+      seenCourseKeys.add(courseKey);
+      subjects.add(course.name);
+      if (!icons[course.icon]) throw new Error(`Icono no soportado: ${course.icon}`);
+      if (!Array.isArray(course.colors) || course.colors.length !== 3) throw new Error(`Colores incompletos en ${course.name}`);
+      if (!course.colors.slice(0, 2).every((color) => /^#[0-9a-f]{6}$/i.test(color)) || !/^rgba\([\d., ]+\)$/.test(course.colors[2])) throw new Error(`Formato de color inválido en ${course.name}`);
+      if (!Array.isArray(course.books) || course.books.length === 0) throw new Error(`No hay libros en ${course.name}`);
+      course.books.forEach((book) => validateBook(book, `${collection.name} / ${course.name}`));
+    }
+  } else {
+    collection.books.forEach((book) => validateBook(book, collection.name));
   }
 }
 
@@ -64,22 +86,45 @@ ${course.books.map(renderBook).join('\n\n')}
     </div>`;
 };
 
-const totalBooks = catalog.courses.reduce((sum, course) => sum + course.books.length, 0);
-const courseCount = catalog.courses.length;
-const courseNames = catalog.courses.map((course) => course.name);
-const descriptionNames = courseNames.length > 1
-  ? `${courseNames.slice(0, -1).join(', ')} y ${courseNames.at(-1)}`
-  : courseNames[0];
+const collectionBooks = (collection) => Array.isArray(collection.courses)
+  ? collection.courses.flatMap((course) => course.books)
+  : collection.books;
+
+const renderCollection = (collection) => {
+  const books = collectionBooks(collection);
+  const content = Array.isArray(collection.courses)
+    ? collection.courses.map(renderCourse).join('\n\n')
+    : `    <div class="book-grid collection-book-grid" aria-label="Libros de la colección ${escapeHtml(collection.name)} de Lumbreras">
+${collection.books.map(renderBook).join('\n\n')}
+    </div>`;
+  return `  <section class="catalog-collection catalog-collection-${escapeHtml(collection.slug)}" aria-labelledby="${escapeHtml(collection.slug)}-title">
+    <header class="collection-heading">
+      <div>
+        <span class="collection-number">Colección ${escapeHtml(collection.number)}</span>
+        <h2 id="${escapeHtml(collection.slug)}-title">${escapeHtml(collection.name)}</h2>
+        <p>${escapeHtml(collection.description)}</p>
+      </div>
+      <span class="collection-count">${books.length} libros disponibles</span>
+    </header>
+
+${content}
+  </section>`;
+};
+
+const allBooks = catalog.collections.flatMap(collectionBooks);
+const totalBooks = allBooks.length;
+const collectionCount = catalog.collections.length;
+const courseCount = subjects.size;
 
 let html = fs.readFileSync(pagePath, 'utf8');
 const markerPattern = new RegExp(`${startMarker}[\\s\\S]*?${endMarker}`);
-if (!markerPattern.test(html)) throw new Error('No se encontraron los marcadores del catálogo en index.html.');
+if (!markerPattern.test(html)) throw new Error('No se encontraron los marcadores de colecciones en index.html.');
 
-html = html.replace(markerPattern, `${startMarker}\n${catalog.courses.map(renderCourse).join('\n\n')}\n    ${endMarker}`);
+html = html.replace(markerPattern, `${startMarker}\n${catalog.collections.map(renderCollection).join('\n\n')}\n  ${endMarker}`);
+html = html.replace(/<span><b>\d+<\/b> colecci(?:ón|ones)<\/span>/, `<span><b>${String(collectionCount).padStart(2, '0')}</b> ${collectionCount === 1 ? 'colección' : 'colecciones'}</span>`);
 html = html.replace(/<span><b>\d+<\/b> cursos?<\/span>/, `<span><b>${String(courseCount).padStart(2, '0')}</b> ${courseCount === 1 ? 'curso' : 'cursos'}</span>`);
 html = html.replace(/<span><b>\d+<\/b> libros<\/span>/, `<span><b>${String(totalBooks).padStart(2, '0')}</b> libros</span>`);
-html = html.replace(/<span class="collection-count">\d+ libros disponibles<\/span>/, `<span class="collection-count">${totalBooks} libros disponibles</span>`);
-html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="Catálogo de libros de Editorial Lumbreras organizado por colecciones y cursos. Explora los tomos de ${escapeHtml(descriptionNames)} y abre cada libro en Drive.">`);
+html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="Catálogo de Editorial Lumbreras con ${totalBooks} libros de ${courseCount} cursos en ${collectionCount} colecciones. Abre cada libro directamente en Google Drive.">`);
 
 fs.writeFileSync(pagePath, html, 'utf8');
-console.log(`Catálogo actualizado: ${courseCount} cursos, ${totalBooks} libros.`);
+console.log(`Catálogo actualizado: ${collectionCount} colecciones, ${courseCount} cursos, ${totalBooks} libros.`);

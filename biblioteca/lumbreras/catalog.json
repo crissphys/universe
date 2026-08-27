@@ -1,6 +1,11 @@
 {
-  "collection": "Libros rojos",
-  "courses": [
+  "collections": [
+    {
+      "slug": "libros-rojos",
+      "number": "01",
+      "name": "Libros rojos",
+      "description": "Serie de teoría y problemas resueltos de Editorial Lumbreras.",
+      "courses": [
     {
       "slug": "fisica",
       "name": "Física",
@@ -215,6 +220,106 @@
           "driveUrl": "https://drive.google.com/file/d/1ZSulxwuG8fCvUU88pserCh4OUnzpxa6M/view?usp=drive_link",
           "aria": "Abrir Problemas resueltos de Trigonometría, libro I en Google Drive",
           "alt": "Portada del libro Problemas resueltos de Trigonometría"
+        }
+      ]
+    }
+      ]
+    },
+    {
+      "slug": "esenciales",
+      "number": "02",
+      "name": "Esenciales",
+      "description": "Colección de fundamentos esenciales organizada por curso.",
+      "books": [
+        {
+          "course": "Álgebra",
+          "series": "Colección Esencial",
+          "title": "Álgebra esencial",
+          "image": "/assets/library/lumbreras/esenciales/algebra-esencial.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1EGxRbuT6m2gWSLO8jb0hFJrPXi5nIIxl/view?usp=drive_link",
+          "aria": "Abrir Álgebra esencial en Google Drive",
+          "alt": "Portada del libro Álgebra esencial"
+        },
+        {
+          "course": "Aritmética",
+          "series": "Colección Esencial",
+          "title": "Aritmética esencial",
+          "image": "/assets/library/lumbreras/esenciales/aritmetica-esencial.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1ISrYrJ5YYvuAH5BfWRF5si99Cxrkwgv3/view?usp=drive_link",
+          "aria": "Abrir Aritmética esencial en Google Drive",
+          "alt": "Portada del libro Aritmética esencial"
+        },
+        {
+          "course": "Geometría",
+          "series": "Colección Esencial",
+          "title": "Geometría esencial",
+          "image": "/assets/library/lumbreras/esenciales/geometria-esencial.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1EGAGx2CX3VIq56dc_cN-1PgmhLzqk1xE/view?usp=drive_link",
+          "aria": "Abrir Geometría esencial en Google Drive",
+          "alt": "Portada del libro Geometría esencial"
+        },
+        {
+          "course": "Trigonometría",
+          "series": "Colección Esencial",
+          "title": "Trigonometría esencial",
+          "image": "/assets/library/lumbreras/esenciales/trigonometria-esencial.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1AVc9HjRu8WrJ9VMUpke3KrEi4k9PczCT/view?usp=drive_link",
+          "aria": "Abrir Trigonometría esencial en Google Drive",
+          "alt": "Portada del libro Trigonometría esencial"
+        },
+        {
+          "course": "Física",
+          "series": "Colección Esencial",
+          "title": "Física esencial",
+          "image": "/assets/library/lumbreras/esenciales/fisica-esencial.png",
+          "driveUrl": "https://drive.google.com/file/d/1m0WfbkBwZ0hhdq8UdcJEN0BGvKDG7QdS/view?usp=drive_link",
+          "aria": "Abrir Física esencial en Google Drive",
+          "alt": "Portada del libro Física esencial"
+        },
+        {
+          "course": "Química",
+          "series": "Colección Esencial",
+          "title": "Química esencial",
+          "image": "/assets/library/lumbreras/esenciales/quimica-esencial.png",
+          "driveUrl": "https://drive.google.com/file/d/1UUuSoaJLaAUWzsrpDDJw4O0cBUvH3koE/view?usp=drive_link",
+          "aria": "Abrir Química esencial en Google Drive",
+          "alt": "Portada del libro Química esencial"
+        },
+        {
+          "course": "Razonamiento Matemático",
+          "series": "Colección Esencial",
+          "title": "Razonamiento Matemático esencial",
+          "image": "/assets/library/lumbreras/esenciales/razonamiento-matematico-esencial.png",
+          "driveUrl": "https://drive.google.com/file/d/1aLjca20-dNaBEk3pyns5HjYmwiAWcyPA/view?usp=drive_link",
+          "aria": "Abrir Razonamiento Matemático esencial en Google Drive",
+          "alt": "Portada del libro Razonamiento Matemático esencial"
+        },
+        {
+          "course": "Lenguaje",
+          "series": "Colección Esencial",
+          "title": "Lenguaje esencial",
+          "image": "/assets/library/lumbreras/esenciales/lenguaje-esencial.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1jLjoz3rLVecLPl2PkWgH7rs5TLBaey8j/view?usp=drive_link",
+          "aria": "Abrir Lenguaje esencial en Google Drive",
+          "alt": "Portada del libro Lenguaje esencial"
+        },
+        {
+          "course": "Estadística",
+          "series": "Colección Esencial",
+          "title": "Estadística esencial",
+          "image": "/assets/library/lumbreras/esenciales/estadistica-esencial.png",
+          "driveUrl": "https://drive.google.com/file/d/1eaMvs8841QZ0lsV7P0JfMddZ1lOlWMzk/view?usp=drive_link",
+          "aria": "Abrir Estadística esencial en Google Drive",
+          "alt": "Portada del libro Estadística esencial"
+        },
+        {
+          "course": "Biología",
+          "series": "Colección Esencial",
+          "title": "Biología esencial",
+          "image": "/assets/library/lumbreras/esenciales/biologia-esencial.png",
+          "driveUrl": "https://drive.google.com/file/d/1EPXAmxU6YF25Ubpniz6_S5o_33-pbQgn/view?usp=drive_link",
+          "aria": "Abrir Biología esencial en Google Drive",
+          "alt": "Portada del libro Biología esencial"
         }
       ]
     }
