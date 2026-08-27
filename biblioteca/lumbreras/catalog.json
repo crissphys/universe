@@ -1,0 +1,134 @@
+{
+  "collection": "Libros rojos",
+  "courses": [
+    {
+      "slug": "fisica",
+      "name": "Física",
+      "icon": "flask",
+      "colors": ["#d70b25", "#f04457", "rgba(215,11,37,.22)"],
+      "books": [
+        {
+          "series": "Física · Tomo I",
+          "title": "Una visión analítica del movimiento",
+          "image": "/assets/library/lumbreras/fisica/fisica-tomo-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1pt3JUbUv4vRgnud-j5SdXgX3PPPBUomw/view?usp=drive_link",
+          "aria": "Abrir Física, una visión analítica del movimiento, tomo I en Google Drive",
+          "alt": "Portada del libro Física, una visión analítica del movimiento, volumen I",
+          "eager": true
+        },
+        {
+          "series": "Física · Tomo II",
+          "title": "Una visión analítica del movimiento",
+          "image": "/assets/library/lumbreras/fisica/fisica-tomo-2.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1MzahaZRuJ9vmc9zo-6jTSDi1W2iCLGDk/view?usp=drive_link",
+          "aria": "Abrir Física, una visión analítica del movimiento, tomo II en Google Drive",
+          "alt": "Portada del libro Física, una visión analítica del movimiento, volumen II"
+        },
+        {
+          "series": "Física · Tomo III",
+          "title": "Una visión analítica del movimiento",
+          "image": "/assets/library/lumbreras/fisica/fisica-tomo-3.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1dp2LplivzZBIWPsXE0RHnSAexQ1Gu9cj/view?usp=drive_link",
+          "aria": "Abrir Física, una visión analítica del movimiento, tomo III en Google Drive",
+          "alt": "Portada del libro Física, una visión analítica del movimiento, volumen III"
+        },
+        {
+          "series": "Problemas resueltos · Vol. I",
+          "title": "Problemas resueltos de Física",
+          "image": "/assets/library/lumbreras/fisica/fisica-problemas-resueltos-vol-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/13bkpm8Nc4igXHFV3LRX-59IZQspym84l/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Física, volumen I en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Física, volumen I"
+        },
+        {
+          "series": "Problemas resueltos · Vol. II",
+          "title": "Problemas resueltos de Física",
+          "image": "/assets/library/lumbreras/fisica/fisica-problemas-resueltos-vol-2.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1gZvyVM9_cKk-jn6-IVNmJRgmgfjPrW_c/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Física, volumen II en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Física, volumen II"
+        }
+      ]
+    },
+    {
+      "slug": "quimica",
+      "name": "Química",
+      "icon": "atom",
+      "colors": ["#d97706", "#f5ad28", "rgba(217,119,6,.22)"],
+      "books": [
+        {
+          "series": "Química · Tomo I",
+          "title": "Análisis de principios y aplicaciones",
+          "image": "/assets/library/lumbreras/quimica/quimica-tomo-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1UGADzE6sB44BSx0uiSB9pFMi1uVzyPf5/view?usp=drive_link",
+          "aria": "Abrir Química, análisis de principios y aplicaciones, tomo I en Google Drive",
+          "alt": "Portada del libro Química, análisis de principios y aplicaciones, tomo I"
+        },
+        {
+          "series": "Química · Tomo II",
+          "title": "Análisis de principios y aplicaciones",
+          "image": "/assets/library/lumbreras/quimica/quimica-tomo-2.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1_H8HNgC2pbhcuWEBgQon6lYkZ3yo2row/view?usp=drive_link",
+          "aria": "Abrir Química, análisis de principios y aplicaciones, tomo II en Google Drive",
+          "alt": "Portada del libro Química, análisis de principios y aplicaciones, tomo II"
+        },
+        {
+          "series": "Problemas resueltos · Vol. I",
+          "title": "Problemas resueltos de Química",
+          "image": "/assets/library/lumbreras/quimica/quimica-problemas-resueltos-vol-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1RY9fbl_4LQYEvtikgZR4TnZZcwj0-egn/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Química, volumen I en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Química, volumen I"
+        },
+        {
+          "series": "Problemas resueltos · Vol. II",
+          "title": "Problemas resueltos de Química",
+          "image": "/assets/library/lumbreras/quimica/quimica-problemas-resueltos-vol-2.jpg",
+          "driveUrl": "https://drive.google.com/file/d/10ibmcj3I8BYVIq-O17bj189Ajzt0T_r-/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Química, volumen II en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Química, volumen II"
+        }
+      ]
+    },
+    {
+      "slug": "algebra",
+      "name": "Álgebra",
+      "icon": "function",
+      "colors": ["#2563eb", "#5693f5", "rgba(37,99,235,.22)"],
+      "books": [
+        {
+          "series": "Álgebra · Tomo I",
+          "title": "Álgebra y principios del análisis",
+          "image": "/assets/library/lumbreras/algebra/algebra-tomo-1.png",
+          "driveUrl": "https://drive.google.com/file/d/1P1p-PDX8H7_OQbr38z4T25zhd6gLFQXZ/view?usp=drive_link",
+          "aria": "Abrir Álgebra y principios del análisis, tomo I en Google Drive",
+          "alt": "Portada del libro Álgebra y principios del análisis, tomo I"
+        },
+        {
+          "series": "Álgebra · Tomo II",
+          "title": "Álgebra y principios del análisis",
+          "image": "/assets/library/lumbreras/algebra/algebra-tomo-2.png",
+          "driveUrl": "https://drive.google.com/file/d/1-KKGbPg1Xm6FmUEyZF9z025YaF2P8ZhN/view?usp=drive_link",
+          "aria": "Abrir Álgebra y principios del análisis, tomo II en Google Drive",
+          "alt": "Portada del libro Álgebra y principios del análisis, tomo II"
+        },
+        {
+          "series": "Problemas resueltos · Tomo I",
+          "title": "Problemas resueltos de Álgebra",
+          "image": "/assets/library/lumbreras/algebra/algebra-problemas-resueltos-tomo-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1ORMLQArjDJDfAxlX1qfDphAQGmwwOdmA/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Álgebra, tomo I en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Álgebra, tomo I"
+        },
+        {
+          "series": "Problemas resueltos · Tomo II",
+          "title": "Problemas resueltos de Álgebra",
+          "image": "/assets/library/lumbreras/algebra/algebra-problemas-resueltos-tomo-2.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1te3-QGGFEj4Z3dWH4VtEAUz0xFuu4CUg/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Álgebra, tomo II en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Álgebra, tomo II"
+        }
+      ]
+    }
+  ]
+}
