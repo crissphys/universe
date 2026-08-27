@@ -127,6 +127,7 @@ body { overflow-x:clip; }
 .course-rule { height:1px;flex:1;background:linear-gradient(90deg,var(--catalog-line),transparent); }
 .course-heading-secondary { margin-top:3rem;padding-top:2rem;border-top:1px solid var(--catalog-line); }
 .book-grid { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(.8rem,1.6vw,1.25rem); }
+.book-grid-2 { grid-template-columns:repeat(2,minmax(0,278.5px)); }
 .book-grid-four { grid-template-columns:repeat(4,minmax(0,1fr)); }
 .book-card {
   position:relative;
@@ -191,7 +192,7 @@ html[data-universe-theme="dark"] .lumbreras-brand-card img { filter:brightness(1
   .lumbreras-brand-card img { height:90px; }
   .catalog-collection { border-radius:25px;padding:1rem; }
   .collection-heading { align-items:flex-start;flex-direction:column;gap:1rem;padding:1rem .2rem 1.5rem; }
-  .book-grid,.book-grid-four { grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem; }
+  .book-grid,.book-grid-2,.book-grid-four { grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem; }
   .book-card { border-radius:17px; }
   .book-info { padding:.85rem; }
   .book-info h4 { font-size:.86rem; }
@@ -202,7 +203,7 @@ html[data-universe-theme="dark"] .lumbreras-brand-card img { filter:brightness(1
 @media (max-width:410px) {
   .catalog-metrics { display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem; }
   .catalog-metrics span { justify-content:center;flex-direction:column;align-items:center;gap:.25rem;text-align:center;padding:.55rem .3rem;font-size:.58rem; }
-  .book-grid,.book-grid-four { grid-template-columns:1fr; }
+  .book-grid,.book-grid-2,.book-grid-four { grid-template-columns:1fr; }
   .book-cover { aspect-ratio:400/520; }
   .book-info h4 { font-size:.96rem; }
 }
