@@ -129,6 +129,30 @@
           "alt": "Portada del libro Problemas resueltos de Álgebra, tomo II"
         }
       ]
+    },
+    {
+      "slug": "aritmetica",
+      "name": "Aritmética",
+      "icon": "calculator",
+      "colors": ["#0f766e", "#2bb5a8", "rgba(15,118,110,.22)"],
+      "books": [
+        {
+          "series": "Aritmética · Libro I",
+          "title": "Análisis del número y sus aplicaciones",
+          "image": "/assets/library/lumbreras/aritmetica/aritmetica-libro-1.webp",
+          "driveUrl": "https://drive.google.com/file/d/1zCV5deUq6zns3lwXGXSQkPY4ihBIeXZz/view?usp=drive_link",
+          "aria": "Abrir Aritmética, análisis del número y sus aplicaciones, libro I en Google Drive",
+          "alt": "Portada del libro Aritmética, análisis del número y sus aplicaciones"
+        },
+        {
+          "series": "Solucionario · Libro I",
+          "title": "Problemas resueltos de Aritmética",
+          "image": "/assets/library/lumbreras/aritmetica/aritmetica-problemas-resueltos.webp",
+          "driveUrl": "https://drive.google.com/file/d/1-cILI148SfVcRL5CBGwoAADBVUHs5G9y/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Aritmética en Google Drive",
+          "alt": "Portada del solucionario Problemas resueltos de Aritmética"
+        }
+      ]
     }
   ]
 }
