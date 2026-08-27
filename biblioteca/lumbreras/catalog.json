@@ -193,6 +193,30 @@
           "alt": "Portada del libro Problemas resueltos de Geometría, tomo II"
         }
       ]
+    },
+    {
+      "slug": "trigonometria",
+      "name": "Trigonometría",
+      "icon": "trigonometry",
+      "colors": ["#ea580c", "#f59e0b", "rgba(234,88,12,.22)"],
+      "books": [
+        {
+          "series": "Trigonometría · Libro I",
+          "title": "Plana y esférica e introducción al cálculo",
+          "image": "/assets/library/lumbreras/trigonometria/trigonometria-libro-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1QQuCJ25Mcd6TVTyIzSQjg0EbiKcNoWoo/view?usp=drive_link",
+          "aria": "Abrir Trigonometría plana y esférica e introducción al cálculo, libro I en Google Drive",
+          "alt": "Portada del libro Trigonometría plana y esférica e introducción al cálculo"
+        },
+        {
+          "series": "Problemas resueltos · Libro I",
+          "title": "Problemas resueltos de Trigonometría",
+          "image": "/assets/library/lumbreras/trigonometria/trigonometria-problemas-resueltos-libro-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1ZSulxwuG8fCvUU88pserCh4OUnzpxa6M/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Trigonometría, libro I en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Trigonometría"
+        }
+      ]
     }
   ]
 }
