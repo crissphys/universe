@@ -153,6 +153,46 @@
           "alt": "Portada del solucionario Problemas resueltos de Aritmética"
         }
       ]
+    },
+    {
+      "slug": "geometria",
+      "name": "Geometría",
+      "icon": "geometry",
+      "colors": ["#7c3aed", "#a368f5", "rgba(124,58,237,.22)"],
+      "books": [
+        {
+          "series": "Geometría · Tomo I",
+          "title": "Una visión de la planimetría",
+          "image": "/assets/library/lumbreras/geometria/geometria-tomo-1.jpg",
+          "driveUrl": "https://drive.google.com/file/d/18UrFzpVrYMzZ0qTOSQnl-RYPXqlsVwzE/view?usp=drive_link",
+          "aria": "Abrir Geometría, una visión de la planimetría, tomo I en Google Drive",
+          "alt": "Portada del libro Geometría, una visión de la planimetría, tomo I"
+        },
+        {
+          "series": "Geometría · Tomo II",
+          "title": "Una visión de la estereometría",
+          "image": "/assets/library/lumbreras/geometria/geometria-tomo-2.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1ms1xRWYS_yOW23v0TI166-gb-wfTnZdV/view?usp=drive_link",
+          "aria": "Abrir Geometría, una visión de la estereometría, tomo II en Google Drive",
+          "alt": "Portada del libro Geometría, una visión de la estereometría, tomo II"
+        },
+        {
+          "series": "Problemas resueltos · Tomo I",
+          "title": "Problemas resueltos de Geometría",
+          "image": "/assets/library/lumbreras/geometria/geometria-problemas-resueltos-tomo-1.png",
+          "driveUrl": "https://drive.google.com/file/d/18zXI-AknXnYnF_PMOUQt5k7ntwNTHroi/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Geometría, tomo I en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Geometría, tomo I"
+        },
+        {
+          "series": "Problemas resueltos · Tomo II",
+          "title": "Problemas resueltos de Geometría",
+          "image": "/assets/library/lumbreras/geometria/geometria-problemas-resueltos-tomo-2.jpg",
+          "driveUrl": "https://drive.google.com/file/d/1X7eHaQdA6i-umOpEAl2KdEzRYIqHAwPh/view?usp=drive_link",
+          "aria": "Abrir Problemas resueltos de Geometría, tomo II en Google Drive",
+          "alt": "Portada del libro Problemas resueltos de Geometría, tomo II"
+        }
+      ]
     }
   ]
 }

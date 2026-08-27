@@ -13,7 +13,8 @@ const icons = {
   flask: '<svg viewBox="0 0 24 24"><path d="M9 3h6m-4 0v5l-5.5 9.2A2.5 2.5 0 0 0 7.7 21h8.6a2.5 2.5 0 0 0 2.2-3.8L13 8V3"></path><path d="M8.2 15h7.6"></path></svg>',
   atom: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M4.9 7.5c2.1-3.5 6.8-3.8 10.7-.7s5.4 8.1 3.3 10.8-6.8 1.9-10.7-1.2S2.8 10.2 4.9 7.5Z"></path><path d="M19.1 7.5c-2.1-3.5-6.8-3.8-10.7-.7S3 14.9 5.1 17.6s6.8 1.9 10.7-1.2 5.4-6.2 3.3-8.9Z"></path></svg>',
   function: '<svg viewBox="0 0 24 24"><path d="M4 19h16M5 4v16"></path><path d="M7 16c2-1 2.5-4 4-6s3-3 6-4"></path><circle cx="11" cy="10" r="1"></circle><circle cx="17" cy="6" r="1"></circle></svg>',
-  calculator: '<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8v3H8zM8 14h2m4 0h2m-8 3h2m4 0h2"></path></svg>'
+  calculator: '<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8v3H8zM8 14h2m4 0h2m-8 3h2m4 0h2"></path></svg>',
+  geometry: '<svg viewBox="0 0 24 24"><path d="M4 19 12 4l8 15H4Z"></path><circle cx="12" cy="13" r="2"></circle><path d="M8 19l4-6 4 6"></path></svg>'
 };
 
 const escapeHtml = (value) => String(value)
