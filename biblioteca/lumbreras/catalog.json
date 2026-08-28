@@ -565,6 +565,54 @@
               "alt": "Portada del libro Teoría de la divisibilidad de Aritmética"
             }
           ]
+        },
+        {
+          "slug": "biologia",
+          "name": "Biología",
+          "icon": "atom",
+          "colors": ["#ef6c00", "#1769aa", "rgba(239,108,0,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Biología",
+              "title": "Célula eucariota: estructura y función",
+              "image": "/assets/library/lumbreras/temas-selectos/biologia/celula-eucariota.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1KLFJspXaiBO7dhmSS3i0jOx1qqAILrMe/view?usp=drive_link",
+              "aria": "Abrir Célula eucariota: estructura y función de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Célula eucariota: estructura y función de Biología"
+            },
+            {
+              "series": "Temas Selectos · Biología",
+              "title": "Ecología general y del Perú",
+              "image": "/assets/library/lumbreras/temas-selectos/biologia/ecologia-general-y-del-peru.jpg",
+              "driveUrl": "https://drive.google.com/file/d/181PNAzfh0mLCCYb_cysWxyHFJwy7qiAY/view?usp=drive_link",
+              "aria": "Abrir Ecología general y del Perú de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Ecología general y del Perú de Biología"
+            },
+            {
+              "series": "Temas Selectos · Biología",
+              "title": "Genética, citogenética y biotecnología",
+              "image": "/assets/library/lumbreras/temas-selectos/biologia/genetica-citogenetica-y-biotecnologia.jpg",
+              "driveUrl": "https://drive.google.com/file/d/18B-5PggtU-AyGIufn-PPLUISG6mrvqPn/view?usp=drive_link",
+              "aria": "Abrir Genética, citogenética y biotecnología de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Genética, citogenética y biotecnología de Biología"
+            },
+            {
+              "series": "Temas Selectos · Biología",
+              "title": "Microbiología y enfermedades infecciosas",
+              "image": "/assets/library/lumbreras/temas-selectos/biologia/microbiologia-y-enfermedades-infecciosas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1Gy1-1Jzo3JRZrjN0HTHoetQLV79Co5TA/view?usp=drive_link",
+              "aria": "Abrir Microbiología y enfermedades infecciosas de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Microbiología y enfermedades infecciosas de Biología"
+            },
+            {
+              "series": "Temas Selectos · Biología",
+              "title": "Seres vivos: origen, evolución y clasificación",
+              "image": "/assets/library/lumbreras/temas-selectos/biologia/seres-vivos-origen-evolucion-y-clasificacion.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1k-bq1-7MzprT_Q4C7cSMTr5hkinWxJlW/view?usp=drive_link",
+              "aria": "Abrir Seres vivos: origen, evolución y clasificación de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Seres vivos: origen, evolución y clasificación de Biología"
+            }
+          ]
         }
       ]
     }
