@@ -869,6 +869,30 @@
               "alt": "Portada del libro Manual actualizado de ortografía de Lenguaje"
             }
           ]
+        },
+        {
+          "slug": "logica",
+          "name": "Lógica",
+          "icon": "function",
+          "colors": ["#7eb9e5", "#e60000", "rgba(126,185,229,.24)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Lógica",
+              "title": "Lógica predicativa",
+              "image": "/assets/library/lumbreras/temas-selectos/logica/logica-predicativa.png",
+              "driveUrl": "https://drive.google.com/file/d/1ul8u-Q7-_lxGqxhz6RPfCA2_-oJKJfIu/view?usp=drive_link",
+              "aria": "Abrir Lógica predicativa de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Lógica predicativa"
+            },
+            {
+              "series": "Temas Selectos · Lógica",
+              "title": "Lógica proposicional",
+              "image": "/assets/library/lumbreras/temas-selectos/logica/logica-proposicional.png",
+              "driveUrl": "https://drive.google.com/file/d/1tG2k7GlEf8FoCGc1iXThpu2edFXnqaK-/view?usp=drive_link",
+              "aria": "Abrir Lógica proposicional de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Lógica proposicional"
+            }
+          ]
         }
       ]
     }
