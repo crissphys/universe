@@ -989,6 +989,94 @@
               "alt": "Portada del libro Sistemas dispersos"
             }
           ]
+        },
+        {
+          "slug": "razonamiento-matematico",
+          "name": "Razonamiento Matemático",
+          "icon": "calculator",
+          "colors": ["#079ed3", "#ffd45a", "rgba(7,158,211,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Conteo de figuras",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/conteo-de-figuras.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1yYANSJG4zc3D8LMBnyHN3qQQBop34ZQZ/view?usp=drive_link",
+              "aria": "Abrir Conteo de figuras en Google Drive",
+              "alt": "Portada de Conteo de figuras"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Ecuaciones diofánticas",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/ecuaciones-diofanticas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1sSRwiE2RdAV7QyqZ3fRv1y1Vd8Dr2mrF/view?usp=drive_link",
+              "aria": "Abrir Ecuaciones diofánticas en Google Drive",
+              "alt": "Portada de Ecuaciones diofánticas"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Máximos y mínimos",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/maximos-y-minimos.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1XAr0d9Xe_4sJn1eyHL1A85Myn9AlR4U_/view?usp=drive_link",
+              "aria": "Abrir Máximos y mínimos en Google Drive",
+              "alt": "Portada de Máximos y mínimos"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Operaciones matemáticas",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/operaciones-matematicas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1-UWnJo3x7QR6RcZ5dJilPWwJQJC0RA0G/view?usp=drive_link",
+              "aria": "Abrir Operaciones matemáticas en Google Drive",
+              "alt": "Portada de Operaciones matemáticas"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Planteo de ecuaciones",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/planteo-de-ecuaciones.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1Nw0OyvQWW76hT6Kw2Cd8ZGn-M6JOspnW/view?usp=drive_link",
+              "aria": "Abrir Planteo de ecuaciones en Google Drive",
+              "alt": "Portada de Planteo de ecuaciones"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Psicotécnico",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/psicotecnico.jpg",
+              "driveUrl": "https://drive.google.com/file/d/12LFBE3jQYxVcJV82Hy_3oScX9J6lj_Nq/view?usp=drive_link",
+              "aria": "Abrir Psicotécnico en Google Drive",
+              "alt": "Portada de Psicotécnico"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Razonamiento geométrico",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/razonamiento-geometrico.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1tBBJz4OhfDJelpf7X4RxHpnDW17tcQGU/view?usp=drive_link",
+              "aria": "Abrir Razonamiento geométrico en Google Drive",
+              "alt": "Portada de Razonamiento geométrico"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Razonamiento inductivo-deductivo",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/razonamiento-inductivo-deductivo.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1mfS2VQ3gXdCGuZsHzOBfl66uX4iZCYy_/view?usp=drive_link",
+              "aria": "Abrir Razonamiento inductivo-deductivo en Google Drive",
+              "alt": "Portada de Razonamiento inductivo-deductivo"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Razonamiento lógico",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/razonamiento-logico.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1aRH1gc8GTQsELjHossHm87pYgc4jKaZR/view?usp=drive_link",
+              "aria": "Abrir Razonamiento lógico en Google Drive",
+              "alt": "Portada de Razonamiento lógico"
+            },
+            {
+              "series": "Temas Selectos · Razonamiento Matemático",
+              "title": "Verdades y mentiras",
+              "image": "/assets/library/lumbreras/temas-selectos/razonamiento-matematico/verdades-y-mentiras.jpg",
+              "driveUrl": "https://drive.google.com/file/d/10gUPngb1YkuoesFjkiPk9IVfUQM-mU49/view?usp=drive_link",
+              "aria": "Abrir Verdades y mentiras en Google Drive",
+              "alt": "Portada de Verdades y mentiras"
+            }
+          ]
         }
       ]
     }
