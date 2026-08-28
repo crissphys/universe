@@ -613,6 +613,30 @@
               "alt": "Portada del libro Seres vivos: origen, evolución y clasificación de Biología"
             }
           ]
+        },
+        {
+          "slug": "filosofia",
+          "name": "Filosofía",
+          "icon": "book",
+          "colors": ["#7f8c8d", "#0879c9", "rgba(8,121,201,.20)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Filosofía",
+              "title": "Disciplinas filosóficas",
+              "image": "/assets/library/lumbreras/temas-selectos/filosofia/disciplinas-filosoficas.png",
+              "driveUrl": "https://drive.google.com/file/d/1xxjmwXBB97BO5BXO3HhXy8xlQiqGz-Wj/view?usp=drive_link",
+              "aria": "Abrir Disciplinas filosóficas de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Disciplinas filosóficas"
+            },
+            {
+              "series": "Temas Selectos · Filosofía",
+              "title": "Historia de la filosofía",
+              "image": "/assets/library/lumbreras/temas-selectos/filosofia/historia-de-la-filosofia.png",
+              "driveUrl": "https://drive.google.com/file/d/1l0ClaK1GBryflF5PvFIsuKdlrhuQdY-u/view?usp=drive_link",
+              "aria": "Abrir Historia de la filosofía de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Historia de la filosofía"
+            }
+          ]
         }
       ]
     }
