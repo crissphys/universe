@@ -1157,6 +1157,22 @@
               "alt": "Portada de Resolución de triángulos oblicuángulos"
             }
           ]
+        },
+        {
+          "slug": "compendio-cesar-vallejo",
+          "name": "Compendio César Vallejo",
+          "icon": "book",
+          "colors": ["#d60000", "#111111", "rgba(214,0,0,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · César Vallejo × Lumbreras",
+              "title": "Problemas selectos",
+              "image": "/assets/library/lumbreras/temas-selectos/compendio-cesar-vallejo/problemas-selectos.png",
+              "driveUrl": "https://drive.google.com/file/d/1Z5Urn8W_b6wTRhrfhR0YDwcy7JFB2FZV/view?usp=drive_link",
+              "aria": "Abrir Problemas selectos de César Vallejo y Lumbreras en Google Drive",
+              "alt": "Portada del compendio Problemas selectos de César Vallejo y Lumbreras"
+            }
+          ]
         }
       ]
     }
