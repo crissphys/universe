@@ -485,6 +485,86 @@
               "alt": "Portada del libro Sucesiones y series de Álgebra"
             }
           ]
+        },
+        {
+          "slug": "aritmetica",
+          "name": "Aritmética",
+          "icon": "calculator",
+          "colors": ["#f2a900", "#ef2222", "rgba(242,169,0,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Análisis combinatorio",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/analisis-combinatorio.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1ll1NWcXMeBsSEai-C4tVpchNRTjK8f5O/view?usp=drive_link",
+              "aria": "Abrir Análisis combinatorio de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Análisis combinatorio de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Magnitudes proporcionales",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/magnitudes-proporcionales.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1Qxnqf9pGeIz3lbfILVOt8JAdJc98M8su/view?usp=drive_link",
+              "aria": "Abrir Magnitudes proporcionales de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Magnitudes proporcionales de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Máximo común divisor y mínimo común múltiplo",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/maximo-comun-divisor-y-minimo-comun-multiplo.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1gv4bXpOHUMs2clfMNOlwoqEonfaug7t-/view?usp=drive_link",
+              "aria": "Abrir Máximo común divisor y mínimo común múltiplo de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Máximo común divisor y mínimo común múltiplo de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Numeración",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/numeracion.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1E_W5eT97GswgRSTSjvdJoNM7kgp3on2W/view?usp=drive_link",
+              "aria": "Abrir Numeración de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Numeración de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Números racionales",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/numeros-racionales.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1xXsncoHGoej-P6SOrgcmTcxi4bsD7Nn3/view?usp=drive_link",
+              "aria": "Abrir Números racionales de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Números racionales de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Operaciones fundamentales en Z+",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/operaciones-fundamentales.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1CGpxCQu5h2mcgloWfvjFBepRpmq-vp5h/view?usp=drive_link",
+              "aria": "Abrir Operaciones fundamentales en Z positivo de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Operaciones fundamentales en Z positivo de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Razones y proporciones",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/razones-y-proporciones.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1eoYRjsNFfnXesvjeVfVioFzJllgvQvVs/view?usp=drive_link",
+              "aria": "Abrir Razones y proporciones de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Razones y proporciones de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Sucesiones aritméticas y series",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/sucesiones-aritmeticas-y-series.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1KsNWUPQXIeoSy4ZlkifenJnRgM9-jJLs/view?usp=drive_link",
+              "aria": "Abrir Sucesiones aritméticas y series de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Sucesiones aritméticas y series de Aritmética"
+            },
+            {
+              "series": "Temas Selectos · Aritmética",
+              "title": "Teoría de la divisibilidad",
+              "image": "/assets/library/lumbreras/temas-selectos/aritmetica/teoria-de-la-divisibilidad.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1HTnV8HLTS8mj-rg52XEmcPf2uO_kn5Wy/view?usp=drive_link",
+              "aria": "Abrir Teoría de la divisibilidad de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Teoría de la divisibilidad de Aritmética"
+            }
+          ]
         }
       ]
     }
