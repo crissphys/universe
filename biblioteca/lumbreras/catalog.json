@@ -1077,6 +1077,86 @@
               "alt": "Portada de Verdades y mentiras"
             }
           ]
+        },
+        {
+          "slug": "trigonometria",
+          "name": "Trigonometría",
+          "icon": "trigonometry",
+          "colors": ["#e90012", "#86bd22", "rgba(233,0,18,.20)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Circunferencia trigonométrica",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/circunferencia-trigonometrica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1DXddIIW8-0HJik6MHlt1w8kp3qRd3JpH/view?usp=drive_link",
+              "aria": "Abrir Circunferencia trigonométrica en Google Drive",
+              "alt": "Portada de Circunferencia trigonométrica"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Ecuaciones trigonométricas",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/ecuaciones-trigonometricas.png",
+              "driveUrl": "https://drive.google.com/file/d/1PpY47ojYWSgozVYVSYjnMkM2KxENmQMp/view?usp=drive_link",
+              "aria": "Abrir Ecuaciones trigonométricas en Google Drive",
+              "alt": "Portada de Ecuaciones trigonométricas"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Funciones trigonométricas directas",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/funciones-trigonometricas-directas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1-VKegS1ie7oe5GJnSrvEk54N7pOZPLcJ/view?usp=drive_link",
+              "aria": "Abrir Funciones trigonométricas directas en Google Drive",
+              "alt": "Portada de Funciones trigonométricas directas"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Funciones trigonométricas inversas",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/funciones-trigonometricas-inversas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1cNMb-tjo3YnxgiZkmBwngIXiDrjs8gXO/view?usp=drive_link",
+              "aria": "Abrir Funciones trigonométricas inversas en Google Drive",
+              "alt": "Portada de Funciones trigonométricas inversas"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Identidades trigonométricas",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/identidades-trigonometricas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1FMp-JlniJ34_9hsgMb6eockKu4JQ1aDP/view?usp=drive_link",
+              "aria": "Abrir Identidades trigonométricas en Google Drive",
+              "alt": "Portada de Identidades trigonométricas"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Números complejos aplicados a la trigonometría",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/numeros-complejos-aplicados-a-la-trigonometria.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1y4eupXEPN3gJ22Mw_cYVoCatq82NBZmA/view?usp=drive_link",
+              "aria": "Abrir Números complejos aplicados a la trigonometría en Google Drive",
+              "alt": "Portada de Números complejos aplicados a la trigonometría"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Razones trigonométricas de un ángulo agudo",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/razones-trigonometricas-de-un-angulo-agudo.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1WcDcZb56Lwbvygz2j2HNwhl62WYWM9HV/view?usp=drive_link",
+              "aria": "Abrir Razones trigonométricas de un ángulo agudo en Google Drive",
+              "alt": "Portada de Razones trigonométricas de un ángulo agudo"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Razones trigonométricas de un ángulo en posición normal",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/razones-trigonometricas-de-un-angulo-en-posicion-normal.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1TioddQ3RVxjiRPgCpyYdjNltM_JReG0u/view?usp=drive_link",
+              "aria": "Abrir Razones trigonométricas de un ángulo en posición normal en Google Drive",
+              "alt": "Portada de Razones trigonométricas de un ángulo en posición normal"
+            },
+            {
+              "series": "Temas Selectos · Trigonometría",
+              "title": "Resolución de triángulos oblicuángulos",
+              "image": "/assets/library/lumbreras/temas-selectos/trigonometria/resolucion-de-triangulos-oblicuangulos.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1E0LSU3nLPDo3fwY3UQc4kSXlp62Nzklx/view?usp=drive_link",
+              "aria": "Abrir Resolución de triángulos oblicuángulos en Google Drive",
+              "alt": "Portada de Resolución de triángulos oblicuángulos"
+            }
+          ]
         }
       ]
     }
