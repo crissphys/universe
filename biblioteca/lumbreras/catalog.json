@@ -717,6 +717,30 @@
               "alt": "Portada del libro Trabajo y energía mecánica de Física"
             }
           ]
+        },
+        {
+          "slug": "geografia",
+          "name": "Geografía",
+          "icon": "geometry",
+          "colors": ["#315e70", "#b7d719", "rgba(49,94,112,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Geografía",
+              "title": "La atmósfera y el clima",
+              "image": "/assets/library/lumbreras/temas-selectos/geografia/la-atmosfera-y-el-clima.png",
+              "driveUrl": "https://drive.google.com/file/d/1m9e-JZTrbobAOu70FNOCUefuFZeRkXXO/view?usp=drive_link",
+              "aria": "Abrir La atmósfera y el clima de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro La atmósfera y el clima de Geografía"
+            },
+            {
+              "series": "Temas Selectos · Geografía",
+              "title": "La Tierra y su representación cartográfica",
+              "image": "/assets/library/lumbreras/temas-selectos/geografia/la-tierra-y-su-representacion-cartografica.png",
+              "driveUrl": "https://drive.google.com/file/d/1aO6IrWyKvKQ1zxX1MOsbfzAYmv_qqKHc/view?usp=drive_link",
+              "aria": "Abrir La Tierra y su representación cartográfica de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro La Tierra y su representación cartográfica de Geografía"
+            }
+          ]
         }
       ]
     }
