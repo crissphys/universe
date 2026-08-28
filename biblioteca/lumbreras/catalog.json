@@ -741,6 +741,86 @@
               "alt": "Portada del libro La Tierra y su representación cartográfica de Geografía"
             }
           ]
+        },
+        {
+          "slug": "geometria",
+          "name": "Geometría",
+          "icon": "geometry",
+          "colors": ["#079f98", "#fff137", "rgba(7,159,152,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Área de regiones triangulares y cuadrangulares",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/area-de-regiones-triangulares-y-cuadrangulares.png",
+              "driveUrl": "https://drive.google.com/file/d/1xwyFzIEuO17bChSENjNXE0MPENjrHbJI/view?usp=drive_link",
+              "aria": "Abrir Área de regiones triangulares y cuadrangulares de la colección Temas Selectos en Google Drive",
+              "alt": "Portada de Área de regiones triangulares y cuadrangulares"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Circunferencia y cuadrilátero inscrito en una circunferencia",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/circunferencia-y-cuadrilatero-inscrito.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1ZiIb1M9ijDrHGFCYgtSbBsQxw-eLTg39/view?usp=drive_link",
+              "aria": "Abrir Circunferencia y cuadrilátero inscrito en una circunferencia en Google Drive",
+              "alt": "Portada de Circunferencia y cuadrilátero inscrito en una circunferencia"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Congruencia de triángulos",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/congruencia-de-triangulos.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1WifH9xa2vT6CBai5InoYQysaFyd4-9nK/view?usp=drive_link",
+              "aria": "Abrir Congruencia de triángulos de la colección Temas Selectos en Google Drive",
+              "alt": "Portada de Congruencia de triángulos"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Cuadriláteros",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/cuadrilateros.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1Lx4s6jD3mwSUXml2L8fwbsrpf9MGB2uc/view?usp=drive_link",
+              "aria": "Abrir Cuadriláteros de la colección Temas Selectos en Google Drive",
+              "alt": "Portada de Cuadriláteros"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Geometría del espacio I",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/geometria-del-espacio-i.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1tjxa4B35X_7FmU-_fmYp15SnvWM1Z7vz/view?usp=drive_link",
+              "aria": "Abrir Geometría del espacio I de la colección Temas Selectos en Google Drive",
+              "alt": "Portada de Geometría del espacio I"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Poliedros regulares",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/poliedros-regulares.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1XcOji69Ir9185JU_4ggx0pYiVhepq1l8/view?usp=drive_link",
+              "aria": "Abrir Poliedros regulares de la colección Temas Selectos en Google Drive",
+              "alt": "Portada de Poliedros regulares"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Proporcionalidad de segmentos y semejanza de triángulos",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/proporcionalidad-de-segmentos-y-semejanza-de-triangulos.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1a3fMlxIInLAE4aqhe440CxMhj4vxM8YC/view?usp=drive_link",
+              "aria": "Abrir Proporcionalidad de segmentos y semejanza de triángulos en Google Drive",
+              "alt": "Portada de Proporcionalidad de segmentos y semejanza de triángulos"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Puntos notables",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/puntos-notables.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1fdYl9tZ2u37nf4pq0Dz43CXs3cHJrrVG/view?usp=drive_link",
+              "aria": "Abrir Puntos notables de la colección Temas Selectos en Google Drive",
+              "alt": "Portada de Puntos notables"
+            },
+            {
+              "series": "Temas Selectos · Geometría",
+              "title": "Relaciones métricas",
+              "image": "/assets/library/lumbreras/temas-selectos/geometria/relaciones-metricas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1UwVTCQT1DFKBaWCdJLHg31ecszuHY3AR/view?usp=drive_link",
+              "aria": "Abrir Relaciones métricas de la colección Temas Selectos en Google Drive",
+              "alt": "Portada de Relaciones métricas"
+            }
+          ]
         }
       ]
     }
