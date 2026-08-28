@@ -821,6 +821,38 @@
               "alt": "Portada de Relaciones métricas"
             }
           ]
+        },
+        {
+          "slug": "historia",
+          "name": "Historia",
+          "icon": "book",
+          "colors": ["#9f0050", "#f4cf00", "rgba(159,0,80,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Historia",
+              "title": "Perú prehispánico",
+              "image": "/assets/library/lumbreras/temas-selectos/historia/peru-prehispanico.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1YqGuMiD14Lpa22qSsXUvXrttwBLnOyy1/view?usp=drive_link",
+              "aria": "Abrir Perú prehispánico de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Perú prehispánico de Historia"
+            },
+            {
+              "series": "Temas Selectos · Historia",
+              "title": "Prehistoria y esclavismo en el mundo antiguo",
+              "image": "/assets/library/lumbreras/temas-selectos/historia/prehistoria-y-esclavismo-en-el-mundo-antiguo.png",
+              "driveUrl": "https://drive.google.com/file/d/1gq6nZFFeGKmGY-l5wamRwtkZljDE2UI3/view?usp=drive_link",
+              "aria": "Abrir Prehistoria y esclavismo en el mundo antiguo en Google Drive",
+              "alt": "Portada del libro Prehistoria y esclavismo en el mundo antiguo"
+            },
+            {
+              "series": "Temas Selectos · Historia",
+              "title": "Perú: siglo XIX",
+              "image": "/assets/library/lumbreras/temas-selectos/historia/peru-siglo-xix.png",
+              "driveUrl": "https://drive.google.com/file/d/1Az7FIeIfdJK9oa0SjN2Rv4sZMpSbT9_e/view?usp=drive_link",
+              "aria": "Abrir Perú: siglo XIX de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Perú: siglo XIX de Historia"
+            }
+          ]
         }
       ]
     }
