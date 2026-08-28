@@ -699,6 +699,22 @@
               "driveUrl": "https://drive.google.com/file/d/1Pqn3ieUu00X7AY9OUypBCRknqtZCBL1I/view?usp=drive_link",
               "aria": "Abrir Ondas mecánicas y fenómenos ondulatorios de la colección Temas Selectos en Google Drive",
               "alt": "Portada del libro Ondas mecánicas y fenómenos ondulatorios de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Termodinámica",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/termodinamica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1pCEYpliynCY5Si64lFNFrVEJNRxjsLoJ/view?usp=drive_link",
+              "aria": "Abrir Termodinámica de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Termodinámica de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Trabajo y energía mecánica",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/trabajo-y-energia-mecanica.png",
+              "driveUrl": "https://drive.google.com/file/d/1qnP3p7HR3DO0T4jJTi_phQSQ4XhC9rKx/view?usp=drive_link",
+              "aria": "Abrir Trabajo y energía mecánica de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Trabajo y energía mecánica de Física"
             }
           ]
         }
