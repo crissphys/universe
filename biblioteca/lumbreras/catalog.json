@@ -893,6 +893,38 @@
               "alt": "Portada del libro Lógica proposicional"
             }
           ]
+        },
+        {
+          "slug": "psicologia",
+          "name": "Psicología",
+          "icon": "atom",
+          "colors": ["#009d28", "#ffd500", "rgba(0,157,40,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Psicología",
+              "title": "El aprendizaje y sus teorías",
+              "image": "/assets/library/lumbreras/temas-selectos/psicologia/el-aprendizaje-y-sus-teorias.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1_LmWbpWaRi9cXftp2BcVG2XRAvpijlI9/view?usp=drive_link",
+              "aria": "Abrir El aprendizaje y sus teorías de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro El aprendizaje y sus teorías"
+            },
+            {
+              "series": "Temas Selectos · Psicología",
+              "title": "Procesos cognitivos",
+              "image": "/assets/library/lumbreras/temas-selectos/psicologia/procesos-cognitivos.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1eh5AfF5PCL6RHMvXKzVVlf9bq2q5333P/view?usp=drive_link",
+              "aria": "Abrir Procesos cognitivos de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Procesos cognitivos"
+            },
+            {
+              "series": "Temas Selectos · Psicología",
+              "title": "La personalidad y sus teorías",
+              "image": "/assets/library/lumbreras/temas-selectos/psicologia/la-personalidad-y-sus-teorias.png",
+              "driveUrl": "https://drive.google.com/file/d/1IHj4cbKFjQZ-fHuhgQiUHZDgnq6lVy9T/view?usp=drive_link",
+              "aria": "Abrir La personalidad y sus teorías de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro La personalidad y sus teorías"
+            }
+          ]
         }
       ]
     }
