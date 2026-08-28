@@ -1175,6 +1175,134 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "compendios-academicos",
+      "number": "04",
+      "name": "Compendios Académicos",
+      "description": "Colección integral de teoría y práctica preuniversitaria de Editorial Lumbreras.",
+      "courses": [
+        {
+          "slug": "coleccion-completa",
+          "name": "Colección completa",
+          "icon": "book",
+          "colors": ["#003f83", "#ffcc19", "rgba(0,63,131,.22)"],
+          "books": [
+            {
+              "series": "Compendios Académicos",
+              "title": "Física",
+              "image": "/assets/library/lumbreras/compendios-academicos/fisica.png",
+              "driveUrl": "https://drive.google.com/file/d/1vesB5KOxJECGplBSh65koTZY6TI0RyZ_/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Física en Google Drive",
+              "alt": "Portada del Compendio Académico de Física"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Geometría y Trigonometría",
+              "image": "/assets/library/lumbreras/compendios-academicos/geometria-y-trigonometria.png",
+              "driveUrl": "https://drive.google.com/file/d/1uYh8V18QFPOECtKlmD9NbUpXj2pXChnO/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Geometría y Trigonometría en Google Drive",
+              "alt": "Portada del Compendio Académico de Geometría y Trigonometría"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Lenguaje",
+              "image": "/assets/library/lumbreras/compendios-academicos/lenguaje.png",
+              "driveUrl": "https://drive.google.com/file/d/1h_9n-Eac5AR1VzvaOIjvbNwwYPkYJF5r/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Lenguaje en Google Drive",
+              "alt": "Portada del Compendio Académico de Lenguaje"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Literatura",
+              "image": "/assets/library/lumbreras/compendios-academicos/literatura.png",
+              "driveUrl": "https://drive.google.com/file/d/1d5ovIPatLjU03PJgrK8Kpp5Q5EMtQICL/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Literatura en Google Drive",
+              "alt": "Portada del Compendio Académico de Literatura"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Filosofía y Lógica",
+              "image": "/assets/library/lumbreras/compendios-academicos/filosofia-y-logica.png",
+              "driveUrl": "https://drive.google.com/file/d/1ITruuBdW8WsmQehK_2FgEN1tKtwSFmF2/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Filosofía y Lógica en Google Drive",
+              "alt": "Portada del Compendio Académico de Filosofía y Lógica"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Psicología",
+              "image": "/assets/library/lumbreras/compendios-academicos/psicologia.png",
+              "driveUrl": "https://drive.google.com/file/d/1dwDnoPGAKOLOWjL0Tk4FHVI6jWI5oo82/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Psicología en Google Drive",
+              "alt": "Portada del Compendio Académico de Psicología"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Economía y Educación Cívica",
+              "image": "/assets/library/lumbreras/compendios-academicos/economia-y-educacion-civica.png",
+              "driveUrl": "https://drive.google.com/file/d/1uBQQajSKVIAbS_vvO7tibl8UazRD_PQ5/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Economía y Educación Cívica en Google Drive",
+              "alt": "Portada del Compendio Académico de Economía y Educación Cívica"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Geografía",
+              "image": "/assets/library/lumbreras/compendios-academicos/geografia.png",
+              "driveUrl": "https://drive.google.com/file/d/1sP8MrHWXm_uPBSA174vBQnWM1fXPRdxB/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Geografía en Google Drive",
+              "alt": "Portada del Compendio Académico de Geografía"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Historia",
+              "image": "/assets/library/lumbreras/compendios-academicos/historia.png",
+              "driveUrl": "https://drive.google.com/file/d/1bx7M4ABIySujI8BhT4BRXhJwHWu03ssu/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Historia en Google Drive",
+              "alt": "Portada del Compendio Académico de Historia"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Química",
+              "image": "/assets/library/lumbreras/compendios-academicos/quimica.png",
+              "driveUrl": "https://drive.google.com/file/d/1vKH3OSepygcT57hk1hgZWXRdNUEqcqZ6/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Química en Google Drive",
+              "alt": "Portada del Compendio Académico de Química"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Biología y Anatomía",
+              "image": "/assets/library/lumbreras/compendios-academicos/biologia-y-anatomia.png",
+              "driveUrl": "https://drive.google.com/file/d/1whBRwmYp4mkhUz25GytTTw9iGY4ljkIq/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Biología y Anatomía en Google Drive",
+              "alt": "Portada del Compendio Académico de Biología y Anatomía"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Razonamiento Verbal",
+              "image": "/assets/library/lumbreras/compendios-academicos/razonamiento-verbal.png",
+              "driveUrl": "https://drive.google.com/file/d/1kckSPZ-W72fBb8yvRbe332V5tdTP36dU/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Razonamiento Verbal en Google Drive",
+              "alt": "Portada del Compendio Académico de Razonamiento Verbal"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Razonamiento Matemático",
+              "image": "/assets/library/lumbreras/compendios-academicos/razonamiento-matematico.png",
+              "driveUrl": "https://drive.google.com/file/d/1ww2qIbqA01i9qiQ6DE1ZZBD0NS3FxqL-/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Razonamiento Matemático en Google Drive",
+              "alt": "Portada del Compendio Académico de Razonamiento Matemático"
+            },
+            {
+              "series": "Compendios Académicos",
+              "title": "Aritmética y Álgebra",
+              "image": "/assets/library/lumbreras/compendios-academicos/aritmetica-y-algebra.png",
+              "driveUrl": "https://drive.google.com/file/d/1C1KdaUQ1_IfykQqCfs9u_8OUiBy8NVxb/view?usp=drive_link",
+              "aria": "Abrir Compendio Académico de Aritmética y Álgebra en Google Drive",
+              "alt": "Portada del Compendio Académico de Aritmética y Álgebra"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
