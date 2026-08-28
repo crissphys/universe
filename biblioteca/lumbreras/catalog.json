@@ -637,6 +637,70 @@
               "alt": "Portada del libro Historia de la filosofía"
             }
           ]
+        },
+        {
+          "slug": "fisica",
+          "name": "Física",
+          "icon": "flask",
+          "colors": ["#0b559f", "#f3cf4f", "rgba(11,85,159,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Análisis dimensional y vectores",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/analisis-dimensional-y-vectores.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1JN186XUlUWWVn2eDqyYWSLVW2NoL0X_t/view?usp=drive_link",
+              "aria": "Abrir Análisis dimensional y vectores de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Análisis dimensional y vectores de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Dinámica",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/dinamica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1_fri0lxn0Pjz7n_qOB8l0LBqpfluS1UA/view?usp=drive_link",
+              "aria": "Abrir Dinámica de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Dinámica de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Electrodinámica",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/electrodinamica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1zy_AGsfszzQI5ChEKplRuLz9ALzOwAEe/view?usp=drive_link",
+              "aria": "Abrir Electrodinámica de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Electrodinámica de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Electromagnetismo",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/electromagnetismo.png",
+              "driveUrl": "https://drive.google.com/file/d/1WSGPD3HT5yZugxcrRFm3o7sUY_0-03gl/view?usp=drive_link",
+              "aria": "Abrir Electromagnetismo de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Electromagnetismo de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Estática",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/estatica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1nzfDfAVGA3tCPBt7Foik7wzSwA_adtTn/view?usp=drive_link",
+              "aria": "Abrir Estática de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Estática de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Movimiento armónico simple",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/movimiento-armonico-simple.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1dIWGndwuhH3XkIe9-NJMK0GsjpiapM6y/view?usp=drive_link",
+              "aria": "Abrir Movimiento armónico simple de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Movimiento armónico simple de Física"
+            },
+            {
+              "series": "Temas Selectos · Física",
+              "title": "Ondas mecánicas y fenómenos ondulatorios",
+              "image": "/assets/library/lumbreras/temas-selectos/fisica/ondas-mecanicas-y-fenomenos-ondulatorios.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1Pqn3ieUu00X7AY9OUypBCRknqtZCBL1I/view?usp=drive_link",
+              "aria": "Abrir Ondas mecánicas y fenómenos ondulatorios de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Ondas mecánicas y fenómenos ondulatorios de Física"
+            }
+          ]
         }
       ]
     }
