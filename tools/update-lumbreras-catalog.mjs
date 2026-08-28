@@ -29,6 +29,7 @@ if (!Array.isArray(catalog.collections) || catalog.collections.length === 0) thr
 
 const seenCollections = new Set();
 const seenCourseKeys = new Set();
+const seenSectionKeys = new Set();
 const seenUrls = new Set();
 const subjects = new Set();
 
@@ -48,7 +49,8 @@ for (const collection of catalog.collections) {
   if (!collection.number || !collection.name || !collection.description) throw new Error(`Datos incompletos en la colección ${collection.slug}`);
   const hasCourses = Array.isArray(collection.courses) && collection.courses.length > 0;
   const hasBooks = Array.isArray(collection.books) && collection.books.length > 0;
-  if (hasCourses === hasBooks) throw new Error(`La colección ${collection.name} debe usar cursos o libros, no ambos.`);
+  const hasSections = Array.isArray(collection.sections) && collection.sections.length > 0;
+  if ([hasCourses, hasBooks, hasSections].filter(Boolean).length !== 1) throw new Error(`La colección ${collection.name} debe usar cursos, libros o secciones.`);
 
   if (hasCourses) {
     for (const course of collection.courses) {
@@ -62,8 +64,16 @@ for (const collection of catalog.collections) {
       if (!Array.isArray(course.books) || course.books.length === 0) throw new Error(`No hay libros en ${course.name}`);
       course.books.forEach((book) => validateBook(book, `${collection.name} / ${course.name}`));
     }
-  } else {
+  } else if (hasBooks) {
     collection.books.forEach((book) => validateBook(book, collection.name));
+  } else {
+    for (const section of collection.sections) {
+      const sectionKey = `${collection.slug}/${section.slug}`;
+      if (!/^[a-z0-9-]+$/.test(section.slug) || seenSectionKeys.has(sectionKey)) throw new Error(`Slug de sección inválido o duplicado: ${sectionKey}`);
+      seenSectionKeys.add(sectionKey);
+      if (!section.name || !section.description || !Array.isArray(section.books) || section.books.length === 0) throw new Error(`Datos incompletos en la sección ${sectionKey}`);
+      section.books.forEach((book) => validateBook(book, `${collection.name} / ${section.name}`));
+    }
   }
 }
 
@@ -88,13 +98,27 @@ ${course.books.map(renderBook).join('\n\n')}
 
 const collectionBooks = (collection) => Array.isArray(collection.courses)
   ? collection.courses.flatMap((course) => course.books)
-  : collection.books;
+  : Array.isArray(collection.sections)
+    ? collection.sections.flatMap((section) => section.books)
+    : collection.books;
+
+const renderCollectionSection = (collection, section, index) => `    <div class="collection-subsection collection-subsection-${escapeHtml(section.slug)}" aria-labelledby="${escapeHtml(collection.slug)}-${escapeHtml(section.slug)}-title">
+      <header class="collection-subheading">
+        <div><span>Sección ${String(index + 1).padStart(2, '0')}</span><h3 id="${escapeHtml(collection.slug)}-${escapeHtml(section.slug)}-title">${escapeHtml(section.name)}</h3><p>${escapeHtml(section.description)}</p></div>
+        <strong>${section.books.length} ${section.books.length === 1 ? 'libro' : 'libros'}</strong>
+      </header>
+      <div class="book-grid collection-book-grid" aria-label="${escapeHtml(section.name)} de la colección ${escapeHtml(collection.name)}">
+${section.books.map(renderBook).join('\n\n')}
+      </div>
+    </div>`;
 
 const renderCollection = (collection) => {
   const books = collectionBooks(collection);
   const content = Array.isArray(collection.courses)
     ? collection.courses.map(renderCourse).join('\n\n')
-    : `    <div class="book-grid collection-book-grid" aria-label="Libros de la colección ${escapeHtml(collection.name)} de Lumbreras">
+    : Array.isArray(collection.sections)
+      ? collection.sections.map((section, index) => renderCollectionSection(collection, section, index)).join('\n\n')
+      : `    <div class="book-grid collection-book-grid" aria-label="Libros de la colección ${escapeHtml(collection.name)} de Lumbreras">
 ${collection.books.map(renderBook).join('\n\n')}
     </div>`;
   return `  <section class="catalog-collection catalog-collection-${escapeHtml(collection.slug)}" aria-labelledby="${escapeHtml(collection.slug)}-title">
