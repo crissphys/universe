@@ -399,6 +399,86 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "temas-selectos",
+      "number": "03",
+      "name": "Temas Selectos",
+      "description": "Colección de teoría y práctica por temas específicos, desde nivel básico hasta avanzado.",
+      "courses": [
+        {
+          "slug": "algebra",
+          "name": "Álgebra",
+          "icon": "function",
+          "colors": ["#b43b24", "#e0a23e", "rgba(180,59,36,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "Desigualdades e inecuaciones",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/desigualdades-e-inecuaciones.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1ndSphEM7JONBFT9-uFN0w0P_Z1EBmEHU/view?usp=drive_link",
+              "aria": "Abrir Desigualdades e inecuaciones de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Desigualdades e inecuaciones de Álgebra"
+            },
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "División algebraica y cocientes notables",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/division-algebraica-y-cocientes-notables.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1oMDIgfZIkm7wIzDWI6qdzOgHytHhgdFE/view?usp=drive_link",
+              "aria": "Abrir División algebraica y cocientes notables de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro División algebraica y cocientes notables de Álgebra"
+            },
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "Ecuaciones polinomiales",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/ecuaciones-polinomiales.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1v-jvMVWg0oCzEQPeujBWgLLPrj0GZzRM/view?usp=drive_link",
+              "aria": "Abrir Ecuaciones polinomiales de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Ecuaciones polinomiales de Álgebra"
+            },
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "Funciones",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/funciones.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1_CzNvA6hkzhrRMW5VVQb0lZpre7_dO60/view?usp=drive_link",
+              "aria": "Abrir Funciones de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Funciones de Álgebra"
+            },
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "Leyes de exponentes y productos notables",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/leyes-de-exponentes-y-productos-notables.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1W0SLNxVF7MVy_DPBBhJnOMfRDc__WDAw/view?usp=drive_link",
+              "aria": "Abrir Leyes de exponentes y productos notables de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Leyes de exponentes y productos notables de Álgebra"
+            },
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "Polinomios",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/polinomios.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1yv4JEk-w99S5-USbN0OvrXSbJc4U5Orf/view?usp=drive_link",
+              "aria": "Abrir Polinomios de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Polinomios de Álgebra"
+            },
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "Sistema de ecuaciones lineales y no lineales",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/sistema-de-ecuaciones-lineales-y-no-lineales.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1OdVaZmeNMwiWOxBc9hNFknIySj7qZU7W/view?usp=drive_link",
+              "aria": "Abrir Sistema de ecuaciones lineales y no lineales de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Sistema de ecuaciones lineales y no lineales de Álgebra"
+            },
+            {
+              "series": "Temas Selectos · Álgebra",
+              "title": "Sucesiones y series",
+              "image": "/assets/library/lumbreras/temas-selectos/algebra/sucesiones-y-series.jpg",
+              "driveUrl": "https://drive.google.com/file/d/19-fhjWjZpWRmK7kpafeNF--K3PewLT_-/view?usp=drive_link",
+              "aria": "Abrir Sucesiones y series de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Sucesiones y series de Álgebra"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
