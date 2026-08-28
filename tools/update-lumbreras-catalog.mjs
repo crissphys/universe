@@ -15,7 +15,8 @@ const icons = {
   function: '<svg viewBox="0 0 24 24"><path d="M4 19h16M5 4v16"></path><path d="M7 16c2-1 2.5-4 4-6s3-3 6-4"></path><circle cx="11" cy="10" r="1"></circle><circle cx="17" cy="6" r="1"></circle></svg>',
   calculator: '<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8v3H8zM8 14h2m4 0h2m-8 3h2m4 0h2"></path></svg>',
   geometry: '<svg viewBox="0 0 24 24"><path d="M4 19 12 4l8 15H4Z"></path><circle cx="12" cy="13" r="2"></circle><path d="M8 19l4-6 4 6"></path></svg>',
-  trigonometry: '<svg viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"></path><path d="M4 16c2.5 0 3-8 6-8s3.5 8 6.5 8c1.5 0 2.3-1.6 3.5-4"></path></svg>'
+  trigonometry: '<svg viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"></path><path d="M4 16c2.5 0 3-8 6-8s3.5 8 6.5 8c1.5 0 2.3-1.6 3.5-4"></path></svg>',
+  book: '<svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z"></path><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5v-16Z"></path></svg>'
 };
 
 const escapeHtml = (value) => String(value)
