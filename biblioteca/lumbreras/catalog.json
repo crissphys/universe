@@ -230,7 +230,12 @@
       "number": "02",
       "name": "Esenciales",
       "description": "Colección de fundamentos esenciales organizada por curso.",
-      "books": [
+      "sections": [
+        {
+          "slug": "libros",
+          "name": "Libros",
+          "description": "Textos de teoría y fundamentos esenciales.",
+          "books": [
         {
           "course": "Álgebra",
           "series": "Colección Esencial",
@@ -320,6 +325,78 @@
           "driveUrl": "https://drive.google.com/file/d/1EPXAmxU6YF25Ubpniz6_S5o_33-pbQgn/view?usp=drive_link",
           "aria": "Abrir Biología esencial en Google Drive",
           "alt": "Portada del libro Biología esencial"
+        }
+          ]
+        },
+        {
+          "slug": "solucionarios",
+          "name": "Solucionarios",
+          "description": "Respuestas desarrolladas para practicar y comprobar procedimientos.",
+          "books": [
+            {
+              "course": "Álgebra",
+              "series": "Solucionario · Colección Esencial",
+              "title": "Solucionario de Álgebra esencial",
+              "image": "/assets/library/lumbreras/esenciales/solucionario-algebra-esencial.png",
+              "driveUrl": "https://drive.google.com/file/d/1jI5LdJVgufMTun_4thjgImmf54nBjnT-/view?usp=drive_link",
+              "aria": "Abrir el solucionario de Álgebra esencial en Google Drive",
+              "alt": "Portada del solucionario de Álgebra esencial"
+            },
+            {
+              "course": "Aritmética",
+              "series": "Solucionario · Colección Esencial",
+              "title": "Solucionario de Aritmética esencial",
+              "image": "/assets/library/lumbreras/esenciales/solucionario-aritmetica-esencial.png",
+              "driveUrl": "https://drive.google.com/file/d/1GBt4OLpk04y2Yf0F7VFoxtW2CQ31b632/view?usp=drive_link",
+              "aria": "Abrir el solucionario de Aritmética esencial en Google Drive",
+              "alt": "Portada del solucionario de Aritmética esencial"
+            },
+            {
+              "course": "Geometría",
+              "series": "Solucionario · Colección Esencial",
+              "title": "Solucionario de Geometría esencial",
+              "image": "/assets/library/lumbreras/esenciales/solucionario-geometria-esencial.png",
+              "driveUrl": "https://drive.google.com/file/d/1I_5mn_5RIgdo25mQoDrxIYa-_jKHZpBv/view?usp=drive_link",
+              "aria": "Abrir el solucionario de Geometría esencial en Google Drive",
+              "alt": "Portada del solucionario de Geometría esencial"
+            },
+            {
+              "course": "Trigonometría",
+              "series": "Solucionario · Colección Esencial",
+              "title": "Solucionario de Trigonometría esencial",
+              "image": "/assets/library/lumbreras/esenciales/solucionario-trigonometria-esencial.png",
+              "driveUrl": "https://drive.google.com/file/d/15Ci1rgz01ptErLk1yO-rQkdDgof6QgI7/view?usp=drive_link",
+              "aria": "Abrir el solucionario de Trigonometría esencial en Google Drive",
+              "alt": "Portada del solucionario de Trigonometría esencial"
+            },
+            {
+              "course": "Razonamiento Matemático",
+              "series": "Solucionario · Colección Esencial",
+              "title": "Solucionario de Razonamiento Matemático esencial",
+              "image": "/assets/library/lumbreras/esenciales/solucionario-razonamiento-matematico-esencial.png",
+              "driveUrl": "https://drive.google.com/file/d/1ZBYsExZQY9s9ebDUsKAFDVplm9YWkVIk/view?usp=drive_link",
+              "aria": "Abrir el solucionario de Razonamiento Matemático esencial en Google Drive",
+              "alt": "Portada del solucionario de Razonamiento Matemático esencial"
+            },
+            {
+              "course": "Física",
+              "series": "Solucionario · Colección Esencial",
+              "title": "Solucionario de Física esencial",
+              "image": "/assets/library/lumbreras/esenciales/solucionario-fisica-esencial.png",
+              "driveUrl": "https://drive.google.com/file/d/1w54EF5mn_7kr7HdnXVNOxfxVM8yyWg6H/view?usp=drive_link",
+              "aria": "Abrir el solucionario de Física esencial en Google Drive",
+              "alt": "Portada del solucionario de Física esencial"
+            },
+            {
+              "course": "Química",
+              "series": "Solucionario · Colección Esencial",
+              "title": "Solucionario de Química esencial",
+              "image": "/assets/library/lumbreras/esenciales/solucionario-quimica-esencial.png",
+              "driveUrl": "https://drive.google.com/file/d/1jtbI2s6Kazrz6cloyp0Q65tJiyhj9Mo_/view?usp=drive_link",
+              "aria": "Abrir el solucionario de Química esencial en Google Drive",
+              "alt": "Portada del solucionario de Química esencial"
+            }
+          ]
         }
       ]
     }
