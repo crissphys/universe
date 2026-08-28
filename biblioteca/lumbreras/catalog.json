@@ -925,6 +925,70 @@
               "alt": "Portada del libro La personalidad y sus teorías"
             }
           ]
+        },
+        {
+          "slug": "quimica",
+          "name": "Química",
+          "icon": "flask",
+          "colors": ["#78bd00", "#ef2b20", "rgba(120,189,0,.22)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Química",
+              "title": "Cálculos químicos",
+              "image": "/assets/library/lumbreras/temas-selectos/quimica/calculos-quimicos.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1LiIdKVxZdQNU6D4OlxSKC93HQLVKKrv6/view?usp=drive_link",
+              "aria": "Abrir Cálculos químicos de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Cálculos químicos"
+            },
+            {
+              "series": "Temas Selectos · Química",
+              "title": "Electrólisis",
+              "image": "/assets/library/lumbreras/temas-selectos/quimica/electrolisis.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1J7uv4mZP0rVndrlNn7zsiNIPrbuhT5VO/view?usp=drive_link",
+              "aria": "Abrir Electrólisis de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Electrólisis"
+            },
+            {
+              "series": "Temas Selectos · Química",
+              "title": "Equilibrio químico",
+              "image": "/assets/library/lumbreras/temas-selectos/quimica/equilibrio-quimico.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1bTSRafq4BgW9Lsp2MJmxVHvHYfvz9PV9/view?usp=drive_link",
+              "aria": "Abrir Equilibrio químico de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Equilibrio químico"
+            },
+            {
+              "series": "Temas Selectos · Química",
+              "title": "Estado gaseoso",
+              "image": "/assets/library/lumbreras/temas-selectos/quimica/estado-gaseoso.png",
+              "driveUrl": "https://drive.google.com/file/d/1y9PgS-AW1B8g1AmnK3i4W8fpvQkMeba4/view?usp=drive_link",
+              "aria": "Abrir Estado gaseoso de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Estado gaseoso"
+            },
+            {
+              "series": "Temas Selectos · Química",
+              "title": "Estequiometría",
+              "image": "/assets/library/lumbreras/temas-selectos/quimica/estequiometria.png",
+              "driveUrl": "https://drive.google.com/file/d/1s5wRC0WXnUMNgXwBcKoDssVtK-e3jf88/view?usp=drive_link",
+              "aria": "Abrir Estequiometría de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Estequiometría"
+            },
+            {
+              "series": "Temas Selectos · Química",
+              "title": "Reacciones químicas y balance de ecuaciones",
+              "image": "/assets/library/lumbreras/temas-selectos/quimica/reacciones-quimicas-y-balance-de-ecuaciones.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1sKJd7muv9ZL8hSivSQuJm6sFHcfYTtmA/view?usp=drive_link",
+              "aria": "Abrir Reacciones químicas y balance de ecuaciones en Google Drive",
+              "alt": "Portada de Reacciones químicas y balance de ecuaciones"
+            },
+            {
+              "series": "Temas Selectos · Química",
+              "title": "Sistemas dispersos",
+              "image": "/assets/library/lumbreras/temas-selectos/quimica/sistemas-dispersos.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1vIiT1wc-yx5QSzpyMt8rgOnXBkcQBNLj/view?usp=drive_link",
+              "aria": "Abrir Sistemas dispersos de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Sistemas dispersos"
+            }
+          ]
         }
       ]
     }
