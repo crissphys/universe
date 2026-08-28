@@ -1303,6 +1303,62 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "compendios-academicos-uni",
+      "number": "05",
+      "name": "Compendios Académicos UNI",
+      "description": "Colección especializada para la preparación del examen de admisión UNI.",
+      "courses": [
+        {
+          "slug": "tomos-disponibles",
+          "name": "Tomos disponibles",
+          "icon": "book",
+          "colors": ["#b00000", "#ffc400", "rgba(176,0,0,.22)"],
+          "books": [
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Álgebra",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/algebra.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1HExkoZIDveGYl2uUcl3fUGjqeekITXEz/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Álgebra en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Álgebra"
+            },
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Química",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/quimica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1mPgbdM6ZVP51gpvof3mX2dcJ27QPOGP1/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Química en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Química"
+            },
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Física",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/fisica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/148wTXn7hQsYtiRZBP94wxigxgK9E61ot/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Física en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Física"
+            },
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Cultura General",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/cultura-general.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1qoD0D9iEkXma77d33km4LURCOnyZP1bk/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Cultura General en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Cultura General"
+            },
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Trigonometría",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/trigonometria.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1fK-dHzjJ6uXSQL4MtYfeU7j9aPsZrCrb/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Trigonometría en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Trigonometría"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
