@@ -853,6 +853,22 @@
               "alt": "Portada del libro Perú: siglo XIX de Historia"
             }
           ]
+        },
+        {
+          "slug": "lenguaje",
+          "name": "Lenguaje",
+          "icon": "book",
+          "colors": ["#d8b46c", "#930878", "rgba(147,8,120,.20)"],
+          "books": [
+            {
+              "series": "Temas Selectos · Lenguaje",
+              "title": "Manual actualizado de ortografía",
+              "image": "/assets/library/lumbreras/temas-selectos/lenguaje/manual-actualizado-de-ortografia.png",
+              "driveUrl": "https://drive.google.com/file/d/1GCyK5fkXOwCmIODbaXe_rMZisHqNCsMw/view?usp=drive_link",
+              "aria": "Abrir Manual actualizado de ortografía de la colección Temas Selectos en Google Drive",
+              "alt": "Portada del libro Manual actualizado de ortografía de Lenguaje"
+            }
+          ]
         }
       ]
     }
