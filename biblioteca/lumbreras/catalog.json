@@ -1276,12 +1276,11 @@
       "number": "05",
       "name": "Compendios Académicos",
       "description": "Colección integral de teoría y práctica preuniversitaria de Editorial Lumbreras.",
-      "courses": [
+      "sections": [
         {
-          "slug": "coleccion-completa",
+          "slug": "edicion-antigua",
           "name": "Colección Edición Antigua",
-          "icon": "book",
-          "colors": ["#003f83", "#ffcc19", "rgba(0,63,131,.22)"],
+          "description": "Compendios académicos de la edición clásica de Lumbreras.",
           "books": [
             {
               "series": "Compendios Académicos",
@@ -1394,6 +1393,133 @@
               "driveUrl": "https://drive.google.com/file/d/1C1KdaUQ1_IfykQqCfs9u_8OUiBy8NVxb/view?usp=drive_link",
               "aria": "Abrir Compendio Académico de Aritmética y Álgebra en Google Drive",
               "alt": "Portada del Compendio Académico de Aritmética y Álgebra"
+            }
+          ]
+        },
+        {
+          "slug": "edicion-nueva",
+          "name": "Colección Edición Nueva",
+          "description": "Nueva edición de compendios académicos por asignatura.",
+          "books": [
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Geografía",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/geografia.png",
+              "driveUrl": "https://drive.google.com/file/d/1D5LGgOWrFpHnofu2yUvTZwX2qiC80Y4x/view?usp=drive_link",
+              "aria": "Abrir Geografía de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Geografía, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Aritmética y Álgebra",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/aritmetica-y-algebra.png",
+              "driveUrl": "https://drive.google.com/file/d/1g7PIYhScz04w_yx3nkX15xPnbjGevYzz/view?usp=drive_link",
+              "aria": "Abrir Aritmética y Álgebra de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Aritmética y Álgebra, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Biología",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/biologia.webp",
+              "driveUrl": "https://drive.google.com/file/d/1YJqWGHLAAFmswa5UlJkocnLProryMla0/view?usp=drive_link",
+              "aria": "Abrir Biología de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Biología, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Economía y Educación Cívica",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/economia-y-educacion-civica.jpeg",
+              "driveUrl": "https://drive.google.com/file/d/1mY1P3xbYFhtFezDEEW1QycTi8xelN0Bi/view?usp=drive_link",
+              "aria": "Abrir Economía y Educación Cívica de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Economía y Educación Cívica, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Razonamiento Matemático",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/razonamiento-matematico.jpeg",
+              "driveUrl": "https://drive.google.com/file/d/1BGeZF2XAoeSVAAgmnqSk4_-SHqbN5Qqe/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Matemático de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Razonamiento Matemático, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Física",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/fisica.png",
+              "driveUrl": "https://drive.google.com/file/d/1BQiAcrtIoI_mZJ0VGCEoskAlm0EjlqEM/view?usp=drive_link",
+              "aria": "Abrir Física de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Física, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Historia Universal",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/historia-universal.png",
+              "driveUrl": "https://drive.google.com/file/d/1coMrht5zjaveFCq2eMVH0huv2J6SjmtI/view?usp=drive_link",
+              "aria": "Abrir Historia Universal de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Historia Universal, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Historia del Perú",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/historia-del-peru.png",
+              "driveUrl": "https://drive.google.com/file/d/1N5vsWd5t-nG-ZoZ7EBCVwqp_cHNJKbRY/view?usp=drive_link",
+              "aria": "Abrir Historia del Perú de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Historia del Perú, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Química",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/quimica.png",
+              "driveUrl": "https://drive.google.com/file/d/1mAtjIn8Fla-VOFnlIF8EQTU6fEzmTDdo/view?usp=drive_link",
+              "aria": "Abrir Química de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Química, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Psicología",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/psicologia.png",
+              "driveUrl": "https://drive.google.com/file/d/1qSkC60wxSKsDwC40ORyDWJd7oy8J2UyT/view?usp=drive_link",
+              "aria": "Abrir Psicología de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Psicología, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Filosofía y Lógica",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/filosofia-y-logica.png",
+              "driveUrl": "https://drive.google.com/file/d/1xv1WqYxQbSj-a2bIZFS-aIa-NDJzyqvC/view?usp=drive_link",
+              "aria": "Abrir Filosofía y Lógica de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Filosofía y Lógica, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Razonamiento Verbal",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/razonamiento-verbal.png",
+              "driveUrl": "https://drive.google.com/file/d/1QnST6oBSjmEF3gjnXfkJNnxZ9Yc8cYQZ/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Verbal de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Razonamiento Verbal, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Literatura",
+              "image": "/assets/library/lumbreras/compendios-academicos/literatura.png",
+              "driveUrl": "https://drive.google.com/file/d/11T1KJrsZ6Hz_P8mJQ191b0e0hwz8gRot/view?usp=drive_link",
+              "aria": "Abrir Literatura de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Literatura, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Lenguaje",
+              "image": "/assets/library/lumbreras/compendios-academicos-edicion-nueva/lenguaje.png",
+              "driveUrl": "https://drive.google.com/file/d/1up4cV4-TfIWhmBdkwPfs4GUr__hbkJn2/view?usp=drive_link",
+              "aria": "Abrir Lenguaje de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Lenguaje, Colección Compendios Académicos, Edición Nueva"
+            },
+            {
+              "series": "Colección Compendios Académicos · Edición Nueva",
+              "title": "Geometría y Trigonometría",
+              "image": "/assets/library/lumbreras/compendios-academicos/geometria-y-trigonometria.png",
+              "driveUrl": "https://drive.google.com/file/d/1GaKIcz1NY35a1ciMJzdq_AayOI0EIlD9/view?usp=drive_link",
+              "aria": "Abrir Geometría y Trigonometría de la Colección Compendios Académicos, Edición Nueva, en Google Drive",
+              "alt": "Portada de Geometría y Trigonometría, Colección Compendios Académicos, Edición Nueva"
             }
           ]
         }
