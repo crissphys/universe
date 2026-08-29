@@ -1184,7 +1184,7 @@
       "courses": [
         {
           "slug": "coleccion-completa",
-          "name": "Colección completa",
+          "name": "Colección Edición Antigua",
           "icon": "book",
           "colors": ["#003f83", "#ffcc19", "rgba(0,63,131,.22)"],
           "books": [
