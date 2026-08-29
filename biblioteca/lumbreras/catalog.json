@@ -1423,6 +1423,203 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "seleccion-de-preguntas",
+      "number": "07",
+      "name": "Selección de Preguntas",
+      "description": "Libros de preguntas y solucionarios organizados por universidad y curso.",
+      "sections": [
+        {
+          "slug": "libros",
+          "name": "Selección de Preguntas Libros",
+          "description": "Libros completos por tipo de admisión.",
+          "books": [
+            {
+              "series": "Selección de Preguntas",
+              "title": "Tipo Admisión",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/tipo-admision.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1BQ0T7iDyFBQFmbVU2OhA8wCCd4dD1d0e/view?usp=drive_link",
+              "aria": "Abrir Tipo Admisión en Google Drive",
+              "alt": "Portada de Tipo Admisión"
+            },
+            {
+              "series": "Selección de Preguntas",
+              "title": "Tipo UNI",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/tipo-uni.jpg",
+              "driveUrl": "https://drive.google.com/file/d/12EfDptcJCXTiokMbQfSKQd7Kb12n1p6_/view?usp=drive_link",
+              "aria": "Abrir Tipo UNI en Google Drive",
+              "alt": "Portada de Tipo UNI"
+            },
+            {
+              "series": "Selección de Preguntas",
+              "title": "Tipo UNMSM Ciencias",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/unmsm-ciencias.jpg",
+              "driveUrl": "https://drive.google.com/file/d/14ms75dibXFgrTi7solnb8AMVfQZB2t2u/view?usp=drive_link",
+              "aria": "Abrir Tipo UNMSM Ciencias en Google Drive",
+              "alt": "Portada de Tipo UNMSM Ciencias"
+            },
+            {
+              "series": "Selección de Preguntas",
+              "title": "Tipo UNMSM Letras",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/unmsm-letras.jpg",
+              "driveUrl": "https://drive.google.com/file/d/18R3j1MSoBk9vfPLCvud0PefcJ6q6swll/view?usp=drive_link",
+              "aria": "Abrir Tipo UNMSM Letras en Google Drive",
+              "alt": "Portada de Tipo UNMSM Letras"
+            },
+            {
+              "series": "Selección de Preguntas",
+              "title": "Tipo UNMSM Matemáticas",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/unmsm-matematicas.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1_w4Esvi0a35F7p9be-jyzp5dztFjFBH2/view?usp=drive_link",
+              "aria": "Abrir Tipo UNMSM Matemáticas en Google Drive",
+              "alt": "Portada de Tipo UNMSM Matemáticas"
+            },
+            {
+              "series": "Selección de Preguntas",
+              "title": "Tipo UNSA",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/tipo-unsa.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1lD7RUtyLsm77UV4Pw0Q7P4_b0nrjlIRG/view?usp=drive_link",
+              "aria": "Abrir Tipo UNSA en Google Drive",
+              "alt": "Portada de Tipo UNSA"
+            }
+          ]
+        },
+        {
+          "slug": "solucionarios-unsa",
+          "name": "Solucionarios UNSA",
+          "description": "Solucionarios individuales por curso.",
+          "books": [
+            {
+              "series": "Solucionario UNSA",
+              "title": "Aritmética",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/02_01_UNSA_aritmetica.png",
+              "driveUrl": "https://drive.google.com/file/d/10I1tx6snEgUH0-YvLCZLJPhdB7wiNZW4/view?usp=drive_link",
+              "aria": "Abrir solucionario UNSA de Aritmética en Google Drive",
+              "alt": "Portada del solucionario UNSA de Aritmética"
+            },
+            {
+              "series": "Solucionario UNSA",
+              "title": "Álgebra",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/02_02_UNSA_algebra.png",
+              "driveUrl": "https://drive.google.com/file/d/1uOfEL0B2SRPPIPunVjqlEJ8q2RLCact4/view?usp=drive_link",
+              "aria": "Abrir solucionario UNSA de Álgebra en Google Drive",
+              "alt": "Portada del solucionario UNSA de Álgebra"
+            },
+            {
+              "series": "Solucionario UNSA",
+              "title": "Geometría",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/02_03_UNSA_geometria.png",
+              "driveUrl": "https://drive.google.com/file/d/1ixxfZmZGAwwwJ0Mc2dNijLAcDp3JdKaE/view?usp=drive_link",
+              "aria": "Abrir solucionario UNSA de Geometría en Google Drive",
+              "alt": "Portada del solucionario UNSA de Geometría"
+            },
+            {
+              "series": "Solucionario UNSA",
+              "title": "Trigonometría",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/02_04_UNSA_trigonometria.png",
+              "driveUrl": "https://drive.google.com/file/d/18LdtfYD8PbzWZnSe5Xm1hjfW1HkrLxmG/view?usp=drive_link",
+              "aria": "Abrir solucionario UNSA de Trigonometría en Google Drive",
+              "alt": "Portada del solucionario UNSA de Trigonometría"
+            },
+            {
+              "series": "Solucionario UNSA",
+              "title": "Razonamiento Lógico-Matemático",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/02_05_UNSA_razonamiento_matematico.png",
+              "driveUrl": "https://drive.google.com/file/d/1PDY7yUI0Mdl_BoakdQ_oCd2DaOYBMNaR/view?usp=drive_link",
+              "aria": "Abrir solucionario UNSA de Razonamiento Lógico-Matemático en Google Drive",
+              "alt": "Portada del solucionario UNSA de Razonamiento Lógico-Matemático"
+            },
+            {
+              "series": "Solucionario UNSA",
+              "title": "Física",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/02_06_UNSA_fisica.png",
+              "driveUrl": "https://drive.google.com/file/d/1dKiEzDf9Vv954t0_w8g8GHoj1Va3pa2a/view?usp=drive_link",
+              "aria": "Abrir solucionario UNSA de Física en Google Drive",
+              "alt": "Portada del solucionario UNSA de Física"
+            },
+            {
+              "series": "Solucionario UNSA",
+              "title": "Química",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/02_07_UNSA_quimica.png",
+              "driveUrl": "https://drive.google.com/file/d/1j8ckDTuO2rU7M_cQAouSPdIog1IVEB1W/view?usp=drive_link",
+              "aria": "Abrir solucionario UNSA de Química en Google Drive",
+              "alt": "Portada del solucionario UNSA de Química"
+            }
+          ]
+        },
+        {
+          "slug": "solucionarios-uncp",
+          "name": "Solucionarios UNCP",
+          "description": "Solucionarios individuales por curso.",
+          "books": [
+            {
+              "series": "Solucionario UNCP",
+              "title": "Aritmética",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_01_UNCP_aritmetica.png",
+              "driveUrl": "https://drive.google.com/file/d/1DXN30JBjQVj5nLW6-vT_Hh1vOmnhbyYK/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Aritmética en Google Drive",
+              "alt": "Portada del solucionario UNCP de Aritmética"
+            },
+            {
+              "series": "Solucionario UNCP",
+              "title": "Álgebra",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_02_UNCP_algebra.png",
+              "driveUrl": "https://drive.google.com/file/d/1TPTOZ9mGN9vVGrXS-g_XkSJXgLt6eWgN/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Álgebra en Google Drive",
+              "alt": "Portada del solucionario UNCP de Álgebra"
+            },
+            {
+              "series": "Solucionario UNCP",
+              "title": "Geometría",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_03_UNCP_geometria.png",
+              "driveUrl": "https://drive.google.com/file/d/1TlQfl-faY8FWBPzDU77Tcr-eZRpOV05T/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Geometría en Google Drive",
+              "alt": "Portada del solucionario UNCP de Geometría"
+            },
+            {
+              "series": "Solucionario UNCP",
+              "title": "Trigonometría",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_04_UNCP_trigonometria.png",
+              "driveUrl": "https://drive.google.com/file/d/1auDjxFryYimxOcFWKchgj2BWpZewfJxr/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Trigonometría en Google Drive",
+              "alt": "Portada del solucionario UNCP de Trigonometría"
+            },
+            {
+              "series": "Solucionario UNCP",
+              "title": "Estadística y Probabilidades",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_05_UNCP_estadistica.png",
+              "driveUrl": "https://drive.google.com/file/d/1yC3np33ZqsTWVrMRk7ZtLNQPZKIgaX2w/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Estadística y Probabilidades en Google Drive",
+              "alt": "Portada del solucionario UNCP de Estadística y Probabilidades"
+            },
+            {
+              "series": "Solucionario UNCP",
+              "title": "Aptitud Lógico-Matemática",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_06_UNCP_logico_matematico.png",
+              "driveUrl": "https://drive.google.com/file/d/1YTyDw7SmEASwpL_3d6um1_YbrSDJoruH/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Aptitud Lógico-Matemática en Google Drive",
+              "alt": "Portada del solucionario UNCP de Aptitud Lógico-Matemática"
+            },
+            {
+              "series": "Solucionario UNCP",
+              "title": "Física",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_07_UNCP_fisica.png",
+              "driveUrl": "https://drive.google.com/file/d/10ke0Md2qGeo9S0j3q0sH85hDlMMOvSoz/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Física en Google Drive",
+              "alt": "Portada del solucionario UNCP de Física"
+            },
+            {
+              "series": "Solucionario UNCP",
+              "title": "Química",
+              "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_08_UNCP_quimica.png",
+              "driveUrl": "https://drive.google.com/file/d/1lHmdwQSs07EzuFtZsf0YEYI789w5bIBw/view?usp=drive_link",
+              "aria": "Abrir solucionario UNCP de Química en Google Drive",
+              "alt": "Portada del solucionario UNCP de Química"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
