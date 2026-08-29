@@ -1355,6 +1355,30 @@
               "driveUrl": "https://drive.google.com/file/d/1fK-dHzjJ6uXSQL4MtYfeU7j9aPsZrCrb/view?usp=drivesdk",
               "aria": "Abrir Compendio Académico UNI de Trigonometría en Google Drive",
               "alt": "Portada del Compendio Académico UNI de Trigonometría"
+            },
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Aptitud Académica",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/aptitud-academica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1KvYvBeb6Wl5NeFFisTPPF93jRDNsUHsN/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Aptitud Académica en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Aptitud Académica"
+            },
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Geometría",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/geometria.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1X32hDLp2McHoQGqqUxED08Dip46o962L/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Geometría en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Geometría"
+            },
+            {
+              "series": "Compendios Académicos UNI",
+              "title": "Aritmética",
+              "image": "/assets/library/lumbreras/compendios-academicos-uni/aritmetica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1ODxsH7fWXhdzPvcFsvJyIU8ej44vbLje/view?usp=drivesdk",
+              "aria": "Abrir Compendio Académico UNI de Aritmética en Google Drive",
+              "alt": "Portada del Compendio Académico UNI de Aritmética"
             }
           ]
         }
