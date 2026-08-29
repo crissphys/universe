@@ -1383,6 +1383,46 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "diversos",
+      "number": "06",
+      "name": "Diversos",
+      "description": "Guías complementarias de cultura general, matemáticas y ciencias.",
+      "courses": [
+        {
+          "slug": "guias",
+          "name": "Guías",
+          "icon": "book",
+          "colors": ["#a90035", "#f5c400", "rgba(169,0,53,.20)"],
+          "books": [
+            {
+              "series": "Colección Diversos",
+              "title": "La Guía Humanística",
+              "image": "/assets/library/lumbreras/diversos/guia-humanistica.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1JMO3M6OpZTV6ONBlnFWPhPdmcBoNTKes/view?usp=drivesdk",
+              "aria": "Abrir La Guía Humanística en Google Drive",
+              "alt": "Portada de La Guía Humanística"
+            },
+            {
+              "series": "Colección Diversos",
+              "title": "La Guía Científica — Edición antigua",
+              "image": "/assets/library/lumbreras/diversos/guia-cientifica-edicion-antigua.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1XBgnDBeSjhRG6oCBlwypzYY2x55sjk01/view?usp=drivesdk",
+              "aria": "Abrir La Guía Científica, edición antigua, en Google Drive",
+              "alt": "Portada azul de La Guía Científica, edición antigua"
+            },
+            {
+              "series": "Colección Diversos",
+              "title": "La Guía Científica — Nueva edición",
+              "image": "/assets/library/lumbreras/diversos/guia-cientifica-nueva-edicion.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1gJ41FAa8XmTr-oBxW71jQXXE9gTNrccW/view?usp=drivesdk",
+              "aria": "Abrir La Guía Científica, nueva edición, en Google Drive",
+              "alt": "Portada roja de La Guía Científica, nueva edición"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
