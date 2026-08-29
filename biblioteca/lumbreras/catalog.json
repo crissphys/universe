@@ -228,7 +228,7 @@
     {
       "slug": "libros-azules-nuevos",
       "number": "02",
-      "name": "LIBROS AZULES NUEVOS",
+      "name": "LIBROS AZULES",
       "description": "Nueva colección de Ciencias y Humanidades de Editorial Lumbreras.",
       "sections": [
         {
@@ -315,6 +315,85 @@
               "driveUrl": "https://drive.google.com/file/d/18Fjlvgz8ZhvMCIrDFgAwfpXo41P69mOt/view?usp=drive_link",
               "aria": "Abrir Geografía HD (800 MB) en Google Drive",
               "alt": "Portada del libro Geografía HD (800 MB)"
+            }
+          ]
+        },
+        {
+          "slug": "edicion-especial",
+          "name": "Edición Especial",
+          "description": "Libros de edición especial de la colección azul de Lumbreras.",
+          "books": [
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Razonamiento Verbal I",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/razonamiento-verbal-i.png",
+              "driveUrl": "https://drive.google.com/file/d/1R8rVxomB22qN-qubFgVQ4KqJu80DKV5o/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Verbal I de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Razonamiento Verbal I, Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Razonamiento Verbal II",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/razonamiento-verbal-ii.png",
+              "driveUrl": "https://drive.google.com/file/d/1a2yEcnmVv-UgyV6ZPYhcE0aDuAmG7YUi/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Verbal II de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Razonamiento Verbal II, Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Razonamiento Matemático",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/razonamiento-matematico.png",
+              "driveUrl": "https://drive.google.com/file/d/1GntW0BKyzdXsvDoAJmSCOsktZELoaodZ/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Matemático de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Razonamiento Matemático, Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Razonamiento Matemático (Problemas Resueltos)",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/razonamiento-matematico-problemas-resueltos.png",
+              "driveUrl": "https://drive.google.com/file/d/1Kkj4_rRIMfyLamKiJgTafecD-kZiC9lL/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Matemático (Problemas Resueltos) de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Razonamiento Matemático (Problemas Resueltos), Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Anatomía",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/anatomia.png",
+              "driveUrl": "https://drive.google.com/file/d/1ECTPQGUYMGEC5CXMkdy2zmdVNdCRSLyU/view?usp=drive_link",
+              "aria": "Abrir Anatomía de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Anatomía, Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Biología",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/biologia.png",
+              "driveUrl": "https://drive.google.com/file/d/1FmvaCj1OnRHs5ziR0YCMI_Mm_2uF5tOE/view?usp=drive_link",
+              "aria": "Abrir Biología de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Biología, Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Filosofía",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/filosofia.png",
+              "driveUrl": "https://drive.google.com/file/d/1qcapDwro4YoMg-WmtNoGJ84yxU9jEZBJ/view?usp=drive_link",
+              "aria": "Abrir Filosofía de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Filosofía, Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Historia de la Humanidad Volumen I",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/historia-de-la-humanidad-volumen-i.png",
+              "driveUrl": "https://drive.google.com/file/d/1MqWALv05gV3VV4zQTNvU7CmTygwzCkkT/view?usp=drive_link",
+              "aria": "Abrir Historia de la Humanidad Volumen I de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Historia de la Humanidad Volumen I, Libros Azules, Edición Especial"
+            },
+            {
+              "series": "Libros Azules · Edición Especial",
+              "title": "Historia de la Humanidad Volumen II",
+              "image": "/assets/library/lumbreras/libros-azules-edicion-especial/historia-de-la-humanidad-volumen-ii.png",
+              "driveUrl": "https://drive.google.com/file/d/12uLIQ2BqzIao6SNGhu_j219FssLMAfZM/view?usp=drive_link",
+              "aria": "Abrir Historia de la Humanidad Volumen II de Libros Azules, Edición Especial, en Google Drive",
+              "alt": "Portada de Historia de la Humanidad Volumen II, Libros Azules, Edición Especial"
             }
           ]
         }
