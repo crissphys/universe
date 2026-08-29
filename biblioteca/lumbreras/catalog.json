@@ -226,8 +226,103 @@
       ]
     },
     {
-      "slug": "esenciales",
+      "slug": "libros-azules-nuevos",
       "number": "02",
+      "name": "LIBROS AZULES NUEVOS",
+      "description": "Nueva colección de Ciencias y Humanidades de Editorial Lumbreras.",
+      "sections": [
+        {
+          "slug": "humanidades",
+          "name": "Humanidades",
+          "description": "Historia, ciencias, letras y razonamiento para la preparación preuniversitaria.",
+          "books": [
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Historia del Perú",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/historia-del-peru.png",
+              "driveUrl": "https://drive.google.com/file/d/1uhmvvtYXpJhgsCEFIS1pNIatLv0S0wyJ/view?usp=drive_link",
+              "aria": "Abrir Historia del Perú en Google Drive",
+              "alt": "Portada del libro Historia del Perú"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Biología Tomo I",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/biologia-tomo-1.jpg",
+              "driveUrl": "https://drive.google.com/file/d/18ASO8pI5BL0hldn-cc9X02XQqbeczJqW/view?usp=drive_link",
+              "aria": "Abrir Biología Tomo I en Google Drive",
+              "alt": "Portada del libro Biología Tomo I"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Biología Tomo II",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/biologia-tomo-2.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1Of1g-CqbjIPycRKRTrWQkrXYEmAUbsHk/view?usp=drive_link",
+              "aria": "Abrir Biología Tomo II en Google Drive",
+              "alt": "Portada del libro Biología Tomo II"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Razonamiento Verbal",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/razonamiento-verbal.jpeg",
+              "driveUrl": "https://drive.google.com/file/d/1y2QqLDVoi0eQTupJWhSrxmaayR0SrG93/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Verbal en Google Drive",
+              "alt": "Portada del libro Razonamiento Verbal"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Razonamiento Matemático",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/razonamiento-matematico.png",
+              "driveUrl": "https://drive.google.com/file/d/1i3sXXxP49RyLOOEeQUtgRKK0rM_NZWMW/view?usp=drive_link",
+              "aria": "Abrir Razonamiento Matemático en Google Drive",
+              "alt": "Portada del libro Razonamiento Matemático"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Lenguaje",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/lenguaje.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1C1LZySpb3XgbUrPxTc2YRSHggwCGBA13/view?usp=drive_link",
+              "aria": "Abrir Lenguaje en Google Drive",
+              "alt": "Portada del libro Lenguaje"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Literatura",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/literatura.png",
+              "driveUrl": "https://drive.google.com/file/d/1DYD-CyKrrAG70QIxeTFD6sIcJ5rqY3HK/view?usp=drive_link",
+              "aria": "Abrir Literatura en Google Drive",
+              "alt": "Portada del libro Literatura"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Economía",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/economia.png",
+              "driveUrl": "https://drive.google.com/file/d/1riKbjUkjV3PoBzv9gOxeRK3PU5Hes2dw/view?usp=drive_link",
+              "aria": "Abrir Economía en Google Drive",
+              "alt": "Portada del libro Economía"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Geografía",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/geografia.jpg",
+              "driveUrl": "https://drive.google.com/file/d/1AkVTNhrMzV2T019liPTGE0FBdGj4VoBw/view?usp=drive_link",
+              "aria": "Abrir Geografía en Google Drive",
+              "alt": "Portada del libro Geografía"
+            },
+            {
+              "series": "Colección Ciencias y Humanidades",
+              "title": "Geografía HD (800 MB)",
+              "image": "/assets/library/lumbreras/libros-azules-nuevos/geografia.jpg",
+              "driveUrl": "https://drive.google.com/file/d/18Fjlvgz8ZhvMCIrDFgAwfpXo41P69mOt/view?usp=drive_link",
+              "aria": "Abrir Geografía HD (800 MB) en Google Drive",
+              "alt": "Portada del libro Geografía HD (800 MB)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "esenciales",
+      "number": "03",
       "name": "Esenciales",
       "description": "Colección de fundamentos esenciales organizada por curso.",
       "sections": [
@@ -402,7 +497,7 @@
     },
     {
       "slug": "temas-selectos",
-      "number": "03",
+      "number": "04",
       "name": "Temas Selectos",
       "description": "Colección de teoría y práctica por temas específicos, desde nivel básico hasta avanzado.",
       "courses": [
@@ -1178,7 +1273,7 @@
     },
     {
       "slug": "compendios-academicos",
-      "number": "04",
+      "number": "05",
       "name": "Compendios Académicos",
       "description": "Colección integral de teoría y práctica preuniversitaria de Editorial Lumbreras.",
       "courses": [
@@ -1306,7 +1401,7 @@
     },
     {
       "slug": "compendios-academicos-uni",
-      "number": "05",
+      "number": "06",
       "name": "Compendios Académicos UNI",
       "description": "Colección especializada para la preparación del examen de admisión UNI.",
       "courses": [
@@ -1386,7 +1481,7 @@
     },
     {
       "slug": "diversos",
-      "number": "06",
+      "number": "07",
       "name": "Diversos",
       "description": "Guías complementarias de cultura general, matemáticas y ciencias.",
       "courses": [
@@ -1426,7 +1521,7 @@
     },
     {
       "slug": "seleccion-de-preguntas",
-      "number": "07",
+      "number": "08",
       "name": "Selección de Preguntas",
       "description": "Libros de preguntas y solucionarios organizados por universidad y curso.",
       "sections": [
