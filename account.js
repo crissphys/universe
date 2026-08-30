@@ -1,9 +1,16 @@
 (function () {
   var API_BASE = '/api/site';
   var AUTH_TOKEN_KEY = 'universe_auth_token';
-  var CURRENT_CEPRE_CYCLE = '2026-2';
-  var CEPRE_CYCLES = ['2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
-  var ACADEMIES = ['Pitágoras', 'César Vallejo', 'Savia', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI', 'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Integral Class', 'Academia Prisma', 'Otra academia'];
+  var CURRENT_CEPRE_CYCLE = '2027-1';
+  var VERIFIED_CEPRE_CYCLE = '2026-2';
+  var CEPRE_CYCLES = ['2027-2', '2027-1', '2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
+  var ACADEMIES = ['Pitágoras', 'César Vallejo', 'ADUNI', 'Trilce', 'Pamer', 'Exclusiva UNI', 'ASEUNI', 'ADCUNI', 'Academia Ingeniería', 'Formación UNI', 'Aula 20', 'ACUNI', 'Grupo Ciencias', 'Vonex', 'Saco Oliveros', 'Savia', 'Integral Class', 'Academia Prisma', 'Academia Euclides', 'Academia Apolo', 'Academia Mendel', 'Otra academia'];
+  var INTENT_LABELS = {
+    offering: 'Dispuesto/a a apoyar',
+    seeking: 'Buscando material',
+    both: 'Apoya y busca material',
+    networking: 'Aquí para estudiar y conocer personas'
+  };
   var state = {
     user: null,
     profile: null,
@@ -104,27 +111,50 @@
     var track = $('academic-track') ? $('academic-track').value : '';
     var member = track === 'cepreuni';
     var academy = track === 'academy';
+    var uniStudent = track === 'uni-student';
     var cycle = $('cepre-cycle') ? $('cepre-cycle').value : CURRENT_CEPRE_CYCLE;
+    if ($('cepre-details-wrap')) $('cepre-details-wrap').hidden = !member;
     if ($('academy-wrap')) $('academy-wrap').hidden = !academy;
-    if ($('cepre-cycle-wrap')) $('cepre-cycle-wrap').hidden = !member;
-    if ($('cepre-code-wrap')) $('cepre-code-wrap').hidden = !member || cycle !== CURRENT_CEPRE_CYCLE;
+    if ($('uni-details-wrap')) $('uni-details-wrap').hidden = !uniStudent;
+    if ($('cepre-code-wrap')) $('cepre-code-wrap').hidden = !member || cycle !== VERIFIED_CEPRE_CYCLE;
+    if ($('community-target') && !$('community-target').value) {
+      if (member || uniStudent) $('community-target').value = 'UNI';
+      if (track === 'san-marcos') $('community-target').value = 'San Marcos';
+    }
     if ($('academic-explain')) {
       $('academic-explain').textContent =
-        track === 'cepreuni' ? 'Si eres del ciclo actual, validaremos que el código exista en el ranking y que no esté usado por otra cuenta.' :
-        track === 'uni-student' ? 'Guardaremos tu perfil como estudiante de la Universidad Nacional de Ingeniería.' :
+        track === 'cepreuni' ? 'Selecciona el ciclo 2027 o uno anterior y luego indica si perteneces a Básico, PRE, IEN, Intensivo u otra modalidad.' :
+        track === 'uni-student' ? 'Indica tu carrera y ciclo actual en la Universidad Nacional de Ingeniería.' :
         track === 'san-marcos' ? 'Guardaremos tu perfil como postulante San Marcos para personalizar temario, simulacros y avisos.' :
-        track === 'academy' ? 'Selecciona tu academia preuniversitaria para organizar mejor tus recursos.' :
-        track === 'independent' ? 'Listo: tu perfil quedará como estudiante autónomo.' :
+        track === 'academy' ? 'Selecciona la academia a la que asistes y el ciclo o modalidad que llevas.' :
+        track === 'independent' ? 'Tu perfil mostrará que estudias de forma autodidacta.' :
         'Elige tu perfil académico para personalizar tu experiencia.';
     }
+    updateOverview();
+  }
+  function academicSummary() {
+    var track = $('academic-track') ? $('academic-track').value : '';
+    if (track === 'cepreuni') return ['CEPREUNI', $('cepre-cycle').value, $('cepre-program').value].filter(Boolean).join(' · ');
+    if (track === 'academy') return [$('academy-name').value, $('academy-cycle').value].filter(Boolean).join(' · ') || 'Estudia en una academia';
+    if (track === 'uni-student') return ['Estudiante UNI', $('uni-career').value, $('uni-cycle').value].filter(Boolean).join(' · ');
+    if (track === 'san-marcos') return 'Postulante a San Marcos';
+    if (track === 'independent') return 'Estudiante autodidacta';
+    return 'Completa tu situación académica';
+  }
+  function updateOverview() {
+    var fallbackName = repairText([$('profile-first') && $('profile-first').value, $('profile-last') && $('profile-last').value].filter(Boolean).join(' ') || state.user && state.user.name || 'Tu nombre');
+    var displayName = $('community-display-name') && $('community-display-name').value.trim() || fallbackName;
+    var username = $('community-username') && $('community-username').value.trim().toLowerCase();
+    if ($('account-display-name')) $('account-display-name').textContent = displayName || 'Tu nombre';
+    if ($('account-display-handle')) $('account-display-handle').textContent = username ? '@' + username : '@usuario';
+    if ($('account-academic-summary')) $('account-academic-summary').textContent = academicSummary();
+    if ($('account-intent-summary')) $('account-intent-summary').textContent = INTENT_LABELS[$('community-intent') && $('community-intent').value] || 'Indica qué buscas en la comunidad';
   }
   function fillProfile() {
     var u = state.user, p = state.profile || {};
     var parts = repairText(p.googleName || u.name || '').split(/\s+/);
     var firstName = repairText(p.firstName || parts[0] || '');
     var lastName = repairText(p.lastName || parts.slice(1).join(' ') || '');
-    $('account-display-name').textContent = [firstName, lastName].filter(Boolean).join(' ') || 'Usuario';
-    $('account-display-email').textContent = u.email || '';
     $('profile-first').value = firstName;
     $('profile-last').value = lastName;
     $('profile-age').value = p.age || '';
@@ -133,20 +163,19 @@
     $('academic-track').value = p.academicTrack || (p.cepreMember || p.cepreCode || p.cepreCycle ? 'cepreuni' : '');
     fillSelect('academy-name', ACADEMIES, p.academyName || '', 'Selecciona academia');
     fillSelect('cepre-cycle', CEPRE_CYCLES, p.cepreCycle || CURRENT_CEPRE_CYCLE);
-    var avatar = $('account-avatar');
-    var avatarSrc = state.community && state.community.avatar || u.avatar || '';
-    avatar.innerHTML = avatarSrc ? '<img alt="" src="' + safe(avatarSrc) + '">' : safe((u.name || 'U').charAt(0).toUpperCase());
+    $('cepre-program').value = p.cepreProgram || '';
+    $('academy-cycle').value = p.academyCycle || '';
+    $('uni-career').value = p.uniCareer || '';
+    $('uni-cycle').value = p.uniCycle || '';
     var code = normalizeCode(p.cepreCode || '');
     if (code) {
       $('code-current').innerHTML = '<p><span class="code-lock">Código registrado: ' + safe(code) + ' · ' + safe(p.cepreCycle || CURRENT_CEPRE_CYCLE) + '</span></p>';
       $('cepre-code').value = code;
       $('cepre-code').disabled = true;
-      status('code-status', 'Tu código ya está vinculado. No se puede cambiar desde esta página.', 'good');
     } else {
       $('code-current').innerHTML = '';
       $('cepre-code').value = '';
       $('cepre-code').disabled = false;
-      status('code-status', 'Si eres del ciclo actual, el código se validará antes de guardarse.', 'warn');
     }
     toggleAcademicFields();
   }
@@ -157,6 +186,7 @@
     $('community-username').value = p.username || '';
     $('community-display-name').value = p.displayName || fallbackName;
     $('community-target').value = p.target || state.profile && state.profile.target || '';
+    $('community-intent').value = p.intent || state.profile && state.profile.communityIntent || '';
     $('community-visibility').value = p.profileVisibility || 'public';
     $('community-bio').value = p.bio || '';
     $('community-show-avatar').checked = p.showAvatar !== false;
@@ -166,12 +196,14 @@
     state.communityAvatar = p.avatar || state.user && state.user.avatar || '';
     var avatar = $('community-avatar');
     avatar.innerHTML = state.communityAvatar ? '<img alt="" src="' + safe(state.communityAvatar) + '">' : safe((fallbackName || 'U').charAt(0).toUpperCase());
+    updateOverview();
   }
   function communityPayload() {
     return {
       username: $('community-username').value.trim().toLowerCase(),
       displayName: $('community-display-name').value.trim(),
       target: $('community-target').value,
+      intent: $('community-intent').value,
       bio: $('community-bio').value.trim(),
       avatar: state.communityAvatar || '',
       profileVisibility: $('community-visibility').value,
@@ -188,6 +220,11 @@
       username_change_wait: 'Por seguridad, el nombre de usuario solo puede cambiarse una vez cada 30 días.',
       academic_track_required: 'Selecciona primero tu tipo de estudiante.',
       academy_required: 'Selecciona tu academia.',
+      academy_cycle_required: 'Selecciona el ciclo o modalidad de tu academia.',
+      cepre_program_required: 'Selecciona tu modalidad CEPREUNI.',
+      uni_career_required: 'Escribe tu carrera UNI.',
+      uni_cycle_required: 'Selecciona tu ciclo universitario.',
+      community_intent_required: 'Indica qué buscas o cómo quieres apoyar en la comunidad.',
       target_required: 'Selecciona a dónde estás postulando.'
     }[String(error && error.message || '')] || 'No se pudo guardar el perfil. Inténtalo nuevamente.';
   }
@@ -218,34 +255,22 @@
       state.profileLoading = false;
     }
   }
-  async function saveProfile() {
-    if (!state.user) return;
-    var data = {
+  function academicPayload() {
+    var track = $('academic-track').value;
+    return {
       firstName: $('profile-first').value.trim(),
       lastName: $('profile-last').value.trim(),
       age: $('profile-age').value.trim(),
       phone: $('profile-phone').value.trim(),
-      email: state.user.email || '',
-      googleName: state.user.name || '',
-      avatar: state.user.avatar || '',
-      updatedAt: Date.now()
-    };
-    await api('/profiles/' + uid(), 'PATCH', data);
-    state.profile = Object.assign({}, state.profile || {}, data);
-    fillProfile();
-    status('profile-status', 'Perfil guardado correctamente.', 'good');
-  }
-  async function saveAcademicProfile() {
-    if (!state.user) return;
-    var track = $('academic-track').value;
-    var cycle = $('cepre-cycle').value || CURRENT_CEPRE_CYCLE;
-    var code = normalizeCode($('cepre-code').value);
-    var existing = normalizeCode(state.profile && state.profile.cepreCode || '');
-    var data = {
       academicTrack: track,
       academyName: track === 'academy' ? $('academy-name').value : '',
+      academyCycle: track === 'academy' ? $('academy-cycle').value : '',
       cepreMember: track === 'cepreuni',
-      cepreCycle: track === 'cepreuni' ? cycle : '',
+      cepreCycle: track === 'cepreuni' ? ($('cepre-cycle').value || CURRENT_CEPRE_CYCLE) : '',
+      cepreProgram: track === 'cepreuni' ? $('cepre-program').value : '',
+      uniCareer: track === 'uni-student' ? $('uni-career').value.trim() : '',
+      uniCycle: track === 'uni-student' ? $('uni-cycle').value : '',
+      communityIntent: $('community-intent').value,
       target: $('community-target').value,
       onboardingComplete: true,
       email: state.user.email || '',
@@ -253,100 +278,69 @@
       avatar: state.user.avatar || '',
       updatedAt: Date.now()
     };
-
-    if (!track) { status('code-status', 'Elige si eres CEPREUNI, estudiante UNI, San Marcos, academia o estudiante independiente.', 'bad'); return; }
-    if (track === 'academy' && !data.academyName) { status('code-status', 'Selecciona tu academia.', 'bad'); return; }
-    var publicData = communityPayload();
-    if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(publicData.username)) {
-      status('code-status', 'Antes de guardar, crea tu nombre de usuario en la sección Perfil público y privacidad.', 'bad');
-      $('community-username').focus();
-      return;
-    }
-    if (track !== 'cepreuni') {
-      if (existing) { status('code-status', 'Tu cuenta ya tiene un código CEPREUNI del ciclo actual; no se elimina desde aquí.', 'bad'); return; }
-      data.cepreCode = '';
-      try {
-        var onboarding = await communityApi('/onboarding', 'POST', Object.assign({}, publicData, data));
-        state.community = onboarding.profile || state.community;
-        state.profile = Object.assign({}, state.profile || {}, data, { onboardingComplete: true });
-      } catch (error) { status('code-status', communityError(error), 'bad'); return; }
-      fillProfile();
-      fillCommunity();
-      status('code-status', 'Perfil académico guardado correctamente.', 'good');
-      return;
-    }
-    if (cycle !== CURRENT_CEPRE_CYCLE) {
-      data.cepreCode = '';
-      try {
-        var previousOnboarding = await communityApi('/onboarding', 'POST', Object.assign({}, publicData, data));
-        state.community = previousOnboarding.profile || state.community;
-        state.profile = Object.assign({}, state.profile || {}, data, { onboardingComplete: true });
-      } catch (error) { status('code-status', communityError(error), 'bad'); return; }
-      fillProfile();
-      fillCommunity();
-      status('code-status', 'Ciclo CEPREUNI anterior guardado. No se pidió código porque puede repetirse entre ciclos.', 'good');
-      return;
-    }
-    if (!code) { status('code-status', 'Escribe tu código CEPREUNI del ciclo actual.', 'bad'); return; }
-    if (!validCodes().has(code)) { status('code-status', 'Ese código no existe en el ranking CEPREUNI actual cargado en Universe.', 'bad'); return; }
-    if (existing && existing !== code) { status('code-status', 'Tu cuenta ya tiene un código registrado y no se puede cambiar.', 'bad'); return; }
-    var ownerRoute = '/codeOwnersByCycle/' + cleanId(cycle) + '/' + cleanId(code);
+  }
+  function validateUnifiedProfile(publicData, academicData) {
+    if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(publicData.username)) return communityError(new Error('invalid_username'));
+    if (!publicData.displayName) return 'Escribe el nombre que quieres mostrar en tu perfil.';
+    if (!academicData.academicTrack) return 'Selecciona tu situación académica actual.';
+    if (academicData.academicTrack === 'academy' && !academicData.academyName) return 'Selecciona la academia a la que asistes.';
+    if (academicData.academicTrack === 'academy' && !academicData.academyCycle) return 'Selecciona el ciclo o modalidad de tu academia.';
+    if (academicData.academicTrack === 'cepreuni' && !academicData.cepreProgram) return 'Selecciona tu modalidad CEPREUNI: Básico, PRE, IEN, Intensivo u otra.';
+    if (academicData.academicTrack === 'uni-student' && !academicData.uniCareer) return 'Escribe la carrera que estudias en la UNI.';
+    if (academicData.academicTrack === 'uni-student' && !academicData.uniCycle) return 'Selecciona tu ciclo universitario.';
+    if (!academicData.target) return 'Selecciona tu objetivo principal.';
+    if (!publicData.intent) return 'Indica si quieres apoyar, buscas material o ambas cosas.';
+    return '';
+  }
+  async function prepareCepreCode(academicData) {
+    var existing = normalizeCode(state.profile && state.profile.cepreCode || '');
+    if (academicData.academicTrack !== 'cepreuni' || academicData.cepreCycle !== VERIFIED_CEPRE_CYCLE) return null;
+    if (existing) return { code: existing, existing: true };
+    var code = normalizeCode($('cepre-code').value);
+    if (!code) throw new Error('cepre_code_required');
+    if (!validCodes().has(code)) throw new Error('cepre_code_invalid');
+    var ownerRoute = '/codeOwnersByCycle/' + cleanId(academicData.cepreCycle) + '/' + cleanId(code);
     var owner = await api(ownerRoute, 'GET').catch(function () { return null; });
     var legacy = await api('/codeOwners/' + cleanId(code), 'GET').catch(function () { return null; });
-    if ((owner && owner.userId && owner.userId !== uid()) || (legacy && legacy.userId && legacy.userId !== uid())) {
-      status('code-status', 'Este código del ciclo actual ya fue registrado por otra cuenta de Gmail.', 'bad');
-      return;
-    }
-    if (!existing) {
-      var ok = confirm('¿Estás seguro de que este es tu código CEPREUNI del ciclo ' + cycle + '?\n\nCódigo: ' + code + '\n\nNo se volverá a cambiar para este ciclo. Las notificaciones y datos asociados llegarán a tu cuenta: ' + (state.user.email || ''));
-      if (!ok) return;
-    }
-    data.cepreCode = code;
-    try {
-      await api(ownerRoute, 'PUT', { cycle: cycle });
-      await api('/codeOwners/' + cleanId(code), 'PUT', { cycle: cycle });
-      var currentOnboarding = await communityApi('/onboarding', 'POST', Object.assign({}, publicData, data));
-      state.community = currentOnboarding.profile || state.community;
-      await api('/profiles/' + uid(), 'PATCH', data);
-    } catch (error) {
-      status('code-status', error.status === 409 ? 'Este código ya fue registrado por otra cuenta.' : communityError(error), 'bad');
-      return;
-    }
-    state.profile = Object.assign({}, state.profile || {}, data);
-    fillProfile();
-    fillCommunity();
-    status('code-status', 'Datos CEPREUNI guardados. Tu código queda vinculado para el ciclo actual.', 'good');
+    if ((owner && owner.userId && owner.userId !== uid()) || (legacy && legacy.userId && legacy.userId !== uid())) throw new Error('cepre_code_taken');
+    var ok = confirm('Confirma tu código CEPREUNI del ciclo ' + academicData.cepreCycle + ':\n\n' + code + '\n\nQuedará vinculado a ' + (state.user.email || '') + '.');
+    if (!ok) throw new Error('save_cancelled');
+    return { code: code, ownerRoute: ownerRoute, existing: false };
   }
-  async function saveCommunityProfile() {
+  async function saveUnifiedProfile() {
     if (!state.user) return;
-    var payload = communityPayload();
-    if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(payload.username)) {
-      status('community-status', communityError(new Error('invalid_username')), 'bad');
-      return;
-    }
-    if (!payload.displayName) { status('community-status', 'Escribe un nombre visible.', 'bad'); return; }
+    var button = document.querySelector('[data-save-unified]');
+    var publicData = communityPayload();
+    var academicData = academicPayload();
+    var validation = validateUnifiedProfile(publicData, academicData);
+    if (validation) { unifiedStatus(validation, 'bad'); return; }
+    if (button) button.disabled = true;
+    unifiedStatus('Guardando tu perfil único...', 'saving');
     try {
-      var result;
-      if (!(state.profile && state.profile.onboardingComplete)) {
-        payload.academicTrack = $('academic-track').value;
-        payload.academyName = $('academy-name').value;
-        payload.cepreCycle = $('cepre-cycle').value;
-        if (!payload.academicTrack) {
-          status('community-status', 'Selecciona también tu tipo de estudiante para completar el registro una sola vez.', 'bad');
-          return;
-        }
-        result = await communityApi('/onboarding', 'POST', payload);
-        state.profile = Object.assign({}, state.profile || {}, result.academic || {}, { onboardingComplete: true });
-      } else {
-        result = await communityApi('/me', 'PUT', payload);
+      var codeClaim = await prepareCepreCode(academicData);
+      if (codeClaim && codeClaim.code) academicData.cepreCode = codeClaim.code;
+      var result = await communityApi('/onboarding', 'POST', Object.assign({}, publicData, academicData));
+      if (codeClaim && !codeClaim.existing) {
+        await api(codeClaim.ownerRoute, 'PUT', { cycle: academicData.cepreCycle });
+        await api('/codeOwners/' + cleanId(codeClaim.code), 'PUT', { cycle: academicData.cepreCycle });
       }
-      state.community = Object.assign({}, state.community || {}, payload, result.profile || {});
+      await api('/profiles/' + uid(), 'PATCH', academicData);
+      state.profile = Object.assign({}, state.profile || {}, academicData, result.academic || {}, { onboardingComplete: true });
+      state.community = Object.assign({}, state.community || {}, publicData, result.profile || {});
       state.communityDirty = false;
       fillProfile();
       fillCommunity(true);
-      status('community-status', 'Perfil público y preferencias de privacidad guardados.', 'good');
+      unifiedStatus('Perfil actualizado. Los cambios ya se usan también en UNITalk.', 'good');
     } catch (error) {
-      status('community-status', communityError(error), 'bad');
+      var message = {
+        cepre_code_required: 'Escribe tu código CEPREUNI para el ciclo verificable seleccionado.',
+        cepre_code_invalid: 'Ese código no aparece en el padrón CEPREUNI disponible en Universe.',
+        cepre_code_taken: 'Ese código CEPREUNI ya está vinculado a otra cuenta.',
+        save_cancelled: 'No se realizaron cambios.'
+      }[String(error && error.message || '')] || communityError(error);
+      unifiedStatus(message, error && error.message === 'save_cancelled' ? 'warn' : 'bad');
+    } finally {
+      if (button) button.disabled = false;
     }
   }
   async function loadAdmin() {
@@ -414,6 +408,12 @@
     renderEvents();
     status('schedule-status', 'Evento agregado. Presiona Guardar fechas para publicarlo.', 'warn');
   }
+  function unifiedStatus(msg, type) {
+    var el = $('unified-status');
+    if (!el) return;
+    el.textContent = msg;
+    el.dataset.state = type || '';
+  }
   function announcementUrls() {
     var value = $('ann-image-url') ? $('ann-image-url').value : '';
     return String(value || '').split(/\r?\n/).map(function (src) { return src.trim(); }).filter(function (src) { return /^https:\/\/[^\s"'<>]+$/i.test(src); });
@@ -458,11 +458,11 @@
   }
   function prepareCommunityAvatar(file) {
     if (!file || !/^image\/(?:png|jpeg|webp)$/i.test(file.type)) {
-      status('community-status', 'Selecciona una imagen PNG, JPG o WebP.', 'bad');
+      unifiedStatus('Selecciona una imagen PNG, JPG o WebP.', 'bad');
       return;
     }
     if (file.size > 5000000) {
-      status('community-status', 'La imagen original no puede pesar más de 5 MB.', 'bad');
+      unifiedStatus('La imagen original no puede pesar más de 5 MB.', 'bad');
       return;
     }
     var reader = new FileReader();
@@ -479,9 +479,9 @@
         ctx.drawImage(image, sx, sy, crop, crop, 0, 0, size, size);
         state.communityAvatar = canvas.toDataURL('image/jpeg', .78);
         $('community-avatar').innerHTML = '<img alt="" src="' + safe(state.communityAvatar) + '">';
-        status('community-status', 'Foto preparada. Presiona Guardar perfil público.', 'warn');
+        unifiedStatus('Foto preparada. Presiona “Guardar todos los cambios”.', 'warn');
       };
-      image.onerror = function () { status('community-status', 'No se pudo leer la imagen.', 'bad'); };
+      image.onerror = function () { unifiedStatus('No se pudo leer la imagen.', 'bad'); };
       image.src = String(reader.result || '');
     };
     reader.readAsDataURL(file);
@@ -489,15 +489,12 @@
   function bind() {
     var login = document.querySelector('[data-login]');
     if (login) login.onclick = function () { UniverseGoogleAuth.open({ account: true }); };
-    document.querySelector('[data-save-profile]').onclick = saveProfile;
-    document.querySelector('[data-save-community]').onclick = saveCommunityProfile;
-    document.querySelector('[data-register-code]').onclick = saveAcademicProfile;
+    document.querySelector('[data-save-unified]').onclick = saveUnifiedProfile;
     document.querySelector('[data-logout]').onclick = function () {
       if (window.UniverseGoogleAuth) UniverseGoogleAuth.signOut();
       state.user = null; state.profile = null; state.community = null; showLogin();
-      status('profile-status', 'Sesión cerrada.', 'warn');
     };
-    ['academic-track', 'academy-name', 'cepre-cycle'].forEach(function (id) {
+    ['academic-track', 'academy-name', 'academy-cycle', 'cepre-cycle', 'cepre-program', 'uni-career', 'uni-cycle', 'community-intent', 'community-target'].forEach(function (id) {
       if ($(id)) $(id).addEventListener('change', toggleAcademicFields);
     });
     document.querySelector('[data-save-ann]').onclick = saveAnnouncement;
@@ -533,16 +530,28 @@
       'community-username',
       'community-display-name',
       'community-target',
+      'community-intent',
       'community-visibility',
       'community-bio',
+      'profile-first',
+      'profile-last',
+      'profile-age',
+      'profile-phone',
+      'academic-track',
+      'academy-name',
+      'academy-cycle',
+      'cepre-cycle',
+      'cepre-program',
+      'uni-career',
+      'uni-cycle',
       'community-show-avatar',
       'community-show-academy',
       'community-show-cycle',
       'community-show-target'
     ].forEach(function (id) {
       if (!$(id)) return;
-      $(id).addEventListener('input', function () { state.communityDirty = true; });
-      $(id).addEventListener('change', function () { state.communityDirty = true; });
+      $(id).addEventListener('input', function () { state.communityDirty = true; updateOverview(); });
+      $(id).addEventListener('change', function () { state.communityDirty = true; updateOverview(); });
     });
     window.addEventListener('universe-google-auth', function () { setTimeout(loadProfile, 80); });
   }

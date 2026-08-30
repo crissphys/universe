@@ -39,6 +39,7 @@ const ACADEMIES = [
 ];
 const ACADEMIC_TRACKS = ['cepreuni', 'uni-student', 'san-marcos', 'academy', 'independent'];
 const TARGETS = ['UNI', 'San Marcos', 'Otra universidad', 'Aún no lo decido'];
+const COMMUNITY_INTENTS = ['offering', 'seeking', 'both', 'networking'];
 const UNIT_ROOT = '/community/unitalkV1';
 const SITE_ROOT = '/site/universeV1';
 const AUTH_ROOT = '/private/universeAuthV1';
@@ -304,9 +305,20 @@ function publicProfile(profile, viewer) {
     profileVisibility: visibility,
     joinedAt: Number(profile.joinedAt) || 0
   };
-  if (canSee && profile.showAcademy !== false) result.academy = cleanText(profile.academy, 60);
-  if (canSee && profile.showCycle !== false) result.cycle = cleanText(profile.cycle, 30);
-  if (canSee && profile.showTarget !== false) result.target = cleanText(profile.target, 40);
+  if (canSee && profile.showAcademy !== false) {
+    result.academy = cleanText(profile.academy, 60);
+    result.academicTrack = ACADEMIC_TRACKS.includes(profile.academicTrack) ? profile.academicTrack : '';
+  }
+  if (canSee && profile.showCycle !== false) {
+    result.cycle = cleanText(profile.cycle, 30);
+    result.program = cleanText(profile.program, 40);
+    result.career = cleanText(profile.career, 80);
+    result.universityCycle = cleanText(profile.universityCycle, 30);
+  }
+  if (canSee && profile.showTarget !== false) {
+    result.target = cleanText(profile.target, 40);
+    result.intent = COMMUNITY_INTENTS.includes(profile.intent) ? profile.intent : '';
+  }
   if (!canSee) result.private = true;
   return result;
 }
@@ -316,8 +328,8 @@ function sanitizeAcademicProfile(data, existing, auth) {
   existing = existing && typeof existing === 'object' ? existing : {};
   var track = ACADEMIC_TRACKS.includes(data.academicTrack) ? data.academicTrack : existing.academicTrack || '';
   var academy = track === 'academy' ? cleanText(data.academyName, 60) : '';
-  var cycle = track === 'cepreuni' ? cleanText(data.cepreCycle, 20) : '';
-  var code = track === 'cepreuni' ? cleanText(data.cepreCode || existing.cepreCode, 12).toUpperCase().replace(/\s+/g, '') : '';
+  var cycle = track === 'cepreuni' ? cleanText(data.cepreCycle, 20) : cleanText(existing.cepreCycle, 20);
+  var code = cleanText(data.cepreCode || existing.cepreCode, 12).toUpperCase().replace(/\s+/g, '');
   return {
     userId: auth.id,
     email: auth.email,
@@ -329,9 +341,14 @@ function sanitizeAcademicProfile(data, existing, auth) {
     phone: cleanText(data.phone !== undefined ? data.phone : existing.phone, 24),
     academicTrack: track,
     academyName: academy,
+    academyCycle: track === 'academy' ? cleanText(data.academyCycle !== undefined ? data.academyCycle : existing.academyCycle, 40) : '',
     cepreMember: track === 'cepreuni',
     cepreCycle: cycle,
     cepreCode: code,
+    cepreProgram: track === 'cepreuni' ? cleanText(data.cepreProgram !== undefined ? data.cepreProgram : existing.cepreProgram, 40) : '',
+    uniCareer: track === 'uni-student' ? cleanText(data.uniCareer !== undefined ? data.uniCareer : existing.uniCareer, 80) : '',
+    uniCycle: track === 'uni-student' ? cleanText(data.uniCycle !== undefined ? data.uniCycle : existing.uniCycle, 30) : '',
+    communityIntent: COMMUNITY_INTENTS.includes(data.communityIntent) ? data.communityIntent : existing.communityIntent || '',
     target: TARGETS.includes(data.target) ? data.target : existing.target || '',
     onboardingComplete: cleanBoolean(data.onboardingComplete, existing.onboardingComplete === true),
     createdAt: Number(existing.createdAt) || Date.now(),
@@ -1274,7 +1291,12 @@ async function saveCommunityProfile(env, auth, data, academic) {
       academic.academicTrack === 'uni-student' ? 'Universidad Nacional de Ingeniería' :
       academic.academicTrack === 'san-marcos' ? 'Postulante San Marcos' :
       academic.academicTrack === 'independent' ? 'Estudiante independiente' : cleanText(existing.academy, 60),
-    cycle: cleanText(academic.cepreCycle || data.cycle || existing.cycle, 30),
+    cycle: cleanText(academic.academicTrack === 'cepreuni' ? academic.cepreCycle : academic.academicTrack === 'academy' ? academic.academyCycle : '', 30),
+    academicTrack: ACADEMIC_TRACKS.includes(academic.academicTrack) ? academic.academicTrack : existing.academicTrack || '',
+    program: cleanText(academic.academicTrack === 'cepreuni' ? academic.cepreProgram : academic.academicTrack === 'academy' ? academic.academyCycle : '', 40),
+    career: cleanText(academic.academicTrack === 'uni-student' ? academic.uniCareer : '', 80),
+    universityCycle: cleanText(academic.academicTrack === 'uni-student' ? academic.uniCycle : '', 30),
+    intent: COMMUNITY_INTENTS.includes(data.intent) ? data.intent : COMMUNITY_INTENTS.includes(academic.communityIntent) ? academic.communityIntent : existing.intent || '',
     target: TARGETS.includes(data.target) ? data.target : academic.target || existing.target || '',
     profileVisibility: visibility,
     showAvatar: cleanBoolean(data.showAvatar, existing.showAvatar !== false),
@@ -1356,6 +1378,11 @@ async function handleUnitalk(request, env, subpath) {
     var academic = sanitizeAcademicProfile(body, existingAcademic, auth);
     if (!academic.academicTrack) return json({ error: 'academic_track_required' }, 400);
     if (academic.academicTrack === 'academy' && !academic.academyName) return json({ error: 'academy_required' }, 400);
+    if (academic.academicTrack === 'academy' && !academic.academyCycle) return json({ error: 'academy_cycle_required' }, 400);
+    if (academic.academicTrack === 'cepreuni' && !academic.cepreProgram) return json({ error: 'cepre_program_required' }, 400);
+    if (academic.academicTrack === 'uni-student' && !academic.uniCareer) return json({ error: 'uni_career_required' }, 400);
+    if (academic.academicTrack === 'uni-student' && !academic.uniCycle) return json({ error: 'uni_cycle_required' }, 400);
+    if (!COMMUNITY_INTENTS.includes(body.intent)) return json({ error: 'community_intent_required' }, 400);
     academic.target = TARGETS.includes(body.target) ? body.target : existingAcademic.target || '';
     if (!academic.target) return json({ error: 'target_required' }, 400);
     academic.onboardingComplete = true;
@@ -1365,7 +1392,12 @@ async function handleUnitalk(request, env, subpath) {
     return json({ ok: true, profile: publicProfile(community.profile, auth), academic: {
       academicTrack: academic.academicTrack,
       academyName: academic.academyName,
+      academyCycle: academic.academyCycle,
       cepreCycle: academic.cepreCycle,
+      cepreProgram: academic.cepreProgram,
+      uniCareer: academic.uniCareer,
+      uniCycle: academic.uniCycle,
+      communityIntent: academic.communityIntent,
       target: academic.target,
       onboardingComplete: true
     } });
