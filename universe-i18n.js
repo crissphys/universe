@@ -145,6 +145,15 @@
   ];
 
   var dynamicRules = [
+    [/^(\d+)\s+colecciones?$/i, '$1 collections'],
+    [/^(\d+)\s+cursos?$/i, '$1 subjects'],
+    [/^(\d+)\s+libros disponibles$/i, '$1 books available'],
+    [/^(\d+)\s+libros?$/i, '$1 books'],
+    [/^Colección\s+(\d+)$/i, 'Collection $1'],
+    [/^Sección\s+(\d+)$/i, 'Section $1'],
+    [/^Libros de (.+) de Lumbreras$/i, 'Lumbreras $1 books'],
+    [/^Libros de la colección (.+) de Lumbreras$/i, 'Books in the Lumbreras $1 collection'],
+    [/^Abrir (.+) en Google Drive$/i, 'Open $1 in Google Drive'],
     [/^Pregunta\s+(\d+)\s+de\s+(\d+)$/i, 'Question $1 of $2'],
     [/^Pregunta\s+(\d+)$/i, 'Question $1'],
     [/^([\d.,]+)\s*%\s+del puntaje máximo$/i, '$1% of the maximum score'],
@@ -251,7 +260,7 @@
       var script = existing || document.createElement('script');
       if (!existing) {
         script.id = 'uts-i18n-catalog';
-        script.src = '/universe-i18n-catalog.js?v=en-10';
+        script.src = '/universe-i18n-catalog.js?v=en-11';
         script.async = true;
         document.head.appendChild(script);
       }
