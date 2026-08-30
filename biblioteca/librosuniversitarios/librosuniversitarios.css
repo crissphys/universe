@@ -217,8 +217,8 @@ html[data-universe-theme="dark"] body .university-books .book-cover {
 /* Tabletas y pantallas de escritorio estrechas. */
 @media (max-width: 1180px) {
   .university-books .lumbreras-hero-grid {
-    grid-template-columns: minmax(0, 1fr) 230px;
-    gap: 2.25rem;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 1.5rem;
   }
 
   .university-books .lumbreras-hero h1 {
@@ -226,7 +226,7 @@ html[data-universe-theme="dark"] body .university-books .book-cover {
   }
 
   .university-books .lumbreras-brand-card {
-    min-height: 240px;
+    min-height: 210px;
     padding: 1.4rem;
   }
 
@@ -238,11 +238,6 @@ html[data-universe-theme="dark"] body .university-books .book-cover {
 }
 
 @media (max-width: 900px) {
-  .university-books .lumbreras-hero-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
   .university-books .lumbreras-hero h1 {
     font-size: clamp(3.5rem, 10vw, 5rem);
   }
