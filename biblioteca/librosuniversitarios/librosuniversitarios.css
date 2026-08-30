@@ -1,7 +1,445 @@
-.books-shell{display:contents}.university-books .lumbreras-hero h1 em{color:#0b7f8f}.university-books .catalog-eyebrow{color:#0b7f8f}.university-books .catalog-eyebrow i{background:linear-gradient(90deg,#0b7f8f,#45b9bd)}.university-books .catalog-metrics b{color:#0b7f8f}.university-books .brand-halo{background:radial-gradient(circle,rgba(11,127,143,.2),rgba(11,127,143,0) 68%)}
-.author-monogram{position:relative;display:grid;place-items:center;width:150px;height:150px;border:1px solid rgba(11,127,143,.2);border-radius:50%;color:#fff;background:linear-gradient(145deg,#071f3d,#0b7f8f);box-shadow:0 20px 45px rgba(7,45,74,.2);font:700 4.2rem/1 "Bebas Neue",sans-serif;letter-spacing:.04em}.lumbreras-brand-card small{margin-top:12px}
-.catalog-tools{position:sticky;top:74px;z-index:20;display:flex;align-items:center;gap:.7rem;margin:2rem 0;border:1px solid var(--catalog-line);border-radius:24px;padding:.8rem;background:rgba(255,255,255,.82);box-shadow:0 18px 45px rgba(31,60,104,.1);backdrop-filter:blur(16px)}.catalog-search{min-width:180px;height:46px;flex:1;border:1px solid var(--catalog-line);border-radius:14px;padding:0 1rem;background:rgba(248,251,255,.92);color:var(--catalog-ink);font:600 .83rem/1 "DM Sans",sans-serif;outline:none}.catalog-search:focus{border-color:rgba(11,127,143,.55);box-shadow:0 0 0 4px rgba(11,127,143,.1)}.language-filters{display:flex;flex-wrap:wrap;gap:.42rem}.language-filter{height:40px;border:1px solid var(--catalog-line);border-radius:999px;padding:0 .85rem;background:#fff;color:var(--catalog-muted);font:700 .7rem/1 "DM Sans",sans-serif;cursor:pointer}.language-filter.is-active{border-color:transparent;color:#fff;background:#07152f}.catalog-result{flex:none;padding:0 .35rem;color:var(--catalog-muted);font:700 .7rem/1 "DM Sans",sans-serif}
-.catalog-collection-raymond-chang{border-color:rgba(11,127,143,.22);background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(232,248,248,.84))}.catalog-collection-raymond-chang .collection-number,.catalog-collection-raymond-chang .collection-subheading span{color:#0b7f8f}.catalog-collection-raymond-chang .collection-count,.catalog-collection-raymond-chang .collection-subheading strong{color:#087179;background:rgba(11,127,143,.1)}.catalog-collection-raymond-chang .book-series{color:#0b7f8f}.catalog-collection-raymond-chang .book-card:hover{border-color:rgba(11,127,143,.42);box-shadow:0 22px 42px rgba(11,127,143,.14)}
-.book-cover{position:relative}.language-badge{position:absolute;top:.7rem;right:.7rem;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.42rem .58rem;color:#fff;background:rgba(7,21,47,.84);font:700 .62rem/1 "DM Sans",sans-serif;backdrop-filter:blur(8px)}.book-card[hidden],.collection-subsection[hidden]{display:none}.empty-state{display:none;margin:1.2rem 0;border:1px dashed rgba(11,127,143,.35);border-radius:18px;padding:1.2rem;color:var(--catalog-muted);text-align:center;font:600 .84rem/1.5 "DM Sans",sans-serif}.empty-state.is-visible{display:block}
-html[data-universe-theme="dark"] .catalog-tools{background:rgba(9,31,57,.84)}html[data-universe-theme="dark"] :is(.catalog-search,.language-filter){color:#e6f4ff;background:rgba(12,42,75,.74)}html[data-universe-theme="dark"] .catalog-collection-raymond-chang{background:linear-gradient(145deg,rgba(9,43,79,.76),rgba(7,47,65,.66));border-color:rgba(93,199,204,.22)}
-@media(max-width:760px){.catalog-tools{position:relative;top:auto;align-items:stretch;flex-direction:column}.catalog-result{padding:.35rem}.author-monogram{width:112px;height:112px;font-size:3.1rem}}@media(max-width:440px){.language-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.language-filter{width:100%}}
+.books-shell {
+  display: contents;
+}
+
+body {
+  background: #edf5fb !important;
+}
+
+/* Identidad del catálogo, conservando la estructura visual de Lumbreras. */
+.university-books .lumbreras-hero-copy {
+  min-width: 0;
+}
+
+.university-books .lumbreras-hero h1 {
+  max-width: 100%;
+  font-size: clamp(3.5rem, 6.3vw, 6.6rem);
+}
+
+.university-books .lumbreras-hero h1 em,
+.university-books .catalog-eyebrow,
+.university-books .catalog-metrics b {
+  color: #0b7f8f;
+}
+
+.university-books .catalog-eyebrow i {
+  background: linear-gradient(90deg, #0b7f8f, #45b9bd);
+}
+
+.university-books .brand-halo {
+  background: radial-gradient(circle, rgba(11, 127, 143, .2), rgba(11, 127, 143, 0) 68%);
+}
+
+.author-monogram {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(11, 127, 143, .2);
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(145deg, #071f3d, #0b7f8f);
+  box-shadow: 0 20px 45px rgba(7, 45, 74, .2);
+  font: 700 4.2rem/1 "Bebas Neue", sans-serif;
+  letter-spacing: .04em;
+}
+
+.university-books .lumbreras-brand-card small {
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* Búsqueda y filtros. */
+.catalog-tools {
+  position: sticky;
+  top: 74px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin: 2rem 0;
+  border: 1px solid var(--catalog-line);
+  border-radius: 24px;
+  padding: .8rem;
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 18px 45px rgba(31, 60, 104, .1);
+  backdrop-filter: blur(16px);
+}
+
+.catalog-search {
+  min-width: 180px;
+  height: 46px;
+  flex: 1;
+  border: 1px solid var(--catalog-line);
+  border-radius: 14px;
+  padding: 0 1rem;
+  background: rgba(248, 251, 255, .96);
+  color: var(--catalog-ink);
+  font: 600 .83rem/1 "DM Sans", sans-serif;
+  outline: none;
+}
+
+.catalog-search:focus {
+  border-color: rgba(11, 127, 143, .55);
+  box-shadow: 0 0 0 4px rgba(11, 127, 143, .1);
+}
+
+.language-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .42rem;
+}
+
+.language-filter {
+  height: 40px;
+  border: 1px solid var(--catalog-line);
+  border-radius: 999px;
+  padding: 0 .85rem;
+  background: #fff;
+  color: var(--catalog-muted);
+  font: 700 .7rem/1 "DM Sans", sans-serif;
+  cursor: pointer;
+}
+
+.language-filter.is-active {
+  border-color: transparent;
+  color: #fff;
+  background: #0a2948;
+}
+
+.catalog-result {
+  flex: none;
+  padding: 0 .35rem;
+  color: var(--catalog-muted);
+  font: 700 .7rem/1 "DM Sans", sans-serif;
+}
+
+/* Colección y tarjetas. */
+.catalog-collection-raymond-chang {
+  border-color: rgba(11, 127, 143, .22);
+  background: linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(232, 248, 248, .88));
+}
+
+.catalog-collection-raymond-chang .collection-number,
+.catalog-collection-raymond-chang .collection-subheading span,
+.catalog-collection-raymond-chang .book-series {
+  color: #0b7f8f;
+}
+
+.catalog-collection-raymond-chang .collection-count,
+.catalog-collection-raymond-chang .collection-subheading strong {
+  color: #087179;
+  background: rgba(11, 127, 143, .1);
+}
+
+.catalog-collection-raymond-chang .book-card:hover {
+  border-color: rgba(11, 127, 143, .42);
+  box-shadow: 0 22px 42px rgba(11, 127, 143, .14);
+}
+
+.book-cover {
+  position: relative;
+}
+
+.language-badge {
+  position: absolute;
+  top: .7rem;
+  right: .7rem;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 999px;
+  padding: .42rem .58rem;
+  color: #fff;
+  background: rgba(7, 38, 66, .88);
+  font: 700 .62rem/1 "DM Sans", sans-serif;
+  backdrop-filter: blur(8px);
+}
+
+.book-card[hidden],
+.collection-subsection[hidden] {
+  display: none;
+}
+
+.empty-state {
+  display: none;
+  margin: 1.2rem 0;
+  border: 1px dashed rgba(11, 127, 143, .35);
+  border-radius: 18px;
+  padding: 1.2rem;
+  color: var(--catalog-muted);
+  text-align: center;
+  font: 600 .84rem/1.5 "DM Sans", sans-serif;
+}
+
+.empty-state.is-visible {
+  display: block;
+}
+
+/* El tema oscuro usa azul marino: evita fondos negros accidentales. */
+html[data-universe-theme="dark"][data-universe-page="library"]:not([data-universe-page="home"]) body {
+  background: linear-gradient(145deg, #071426, #0a2039 55%, #0a3140) !important;
+}
+
+html[data-universe-theme="dark"] body .university-books .catalog-tools {
+  background: #0b2948 !important;
+}
+
+html[data-universe-theme="dark"] :is(.catalog-search, .language-filter) {
+  color: #e6f4ff;
+  background: rgba(12, 42, 75, .92);
+}
+
+html[data-universe-theme="dark"] .language-filter.is-active {
+  color: #06172a;
+  background: #7edce0;
+}
+
+html[data-universe-theme="dark"] body .university-books .catalog-collection-raymond-chang {
+  border-color: rgba(93, 199, 204, .22);
+  background: linear-gradient(145deg, rgba(9, 43, 79, .96), rgba(7, 47, 65, .92)) !important;
+}
+
+html[data-universe-theme="dark"] body .university-books .book-card,
+html[data-universe-theme="dark"] body .university-books .catalog-next,
+html[data-universe-theme="dark"] body .university-books .lumbreras-brand-card {
+  background: #0b2948 !important;
+}
+
+html[data-universe-theme="dark"] body .university-books .collection-heading,
+html[data-universe-theme="dark"] body .university-books .collection-subheading {
+  background: transparent !important;
+}
+
+html[data-universe-theme="dark"] body .university-books .book-cover {
+  background: #eef4f8 !important;
+}
+
+/* Tabletas y pantallas de escritorio estrechas. */
+@media (max-width: 1180px) {
+  .university-books .lumbreras-hero-grid {
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 2.25rem;
+  }
+
+  .university-books .lumbreras-hero h1 {
+    font-size: clamp(3.65rem, 6vw, 5rem);
+  }
+
+  .university-books .lumbreras-brand-card {
+    min-height: 240px;
+    padding: 1.4rem;
+  }
+
+  .author-monogram {
+    width: 125px;
+    height: 125px;
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .university-books .lumbreras-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .university-books .lumbreras-hero h1 {
+    font-size: clamp(3.5rem, 10vw, 5rem);
+  }
+
+  .university-books .lumbreras-brand-card {
+    min-height: 180px;
+  }
+
+  .catalog-tools {
+    position: relative;
+    top: auto;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .catalog-result {
+    padding: .35rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .university-books .lumbreras-hero h1 {
+    font-size: clamp(3rem, 13vw, 4.8rem);
+    line-height: .86;
+  }
+
+  .university-books .lumbreras-hero h1 em {
+    font-size: .86em;
+  }
+
+  .author-monogram {
+    width: 112px;
+    height: 112px;
+    font-size: 3.1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .university-books.lumbreras-page {
+    width: min(100% - 1rem, 1280px);
+    padding-top: 5.25rem;
+  }
+
+  .university-books .lumbreras-hero {
+    border-radius: 22px;
+    padding: 1.2rem;
+  }
+
+  .university-books .catalog-breadcrumb {
+    gap: .45rem;
+    margin-bottom: 1rem;
+    font-size: .68rem;
+  }
+
+  .university-books .catalog-eyebrow {
+    margin-bottom: .9rem;
+    font-size: .65rem;
+  }
+
+  .university-books .lumbreras-hero h1 {
+    font-size: clamp(2.75rem, 14.2vw, 4rem);
+  }
+
+  .university-books .lumbreras-hero h1 em {
+    font-size: .68em;
+    letter-spacing: -.035em;
+  }
+
+  .university-books .lumbreras-hero-grid,
+  .university-books .lumbreras-hero-copy,
+  .university-books .catalog-metrics {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .university-books .lumbreras-hero-copy {
+    overflow: hidden;
+  }
+
+  .university-books .catalog-metrics span {
+    min-width: 0;
+  }
+
+  .university-books .lumbreras-hero-copy > p {
+    margin: 1.1rem 0 1.35rem;
+    font-size: .92rem;
+    line-height: 1.55;
+  }
+
+  .university-books .catalog-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .35rem;
+  }
+
+  .university-books .catalog-metrics span {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: .22rem;
+    padding: .55rem .25rem;
+    font-size: .54rem;
+    text-align: center;
+  }
+
+  .catalog-tools {
+    margin: 1rem 0;
+    border-radius: 18px;
+    padding: .65rem;
+  }
+
+  .language-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .language-filter {
+    width: 100%;
+    padding: 0 .45rem;
+  }
+
+  .university-books .catalog-collection {
+    margin-top: 1rem;
+  }
+
+  .university-books .collection-heading h2 {
+    font-size: clamp(2.4rem, 13vw, 3.4rem);
+    overflow-wrap: anywhere;
+  }
+
+  .university-books .collection-count,
+  .university-books .collection-subheading strong {
+    white-space: normal;
+  }
+
+  .university-books .collection-subsection {
+    margin-top: 1.7rem;
+  }
+
+  .university-books .collection-subsection + .collection-subsection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .university-books .collection-subheading h3 {
+    font-size: clamp(1.35rem, 6vw, 1.8rem);
+    overflow-wrap: anywhere;
+  }
+
+  .university-books .catalog-next {
+    gap: .85rem;
+    border-radius: 19px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 410px) {
+  .university-books .lumbreras-hero h1 {
+    font-size: clamp(2.6rem, 14vw, 3.45rem);
+  }
+
+  .university-books .lumbreras-hero h1 em {
+    font-size: .67em;
+  }
+}
+
+/* Navegación móvil en dos filas, sin aumentar el ancho de la página. */
+@media (max-width: 680px) {
+  html[data-universe-page="library"] body > nav {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: calc(100vw - 14px) !important;
+    max-width: calc(100vw - 14px) !important;
+    gap: .35rem !important;
+    overflow: hidden !important;
+    padding: .5rem .6rem !important;
+  }
+
+  html[data-universe-page="library"] body > nav .nav-logo {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    max-width: 100% !important;
+  }
+
+  html[data-universe-page="library"] body > nav .nav-links {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    justify-self: stretch !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+  }
+
+  html[data-universe-page="library"] body > nav .nav-actions {
+    display: none !important;
+  }
+}
