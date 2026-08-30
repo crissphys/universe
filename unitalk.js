@@ -212,8 +212,14 @@
     var parts = [];
     if (profile && profile.academy) parts.push(profile.academy);
     if (profile && profile.cycle) parts.push(profile.cycle);
-    if (profile && profile.target) parts.push('Postula a ' + profile.target);
+    if (profile && profile.program && profile.program !== profile.cycle) parts.push(profile.program);
+    if (profile && profile.career) parts.push(profile.career);
+    if (profile && profile.universityCycle) parts.push(profile.universityCycle);
+    if (profile && profile.target && profile.academicTrack !== 'uni-student') parts.push('Objetivo: ' + profile.target);
     return parts.join(' · ') || 'Miembro de UNITALK';
+  }
+  function intentLabel(value) {
+    return { offering: 'Dispuesto/a a apoyar', seeking: 'Busca material', both: 'Apoya y busca material', networking: 'Estudia y conecta con la comunidad' }[value] || '';
   }
   function errorText(error) {
     var key = String(error && error.message || '');
@@ -593,7 +599,7 @@
       $('unitalk-profile-content').innerHTML = '<div class="unitalk-profile-hero">' + avatar(profile) +
         '<h2 id="unitalk-profile-name">' + safe(profile.displayName || 'Estudiante Universe') + '</h2><span class="handle">@' + safe(profile.username || username) + '</span>' +
         (profile.private ? '<p>Esta persona eligió mantener privados sus datos académicos.</p>' : '<p>' + safe(profile.bio || 'Miembro de la comunidad Universe.') + '</p>') +
-        '</div><div class="unitalk-profile-facts">' + profileFact('Academia o institución', profile.academy) + profileFact('Ciclo', profile.cycle) + profileFact('Objetivo', profile.target) + profileFact('Miembro desde', profile.joinedAt ? new Date(profile.joinedAt).toLocaleDateString('es-PE', { month: 'long', year: 'numeric' }) : '') + '</div>';
+        '</div><div class="unitalk-profile-facts">' + profileFact('Situación académica', academicLabel(profile)) + profileFact('Carrera UNI', profile.career) + profileFact('En UNITalk', intentLabel(profile.intent)) + profileFact('Objetivo', profile.target) + profileFact('Miembro desde', profile.joinedAt ? new Date(profile.joinedAt).toLocaleDateString('es-PE', { month: 'long', year: 'numeric' }) : '') + '</div>';
       if (push !== false) history.pushState({ unitalkProfile: username }, '', '/unitalk/perfil/' + encodeURIComponent(username));
     } catch (error) { $('unitalk-profile-content').innerHTML = '<div class="unitalk-empty">Este perfil no existe o no está disponible.</div>'; }
   }
@@ -631,14 +637,14 @@
     }
     if (view === 'profile') {
       var profile = state.me || currentGoogleUser() || {};
-      root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Mi perfil</h1><p>Así te verá la comunidad de UNITALK.</p></div></div><section class="unitalk-page-card"><div class="unitalk-profile-summary">' + avatar(profile) + '<div><h2>' + safe(profile.displayName || profile.name || 'Tu perfil') + '</h2><span class="unitalk-handle">' + (state.me && state.me.username ? '@' + safe(state.me.username) : 'Completa tu perfil público') + '</span><p>' + safe(state.me && state.me.bio || 'Configura tus datos visibles y preferencias de privacidad desde tu cuenta.') + '</p></div></div><a class="unitalk-profile-cta" href="/account">Administrar mi perfil</a></section><section class="unitalk-page-card"><h2>Mis publicaciones</h2><div class="unitalk-feed">' + (mine.length ? mine.map(postMarkup).join('') : '<div class="unitalk-empty">Aún no has publicado en UNITALK.</div>') + '</div></section>';
+      root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Mi perfil</h1><p>Es el mismo perfil que utilizas en todo Universe.</p></div></div><section class="unitalk-page-card"><div class="unitalk-profile-summary">' + avatar(profile) + '<div><h2>' + safe(profile.displayName || profile.name || 'Tu perfil') + '</h2><span class="unitalk-handle">' + (state.me && state.me.username ? '@' + safe(state.me.username) : 'Completa tu usuario público') + '</span><p>' + safe(state.me && state.me.bio || 'Configura tu identidad, situación académica y privacidad desde una sola pantalla.') + '</p></div></div><a class="unitalk-profile-cta" href="/account">Editar mi perfil único</a></section><section class="unitalk-page-card"><h2>Mis publicaciones</h2><div class="unitalk-feed">' + (mine.length ? mine.map(postMarkup).join('') : '<div class="unitalk-empty">Aún no has publicado en UNITALK.</div>') + '</div></section>';
       return;
     }
     if (view === 'settings') {
       var dark = document.documentElement.getAttribute('data-universe-theme') === 'dark';
       root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Ajustes</h1><p>Personaliza tu experiencia sin cambiar la privacidad de tu cuenta.</p></div></div><section class="unitalk-page-card"><div class="unitalk-settings-list">' +
         settingRow('dark', 'Modo oscuro', 'Aplica el mismo tema a todo Universe to Study.', dark) + settingRow('compact', 'Vista compacta', 'Muestra más publicaciones en la pantalla.', readFlag(COMPACT_KEY)) + settingRow('motion', 'Reducir animaciones', 'Desactiva efectos decorativos de la interfaz.', readFlag(MOTION_KEY)) +
-        '</div></section><section class="unitalk-page-card"><h2>Privacidad y convivencia</h2><p>Tu Gmail, teléfono y permisos de administrador nunca aparecen en UNITALK. Elige los datos visibles desde tu cuenta.</p><a class="unitalk-profile-cta" href="/account">Ir a privacidad del perfil</a></section>';
+        '</div></section><section class="unitalk-page-card"><h2>Perfil y privacidad</h2><p>Tu Gmail, teléfono y permisos de administrador nunca aparecen en UNITALK. La identidad y privacidad se administran juntas desde tu perfil único.</p><a class="unitalk-profile-cta" href="/account">Abrir configuración del perfil</a></section>';
     }
   }
   function settingRow(key, title, description, active) {
