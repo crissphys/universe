@@ -17,7 +17,8 @@
   <link rel="stylesheet" href="/style.css?v=reveal-1">
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
   <link rel="stylesheet" href="/universe-admission.css?v=admission-6">
-  <link rel="stylesheet" href="/biblioteca/librosuniversitarios/librosuniversitarios.css?v=1">
+  <link rel="stylesheet" href="/biblioteca/lumbreras/lumbreras.css?v=lumbreras-8">
+  <link rel="stylesheet" href="/biblioteca/librosuniversitarios/librosuniversitarios.css?v=2">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
 </head>
@@ -30,11 +31,16 @@
   </ul>
   <div class="nav-actions"><button aria-label="Cambiar tema" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" title="Cambiar tema" type="button"><svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.8A8.7 8.7 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"></path></svg><svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg></button></div>
 </nav>
-<main class="university-books" id="contenido-principal">
+<main class="lumbreras-page university-books" id="contenido-principal">
+  <div class="catalog-orbit catalog-orbit-one" aria-hidden="true"></div>
+  <div class="catalog-orbit catalog-orbit-two" aria-hidden="true"></div>
   <div class="books-shell">
-    <section class="books-hero" aria-labelledby="books-title">
-      <div><span class="books-kicker">Biblioteca universitaria · Catálogo 01</span><h1 id="books-title">Libros <span>Universitarios</span></h1><p>Primera colección dedicada a Raymond Chang. Explora cada edición por autor y coautor, con el idioma claramente identificado.</p><div class="hero-actions"><a href="#catalog-tools">Explorar catálogo →</a><a href="https://drive.google.com/drive/folders/1lUi1KI8bBwUy94TnTRXLwZxCvznmt2_h?usp=drive_link" target="_blank" rel="noopener noreferrer">Abrir carpeta en Drive</a></div></div>
-      <div class="hero-stat" aria-label="Resumen del catálogo"><div class="stat-card"><strong>17</strong><span>Libros y materiales</span></div><div class="stat-card"><strong>3</strong><span>Secciones de autoría</span></div><div class="stat-card"><strong>3</strong><span>Idiomas</span></div><div class="stat-card"><strong>01</strong><span>Raymond Chang</span></div></div>
+    <section class="lumbreras-hero" aria-labelledby="books-title">
+      <div class="catalog-breadcrumb" aria-label="Ruta de navegación"><a href="/biblioteca">Biblioteca</a><span aria-hidden="true">/</span><span>Libros universitarios</span><span aria-hidden="true">/</span><strong>Raymond Chang</strong></div>
+      <div class="lumbreras-hero-grid">
+        <div class="lumbreras-hero-copy"><span class="catalog-eyebrow"><i></i> Biblioteca universitaria</span><h1 id="books-title">Libros <em>Universitarios</em></h1><p>Catálogos por autor y coautor, con cada edición e idioma claramente identificados.</p><div class="catalog-metrics" aria-label="Resumen del catálogo"><span><b>01</b> catálogo</span><span><b>03</b> secciones</span><span><b>17</b> libros</span></div></div>
+        <div class="lumbreras-brand-card" aria-label="Catálogo Raymond Chang"><span class="brand-halo" aria-hidden="true"></span><span class="author-monogram" aria-hidden="true">RC</span><small>Raymond Chang · Química</small></div>
+      </div>
     </section>
     <section class="catalog-tools" id="catalog-tools" aria-label="Buscar y filtrar libros">
       <input class="catalog-search" id="catalog-search" type="search" placeholder="Buscar título, edición, autor o idioma..." aria-label="Buscar en el catálogo">
@@ -44,13 +50,13 @@
     <div id="catalog-sections"></div>
     <p class="empty-state" id="catalog-empty">No hay libros que coincidan con la búsqueda.</p>
     <noscript><p class="empty-state is-visible">Activa JavaScript para visualizar y filtrar el catálogo.</p></noscript>
-    <section class="catalog-next" aria-label="Próximos catálogos"><div><strong>La biblioteca universitaria seguirá creciendo</strong><p>Los próximos autores y materias aparecerán en esta misma página.</p></div><a href="/biblioteca">Volver a la biblioteca →</a></section>
+    <section class="catalog-next" aria-label="Próximos catálogos"><span class="next-mark" aria-hidden="true">+</span><div><strong>La biblioteca universitaria seguirá creciendo</strong><p>Los próximos autores y materias aparecerán en esta misma página.</p></div><a href="/biblioteca">Volver a la biblioteca →</a></section>
   </div>
 </main>
 <footer><div class="footer-top"><div><div class="footer-logo">Universe to Study</div><div class="footer-tagline">Recursos organizados para postulantes y estudiantes universitarios.</div></div><div class="footer-links"><h4>Biblioteca</h4><ul><li><a href="/biblioteca">Explorar biblioteca</a></li><li><a href="/biblioteca/librosuniversitarios">Libros universitarios</a></li><li><a href="/biblioteca/lumbreras">Catálogo Lumbreras</a></li></ul></div><div class="footer-links"><h4>Universe</h4><ul><li><a href="/nosotros">Nosotros</a></li><li><a href="/contacto">Contacto</a></li><li><a href="/terminos">Términos</a></li><li><a href="/privacidad">Privacidad</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 Universe to Study.</div><div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
 <script>window.UNIVERSE_PAGE_ROUTE='library';</script>
 <script src="/biblioteca/librosuniversitarios/catalog.js?v=1"></script>
-<script src="/biblioteca/librosuniversitarios/librosuniversitarios.js?v=1"></script>
+<script src="/biblioteca/librosuniversitarios/librosuniversitarios.js?v=2"></script>
 <script src="/universe-admission.js?v=security-3"></script>
 <script src="/universe-polish.js?v=unified-36" defer></script>
 </body>
