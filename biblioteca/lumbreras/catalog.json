@@ -226,8 +226,64 @@
       ]
     },
     {
-      "slug": "libros-azules-nuevos",
+      "slug": "libros-rojos-nuevos",
       "number": "02",
+      "name": "LIBROS ROJOS NUEVOS",
+      "description": "Nueva edición de la Colección Ciencias y Humanidades de Editorial Lumbreras.",
+      "books": [
+        {
+          "series": "Colección Ciencias y Humanidades · Edición Nueva",
+          "title": "Álgebra",
+          "image": "/assets/library/lumbreras/libros-rojos-nuevos/algebra-tomo-i.png",
+          "driveUrl": "https://drive.google.com/file/d/1JSbMisk7UcXFS9qtWRUU4zSQSgERfCPx/view?usp=drive_link",
+          "aria": "Abrir Álgebra de Libros Rojos Nuevos en Google Drive",
+          "alt": "Portada de Álgebra, Libros Rojos Nuevos"
+        },
+        {
+          "series": "Colección Ciencias y Humanidades · Edición Nueva",
+          "title": "Aritmética",
+          "image": "/assets/library/lumbreras/libros-rojos-nuevos/aritmetica.png",
+          "driveUrl": "https://drive.google.com/file/d/1MaqmY7UT0k_ELvJx1SYJly3OtEChk8K6/view?usp=drive_link",
+          "aria": "Abrir Aritmética de Libros Rojos Nuevos en Google Drive",
+          "alt": "Portada de Aritmética, Libros Rojos Nuevos"
+        },
+        {
+          "series": "Colección Ciencias y Humanidades · Edición Nueva",
+          "title": "Geometría del Espacio",
+          "image": "/assets/library/lumbreras/libros-rojos-nuevos/geometria-del-espacio.png",
+          "driveUrl": "https://drive.google.com/file/d/1kOzR00cp5n8DRFq9ktlJoRD8D2Ciq9Kt/view?usp=drive_link",
+          "aria": "Abrir Geometría del Espacio de Libros Rojos Nuevos en Google Drive",
+          "alt": "Portada de Geometría del Espacio, Libros Rojos Nuevos"
+        },
+        {
+          "series": "Colección Ciencias y Humanidades · Edición Nueva",
+          "title": "Geometría Plana",
+          "image": "/assets/library/lumbreras/libros-rojos-nuevos/geometria-plana.png",
+          "driveUrl": "https://drive.google.com/file/d/1u8p-MhN6n5mJaR6nj4pUMDSGNKnc-iWq/view?usp=drive_link",
+          "aria": "Abrir Geometría Plana de Libros Rojos Nuevos en Google Drive",
+          "alt": "Portada de Geometría Plana, Libros Rojos Nuevos"
+        },
+        {
+          "series": "Colección Ciencias y Humanidades · Edición Nueva",
+          "title": "Química",
+          "image": "/assets/library/lumbreras/libros-rojos-nuevos/quimica-tomo-i.webp",
+          "driveUrl": "https://drive.google.com/file/d/13eNdtrJRbvmx77ltVHXq4SH80zu9kkDm/view?usp=drive_link",
+          "aria": "Abrir Química de Libros Rojos Nuevos en Google Drive",
+          "alt": "Portada de Química, Libros Rojos Nuevos"
+        },
+        {
+          "series": "Colección Ciencias y Humanidades · Edición Nueva",
+          "title": "Trigonometría",
+          "image": "/assets/library/lumbreras/libros-rojos-nuevos/trigonometria.png",
+          "driveUrl": "https://drive.google.com/file/d/1TDasdb5GVAJocN6qDEWl_IFAOeF1C5U3/view?usp=drive_link",
+          "aria": "Abrir Trigonometría de Libros Rojos Nuevos en Google Drive",
+          "alt": "Portada de Trigonometría, Libros Rojos Nuevos"
+        }
+      ]
+    },
+    {
+      "slug": "libros-azules-nuevos",
+      "number": "03",
       "name": "LIBROS AZULES",
       "description": "Nueva colección de Ciencias y Humanidades de Editorial Lumbreras.",
       "sections": [
@@ -401,7 +457,7 @@
     },
     {
       "slug": "esenciales",
-      "number": "03",
+      "number": "04",
       "name": "Esenciales",
       "description": "Colección de fundamentos esenciales organizada por curso.",
       "sections": [
@@ -576,7 +632,7 @@
     },
     {
       "slug": "temas-selectos",
-      "number": "04",
+      "number": "05",
       "name": "Temas Selectos",
       "description": "Colección de teoría y práctica por temas específicos, desde nivel básico hasta avanzado.",
       "courses": [
@@ -1352,7 +1408,7 @@
     },
     {
       "slug": "compendios-academicos",
-      "number": "05",
+      "number": "06",
       "name": "Compendios Académicos",
       "description": "Colección integral de teoría y práctica preuniversitaria de Editorial Lumbreras.",
       "sections": [
@@ -1606,7 +1662,7 @@
     },
     {
       "slug": "compendios-academicos-uni",
-      "number": "06",
+      "number": "07",
       "name": "Compendios Académicos UNI",
       "description": "Colección especializada para la preparación del examen de admisión UNI.",
       "courses": [
@@ -1686,7 +1742,7 @@
     },
     {
       "slug": "diversos",
-      "number": "07",
+      "number": "08",
       "name": "Diversos",
       "description": "Guías complementarias de cultura general, matemáticas y ciencias.",
       "courses": [
@@ -1726,7 +1782,7 @@
     },
     {
       "slug": "seleccion-de-preguntas",
-      "number": "08",
+      "number": "09",
       "name": "Selección de Preguntas",
       "description": "Libros de preguntas y solucionarios organizados por universidad y curso.",
       "sections": [

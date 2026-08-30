@@ -113,6 +113,11 @@ body { overflow-x:clip; }
 @keyframes brandPulse { 50%{transform:scale(1.12);opacity:.66} }
 
 .catalog-collection { margin-top:2rem;border:1px solid var(--catalog-line);border-radius:34px;padding:clamp(1.25rem,4vw,3.25rem);background:var(--catalog-panel);box-shadow:0 24px 70px rgba(31,60,104,.1);backdrop-filter:blur(18px); }
+.catalog-collection-libros-rojos-nuevos { border-color:rgba(177,15,31,.25);background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,237,239,.88)); }
+.catalog-collection-libros-rojos-nuevos .collection-number { color:#b10f1f; }
+.catalog-collection-libros-rojos-nuevos .collection-count { background:rgba(177,15,31,.1);color:#950b1a; }
+.catalog-collection-libros-rojos-nuevos .book-series { color:#b10f1f; }
+.catalog-collection-libros-rojos-nuevos .book-card:hover { border-color:rgba(177,15,31,.42);box-shadow:0 22px 42px rgba(177,15,31,.16); }
 .catalog-collection-libros-azules-nuevos { border-color:rgba(13,66,145,.24);background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(229,241,255,.86)); }
 .catalog-collection-libros-azules-nuevos .collection-number,.catalog-collection-libros-azules-nuevos .collection-subheading span { color:#0d4291; }
 .catalog-collection-libros-azules-nuevos .collection-count,.catalog-collection-libros-azules-nuevos .collection-subheading strong { background:rgba(13,66,145,.1);color:#0d4291; }
