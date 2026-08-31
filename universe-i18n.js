@@ -260,7 +260,7 @@
       var script = existing || document.createElement('script');
       if (!existing) {
         script.id = 'uts-i18n-catalog';
-        script.src = '/universe-i18n-catalog.js?v=en-13';
+        script.src = '/universe-i18n-catalog.js?v=en-14';
         script.async = true;
         document.head.appendChild(script);
       }
