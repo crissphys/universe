@@ -1,0 +1,39 @@
+:root{--uc-blue:#0c4da2;--uc-blue-deep:#071d49;--uc-cyan:#18a8e0;--uc-gold:#e7b84b;--uc-ink:#081a39}
+.universe-catalog-page::before{background:radial-gradient(circle at 14% 14%,rgba(24,168,224,.14),transparent 25rem),radial-gradient(circle at 84% 30%,rgba(231,184,75,.11),transparent 28rem),linear-gradient(rgba(12,77,162,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(12,77,162,.035) 1px,transparent 1px);background-size:auto,auto,48px 48px,48px 48px}
+.universe-catalog-page .catalog-orbit{border-color:rgba(12,77,162,.19)}
+.universe-catalog-hero{background:linear-gradient(120deg,rgba(255,255,255,.97),rgba(239,248,255,.84)),linear-gradient(135deg,rgba(12,77,162,.12),rgba(24,168,224,.1))!important}
+.universe-catalog-hero::after{content:"U";color:rgba(12,77,162,.045)}
+.universe-catalog-page .catalog-eyebrow{color:var(--uc-blue)}
+.universe-catalog-page .catalog-eyebrow i{background:var(--uc-cyan);box-shadow:0 0 0 6px rgba(24,168,224,.11)}
+.universe-catalog-page .lumbreras-hero h1 em{color:var(--uc-blue)}
+.universe-brand-card{border-color:rgba(12,77,162,.2);background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(229,244,255,.78))}
+.universe-brand-card .brand-halo{background:radial-gradient(circle,rgba(24,168,224,.2),rgba(12,77,162,0) 68%)}
+.collab-mark{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:.7rem;color:var(--uc-blue-deep)}
+.collab-mark strong{display:grid;place-items:center;width:82px;height:82px;border:1px solid rgba(12,77,162,.18);border-radius:24px;background:rgba(255,255,255,.76);font:700 2rem/1 "Rajdhani",sans-serif;box-shadow:0 14px 30px rgba(7,29,73,.1)}
+.collab-mark i{color:var(--uc-cyan);font:700 1.25rem/1 "DM Sans",sans-serif}
+.universe-brand-card small{color:#244b7e}
+.universe-authorship{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:1rem;margin:clamp(1rem,2vw,1.5rem) 0;padding:1.2rem 1.4rem;border:1px solid rgba(12,77,162,.18);border-radius:22px;background:linear-gradient(120deg,rgba(8,39,89,.97),rgba(12,77,162,.91));box-shadow:0 18px 38px rgba(7,29,73,.13);color:#fff}
+.authorship-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:rgba(255,255,255,.12);color:#7edcff;font-size:1.3rem}
+.universe-authorship strong{display:block;font:700 1.05rem/1.2 "DM Sans",sans-serif}.universe-authorship p{margin:.3rem 0 0;color:#d8eaff;font:500 .85rem/1.55 "DM Sans",sans-serif}
+.universe-collection{border-color:rgba(12,77,162,.2);background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(236,247,255,.86))}
+.universe-catalog-page .collection-number,.universe-catalog-page .collection-subheading span,.universe-catalog-page .book-series{color:var(--uc-blue)}
+.universe-catalog-page .collection-count{background:rgba(12,77,162,.1);color:var(--uc-blue-deep)}
+.universe-section-heading strong{background:rgba(24,168,224,.11);color:#08668b}
+.universe-book-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2vw,1.5rem)}
+.universe-book-grid .book-card{border-color:rgba(12,77,162,.14);cursor:default}
+.universe-book-grid .book-cover{position:relative;aspect-ratio:1089/1444;background:linear-gradient(145deg,#eef7ff,#fff)}
+.universe-book-grid .book-cover img{filter:saturate(.96)}
+.universe-book-grid .book-info{padding:1.1rem 1.15rem 1.25rem}.universe-book-grid .book-info h4{margin:.55rem 0 .35rem;font-size:1.2rem}
+.book-author{display:block;margin-bottom:.9rem;color:#4d607a;font:700 .76rem/1.4 "DM Sans",sans-serif}
+.upcoming-ribbon{position:absolute;right:.7rem;top:.7rem;padding:.45rem .65rem;border:1px solid rgba(255,255,255,.34);border-radius:999px;background:rgba(7,29,73,.88);box-shadow:0 8px 20px rgba(0,0,0,.18);color:#fff;font:800 .62rem/1 "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.book-status{display:flex;align-items:center;gap:.48rem;color:#315b8b;font:800 .7rem/1.2 "DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.07em}.book-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--uc-gold);box-shadow:0 0 0 4px rgba(231,184,75,.15)}
+.universe-catalog-page .catalog-next{border-color:rgba(12,77,162,.24)}.universe-catalog-page .next-mark{background:rgba(12,77,162,.09);color:var(--uc-blue)}.universe-catalog-page .catalog-next a{color:var(--uc-blue)}
+html[data-universe-theme="dark"] .universe-catalog-page::before{background:radial-gradient(circle at 14% 14%,rgba(24,168,224,.18),transparent 26rem),radial-gradient(circle at 84% 30%,rgba(231,184,75,.1),transparent 29rem),linear-gradient(rgba(87,155,225,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(87,155,225,.045) 1px,transparent 1px);background-size:auto,auto,48px 48px,48px 48px}
+html[data-universe-theme="dark"] body .universe-catalog-page .universe-catalog-hero{background:linear-gradient(120deg,rgba(5,23,54,.94),rgba(8,42,78,.84)),linear-gradient(135deg,rgba(12,77,162,.2),rgba(24,168,224,.12))!important}
+html[data-universe-theme="dark"] body .universe-catalog-page .universe-collection{background:linear-gradient(145deg,rgba(6,27,59,.94),rgba(12,39,70,.82))!important}
+html[data-universe-theme="dark"] .universe-brand-card{background:linear-gradient(145deg,rgba(8,34,70,.9),rgba(8,48,83,.78));border-color:rgba(106,181,245,.23)}
+html[data-universe-theme="dark"] .collab-mark strong{background:rgba(6,26,58,.76);border-color:rgba(106,181,245,.2);color:#eaf6ff}
+html[data-universe-theme="dark"] .universe-brand-card small{color:#b9d8f1}html[data-universe-theme="dark"] .book-author{color:#c7d3e5}html[data-universe-theme="dark"] .book-status{color:#9bc9ee}
+@media(max-width:900px){.universe-book-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.universe-authorship{grid-template-columns:1fr;padding:1.05rem}.universe-book-grid{grid-template-columns:1fr}.universe-catalog-page .collection-subheading{align-items:flex-start;flex-direction:column}.universe-catalog-page .collection-subheading strong{align-self:flex-start}.universe-book-grid .book-card{width:min(100%,420px);margin-inline:auto}.collab-mark strong{width:68px;height:68px;border-radius:20px;font-size:1.65rem}}
+@media(prefers-reduced-motion:reduce){.universe-catalog-page .catalog-orbit,.universe-catalog-page .brand-halo{animation:none}}
