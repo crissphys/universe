@@ -13,7 +13,7 @@
 .cepre-collection{border-color:rgba(125,22,32,.17);background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,247,245,.88))}
 .cepre-library-page .collection-count{background:rgba(125,22,32,.09);color:var(--cepre-wine)}
 .cepre-section-heading strong{background:rgba(198,146,54,.13);color:#81560f}
-.cepre-book-grid{grid-template-columns:minmax(0,310px);gap:1.25rem}
+.cepre-book-grid{grid-template-columns:repeat(2,minmax(0,310px));gap:1.25rem}
 .cepre-book-grid .book-card{border-color:rgba(125,22,32,.15)}
 .cepre-book-grid .book-card:hover{border-color:rgba(166,37,49,.42);box-shadow:0 24px 46px rgba(90,22,30,.16)}
 .cepre-book-grid .book-cover{aspect-ratio:1241/1754;background:#f7f4f2}
