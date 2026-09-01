@@ -420,15 +420,16 @@ html[data-universe-theme="dark"] :where(.home-eyebrow, .home-section-label, .hom
   text-wrap: balance;
 }
 
-.home-hero h1 > span:not(.text-rotate-sr-only) {
+.home-hero h1 > span:not(.text-type-sr-only) {
+  --home-title-gradient: linear-gradient(105deg, #145bd7 8%, #2889ee 55%, #55bfe3 94%);
   display: block;
-  background: linear-gradient(105deg, #145bd7 8%, #2889ee 55%, #55bfe3 94%);
+  background: var(--home-title-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-html[data-universe-theme="dark"] .home-hero h1 > span:not(.text-rotate-sr-only) { background-image: linear-gradient(105deg, #7fb8ff, #70d9ee); }
+html[data-universe-theme="dark"] .home-hero h1 > span:not(.text-type-sr-only) { --home-title-gradient: linear-gradient(105deg, #7fb8ff, #70d9ee);background-image:var(--home-title-gradient); }
 
 .home-lead {
   max-width: 670px;
