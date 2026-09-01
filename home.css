@@ -420,7 +420,7 @@ html[data-universe-theme="dark"] :where(.home-eyebrow, .home-section-label, .hom
   text-wrap: balance;
 }
 
-.home-hero h1 span {
+.home-hero h1 > span:not(.text-rotate-sr-only) {
   display: block;
   background: linear-gradient(105deg, #145bd7 8%, #2889ee 55%, #55bfe3 94%);
   -webkit-background-clip: text;
@@ -428,7 +428,7 @@ html[data-universe-theme="dark"] :where(.home-eyebrow, .home-section-label, .hom
   color: transparent;
 }
 
-html[data-universe-theme="dark"] .home-hero h1 span { background-image: linear-gradient(105deg, #7fb8ff, #70d9ee); }
+html[data-universe-theme="dark"] .home-hero h1 > span:not(.text-rotate-sr-only) { background-image: linear-gradient(105deg, #7fb8ff, #70d9ee); }
 
 .home-lead {
   max-width: 670px;
