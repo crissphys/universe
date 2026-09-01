@@ -1,0 +1,42 @@
+.cursor-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cursor-grid__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cepre-cursor-grid-layer {
+  position: absolute;
+  z-index: -1;
+  top: 6.5rem;
+  left: 50%;
+  width: 100vw;
+  height: 600px;
+  overflow: hidden;
+  opacity: .2;
+  pointer-events: none !important;
+  transform: translateX(-50%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+}
+
+.cepre-cursor-grid-layer,
+.cepre-cursor-grid-layer * {
+  pointer-events: none !important;
+}
+
+html[data-universe-theme="dark"] .cepre-cursor-grid-layer {
+  opacity: .25;
+}
+
+@media (max-width: 720px), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cepre-cursor-grid-layer {
+    display: none;
+  }
+}
