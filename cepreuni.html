@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="/universe-polish.css?v=liquid-1">
 <link rel="stylesheet" href="/universe-admission.css?v=admission-6">
 <link rel="stylesheet" href="/cepreuni-schedules.css?v=schedules-2">
+<link rel="stylesheet" href="/cepreuni-minimal.css?v=minimal-6">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
 </head>
@@ -76,79 +77,65 @@
   </div>
 </aside>
 <main class="admission-page cepre-page">
-  <section class="admission-hero">
-    <div class="admission-hero-copy"><span class="admission-kicker">CEPREUNI</span><h1>CEPREUNI 2027-1</h1><p>Consulta los horarios oficiales por ciclo, organiza tu cronograma y accede al histórico de puntajes, ingresantes, fijas, temarios y exámenes.</p><div class="admission-actions"><a class="admission-btn primary" href="#horarios-cepreuni">Ver horarios 2027-1</a><a class="admission-btn ghost" href="/planificador">Crear mi plan</a></div></div>
-    <aside class="admission-hero-card"><strong>Fórmula CEPREUNI</strong><p class="formula">PID = S + 2EP1 + 4EP2 + 6EF</p><p>S considera las mejores 5 de PC1 a PC6 más PC7. Arquitectura suma evaluación vocacional.</p></aside>
-  </section>
-  <section class="cepre-schedules" id="horarios-cepreuni">
-    <div class="cepre-schedules-intro"><div><span>ORGANIZACIÓN ACADÉMICA</span><h2>Horarios CEPREUNI por ciclo</h2></div><p>Selecciona tu ciclo y turno. Los módulos se presentan en tablas semanales y en pantallas pequeñas puedes desplazarlas horizontalmente.</p></div>
-    <div id="cepre-schedules-app"></div>
-  </section>
-  <section class="cepre-link-grid">
-    <a class="cepre-hub-card" href="/ranking"><span>01</span><b>Máximos y mínimos CEPREUNI 2026-2</b><p>Compara ciclos y consulta puntajes máximos, mínimos e ingresantes por especialidad. El ranking queda como vista secundaria.</p></a>
-    <a class="cepre-hub-card cepre-hub-success" href="/ingresantes-cepreuni"><span>02</span><b>Ingresantes CEPREUNI 2026-2</b><p>Busca por nombre o código y celebra la especialidad y el puntaje oficial de cada ingresante.</p></a>
-    <a class="cepre-hub-card" href="/calculadora"><span>03</span><b>Calculadora CEPREUNI</b><p>Consulta tu examen final, calcula el ponderado y compara tu carrera con otros ciclos.</p></a>
-    <a class="cepre-hub-card" href="/fijas-cepreuni"><span>04</span><b>Fijas CEPREUNI</b><p>Temas que aparecieron en evaluaciones anteriores, con conteo por examen y recurrencia.</p></a>
-    <a class="cepre-hub-card" href="/temario#temario-cepreuni"><span>05</span><b>Temario CEPREUNI</b><p>Pruebas calificadas y temas acumulados por curso del ciclo.</p></a>
-    <a class="cepre-hub-card" href="/examenes"><span>06</span><b>Exámenes CEPREUNI</b><p>Material de práctica y exámenes por ciclo.</p></a>
-    <a class="cepre-hub-card" href="/docentes-cepreuni"><span>07</span><b>Guía de aulas</b><p>Docentes, salones y horarios organizados por curso.</p></a>
-    <a class="cepre-hub-card cepre-hub-info" href="/informacion-cepreuni"><span>08</span><b>Información CEPREUNI</b><p>Guía diferenciada para estudiantes y familias: estudio, convivencia, asistencia, pagos, horarios, biblioteca y documentos.</p></a>
-    <a class="cepre-hub-card cepre-hub-library" href="/cepreuni/ciclopre20271"><span>09</span><b>Biblioteca CEPREUNI 2027-1</b><p>Materiales del ciclo organizados por entrega, con vista previa de la carátula de cada PDF.</p></a>
-  </section>
-</main>
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo">Universe to Study</div>
-      <div class="footer-tagline">Recursos, seguimiento y comunidad para postulantes UNI y estudiantes CEPREUNI.</div>
+  <section class="cepre-minimal-hero" aria-labelledby="cepre-title">
+    <img class="cepre-minimal-logo" src="/assets/home-access/cepreuni.png" alt="CEPREUNI">
+    <span class="cepre-minimal-kicker">Ciclo Preuniversitario</span>
+    <h1 id="cepre-title">CEPREUNI 2027-1</h1>
+    <p>Horarios, resultados y materiales del ciclo en un solo lugar.</p>
+    <div class="cepre-minimal-actions">
+      <a class="cepre-primary-action" href="#horarios-cepreuni" onclick="document.getElementById('horarios-cepreuni').open=true">Consultar horarios</a>
+      <a class="cepre-secondary-action" href="/planificador">Crear mi plan</a>
     </div>
-    <div class="footer-links">
-      <h4>Páginas</h4>
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/admision">Admisión UNI</a></li>
-        <li><a href="/cepreuni">CEPREUNI</a></li>
-        <li><a href="/temario">Temario</a></li>
-        <li><a href="/clases">Clases</a></li>
-        <li><a href="/biblioteca">Biblioteca</a></li>
-        <li><a href="/simulacros">Simulacros y exámenes</a></li>
-        <li><a href="/privacidad">Privacidad</a></li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h4>CEPREUNI</h4>
-      <ul>
-        <li><a href="/ranking">Máximos y mínimos</a></li>
-        <li><a href="/ingresantes-cepreuni">Ingresantes 2026-2</a></li>
-        <li><a href="/calculadora">Calculadora CEPREUNI</a></li>
-        <li><a href="/fijas-cepreuni">Fijas CEPREUNI</a></li>
-        <li><a href="/temario#temario-cepreuni">Temario CEPREUNI</a></li>
-        <li><a href="/examenes">Exámenes CEPREUNI</a></li>
-        <li><a href="/docentes-cepreuni">Guía de aulas</a></li>
-        <li><a href="/informacion-cepreuni">Información CEPREUNI</a></li>
-        <li><a href="/cepreuni/ciclopre20271">Biblioteca CEPREUNI 2027-1</a></li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h4>Accesos oficiales</h4>
-      <ul>
-        <li><a href="https://admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Admisión UNI</a></li>
-        <li><a href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPREUNI oficial</a></li>
-        <li><a href="https://ceprenet.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPRENET</a></li>
-        <li><a href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank">Drive Universe to Study</a></li>
+    <p class="cepre-formula-line"><strong>PID</strong> = S + 2EP1 + 4EP2 + 6EF</p>
+  </section>
 
-        <li><a href="/nosotros">Nosotros</a></li>
-        <li><a href="/metodologia-editorial">Metodología editorial</a></li>
-        <li><a href="/correcciones">Correcciones</a></li>
-        <li><a href="/contacto">Contacto</a></li>
-        <li><a href="/terminos">Términos y condiciones</a></li>
-      </ul>
+  <section class="cepre-essentials" aria-labelledby="cepre-essentials-title">
+    <div class="cepre-section-heading">
+      <span>Lo esencial</span>
+      <h2 id="cepre-essentials-title">¿Qué necesitas revisar?</h2>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Universe to Study. Todos los derechos reservados.</div>
-    <div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
-  </div>
+    <div class="cepre-quick-grid">
+      <a href="/calculadora"><span>01</span><strong>Calculadora</strong><small>Calcula y compara tu puntaje.</small><b>→</b></a>
+      <a href="/ranking"><span>02</span><strong>Puntajes</strong><small>Máximos y mínimos por especialidad.</small><b>→</b></a>
+      <a href="/ingresantes-cepreuni"><span>03</span><strong>Ingresantes</strong><small>Busca por nombre o código.</small><b>→</b></a>
+      <a href="/cepreuni/ciclopre20271"><span>04</span><strong>Materiales 2027-1</strong><small>Libros organizados por entrega.</small><b>→</b></a>
+    </div>
+  </section>
+
+  <details class="cepre-schedule-disclosure" id="horarios-cepreuni">
+    <summary>
+      <span><small>Horarios oficiales</small><strong>Consulta por ciclo y turno</strong></span>
+      <b>Mostrar horarios <i>+</i></b>
+    </summary>
+    <section class="cepre-schedules">
+      <div class="cepre-schedules-intro"><div><span>ORGANIZACIÓN ACADÉMICA</span><h2>Horarios CEPREUNI</h2></div><p>Selecciona el ciclo y el turno que deseas consultar.</p></div>
+      <div id="cepre-schedules-app"></div>
+    </section>
+  </details>
+
+  <details class="cepre-more-resources">
+    <summary>
+      <span><small>Más recursos</small><strong>Temarios, exámenes y orientación</strong></span>
+      <b>Ver opciones <i>+</i></b>
+    </summary>
+    <div class="cepre-link-grid">
+      <a class="cepre-hub-card" href="/fijas-cepreuni"><span>05</span><b>Fijas CEPREUNI</b><p>Temas recurrentes de evaluaciones anteriores.</p></a>
+      <a class="cepre-hub-card" href="/temario#temario-cepreuni"><span>06</span><b>Temario CEPREUNI</b><p>Contenido acumulado por curso y evaluación.</p></a>
+      <a class="cepre-hub-card" href="/examenes"><span>07</span><b>Exámenes CEPREUNI</b><p>Prácticas y exámenes organizados por ciclo.</p></a>
+      <a class="cepre-hub-card" href="/docentes-cepreuni"><span>08</span><b>Guía de aulas</b><p>Docentes, salones y horarios por curso.</p></a>
+      <a class="cepre-hub-card" href="/informacion-cepreuni"><span>09</span><b>Información CEPREUNI</b><p>Orientación para estudiantes y familias.</p></a>
+    </div>
+  </details>
+</main>
+<footer class="cepre-minimal-footer">
+  <a class="cepre-footer-brand" href="/">Universe to Study</a>
+  <nav aria-label="Enlaces del pie de página">
+    <a href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPREUNI oficial</a>
+    <a href="https://ceprenet.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPRENET</a>
+    <a href="/privacidad">Privacidad</a>
+    <a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a>
+  </nav>
+  <small>© 2026 Universe to Study</small>
 </footer>
 <script src="/cepreuni-2027-data.js?v=cepre-2027-1"></script>
 <script src="/cepreuni-schedules.js?v=schedules-2"></script>
