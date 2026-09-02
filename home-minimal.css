@@ -124,10 +124,11 @@ html[data-universe-page="home"] .home-access-heading p {
 }
 
 html[data-universe-page="home"] .home-access-logo-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: clamp(8px, 1.25vw, 16px);
+  gap: clamp(22px, 3.2vw, 48px);
   width: min(100%, 1180px);
   margin: 0 auto;
 }
@@ -136,28 +137,40 @@ html[data-universe-page="home"] .home-access-logo {
   position: relative;
   display: grid;
   place-items: center;
-  height: 104px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .68);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, .47);
-  box-shadow: 0 15px 35px rgba(29, 77, 151, .09);
-  backdrop-filter: blur(16px) saturate(135%);
-  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  flex: 0 1 128px;
+  width: 128px;
+  height: 92px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-decoration: none;
+  transition: transform .22s ease, filter .22s ease;
 }
 
-html[data-universe-page="home"] .home-access-logo:hover,
+html[data-universe-page="home"] .home-access-logo:hover {
+  z-index: 2;
+  filter: drop-shadow(0 10px 13px rgba(29, 77, 151, .18));
+  transform: translateY(-3px) scale(1.06);
+}
+
 html[data-universe-page="home"] .home-access-logo:focus-visible {
   z-index: 2;
-  border-color: rgba(58, 132, 239, .34);
-  outline: none;
-  box-shadow: 0 20px 44px rgba(29, 77, 151, .16);
-  transform: translateY(-5px) scale(1.025);
+  outline: 2px solid var(--home-accent);
+  outline-offset: 7px;
+  transform: scale(1.05);
 }
 
-html[data-universe-theme="dark"][data-universe-page="home"] .home-access-logo {
-  border-color: rgba(131, 184, 255, .18);
-  background: rgba(239, 247, 255, .9);
+html[data-universe-theme="dark"][data-universe-page="home"] .home-access-logo img {
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, .24));
+}
+
+html[data-universe-theme="dark"][data-universe-page="home"] .access-uni img,
+html[data-universe-theme="dark"][data-universe-page="home"] .access-cepre img,
+html[data-universe-theme="dark"][data-universe-page="home"] .access-youtube img,
+html[data-universe-theme="dark"][data-universe-page="home"] .access-linktree img {
+  filter: invert(1) hue-rotate(180deg) drop-shadow(0 0 7px rgba(255, 255, 255, .18));
 }
 
 html[data-universe-page="home"] .home-access-logo img {
@@ -349,12 +362,7 @@ html[data-universe-theme="dark"][data-universe-page="home"] .module-planner {
 
 @media (max-width: 1120px) {
   html[data-universe-page="home"] .home-access-logo-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
     width: min(100%, 760px);
-  }
-
-  html[data-universe-page="home"] .home-access-logo:last-child {
-    grid-column: 2 / span 2;
   }
 
   html[data-universe-page="home"] .home-module,
@@ -402,19 +410,13 @@ html[data-universe-theme="dark"][data-universe-page="home"] .module-planner {
   }
 
   html[data-universe-page="home"] .home-access-logo-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 9px;
+    gap: 18px 24px;
   }
 
-  html[data-universe-page="home"] .home-access-logo,
-  html[data-universe-page="home"] .home-access-logo:last-child {
-    grid-column: auto;
-    height: 92px;
-    border-radius: 18px;
-  }
-
-  html[data-universe-page="home"] .home-access-logo:last-child {
-    grid-column: 2;
+  html[data-universe-page="home"] .home-access-logo {
+    flex-basis: 112px;
+    width: 112px;
+    height: 82px;
   }
 
   html[data-universe-page="home"] .home-exams {
@@ -446,13 +448,7 @@ html[data-universe-theme="dark"][data-universe-page="home"] .module-planner {
 
 @media (max-width: 520px) {
   html[data-universe-page="home"] .home-access-logo-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  html[data-universe-page="home"] .home-access-logo:last-child {
-    grid-column: 1 / -1;
-    width: calc(50% - 5px);
-    justify-self: center;
+    gap: 16px 22px;
   }
 
   html[data-universe-page="home"] .home-module,
@@ -466,7 +462,6 @@ html[data-universe-theme="dark"][data-universe-page="home"] .module-planner {
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  html[data-universe-page="home"] .home-access-logo,
   html[data-universe-page="home"] .home-module {
     backdrop-filter: none;
   }
