@@ -864,7 +864,7 @@ html[data-universe-theme="dark"][data-universe-page="home"] body.home-page main 
   background: var(--home-panel) !important;
 }
 
-@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 761px) {
   .home-nav-inner {
     animation: home-desktop-nav-in .68s cubic-bezier(.22, 1, .36, 1) both;
   }
@@ -1085,12 +1085,10 @@ html[data-universe-page="home"] :where(a, button):focus-visible {
   .home-footer-main { grid-template-columns: 1fr 1fr; gap: 30px 18px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html[data-universe-page="home"] { scroll-behavior: auto; }
-  .home-orbit, .home-glow, .home-spark, .home-float-chip, .current-ring { animation: none !important; }
-  .home-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .home-module, .home-guide, .home-btn, .home-route-list li { transition: none !important; }
-}
+html[data-universe-animations="off"][data-universe-page="home"] { scroll-behavior: auto; }
+html[data-universe-animations="off"] :where(.home-orbit, .home-glow, .home-spark, .home-float-chip, .current-ring) { animation: none !important; }
+html[data-universe-animations="off"] .home-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+html[data-universe-animations="off"] :where(.home-module, .home-guide, .home-btn, .home-route-list li) { transition: none !important; }
 
 @media (prefers-reduced-transparency: reduce) {
   .home-nav-inner, .home-route-card, .home-channel, .home-module, .home-exam-card, .home-admission-panel, .home-info-links a, .home-current-card, .home-guide, .home-final { backdrop-filter: none; background: #f3f8ff; }

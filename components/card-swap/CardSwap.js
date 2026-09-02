@@ -22,7 +22,7 @@
     const status = shell && shell.querySelector('[data-card-swap-status]');
     const previousButton = shell && shell.querySelector('[data-card-swap-previous]');
     const nextButton = shell && shell.querySelector('[data-card-swap-next]');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animationsEnabled = () => document.documentElement.dataset.universeAnimations !== 'off';
     let order = cards.map((_, index) => index);
     let interval = 0;
     let animationTimer = 0;
@@ -89,7 +89,7 @@
 
     const restart = () => {
       window.clearInterval(interval);
-      if (!reducedMotion && !paused && cards.length > 1) interval = window.setInterval(next, settings.delay);
+      if (animationsEnabled() && !paused && cards.length > 1) interval = window.setInterval(next, settings.delay);
     };
 
     const finishSwap = (nextOrder, outgoing) => {
@@ -105,7 +105,7 @@
       if (animating || cards.length < 2) return;
       const outgoing = order[0];
       const nextOrder = order.slice(1).concat(outgoing);
-      if (reducedMotion) {
+      if (!animationsEnabled()) {
         order = nextOrder;
         placeAll(true);
         restart();
@@ -124,8 +124,18 @@
     const previous = () => {
       if (animating || cards.length < 2) return;
       order = [order[order.length - 1]].concat(order.slice(0, -1));
-      placeAll(reducedMotion);
+      placeAll(!animationsEnabled());
       restart();
+    };
+
+    const motionChanged = event => {
+      const enabled = !event.detail || event.detail.enabled !== false;
+      window.clearInterval(interval);
+      window.clearTimeout(animationTimer);
+      animating = false;
+      cards.forEach(card => card.classList.remove('is-dropping'));
+      placeAll(true);
+      if (enabled) restart();
     };
 
     const pause = () => {
@@ -148,6 +158,7 @@
       });
     }
     window.addEventListener('universe:languagechange', updateAccessibility);
+    window.addEventListener('universe:animationschange', motionChanged);
     const resizeObserver = new ResizeObserver(() => placeAll(true));
     resizeObserver.observe(container);
     placeAll(true);
@@ -162,6 +173,7 @@
         window.clearTimeout(animationTimer);
         resizeObserver.disconnect();
         window.removeEventListener('universe:languagechange', updateAccessibility);
+        window.removeEventListener('universe:animationschange', motionChanged);
         if (previousButton) previousButton.removeEventListener('click', previous);
         if (nextButton) nextButton.removeEventListener('click', next);
         delete container.dataset.cardSwapMounted;

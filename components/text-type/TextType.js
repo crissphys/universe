@@ -37,7 +37,7 @@
     let stopped = false;
     let visible = !settings.startOnVisible;
     let observer = null;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animationsEnabled = () => document.documentElement.dataset.universeAnimations !== 'off';
 
     const currentText = () => {
       const sentence = texts[currentTextIndex];
@@ -99,7 +99,7 @@
 
     const start = () => {
       if (!visible || stopped) return;
-      if (reducedMotion) {
+      if (!animationsEnabled()) {
         content.textContent = texts[0];
         cursor.hidden = true;
         return;
@@ -154,6 +154,9 @@
     };
     start(document.documentElement.dataset.universeLanguage || document.documentElement.lang || 'es');
     window.addEventListener('universe:languagechange', event => start(event.detail && event.detail.language));
+    window.addEventListener('universe:animationschange', () => {
+      start(document.documentElement.dataset.universeLanguage || document.documentElement.lang || 'es');
+    });
   };
 
   if (document.readyState === 'loading') {

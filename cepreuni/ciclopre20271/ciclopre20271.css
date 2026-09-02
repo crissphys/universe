@@ -34,4 +34,4 @@ html[data-universe-theme="dark"] .book-author{color:#c9c0c5}
 html[data-universe-theme="dark"] .cepre-library-page .book-open b,html[data-universe-theme="dark"] .cepre-library-page .catalog-next a{color:#f08b96}
 @media(max-width:720px){.cepre-library-page .collection-subheading{align-items:flex-start;flex-direction:column}.cepre-section-heading strong{align-self:flex-start}.cepre-book-grid{grid-template-columns:minmax(0,1fr)}.cepre-book-grid .book-card{width:min(100%,390px);margin-inline:auto}.cepre-brand-card img{width:min(82%,290px)}}
 @media(max-width:480px){.cepre-library-hero::after{display:none}.cepre-book-grid .book-info{padding:1rem}.pdf-preview-badge{font-size:.56rem}.cepre-library-page .catalog-next{grid-template-columns:auto 1fr}.cepre-library-page .catalog-next a{grid-column:1/-1;white-space:normal}}
-@media(prefers-reduced-motion:reduce){.cepre-library-page .catalog-orbit,.cepre-library-page .brand-halo{animation:none}}
+html[data-universe-animations="off"] :where(.cepre-library-page .catalog-orbit,.cepre-library-page .brand-halo){animation:none}

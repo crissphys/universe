@@ -350,6 +350,7 @@ function sanitizeAcademicProfile(data, existing, auth) {
     uniCycle: track === 'uni-student' ? cleanText(data.uniCycle !== undefined ? data.uniCycle : existing.uniCycle, 30) : '',
     communityIntent: COMMUNITY_INTENTS.includes(data.communityIntent) ? data.communityIntent : existing.communityIntent || '',
     target: TARGETS.includes(data.target) ? data.target : existing.target || '',
+    animationsEnabled: cleanBoolean(data.animationsEnabled, existing.animationsEnabled !== false),
     onboardingComplete: cleanBoolean(data.onboardingComplete, existing.onboardingComplete === true),
     createdAt: Number(existing.createdAt) || Date.now(),
     updatedAt: Date.now()
@@ -1399,6 +1400,7 @@ async function handleUnitalk(request, env, subpath) {
       uniCycle: academic.uniCycle,
       communityIntent: academic.communityIntent,
       target: academic.target,
+      animationsEnabled: academic.animationsEnabled,
       onboardingComplete: true
     } });
   }
