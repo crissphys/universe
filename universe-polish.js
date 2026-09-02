@@ -270,6 +270,11 @@
   function moveThemeToggleToViewport() {
     var btn = document.getElementById('universe-theme-toggle');
     if (!btn || !document.body) return;
+    if (document.documentElement && document.documentElement.dataset.universePage === 'home') {
+      var homeSlot = document.getElementById('home-account-slot');
+      if (homeSlot && btn.parentElement !== homeSlot) homeSlot.appendChild(btn);
+      return;
+    }
     if (btn.parentElement !== document.body) {
       document.body.appendChild(btn);
     }
