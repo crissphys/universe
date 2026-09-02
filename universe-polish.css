@@ -1044,7 +1044,13 @@ html[data-universe-page] :where(.primary, .cp-primary, .admission-btn.primary, .
   background:linear-gradient(135deg,var(--uts-accent),var(--uts-accent-2)) !important;
   box-shadow:0 12px 28px rgba(var(--uts-accent-rgb),.22) !important;
 }
-html[data-universe-page] :where(input, select, textarea, .cepre-v2-search, .libv4-search) {
+html[data-universe-page] :where(
+  input:not(:where([type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="color"])),
+  select,
+  textarea,
+  .cepre-v2-search,
+  .libv4-search
+) {
   min-height: 46px !important; border:1px solid rgba(var(--uts-accent-rgb),.18) !important;
   border-radius:14px !important; background:rgba(255,255,255,.78) !important;
   color:var(--uts-copy) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.5) !important;
@@ -1314,4 +1320,383 @@ html[data-universe-theme="dark"][data-universe-page="privacy"] body .universe-le
 html[data-universe-theme="dark"][data-universe-page="terms"] body .universe-legal-grid .legal-card {
   background: linear-gradient(145deg, rgba(7, 24, 57, .92), rgba(5, 18, 45, .74)) !important;
   border-color: rgba(117, 169, 255, .20) !important;
+}
+
+/* ========================================================================== */
+/* LIQUID GLASS · sistema global de superficies y controles                   */
+/* ========================================================================== */
+
+html[data-universe-page] {
+  --uts-liquid-accent: var(--accent, var(--uts-accent));
+  --uts-liquid-light: rgba(255, 255, 255, .62);
+  --uts-liquid-light-strong: rgba(255, 255, 255, .78);
+  --uts-liquid-edge: rgba(255, 255, 255, .72);
+  --uts-liquid-shadow:
+    0 20px 48px rgba(20, 61, 119, .13),
+    inset 0 1px 0 rgba(255, 255, 255, .84),
+    inset 0 -1px 0 rgba(var(--uts-accent-rgb), .08);
+}
+
+html[data-universe-theme="dark"][data-universe-page] {
+  --uts-liquid-light: rgba(6, 22, 52, .58);
+  --uts-liquid-light-strong: rgba(8, 29, 66, .76);
+  --uts-liquid-edge: rgba(141, 190, 255, .20);
+  --uts-liquid-shadow:
+    0 22px 56px rgba(0, 0, 0, .32),
+    inset 0 1px 0 rgba(185, 218, 255, .16),
+    inset 0 -1px 0 rgba(0, 0, 0, .18);
+}
+
+/* Los colores locales (por ejemplo, cada editorial o módulo de la portada)
+   tiñen su propio cristal sin perder la identidad de la sección. */
+html[data-universe-page] [data-card-tone="violet"] { --uts-liquid-accent: #7357e8; }
+html[data-universe-page] [data-card-tone="cyan"] { --uts-liquid-accent: #0e9bb8; }
+html[data-universe-page] [data-card-tone="green"] { --uts-liquid-accent: #0c9b70; }
+html[data-universe-page] :where(.module-admission, .exam-selection) { --uts-liquid-accent: #246ee9; }
+html[data-universe-page] :where(.module-cepre, .exam-classes) { --uts-liquid-accent: #7357e8; }
+html[data-universe-page] .module-classes { --uts-liquid-accent: #0e9bb8; }
+html[data-universe-page] .module-library { --uts-liquid-accent: #0c9b70; }
+
+/* Tarjetas, paneles, módulos y piezas informativas. El selector por sufijo
+   permite que las vistas nuevas hereden el sistema sin repetir estilos. */
+html[data-universe-page] :where(
+  .card,
+  .panel,
+  [class$="-card"],
+  [class*="-card "],
+  [class$="-panel"],
+  [class*="-panel "],
+  [class$="-tile"],
+  [class*="-tile "],
+  [class$="-module"],
+  [class*="-module "],
+  [class$="-sheet"],
+  [class*="-sheet "],
+  [class$="-box"],
+  [class*="-box "],
+  .home-feature-links a,
+  .home-info-links a,
+  .library-link-card,
+  .editorial-logo-card,
+  .book-card,
+  .privacy-option,
+  .conditional-group,
+  .settings-section
+):not(:where(
+  .uts-liquid-solid,
+  .uts-liquid-glass-exempt,
+  .support-v2-panel,
+  #support-v2-panel *,
+  [role="dialog"],
+  [role="dialog"] *,
+  .modal,
+  .modal *,
+  .alert,
+  .notice-important,
+  .lumbreras-important-notice,
+  .account-profile-overview,
+  .home-route-visual,
+  .home-card-swap-visual
+)) {
+  --uts-liquid-accent: var(--accent, var(--uts-accent));
+  border-color: color-mix(in srgb, var(--uts-liquid-accent) 22%, var(--uts-liquid-edge)) !important;
+  background-color: var(--uts-liquid-light) !important;
+  background-image:
+    radial-gradient(circle at 12% -8%, rgba(255, 255, 255, .82), transparent 40%),
+    radial-gradient(circle at 92% 112%, color-mix(in srgb, var(--uts-liquid-accent) 18%, transparent), transparent 48%),
+    linear-gradient(135deg, color-mix(in srgb, var(--uts-liquid-accent) 9%, rgba(255, 255, 255, .58)), rgba(255, 255, 255, .24)) !important;
+  box-shadow: var(--uts-liquid-shadow) !important;
+  backdrop-filter: blur(22px) saturate(1.55) contrast(1.02) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.55) contrast(1.02) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] :where(
+  .card,
+  .panel,
+  [class$="-card"],
+  [class*="-card "],
+  [class$="-panel"],
+  [class*="-panel "],
+  [class$="-tile"],
+  [class*="-tile "],
+  [class$="-module"],
+  [class*="-module "],
+  [class$="-sheet"],
+  [class*="-sheet "],
+  [class$="-box"],
+  [class*="-box "],
+  .home-feature-links a,
+  .home-info-links a,
+  .library-link-card,
+  .editorial-logo-card,
+  .book-card,
+  .privacy-option,
+  .conditional-group,
+  .settings-section
+):not(:where(
+  .uts-liquid-solid,
+  .uts-liquid-glass-exempt,
+  .support-v2-panel,
+  #support-v2-panel *,
+  [role="dialog"],
+  [role="dialog"] *,
+  .modal,
+  .modal *,
+  .alert,
+  .notice-important,
+  .lumbreras-important-notice,
+  .account-profile-overview,
+  .home-route-visual,
+  .home-card-swap-visual
+)) {
+  border-color: color-mix(in srgb, var(--uts-liquid-accent) 30%, rgba(157, 201, 255, .19)) !important;
+  background-color: var(--uts-liquid-light) !important;
+  background-image:
+    radial-gradient(circle at 12% -10%, rgba(153, 204, 255, .16), transparent 42%),
+    radial-gradient(circle at 92% 112%, color-mix(in srgb, var(--uts-liquid-accent) 22%, transparent), transparent 48%),
+    linear-gradient(135deg, color-mix(in srgb, var(--uts-liquid-accent) 12%, rgba(7, 25, 58, .74)), rgba(3, 14, 35, .50)) !important;
+  color: var(--uts-copy) !important;
+}
+
+/* Capas muy pequeñas: etiquetas, pestañas y chips reciben vidrio más ligero. */
+html[data-universe-page] :where(
+  [class$="-chip"],
+  [class*="-chip "],
+  [class$="-pill"],
+  [class*="-pill "],
+  [class$="-badge"],
+  [class*="-badge "],
+  [class$="-tag"],
+  [class*="-tag "],
+  .uts-context-home,
+  .home-feature-link-icon,
+  .library-card-mark
+) {
+  border: 1px solid color-mix(in srgb, var(--accent, var(--uts-accent)) 22%, rgba(255, 255, 255, .64)) !important;
+  background-color: rgba(255, 255, 255, .42) !important;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, .55), color-mix(in srgb, var(--accent, var(--uts-accent)) 12%, transparent)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72), 0 7px 18px rgba(21, 65, 124, .08) !important;
+  backdrop-filter: blur(12px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.4) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] :where(
+  [class$="-chip"], [class*="-chip "], [class$="-pill"], [class*="-pill "],
+  [class$="-badge"], [class*="-badge "], [class$="-tag"], [class*="-tag "],
+  .uts-context-home, .home-feature-link-icon, .library-card-mark
+) {
+  background-color: rgba(9, 31, 69, .52) !important;
+  background-image: linear-gradient(145deg, rgba(112, 170, 255, .12), color-mix(in srgb, var(--accent, var(--uts-accent)) 18%, transparent)) !important;
+  border-color: color-mix(in srgb, var(--accent, var(--uts-accent)) 28%, rgba(139, 188, 255, .18)) !important;
+  box-shadow: inset 0 1px 0 rgba(185, 218, 255, .14), 0 8px 20px rgba(0, 0, 0, .16) !important;
+}
+
+/* Controles secundarios con vidrio líquido. Las acciones críticas quedan
+   explícitamente excluidas para conservar un CTA sólido y reconocible. */
+html[data-universe-page] :where(
+  button,
+  .btn,
+  [class$="-btn"],
+  [class*="-btn "],
+  [class$="-button"],
+  [class*="-button "],
+  .nav-cta,
+  .tool-cta,
+  .ap-action,
+  .learn-secondary,
+  .cp-mode-tab,
+  .cepre-v2-filter,
+  .cepre-eval-btn
+):not(:where(
+  .primary,
+  [class$="-primary"],
+  [class*="-primary "],
+  .danger,
+  [class*="danger"],
+  .home-btn-celebrate,
+  .book-open,
+  .libv4-open,
+  .cp-primary,
+  .learn-primary,
+  .support-v2-send,
+  .support-v2-solved,
+  #support-v2-fab,
+  #support-v2-panel *,
+  #uts-google-auth-button,
+  .uts-google-login,
+  [type="submit"],
+  [data-login],
+  [data-logout],
+  [data-save-unified],
+  [data-save-ann],
+  [data-save-schedule],
+  [data-add-event],
+  [data-report-action],
+  [data-unitalk-submit],
+  .unitalk-submit,
+  .unitalk-send,
+  .home-world-chat-compose-row button,
+  .uts-liquid-solid,
+  .uts-liquid-glass-exempt
+)) {
+  border: 1px solid color-mix(in srgb, var(--accent, var(--uts-accent)) 28%, rgba(255, 255, 255, .70)) !important;
+  background-color: rgba(255, 255, 255, .54) !important;
+  background-image:
+    linear-gradient(145deg, rgba(255, 255, 255, .76), color-mix(in srgb, var(--accent, var(--uts-accent)) 14%, rgba(255, 255, 255, .28))) !important;
+  color: var(--accent, var(--uts-accent)) !important;
+  box-shadow:
+    0 10px 24px rgba(21, 65, 124, .11),
+    inset 0 1px 0 rgba(255, 255, 255, .88),
+    inset 0 -1px 0 rgba(var(--uts-accent-rgb), .08) !important;
+  backdrop-filter: blur(16px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
+}
+
+html[data-universe-page] :where(
+  button,
+  .btn,
+  [class$="-btn"],
+  [class*="-btn "],
+  [class$="-button"],
+  [class*="-button "]
+):not(:where(
+  .primary, [class$="-primary"], [class*="-primary "], .danger, [class*="danger"],
+  .home-btn-celebrate, .book-open, .libv4-open, .cp-primary, .learn-primary,
+  .support-v2-send, .support-v2-solved, #support-v2-fab, #support-v2-panel *,
+  #uts-google-auth-button, .uts-google-login, [type="submit"], [data-login], [data-logout],
+  [data-save-unified], [data-save-ann], [data-save-schedule], [data-add-event],
+  [data-report-action], [data-unitalk-submit], .unitalk-submit, .unitalk-send,
+  .home-world-chat-compose-row button, .uts-liquid-solid, .uts-liquid-glass-exempt
+)):hover {
+  border-color: color-mix(in srgb, var(--accent, var(--uts-accent)) 48%, rgba(255, 255, 255, .72)) !important;
+  background-color: rgba(255, 255, 255, .72) !important;
+  box-shadow: 0 15px 32px rgba(var(--uts-accent-rgb), .17), inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] :where(
+  button,
+  .btn,
+  [class$="-btn"],
+  [class*="-btn "],
+  [class$="-button"],
+  [class*="-button "],
+  .nav-cta,
+  .tool-cta,
+  .ap-action,
+  .learn-secondary,
+  .cp-mode-tab,
+  .cepre-v2-filter,
+  .cepre-eval-btn
+):not(:where(
+  .primary, [class$="-primary"], [class*="-primary "], .danger, [class*="danger"],
+  .home-btn-celebrate, .book-open, .libv4-open, .cp-primary, .learn-primary,
+  .support-v2-send, .support-v2-solved, #support-v2-fab, #support-v2-panel *,
+  #uts-google-auth-button, .uts-google-login, [type="submit"], [data-login], [data-logout],
+  [data-save-unified], [data-save-ann], [data-save-schedule], [data-add-event],
+  [data-report-action], [data-unitalk-submit], .unitalk-submit, .unitalk-send,
+  .home-world-chat-compose-row button, .uts-liquid-solid, .uts-liquid-glass-exempt
+)) {
+  border-color: color-mix(in srgb, var(--accent, var(--uts-accent)) 34%, rgba(139, 188, 255, .20)) !important;
+  background-color: rgba(7, 25, 58, .58) !important;
+  background-image: linear-gradient(145deg, rgba(116, 174, 255, .12), color-mix(in srgb, var(--accent, var(--uts-accent)) 16%, rgba(3, 14, 35, .42))) !important;
+  color: color-mix(in srgb, var(--accent, var(--uts-accent)) 62%, #dbeafe) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(185, 218, 255, .16) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] :where(
+  button,
+  .btn,
+  [class$="-btn"],
+  [class*="-btn "],
+  [class$="-button"],
+  [class*="-button "]
+):not(:where(
+  .primary, [class$="-primary"], [class*="-primary "], .danger, [class*="danger"],
+  .home-btn-celebrate, .book-open, .libv4-open, .cp-primary, .learn-primary,
+  .support-v2-send, .support-v2-solved, #support-v2-fab, #support-v2-panel *,
+  #uts-google-auth-button, .uts-google-login, [type="submit"], [data-login], [data-logout],
+  [data-save-unified], [data-save-ann], [data-save-schedule], [data-add-event],
+  [data-report-action], [data-unitalk-submit], .unitalk-submit, .unitalk-send,
+  .home-world-chat-compose-row button, .uts-liquid-solid, .uts-liquid-glass-exempt
+)):hover {
+  background-color: rgba(12, 40, 86, .74) !important;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .30), inset 0 1px 0 rgba(191, 222, 255, .20) !important;
+}
+
+/* Campos y selectores: cristal funcional, con contraste de texto intacto. */
+html[data-universe-page] :where(input, select, textarea, .cepre-v2-search, .libv4-search) {
+  background-color: rgba(255, 255, 255, .55) !important;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, .62), rgba(var(--uts-accent-rgb), .045)) !important;
+  border-color: color-mix(in srgb, var(--uts-accent) 20%, rgba(255, 255, 255, .66)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .78), 0 8px 22px rgba(21, 65, 124, .07) !important;
+  backdrop-filter: blur(14px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.35) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] :where(
+  input:not(:where([type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="color"])),
+  select,
+  textarea,
+  .cepre-v2-search,
+  .libv4-search
+) {
+  background-color: rgba(7, 25, 58, .62) !important;
+  background-image: linear-gradient(145deg, rgba(116, 174, 255, .08), rgba(3, 14, 35, .46)) !important;
+  border-color: color-mix(in srgb, var(--uts-accent) 28%, rgba(139, 188, 255, .18)) !important;
+  box-shadow: inset 0 1px 0 rgba(185, 218, 255, .12), 0 9px 24px rgba(0, 0, 0, .16) !important;
+}
+
+/* Cabecera, barra contextual y pie: el mismo material para cerrar el sistema. */
+html[data-universe-page] :where(body > nav, .uts-page-context, footer) {
+  background-image:
+    radial-gradient(circle at 10% -20%, rgba(255, 255, 255, .86), transparent 42%),
+    linear-gradient(135deg, rgba(255, 255, 255, .66), rgba(var(--uts-accent-rgb), .065)) !important;
+  backdrop-filter: blur(24px) saturate(1.55) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.55) !important;
+  box-shadow: 0 20px 52px rgba(20, 61, 119, .13), inset 0 1px 0 rgba(255, 255, 255, .82) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page] :where(body > nav, .uts-page-context, footer) {
+  background-image:
+    radial-gradient(circle at 10% -20%, rgba(151, 201, 255, .14), transparent 44%),
+    linear-gradient(135deg, rgba(7, 26, 61, .76), rgba(3, 14, 35, .62)) !important;
+  box-shadow: 0 22px 58px rgba(0, 0, 0, .32), inset 0 1px 0 rgba(185, 218, 255, .14) !important;
+}
+
+/* En teléfonos se conserva el efecto con menos desenfoque para mantenerlo
+   fluido y sin bloquear toques ni controles. */
+@media (max-width: 720px) {
+  html[data-universe-page] :where(
+    .card, .panel, [class$="-card"], [class*="-card "], [class$="-panel"], [class*="-panel "],
+    [class$="-tile"], [class*="-tile "], [class$="-module"], [class*="-module "],
+    [class$="-sheet"], [class*="-sheet "], [class$="-box"], [class*="-box "],
+    .home-feature-links a, .home-info-links a, .library-link-card, .editorial-logo-card, .book-card
+  ):not(:where(.uts-liquid-solid, .uts-liquid-glass-exempt, .support-v2-panel, #support-v2-panel *, [role="dialog"], [role="dialog"] *, .modal, .modal *)) {
+    backdrop-filter: blur(14px) saturate(1.38) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.38) !important;
+    box-shadow: 0 14px 34px rgba(20, 61, 119, .12), inset 0 1px 0 rgba(255, 255, 255, .70) !important;
+  }
+
+  html[data-universe-theme="dark"][data-universe-page] :where(
+    .card, .panel, [class$="-card"], [class*="-card "], [class$="-panel"], [class*="-panel "],
+    [class$="-tile"], [class*="-tile "], [class$="-module"], [class*="-module "],
+    [class$="-sheet"], [class*="-sheet "], [class$="-box"], [class*="-box "],
+    .home-feature-links a, .home-info-links a, .library-link-card, .editorial-logo-card, .book-card
+  ):not(:where(.uts-liquid-solid, .uts-liquid-glass-exempt, .support-v2-panel, #support-v2-panel *, [role="dialog"], [role="dialog"] *, .modal, .modal *)) {
+    box-shadow: 0 15px 36px rgba(0, 0, 0, .26), inset 0 1px 0 rgba(185, 218, 255, .12) !important;
+  }
+}
+
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  html[data-universe-page] :where(
+    .card, .panel, [class$="-card"], [class*="-card "], [class$="-panel"], [class*="-panel "],
+    [class$="-tile"], [class*="-tile "], [class$="-module"], [class*="-module "],
+    [class$="-sheet"], [class*="-sheet "], [class$="-box"], [class*="-box "]
+  ) { background-color: rgba(255, 255, 255, .92) !important; }
+
+  html[data-universe-theme="dark"][data-universe-page] :where(
+    .card, .panel, [class$="-card"], [class*="-card "], [class$="-panel"], [class*="-panel "],
+    [class$="-tile"], [class*="-tile "], [class$="-module"], [class*="-module "],
+    [class$="-sheet"], [class*="-sheet "], [class$="-box"], [class*="-box "]
+  ) { background-color: rgba(6, 22, 52, .96) !important; }
 }
