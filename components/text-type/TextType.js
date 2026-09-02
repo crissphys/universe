@@ -21,14 +21,23 @@
     const texts = (Array.isArray(settings.text) ? settings.text : [settings.text]).filter(Boolean);
     if (!texts.length) return null;
 
+    const sizer = document.createElement('span');
+    sizer.className = 'text-type__sizer';
+    sizer.setAttribute('aria-hidden', 'true');
+    sizer.textContent = texts.reduce((longest, sentence) => (
+      Array.from(sentence).length > Array.from(longest).length ? sentence : longest
+    ), texts[0]);
+    const output = document.createElement('span');
+    output.className = 'text-type__output';
     const content = document.createElement('span');
     content.className = 'text-type__content';
     const cursor = document.createElement('span');
     cursor.className = 'text-type__cursor';
     cursor.setAttribute('aria-hidden', 'true');
     cursor.textContent = settings.cursorCharacter;
-    element.replaceChildren(content);
-    if (settings.showCursor) element.appendChild(cursor);
+    output.appendChild(content);
+    if (settings.showCursor) output.appendChild(cursor);
+    element.replaceChildren(sizer, output);
 
     let currentTextIndex = 0;
     let currentCharacterIndex = 0;
