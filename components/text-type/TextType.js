@@ -135,15 +135,25 @@
   window.TextType = { mount };
 
   const initialize = () => {
-    mount(document.getElementById('home-text-type'), {
-      text: ['empieza aquí.', 'avanza contigo.', 'llega más lejos.'],
-      typingSpeed: 45,
-      pauseDuration: 900,
-      showCursor: true,
-      cursorCharacter: '|',
-      deletingSpeed: 30,
-      loop: true
-    });
+    const element = document.getElementById('home-text-type');
+    let instance = null;
+    const start = language => {
+      if (instance) instance.destroy();
+      const english = String(language || '').toLowerCase().startsWith('en');
+      instance = mount(element, {
+        text: english
+          ? ['starts here.', 'moves forward.', 'goes further.']
+          : ['empieza aquí.', 'avanza contigo.', 'llega más lejos.'],
+        typingSpeed: 45,
+        pauseDuration: 900,
+        showCursor: true,
+        cursorCharacter: '|',
+        deletingSpeed: 30,
+        loop: true
+      });
+    };
+    start(document.documentElement.dataset.universeLanguage || document.documentElement.lang || 'es');
+    window.addEventListener('universe:languagechange', event => start(event.detail && event.detail.language));
   };
 
   if (document.readyState === 'loading') {

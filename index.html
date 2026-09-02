@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
   <link rel="stylesheet" href="/home.css?v=home-13">
   <link rel="stylesheet" href="/components/text-type/TextType.css?v=text-type-1">
+  <link rel="stylesheet" href="/components/card-swap/CardSwap.css?v=card-swap-1">
 
   <script>
     (function () {
@@ -120,49 +121,47 @@
         </div>
       </div>
 
-      <div class="home-route-visual home-reveal" aria-label="Ruta de preparación Universe">
-        <div class="home-float-chip chip-plan"><b>01</b><span>Organiza</span></div>
-        <div class="home-float-chip chip-practice"><b>02</b><span>Practica</span></div>
-        <article class="home-route-card">
-          <header>
-            <div>
-              <span class="home-card-kicker">Tu espacio de estudio</span>
-              <h2>Una ruta. Todo conectado.</h2>
-            </div>
-            <span class="home-live-pill"><i></i> Disponible</span>
-          </header>
-          <ol class="home-route-list">
-            <li>
-              <span class="route-icon route-blue" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 3v4M16 3v4M7 11h4M7 15h7"></path></svg>
-              </span>
-              <a href="/temario"><b>Revisa qué estudiar</b><small>Temarios UNI, San Marcos y CEPREUNI</small></a>
-              <span class="route-arrow">→</span>
-            </li>
-            <li>
-              <span class="route-icon route-violet" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h5M8 16h7"></path></svg>
-              </span>
-              <a href="/simulacros"><b>Pon a prueba tu avance</b><small>Simulacros y exámenes cronometrados</small></a>
-              <span class="route-arrow">→</span>
-            </li>
-            <li>
-              <span class="route-icon route-cyan" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"></path></svg>
-              </span>
-              <a href="/calculadora"><b>Interpreta tus resultados</b><small>Calculadora y referencias CEPREUNI</small></a>
-              <span class="route-arrow">→</span>
-            </li>
-            <li>
-              <span class="route-icon route-gold" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 3zM8 9h8M8 13h5"></path></svg>
-              </span>
-              <a href="/unitalk"><b>Aprende con la comunidad</b><small>Publica, pregunta y comparte en UNITALK</small></a>
-              <span class="route-arrow">→</span>
-            </li>
-          </ol>
-        </article>
-        <div class="home-float-chip chip-community"><b>03</b><span>Conecta</span></div>
+      <div class="home-route-visual home-card-swap-visual home-reveal" aria-label="Funciones principales de Universe to Study">
+        <div class="home-card-swap-intro"><span class="home-card-kicker">Funciones esenciales</span><p>Todo lo que necesitas para avanzar, sin perder tiempo buscando.</p></div>
+        <div class="card-swap-container" id="home-card-swap" aria-label="Tarjetas de funciones principales">
+          <article class="card home-feature-card" data-card-swap-card data-label="Organiza" data-label-en="Plan">
+            <header><span class="home-feature-card-badge"><i>01</i> Planifica</span><span class="home-feature-card-number">01/04</span></header>
+            <h2>Organiza tu preparación</h2><p>Convierte el temario en un plan semanal y encuentra rápidamente la información del ciclo.</p>
+            <nav class="home-feature-links" aria-label="Herramientas de organización">
+              <a href="/planificador"><span class="home-feature-link-icon" aria-hidden="true">✓</span><span><b>Planificador de estudio</b><small>Crea y ajusta tu cronograma</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="/temario"><span class="home-feature-link-icon" aria-hidden="true">≡</span><span><b>Temarios organizados</b><small>Consulta los contenidos oficiales</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="/cepreuni"><span class="home-feature-link-icon" aria-hidden="true">C</span><span><b>Espacio CEPREUNI</b><small>Fechas, materiales y herramientas</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+            </nav>
+          </article>
+          <article class="card home-feature-card" data-card-swap-card data-card-tone="violet" data-label="Practica" data-label-en="Practice">
+            <header><span class="home-feature-card-badge"><i>02</i> Practica</span><span class="home-feature-card-number">02/04</span></header>
+            <h2>Practica y mide tu avance</h2><p>Entrena con tiempo real, revisa exámenes anteriores y estima tus resultados.</p>
+            <nav class="home-feature-links" aria-label="Herramientas de práctica">
+              <a href="/simulacros"><span class="home-feature-link-icon" aria-hidden="true">▶</span><span><b>Simulacros cronometrados</b><small>Practica como en el examen</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="/examenes"><span class="home-feature-link-icon" aria-hidden="true">▤</span><span><b>Exámenes anteriores</b><small>Revisa convocatorias pasadas</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="/calculadora"><span class="home-feature-link-icon" aria-hidden="true">%</span><span><b>Calculadora CEPREUNI</b><small>Interpreta tus puntajes</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+            </nav>
+          </article>
+          <article class="card home-feature-card" data-card-swap-card data-card-tone="cyan" data-label="Aprende" data-label-en="Learn">
+            <header><span class="home-feature-card-badge"><i>03</i> Aprende</span><span class="home-feature-card-number">03/04</span></header>
+            <h2>Aprende con recursos ordenados</h2><p>Encuentra clases, libros y materiales clasificados por curso y editorial.</p>
+            <nav class="home-feature-links" aria-label="Recursos de aprendizaje">
+              <a href="/clases"><span class="home-feature-link-icon" aria-hidden="true">▷</span><span><b>Clases por tema</b><small>Repasa cada curso a tu ritmo</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="/biblioteca"><span class="home-feature-link-icon" aria-hidden="true">B</span><span><b>Biblioteca Universe</b><small>Explora libros y colecciones</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="/cepreuni/ciclopre20271"><span class="home-feature-link-icon" aria-hidden="true">27</span><span><b>Materiales 2027-1</b><small>Accede a las entregas CEPREUNI</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+            </nav>
+          </article>
+          <article class="card home-feature-card" data-card-swap-card data-card-tone="green" data-label="Conecta" data-label-en="Connect">
+            <header><span class="home-feature-card-badge"><i>04</i> Conecta</span><span class="home-feature-card-number">04/04</span></header>
+            <h2>Conecta con la comunidad</h2><p>Pregunta, comparte materiales y conserva una identidad única en toda la plataforma.</p>
+            <nav class="home-feature-links" aria-label="Funciones de comunidad">
+              <a href="/unitalk"><span class="home-feature-link-icon" aria-hidden="true">U</span><span><b>Entrar a UNITALK</b><small>Publica y conversa con estudiantes</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="/account"><span class="home-feature-link-icon" aria-hidden="true">@</span><span><b>Mi perfil Universe</b><small>Configura tu identidad académica</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
+              <a href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer"><span class="home-feature-link-icon" aria-hidden="true">?</span><span><b>Soporte directo</b><small>Recibe ayuda por WhatsApp</small></span><span class="home-feature-link-arrow" aria-hidden="true">↗</span></a>
+            </nav>
+          </article>
+        </div>
+        <div class="home-card-swap-controls"><span class="home-card-swap-status" data-card-swap-status aria-live="polite">1/4 · Organiza</span><button type="button" data-card-swap-previous aria-label="Tarjeta anterior">←</button><button type="button" data-card-swap-next aria-label="Siguiente tarjeta">→</button></div>
       </div>
     </section>
 
@@ -389,6 +388,7 @@
 
   <script src="/home.js?v=home-6" defer></script>
   <script src="/components/text-type/TextType.js?v=text-type-1" defer></script>
+  <script src="/components/card-swap/CardSwap.js?v=card-swap-1" defer></script>
 <script src="/universe-polish.js?v=unified-36" defer></script>
 </body>
 </html>
