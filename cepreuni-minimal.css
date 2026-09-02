@@ -1,0 +1,394 @@
+html[data-universe-page="cepre"] {
+  --cepre-surface: rgba(255, 255, 255, .68);
+  --cepre-surface-strong: rgba(255, 255, 255, .9);
+  --cepre-line: rgba(39, 96, 173, .14);
+  --cepre-text: #0b1f3a;
+  --cepre-muted: #607089;
+  --cepre-blue: #176fd4;
+  --cepre-shadow: 0 18px 48px rgba(29, 77, 151, .08);
+}
+
+html[data-universe-theme="dark"][data-universe-page="cepre"] {
+  --cepre-surface: rgba(7, 24, 49, .66);
+  --cepre-surface-strong: rgba(7, 24, 49, .88);
+  --cepre-line: rgba(124, 179, 255, .16);
+  --cepre-text: #f4f8ff;
+  --cepre-muted: #a9b8cf;
+  --cepre-blue: #73b7ff;
+  --cepre-shadow: 0 18px 54px rgba(0, 8, 24, .22);
+}
+
+html[data-universe-page="cepre"] .cepre-page {
+  width: min(1120px, calc(100vw - 32px));
+  margin: clamp(42px, 7vw, 92px) auto 70px;
+  padding: 0;
+}
+
+html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav {
+  min-height: 64px !important;
+  padding: .55rem .9rem !important;
+}
+
+html[data-universe-page="cepre"] body > nav .uts-g-label small { display: none !important; }
+
+html[data-universe-page="cepre"] .cepre-minimal-hero {
+  display: flex !important;
+  min-height: 0 !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(820px, 100%);
+  margin: 0 auto;
+  padding: clamp(38px, 6vw, 68px) clamp(22px, 5vw, 52px);
+  border: 1px solid var(--cepre-line);
+  border-radius: 34px;
+  background: var(--cepre-surface);
+  box-shadow: var(--cepre-shadow);
+  text-align: center;
+  backdrop-filter: blur(20px) saturate(125%);
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-logo {
+  display: block;
+  width: 112px;
+  height: auto;
+  margin-bottom: 16px;
+  object-fit: contain;
+}
+
+html[data-universe-theme="dark"][data-universe-page="cepre"] .cepre-minimal-logo {
+  filter: invert(1) hue-rotate(180deg) drop-shadow(0 0 8px rgba(255, 255, 255, .12));
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-kicker,
+html[data-universe-page="cepre"] .cepre-section-heading > span {
+  color: var(--cepre-blue);
+  font: 800 .72rem/1 "DM Sans", sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-hero h1 {
+  margin: 12px 0 14px;
+  color: var(--cepre-text);
+  font: 750 clamp(3rem, 6.4vw, 4.8rem)/.95 "DM Sans", sans-serif;
+  letter-spacing: -.065em;
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-hero > p:not(.cepre-formula-line) {
+  max-width: 590px;
+  margin: 0;
+  color: var(--cepre-muted);
+  font: 500 clamp(.96rem, 1.7vw, 1.08rem)/1.65 "DM Sans", sans-serif;
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-actions a {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0 20px;
+  font: 750 .82rem/1 "DM Sans", sans-serif;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-actions a:hover { transform: translateY(-2px); }
+
+html[data-universe-page="cepre"] .cepre-primary-action {
+  background: #176fd4;
+  color: #fff !important;
+  box-shadow: 0 12px 28px rgba(23, 111, 212, .2);
+}
+
+html[data-universe-page="cepre"] .cepre-secondary-action {
+  border: 1px solid var(--cepre-line);
+  background: var(--cepre-surface-strong);
+  color: var(--cepre-text) !important;
+}
+
+html[data-universe-page="cepre"] .cepre-formula-line {
+  margin: 22px 0 0 !important;
+  color: var(--cepre-muted) !important;
+  font: 650 .8rem/1.4 "DM Sans", sans-serif !important;
+}
+
+html[data-universe-page="cepre"] .cepre-formula-line strong { color: var(--cepre-blue); }
+
+html[data-universe-page="cepre"] .cepre-essentials {
+  margin-top: clamp(54px, 8vw, 84px);
+}
+
+html[data-universe-page="cepre"] .cepre-section-heading {
+  max-width: 660px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+html[data-universe-page="cepre"] .cepre-section-heading h2 {
+  margin: 10px 0 0;
+  color: var(--cepre-text);
+  font: 750 clamp(1.8rem, 4vw, 2.7rem)/1.1 "DM Sans", sans-serif;
+  letter-spacing: -.04em;
+}
+
+html[data-universe-page="cepre"] .cepre-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+html[data-universe-page="cepre"] .cepre-quick-grid a {
+  position: relative;
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  border: 1px solid var(--cepre-line);
+  border-radius: 24px;
+  background: var(--cepre-surface);
+  box-shadow: 0 12px 34px rgba(29, 77, 151, .055);
+  padding: 20px;
+  color: var(--cepre-text) !important;
+  text-decoration: none;
+  backdrop-filter: blur(16px) saturate(120%);
+  transition: transform .2s ease, border-color .2s ease;
+}
+
+html[data-universe-page="cepre"] .cepre-quick-grid a:hover {
+  border-color: rgba(23, 111, 212, .36);
+  transform: translateY(-3px);
+}
+
+html[data-universe-page="cepre"] .cepre-quick-grid span {
+  color: var(--cepre-blue);
+  font: 800 .68rem/1 "DM Sans", sans-serif;
+  letter-spacing: .12em;
+}
+
+html[data-universe-page="cepre"] .cepre-quick-grid strong {
+  margin-top: auto;
+  font: 750 1.12rem/1.2 "DM Sans", sans-serif;
+}
+
+html[data-universe-page="cepre"] .cepre-quick-grid small {
+  margin-top: 7px;
+  color: var(--cepre-muted);
+  font: 500 .78rem/1.45 "DM Sans", sans-serif;
+}
+
+html[data-universe-page="cepre"] .cepre-quick-grid b {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  color: var(--cepre-blue);
+  font-size: 1.1rem;
+}
+
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) {
+  overflow: hidden;
+  margin-top: 18px;
+  border: 1px solid var(--cepre-line);
+  border-radius: 26px;
+  background: var(--cepre-surface);
+  box-shadow: 0 12px 34px rgba(29, 77, 151, .05);
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+html[data-universe-page="cepre"] .cepre-schedule-disclosure { margin-top: 22px; }
+
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 24px;
+  cursor: pointer;
+  list-style: none;
+}
+
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary::-webkit-details-marker { display: none; }
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary span { display: grid; gap: 6px; }
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary small { color: var(--cepre-blue); font: 800 .66rem/1 "DM Sans", sans-serif; letter-spacing: .13em; text-transform: uppercase; }
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary strong { color: var(--cepre-text); font: 750 1.08rem/1.3 "DM Sans", sans-serif; }
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary > b { color: var(--cepre-muted); font: 700 .75rem/1 "DM Sans", sans-serif; white-space: nowrap; }
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary i { display: inline-grid; width: 28px; height: 28px; margin-left: 8px; border-radius: 50%; background: rgba(23, 111, 212, .1); color: var(--cepre-blue); font-style: normal; place-items: center; transition: transform .2s ease; }
+html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources)[open] > summary i { transform: rotate(45deg); }
+
+html[data-universe-page="cepre"] .cepre-schedules {
+  width: auto;
+  margin: 0;
+  padding: 8px 18px 20px;
+  border-top: 1px solid var(--cepre-line);
+}
+
+html[data-universe-page="cepre"] .cepre-schedules-intro {
+  margin: 18px 4px;
+}
+
+html[data-universe-page="cepre"] .cepre-schedules-intro h2 {
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 750;
+  letter-spacing: -.04em;
+}
+
+html[data-universe-page="cepre"] .cepre-schedule-shell {
+  border-radius: 20px;
+  box-shadow: none;
+}
+
+html[data-universe-page="cepre"] .cepre-more-resources .cepre-link-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 18px 18px;
+}
+
+html[data-universe-page="cepre"] .cepre-more-resources .cepre-hub-card {
+  min-height: 150px;
+  border-radius: 18px;
+  padding: 16px;
+  background: var(--cepre-surface-strong) !important;
+  box-shadow: none !important;
+}
+
+html[data-universe-page="cepre"] .cepre-more-resources .cepre-hub-card::before { display: none; }
+html[data-universe-page="cepre"] .cepre-more-resources .cepre-hub-card span { margin-bottom: auto; border-radius: 8px; padding: 6px 8px; font-size: .65rem; }
+html[data-universe-page="cepre"] .cepre-more-resources .cepre-hub-card b { margin: 18px 0 5px; font: 750 .94rem/1.25 "DM Sans", sans-serif; }
+html[data-universe-page="cepre"] .cepre-more-resources .cepre-hub-card p { color: var(--cepre-muted) !important; font: 500 .72rem/1.4 "DM Sans", sans-serif; }
+
+html[data-universe-page="cepre"] .cepre-minimal-footer {
+  display: flex !important;
+  width: min(1120px, calc(100vw - 32px)) !important;
+  min-height: 86px !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  margin: 0 auto 22px !important;
+  border: 1px solid var(--cepre-line) !important;
+  border-radius: 24px !important;
+  background: var(--cepre-surface) !important;
+  padding: 18px 22px !important;
+  box-shadow: none !important;
+  color: var(--cepre-muted) !important;
+}
+
+html[data-universe-page="cepre"] .cepre-minimal-footer::before,
+html[data-universe-page="cepre"] .cepre-minimal-footer::after { display: none !important; }
+html[data-universe-page="cepre"] .cepre-footer-brand { color: var(--cepre-text) !important; font: 800 .92rem/1 "DM Sans", sans-serif; text-decoration: none; white-space: nowrap; }
+html[data-universe-page="cepre"] .cepre-minimal-footer nav { position: static !important; display: flex !important; width: auto !important; min-height: 0 !important; flex-wrap: wrap !important; justify-content: center !important; gap: 14px !important; margin: 0 !important; border: 0 !important; background: transparent !important; padding: 0 !important; box-shadow: none !important; transform: none !important; }
+html[data-universe-page="cepre"] .cepre-minimal-footer nav a { color: var(--cepre-muted) !important; font: 650 .72rem/1 "DM Sans", sans-serif; text-decoration: none; }
+html[data-universe-page="cepre"] .cepre-minimal-footer nav a:hover { color: var(--cepre-blue) !important; }
+html[data-universe-page="cepre"] .cepre-minimal-footer > small { font: 550 .68rem/1 "DM Sans", sans-serif; white-space: nowrap; }
+
+html[data-universe-page="cepre"][data-universe-page] body > footer.uts-site-footer {
+  width: min(1120px, calc(100vw - 32px)) !important;
+  margin: 0 auto 22px !important;
+  border: 1px solid var(--cepre-line) !important;
+  border-radius: 24px !important;
+  background: var(--cepre-surface) !important;
+  padding: 20px 22px !important;
+  box-shadow: none !important;
+}
+
+html[data-universe-page="cepre"][data-universe-page] body > footer.uts-site-footer .uts-footer-main {
+  display: block !important;
+}
+
+html[data-universe-page="cepre"] footer.uts-site-footer .uts-footer-main > div:not(.uts-footer-brand) {
+  display: none !important;
+}
+
+html[data-universe-page="cepre"] footer.uts-site-footer .uts-footer-brand p {
+  max-width: none !important;
+  margin: 7px 0 0 !important;
+  font-size: .72rem !important;
+}
+
+html[data-universe-page="cepre"] footer.uts-site-footer .uts-footer-bottom {
+  margin-top: 18px !important;
+  padding-top: 16px !important;
+}
+
+html[data-universe-page="cepre"] #support-v2-fab {
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+  padding: 0;
+}
+
+html[data-universe-page="cepre"] #support-v2-fab > span { display: none; }
+
+@media (max-width: 900px) {
+  html[data-universe-page="cepre"] .cepre-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-universe-page="cepre"] .cepre-more-resources .cepre-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-universe-page="cepre"] .cepre-minimal-footer { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 760px) {
+  html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav .nav-actions {
+    display: none !important;
+  }
+
+  html[data-universe-page="cepre"] body > .uts-language-switch-standalone {
+    display: none !important;
+  }
+}
+
+@media (min-width: 981px) {
+  html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav {
+    grid-template-columns: auto minmax(0, 1fr) auto auto !important;
+  }
+
+  html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav .nav-actions {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+  }
+
+  html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav .uts-nav-account-slot {
+    grid-column: 4 !important;
+    grid-row: 1 !important;
+    min-width: 0 !important;
+  }
+
+  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="admission"]),
+  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="syllabus"]),
+  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="classes"]),
+  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="unitalk"]),
+  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="simulators"]) {
+    display: none !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html[data-universe-page="cepre"] .cepre-page { width: min(100% - 18px, 520px); margin-top: 26px; }
+  html[data-universe-page="cepre"] .cepre-minimal-hero { border-radius: 26px; padding: 34px 18px; }
+  html[data-universe-page="cepre"] .cepre-minimal-logo { width: 94px; }
+  html[data-universe-page="cepre"] .cepre-minimal-hero h1 { font-size: clamp(2.65rem, 14vw, 3.55rem); }
+  html[data-universe-page="cepre"] .cepre-minimal-actions { width: 100%; }
+  html[data-universe-page="cepre"] .cepre-minimal-actions a { width: 100%; }
+  html[data-universe-page="cepre"] .cepre-quick-grid { grid-template-columns: 1fr; }
+  html[data-universe-page="cepre"] .cepre-quick-grid a { min-height: 138px; }
+  html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary { min-height: 82px; padding: 16px; }
+  html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary > b { font-size: 0; }
+  html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-resources) > summary i { margin-left: 0; font-size: 1rem; }
+  html[data-universe-page="cepre"] .cepre-schedules { padding: 6px 9px 12px; }
+  html[data-universe-page="cepre"] .cepre-more-resources .cepre-link-grid { grid-template-columns: 1fr; padding: 0 10px 10px; }
+  html[data-universe-page="cepre"] .cepre-more-resources .cepre-hub-card { min-height: 126px; }
+  html[data-universe-page="cepre"] .cepre-minimal-footer { width: calc(100% - 18px) !important; padding: 20px 14px !important; }
+  html[data-universe-page="cepre"][data-universe-page] body > footer.uts-site-footer { width: calc(100% - 18px) !important; padding: 18px 14px !important; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  html[data-universe-page="cepre"] :is(.cepre-minimal-hero, .cepre-quick-grid a, .cepre-schedule-disclosure, .cepre-more-resources) { backdrop-filter: none; }
+}
