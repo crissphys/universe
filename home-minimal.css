@@ -128,7 +128,7 @@ html[data-universe-page="home"] .home-access-logo-grid {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: clamp(22px, 3.2vw, 48px);
+  gap: clamp(22px, 3.2vw, 46px);
   width: min(100%, 1180px);
   margin: 0 auto;
 }
