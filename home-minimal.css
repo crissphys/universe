@@ -135,8 +135,9 @@ html[data-universe-page="home"] .home-access-logo-grid {
 
 html[data-universe-page="home"] .home-access-logo {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 1 128px;
   width: 128px;
   height: 92px;
@@ -175,35 +176,30 @@ html[data-universe-theme="dark"][data-universe-page="home"] .access-linktree img
 
 html[data-universe-page="home"] .home-access-logo img {
   display: block;
-  width: 82%;
-  height: 76%;
+  width: auto;
+  height: auto !important;
+  max-width: 100%;
+  max-height: 72px;
   object-fit: contain;
   pointer-events: none;
 }
 
 html[data-universe-page="home"] .access-uni img {
-  width: 94%;
-  height: 90%;
-  object-fit: contain;
+  width: 128px;
 }
 
 html[data-universe-page="home"] .access-youtube img {
-  width: 108%;
-  height: 108%;
-  object-fit: cover;
-  object-position: center;
+  width: 128px;
 }
 
 html[data-universe-page="home"] .access-linktree img {
-  width: 98%;
-  height: 98%;
-  object-fit: contain;
+  width: 128px;
 }
 
-html[data-universe-page="home"] .access-cepre img { width: 94%; height: 94%; }
-html[data-universe-page="home"] .access-whatsapp img { width: 88%; height: 88%; }
-html[data-universe-page="home"] .access-tiktok img { width: 63%; height: 63%; }
-html[data-universe-page="home"] .access-drive img { width: 58%; height: 58%; }
+html[data-universe-page="home"] .access-cepre img { width: 110px; }
+html[data-universe-page="home"] .access-whatsapp img { width: 92px; }
+html[data-universe-page="home"] .access-tiktok img { width: 57px; }
+html[data-universe-page="home"] .access-drive img { width: 64px; }
 
 /* Compact, responsive countdown. */
 html[data-universe-page="home"] .home-exams {
