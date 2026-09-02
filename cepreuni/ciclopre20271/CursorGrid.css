@@ -35,8 +35,12 @@ html[data-universe-theme="dark"] .cepre-cursor-grid-layer {
   opacity: .25;
 }
 
-@media (max-width: 720px), (pointer: coarse), (prefers-reduced-motion: reduce) {
+@media (max-width: 720px) {
   .cepre-cursor-grid-layer {
-    display: none;
+    top: 5.25rem;
+    height: 500px;
+    opacity: .14;
   }
 }
+
+html[data-universe-animations="off"] .cepre-cursor-grid-layer { display:none; }

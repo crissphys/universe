@@ -10,7 +10,7 @@
   function modalityLabel(value){var v=norm(value);if(v==='ordinario')return'Ordinario';if(v.indexOf('primeros puestos')>=0)return'Primeros puestos';if(v.indexOf('bachillerato internacional')>=0)return'Bachillerato Internacional';if(v.indexOf('plan integral de reparaciones')>=0)return'Plan Integral de Reparaciones';if(v.indexOf('personas con discapacidad')>=0)return'Personas con discapacidad';if(v.indexOf('deportistas calificados')>=0)return'Deportista calificado';return String(value||'Otra modalidad')}
   function setStats(){id('entrantApplicants').textContent=nf0.format(data.stats.ordinaryApplicants);id('entrantTotal').textContent=nf0.format(data.stats.allPublishedEntrants);id('entrantCount').textContent=nf0.format(data.stats.ordinaryEntrants);id('entrantOther').textContent=nf0.format(data.stats.otherEntrants);id('entrantFaculties').textContent=nf0.format(data.stats.faculties);id('entrantCareers').textContent=nf0.format(data.stats.careers)}
   function confetti(){
-    if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    if(document.documentElement.dataset.universeAnimations==='off')return;
     var colors=['#2563eb','#60a5fa','#f59e0b','#22c55e','#ec4899','#8b5cf6'];
     for(var i=0;i<110;i++){var piece=document.createElement('i');piece.className='entrant-confetti';piece.style.left=(Math.random()*100)+'vw';piece.style.background=colors[i%colors.length];piece.style.setProperty('--duration',(2.8+Math.random()*2.5)+'s');piece.style.setProperty('--drift',(-100+Math.random()*200)+'px');piece.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(piece);setTimeout(function(node){node.remove()},6000,piece)}
   }

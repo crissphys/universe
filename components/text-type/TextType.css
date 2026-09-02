@@ -61,8 +61,6 @@ html[data-universe-theme="dark"] .home-text-type .text-type__cursor {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .text-type__cursor {
-    animation: none;
-  }
+html[data-universe-animations="off"] .text-type__cursor {
+  animation: none;
 }

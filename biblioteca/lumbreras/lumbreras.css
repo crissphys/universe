@@ -320,7 +320,5 @@ html[data-universe-theme="dark"][data-universe-page] body .lumbreras-page .catal
   .book-cover { aspect-ratio:400/520; }
   .book-info h4 { font-size:.96rem; }
 }
-@media (prefers-reduced-motion:reduce) {
-  .catalog-orbit,.brand-halo { animation:none; }
-  .book-card,.book-cover img,.book-cover::after { transition:none; }
-}
+html[data-universe-animations="off"] :where(.catalog-orbit,.brand-halo) { animation:none; }
+html[data-universe-animations="off"] :where(.book-card,.book-cover img,.book-cover::after) { transition:none; }

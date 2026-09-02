@@ -251,23 +251,34 @@
 
   const initialize = () => {
     const container = document.getElementById('cepre-cursor-grid');
-    if (!container || window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    mount(container, {
-      cellSize: 30,
-      color: '#4b919c',
-      radius: 80,
-      falloff: 'linear',
-      holdTime: 0,
-      fadeDuration: 1050,
-      lineWidth: 0.9,
-      maxOpacity: 1,
-      fillOpacity: 0,
-      gridOpacity: 0,
-      cellRadius: 0,
-      clickPulse: true,
-      pulseSpeed: 300
-    });
+    if (!container) return;
+    let instance = null;
+    const sync = () => {
+      const enabled = document.documentElement.dataset.universeAnimations !== 'off';
+      if (!enabled && instance) {
+        instance.destroy();
+        instance = null;
+        return;
+      }
+      if (!enabled || instance) return;
+      instance = mount(container, {
+        cellSize: 30,
+        color: '#4b919c',
+        radius: 80,
+        falloff: 'linear',
+        holdTime: 0,
+        fadeDuration: 1050,
+        lineWidth: 0.9,
+        maxOpacity: 1,
+        fillOpacity: 0,
+        gridOpacity: 0,
+        cellRadius: 0,
+        clickPulse: true,
+        pulseSpeed: 300
+      });
+    };
+    sync();
+    window.addEventListener('universe:animationschange', sync);
   };
 
   if (document.readyState === 'loading') {

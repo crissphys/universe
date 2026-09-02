@@ -1017,13 +1017,5 @@ html[data-universe-theme="dark"] .ufe-card {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ufe-btn,
-  .ufe-progress > span {
-    transition: none;
-  }
-
-  .ufe-live-dot {
-    animation: none;
-  }
-}
+html[data-universe-animations="off"] :where(.ufe-btn,.ufe-progress > span) { transition:none; }
+html[data-universe-animations="off"] .ufe-live-dot { animation:none; }

@@ -916,9 +916,9 @@ html[data-universe-page] body.support-v2-active .uts-language-switch {
   .uts-footer-bottom > span:last-child { flex-wrap: wrap; gap: 12px 16px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html[data-universe-page] *, html[data-universe-page] *::before, html[data-universe-page] *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
-}
+html[data-universe-animations="off"][data-universe-page] *,
+html[data-universe-animations="off"][data-universe-page] *::before,
+html[data-universe-animations="off"][data-universe-page] *::after { scroll-behavior:auto !important;transition-duration:.01ms !important;animation:none !important; }
 
 /* Ranking contains a legacy style block at the end of its body. The doubled
    attribute intentionally outranks that block so the document, not a nested

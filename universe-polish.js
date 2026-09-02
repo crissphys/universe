@@ -1,4 +1,33 @@
 (function () {
+  var ANIMATIONS_KEY = 'universe_animations';
+
+  function animationsEnabled() {
+    try {
+      return localStorage.getItem(ANIMATIONS_KEY) !== 'off';
+    } catch (_) {
+      return true;
+    }
+  }
+
+  function applyAnimations(enabled, persist) {
+    enabled = enabled !== false;
+    document.documentElement.dataset.universeAnimations = enabled ? 'on' : 'off';
+    if (persist !== false) {
+      try { localStorage.setItem(ANIMATIONS_KEY, enabled ? 'on' : 'off'); } catch (_) {}
+    }
+    try {
+      window.dispatchEvent(new CustomEvent('universe:animationschange', { detail: { enabled: enabled } }));
+    } catch (_) {}
+    return enabled;
+  }
+
+  applyAnimations(animationsEnabled(), false);
+  window.UniverseMotion = {
+    enabled: animationsEnabled,
+    set: function (enabled) { return applyAnimations(enabled !== false, true); },
+    toggle: function () { return applyAnimations(!animationsEnabled(), true); }
+  };
+
   try {
     var preferredLanguage = localStorage.getItem('universe_language');
     if (preferredLanguage === 'en' || preferredLanguage === 'es') {
@@ -11,7 +40,7 @@
     if (!document.head || document.getElementById('uts-i18n-runtime')) return;
     var runtime = document.createElement('script');
     runtime.id = 'uts-i18n-runtime';
-    runtime.src = '/universe-i18n.js?v=bilingual-27';
+    runtime.src = '/universe-i18n.js?v=bilingual-28';
     runtime.defer = true;
     document.head.appendChild(runtime);
   }
@@ -31,7 +60,7 @@
       var design = document.createElement('link');
       design.id = 'uts-design-v2';
       design.rel = 'stylesheet';
-      design.href = '/universe-design-v2.css?v=system-9';
+      design.href = '/universe-design-v2.css?v=system-10';
       document.head.appendChild(design);
     }
 
@@ -163,6 +192,14 @@
       if (typeof window.renderAccountPanel === 'function') window.renderAccountPanel();
     } catch (error) {}
     try { window.dispatchEvent(new CustomEvent('universe-google-auth', { detail: user })); } catch (error) {}
+    var profileId = googleProfileId(user);
+    if (profileId) {
+      siteApi('/profiles/' + profileId, 'GET').then(function (profile) {
+        if (profile && typeof profile.animationsEnabled === 'boolean') {
+          applyAnimations(profile.animationsEnabled, true);
+        }
+      }).catch(function () {});
+    }
     renderGoogleAuthButton();
   }
 

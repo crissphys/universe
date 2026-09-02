@@ -7,6 +7,15 @@ const ignored = new Set(['.git', 'output', 'node_modules', 'assets']);
 const sourceExtensions = new Set(['.html', '.js']);
 
 const naturalOverrides = {
+  'Experiencia visual': 'Visual experience',
+  'Decide si Universe utiliza movimiento en este dispositivo y en tu cuenta.': 'Decide whether Universe uses motion on this device and across your account.',
+  'Animaciones del sitio': 'Site animations',
+  'Mantiene activas las transiciones, textos, tarjetas y efectos visuales en computadora, tablet y celular.': 'Keeps transitions, animated text, cards and visual effects active on desktop, tablet and mobile.',
+  'Las animaciones están activadas.': 'Animations are on.',
+  'Las animaciones están activadas en todos los dispositivos.': 'Animations are enabled on all devices.',
+  'Las animaciones están desactivadas. El contenido y los botones seguirán funcionando normalmente.': 'Animations are off. Content and buttons will continue to work normally.',
+  'Guardando tu preferencia visual...': 'Saving your visual preference...',
+  'La preferencia se aplicó en este dispositivo, pero no pudo sincronizarse con tu cuenta.': 'The preference was applied on this device, but it could not be synced with your account.',
   'Inicio': 'Home',
   'Admisión': 'Admissions',
   'Admisión UNI': 'UNI Admissions',

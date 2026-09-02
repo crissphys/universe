@@ -161,6 +161,4 @@ html[data-universe-theme="dark"] .ufa-note { background: #271d09; border-color: 
   .ufa-note { grid-template-columns: 1fr; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ufa-card.is-expanded .ufa-topic--extra { animation: none; }
-}
+html[data-universe-animations="off"] .ufa-card.is-expanded .ufa-topic--extra { animation:none; }

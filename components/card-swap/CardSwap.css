@@ -294,8 +294,6 @@ html[data-universe-theme="dark"] .home-card-swap-controls button { background:rg
   .home-card-swap-status { min-width:100px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card-swap-container .card,
-  .home-feature-links a,
-  .home-card-swap-controls button { transition:none; }
-}
+html[data-universe-animations="off"] .card-swap-container .card,
+html[data-universe-animations="off"] .home-feature-links a,
+html[data-universe-animations="off"] .home-card-swap-controls button { transition:none; }

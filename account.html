@@ -18,7 +18,7 @@
   <meta name="application-name" content="Universe to Study">
   <meta property="og:site_name" content="Universe to Study">
   <link rel="stylesheet" href="/style.css?v=reveal-1">
-  <link rel="stylesheet" href="/universe-polish.css?v=unified-10">
+  <link rel="stylesheet" href="/universe-polish.css?v=motion-1">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <script>
     (function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();
@@ -88,6 +88,7 @@
     .privacy-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
     .privacy-option{display:flex;gap:9px;align-items:center;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;padding:10px 12px;color:#334155;font-size:.86rem}
     .privacy-option input{width:18px;height:18px;accent-color:#2563eb}
+    .motion-preference{display:flex;align-items:center;justify-content:space-between;gap:22px;border:1px solid #cfe1f3;border-radius:20px;background:linear-gradient(135deg,#f8fbff,#edf7ff);padding:18px;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}.motion-preference:hover{transform:translateY(-1px);border-color:#8bbdf0;box-shadow:0 12px 28px rgba(37,99,235,.09)}.motion-preference-copy{display:grid;gap:5px;min-width:0}.motion-preference-copy b{color:#0f2745;font-size:1rem}.motion-preference-copy small{max-width:700px;color:#64748b;line-height:1.5}.motion-switch{position:relative;flex:0 0 auto;width:58px;height:32px}.motion-switch input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}.motion-switch i{display:block;width:100%;height:100%;border-radius:999px;background:#94a3b8;box-shadow:inset 0 0 0 1px rgba(15,23,42,.1);transition:background .22s ease}.motion-switch i:after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 3px 10px rgba(15,23,42,.28);transition:transform .22s ease}.motion-switch input:checked+i{background:linear-gradient(135deg,#075dcc,#13a0ea)}.motion-switch input:checked+i:after{transform:translateX(26px)}.motion-switch input:focus-visible+i{outline:3px solid rgba(37,99,235,.28);outline-offset:3px}
     html[data-universe-theme='dark'] body{background:#020202;color:#f8fafc}
     html[data-universe-theme='dark'] .account-page{background:radial-gradient(circle at 15% 8%,rgba(37,99,235,.20),transparent 30%),linear-gradient(180deg,#020202,#07111f)}
     html[data-universe-theme='dark'] .account-hero,html[data-universe-theme='dark'] .account-card{background:#050505;color:#f8fafc;border-color:#2b3544;box-shadow:0 20px 60px rgba(0,0,0,.42)}
@@ -96,6 +97,7 @@
     html[data-universe-theme='dark'] .account-hero p,html[data-universe-theme='dark'] .account-card p,html[data-universe-theme='dark'] .account-email{color:#cbd5e1}
     html[data-universe-theme='dark'] .account-field input,html[data-universe-theme='dark'] .account-field textarea,html[data-universe-theme='dark'] .account-field select,html[data-universe-theme='dark'] .admin-event{background:#080808;color:#f8fafc;border-color:#334155}
     html[data-universe-theme='dark'] .privacy-option{background:#080808;color:#e2e8f0;border-color:#334155}
+    html[data-universe-theme='dark'] .motion-preference{background:linear-gradient(135deg,#071426,#091b31);border-color:#29415f}html[data-universe-theme='dark'] .motion-preference-copy b{color:#f8fafc}html[data-universe-theme='dark'] .motion-preference-copy small{color:#cbd5e1}
     @media(max-width:860px){.account-grid{grid-template-columns:1fr}.account-form{grid-template-columns:1fr}.privacy-options{grid-template-columns:1fr}.account-profile-overview{align-items:stretch;flex-direction:column}.account-profile-overview>.account-btn{align-self:flex-start}.account-settings-intro,.account-save-bar{align-items:stretch;flex-direction:column}.account-save-note{align-self:flex-start}.account-save-bar .account-actions{justify-content:flex-start}.conditional-group{grid-template-columns:1fr}}
     @media(max-width:560px){.account-profile-identity{grid-template-columns:1fr;text-align:center}.account-profile-copy p{margin-inline:auto}.account-profile-badges{justify-content:center}.account-profile-overview>.account-btn{align-self:center}.account-profile-overview{border-radius:24px}.account-avatar-editor .account-avatar{width:96px;height:96px}.settings-section{padding:22px 16px}.account-settings-intro,.account-save-bar{padding:22px 16px}.account-save-bar .account-actions{display:grid}.account-save-bar .account-btn{width:100%}}
   </style>
@@ -231,6 +233,15 @@
           </div>
         </div>
 
+        <div class="settings-section">
+          <div class="settings-heading"><span>04</span><div><h3>Experiencia visual</h3><p>Decide si Universe utiliza movimiento en este dispositivo y en tu cuenta.</p></div></div>
+          <label class="motion-preference" for="universe-animations-enabled">
+            <span class="motion-preference-copy"><b>Animaciones del sitio</b><small>Mantiene activas las transiciones, textos, tarjetas y efectos visuales en computadora, tablet y celular.</small></span>
+            <span class="motion-switch"><input id="universe-animations-enabled" type="checkbox" checked><i aria-hidden="true"></i></span>
+          </label>
+          <p class="account-status good" id="universe-animations-status">Las animaciones están activadas.</p>
+        </div>
+
         <div class="account-save-bar">
           <div><strong>Todo listo en un solo lugar</strong><span id="unified-status">Revisa tus datos y guarda el perfil completo.</span></div>
           <div class="account-actions"><button class="account-btn" type="button" data-save-unified>Guardar todos los cambios</button><button class="account-btn danger" type="button" data-logout>Cerrar sesión</button></div>
@@ -291,7 +302,7 @@
 </main>
 
 <script src="cepre-codes.js?v=account-5"></script>
-<script src="/universe-polish.js?v=unified-38" defer></script>
-<script src="account.js?v=profile-unified-1" defer></script>
+<script src="/universe-polish.js?v=motion-1" defer></script>
+<script src="account.js?v=profile-unified-2" defer></script>
 </body>
 </html>

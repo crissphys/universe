@@ -82,6 +82,4 @@ html[data-universe-theme="dark"] .book-topics li { color:#cfdaea; }
   .cuzcano-page .collection-subheading strong { align-self:flex-start; }
   .cuzcano-book-grid .book-card { width:min(100%,420px);margin-inline:auto; }
 }
-@media (prefers-reduced-motion:reduce) {
-  .cuzcano-page .catalog-orbit,.cuzcano-page .brand-halo { animation:none; }
-}
+html[data-universe-animations="off"] :where(.cuzcano-page .catalog-orbit,.cuzcano-page .brand-halo) { animation:none; }

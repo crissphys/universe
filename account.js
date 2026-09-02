@@ -1,6 +1,7 @@
 (function () {
   var API_BASE = '/api/site';
   var AUTH_TOKEN_KEY = 'universe_auth_token';
+  var ANIMATIONS_KEY = 'universe_animations';
   var CURRENT_CEPRE_CYCLE = '2027-1';
   var VERIFIED_CEPRE_CYCLE = '2026-2';
   var CEPRE_CYCLES = ['2027-2', '2027-1', '2026-2', '2026-1', '2025-2', '2025-1', '2024-2', '2024-1', '2023-2', '2023-1', '2022-2', '2022-1', '2021-2', '2021-1'];
@@ -132,6 +133,26 @@
     }
     updateOverview();
   }
+  function localAnimationsEnabled() {
+    try { return localStorage.getItem(ANIMATIONS_KEY) !== 'off'; }
+    catch (error) { return true; }
+  }
+  function setAnimationsEnabled(enabled) {
+    enabled = enabled !== false;
+    if (window.UniverseMotion && typeof window.UniverseMotion.set === 'function') {
+      window.UniverseMotion.set(enabled);
+    } else {
+      document.documentElement.dataset.universeAnimations = enabled ? 'on' : 'off';
+      try { localStorage.setItem(ANIMATIONS_KEY, enabled ? 'on' : 'off'); } catch (error) {}
+    }
+    status(
+      'universe-animations-status',
+      enabled
+        ? 'Las animaciones están activadas en todos los dispositivos.'
+        : 'Las animaciones están desactivadas. El contenido y los botones seguirán funcionando normalmente.',
+      enabled ? 'good' : 'warn'
+    );
+  }
   function academicSummary() {
     var track = $('academic-track') ? $('academic-track').value : '';
     if (track === 'cepreuni') return ['CEPREUNI', $('cepre-cycle').value, $('cepre-program').value].filter(Boolean).join(' · ');
@@ -160,6 +181,9 @@
     $('profile-age').value = p.age || '';
     $('profile-phone').value = p.phone || '';
     $('profile-email').value = u.email || '';
+    var animations = typeof p.animationsEnabled === 'boolean' ? p.animationsEnabled : localAnimationsEnabled();
+    if ($('universe-animations-enabled')) $('universe-animations-enabled').checked = animations;
+    setAnimationsEnabled(animations);
     $('academic-track').value = p.academicTrack || (p.cepreMember || p.cepreCode || p.cepreCycle ? 'cepreuni' : '');
     fillSelect('academy-name', ACADEMIES, p.academyName || '', 'Selecciona academia');
     fillSelect('cepre-cycle', CEPRE_CYCLES, p.cepreCycle || CURRENT_CEPRE_CYCLE);
@@ -272,6 +296,7 @@
       uniCycle: track === 'uni-student' ? $('uni-cycle').value : '',
       communityIntent: $('community-intent').value,
       target: $('community-target').value,
+      animationsEnabled: $('universe-animations-enabled') ? $('universe-animations-enabled').checked : true,
       onboardingComplete: true,
       email: state.user.email || '',
       googleName: state.user.name || '',
@@ -494,6 +519,22 @@
       if (window.UniverseGoogleAuth) UniverseGoogleAuth.signOut();
       state.user = null; state.profile = null; state.community = null; showLogin();
     };
+    if ($('universe-animations-enabled')) {
+      $('universe-animations-enabled').checked = localAnimationsEnabled();
+      setAnimationsEnabled($('universe-animations-enabled').checked);
+      $('universe-animations-enabled').addEventListener('change', function () {
+        var enabled = this.checked;
+        setAnimationsEnabled(enabled);
+        if (!state.user) return;
+        state.profile = Object.assign({}, state.profile || {}, { animationsEnabled: enabled });
+        status('universe-animations-status', 'Guardando tu preferencia visual...', 'warn');
+        api('/profiles/' + uid(), 'PATCH', { animationsEnabled: enabled }).then(function () {
+          setAnimationsEnabled(enabled);
+        }).catch(function () {
+          status('universe-animations-status', 'La preferencia se aplicó en este dispositivo, pero no pudo sincronizarse con tu cuenta.', 'warn');
+        });
+      });
+    }
     ['academic-track', 'academy-name', 'academy-cycle', 'cepre-cycle', 'cepre-program', 'uni-career', 'uni-cycle', 'community-intent', 'community-target'].forEach(function (id) {
       if ($(id)) $(id).addEventListener('change', toggleAcademicFields);
     });
