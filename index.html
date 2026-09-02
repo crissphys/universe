@@ -25,10 +25,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Sora:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v=reveal-1">
-  <link rel="stylesheet" href="/universe-polish.css?v=liquid-1">
-  <link rel="stylesheet" href="/home.css?v=home-14">
+  <link rel="stylesheet" href="/universe-polish.css?v=liquid-2">
+  <link rel="stylesheet" href="/home.css?v=home-15">
   <link rel="stylesheet" href="/components/text-type/TextType.css?v=text-type-3">
   <link rel="stylesheet" href="/components/card-swap/CardSwap.css?v=card-swap-2">
+  <link rel="stylesheet" href="/liquid-glass-runtime.css?v=liquid-webgl-1">
+  <link rel="stylesheet" href="/home-minimal.css?v=minimal-1">
 
   <script>
     (function () {
@@ -108,10 +110,10 @@
         <div class="home-eyebrow"><span></span> Preparación gratuita para UNI y San Marcos</div>
         <h1 id="home-title">Tu ruta de ingreso <span class="text-type-sr-only">empieza aquí.</span><span class="text-type home-text-type" id="home-text-type" aria-hidden="true">empieza aquí.</span></h1>
         <p class="home-lead">Convierte un objetivo grande en un plan claro. Revisa el temario, practica con simulacros, compara tu avance y estudia acompañado desde un solo lugar.</p>
-        <div class="home-actions">
+        <div class="home-actions" id="home-hero-actions" data-liquid-root="actions">
+          <span class="home-action-liquid-scene" aria-hidden="true"></span>
           <a class="home-btn home-btn-primary" href="/admision">Explorar admisión <span aria-hidden="true">→</span></a>
-          <a class="home-btn home-btn-ghost" href="/clases">Entrar a clases</a>
-          <a class="home-btn home-btn-celebrate" href="/ingresantes-uni-2026-2">Ingresantes UNI 2026-2</a>
+          <a class="home-btn home-btn-ghost" href="/clases" data-liquid-glass="button">Entrar a clases</a>
         </div>
         <div class="home-proof home-hero-facts" aria-label="Datos clave de la convocatoria">
           <span><b>3</b><small>pruebas UNI</small></span>
@@ -120,10 +122,13 @@
           <span class="home-active-users" aria-live="polite" aria-label="Calculando personas activas"><b data-active-visitor-count>…</b><small data-active-visitor-label>personas activas</small></span>
         </div>
       </div>
+    </section>
 
-      <div class="home-route-visual home-card-swap-visual home-reveal" aria-label="Funciones principales de Universe to Study">
-        <div class="home-card-swap-intro"><span class="home-card-kicker">Funciones esenciales</span><p>Todo lo que necesitas para avanzar, sin perder tiempo buscando.</p></div>
-        <div class="card-swap-container" id="home-card-swap" aria-label="Tarjetas de funciones principales">
+    <section class="home-section home-features" aria-labelledby="features-title">
+      <div class="home-route-visual home-card-swap-visual home-reveal" aria-label="Funciones principales de Universe to Study" data-liquid-root="features">
+        <div class="home-liquid-feature-scene" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="home-card-swap-intro"><span class="home-card-kicker">Funciones esenciales</span><h2 id="features-title">Todo lo que necesitas para avanzar.</h2><p>Planifica, practica, aprende y conecta sin perder tiempo buscando.</p></div>
+        <div class="card-swap-container" id="home-card-swap" aria-label="Tarjetas de funciones principales" data-liquid-glass="panel">
           <article class="card home-feature-card" data-card-swap-card data-label="Organiza" data-label-en="Plan">
             <header><span class="home-feature-card-badge"><i>01</i> Planifica</span><span class="home-feature-card-number">01/04</span></header>
             <h2>Organiza tu preparación</h2><p>Convierte el temario en un plan semanal y encuentra rápidamente la información del ciclo.</p>
@@ -165,70 +170,33 @@
       </div>
     </section>
 
-    <section class="home-section home-world-chat" aria-labelledby="home-world-chat-title">
-      <div class="home-world-chat-shell home-reveal">
-        <div class="home-world-chat-intro">
-          <span class="home-section-label">Comunidad en vivo</span>
-          <h2 id="home-world-chat-title" class="home-world-chat-brand"><span class="home-world-chat-brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M10 9v13.2C10 29.8 14 34 20 34s10-4.2 10-11.8V15h-6.2v7.4c0 3.8-1.3 5.6-3.8 5.6s-3.8-1.8-3.8-5.6V9H10Z"></path><path d="M22.5 9H32l-9.5 8V9Z"></path></svg></span><span>UNITALK</span><small>mini</small></h2>
-          <p>Pregunta, comparte una idea o conversa con la comunidad. Los mensajes aparecen también en UNITALK.</p>
-          <a class="home-btn home-btn-ghost home-world-chat-open" href="/unitalk">Abrir UNITALK <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="home-world-chat-card">
-          <div class="home-world-chat-head">
-            <div><strong>Últimos mensajes</strong><small>Visible para toda la comunidad</small></div>
-            <button id="home-world-chat-refresh" type="button" aria-label="Actualizar mensajes" title="Actualizar mensajes">↻</button>
-          </div>
-          <div class="home-world-chat-feed" id="home-world-chat-feed" aria-live="polite">
-            <div class="home-world-chat-loading">Cargando la conversación…</div>
-          </div>
-          <form class="home-world-chat-form" id="home-world-chat-form">
-            <label class="sr-only" for="home-world-chat-input">Escribe un mensaje para UNITALK</label>
-            <textarea id="home-world-chat-input" maxlength="400" rows="2" placeholder="Escribe algo para la comunidad…"></textarea>
-            <div class="home-world-chat-compose-row">
-              <span id="home-world-chat-count">0/400</span>
-              <button type="submit" id="home-world-chat-send">Publicar</button>
-            </div>
-            <p id="home-world-chat-status">Necesitas una cuenta de Google registrada para publicar.</p>
-          </form>
-        </div>
-      </div>
-    </section>
-
     <section class="home-section home-channels" aria-labelledby="channels-title">
-      <div class="home-section-head home-reveal">
-        <div><span class="home-section-label">Conecta y continúa</span><h2 id="channels-title">Todos los accesos importantes, en un solo lugar.</h2></div>
-        <p>Entra a los canales oficiales, recibe avisos, repasa con videos o abre la biblioteca sin buscar enlaces dispersos.</p>
+      <div class="home-access-heading home-reveal">
+        <span class="home-section-label">Accesos importantes</span>
+        <h2 id="channels-title">Encuéntranos donde ya estudias.</h2>
+        <p>Presiona un logotipo para abrir su enlace oficial.</p>
       </div>
-      <div class="home-channel-grid">
-        <a class="home-channel channel-admission home-reveal" href="https://admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo"><svg viewBox="0 0 24 24"><path d="M3 10 12 4l9 6-9 6-9-6Zm3 3v5m12-5v5M4 20h16"></path></svg></span><span><b>Admisión UNI</b><small>Convocatoria y vacantes</small></span><i>↗</i>
+      <div class="home-access-logo-grid">
+        <a class="home-access-logo access-uni home-reveal" href="https://admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Admisión UNI" title="Admisión UNI">
+          <img src="/assets/home-access/uni.png" alt="Universidad Nacional de Ingeniería" width="2312" height="781" loading="lazy">
         </a>
-        <a class="home-channel channel-cepre home-reveal" href="https://www.cepre.uni.edu.pe/" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo channel-u">U</span><span><b>CEPREUNI</b><small>Web oficial</small></span><i>↗</i>
+        <a class="home-access-logo access-cepre home-reveal" href="https://www.cepre.uni.edu.pe/" target="_blank" rel="noopener noreferrer" aria-label="Abrir CEPREUNI" title="CEPREUNI">
+          <img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="400" height="400" loading="lazy">
         </a>
-        <a class="home-channel channel-youtube home-reveal" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo"><svg viewBox="0 0 24 24"><path class="fill" d="M23 12s0-4.1-.5-6c-.3-1.2-1.3-2.2-2.5-2.5C18.1 3 12 3 12 3s-6.1 0-8 .5C2.8 3.8 1.8 4.8 1.5 6 1 7.9 1 12 1 12s0 4.1.5 6c.3 1.2 1.3 2.2 2.5 2.5 1.9.5 8 .5 8 .5s6.1 0 8-.5c1.2-.3 2.2-1.3 2.5-2.5.5-1.9.5-6 .5-6Z"></path><path class="play" d="m10 15 5-3-5-3v6Z"></path></svg></span><span><b>YouTube</b><small>Clases y repasos</small></span><i>↗</i>
+        <a class="home-access-logo access-youtube home-reveal" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="Abrir YouTube de Universe" title="YouTube">
+          <img src="/assets/home-access/youtube.png" alt="YouTube" width="4096" height="4096" loading="lazy">
         </a>
-        <a class="home-channel channel-whatsapp home-reveal" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo"><svg viewBox="0 0 24 24"><path class="fill" d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.2c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.1.8.8-3-.2-.3A7.7 7.7 0 1 1 12 19.2Z"></path><path class="fill" d="M16.3 13.7c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.2l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.3-3.2-2.9-.2-.3.2-.5.6-1 .1-.2.1-.3 0-.5l-.7-1.8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.7 1.1 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.2-.3-.2-.5-.3Z"></path></svg></span><span><b>WhatsApp Universe</b><small>Avisos de la comunidad</small></span><i>↗</i>
+        <a class="home-access-logo access-whatsapp home-reveal" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp de Universe" title="WhatsApp">
+          <img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="1600" height="1136" loading="lazy">
         </a>
-        <a class="home-channel channel-secret home-reveal" href="https://whatsapp.com/channel/0029Vb7lA2q7IUYXqEZIDH3R" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo"><svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-4 12.7V20l4-2 4 2v-4.3A7 7 0 0 0 12 3Zm-2.5 7.2 1.7 1.7 3.4-3.5"></path></svg></span><span><b>Secret Solutions</b><small>Canal de soluciones</small></span><i>↗</i>
+        <a class="home-access-logo access-drive home-reveal" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" target="_blank" rel="noopener noreferrer" aria-label="Abrir Drive de Universe" title="Google Drive">
+          <img src="/assets/home-access/drive.png" alt="Google Drive" width="960" height="890" loading="lazy">
         </a>
-        <a class="home-channel channel-drive home-reveal" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo drive-logo"><svg viewBox="0 0 87 78"><path d="M6.6 66.8 28.1 29.5h29.1L35.7 66.8H6.6Z" fill="#06a84f"></path><path d="M29.4 0h29L87 49.5H58L29.4 0Z" fill="#ffba00"></path><path d="M28.1 49.5H87L72.5 74.7H13.6L28.1 49.5Z" fill="#2684fc"></path></svg></span><span><b>Drive Universe</b><small>Materiales y archivos</small></span><i>↗</i>
+        <a class="home-access-logo access-tiktok home-reveal" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="Abrir TikTok de Universe" title="TikTok">
+          <img src="/assets/home-access/tiktok.png" alt="TikTok" width="3688" height="4167" loading="lazy">
         </a>
-        <a class="home-channel channel-tiktok home-reveal" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo"><svg viewBox="0 0 24 24"><path class="fill" d="M16 2h-3.3v13.1a2.8 2.8 0 1 1-2.2-2.7V9.1a6 6 0 1 0 5.5 6V8.8a8.2 8.2 0 0 0 4.8 1.5V7A4.8 4.8 0 0 1 16 2Z"></path></svg></span><span><b>TikTok</b><small>@universe_preuni</small></span><i>↗</i>
-        </a>
-        <a class="home-channel channel-linktree home-reveal" href="https://linktr.ee/UNIverse.Criss" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo"><svg viewBox="0 0 24 24"><path class="fill" d="m12 2 2.5 4.5h-2l3.8-3.7 2 2-3.7 3.5H19v3h-5.2l3.8 3.7-2.1 2-3.5-3.7L8.5 17l-2.1-2 3.8-3.7H5v-3h4.4L5.7 4.8l2-2 3.8 3.7h-2L12 2Zm-1.5 13.5h3V22h-3v-6.5Z"></path></svg></span><span><b>Linktree</b><small>Todos los enlaces</small></span><i>↗</i>
-        </a>
-        <a class="home-channel channel-ceprenet home-reveal" href="https://ceprenet.uni.edu.pe/" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"></path></svg></span><span><b>CEPRENET</b><small>Asistencia y plataforma</small></span><i>↗</i>
-        </a>
-        <a class="home-channel channel-kick home-reveal" href="https://kick.com/universeoficial" target="_blank" rel="noopener noreferrer">
-          <span class="channel-logo channel-k">K</span><span><b>Kick</b><small>@universeoficial</small></span><i>↗</i>
+        <a class="home-access-logo access-linktree home-reveal" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Abrir Linktree de Universe" title="Linktree">
+          <img src="/assets/home-access/linktree.png" alt="Linktree" width="3840" height="2160" loading="lazy">
         </a>
       </div>
     </section>
@@ -305,73 +273,6 @@
       </div>
     </section>
 
-    <section class="home-section home-admission-data" aria-labelledby="admission-data-title">
-      <div class="home-admission-panel home-reveal">
-        <div class="home-admission-copy">
-          <span class="home-section-label">Datos oficiales · proceso 2026-2</span>
-          <h2 id="admission-data-title">La información que necesitas antes de postular.</h2>
-          <p>Consulta vacantes, modalidades y documentos desde fuentes oficiales. Universe organiza los datos para que puedas leerlos con rapidez.</p>
-          <div class="home-actions compact">
-            <a class="home-btn home-btn-primary" href="https://admision.uni.edu.pe/wp-content/uploads/2026/06/CUADRO-VACANTES-2026-2.pdf" target="_blank" rel="noopener noreferrer">Ver cuadro completo</a>
-            <a class="home-btn home-btn-ghost" href="/admision">Analizar puntajes</a>
-          </div>
-        </div>
-        <div class="home-vacancy-stats" aria-label="Resumen de vacantes UNI 2026-2">
-          <article class="stat-total"><span>Total aprobado</span><b>1,630</b><small>vacantes en todas las modalidades</small></article>
-          <article class="stat-ordinary"><span>Examen general</span><b>641</b><small>vacantes del proceso ordinario</small></article>
-          <article class="stat-cepre"><span>Ingreso directo</span><b>402</b><small>vacantes CEPREUNI</small></article>
-          <article class="stat-careers"><span>Oferta académica</span><b>34</b><small>especialidades registradas</small></article>
-        </div>
-      </div>
-      <div class="home-info-links">
-        <a class="home-reveal" href="https://inscripcion.admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer"><span>01</span><div><b>Inscripción oficial</b><small>Accede a la plataforma de postulantes</small></div><i>↗</i></a>
-        <a class="home-reveal" href="https://admision.uni.edu.pe/wp-content/uploads/2026/06/Guia-de-Inscripcion-2026-2.pdf" target="_blank" rel="noopener noreferrer"><span>02</span><div><b>Guía de inscripción</b><small>Requisitos, pagos y pasos del proceso</small></div><i>↗</i></a>
-        <a class="home-reveal" href="/temario"><span>03</span><div><b>Temario organizado</b><small>Revisa los cursos y contenidos evaluados</small></div><i>→</i></a>
-        <a class="home-reveal" href="/simulacros"><span>04</span><div><b>Simulacros Universe</b><small>Practica antes de cada prueba</small></div><i>→</i></a>
-      </div>
-    </section>
-
-    <section class="home-section home-current" aria-labelledby="current-title">
-      <div class="home-current-card home-reveal">
-        <div class="home-current-visual">
-          <img src="/assets/cepreuni-ciclo-2027-1.png" loading="lazy" width="1080" height="1080" alt="Convocatoria oficial del Ciclo Preuniversitario y Básico CEPREUNI 2027-1">
-          <span class="current-cycle-pill">Convocatoria 2027-1</span>
-        </div>
-        <div>
-          <span class="home-section-label">Nueva etapa CEPREUNI</span>
-          <h2 id="current-title">Ciclo Preuniversitario y Básico 2027-1</h2>
-          <p>Revisa modalidades, requisitos e inscripción directamente en los canales oficiales de CEPREUNI.</p>
-          <ul class="home-current-points"><li>Preparación para ingreso directo</li><li>Ciclo básico para reforzar fundamentos</li><li>Información y matrícula en CEPREUNI</li></ul>
-          <div class="home-actions compact">
-            <a class="home-btn home-btn-primary" href="https://www.cepre.uni.edu.pe/ciclos/ciclo-preuniversitario" target="_blank" rel="noopener noreferrer">Ciclo Preuniversitario</a>
-            <a class="home-btn home-btn-ghost" href="https://www.cepre.uni.edu.pe/ciclos/ciclo-basico" target="_blank" rel="noopener noreferrer">Ciclo Básico</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="home-section home-guides" aria-labelledby="guides-title">
-      <div class="home-section-head home-reveal">
-        <div><span class="home-section-label">Contenido editorial</span><h2 id="guides-title">Entiende antes de decidir.</h2></div>
-        <p>Guías propias para interpretar fórmulas y resultados sin convertir una referencia histórica en una promesa de ingreso.</p>
-      </div>
-      <div class="home-guide-grid">
-        <a class="home-guide home-reveal" href="/guias/como-se-calcula-puntaje-cepreuni-2026-2"><span>CEPREUNI</span><h3>Cómo se calcula el puntaje</h3><p>Fórmula ponderada, descarte de la PC más baja y ejemplos explicados.</p><b>Leer guía →</b></a>
-        <a class="home-guide home-reveal" href="/guias/como-interpretar-ranking-cepreuni"><span>RANKING</span><h3>Cómo interpretar tu puesto</h3><p>Qué puede decirte el ranking y cuáles son sus límites como referencia.</p><b>Leer guía →</b></a>
-        <a class="home-guide home-reveal" href="/metodologia-editorial"><span>CONFIANZA</span><h3>Cómo elaboramos el contenido</h3><p>Fuentes, revisión, correcciones y uso responsable de herramientas de IA.</p><b>Ver metodología →</b></a>
-      </div>
-    </section>
-
-    <section class="home-final home-reveal" aria-labelledby="final-title">
-      <div class="home-final-glow" aria-hidden="true"></div>
-      <span class="home-section-label">Tu siguiente paso</span>
-      <h2 id="final-title">Estudia con dirección, no por acumulación.</h2>
-      <p>Elige un módulo y continúa desde donde realmente lo necesitas.</p>
-      <div class="home-actions">
-        <a class="home-btn home-btn-primary" href="#modulos">Ver todos los módulos</a>
-        <a class="home-btn home-btn-ghost" href="/account">Configurar mi cuenta</a>
-      </div>
-    </section>
   </main>
 
   <footer class="home-footer">
@@ -386,9 +287,10 @@
 
   <a id="support-v2-fab" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" title="Soporte por WhatsApp"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.2c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.1.8.8-3-.2-.3A7.7 7.7 0 1 1 12 19.2Zm4.3-5.5c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.2l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.3-3.2-2.9-.2-.3.2-.5.6-1 .1-.2.1-.3 0-.5l-.7-1.8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.7 1.1 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.2-.3-.2-.5-.3Z"></path></svg><span>WhatsApp</span></a>
 
-  <script src="/home.js?v=home-7" defer></script>
+  <script src="/home.js?v=home-8" defer></script>
   <script src="/components/text-type/TextType.js?v=text-type-3" defer></script>
   <script src="/components/card-swap/CardSwap.js?v=card-swap-2" defer></script>
-<script src="/universe-polish.js?v=motion-1" defer></script>
+<script src="/universe-polish.js?v=motion-2" defer></script>
+  <script type="module" src="/liquid-glass-runtime.js?v=liquid-webgl-2"></script>
 </body>
 </html>

@@ -1535,7 +1535,6 @@ html[data-universe-page] :where(
   [data-unitalk-submit],
   .unitalk-submit,
   .unitalk-send,
-  .home-world-chat-compose-row button,
   .uts-liquid-solid,
   .uts-liquid-glass-exempt
 )) {
@@ -1566,7 +1565,7 @@ html[data-universe-page] :where(
   #uts-google-auth-button, .uts-google-login, [type="submit"], [data-login], [data-logout],
   [data-save-unified], [data-save-ann], [data-save-schedule], [data-add-event],
   [data-report-action], [data-unitalk-submit], .unitalk-submit, .unitalk-send,
-  .home-world-chat-compose-row button, .uts-liquid-solid, .uts-liquid-glass-exempt
+  .uts-liquid-solid, .uts-liquid-glass-exempt
 )):hover {
   border-color: color-mix(in srgb, var(--accent, var(--uts-accent)) 48%, rgba(255, 255, 255, .72)) !important;
   background-color: rgba(255, 255, 255, .72) !important;
@@ -1594,7 +1593,7 @@ html[data-universe-theme="dark"][data-universe-page] :where(
   #uts-google-auth-button, .uts-google-login, [type="submit"], [data-login], [data-logout],
   [data-save-unified], [data-save-ann], [data-save-schedule], [data-add-event],
   [data-report-action], [data-unitalk-submit], .unitalk-submit, .unitalk-send,
-  .home-world-chat-compose-row button, .uts-liquid-solid, .uts-liquid-glass-exempt
+  .uts-liquid-solid, .uts-liquid-glass-exempt
 )) {
   border-color: color-mix(in srgb, var(--accent, var(--uts-accent)) 34%, rgba(139, 188, 255, .20)) !important;
   background-color: rgba(7, 25, 58, .58) !important;
@@ -1617,7 +1616,7 @@ html[data-universe-theme="dark"][data-universe-page] :where(
   #uts-google-auth-button, .uts-google-login, [type="submit"], [data-login], [data-logout],
   [data-save-unified], [data-save-ann], [data-save-schedule], [data-add-event],
   [data-report-action], [data-unitalk-submit], .unitalk-submit, .unitalk-send,
-  .home-world-chat-compose-row button, .uts-liquid-solid, .uts-liquid-glass-exempt
+  .uts-liquid-solid, .uts-liquid-glass-exempt
 )):hover {
   background-color: rgba(12, 40, 86, .74) !important;
   box-shadow: 0 16px 34px rgba(0, 0, 0, .30), inset 0 1px 0 rgba(191, 222, 255, .20) !important;
