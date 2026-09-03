@@ -292,21 +292,25 @@ html[data-universe-page="cepre"] .cepre-minimal-footer nav a:hover { color: var(
 html[data-universe-page="cepre"] .cepre-minimal-footer > small { font: 550 .68rem/1 "DM Sans", sans-serif; white-space: nowrap; }
 
 html[data-universe-page="cepre"][data-universe-page] body > footer.uts-site-footer {
-  width: min(1120px, calc(100vw - 32px)) !important;
-  margin: 0 auto 22px !important;
+  width: calc(100vw - 28px) !important;
+  max-width: none !important;
+  margin: 30px 14px 14px !important;
   border: 1px solid var(--cepre-line) !important;
-  border-radius: 24px !important;
+  border-radius: 30px 30px 20px 20px !important;
   background: var(--cepre-surface) !important;
-  padding: 20px 22px !important;
-  box-shadow: none !important;
+  padding: 54px clamp(32px, 4.4vw, 86px) 30px !important;
+  box-shadow: var(--uts2-shadow) !important;
 }
 
+/* El encabezado y el pie globales deben permanecer completos en CEPREUNI. */
 html[data-universe-page="cepre"][data-universe-page] body > footer.uts-site-footer .uts-footer-main {
-  display: block !important;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 1.65fr) repeat(3, minmax(145px, .68fr)) !important;
+  gap: 42px !important;
 }
 
 html[data-universe-page="cepre"] footer.uts-site-footer .uts-footer-main > div:not(.uts-footer-brand) {
-  display: none !important;
+  display: block !important;
 }
 
 html[data-universe-page="cepre"] footer.uts-site-footer .uts-footer-brand p {
@@ -335,16 +339,6 @@ html[data-universe-page="cepre"] #support-v2-fab > span { display: none; }
   html[data-universe-page="cepre"] .cepre-minimal-footer { flex-direction: column; text-align: center; }
 }
 
-@media (max-width: 760px) {
-  html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav .nav-actions {
-    display: none !important;
-  }
-
-  html[data-universe-page="cepre"] body > .uts-language-switch-standalone {
-    display: none !important;
-  }
-}
-
 @media (min-width: 981px) {
   html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav {
     grid-template-columns: auto minmax(0, 1fr) auto auto !important;
@@ -361,13 +355,30 @@ html[data-universe-page="cepre"] #support-v2-fab > span { display: none; }
     min-width: 0 !important;
   }
 
-  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="admission"]),
-  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="syllabus"]),
-  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="classes"]),
-  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="unitalk"]),
-  html[data-universe-page="cepre"] body > nav .nav-links li:has(a[data-route="simulators"]) {
-    display: none !important;
+  html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav .nav-links {
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: auto !important;
+    scrollbar-width: none;
   }
+
+  html[data-universe-page="cepre"][data-universe-page] body > nav.uts-unified-nav .nav-links::-webkit-scrollbar { display: none; }
+}
+
+@media (max-width: 900px) {
+  html[data-universe-page="cepre"][data-universe-page] body > footer.uts-site-footer {
+    width: calc(100vw - 14px) !important;
+    margin: 18px 7px 7px !important;
+    padding: 38px 18px 24px !important;
+    border-radius: 22px 22px 16px 16px !important;
+  }
+
+  html[data-universe-page="cepre"][data-universe-page] body > footer.uts-site-footer .uts-footer-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 30px 18px !important;
+  }
+
+  html[data-universe-page="cepre"] footer.uts-site-footer .uts-footer-brand { grid-column: 1 / -1; }
 }
 
 @media (max-width: 620px) {
