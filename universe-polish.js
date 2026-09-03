@@ -60,7 +60,7 @@
       var design = document.createElement('link');
       design.id = 'uts-design-v2';
       design.rel = 'stylesheet';
-      design.href = '/universe-design-v2.css?v=system-14';
+      design.href = '/universe-design-v2.css?v=system-15';
       document.head.appendChild(design);
     }
 
@@ -363,6 +363,31 @@
     return '<span class="uts-brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><path d="M10 9v13.2C10 29.8 14 34 20 34s10-4.2 10-11.8V15h-6.2v7.4c0 3.8-1.3 5.6-3.8 5.6s-3.8-1.8-3.8-5.6V9H10Z"/><path d="M22.5 9H32l-9.5 8V9Z"/></svg></span><span class="uts-brand-label">Universe <b>to Study</b></span>';
   }
 
+  var UNIVERSE_NAV_ITEMS = [
+    ['home', '/', 'Inicio'],
+    ['admission', '/admision', 'Admisión'],
+    ['cepre', '/cepreuni', 'CEPREUNI'],
+    ['planner', '/planificador', 'Planificador'],
+    ['syllabus', '/temario', 'Temario'],
+    ['classes', '/clases', 'Clases'],
+    ['unitalk', '/unitalk', 'UNITALK'],
+    ['library', '/biblioteca', 'Biblioteca'],
+    ['simulators', '/simulacros', 'Simulacros']
+  ];
+
+  function universeActiveRoute(page) {
+    var grouped = {
+      ranking: 'cepre',
+      calculator: 'cepre',
+      'docentes-cepreuni': 'cepre',
+      'fijas-cepreuni': 'cepre',
+      'ingresantes-cepreuni': 'cepre',
+      exams: 'simulators',
+      'admission-results': 'admission'
+    };
+    return grouped[page] || page;
+  }
+
   function ensureUnifiedNavigation() {
     var page = document.documentElement.getAttribute('data-universe-page') || '';
     if (page === 'home') return;
@@ -373,6 +398,16 @@
         logo.innerHTML = universeBrandMarkup();
         logo.setAttribute('aria-label', 'Universe to Study - Inicio');
       }
+      var navLinks = nav.querySelector('.nav-links');
+      if (navLinks) {
+        navLinks.innerHTML = UNIVERSE_NAV_ITEMS.map(function (item) {
+          return '<li><a data-route="' + item[0] + '" href="' + item[1] + '">' + item[2] + '</a></li>';
+        }).join('');
+        var activeRoute = universeActiveRoute(page);
+        navLinks.querySelectorAll('a[data-route]').forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('data-route') === activeRoute);
+        });
+      }
       var menuButton = nav.querySelector('.uts-menu-toggle');
       if (!menuButton) {
         menuButton = document.createElement('button');
@@ -381,7 +416,6 @@
         menuButton.setAttribute('aria-label', 'Abrir menú');
         menuButton.setAttribute('aria-expanded', 'false');
         menuButton.innerHTML = '<span></span><span></span><span></span>';
-        var navLinks = nav.querySelector('.nav-links');
         if (navLinks) nav.insertBefore(menuButton, navLinks);
         menuButton.addEventListener('click', function () {
           var open = nav.classList.toggle('uts-menu-open');
