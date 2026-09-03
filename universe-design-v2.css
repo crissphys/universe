@@ -958,3 +958,227 @@ html[data-universe-page="ranking"][data-universe-page] :where(.cepre-v2-wrap, .r
   overflow-x: auto !important;
   overflow-y: visible !important;
 }
+
+/* Floating header controls: the header is only a layout rail. Every visible
+   control owns its own surface, so there is no shared rectangular backdrop. */
+html[data-universe-page][data-universe-page] body > nav,
+html[data-universe-page][data-universe-page] body > nav.uts-unified-nav {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-universe-page="home"][data-universe-page] .home-nav-inner {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-universe-page][data-universe-page] :is(
+  .uts-unified-nav .nav-logo,
+  .home-nav .home-brand
+) {
+  min-height: 46px !important;
+  padding: 4px 13px 4px 5px !important;
+  border: 1px solid rgba(45, 105, 198, .18) !important;
+  border-radius: 15px !important;
+  background: rgba(247, 251, 255, .82) !important;
+  box-shadow: 0 9px 24px rgba(27, 73, 145, .1), inset 0 1px 0 rgba(255, 255, 255, .9) !important;
+  backdrop-filter: blur(16px) saturate(1.32) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.32) !important;
+}
+
+html[data-universe-page][data-universe-page] :is(
+  .uts-unified-nav .nav-links,
+  .home-nav .home-nav-links,
+  .uts-unified-nav .nav-actions,
+  .home-nav .home-account-slot
+) {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-universe-page][data-universe-page] :is(
+  .uts-unified-nav .nav-links,
+  .home-nav .home-nav-links
+) {
+  gap: 7px !important;
+}
+
+html[data-universe-page][data-universe-page] :is(
+  .uts-unified-nav .nav-links a,
+  .home-nav .home-nav-links a
+) {
+  border-color: rgba(45, 105, 198, .16) !important;
+  background: rgba(247, 251, 255, .76) !important;
+  box-shadow: 0 7px 19px rgba(27, 73, 145, .075), inset 0 1px 0 rgba(255, 255, 255, .86) !important;
+  backdrop-filter: blur(14px) saturate(1.28) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.28) !important;
+}
+
+html[data-universe-page][data-universe-page] :is(
+  .uts-unified-nav .nav-links a:hover,
+  .uts-unified-nav .nav-links a.active,
+  .home-nav .home-nav-links a:hover,
+  .home-nav .home-nav-links a.active
+) {
+  border-color: rgba(37, 99, 235, .34) !important;
+  background: rgba(255, 255, 255, .96) !important;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, .14), inset 0 1px 0 #fff !important;
+  transform: translateY(-1px);
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :is(
+  .uts-unified-nav .nav-logo,
+  .home-nav .home-brand,
+  .uts-unified-nav .nav-links a,
+  .home-nav .home-nav-links a
+) {
+  border-color: rgba(151, 171, 204, .25) !important;
+  background: rgba(12, 12, 14, .84) !important;
+  box-shadow: 0 9px 24px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(181, 216, 255, .13) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :is(
+  .uts-unified-nav .nav-links a:hover,
+  .uts-unified-nav .nav-links a.active,
+  .home-nav .home-nav-links a:hover,
+  .home-nav .home-nav-links a.active
+) {
+  border-color: rgba(112, 171, 255, .48) !important;
+  background: rgba(22, 22, 25, .96) !important;
+  box-shadow: 0 11px 26px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(191, 222, 255, .18) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] body > nav.uts-unified-nav {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :is(
+  .uts-language-switch,
+  .uts-menu-toggle,
+  .home-menu-toggle,
+  .uts-unified-nav .uts-nav-account-slot #uts-google-auth-button,
+  .uts-unified-nav .uts-nav-account-slot .nav-user-btn,
+  .uts-unified-nav .nav-actions #uts-google-auth-button,
+  .uts-unified-nav .nav-actions .nav-user-btn,
+  .home-account-slot #uts-google-auth-button,
+  .home-account-slot .nav-user-btn
+) {
+  border-color: rgba(151, 171, 204, .25) !important;
+  background: rgba(12, 12, 14, .9) !important;
+  background-image: none !important;
+  box-shadow: 0 9px 24px rgba(0, 0, 0, .26), inset 0 1px 0 rgba(222, 230, 242, .12) !important;
+}
+
+/* Dark mode uses neutral black and charcoal as its foundation. Section colors
+   remain as small accents instead of tinting the whole interface navy. */
+html[data-universe-theme="dark"][data-universe-page] {
+  --uts-bg: #050505;
+  --uts-card: #0b0b0c;
+  --uts-card-2: #121214;
+  --uts-glass-light: rgba(12, 12, 14, .86);
+  --uts2-panel: rgba(12, 12, 14, .84);
+  --uts2-panel-solid: #0b0b0c;
+  --uts2-soft: #121214;
+  --home-panel: rgba(12, 12, 14, .7);
+  --home-panel-strong: rgba(15, 15, 18, .88);
+  --cepre-surface: rgba(12, 12, 14, .72);
+  --cepre-surface-strong: rgba(16, 16, 18, .9);
+  --uts-liquid-light: rgba(11, 11, 13, .66);
+  --uts-liquid-light-strong: rgba(17, 17, 20, .82);
+  --uts-liquid-edge: rgba(190, 202, 220, .18);
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page],
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] body {
+  background-color: #050505 !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] body {
+  background-image:
+    radial-gradient(circle at 10% 4%, rgba(var(--uts-accent-rgb), .16), transparent 31rem),
+    radial-gradient(circle at 90% 16%, rgba(255, 255, 255, .035), transparent 28rem),
+    linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px),
+    linear-gradient(155deg, #050505 0%, #09090b 52%, #030303 100%) !important;
+  background-size: auto, auto, 42px 42px, 42px 42px, auto !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :where(
+  .card, .panel, [class$="-card"], [class*="-card "], [class$="-panel"], [class*="-panel "],
+  [class$="-tile"], [class*="-tile "], [class$="-module"], [class*="-module "],
+  [class$="-sheet"], [class*="-sheet "], [class$="-box"], [class*="-box "],
+  .home-feature-links a, .home-info-links a, .library-link-card, .editorial-logo-card,
+  .book-card, .privacy-option, .conditional-group, .settings-section
+):not(:where(
+  .uts-liquid-solid, .uts-liquid-glass-exempt, .support-v2-panel, #support-v2-panel *,
+  [role="dialog"], [role="dialog"] *, .modal, .modal *, .alert, .notice-important,
+  .lumbreras-important-notice, .account-profile-overview, .home-route-visual,
+  .home-card-swap-visual
+)) {
+  background-color: var(--uts-liquid-light) !important;
+  background-image:
+    radial-gradient(circle at 12% -10%, rgba(255, 255, 255, .075), transparent 42%),
+    radial-gradient(circle at 92% 112%, color-mix(in srgb, var(--uts-liquid-accent) 16%, transparent), transparent 48%),
+    linear-gradient(145deg, color-mix(in srgb, var(--uts-liquid-accent) 6%, rgba(16, 16, 18, .84)), rgba(5, 5, 6, .7)) !important;
+  border-color: color-mix(in srgb, var(--uts-liquid-accent) 24%, rgba(205, 213, 225, .16)) !important;
+}
+
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :where(
+  input:not(:where([type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="color"])),
+  select, textarea, .cepre-v2-search, .libv4-search
+) {
+  background-color: rgba(12, 12, 14, .8) !important;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, .045), rgba(5, 5, 6, .72)) !important;
+}
+
+@media (max-width: 760px) {
+  html[data-universe-page][data-universe-page] :is(
+    .uts-unified-nav .nav-logo,
+    .home-nav .home-brand
+  ) {
+    min-height: 44px !important;
+    padding: 4px 10px 4px 4px !important;
+    border-radius: 14px !important;
+  }
+
+  html[data-universe-page="home"][data-universe-page] .home-nav-inner,
+  html[data-universe-page][data-universe-page] body > nav.uts-unified-nav {
+    padding-inline: 0 !important;
+  }
+
+  html[data-universe-page][data-universe-page] :is(
+    .uts-unified-nav .nav-links,
+    .home-nav .home-nav-links
+  ) {
+    gap: 7px !important;
+  }
+
+  html[data-universe-page][data-universe-page] :is(
+    .uts-unified-nav .nav-links a,
+    .home-nav .home-nav-links a
+  ) {
+    min-height: 38px !important;
+    border-radius: 12px !important;
+  }
+}
