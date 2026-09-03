@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="/components/text-type/TextType.css?v=text-type-3">
   <link rel="stylesheet" href="/components/card-swap/CardSwap.css?v=card-swap-2">
   <link rel="stylesheet" href="/liquid-glass-runtime.css?v=liquid-webgl-1">
-  <link rel="stylesheet" href="/home-minimal.css?v=minimal-4">
+  <link rel="stylesheet" href="/home-minimal.css?v=minimal-5">
 
   <script>
     (function () {
@@ -92,9 +92,9 @@
         <li><a data-route="planner" href="/planificador">Planificador</a></li>
         <li><a data-route="syllabus" href="/temario">Temario</a></li>
         <li><a data-route="classes" href="/clases">Clases</a></li>
+        <li><a data-route="unitalk" href="/unitalk">UNITALK</a></li>
         <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
         <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
-        <li><a href="/unitalk">UNITALK</a></li>
       </ul>
       <div class="home-account-slot" id="home-account-slot" aria-label="Acceso a la cuenta"></div>
       <button aria-label="Cambiar tema" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" title="Cambiar tema" type="button">
@@ -203,18 +203,33 @@
 
     <section class="home-section home-exams" aria-labelledby="exam-title">
       <div class="home-exams-heading home-reveal">
-        <span class="home-section-label">CEPREUNI 2027-1</span>
-        <h2 id="exam-title">El próximo ciclo está por comenzar.</h2>
-        <p>Sigue la cuenta regresiva de la prueba de selección y del inicio de clases del Ciclo Preuniversitario CEPREUNI 2027-1.</p>
+        <span class="home-section-label">EVALUACIONES 2027-1</span>
+        <h2 id="exam-title">Tus próximas evaluaciones.</h2>
+        <p>Consulta en un solo lugar las cuentas regresivas del Ciclo Preuniversitario, Ciclo Básico y Ciclo IEN.</p>
       </div>
       <div class="home-exam-grid">
-        <article class="home-exam-card exam-selection home-countdown home-reveal" data-target="2026-08-23T09:00:00-05:00" data-complete="Prueba de selección finalizada">
-          <header><span>PRIMER EVENTO</span><i>CEPREUNI 2027-1</i></header><h3>Prueba de selección</h3><p><b>23 AGO</b><span>Domingo · 9:00 a. m.</span></p>
+        <article class="home-exam-card exam-pre-one home-countdown home-reveal" data-target="2026-09-13T09:00:00-05:00" data-complete="Primera práctica calificada finalizada">
+          <header><span>PRIMERA PC</span><i>Ciclo Pre</i></header><h3>Primera práctica calificada</h3><p><b>13 SEP</b><span>Domingo · 9:00 a. m.</span></p>
           <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
           <strong class="countdown-caption">Tiempo restante</strong>
         </article>
-        <article class="home-exam-card exam-classes home-countdown home-reveal" data-target="2026-08-31T07:30:00-05:00" data-complete="Las clases ya comenzaron">
-          <header><span>SEGUNDO EVENTO</span><i>Ciclo Preuniversitario</i></header><h3>Inicio de clases</h3><p><b>31 AGO</b><span>Lunes · 7:30 a. m.</span></p>
+        <article class="home-exam-card exam-pre-two home-countdown home-reveal" data-target="2026-09-27T00:00:00-05:00" data-complete="Segunda práctica calificada finalizada">
+          <header><span>SEGUNDA PC</span><i>Ciclo Pre</i></header><h3>Segunda práctica calificada</h3><p><b>27 SEP</b><span>Domingo · 00:00 (medianoche)</span></p>
+          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
+          <strong class="countdown-caption">Tiempo restante</strong>
+        </article>
+        <article class="home-exam-card exam-basic-one home-countdown home-reveal" data-target="2026-09-13T09:00:00-05:00" data-complete="Primera evaluación calificada finalizada">
+          <header><span>PRIMERA EC</span><i>Ciclo Básico</i></header><h3>Primera evaluación calificada</h3><p><b>13 SEP</b><span>Domingo · 9:00 a. m.</span></p>
+          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
+          <strong class="countdown-caption">Tiempo restante</strong>
+        </article>
+        <article class="home-exam-card exam-basic-two home-countdown home-reveal" data-target="2026-09-27T00:00:00-05:00" data-complete="Segunda evaluación calificada finalizada">
+          <header><span>SEGUNDA EC</span><i>Ciclo Básico</i></header><h3>Segunda evaluación calificada</h3><p><b>27 SEP</b><span>Domingo · 00:00 (medianoche)</span></p>
+          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
+          <strong class="countdown-caption">Tiempo restante</strong>
+        </article>
+        <article class="home-exam-card exam-ien home-countdown home-reveal" data-target="2026-09-20T09:00:00-05:00" data-complete="Examen parcial presencial finalizado">
+          <header><span>EXAMEN PARCIAL</span><i>Ciclo IEN</i></header><h3>Examen parcial presencial</h3><p><b>20 SEP</b><span>Domingo · 9:00 a. m.</span></p>
           <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
           <strong class="countdown-caption">Tiempo restante</strong>
         </article>
@@ -290,7 +305,7 @@
   <script src="/home.js?v=home-8" defer></script>
   <script src="/components/text-type/TextType.js?v=text-type-3" defer></script>
   <script src="/components/card-swap/CardSwap.js?v=card-swap-2" defer></script>
-<script src="/universe-polish.js?v=motion-6" defer></script>
+<script src="/universe-polish.js?v=motion-7" defer></script>
   <script type="module" src="/liquid-glass-runtime.js?v=liquid-webgl-2"></script>
 </body>
 </html>

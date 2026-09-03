@@ -982,6 +982,17 @@ html[data-universe-page="home"][data-universe-page] .home-nav-inner {
   -webkit-backdrop-filter: none !important;
 }
 
+/* Canonical header geometry. Home and internal pages share the same width,
+   height, spacing and navigation order; only the active route changes. */
+html[data-universe-page="home"][data-universe-page] .home-nav-inner,
+html[data-universe-page]:not([data-universe-page="home"])[data-universe-page] body > nav.uts-unified-nav {
+  grid-template-columns: minmax(205px, 1fr) auto minmax(112px, 1fr) !important;
+  width: min(var(--uts2-max), calc(100vw - 32px)) !important;
+  min-height: 62px !important;
+  gap: 18px !important;
+  padding: 8px 10px 8px 18px !important;
+}
+
 html[data-universe-page][data-universe-page] :is(
   .uts-unified-nav .nav-logo,
   .home-nav .home-brand

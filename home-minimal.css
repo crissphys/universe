@@ -227,14 +227,18 @@ html[data-universe-page="home"] .home-exams-heading p {
 }
 
 html[data-universe-page="home"] .home-exam-grid {
-  width: min(100%, 900px);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  width: min(100%, 1180px);
   gap: 14px;
 }
 
 html[data-universe-page="home"] .home-exam-card {
+  grid-column: span 2;
   padding: 18px 20px 17px;
   border-radius: 22px;
 }
+
+html[data-universe-page="home"] .home-exam-card:nth-last-child(-n + 2) { grid-column: span 3; }
 
 html[data-universe-page="home"] .home-exam-card h3 {
   min-height: 0;
@@ -263,9 +267,27 @@ html[data-universe-page="home"] .home-exam-card .countdown-caption {
 }
 
 html[data-universe-page="home"] .home-exam-official {
-  width: min(100%, 900px);
+  width: min(100%, 1180px);
   margin: 12px auto 0;
   padding: 12px 17px;
+}
+
+html[data-universe-page="home"] .exam-pre-one { --exam:#5b63e8; --exam-soft:rgba(91,99,232,.12); }
+html[data-universe-page="home"] .exam-pre-two { --exam:#7454d7; --exam-soft:rgba(116,84,215,.12); }
+html[data-universe-page="home"] .exam-basic-one { --exam:#0c9b78; --exam-soft:rgba(12,155,120,.12); }
+html[data-universe-page="home"] .exam-basic-two { --exam:#087d82; --exam-soft:rgba(8,125,130,.12); }
+html[data-universe-page="home"] .exam-ien { --exam:#d86a22; --exam-soft:rgba(216,106,34,.12); }
+
+@media (max-width: 900px) {
+  html[data-universe-page="home"] .home-exam-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-universe-page="home"] .home-exam-card,
+  html[data-universe-page="home"] .home-exam-card:nth-last-child(-n + 2) { grid-column: span 1; }
+  html[data-universe-page="home"] .home-exam-card:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 600px) {
+  html[data-universe-page="home"] .home-exam-grid { grid-template-columns: 1fr; }
+  html[data-universe-page="home"] .home-exam-card:last-child { grid-column: auto; }
 }
 
 /* Balanced, centered platform cards with a distinct glass tint per module. */
