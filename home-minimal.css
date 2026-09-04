@@ -290,7 +290,7 @@ html[data-universe-page="home"] .exam-ien { --exam:#d86a22; --exam-soft:rgba(216
   html[data-universe-page="home"] .home-exam-card:last-child { grid-column: auto; }
 }
 
-/* Balanced, centered platform cards with a distinct glass tint per module. */
+/* Balanced, centered platform cards with a solid accent per module. */
 html[data-universe-page="home"] .home-modules {
   padding: 72px 0 82px;
 }
@@ -330,7 +330,7 @@ html[data-universe-page="home"] .module-planner {
   min-height: 292px;
   padding: 24px;
   border-color: rgba(var(--module-rgb), .2);
-  background: linear-gradient(145deg, rgba(255,255,255,.7), rgba(var(--module-rgb), .12));
+  background: #f7faff;
   box-shadow: 0 20px 50px rgba(var(--module-rgb), .12);
   text-align: left;
 }
@@ -374,7 +374,7 @@ html[data-universe-theme="dark"][data-universe-page="home"] .module-admission,
 html[data-universe-theme="dark"][data-universe-page="home"] .module-cepre,
 html[data-universe-theme="dark"][data-universe-page="home"] .module-planner {
   border-color: rgba(var(--module-rgb), .32);
-  background: linear-gradient(145deg, rgba(9, 28, 65, .8), rgba(var(--module-rgb), .18));
+  background: #14243a;
   box-shadow: 0 22px 54px rgba(0, 0, 0, .22);
 }
 

@@ -133,7 +133,7 @@ html[data-universe-page="syllabus"] .universe-page-stage-inner {
   border-radius: 22px;
   background: rgba(255,255,255,.83);
   box-shadow: 0 18px 45px rgba(30,64,175,.11);
-  backdrop-filter: blur(12px);
+  backdrop-filter:none;
 }
 
 #syv5-university-switch .uts-sm-switch-title { display: none; }

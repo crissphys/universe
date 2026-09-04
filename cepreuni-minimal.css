@@ -45,7 +45,7 @@ html[data-universe-page="cepre"] .cepre-minimal-hero {
   background: var(--cepre-surface);
   box-shadow: var(--cepre-shadow);
   text-align: center;
-  backdrop-filter: blur(20px) saturate(125%);
+  backdrop-filter:none;
 }
 
 html[data-universe-page="cepre"] .cepre-minimal-logo {
@@ -159,7 +159,7 @@ html[data-universe-page="cepre"] .cepre-quick-grid a {
   padding: 20px;
   color: var(--cepre-text) !important;
   text-decoration: none;
-  backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter:none;
   transition: transform .2s ease, border-color .2s ease;
 }
 
@@ -200,7 +200,7 @@ html[data-universe-page="cepre"] :is(.cepre-schedule-disclosure, .cepre-more-res
   border-radius: 26px;
   background: var(--cepre-surface);
   box-shadow: 0 12px 34px rgba(29, 77, 151, .05);
-  backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter:none;
 }
 
 html[data-universe-page="cepre"] .cepre-schedule-disclosure { margin-top: 22px; }

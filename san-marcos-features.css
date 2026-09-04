@@ -208,7 +208,7 @@
   justify-content: center;
   padding: 20px;
   background: rgba(2,6,23,.58);
-  backdrop-filter: blur(8px);
+  backdrop-filter:none;
 }
 
 .uts-sm-drawer.open {
@@ -236,7 +236,7 @@
   padding: 18px;
   border-bottom: 1px solid #e2e8f0;
   background: rgba(255,255,255,.94);
-  backdrop-filter: blur(8px);
+  backdrop-filter:none;
 }
 
 .uts-sm-close {
@@ -629,7 +629,7 @@ html[data-universe-theme="dark"] .uts-sm-table td,
 html[data-universe-theme="dark"] .uts-sm-question,
 html[data-universe-theme="dark"] .uts-sm-options label,
 html[data-universe-theme="dark"] .uts-sim-mode-switch {
-  background: #050505;
+  background: #0e1c30;
   border-color: #273244;
   color: #f8fafc;
 }
@@ -637,7 +637,7 @@ html[data-universe-theme="dark"] .uts-sim-mode-switch {
 html[data-universe-theme="dark"] .uts-sm-course-btn b,
 html[data-universe-theme="dark"] .uts-sm-drawer-card,
 html[data-universe-theme="dark"] .uts-sm-drawer-head {
-  background: #050505;
+  background: #0e1c30;
   color: #f8fafc;
 }
 

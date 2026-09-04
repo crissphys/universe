@@ -68,7 +68,7 @@ body[data-universe-page="editorial"] {
   border-radius: 28px !important;
   padding: clamp(1.15rem, 2vw, 2rem) !important;
   box-shadow: 0 22px 70px rgba(15, 23, 42, .08) !important;
-  backdrop-filter: blur(18px) !important;
+  backdrop-filter:none;
 }
 
 .article-card h2,

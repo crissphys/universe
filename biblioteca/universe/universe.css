@@ -23,7 +23,7 @@
 .universe-book-grid .book-cover img{filter:saturate(.96)}
 .universe-book-grid .book-info{padding:1.1rem 1.15rem 1.25rem}.universe-book-grid .book-info h4{margin:.55rem 0 .35rem;font-size:1.2rem}
 .book-author{display:block;margin-bottom:.9rem;color:#4d607a;font:700 .76rem/1.4 "DM Sans",sans-serif}
-.upcoming-ribbon{position:absolute;right:.7rem;top:.7rem;padding:.45rem .65rem;border:1px solid rgba(255,255,255,.34);border-radius:999px;background:rgba(7,29,73,.88);box-shadow:0 8px 20px rgba(0,0,0,.18);color:#fff;font:800 .62rem/1 "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.upcoming-ribbon{position:absolute;right:.7rem;top:.7rem;padding:.45rem .65rem;border:1px solid rgba(255,255,255,.34);border-radius:999px;background:rgba(7,29,73,.88);box-shadow:0 8px 20px rgba(0,0,0,.18);color:#fff;font:800 .62rem/1 "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:none}
 .available-ribbon{background:rgba(5,112,78,.93);box-shadow:0 8px 20px rgba(5,112,78,.24)}
 .available-book-card{cursor:pointer!important}.available-book-card .book-open b{color:var(--uc-blue)}
 .book-status{display:flex;align-items:center;gap:.48rem;color:#315b8b;font:800 .7rem/1.2 "DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.07em}.book-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--uc-gold);box-shadow:0 0 0 4px rgba(231,184,75,.15)}

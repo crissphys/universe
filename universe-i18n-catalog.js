@@ -114,7 +114,7 @@ window.UNIVERSE_I18N_CATALOG = Object.freeze({
   ").src = S.image; if (el(": ").src = S.image; if (the(",
   ")) el(": ")) he(",
   "] .cp-status.low{background:#250b0b!important;color:#fca5a5!important;border-color:#991b1b!important;} /* Resúmenes / biblioteca / legal en oscuro */ html[data-universe-theme=": "] .cp-status.low{background:#250b0b!important;color:#fca5a5!important;border-color:#991b1b!important;} /* Abstracts / library / legal in dark */ html[data-universe-theme=",
-  "] #support-v2-hint{background:#050505!important;color:#f8fafc!important;border-color:#334155!important;} /* Ranking: ancho real y columna PC sin blanco en oscuro */ html[data-universe-page=": "] #support-v2-hint{background:#050505!important;color:#f8fafc!important;border-color:#334155!important;} /* Ranking: actual width and PC column without white in dark */ html[data-universe-page=",
+  "] #support-v2-hint{background:#0e1c30!important;color:#f8fafc!important;border-color:#334155!important;} /* Ranking: ancho real y columna PC sin blanco en oscuro */ html[data-universe-page=": "] #support-v2-hint{background:#0e1c30!important;color:#f8fafc!important;border-color:#334155!important;} /* Ranking: actual width and PC column without white in dark */ html[data-universe-page=",
   "] representa el máximo entero de": "] represents the maximum integer of",
   "{blocks} bloques · {breaks} descansos · {hours} h de estudio": "{blocks} blocks · {breaks} breaks · {hours} h of study",
   "{done} de {total} bloques completados": "{done} of {total} blocks completed",

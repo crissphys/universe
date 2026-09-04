@@ -44,7 +44,7 @@
 .ufa-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: .75rem 1.05rem; border: 1px solid rgba(37, 99, 235, .2); border-radius: 14px; background: rgba(255, 255, 255, .88); color: #1d4ed8; font-size: .82rem; font-weight: 800; text-decoration: none; box-shadow: 0 8px 22px rgba(32, 78, 143, .06); }
 .ufa-btn.primary { border-color: transparent; background: linear-gradient(135deg, #124da9, #2f7df6); color: #fff; box-shadow: 0 14px 30px rgba(37, 99, 235, .23); }
 
-.ufa-hero-panel { display: grid; align-content: center; gap: .75rem; padding: clamp(1.15rem, 2.3vw, 2rem); border: 1px solid rgba(255, 255, 255, .8); border-radius: 26px; background: rgba(255, 255, 255, .72); box-shadow: inset 0 0 0 1px rgba(65, 117, 193, .08), 0 18px 50px rgba(31, 76, 139, .1); backdrop-filter: blur(14px); }
+.ufa-hero-panel { display: grid; align-content: center; gap: .75rem; padding: clamp(1.15rem, 2.3vw, 2rem); border: 1px solid rgba(255, 255, 255, .8); border-radius: 26px; background: rgba(255, 255, 255, .72); box-shadow: inset 0 0 0 1px rgba(65, 117, 193, .08), 0 18px 50px rgba(31, 76, 139, .1); backdrop-filter:none; }
 .ufa-panel-label { color: #2467cc; font-size: .7rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
 .ufa-panel-number { display: flex; align-items: baseline; gap: .6rem; padding-bottom: .65rem; border-bottom: 1px solid var(--ufa-line); }
 .ufa-panel-number b { font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1; letter-spacing: -.05em; }
