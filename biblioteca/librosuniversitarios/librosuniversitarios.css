@@ -64,7 +64,7 @@ body {
   padding: .8rem;
   background: rgba(255, 255, 255, .88);
   box-shadow: 0 18px 45px rgba(31, 60, 104, .1);
-  backdrop-filter: blur(16px);
+  backdrop-filter:none;
 }
 
 .catalog-search {
@@ -152,7 +152,7 @@ body {
   color: #fff;
   background: rgba(7, 38, 66, .88);
   font: 700 .62rem/1 "DM Sans", sans-serif;
-  backdrop-filter: blur(8px);
+  backdrop-filter:none;
 }
 
 .book-card[hidden],

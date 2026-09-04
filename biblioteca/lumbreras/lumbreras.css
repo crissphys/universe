@@ -178,7 +178,7 @@ body { overflow-x:clip; }
 }
 .catalog-important-notice-link:focus-visible { outline:3px solid #fff;outline-offset:4px; }
 
-.catalog-collection { margin-top:2rem;border:1px solid var(--catalog-line);border-radius:34px;padding:clamp(1.25rem,4vw,3.25rem);background:var(--catalog-panel);box-shadow:0 24px 70px rgba(31,60,104,.1);backdrop-filter:blur(18px); }
+.catalog-collection { margin-top:2rem;border:1px solid var(--catalog-line);border-radius:34px;padding:clamp(1.25rem,4vw,3.25rem);background:var(--catalog-panel);box-shadow:0 24px 70px rgba(31,60,104,.1);backdrop-filter:none; }
 .catalog-collection-libros-rojos-nuevos { border-color:rgba(177,15,31,.25);background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,237,239,.88)); }
 .catalog-collection-libros-rojos-nuevos .collection-number { color:#b10f1f; }
 .catalog-collection-libros-rojos-nuevos .collection-count { background:rgba(177,15,31,.1);color:#950b1a; }

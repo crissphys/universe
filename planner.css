@@ -72,7 +72,7 @@ html[data-universe-page="planner"] button { cursor: pointer; }
   border-radius: 34px;
   background: var(--planner-panel);
   box-shadow: var(--planner-shadow);
-  backdrop-filter: blur(24px);
+  backdrop-filter:none;
 }
 
 .planner-auth {
@@ -109,14 +109,14 @@ html[data-universe-page="planner"] button { cursor: pointer; }
 .planner-auth-art > span:nth-child(3) { left: 28%; bottom: 18%; animation-delay: -2.6s; }
 .planner-auth-art > span:nth-child(4) { right: 34%; bottom: 12%; width: 5px; height: 5px; animation-delay: -.8s; }
 .planner-auth-art > span:nth-child(5) { left: 48%; top: 12%; width: 4px; height: 4px; animation-delay: -2s; }
-.planner-u-mark { position: absolute; left: 50%; top: 50%; z-index: 3; display: grid; width: 200px; height: 200px; border: 1px solid rgba(255,255,255,.45); border-radius: 48px; background: rgba(255,255,255,.15); box-shadow: 0 32px 80px rgba(0,0,0,.2); transform: translate(-50%,-50%) rotate(-6deg); place-items: center; backdrop-filter: blur(12px); animation: planner-mark 7s ease-in-out infinite; }
+.planner-u-mark { position: absolute; left: 50%; top: 50%; z-index: 3; display: grid; width: 200px; height: 200px; border: 1px solid rgba(255,255,255,.45); border-radius: 48px; background: rgba(255,255,255,.15); box-shadow: 0 32px 80px rgba(0,0,0,.2); transform: translate(-50%,-50%) rotate(-6deg); place-items: center; backdrop-filter:none; animation: planner-mark 7s ease-in-out infinite; }
 .planner-u-mark b { color: #fff; font-family: Sora, sans-serif; font-size: 6rem; letter-spacing: -.12em; }
 .planner-u-mark i { position: absolute; right: -34px; top: 50%; width: 95px; height: 3px; border-radius: 4px; background: #85e3ff; box-shadow: 0 0 24px #85e3ff; transform: rotate(-32deg); }
 .planner-orbit { position: absolute; left: 50%; top: 50%; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; transform: translate(-50%,-50%); }
 .planner-orbit i { position: absolute; left: 50%; top: -6px; width: 11px; height: 11px; border-radius: 50%; background: #fff; box-shadow: 0 0 18px rgba(255,255,255,.95); }
 .planner-orbit.orbit-one { width: 410px; height: 250px; animation: planner-orbit 14s linear infinite; }
 .planner-orbit.orbit-two { width: 520px; height: 370px; transform: translate(-50%,-50%) rotate(28deg); animation: planner-orbit-alt 19s linear infinite; }
-.planner-float-card { position: absolute; z-index: 4; display: grid; min-width: 78px; min-height: 42px; padding: 0 15px; border: 1px solid rgba(255,255,255,.35); border-radius: 14px; background: rgba(7,28,75,.42); color: #fff; box-shadow: 0 18px 45px rgba(0,0,0,.2); font-size: .68rem; font-style: normal; font-weight: 900; letter-spacing: .11em; place-items: center; backdrop-filter: blur(14px); animation: planner-card 5s ease-in-out infinite; }
+.planner-float-card { position: absolute; z-index: 4; display: grid; min-width: 78px; min-height: 42px; padding: 0 15px; border: 1px solid rgba(255,255,255,.35); border-radius: 14px; background: rgba(7,28,75,.42); color: #fff; box-shadow: 0 18px 45px rgba(0,0,0,.2); font-size: .68rem; font-style: normal; font-weight: 900; letter-spacing: .11em; place-items: center; backdrop-filter:none; animation: planner-card 5s ease-in-out infinite; }
 .card-calendar { left: 12%; top: 30%; }
 .card-focus { right: 9%; top: 22%; animation-delay: -1.8s; }
 .card-progress { right: 14%; bottom: 24%; animation-delay: -3.2s; }
@@ -416,7 +416,7 @@ html[data-universe-page="planner"] button { cursor: pointer; }
 
 .planner-dialog { position: fixed; inset: 50% auto auto 50%; width: min(720px, calc(100% - 28px)); max-height: min(880px, calc(100dvh - 30px)); overflow: auto; margin: 0; border: 1px solid var(--planner-line); border-radius: 26px; padding: 0; background: rgba(250,252,255,.98); color: var(--planner-ink); box-shadow: 0 30px 100px rgba(3,18,50,.35); transform: translate(-50%,-50%); }
 .planner-dialog:not([open]) { display: none; }
-.planner-dialog::backdrop { background: rgba(3,12,34,.58); backdrop-filter: blur(8px); }
+.planner-dialog::backdrop { background: rgba(3,12,34,.58); backdrop-filter:none; }
 .planner-dialog form { margin: 0; }
 .planner-dialog header { display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 22px 24px; border-bottom: 1px solid var(--planner-line); }
 .planner-dialog h2 { margin: 5px 0 0; font-family: Sora, sans-serif; font-size: 1.5rem; }
