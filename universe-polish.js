@@ -60,7 +60,7 @@
       var design = document.createElement('link');
       design.id = 'uts-design-v2';
       design.rel = 'stylesheet';
-      design.href = '/universe-design-v2.css?v=solid-5';
+      design.href = '/universe-design-v2.css?v=solid-8';
       document.head.appendChild(design);
     }
 
@@ -277,7 +277,9 @@
     }
     var nav = document.querySelector('body > nav');
     var navActions = nav && nav.querySelector('.nav-actions');
-    if (navActions && btn.parentElement !== navActions) navActions.appendChild(btn);
+    var accountSlot = nav && nav.querySelector('.uts-nav-account-slot');
+    var controls = accountSlot || navActions;
+    if (controls && btn.parentElement !== controls) controls.appendChild(btn);
   }
 
   function activateUniverseNav() {
@@ -434,8 +436,13 @@
         slot = document.createElement('div');
         slot.className = 'uts-nav-account-slot';
         slot.setAttribute('aria-label', 'Cuenta de usuario');
-        nav.appendChild(slot);
+        var actions = nav.querySelector('.nav-actions');
+        (actions || nav).appendChild(slot);
       }
+      var actions = nav.querySelector('.nav-actions');
+      if (actions && slot.parentElement !== actions) actions.appendChild(slot);
+      var themeToggle = nav.querySelector('#universe-theme-toggle');
+      if (themeToggle && themeToggle.parentElement !== slot) slot.appendChild(themeToggle);
       var button = document.getElementById('uts-google-auth-button');
       if (button && button.parentElement !== slot) slot.appendChild(button);
     });
