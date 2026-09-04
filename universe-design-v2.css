@@ -1009,6 +1009,7 @@ html[data-universe-theme="dark"][data-universe-page="home"][data-universe-page] 
 /* Header v3: independent controls, with no shared rectangular rail. */
 html[data-universe-page="home"][data-universe-page] .home-nav-inner,
 html[data-universe-page]:not([data-universe-page="home"])[data-universe-page] body > nav.uts-unified-nav {
+  width: min(1680px, calc(100vw - 32px)) !important;
   align-items: center !important;
   min-height: 46px !important;
   padding: 0 !important;
@@ -1095,7 +1096,7 @@ html[data-universe-theme="dark"][data-universe-page="home"] body.home-page > foo
   box-shadow: 0 10px 28px rgba(0, 0, 0, .48) !important;
 }
 
-html[data-universe-theme="dark"][data-universe-page] :where(
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :where(
   .home-route-card, .home-channel, .home-module, .home-exam-card,
   .home-admission-panel, .home-info-links a, .home-current-card, .home-guide,
   .home-final, .admission-hero-copy, .admission-hero-card, .cepre-hub-card,
@@ -1105,7 +1106,7 @@ html[data-universe-theme="dark"][data-universe-page] :where(
   background-image: none !important;
 }
 
-html[data-universe-theme="dark"][data-universe-page] :where(
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :where(
   .exam-overview, .score-chart-panel, .exam-kpi-panel, .exam-tools,
   .exam-kpi, .exam-comparison, #examComparison article,
   .scoring-strip article, .exam-tool, .admission-cycle-box,
@@ -1120,7 +1121,7 @@ html[data-universe-theme="dark"][data-universe-page] :where(
   border-color: #29292e !important;
 }
 
-html[data-universe-theme="dark"][data-universe-page] :where(
+html[data-universe-theme="dark"][data-universe-page][data-universe-page] :where(
   .exam-overview, .admission-hero-copy, .admission-hero-card,
   .cepre-hub-card, .rank-hero
 )::before {
