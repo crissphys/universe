@@ -60,7 +60,7 @@
       var design = document.createElement('link');
       design.id = 'uts-design-v2';
       design.rel = 'stylesheet';
-      design.href = '/universe-design-v2.css?v=solid-8';
+      design.href = '/universe-design-v2.css?v=solid-9';
       document.head.appendChild(design);
     }
 
