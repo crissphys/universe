@@ -1039,11 +1039,26 @@ html[data-universe-page] :is(.home-nav-links, .uts-unified-nav .nav-links) a {
 }
 
 @media (min-width: 1121px) and (max-width: 2000px) {
+  html[data-universe-page]:not([data-universe-page="home"])[data-universe-page] body > nav.uts-unified-nav {
+    position: sticky !important;
+  }
+
   html[data-universe-page] :is(.home-nav-links, .uts-unified-nav .nav-links) {
     min-width: 0 !important;
     width: 100% !important;
     gap: 4px !important;
     justify-content: center !important;
+  }
+
+  html[data-universe-page] .uts-unified-nav .nav-links {
+    transform: translateX(-90px) !important;
+  }
+
+  html[data-universe-page] .uts-unified-nav .nav-actions {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    height: 46px !important;
   }
 
   html[data-universe-page] :is(.home-nav-links, .uts-unified-nav .nav-links) a {
