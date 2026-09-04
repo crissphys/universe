@@ -13,10 +13,16 @@
 .cepre-collection{border-color:rgba(125,22,32,.17);background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,247,245,.88))}
 .cepre-library-page .collection-count{background:rgba(125,22,32,.09);color:var(--cepre-wine)}
 .cepre-section-heading strong{background:rgba(198,146,54,.13);color:#81560f}
-.cepre-book-grid{grid-template-columns:repeat(2,minmax(0,310px));gap:1.25rem}
+.course-class-groups{display:grid;gap:2.25rem}
+.course-class-group{display:grid;gap:1rem}
+.course-class-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.2rem 0 .8rem;border-bottom:1px solid rgba(125,22,32,.16)}
+.course-class-heading h4{margin:0;color:var(--cepre-ink);font:800 clamp(1.25rem,2vw,1.65rem)/1.1 "Space Grotesk",sans-serif}
+.course-class-heading span{padding:.4rem .7rem;border-radius:999px;background:rgba(125,22,32,.08);color:var(--cepre-wine);font:800 .68rem/1 "DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.05em}
+.cepre-book-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
 .cepre-book-grid .book-card{border-color:rgba(125,22,32,.15)}
 .cepre-book-grid .book-card:hover{border-color:rgba(166,37,49,.42);box-shadow:0 24px 46px rgba(90,22,30,.16)}
 .cepre-book-grid .book-cover{aspect-ratio:1241/1754;background:#f7f4f2}
+.cepre-book-grid .book-cover img{object-fit:contain;background:#fff}
 .cepre-book-grid .book-info{padding:1.15rem 1.2rem 1.25rem}
 .cepre-book-grid .book-info h4{margin:.55rem 0 .35rem;font-size:1.18rem}
 .book-author{display:block;margin-bottom:1rem;color:#5d6473;font:700 .76rem/1.45 "DM Sans",sans-serif}
@@ -31,7 +37,10 @@ html[data-universe-theme="dark"] .cepre-brand-card{background:linear-gradient(14
 html[data-universe-theme="dark"] .cepre-brand-card img{filter:none!important}
 html[data-universe-theme="dark"] .cepre-brand-card small{color:#713039}
 html[data-universe-theme="dark"] .book-author{color:#c9c0c5}
+html[data-universe-theme="dark"] .course-class-heading h4{color:#f6eef1}
+html[data-universe-theme="dark"] .course-class-heading{border-bottom-color:rgba(232,145,155,.22)}
 html[data-universe-theme="dark"] .cepre-library-page .book-open b,html[data-universe-theme="dark"] .cepre-library-page .catalog-next a{color:#f08b96}
+@media(max-width:960px){.cepre-book-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){.cepre-library-page .collection-subheading{align-items:flex-start;flex-direction:column}.cepre-section-heading strong{align-self:flex-start}.cepre-book-grid{grid-template-columns:minmax(0,1fr)}.cepre-book-grid .book-card{width:min(100%,390px);margin-inline:auto}.cepre-brand-card img{width:min(82%,290px)}}
 @media(max-width:480px){.cepre-library-hero::after{display:none}.cepre-book-grid .book-info{padding:1rem}.pdf-preview-badge{font-size:.56rem}.cepre-library-page .catalog-next{grid-template-columns:auto 1fr}.cepre-library-page .catalog-next a{grid-column:1/-1;white-space:normal}}
 html[data-universe-animations="off"] :where(.cepre-library-page .catalog-orbit,.cepre-library-page .brand-halo){animation:none}
