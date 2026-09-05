@@ -128,7 +128,7 @@ html[data-universe-page="home"] .home-access-logo-grid {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: clamp(22px, 3.2vw, 46px);
+  gap: clamp(18px, 2.4vw, 34px);
   width: min(100%, 1180px);
   margin: 0 auto;
 }
@@ -138,8 +138,8 @@ html[data-universe-page="home"] .home-access-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 1 128px;
-  width: 128px;
+  flex: 0 1 184px;
+  width: 184px;
   height: 92px;
   overflow: visible;
   border: 0;
@@ -178,28 +178,29 @@ html[data-universe-page="home"] .home-access-logo img {
   display: block;
   width: auto;
   height: auto !important;
-  max-width: 100%;
-  max-height: 72px;
+  max-width: none;
+  max-height: none;
   object-fit: contain;
   pointer-events: none;
 }
 
 html[data-universe-page="home"] .access-uni img {
-  width: 128px;
+  width: 154px;
 }
 
 html[data-universe-page="home"] .access-youtube img {
-  width: 128px;
+  width: 230px;
 }
 
 html[data-universe-page="home"] .access-linktree img {
-  width: 128px;
+  width: 180px;
 }
 
-html[data-universe-page="home"] .access-cepre img { width: 110px; }
-html[data-universe-page="home"] .access-whatsapp img { width: 92px; }
-html[data-universe-page="home"] .access-tiktok img { width: 57px; }
-html[data-universe-page="home"] .access-drive img { width: 64px; }
+/* Equalise perceived logo area while preserving every brand's aspect ratio. */
+html[data-universe-page="home"] .access-cepre img { width: 147px; }
+html[data-universe-page="home"] .access-whatsapp img { width: 137px; }
+html[data-universe-page="home"] .access-tiktok img { width: 72px; }
+html[data-universe-page="home"] .access-drive img { width: 88px; }
 
 /* Compact, responsive countdown. */
 html[data-universe-page="home"] .home-exams {
@@ -432,9 +433,13 @@ html[data-universe-theme="dark"][data-universe-page="home"] .module-planner {
   }
 
   html[data-universe-page="home"] .home-access-logo {
-    flex-basis: 112px;
-    width: 112px;
+    flex-basis: 142px;
+    width: 142px;
     height: 82px;
+  }
+
+  html[data-universe-page="home"] .home-access-logo img {
+    transform: scale(.82);
   }
 
   html[data-universe-page="home"] .home-exams {
