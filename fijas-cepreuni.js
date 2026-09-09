@@ -4,7 +4,9 @@
   var root=document.getElementById('fixed-app');
   var source=window.UNIVERSE_CEPRE_FIXED;
   var selectionSource=window.UNIVERSE_CEPRE_SELECTION_FIXED;
+  var firstPcSource=window.UNIVERSE_CEPRE_PC1_FIXED;
   if(source&&Array.isArray(source.examTypes)&&selectionSource&&!source.examTypes.some(function(exam){return exam.id==='seleccion'}))source.examTypes.push(selectionSource);
+  if(source&&Array.isArray(source.examTypes)&&firstPcSource&&!source.examTypes.some(function(exam){return exam.id==='primera-pc'}))source.examTypes.push(firstPcSource);
   if(!root||!source||!source.examTypes||!source.examTypes.length)return;
 
   var state={examType:source.examTypes[0].id,category:'Todos',course:'all',query:'',showAll:false,sort:'frequency'};
@@ -19,6 +21,8 @@
     courseNav:document.getElementById('fixed-course-nav'),
     top:document.getElementById('fixed-top-grid'),
     topDescription:document.getElementById('fixed-top-description'),
+    topTitle:root.querySelector('.fixed-top h2'),
+    kpiTopicsLabel:document.getElementById('fixed-kpi-topics').previousElementSibling,
     tables:document.getElementById('fixed-tables'),
     note:document.getElementById('fixed-note'),
     kpiExams:document.getElementById('fixed-kpi-exams'),
@@ -29,6 +33,7 @@
     kpiTopics:document.getElementById('fixed-kpi-topics'),
     kpiTopicsNote:document.getElementById('fixed-kpi-topics-note'),
     kpiAppearances:document.getElementById('fixed-kpi-appearances'),
+    kpiAppearancesLabel:document.getElementById('fixed-kpi-appearances-label'),
     kpiAppearancesNote:document.getElementById('fixed-kpi-appearances-note')
   };
 
@@ -43,7 +48,7 @@
   function visibleTopics(course){
     var query=plain(state.query.trim());
     var topics=course.topics.map(function(topic,index){return Object.assign({_order:index},topic)}).filter(function(topic){
-      return (state.showAll||topic.total>0)&&(!query||plain(topic.name+' '+course.name).indexOf(query)>-1);
+      return (state.showAll||topic.total>0)&&(!query||plain([topic.name,course.name,topic.problemType,topic.focus].join(' ')).indexOf(query)>-1);
     });
     if(state.sort==='alpha')topics.sort(function(a,b){return a.name.localeCompare(b.name,'es')});
     if(state.sort==='frequency')topics.sort(function(a,b){return b.total-a.total||(b.cycles||0)-(a.cycles||0)||a._order-b._order});
@@ -65,26 +70,32 @@
   function renderExamOptions(){
     els.exam.innerHTML=source.examTypes.map(function(exam){
       var count=exam.examCount||exam.periods.length;
-      return '<option value="'+esc(exam.id)+'">'+esc(exam.label)+' · '+count+' '+(exam.aggregateOnly?'pruebas':'ciclos')+'</option>';
+      var unit=exam.probabilityModel?exam.questionCount+' posiciones':(exam.aggregateOnly?count+' pruebas':count+' ciclos');
+      return '<option value="'+esc(exam.id)+'">'+esc(exam.label)+' · '+unit+'</option>';
     }).join('');
     els.exam.value=state.examType;
   }
   function renderContext(){
     var exam=activeExam();
     var metrics=examMetrics(exam);
+    var probabilityModel=!!exam.probabilityModel;
+    els.kpiTopicsLabel.textContent=probabilityModel?'Familias de problemas':'Temas con aparición';
+    els.topTitle.textContent=probabilityModel?'Temas con mayor probabilidad estimada':'Temas con más apariciones';
+    els.sort.querySelector('option[value="frequency"]').textContent=probabilityModel?'Mayor probabilidad estimada':'Más repetidos';
     var categories=Array.from(new Set(exam.courses.map(function(course){return course.category}))).join(' y ');
-    els.kpiExamsLabel.textContent=exam.aggregateOnly?'Pruebas analizadas':'Exámenes analizados';
+    els.kpiExamsLabel.textContent=probabilityModel?'Procesos base verificables':(exam.aggregateOnly?'Pruebas analizadas':'Exámenes analizados');
     els.kpiExams.textContent=metrics.exams;
-    els.kpiExamsNote.textContent=exam.aggregateOnly?exam.range:'Desde '+exam.periods[exam.periods.length-1]+' hasta '+exam.periods[0];
+    els.kpiExamsNote.textContent=probabilityModel?'Presencia: 2019-1 a 2020-2':(exam.aggregateOnly?exam.range:'Desde '+exam.periods[exam.periods.length-1]+' hasta '+exam.periods[0]);
     els.kpiCourses.textContent=metrics.courses;
     els.kpiCoursesNote.textContent=categories;
     els.kpiTopics.textContent=metrics.topics;
-    els.kpiTopicsNote.textContent=exam.aggregateOnly?'Clasificaciones temáticas de los seis bancos':'De '+metrics.allTopics+' temas revisados';
-    els.kpiAppearances.textContent=metrics.appearances;
-    els.kpiAppearancesNote.textContent=exam.aggregateOnly?'Preguntas históricas clasificadas':'Conteo total de preguntas';
+    els.kpiTopicsNote.textContent=probabilityModel?'Familias modeladas para la Primera PC':(exam.aggregateOnly?'Clasificaciones temáticas de los seis bancos':'De '+metrics.allTopics+' temas revisados');
+    if(els.kpiAppearancesLabel)els.kpiAppearancesLabel.textContent=probabilityModel?'Posiciones del formato':'Apariciones registradas';
+    els.kpiAppearances.textContent=probabilityModel?(exam.questionCount||metrics.topics):metrics.appearances;
+    els.kpiAppearancesNote.textContent=probabilityModel?'6+7+6+7+6+7+6+7 por curso':(exam.aggregateOnly?'Preguntas históricas clasificadas':'Conteo total de preguntas');
     els.showAll.closest('label').hidden=!!exam.aggregateOnly;
-    els.topDescription.textContent=exam.aggregateOnly?'Frecuencia acumulada entre '+exam.range+'. Presiona un tema para revisar su tabla y compararlo con los demás contenidos del curso.':'La lista se actualiza al buscar o filtrar. Presiona un tema para ir directamente a la tabla de su curso.';
-    els.note.innerHTML=exam.aggregateOnly?'<strong>Prueba de selección:</strong> seis bancos temáticos reúnen '+metrics.appearances+' preguntas de Física, Química, Aritmética, Álgebra, Geometría y Trigonometría, identificadas en 19 pruebas entre 2011-2 y 2026-2. Una frecuencia alta orienta el repaso, pero no garantiza que el tema aparezca en la próxima evaluación.':'<strong>Examen final:</strong> datos CEPREUNI 2022-2, 2023-1, 2023-2, 2024-1, 2024-2, 2025-1, 2025-2 y 2026-1. Los conteos sirven como referencia histórica y no reemplazan el temario oficial.';
+    els.topDescription.textContent=probabilityModel?'Probabilidad estimada por familia. Presiona un tema para ver el tipo de problema que conviene practicar.':(exam.aggregateOnly?'Frecuencia acumulada entre '+exam.range+'. Presiona un tema para revisar su tabla y compararlo con los demás contenidos del curso.':'La lista se actualiza al buscar o filtrar. Presiona un tema para ir directamente a la tabla de su curso.');
+    els.note.innerHTML=probabilityModel?'<strong>Modelo de Primera PC:</strong> '+esc(exam.sourceNote||'Las probabilidades son estimaciones de recurrencia, no un pronóstico oficial.'): (exam.aggregateOnly?'<strong>Prueba de selección:</strong> seis bancos temáticos reúnen '+metrics.appearances+' preguntas de Física, Química, Aritmética, Álgebra, Geometría y Trigonometría, identificadas en 19 pruebas entre 2011-2 y 2026-2. Una frecuencia alta orienta el repaso, pero no garantiza que el tema aparezca en la próxima evaluación.':'<strong>Examen final:</strong> datos CEPREUNI 2022-2, 2023-1, 2023-2, 2024-1, 2024-2, 2025-1, 2025-2 y 2026-1. Los conteos sirven como referencia histórica y no reemplazan el temario oficial.');
   }
   function renderCategories(){
     var categories=['Todos'].concat(Array.from(new Set(activeExam().courses.map(function(course){return course.category}))));
@@ -97,14 +108,28 @@
     els.course.value=state.course;
   }
   function renderTop(){
+    var probabilityModel=!!activeExam().probabilityModel;
     var topics=[];
     visibleCourses().forEach(function(course){
       visibleTopics(course).forEach(function(topic){if(topic.total>0)topics.push({course:course,topic:topic})});
     });
     topics.sort(function(a,b){return b.topic.total-a.topic.total||(b.topic.cycles||0)-(a.topic.cycles||0)});
     els.top.innerHTML=topics.slice(0,10).map(function(item,index){
-      return '<button type="button" class="fixed-top-card" data-target="course-'+esc(item.course.slug)+'"><span class="fixed-top-rank">'+(index+1)+'</span><span><b>'+esc(item.topic.name)+'</b><small>'+esc(item.course.name)+' · '+item.topic.total+' apariciones</small></span></button>';
+      var key=topicKey(item.course,item.topic);
+      var detail=probabilityModel?'Slot '+item.topic.slot+' · '+item.topic.probability+'% estimado':item.course.name+' · '+item.topic.total+' apariciones';
+      return '<button type="button" class="fixed-top-card" data-target="course-'+esc(item.course.slug)+'"'+(probabilityModel?' data-topic-key="'+esc(key)+'"':'')+'><span class="fixed-top-rank">'+(index+1)+'</span><span><b>'+esc(item.topic.name)+'</b><small>'+esc(detail)+'</small></span></button>';
     }).join('')||'<div class="fixed-empty">No hay coincidencias para mostrar.</div>';
+  }
+  function topicKey(course,topic){return course.slug+'-'+(topic.slot||plain(topic.name).replace(/[^a-z0-9]+/g,'-'))}
+  function probabilityLabel(probability){return probability>=80?'Fija fuerte':probability>=65?'Muy probable':probability>=50?'Posible recurrente':'Variante de rotación'}
+  function probabilityTableFor(course,topics,exam){
+    var rows=topics.map(function(topic){
+      var key=topicKey(course,topic);
+      var detailId='fixed-topic-detail-'+key;
+      var probability=Number(topic.probability||topic.total||0);
+      return '<tr class="fixed-probability-row"><td><button type="button" class="fixed-topic-toggle" data-fixed-topic="'+esc(key)+'" aria-expanded="false" aria-controls="'+esc(detailId)+'"><span>Slot '+esc(topic.slot)+'</span>'+esc(topic.name)+'</button></td><td class="fixed-frequency"><b>'+probability+'% estimado</b><span class="fixed-frequency-track"><i style="--presence:'+probability+'%"></i></span></td><td><b class="fixed-probability-label">'+probabilityLabel(probability)+'</b><small>Presencia: '+esc(topic.processes||'—')+'</small></td></tr><tr class="fixed-topic-detail-row" id="'+esc(detailId)+'" hidden><td colspan="3"><div class="fixed-topic-detail"><span>Tipo de problema probable</span><strong>'+esc(topic.problemType||'Consulta el patrón del tema en el temario.')+'</strong><p><b>Qué dominar:</b> '+esc(topic.focus||'Concepto y procedimiento del tema.')+'</p></div></td></tr>';
+    }).join('');
+    return '<section class="fixed-course" id="course-'+esc(course.slug)+'"><header class="fixed-course-head"><div><h2>'+esc(course.name)+'</h2><p>'+topics.length+' slots modelados · presiona un tema para ver el tipo de problema</p></div><span class="fixed-course-badge">'+esc(course.category)+'</span></header><div class="fixed-table-wrap" tabindex="0" aria-label="Modelo de Primera PC de '+esc(course.name)+'"><table class="fixed-table fixed-table-probability"><thead><tr><th>Tema o fija</th><th>Probabilidad estimada</th><th>Estabilidad</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
   }
   function renderCourseNav(courseRows){
     els.courseNav.innerHTML=courseRows.map(function(item){return '<button type="button" class="fixed-course-chip" data-target="course-'+esc(item.course.slug)+'">'+esc(item.course.name)+' · '+item.topics.length+'</button>'}).join('');
@@ -113,6 +138,7 @@
   function tableFor(course,topics,periods){
     var courseAppearances=topics.reduce(function(total,topic){return total+topic.total},0);
     var exam=activeExam();
+    if(exam.probabilityModel)return probabilityTableFor(course,topics,exam);
     if(exam.aggregateOnly){
       var maxTotal=Math.max.apply(null,topics.map(function(topic){return topic.total}));
       var aggregateRows=topics.map(function(topic){
@@ -142,6 +168,14 @@
   }
   function render(){renderContext();renderCategories();renderCourseOptions();renderTop();renderTables()}
   function scrollTarget(id){var target=document.getElementById(id);if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}
+  function revealTopic(key){
+    var button=document.querySelector('[data-fixed-topic="'+key+'"]');
+    if(!button)return false;
+    var detail=document.getElementById(button.getAttribute('aria-controls'));
+    if(detail){detail.hidden=false;button.setAttribute('aria-expanded','true')}
+    button.scrollIntoView({behavior:'smooth',block:'center'});
+    return true;
+  }
 
   renderExamOptions();
   render();
@@ -152,5 +186,6 @@
   els.sort.addEventListener('change',function(){state.sort=this.value;render()});
   els.categories.addEventListener('click',function(event){var button=event.target.closest('[data-category]');if(!button)return;state.category=button.dataset.category;state.course='all';render()});
   els.courseNav.addEventListener('click',function(event){var button=event.target.closest('[data-target]');if(button)scrollTarget(button.dataset.target)});
-  els.top.addEventListener('click',function(event){var button=event.target.closest('[data-target]');if(button)scrollTarget(button.dataset.target)});
+  els.top.addEventListener('click',function(event){var button=event.target.closest('[data-target]');if(!button)return;if(button.dataset.topicKey){if(!revealTopic(button.dataset.topicKey))scrollTarget(button.dataset.target)}else scrollTarget(button.dataset.target)});
+  els.tables.addEventListener('click',function(event){var button=event.target.closest('[data-fixed-topic]');if(!button)return;var detail=document.getElementById(button.getAttribute('aria-controls'));if(!detail)return;var open=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!open));detail.hidden=open});
 })();

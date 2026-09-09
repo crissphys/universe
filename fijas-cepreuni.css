@@ -91,6 +91,17 @@ html[data-universe-theme='dark'] .fixed-kicker{background:#0b3152;color:#7dd3fc}
 .fixed-top-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .fixed-top-card{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;border:1px solid var(--fx-line);border-radius:16px;background:var(--fx-soft);padding:13px;text-align:left;cursor:pointer;transition:.2s}
 .fixed-top-card:hover{transform:translateY(-2px);border-color:var(--fx-cyan)}
+.fixed-topic-toggle{display:grid;gap:4px;width:100%;border:0;background:transparent;color:var(--fx-ink);padding:0;text-align:left;font:800 .94rem/1.3 'DM Sans',sans-serif;cursor:pointer}
+.fixed-topic-toggle span{color:var(--fx-blue);font:900 .69rem/1 'Rajdhani',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.fixed-topic-toggle:hover{color:var(--fx-blue)}
+.fixed-topic-detail-row[hidden]{display:none}
+.fixed-topic-detail-row td{padding:0!important;background:color-mix(in srgb,var(--fx-soft) 72%,transparent)}
+.fixed-topic-detail{margin:9px 12px 14px;border-left:3px solid var(--fx-cyan);padding:13px 15px;color:var(--fx-muted);line-height:1.55}
+.fixed-topic-detail span{display:block;margin-bottom:5px;color:var(--fx-blue);font:900 .7rem/1 'Rajdhani',sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.fixed-topic-detail strong{display:block;color:var(--fx-ink);font:800 .96rem/1.4 'DM Sans',sans-serif}
+.fixed-topic-detail p{margin:8px 0 0}
+.fixed-probability-label{display:block;color:var(--fx-blue);font:900 .82rem/1.15 'Rajdhani',sans-serif;letter-spacing:.04em}
+.fixed-table-probability td:last-child small{display:block;margin-top:5px;color:var(--fx-muted);font-size:.78rem}
 .fixed-top-rank{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--fx-blue),var(--fx-blue-2));color:#fff;font:900 .82rem/1 'Rajdhani',sans-serif}
 .fixed-top-card b{display:block;color:var(--fx-ink);font-size:.84rem;line-height:1.25}
 .fixed-top-card small{display:block;margin-top:3px;color:var(--fx-muted);line-height:1.25}
