@@ -100,30 +100,34 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 @media(max-width:1100px){.score-layout{grid-template-columns:minmax(0,1fr)}.score-side{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}.orbital-instrument{max-width:330px}.brand-rail{gap:14px}.brand-link{width:110px}}
 @media(max-width:600px){.score-side{grid-template-columns:minmax(0,1fr)}.score-selectors{grid-template-columns:minmax(0,1fr)}.score-grades{gap:15px 10px}.score-layout>.p-panel{padding:22px 18px}.score-history .p-subhead{display:block}.score-history .p-subhead>span{display:block;margin-top:10px}.catalog-options{flex-wrap:wrap}.catalog-divider{grid-template-columns:minmax(0,1fr)}.catalog-divider small{grid-column:1}.catalog-section>h3{font-size:13px}.orbital-instrument{max-width:320px;margin-top:28px}.p-feature:has(.orbital-instrument){grid-template-columns:minmax(0,1fr)}.brand-rail{gap:18px;padding:25px 0}.brand-link{width:98px;height:60px}.brand-rail .brand-uni{width:128px}.brand-rail .brand-universe{width:142px}.brand-whatsapp,.brand-drive,.brand-tiktok{width:50px}.catalog-identity .brand-link{width:140px}.catalog-identity{font-size:12px}.catalog-identity small{font-size:10px}.history-summary{gap:15px}.score-history td{padding:14px 5px}}
 
-/* Brand rail — uncropped, uniform, monochrome.
-   The previous treatment absolutely positioned each logo inside an overflow:hidden box and scaled it by
-   a per-brand --logo-width, which cropped WhatsApp, Drive and TikTok outright and gave every mark a
-   different visual weight. Logos are not illustrations: they belong at one size, whole, in one colour,
-   so the row reads as a quiet list of places rather than a wall of brand colour. */
-:root[data-theme] .brand-rail{gap:clamp(20px,3.4vw,46px);padding:46px 0}
+/* Brand rail — sin recuadro, sin recorte, monocroma.
+   El tratamiento anterior posicionaba cada logo en absoluto dentro de una caja overflow:hidden y lo
+   escalaba con un --logo-width por marca, lo que recortaba WhatsApp, Drive y TikTok. Igualar la altura
+   tampoco basta: un logotipo ancho y un icono cuadrado a la misma altura no se ven del mismo tamaño.
+   Aquí cada marca se dimensiona para ocupar la misma ÁREA óptica (~980 px², calculada de las
+   proporciones reales de cada PNG), que es lo que el ojo compara. */
+:root[data-theme] .brand-rail{gap:clamp(26px,4.2vw,58px);padding:46px 0}
 :root[data-theme] .brand-rail a.brand-link{
-  overflow:visible;width:104px;height:52px;padding:10px 14px!important;
-  border:1px solid var(--line)!important;border-radius:12px;
-  transition:border-color .2s cubic-bezier(.23,1,.32,1),transform .2s cubic-bezier(.23,1,.32,1);
+  overflow:visible;width:auto;height:auto;padding:0!important;border:0!important;background:none!important;
+  transition:transform .2s cubic-bezier(.23,1,.32,1);
 }
 :root[data-theme] .brand-rail a.brand-link img{
-  position:static;left:auto;top:auto;transform:none;
-  /* One cap height for every mark: a square icon and a wide wordmark then read as the same size,
-     which capping both dimensions never achieves. */
-  height:26px;width:auto;max-width:100%;object-fit:contain;
-  /* Flatten each mark to a single silhouette, then hold it back so the row is grey, not white. */
-  filter:grayscale(1) brightness(0) invert(1);opacity:.72;
+  position:static;left:auto;top:auto;transform:none;width:auto;max-width:none;object-fit:contain;
+  /* Una sola silueta gris: la fila es un índice de sitios, no un muro de color de marca. */
+  filter:grayscale(1) brightness(0) invert(1);opacity:.62;
   transition:opacity .2s cubic-bezier(.23,1,.32,1);
 }
-:root[data-theme] .brand-rail a.brand-link:hover{border-color:#97b5ff55;transform:translateY(-2px)}
+:root[data-theme] .brand-rail a.brand-cepreuni img{height:31px}
+:root[data-theme] .brand-rail a.brand-drive img{height:30px}
+:root[data-theme] .brand-rail a.brand-linktree img{height:23px}
+:root[data-theme] .brand-rail a.brand-tiktok img{height:33px}
+:root[data-theme] .brand-rail a.brand-uni img{height:18px}
+:root[data-theme] .brand-rail a.brand-whatsapp img{height:26px}
+:root[data-theme] .brand-rail a.brand-youtube img{height:31px}
+:root[data-theme] .brand-rail a.brand-link:hover{transform:translateY(-2px)}
 :root[data-theme] .brand-rail a.brand-link:hover img{opacity:1}
 :root[data-theme=light] .brand-rail a.brand-link img{filter:grayscale(1) brightness(0);opacity:.6}
-@media(max-width:760px){:root[data-theme] .brand-rail a.brand-link{width:84px;height:44px}:root[data-theme] .brand-rail a.brand-link img{height:21px}}
+@media(max-width:760px){:root[data-theme] .brand-rail{gap:26px}:root[data-theme] .brand-rail a.brand-link img{transform:scale(.82)}}
 
 /* Catálogo de editoriales. Mismo principio que la fila de marcas: nada se recorta, todas comparten
    altura de caja y color, para que la rejilla se lea como un índice y no como publicidad. */
