@@ -10,7 +10,14 @@ body[data-native] .header .nav{position:static;display:flex;background:none;bord
 body[data-native] .header .account{position:static}
 body[data-native] .footer{position:relative;z-index:2}
 .native-shell{position:relative;z-index:2;margin:118px 0 80px;min-height:60vh}
-.native-shell *{box-sizing:border-box;max-width:100%;min-width:0}
+.native-shell *{box-sizing:border-box;min-width:0}
+/* Each tool's own sheet is emitted nested inside .native-shell{…}, so its selectors weigh (0,2,0) and
+   outrank anything scoped with a single class. The frame has to state its containment louder than the
+   guest can: a tool lays out inside the platform's column, never across the viewport. */
+.native-shell .page-view.native-view *{max-width:100%}
+.native-shell .page-view.native-view :is([class*="-wrap"],[class*="-shell"],[class*="-container"],[class*="-page"],[class*="-stage"]){
+  width:auto;max-width:100%;margin-inline:0;padding-inline:0;
+}
 /* Legacy page wrappers are containers, never surfaces — the platform frame is the surface now. */
 .native-view :is([class*="-page"],[class*="-stage"],[class*="-shell"],[class*="-section"],[class*="-wrap"]){background:none;border:0;padding:0;min-height:0}
 .native-view>:is(section,article)+:is(section,article){margin-top:34px}
