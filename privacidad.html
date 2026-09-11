@@ -1,611 +1,99 @@
-<!DOCTYPE html>
-<html lang="es" data-universe-page="privacy">
+<!doctype html>
+<html lang="es" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <!-- UNIVERSE_FAVICON_START -->
-  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1">
-  <link rel="manifest" href="/site.webmanifest?v=1">
-  <meta name="theme-color" content="#020617">
-  <!-- UNIVERSE_FAVICON_END -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Política de Privacidad | Universe to Study</title>
-  <link rel="canonical" href="https://universetostudy.com/privacidad">
-  <meta name="description" content="Política de privacidad de Universe to Study, cookies, analítica, publicidad y tratamiento de datos.">
-  <meta name="application-name" content="Universe to Study">
-  <meta property="og:site_name" content="Universe to Study">
-  <meta name="apple-mobile-web-app-title" content="Universe to Study">
-  <link rel="stylesheet" href="/style.css?v=solid-5">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <script>
-    (function(){
-      try {
-        if (localStorage.getItem('universe_theme') === 'dark') {
-          document.documentElement.setAttribute('data-universe-theme', 'dark');
-        }
-      } catch(e) {}
-    })();
-  </script>
-  <script>
-    (function(){
-      try {
-        var path = window.location.pathname;
-        if (/\.html$/i.test(path)) {
-          var clean = path.replace(/\/index\.html$/i, '/').replace(/\.html$/i, '');
-          window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
-        }
-      } catch(e) {}
-    })();
-  </script><style id="universe-loader-style">
-#universe-page-loader{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 20% 15%,rgba(37,99,235,.22),transparent 34%),linear-gradient(135deg,#031427,#0b1f3a 58%,#06111f);color:#fff;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;transition:opacity .32s ease,visibility .32s ease}
-#universe-page-loader.hide{opacity:0;visibility:hidden;pointer-events:none}
-.upl-card{width:min(92vw,360px);border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(255,255,255,.08);box-shadow:0 24px 70px rgba(0,0,0,.35);backdrop-filter:none;padding:28px 22px;text-align:center}
-.upl-orbit{position:relative;width:66px;height:66px;margin:0 auto 16px;border-radius:50%;border:3px solid rgba(255,255,255,.18);border-top-color:#60a5fa;animation:upl-spin .85s linear infinite}
-.upl-orbit span{position:absolute;inset:17px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb)}
-#universe-page-loader strong{display:block;font-size:clamp(1.25rem,5vw,1.7rem);letter-spacing:-.03em}
-#universe-page-loader small{display:block;margin-top:7px;color:#cfe7ff;font-weight:700}
-#account-panel,.universe-google-signin,.universe-google-account{display:none!important}
-@keyframes upl-spin{to{transform:rotate(360deg)}}
-@media(max-width:520px){.upl-card{border-radius:20px;padding:24px 18px}.upl-orbit{width:58px;height:58px}}
-</style>
-<script id="universe-loader-script">
-(function(){
-  function hideLoader(){var el=document.getElementById('universe-page-loader');if(!el)return;el.classList.add('hide');setTimeout(function(){try{el.remove()}catch(e){}},420)}
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,450)},{once:true});
-  window.addEventListener('load',function(){setTimeout(hideLoader,180)},{once:true});
-  setTimeout(hideLoader,1800);
-})();
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-NK0XVN4NF5');
-</script>
-</head>
-<body>
-<!-- UNIVERSE · Página física: privacy -->
-<script>(function(){
-  document.documentElement.setAttribute('data-universe-page','privacy');
-  window.UNIVERSE_PAGE_ROUTE='privacy';
-  document.addEventListener('DOMContentLoaded',function(){
-    document.querySelectorAll('.nav-links a[data-route]').forEach(function(link){
-      link.classList.toggle('active',link.getAttribute('data-route')==='privacy');
-    });
-  });
-  window.addEventListener('load',function(){
-    if(typeof window.initUniverseApp==='function') window.initUniverseApp();
-  },{once:true});
-})();</script>
-<style>
-html[data-universe-page] #blogger-header,
-html[data-universe-page] #blogger-footer,
-html[data-universe-page] #Header1,
-html[data-universe-page] #PageList1,
-html[data-universe-page] #Navbar1,
-html[data-universe-page] #Attribution1,
-html[data-universe-page] .header-outer,
-html[data-universe-page] .tabs-outer,
-html[data-universe-page] .navbar,
-html[data-universe-page] .widget.Header,
-html[data-universe-page] .widget.PageList,
-html[data-universe-page] .post-title,
-html[data-universe-page] .post-header,
-html[data-universe-page] .post-footer,
-html[data-universe-page] .post-share-buttons,
-html[data-universe-page] .share-buttons,
-html[data-universe-page] .share-buttons-container,
-html[data-universe-page] .byline,
-html[data-universe-page] #comments,
-html[data-universe-page] .comments,
-html[data-universe-page] .comment-form,
-html[data-universe-page] .feed-links,
-html[data-universe-page] .blog-feeds,
-html[data-universe-page] .blog-pager,
-html[data-universe-page] .Attribution,
-html[data-universe-page] .footer-outer,
-html[data-universe-page] .sidebar-container,
-html[data-universe-page] .post-author,
-html[data-universe-page] .post-labels,
-html[data-universe-page] .post-timestamp,
-html[data-universe-page] .post-location { display:none !important; }
-
-html[data-universe-page],html[data-universe-page] body {
-  width:100% !important;
-  min-height:100% !important;
-  margin:0 !important;
-  overflow-x:hidden !important;
-}
-html[data-universe-page] {
-  height:auto !important;
-  overflow-y:auto !important;
-  overscroll-behavior-y:auto !important;
-  touch-action:pan-y !important;
-}
-html[data-universe-page] body {
-  height:auto !important;
-  min-height:100svh !important;
-  overflow-y:visible !important;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-y !important;
-}
-html[data-universe-page] #page-content {
-  position:relative !important;
-  z-index:1 !important;
-  box-sizing:border-box !important;
-  width:100% !important;
-  min-height:100svh !important;
-  margin:0 !important;
-  padding:0 !important;
-  overflow:visible !important;
-}
-html[data-universe-page] #main-wrapper,
-html[data-universe-page] #page_body,
-html[data-universe-page] #Blog1,
-html[data-universe-page] #Blog1 .widget-content,
-html[data-universe-page] #Blog1 .blog-posts,
-html[data-universe-page] #Blog1 .post-outer-container,
-html[data-universe-page] #Blog1 .post-outer,
-html[data-universe-page] #Blog1 article,
-html[data-universe-page] #Blog1 .post,
-html[data-universe-page] #Blog1 .post-body-container,
-html[data-universe-page] #Blog1 .post-body {
-  display:block !important;
-  box-sizing:border-box !important;
-  width:100% !important;
-  max-width:none !important;
-  min-width:0 !important;
-  margin:0 !important;
-  padding:0 !important;
-  border:0 !important;
-  background:transparent !important;
-  box-shadow:none !important;
-  overflow:visible !important;
-}
-
-html[data-universe-page] .universe-static-page {
-  --universe-page-gutter:clamp(1rem,4vw,4.5rem);
-  box-sizing:border-box;
-  width:100% !important;
-  max-width:none !important;
-  min-height:100%;
-  margin:0 !important;
-}
-html[data-universe-page] .universe-page-stage {
-  box-sizing:border-box;
-  width:100%;
-  min-width:0;
-  padding:clamp(4.5rem,6vw,5.5rem) var(--universe-page-gutter) 0;
-}
-html[data-universe-page] .universe-page-stage-inner {
-  box-sizing:border-box;
-  width:min(1600px,100%);
-  min-width:0;
-  margin-inline:auto;
-}
-html[data-universe-page] .universe-page-stage-inner > .section,
-html[data-universe-page] .universe-page-stage-inner > .ranking-section,
-html[data-universe-page] .universe-page-stage-inner > .universe-legal-page,
-html[data-universe-page] .universe-page-stage-inner > .universe-exams-page,
-html[data-universe-page] .universe-page-stage-inner > .universe-library-layout,
-html[data-universe-page] .universe-library-layout > .section {
-  box-sizing:border-box !important;
-  width:100% !important;
-  max-width:none !important;
-  margin-inline:auto !important;
-  padding-inline:0 !important;
-  padding-top:clamp(1.75rem,3.2vw,3rem) !important;
-}
-html[data-universe-page] .universe-page-stage :where(.section-label,.section-title,.section-sub) {
-  margin-left:auto !important;
-  margin-right:auto !important;
-  text-align:center !important;
-}
-html[data-universe-page] .universe-page-stage .section-label { display:flex; width:max-content; max-width:100%; }
-html[data-universe-page] .universe-legal-page { padding-bottom:4rem !important; }
-html[data-universe-page] .universe-legal-page .section-title {
-  max-width:100% !important;
-  font-size:clamp(1.8rem,4.2vw,3.55rem) !important;
-  line-height:1.02 !important;
-  word-break:normal !important;
-  overflow-wrap:normal !important;
-  text-wrap:balance;
-}
-html[data-universe-page] .universe-legal-grid {
-  display:grid !important;
-  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  gap:1rem !important;
-  width:100% !important;
-  margin-top:1.7rem !important;
-}
-html[data-universe-page] .universe-legal-grid .legal-card {
-  box-sizing:border-box !important;
-  min-width:0 !important;
-  min-height:190px !important;
-  height:auto !important;
-  margin:0 !important;
-  padding:clamp(1rem,1.8vw,1.35rem) !important;
-  border:1px solid rgba(37,99,235,.18) !important;
-  border-radius:8px !important;
-  background:#ffffff !important;
-  color:#0f172a !important;
-  box-shadow:0 10px 28px rgba(15,23,42,.06) !important;
-}
-html[data-universe-page] .universe-legal-grid .legal-card h3 {
-  margin:0 0 .75rem !important;
-  color:#0f172a !important;
-  text-align:left !important;
-}
-html[data-universe-page] .universe-legal-grid .legal-card ul { margin:.15rem 0 0 !important; padding-left:1.15rem !important; }
-html[data-universe-page] .universe-legal-grid .legal-card li { margin:.42rem 0 !important; color:#475569 !important; line-height:1.55 !important; text-align:left !important; }
-html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:1 / -1; }
-html[data-universe-theme='dark'][data-universe-page] .universe-legal-grid .legal-card {
-  border-color:rgba(96,165,250,.34) !important;
-  background:#0e1c30 !important;
-  color:#ffffff !important;
-  box-shadow:0 12px 30px rgba(0,0,0,.5) !important;
-}
-html[data-universe-theme='dark'][data-universe-page] .universe-legal-grid .legal-card h3 { color:#ffffff !important; }
-html[data-universe-theme='dark'][data-universe-page] .universe-legal-grid .legal-card li { color:#dbeafe !important; }
-html[data-universe-page='ranking'] .universe-page-stage-inner,
-html[data-universe-page='library'] .universe-page-stage-inner { width:min(1720px,100%); }
-html[data-universe-page='terms'] .universe-page-stage-inner,
-html[data-universe-page='privacy'] .universe-page-stage-inner { width:min(1380px,100%); }
-html[data-universe-page] #universe-code-cursor,
-html[data-universe-page] #chat-overlay:not(.open),
-html[data-universe-page] #chat-panel:not(.open) { pointer-events:none !important; }
-html[data-universe-page] #chat-overlay.open,
-html[data-universe-page] #chat-panel.open { pointer-events:auto !important; }
-html[data-universe-page] {
-  --universe-arrow-cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='32' viewBox='0 0 26 32'%3E%3Cpath d='M3.5 3.5v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2H24z' fill='%232563eb' opacity='.48'/%3E%3Cpath d='M2 2v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2h9.4z' fill='%23050505' stroke='%23ffffff' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2,default;
-}
-html.universe-arrow-cursor,
-html.universe-arrow-cursor body,
-html.universe-arrow-cursor body * { cursor:var(--universe-arrow-cursor) !important; }
-html.universe-arrow-cursor #universe-code-cursor { display:none !important; }
-@media (pointer:coarse){
-  html.universe-arrow-cursor,
-  html.universe-arrow-cursor body,
-  html.universe-arrow-cursor body * { cursor:auto !important; }
-}
-html[data-universe-page] .universe-static-page,
-html[data-universe-page] .universe-static-page footer,
-html[data-universe-page] .universe-static-page a,
-html[data-universe-page] .universe-static-page button { position:relative; pointer-events:auto; }
-html[data-universe-page] footer .footer-links ul { display:grid; gap:.12rem; padding-left:0; list-style:none; }
-html[data-universe-page] footer .footer-links a,
-html[data-universe-page] footer .footer-legal a {
-  display:inline-flex;
-  align-items:center;
-  min-height:34px;
-  padding:.32rem .48rem;
-  margin-left:-.48rem;
-  border-radius:6px;
-  transition:color .18s ease,background .18s ease,transform .18s ease;
-}
-html[data-universe-page] footer .footer-links a:hover,
-html[data-universe-page] footer .footer-legal a:hover {
-  background:rgba(37,99,235,.10);
-  color:#2563eb !important;
-  transform:translateX(2px);
-}
-html[data-universe-page] footer a:focus-visible { outline:2px solid #2563eb; outline-offset:2px; }
-@media(max-width:760px){
-  html[data-universe-page] .universe-static-page { --universe-page-gutter:.9rem; }
-  html[data-universe-page] .universe-page-stage { padding-top:4.15rem; }
-  html[data-universe-page] .universe-legal-page .section-title { font-size:clamp(1.55rem,7.2vw,2.35rem) !important; }
-  html[data-universe-page] .universe-legal-grid { grid-template-columns:minmax(0,1fr) !important; }
-  html[data-universe-page] .universe-legal-grid .legal-card { min-height:0 !important; }
-  html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:auto; }
-}
-
-
-</style>
-<style id="universe-static-page-recovery-fix">
-html[data-universe-page] .universe-static-page,
-html[data-universe-page] .universe-page-stage,
-html[data-universe-page] .universe-page-stage-inner{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;filter:none!important}
-html[data-universe-page] .universe-static-page{position:relative!important;z-index:1!important;min-height:100svh!important}
-html[data-universe-page] .universe-page-stage{position:relative!important;z-index:2!important;min-height:calc(100svh - 64px)!important}
-html[data-universe-page] body>nav{position:fixed!important;top:0!important;bottom:auto!important}
-html[data-universe-page] :is(#support-v2-fab,#peru-clock){position:fixed!important}
-@media(max-width:700px){html[data-universe-page] .universe-page-stage{padding-top:4.4rem!important}}
-</style>
-<script id="universe-static-page-scroll-reset">
-(function(){
-  if (window.__universeStaticPageScrollReset) return;
-  window.__universeStaticPageScrollReset = true;
-  try { history.scrollRestoration = 'manual'; } catch(e) {}
-  function reset(){
-    if (location.hash) return;
-    try { window.scrollTo(0, 0); } catch(e) {}
-    try { document.documentElement.scrollTop = 0; } catch(e) {}
-    try { document.body.scrollTop = 0; } catch(e) {}
-    try {
-      var pc = document.getElementById('page-content');
-      if (pc) pc.scrollTop = 0;
-    } catch(e) {}
-  }
-  reset();
-  document.addEventListener('DOMContentLoaded', function(){ reset(); setTimeout(reset, 80); }, { once:true });
-  window.addEventListener('load', function(){ reset(); setTimeout(reset, 220); }, { once:true });
-  window.addEventListener('pageshow', function(){ setTimeout(reset, 0); });
-})();
-</script>
-<div id="universe-page-loader" role="status" aria-live="polite">
-  <div class="upl-card">
-    <div class="upl-orbit"><span></span></div>
-    <strong>Cargando página</strong>
-    <small>Preparando Universe to Study...</small>
-  </div>
-</div>
-
-
-
-
-<nav>
-  <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
-  <ul class="nav-links">
-    <li><a data-route="home" href="/">Inicio</a></li>
-    <li><a data-route="admission" href="/admision">Admisión</a></li>
-    <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
-    <li><a data-route="syllabus" href="/temario">Temario</a></li>
-    <li><a data-route="classes" href="/clases">Clases</a></li>
-    <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
-    <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
-    <li><a data-route="privacy" href="/privacidad">Privacidad</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button aria-label="Activar tema oscuro" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" title="Tema oscuro" type="button">
-      <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.8A8.7 8.7 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"></path></svg>
-      <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
-    </button>
-    <div class="nav-user-btn" id="nav-user-btn" onclick="handleNavUser()">
-      <svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.05 0-7.25 2.05-7.25 4.6 0 .64.51 1.15 1.15 1.15h12.2c.64 0 1.15-.51 1.15-1.15 0-2.55-3.2-4.6-7.25-4.6Z"></path></svg><span>Cuenta</span>
-    </div>
-  </div>
-</nav>
-
-<div class="universe-static-page universe-page-privacy" data-universe-route="privacy">
-<div class="universe-page-stage"><div class="universe-page-stage-inner">
-
-<section class="universe-legal-page" id="universe-privacy-page">
+  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
+  <meta name="color-scheme" content="dark light"><link rel="icon" href="/assets/home-access/universe-logo.png">
+  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css"><link rel="stylesheet" href="/universe-ui/platform.css"><link rel="stylesheet" href="/universe-ui/refinements.css"><script type="module" src="/universe-ui/app.js"></script>
+<link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/auth.js" defer></script><link rel="stylesheet" href="/universe-ui/native/privacidad.css"><link rel="stylesheet" href="/universe-ui/native.css"></head>
+<body data-native="privacidad" class="in-platform">
+  <a class="skip-link" href="#native-main">Saltar al contenido</a>
+  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
+  <div class="space-shade" aria-hidden="true"></div>
+  <header class="header">
+    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+    <nav class="nav" aria-label="Navegación principal"><a href="/explorar" data-en="Platform">Plataforma</a><a href="/cepreuni">CEPREUNI</a><a href="/biblioteca" data-en="Library">Biblioteca</a><a href="/planificador" data-en="Planner">Planificador</a></nav>
+    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
+  </header>
+  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a></nav>
+  <main id="main" hidden>
+    <section id="origin" class="hero chapter">
+      <div class="hero-grid wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
+          <h1><span data-en="Your curiosity.">Tu curiosidad.</span><br><span class="outline-word" data-en="A new dimension.">Otra dimensión.</span></h1>
+          <p class="hero-description" data-en="Every great idea begins with a question. Connect knowledge, practice and purpose in one place.">Toda gran idea empieza con una pregunta. Conecta conocimiento, práctica y propósito en un solo lugar.</p>
+<div class="hero-cta"><a class="button primary" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
+          <p class="hero-note" data-en="For curious minds. For your next step.">Para mentes curiosas. Para tu siguiente paso.</p>
+        </div>
+        <div class="galaxy-label" aria-hidden="true"><span class="target-cross"></span><span>UNIVERSE / ORIGIN<br><small>EL CONOCIMIENTO NO TIENE UN SOLO CENTRO</small></span></div>
+      </div>
+      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
+    </section>
+    <section id="system" class="system chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
+      <div class="command-panel reveal">
+        <div class="command-main"><div class="command-meta"><span class="orb-small" aria-hidden="true"></span><strong>UNIVERSE <span>EXPLORER</span></strong></div><h3 data-en="Where does your mind want to go?">¿A dónde quiere ir tu mente?</h3>
+          <form id="intent-form"><label for="intent" class="sr-only">Tu objetivo de estudio</label><input id="intent" maxlength="220" autocomplete="off" placeholder="Quiero entender física, organizarme, encontrar un libro…" required><button type="submit" aria-label="Encontrar mi ruta"><span data-icon="arrow-right"></span></button></form>
+          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam ↗">Preparar mi primera PC ↗</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book ↗">Encontrar un libro ↗</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week ↗">Organizar mi semana ↗</button></div>
+          <p class="command-disclaimer" data-en="Local resource finder. No connected AI, API usage or external transmission of your text.">Buscador local de recursos. Sin IA conectada, consumo de API ni envío de tu texto.</p>
+          <div id="intent-result" class="intent-result" aria-live="polite" hidden></div>
+        </div><div class="command-visual" aria-hidden="true"><div class="core-orbit one"></div><div class="core-orbit two"></div><div class="core-orbit three"></div><div class="core-sphere"></div><span class="core-caption">PREGUNTA → CONECTA → AVANZA</span></div>
+      </div>
+      <div class="workspace reveal">
+        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
+        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
+      </div>
+    </section>
+    <section id="resources" class="resources chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
+      <div class="resource-grid">
+        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
+        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/ciclopre20271"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="Academic archive">Archivo académico</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Explore the evaluations and solutions archive.">Explora el archivo de evaluaciones y soluciones.</p></div><span data-icon="arrow-up-right"></span></a></div>
+      </div>
+    </section>
+    <section id="trajectory" class="trajectory chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
+      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
+      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
+    </section>
+  </main>
+<main id="native-main" class="native-shell"><div class="platform native-platform">
+<aside class="side-rail"><span>TODO CONECTA</span><nav aria-label="Secciones de Universe"><a href="/explorar"><span data-icon="grid"></span>Plataforma</a><a href="/cepreuni"><span data-icon="cap"></span>CEPREUNI</a><a href="/biblioteca"><span data-icon="book"></span>Biblioteca</a><a href="/temario"><span data-icon="list"></span>Temario</a><a href="/clases"><span data-icon="play"></span>Clases</a><a href="/planificador"><span data-icon="calendar"></span>Planificador</a><a href="/simulacros"><span data-icon="target"></span>Simulacros</a><a href="/examenes"><span data-icon="layers"></span>Exámenes</a><a href="/admision"><span data-icon="cap"></span>Admisión UNI</a><a href="/calculadora"><span data-icon="calculator"></span>Calculadora</a><a href="/unitalk"><span data-icon="users"></span>UNITALK</a><a href="/ranking"><span data-icon="orbit"></span>Ranking</a><a href="/docentes-cepreuni"><span data-icon="grid"></span>Guía de aulas</a></nav></aside>
+<div class="platform-body">
+<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / POLÍTICA DE PRIVACIDAD</span></div>
+<div class="page-head"><span class="eyebrow">UNIVERSE / PRIVACIDAD</span><h1 id="page-title" tabindex="-1">POLÍTICA DE PRIVACIDAD</h1><p>Qué información utiliza Universe to Study, para qué se usa y qué controles conserva cada usuario.</p></div>
+<div class="page-view native-view"><section class="universe-legal-page" id="universe-privacy-page">
   <div class="universe-legal-shell">
     <div class="section-label">Legal</div>
-    <h1 class="section-title">POLÍTICA DE&nbsp;PRIVACIDAD</h1>
-    <p class="section-sub">Qué información utiliza Universe to Study, para qué se usa y qué controles conserva cada usuario.</p>
-    <div class="universe-legal-grid">
-      <article class="legal-card"><h3>Datos de cuenta</h3><ul><li>Se utiliza el nombre visible, identificador de cuenta, rol, preferencias y métricas de actividad necesarias para mostrar el perfil.</li><li>Cuando no existe un nombre, el navegador puede conservar una identificación anónima para mantener continuidad.</li><li>No se solicita publicar documento de identidad, contraseña bancaria ni información académica sensible.</li></ul></article>
-      <article class="legal-card"><h3>Identificación técnica</h3><ul><li>La dirección IP puede consultarse únicamente para reconocer la autorización de propietario definida por el sistema.</li><li>La etiqueta de propietario requiere además un equipo de escritorio autorizado y no se concede automáticamente a otros dispositivos.</li><li>Otros usuarios solo reciben el rol ordinario mientras no exista una autorización posterior.</li></ul></article>
-      <article class="legal-card"><h3>Firebase y sincronización</h3><ul><li>Firebase permite sincronizar cuenta, presencia, puntos, rachas, chats y cambios entre las páginas de Universe to Study.</li><li>Los datos se vinculan mediante identificadores técnicos para conservar la sesión y evitar mezclar cuentas.</li><li>La disponibilidad y seguridad de la infraestructura también se rigen por las condiciones de Google Firebase.</li></ul></article>
-      <article class="legal-card"><h3>UNITALK y perfil público</h3><ul><li>Las publicaciones, comentarios, nombre de usuario y datos del perfil que decidas mostrar pueden ser vistos por otras personas.</li><li>El correo de Google, teléfono, identificador privado y permisos administrativos no se incluyen en la respuesta pública de los perfiles.</li><li>Puedes ocultar foto, academia, ciclo y objetivo, o limitar tus datos académicos a usuarios registrados.</li><li>Publicaciones, reacciones, comentarios y reportes pueden conservarse para funcionamiento, historial, prevención de abuso y moderación.</li></ul></article>
-      <article class="legal-card"><h3>Soporte privado</h3><ul><li>Cada conversación se separa por usuario y solo se presenta al remitente y a la cuenta propietaria.</li><li>Los mensajes se almacenan para que la conversación continúe desde las distintas páginas.</li><li>El usuario debe evitar compartir datos que no sean necesarios para resolver su consulta.</li></ul></article>
-      <article class="legal-card"><h3>Almacenamiento local</h3><ul><li>El navegador guarda tema claro u oscuro, sesión, preferencias, avance y selecciones de juego para mantener la experiencia.</li><li>Estos datos permanecen en el dispositivo hasta que se limpien desde el navegador.</li><li>Bloquear el almacenamiento puede impedir que algunas funciones recuerden su estado.</li></ul></article>
-      <article class="legal-card"><h3>Apuntes y archivos</h3><ul><li>Los archivos cargados para prácticas se procesan principalmente en el navegador.</li><li>El texto extraído puede conservarse de forma temporal en la sesión o almacenamiento local.</li><li>El usuario puede cerrar la sesión o limpiar los datos del sitio para retirar esa información local.</li></ul></article>
-      <article class="legal-card"><h3>Analítica y servicios externos</h3><ul><li>Google Analytics mide visitas y funcionamiento general sin convertir el contenido del chat en una publicación analítica.</li><li>Drive, WhatsApp, YouTube, juegos WebGL y otros enlaces aplican sus propias políticas al abrirse.</li><li>Universe to Study no controla los datos que esos servicios solicitan fuera del sitio.</li></ul></article>
-<article class="legal-card" id="publicidad-cookies"><h3>Publicidad, cookies e identificadores</h3><ul><li>Universe to Study puede usar servicios de publicidad de terceros, incluido Google AdSense, solo en páginas con contenido editorial suficiente.</li><li>Estos servicios pueden utilizar cookies, direcciones IP, identificadores del dispositivo, datos de navegación, etiquetas de medición o tecnologías similares para mostrar anuncios, limitar frecuencia, medir rendimiento y prevenir abuso.</li><li>Google y sus socios pueden usar cookies de publicidad para publicar anuncios personalizados o no personalizados según la configuración del usuario, la normativa aplicable y las preferencias disponibles.</li><li>No colocamos anuncios intencionalmente en inicio de sesión, chat de soporte, visores de archivos externos, páginas vacías, pantallas de carga ni herramientas sin explicación editorial suficiente.</li></ul></article>
-      <article class="legal-card"><h3>Control, seguridad y cambios</h3><ul><li>Puedes modificar tu nombre visible, descripción, foto y controles de privacidad desde Mi cuenta; el nombre de usuario tiene un periodo de espera entre cambios para reducir suplantaciones.</li><li>Las operaciones privadas pasan por el backend, requieren una sesión Google válida y aplican límites de frecuencia. Firebase no se consulta directamente desde el navegador para UNITALK.</li><li>Puedes cerrar sesión, reportar contenido y solicitar corrección o eliminación mediante soporte.</li><li>Ningún sistema es infalible; las actualizaciones importantes de esta política se reflejarán aquí.</li></ul></article>
+    
+    
+    <div class="universe-legal-grid p-grid">
+      <article class="legal-card p-panel p-tile"><h3>Datos de cuenta</h3><ul><li>Se utiliza el nombre visible, identificador de cuenta, rol, preferencias y métricas de actividad necesarias para mostrar el perfil.</li><li>Cuando no existe un nombre, el navegador puede conservar una identificación anónima para mantener continuidad.</li><li>No se solicita publicar documento de identidad, contraseña bancaria ni información académica sensible.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>Identificación técnica</h3><ul><li>La dirección IP puede consultarse únicamente para reconocer la autorización de propietario definida por el sistema.</li><li>La etiqueta de propietario requiere además un equipo de escritorio autorizado y no se concede automáticamente a otros dispositivos.</li><li>Otros usuarios solo reciben el rol ordinario mientras no exista una autorización posterior.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>Firebase y sincronización</h3><ul><li>Firebase permite sincronizar cuenta, presencia, puntos, rachas, chats y cambios entre las páginas de Universe to Study.</li><li>Los datos se vinculan mediante identificadores técnicos para conservar la sesión y evitar mezclar cuentas.</li><li>La disponibilidad y seguridad de la infraestructura también se rigen por las condiciones de Google Firebase.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>UNITALK y perfil público</h3><ul><li>Las publicaciones, comentarios, nombre de usuario y datos del perfil que decidas mostrar pueden ser vistos por otras personas.</li><li>El correo de Google, teléfono, identificador privado y permisos administrativos no se incluyen en la respuesta pública de los perfiles.</li><li>Puedes ocultar foto, academia, ciclo y objetivo, o limitar tus datos académicos a usuarios registrados.</li><li>Publicaciones, reacciones, comentarios y reportes pueden conservarse para funcionamiento, historial, prevención de abuso y moderación.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>Soporte privado</h3><ul><li>Cada conversación se separa por usuario y solo se presenta al remitente y a la cuenta propietaria.</li><li>Los mensajes se almacenan para que la conversación continúe desde las distintas páginas.</li><li>El usuario debe evitar compartir datos que no sean necesarios para resolver su consulta.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>Almacenamiento local</h3><ul><li>El navegador guarda tema claro u oscuro, sesión, preferencias, avance y selecciones de juego para mantener la experiencia.</li><li>Estos datos permanecen en el dispositivo hasta que se limpien desde el navegador.</li><li>Bloquear el almacenamiento puede impedir que algunas funciones recuerden su estado.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>Apuntes y archivos</h3><ul><li>Los archivos cargados para prácticas se procesan principalmente en el navegador.</li><li>El texto extraído puede conservarse de forma temporal en la sesión o almacenamiento local.</li><li>El usuario puede cerrar la sesión o limpiar los datos del sitio para retirar esa información local.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>Analítica y servicios externos</h3><ul><li>Google Analytics mide visitas y funcionamiento general sin convertir el contenido del chat en una publicación analítica.</li><li>Drive, WhatsApp, YouTube, juegos WebGL y otros enlaces aplican sus propias políticas al abrirse.</li><li>Universe to Study no controla los datos que esos servicios solicitan fuera del sitio.</li></ul></article>
+<article class="legal-card p-panel p-tile" id="publicidad-cookies"><h3>Publicidad, cookies e identificadores</h3><ul><li>Universe to Study puede usar servicios de publicidad de terceros, incluido Google AdSense, solo en páginas con contenido editorial suficiente.</li><li>Estos servicios pueden utilizar cookies, direcciones IP, identificadores del dispositivo, datos de navegación, etiquetas de medición o tecnologías similares para mostrar anuncios, limitar frecuencia, medir rendimiento y prevenir abuso.</li><li>Google y sus socios pueden usar cookies de publicidad para publicar anuncios personalizados o no personalizados según la configuración del usuario, la normativa aplicable y las preferencias disponibles.</li><li>No colocamos anuncios intencionalmente en inicio de sesión, chat de soporte, visores de archivos externos, páginas vacías, pantallas de carga ni herramientas sin explicación editorial suficiente.</li></ul></article>
+      <article class="legal-card p-panel p-tile"><h3>Control, seguridad y cambios</h3><ul><li>Puedes modificar tu nombre visible, descripción, foto y controles de privacidad desde Mi cuenta; el nombre de usuario tiene un periodo de espera entre cambios para reducir suplantaciones.</li><li>Las operaciones privadas pasan por el backend, requieren una sesión Google válida y aplican límites de frecuencia. Firebase no se consulta directamente desde el navegador para UNITALK.</li><li>Puedes cerrar sesión, reportar contenido y solicitar corrección o eliminación mediante soporte.</li><li>Ningún sistema es infalible; las actualizaciones importantes de esta política se reflejarán aquí.</li></ul></article>
     </div>
   </div>
-</section>
-
-</div></div>
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo">Universe to Study</div>
-      <div class="footer-tagline">Recursos, seguimiento y comunidad para postulantes UNI y estudiantes CEPREUNI.</div>
-    </div>
-    <div class="footer-links">
-      <h4>Páginas</h4>
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/admision">Admisión UNI</a></li>
-        <li><a href="/cepreuni">CEPREUNI</a></li>
-        <li><a href="/temario">Temario</a></li>
-        <li><a href="/clases">Clases</a></li>
-        <li><a href="/biblioteca">Biblioteca</a></li>
-        <li><a href="/simulacros">Simulacros y exámenes</a></li>
-        <li><a href="/privacidad">Privacidad</a></li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h4>CEPREUNI</h4>
-      <ul>
-        <li><a href="/ranking">Ranking de promedios</a></li>
-        <li><a href="/calculadora">Calculadora CEPREUNI</a></li>
-        <li><a href="/temario#temario-cepreuni">Temario CEPREUNI</a></li>
-        <li><a href="/examenes">Exámenes CEPREUNI</a></li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h4>Accesos oficiales</h4>
-      <ul>
-        <li><a href="https://admision.uni.edu.pe/" rel="noopener noreferrer" target="_blank">Admisión UNI</a></li>
-        <li><a href="https://www.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPREUNI oficial</a></li>
-        <li><a href="https://ceprenet.cepre.uni.edu.pe/" rel="noopener noreferrer" target="_blank">CEPRENET</a></li>
-        <li><a href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" rel="noopener noreferrer" target="_blank">Drive Universe to Study</a></li>
-
-        <li><a href="/nosotros">Nosotros</a></li>
-        <li><a href="/metodologia-editorial">Metodología editorial</a></li>
-        <li><a href="/correcciones">Correcciones</a></li>
-        <li><a href="/contacto">Contacto</a></li>
-        <li><a href="/terminos">Términos y condiciones</a></li>
-      </ul>
-    </div>
+</section></div>
+</div></div></main><footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
+  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
+  <div class="immersion-controls" hidden>
+    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
+    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
+    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
+    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
+    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Universe to Study. Todos los derechos reservados.</div>
-    <div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="javascript:void(0)" onclick="openUniverseSupportChat()">Soporte</a></div>
-  </div>
-</footer>
-
-</div>
-
-<script>//<![CDATA[
-(function(){
-  function setupUniverseCursor(){
-    if(!document.body || !window.matchMedia || window.matchMedia('(pointer: coarse)').matches) return;
-    if(window.__universeCursorReady) return;
-    window.__universeCursorReady=true;
-    var obsolete=document.getElementById('universe-code-cursor');
-    if(obsolete) obsolete.remove();
-    document.documentElement.classList.remove('universe-custom-cursor');
-    document.documentElement.classList.add('universe-arrow-cursor');
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setupUniverseCursor,{once:true});
-  else setupUniverseCursor();
-})();
-//]]></script>
-
-<script>//<![CDATA[
-(function(){
-  if(window.__universeDirectLinksReady) return;
-  window.__universeDirectLinksReady=true;
-  function navigateUniverseLink(event){
-    if(event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    var targetNode=event.target;
-    var link=targetNode && targetNode.closest ? targetNode.closest('a[href]') : null;
-    if(!link || link.hasAttribute('download')) return;
-    var raw=(link.getAttribute('href')||'').trim();
-    if(!raw || raw.charAt(0)==='#' || raw.indexOf('javascript:')===0) return;
-    var target;
-    try { target=new URL(link.href,window.location.href); } catch(error) { return; }
-    if(target.protocol!=='http:' && target.protocol!=='https:') return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    var host=target.hostname.toLowerCase();
-    var isUniverse=host===window.location.hostname.toLowerCase() || host==='universetostudy.com';
-    if(isUniverse || link.target!=='_blank'){
-      window.location.assign(target.href);
-      return;
-    }
-    var popup=window.open(target.href,'_blank');
-    if(popup){ try { popup.opener=null; } catch(error) {} }
-    else window.location.assign(target.href);
-  }
-  window.bindUniverseDirectNavigation=function(){ return true; };
-  document.addEventListener('click',navigateUniverseLink,true);
-})();
-//]]></script>
-
-<!-- UNIVERSE_STANDALONE_SUPPORT_START -->
-<!-- UNIVERSE_STANDALONE_SUPPORT_END -->
-
-
-
-
-
-<!-- UNIVERSE_FINAL_THEME_CONTRAST_FIX_START -->
-<style id="universe-final-theme-contrast-fix">
-/* Fondo de cuadr?cula conectado en toda la pantalla */
-html[data-universe-page],html[data-universe-page] body{min-height:100%;}
-html[data-universe-page] body{
-  background-color:#f7fbff!important;
-  background-image:linear-gradient(rgba(37,99,235,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.075) 1px,transparent 1px),radial-gradient(circle at 18% 8%,rgba(37,99,235,.13),transparent 32%),radial-gradient(circle at 82% 14%,rgba(14,165,233,.10),transparent 30%)!important;
-  background-size:42px 42px,42px 42px,100% 100%,100% 100%!important;
-  background-attachment:fixed!important;
-}
-html[data-universe-theme='dark'][data-universe-page] body{
-  background-color:#020202!important;
-  background-image:linear-gradient(rgba(96,165,250,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.12) 1px,transparent 1px),radial-gradient(circle at 20% 8%,rgba(37,99,235,.22),transparent 32%),radial-gradient(circle at 84% 16%,rgba(14,165,233,.14),transparent 30%),linear-gradient(180deg,#020202 0%,#05070b 52%,#07111f 100%)!important;
-  background-size:44px 44px,44px 44px,100% 100%,100% 100%,100% 100%!important;
-  color:#f8fafc!important;
-}
-html[data-universe-theme='dark'][data-universe-page] :is(main,.section,.ranking-section,.universe-page-stage,.universe-static-page,.universe-page-stage-inner,.universe-library-layout,.universe-legal-page,.universe-exams-page,#herramientas,.cepre-planner){background:transparent!important;color:#f8fafc!important;}
-
-/* Botón de tema: fijo abajo a la izquierda, fuera del header */
-html[data-universe-page] body > nav .nav-theme-toggle{
-  position:fixed!important;
-  left:max(14px,calc(env(safe-area-inset-left) + 14px))!important;
-  bottom:max(16px,calc(env(safe-area-inset-bottom) + 16px))!important;
-  z-index:2147482455!important;
-  width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;
-  display:grid!important;place-items:center!important;
-  border-radius:999px!important;border:1px solid rgba(37,99,235,.24)!important;
-  background:rgba(255,255,255,.94)!important;color:#175cd3!important;
-  box-shadow:0 14px 38px rgba(15,23,42,.18)!important;backdrop-filter:none;
-}
-html[data-universe-theme='dark'][data-universe-page] body > nav .nav-theme-toggle{background:#0e1c30!important;color:#bfdbfe!important;border-color:rgba(96,165,250,.42)!important;box-shadow:0 14px 38px rgba(0,0,0,.58)!important;}
-html[data-universe-page] body.support-v2-active > nav .nav-theme-toggle{opacity:.18!important;pointer-events:none!important;filter:grayscale(1)!important;}
-@media(max-width:620px){
-  html[data-universe-page] body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px))!important;bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px))!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;}
-}
-
-/* Soporte: botón pegado correctamente a la esquina en celular */
-@media(max-width:620px){
-  html[data-universe-page] body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px))!important;padding:12px!important;border-radius:999px!important;}
-  html[data-universe-page] body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px))!important;}
-}
-
-/* Soporte en oscuro: sin paneles blancos */
-html[data-universe-theme='dark'] :is(#support-v2-panel,#support-v2-inbox,.support-v2-conversation,#support-v2-messages,.support-v2-compose,.support-v2-name-row,.support-v2-thread-head,#support-v2-image-preview){background:#0e1c30!important;color:#f8fafc!important;border-color:#1f2937!important;}
-html[data-universe-theme='dark'] .support-v2-head{background:linear-gradient(135deg,#020202,#0b1220)!important;border-bottom:1px solid #1f2937!important;color:#fff!important;}
-html[data-universe-theme='dark'] .support-v2-thread{background:#0e1c30!important;color:#e5e7eb!important;border-color:#1f2937!important;}
-html[data-universe-theme='dark'] .support-v2-thread.active{background:#101827!important;}
-html[data-universe-theme='dark'] .support-v2-thread :is(strong,span),html[data-universe-theme='dark'] .support-v2-thread-head :is(strong,span),html[data-universe-theme='dark'] .support-v2-inbox-title,html[data-universe-theme='dark'] .support-v2-meta,html[data-universe-theme='dark'] .support-v2-name-row span{color:#cbd5e1!important;}
-html[data-universe-theme='dark'] .support-v2-bubble{background:#111111!important;color:#f8fafc!important;border-color:#2b3544!important;}
-html[data-universe-theme='dark'] .support-v2-msg.mine .support-v2-bubble{background:#0b2f63!important;color:#fff!important;border-color:#1d4ed8!important;}
-html[data-universe-theme='dark'] .support-v2-msg.bot .support-v2-bubble{background:#0b1220!important;border-color:#1e3a8a!important;color:#e5edff!important;}
-html[data-universe-theme='dark'] :is(.support-v2-compose textarea,.support-v2-name-row input){background:#080808!important;color:#f8fafc!important;border-color:#2b3544!important;}
-html[data-universe-theme='dark'] #support-v2-closed{background:#17110a!important;color:#fde68a!important;border-color:#92400e!important;}
-html[data-universe-theme='dark'] #support-v2-hint{background:#0e1c30!important;color:#f8fafc!important;border-color:#334155!important;}
-
-/* Ranking: ancho real y columna PC sin blanco en oscuro */
-html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1840px,calc(100vw - 1rem))!important;max-width:none!important;}
-html[data-universe-page='ranking'] .ranking-section{padding-inline:0!important;}
-html[data-universe-page='ranking'] .cepre-v2-shell{width:100%!important;max-width:none!important;margin-inline:0!important;}
-html[data-universe-page='ranking'] .cepre-v2-wrap{max-height:min(68vh,680px)!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] :is(.cepre-v2-shell,.cepre-v2-controls,.cepre-v2-wrap,.cepre-v2-summary,.cepre-v2-search,.cepre-v2-site-group){background:#0e1c30!important;color:#f8fafc!important;border-color:#263244!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table{background:#0e1c30!important;color:#e5e7eb!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table :is(th,td){border-color:#263244!important;color:#dbeafe!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table thead :is(th,.cepre-v2-group-pc,.cepre-v2-group-exam,.cepre-v2-group-result,.cepre-v2-group-list){background:#0b1220!important;color:#f8fafc!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody :is(th,.cepre-v2-code){background:#0e1c30!important;color:#f8fafc!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-position{background:#0a1a2f!important;color:#7dd3fc!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tr > :nth-child(7){background:#07111f!important;color:#e0f2fe!important;border-right-color:#334155!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tr > :nth-child(9){background:#0b1020!important;border-right-color:#3b314a!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody tr:hover,html[data-universe-theme='dark'][data-universe-page='ranking'] .cepre-v2-table tbody tr:hover :is(th,td,.cepre-v2-code,.cepre-v2-position){background:#111827!important;}
-html[data-universe-theme='dark'][data-universe-page='ranking'] :is(.cepre-v2-control-label,.cepre-v2-summary,.cepre-v2-missing){color:#94a3b8!important;}
-
-/* Calculadora: pestañas y tarjetas oscuras completas */
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cepre-planner{--ink:#f8fafc!important;--muted:#cbd5e1!important;--line:#2b3544!important;--card:#0e1c30!important;--soft:#0d0d0d!important;--sky:#081a32!important;color:#f8fafc!important;background:transparent!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-hero,.cp-card,.cp-mode-tabs,.cp-method-card,.cp-note-chip,.cp-architecture,.cp-status,.cp-next,.cp-metric,.cp-formula,.cp-results,.cp-result-body){background:#0e1c30!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.42)!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-hero{background:linear-gradient(135deg,#0e1c30,#0b1220)!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-result-top{background:linear-gradient(145deg,#020202,#0b1220)!important;color:#fff!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-mode-tab{background:#080808!important;color:#cbd5e1!important;border:1px solid #1f2937!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-mode-tab.active{background:#0b2f63!important;color:#fff!important;border-color:#3b82f6!important;box-shadow:0 8px 22px rgba(37,99,235,.26)!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-field,.cp-card-title p,.cp-field small,.cp-note-chip span,.cp-source,.cp-method-card p,.cp-next p,.cp-next span,.cp-result-explain,.cp-target,.cp-architecture p){color:#cbd5e1!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-card-title h2,.cp-card-title h3,.cp-formula code,.cp-source b,.cp-method-card b,.cp-score,.cp-metric strong,.cp-architecture h3){color:#f8fafc!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] :is(.cp-field input,.cp-field select){background:#080808!important;color:#f8fafc!important;border-color:#334155!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.good{background:#061b13!important;color:#86efac!important;border-color:#166534!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.equal{background:#1c1607!important;color:#fde68a!important;border-color:#92400e!important;}
-html[data-universe-theme='dark'][data-universe-page='calculator'] .cp-status.low{background:#250b0b!important;color:#fca5a5!important;border-color:#991b1b!important;}
-
-/* Resúmenes / biblioteca / legal en oscuro */
-html[data-universe-theme='dark'][data-universe-page] :is(.summary-hub,.summary-main,.summary-topic-panel,.summary-course-btn,.summary-topic-btn,.summary-concept,.summary-table-wrap,.summary-table,.library-section,.lib-box,.doc-card,.universe-legal-grid .legal-card,.universe-exams-page .legal-card,.legal-card){background:#0e1c30!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.36)!important;}
-html[data-universe-theme='dark'][data-universe-page] :is(.summary-title,.summary-topic-title,.summary-course-name,.summary-concept strong,.summary-detail h4,.summary-table th,.library-section-title,.doc-title,.legal-card h3,.legal-card h4,.legal-card strong){color:#fff!important;}
-html[data-universe-theme='dark'][data-universe-page] :is(.summary-body,.summary-detail,.summary-line,.summary-course-count,.summary-topic-name,.summary-table td,.summary-source-note,.library-section-meta,.doc-meta,.legal-card,.legal-card li,.legal-card p){color:#cbd5e1!important;}
-html[data-universe-theme='dark'][data-universe-page] .summary-table :is(th,td){border-color:#2b3544!important;background:#080808!important;}
-html[data-universe-theme='dark'][data-universe-page] :is(.summary-course-btn.active,.summary-course-btn:hover,.summary-topic-btn.active,.summary-topic-btn:hover){background:#0b2f63!important;color:#fff!important;border-color:#3b82f6!important;}
-
-/* Inicio: contraste de accesos, pagos, cronograma, vacantes y fechas clave */
-html[data-universe-page='home'] :is(.official-access-card,.admission-card,.admission-table-card,.tool-card,.countdown-item,.countdown-box,.payment-card,.hero-calendar-panel,.payment-event){border-color:rgba(37,99,235,.20)!important;box-shadow:0 18px 44px rgba(18,66,115,.12)!important;}
-html:not([data-universe-theme='dark'])[data-universe-page='home'] :is(.admission-card,.admission-table-card,.tool-card,.countdown-item,.countdown-box,.payment-event){background:#ffffff!important;color:#0f172a!important;}
-html:not([data-universe-theme='dark'])[data-universe-page='home'] :is(.admission-card-title,.admission-table-title,.tool-title,.countdown-number,.countdown-label strong){color:#0f172a!important;}
-html:not([data-universe-theme='dark'])[data-universe-page='home'] :is(.admission-card-meta,.admission-table-note,.tool-copy,.countdown-unit,.payment-note,.payment-event small){color:#475569!important;}
-html[data-universe-theme='dark'][data-universe-page='home'] :is(.official-access-card,.admission-card,.admission-table-card,.tool-card,.countdown-item,.countdown-box,.payment-card,.hero-calendar-panel,.payment-event,.vacancies-table th,.vacancies-table td){background:#0e1c30!important;color:#f8fafc!important;border-color:#2b3544!important;box-shadow:0 18px 44px rgba(0,0,0,.42)!important;}
-html[data-universe-theme='dark'][data-universe-page='home'] :is(.admission-card-title,.admission-table-title,.tool-title,.countdown-number,.countdown-label strong,.payment-month-title,.official-access-name,.official-access-title){color:#fff!important;}
-html[data-universe-theme='dark'][data-universe-page='home'] :is(.admission-card-meta,.admission-table-note,.tool-copy,.countdown-unit,.payment-note,.payment-event small,.official-access-desc){color:#cbd5e1!important;}
-html[data-universe-theme='dark'][data-universe-page='home'] .official-access-logo{background:#f8fafc!important;}
-html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table th:first-child,html[data-universe-theme='dark'][data-universe-page='home'] .vacancies-table td:first-child{background:#0e1c30!important;}
-</style>
-<!-- UNIVERSE_FINAL_THEME_CONTRAST_FIX_END -->
-  <link rel="stylesheet" href="/universe-polish.css?v=solid-5">
-<script src="/universe-polish.js?v=solid-11" defer></script>
-</body>
-</html>
+  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
+  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
+  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
+  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
+</body></html>

@@ -1905,12 +1905,580 @@ async function handleUnitalk(request, env, subpath) {
   return json({ error: 'not_found' }, 404);
 }
 
-async function handleAi(request, env) {
-  if (!rateLimit(request, 'ai', 12, 60000)) return json({ error: 'rate_limited' }, 429);
+const NVIDIA_CHAT_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
+const NVIDIA_EMBED_URL = 'https://integrate.api.nvidia.com/v1/embeddings';
+const NVIDIA_DEFAULT_STUDY_MODEL = 'moonshotai/kimi-k3';
+const NVIDIA_DEFAULT_FALLBACK_STUDY_MODEL = 'nvidia/nemotron-3.5-lightning-30b-a3b';
+const NVIDIA_DEFAULT_CRITIC_MODEL = 'openai/gpt-oss-20b';
+const NVIDIA_DEFAULT_SAFETY_MODEL = 'nvidia/nemotron-3.5-content-safety';
+const NVIDIA_DEFAULT_EMBED_MODEL = 'nvidia/nemotron-3-embed-1b';
+
+function createNvidiaStudyPayload(modelName, messages, mode, isExam) {
+  var usesFixedSampling = modelName === 'moonshotai/kimi-k3'
+    || modelName === 'nvidia/nemotron-3.5-lightning-30b-a3b';
+  var payload = {
+    model: modelName,
+    messages: messages,
+    temperature: usesFixedSampling ? 1 : (mode === 'creative' ? 0.7 : 0.3),
+    top_p: usesFixedSampling ? 0.95 : 0.9,
+    max_tokens: modelName === 'moonshotai/kimi-k3' ? 1600 : 1500
+  };
+  if (modelName === 'moonshotai/kimi-k3') {
+    payload.reasoning_effort = 'low';
+  }
+  if (modelName === 'nvidia/nemotron-3.5-lightning-30b-a3b') {
+    payload.max_tokens = isExam ? 1500 : (mode === 'fast' ? 1700 : 1800);
+    payload.chat_template_kwargs = { enable_thinking: false };
+  }
+  return payload;
+}
+
+function extractJsonObjectFromText(rawText) {
+  var cleanJson = String(rawText || '')
+    .replace(/^```json\s*/i, '')
+    .replace(/^```\s*/i, '')
+    .replace(/\s*```$/, '')
+    .trim();
+  try { return JSON.parse(cleanJson); } catch (_) {}
+  var jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return null;
+  try { return JSON.parse(jsonMatch[0]); } catch (_) { return null; }
+}
+
+function validateAdmissionQuestion(question) {
+  var issues = [];
+  var letters = ['A', 'B', 'C', 'D', 'E'];
+  if (!question || typeof question !== 'object' || Array.isArray(question)) {
+    return { valid: false, structureScore: 0, issues: ['La respuesta no contiene un objeto de pregunta.'] };
+  }
+  var statement = String(question.enunciado || '').trim();
+  var solution = String(question.solucion || '').trim();
+  var concept = String(question.concepto || '').trim();
+  if (statement.length < 35) issues.push('El enunciado es demasiado breve o incompleto.');
+  if (!question.alternativas || typeof question.alternativas !== 'object') {
+    issues.push('Falta el conjunto de alternativas.');
+  } else {
+    var values = [];
+    letters.forEach(function (letter) {
+      var value = String(question.alternativas[letter] || question.alternativas[letter.toLowerCase()] || '').trim();
+      if (!value) issues.push('Falta la alternativa ' + letter + '.');
+      values.push(value.toLowerCase());
+    });
+    if (values.filter(Boolean).length === 5 && new Set(values).size !== 5) {
+      issues.push('Las cinco alternativas deben ser diferentes.');
+    }
+  }
+  if (!/^[A-E]$/.test(String(question.correcta || '').trim().toUpperCase())) {
+    issues.push('La respuesta correcta debe ser una sola letra entre A y E.');
+  }
+  if (solution.length < 70) issues.push('La solución necesita mayor desarrollo conceptual y verificable.');
+  if (concept.length < 4) issues.push('Falta identificar el concepto evaluado.');
+  return {
+    valid: issues.length === 0,
+    structureScore: Math.max(0, 100 - (issues.length * 20)),
+    issues: issues
+  };
+}
+
+async function reviewAdmissionQuestion(candidate, context, env, apiKey) {
+  var criticModel = cleanText(env.NVIDIA_CRITIC_MODEL || NVIDIA_DEFAULT_CRITIC_MODEL, 100);
+  var criticPrompt = [
+    'Actúa como revisor académico senior de preguntas de admisión UNI.',
+    'Revisa silenciosamente la pregunta candidata y devuelve una versión final corregida.',
+    'Curso: ' + context.subject,
+    'Dificultad: ' + context.diff,
+    context.topic ? 'Tema: ' + context.topic : '',
+    'Criterios obligatorios:',
+    '- Evalúa un concepto explícito y exige razonamiento, no solo memoria o sustitución mecánica.',
+    '- El enunciado debe ser inequívoco, autosuficiente y tener exactamente una respuesta correcta.',
+    '- Incluye cinco alternativas A-E distintas y distractores plausibles basados en errores comunes.',
+    '- Verifica cálculos, signos, unidades, datos y coherencia entre respuesta y solución.',
+    '- La solución debe explicar el principio, el procedimiento y la comprobación final.',
+    '- Resuelve el problema de forma independiente antes de corregirlo. Si la candidata es ambigua o insoluble, reemplázala por una pregunta autosuficiente.',
+    '- Antes de responder, compara el resultado de cada cálculo con el valor de la alternativa marcada y elimina cualquier contradicción interna.',
+    '- Para nivel difícil o extremo, exige al menos dos relaciones conceptuales enlazadas y descarta ejercicios escolares de sustitución inmediata.',
+    '- Conserva el nivel solicitado y no menciones la revisión ni a otras IA.',
+    'Devuelve EXCLUSIVAMENTE este objeto JSON, sin markdown ni comentarios:',
+    '{"enunciado":"...","alternativas":{"A":"...","B":"...","C":"...","D":"...","E":"..."},"correcta":"A","solucion":"...","concepto":"...","nivel":"...","habilidad":"...","tipo":"..."}',
+    'Pregunta candidata:',
+    JSON.stringify(candidate || {})
+  ].filter(Boolean).join('\n');
+
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function () { controller.abort(); }, 30000);
+  try {
+    var response = await fetch(NVIDIA_CHAT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify({
+        model: criticModel,
+        messages: [
+          { role: 'system', content: 'Eres un revisor académico riguroso. Entrega únicamente el JSON final solicitado y no reveles razonamiento interno.' },
+          { role: 'user', content: criticPrompt }
+        ],
+        temperature: criticModel.indexOf('gpt-oss') !== -1 ? 1 : 0.6,
+        top_p: criticModel.indexOf('gpt-oss') !== -1 ? 1 : 0.95,
+        max_tokens: 1700
+      }),
+      signal: controller.signal
+    });
+    if (!response.ok) return { ok: false, model: criticModel, status: response.status };
+    var data = await response.json();
+    var reviewed = extractJsonObjectFromText(data?.choices?.[0]?.message?.content || '');
+    var validation = validateAdmissionQuestion(reviewed);
+    return { ok: validation.valid, model: data.model || criticModel, question: reviewed, validation: validation };
+  } catch (_) {
+    return { ok: false, model: criticModel, status: 0 };
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function reviewStudyAnswer(candidateAnswer, userQuestion, env, apiKey) {
+  var criticModel = cleanText(env.NVIDIA_CRITIC_MODEL || NVIDIA_DEFAULT_CRITIC_MODEL, 100);
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function () { controller.abort(); }, 30000);
+  try {
+    var response = await fetch(NVIDIA_CHAT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify({
+        model: criticModel,
+        messages: [
+          {
+            role: 'system',
+            content: 'Eres un editor académico riguroso. Verifica silenciosamente la exactitud y devuelve solo la respuesta final mejorada, sin mencionar la revisión ni revelar razonamiento interno. Conserva una extensión máxima de 750 palabras y termina todas las oraciones y secciones.'
+          },
+          {
+            role: 'user',
+            content: [
+              'Pregunta del estudiante: ' + userQuestion,
+              'Respuesta candidata: ' + candidateAnswer,
+              'Corrige errores y vuelve la explicación conceptual, clara y autosuficiente.',
+              'Debe incluir idea intuitiva, principio formal, ejemplo o procedimiento, error común y comprobación final.',
+              'No inventes fuentes ni datos. Si hay un cálculo, resuélvelo de forma independiente y verifica el resultado.'
+            ].join('\n')
+          }
+        ],
+        temperature: criticModel.indexOf('gpt-oss') !== -1 ? 1 : 0.6,
+        top_p: criticModel.indexOf('gpt-oss') !== -1 ? 1 : 0.95,
+        max_tokens: 1900
+      }),
+      signal: controller.signal
+    });
+    if (!response.ok) return { ok: false, model: criticModel, status: response.status };
+    var data = await response.json();
+    var answer = String(data?.choices?.[0]?.message?.content || '').trim();
+    var finishReason = String(data?.choices?.[0]?.finish_reason || '');
+    return { ok: answer.length >= 80 && finishReason !== 'length', model: data.model || criticModel, answer: answer, finishReason: finishReason };
+  } catch (_) {
+    return { ok: false, model: criticModel, status: 0 };
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function completeTruncatedStudyAnswer(replyText, choice, activeModel, messages, mode, apiKey) {
+  if (!replyText || !choice || String(choice.finish_reason || '') !== 'length') {
+    return { content: replyText, continued: false };
+  }
+
+  var continuationMessages = messages.concat([
+    { role: 'assistant', content: replyText },
+    {
+      role: 'user',
+      content: 'Tu respuesta anterior se cortó por límite técnico. Continúa exactamente desde la última idea; termina de forma breve, sin repetir lo anterior y sin iniciar una sección nueva que no puedas cerrar.'
+    }
+  ]);
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function () { controller.abort(); }, 30000);
+  try {
+    var payload = createNvidiaStudyPayload(activeModel, continuationMessages, mode, false);
+    payload.max_tokens = 900;
+    var response = await fetch(NVIDIA_CHAT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+    if (!response.ok) return { content: replyText, continued: false };
+    var data = await response.json();
+    var continuation = String(data?.choices?.[0]?.message?.content || '').trim();
+    if (!continuation) return { content: replyText, continued: false };
+    return { content: replyText.trim() + '\n\n' + continuation, continued: true };
+  } catch (_) {
+    return { content: replyText, continued: false };
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function moderateWithNemotron(userText, env) {
+  if (!env.NVIDIA_API_KEY) return { allowed: false, unavailable: true };
+  const safetyModel = env.NVIDIA_CONTENT_SAFETY_MODEL || NVIDIA_DEFAULT_SAFETY_MODEL;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(function () { controller.abort(); }, 8000);
+    const resp = await fetch(NVIDIA_CHAT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + env.NVIDIA_API_KEY
+      },
+      body: JSON.stringify({
+        model: safetyModel,
+        messages: [{ role: 'user', content: userText }],
+        temperature: 0.0,
+        max_tokens: 60
+      }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!resp.ok) return { allowed: false, unavailable: true };
+    const data = await resp.json();
+    const reply = String(data?.choices?.[0]?.message?.content || '').toLowerCase();
+    if (reply.includes('unsafe') || reply.includes('violat')) {
+      return { allowed: false, reason: 'content_flagged' };
+    }
+    return { allowed: true };
+  } catch (_) {
+    return { allowed: false, unavailable: true };
+  }
+}
+
+async function handleAiStudy(request, env) {
+  if (request.method !== 'POST') {
+    return json({ error: 'method_not_allowed' }, 405);
+  }
+
+  if (!rateLimit(request, 'ai_study', 15, 60000)) {
+    return json({ error: 'rate_limited', message: 'Has superado el límite de consultas por minuto. Espera un momento.' }, 429);
+  }
+
+  var declaredLength = Number(request.headers.get('Content-Length') || 0);
+  if (declaredLength > 65536) {
+    return json({ error: 'payload_too_large', message: 'La consulta supera el tamaño permitido.' }, 413);
+  }
+
   var auth = await verifySession(request, env);
-  if (!auth) return json({ error: 'login_required' }, 401);
-  if (!env.OPENAI_API_KEY) return json({ error: 'model_not_configured' }, 503);
-  return json({ error: 'model_endpoint_ready_but_not_enabled_in_client' }, 501);
+  if (env.REQUIRE_AUTH_FOR_AI === 'true' && !auth) {
+    return json({ error: 'login_required', message: 'Inicia sesión para usar el asistente de IA.' }, 401);
+  }
+
+  var apiKey = env.NVIDIA_API_KEY;
+  if (!apiKey) {
+    return json({ error: 'model_not_configured', message: 'El servicio de IA de estudio no está configurado en el servidor.' }, 503);
+  }
+
+  var body = null;
+  try {
+    body = await request.json();
+  } catch (_) {
+    return json({ error: 'invalid_json', message: 'Formato JSON inválido.' }, 400);
+  }
+
+  if (!body || typeof body !== 'object') {
+    return json({ error: 'invalid_request', message: 'Cuerpo de solicitud requerido.' }, 400);
+  }
+
+  var messages = [];
+  var mode = cleanText(body.mode || 'study', 30);
+  var qualityMode = body.qualityMode === 'verified' ? 'verified' : 'fast';
+  // El modelo es una decisión exclusiva del servidor para evitar consumo arbitrario
+  // de modelos NVIDIA mediante parámetros controlados por el navegador.
+  var model = cleanText(env.NVIDIA_STUDY_MODEL || NVIDIA_DEFAULT_STUDY_MODEL, 100);
+
+  var systemInstruction = [
+    'Eres el Asistente Académico y Tutor Virtual de Universe to Study (https://universetostudy.com).',
+    'Especialidad: Preparación de alto rendimiento para el examen de admisión a la Universidad Nacional de Ingeniería (UNI) y la Universidad Nacional Mayor de San Marcos (UNMSM).',
+    'Materias: Aritmética, Álgebra, Geometría, Trigonometría, Cálculo, Física, Química, Razonamiento Matemático, Razonamiento Verbal, Humanidades y Ciencias Sociales.',
+    'Reglas pedagógicas obligatorias:',
+    '1. Mantén rigor conceptual, lenguaje académico claro y procedimientos paso a paso verificables.',
+    '2. Fomenta el razonamiento activo. Si el estudiante pide respuestas de un examen en curso o simulacro activo, explica conceptos y métodos sin dar soluciones deshonestas de exámenes en vivo.',
+    '3. En problemas numéricos o de ciencias: muestra planteamiento analítico, unidades y análisis de posibles errores comunes.',
+    '4. Si la solicitud pide formato JSON para una pregunta tipo admisión, responde estrictamente en JSON válido con: {"enunciado": "...", "alternativas": {"A":"...", "B":"...", "C":"...", "D":"...", "E":"..."}, "correcta": "A", "solucion": "...", "concepto": "...", "nivel": "...", "habilidad": "...", "tipo": "..."}.',
+    '5. Toda explicación académica debe desarrollar: idea central intuitiva, principio o definición formal, procedimiento o ejemplo, error común y comprobación final.',
+    '6. En preguntas de admisión, diseña distractores plausibles asociados a errores reales y comprueba que solo una alternativa sea correcta.'
+  ].join('\n');
+
+  if (mode === 'conceptual') {
+    systemInstruction += '\nPrioriza profundidad conceptual: conecta el porqué con el procedimiento, explica supuestos y termina con una breve comprobación de comprensión. Sé completo pero conciso: máximo 750 palabras y ninguna sección u oración debe quedar inconclusa.';
+  } else {
+    systemInstruction += '\nResponde de forma completa y directa en un máximo de 550 palabras. Prioriza terminar correctamente todas las oraciones y secciones antes que añadir contenido secundario.';
+  }
+
+  if (Array.isArray(body.messages) && body.messages.length > 0) {
+    if (body.messages.length > 12) {
+      return json({ error: 'too_many_messages', message: 'Máximo 12 mensajes en el historial.' }, 400);
+    }
+    for (var i = 0; i < body.messages.length; i++) {
+      var m = body.messages[i];
+      if (!m || typeof m !== 'object') continue;
+      var role = String(m.role || '').toLowerCase();
+      if (!['user', 'assistant'].includes(role)) {
+        return json({ error: 'invalid_role', message: 'Rol de mensaje no permitido.' }, 400);
+      }
+      var content = cleanText(m.content, 4000);
+      if (!content) continue;
+      messages.push({ role, content });
+    }
+  } else if (body.prompt || body.query) {
+    var queryText = cleanText(body.prompt || body.query, 4000);
+    if (!queryText) {
+      return json({ error: 'empty_prompt', message: 'El texto de la consulta está vacío.' }, 400);
+    }
+    messages.push({ role: 'user', content: queryText });
+  } else if (body.subject) {
+    var subject = cleanText(body.subject, 80);
+    var diff = cleanText(body.diff || 'medio', 40);
+    var topic = cleanText(body.topic || '', 120);
+    var material = cleanText(body.material || '', 2000);
+    var promptGen = [
+      'Genera UNA pregunta original e inédita de examen de admisión.',
+      'Curso: ' + subject,
+      'Dificultad: ' + diff,
+      topic ? 'Tema específico: ' + topic : '',
+      material ? 'Contexto de estudio:\n' + material : '',
+      'Objetivo conceptual: evaluar comprensión y aplicación del principio central, no solo memoria ni reemplazo directo en una fórmula.',
+      'Construye distractores a partir de errores frecuentes y verifica que exactamente una alternativa sea correcta.',
+      'La solución debe nombrar el principio usado, desarrollar los pasos y comprobar el resultado final.',
+      diff === 'difícil' || diff === 'muy difícil' || diff.indexOf('extremo') !== -1
+        ? 'El nivel exige al menos dos relaciones o inferencias encadenadas; evita datos redondos y ejercicios de una sola operación.'
+        : '',
+      'Responde EXCLUSIVAMENTE un objeto JSON válido con este esquema exacto:',
+      'El campo "correcta" debe contener exactamente una sola letra entre A, B, C, D o E.',
+      '{"enunciado": "...", "alternativas": {"A": "...", "B": "...", "C": "...", "D": "...", "E": "..."}, "correcta": "A", "solucion": "...", "concepto": "...", "nivel": "...", "habilidad": "...", "tipo": "..."}'
+    ].filter(Boolean).join('\n');
+    messages.push({ role: 'user', content: promptGen });
+  }
+
+  if (messages.length === 0) {
+    return json({ error: 'missing_content', message: 'No se encontraron mensajes válidos.' }, 400);
+  }
+
+  messages.unshift({ role: 'system', content: systemInstruction });
+
+  var lastUserMsg = messages.slice().reverse().find(function (msg) { return msg.role === 'user'; });
+  if (lastUserMsg) {
+    var modLocal = moderateText(lastUserMsg.content, 4000, 4);
+    if (!modLocal.allowed) {
+      return json({ error: 'content_flagged', message: 'El contenido ingresado no cumple con las normas de convivencia.' }, 400);
+    }
+    if (env.NVIDIA_MODERATION_ENABLED === 'true') {
+      var nemotronCheck = await moderateWithNemotron(lastUserMsg.content, env);
+      if (nemotronCheck.unavailable) {
+        return json({ error: 'moderation_unavailable', message: 'La validación de seguridad no está disponible temporalmente.' }, 503);
+      }
+      if (!nemotronCheck.allowed) {
+        return json({ error: 'content_flagged', message: 'La consulta no cumple con las políticas de seguridad académica de NVIDIA Nemotron.' }, 400);
+      }
+    }
+  }
+
+  try {
+    var fallbackModel = cleanText(env.NVIDIA_FALLBACK_STUDY_MODEL || NVIDIA_DEFAULT_FALLBACK_STUDY_MODEL, 100);
+    var isExamRequest = Boolean(body.subject);
+    var preferFastModel = isExamRequest || mode === 'fast';
+    var modelCandidates = preferFastModel ? [fallbackModel, model] : [model, fallbackModel];
+    modelCandidates = modelCandidates.filter(function (candidate, index, all) {
+      return candidate && all.indexOf(candidate) === index;
+    });
+    var requestedModel = modelCandidates[0] || model;
+    var nimData = null;
+    var activeModel = model;
+    var lastUpstreamStatus = 0;
+
+    for (var modelIndex = 0; modelIndex < modelCandidates.length; modelIndex++) {
+      activeModel = modelCandidates[modelIndex];
+      var controller = new AbortController();
+      // Los modelos con razonamiento pueden tardar antes de emitir el JSON final.
+      var timeoutId = setTimeout(function () { controller.abort(); }, 75000);
+      var nvidiaPayload = createNvidiaStudyPayload(activeModel, messages, mode, isExamRequest);
+      var nimResp;
+      try {
+        nimResp = await fetch(NVIDIA_CHAT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apiKey
+          },
+          body: JSON.stringify(nvidiaPayload),
+          signal: controller.signal
+        });
+      } finally {
+        clearTimeout(timeoutId);
+      }
+
+      lastUpstreamStatus = nimResp.status;
+      if (nimResp.ok) {
+        nimData = await nimResp.json();
+        break;
+      }
+      if (nimResp.status === 401 || nimResp.status === 403) {
+        return json({
+          error: 'nvidia_auth_failed',
+          message: 'La clave NVIDIA_API_KEY no es válida o no tiene acceso al modelo seleccionado.'
+        }, 502);
+      }
+      // Si el modelo principal está saturado, continúa automáticamente con el
+      // modelo alternativo. Otros errores se devuelven sin ocultar su estado.
+      if (nimResp.status === 429 && modelIndex < modelCandidates.length - 1) continue;
+      if (nimResp.status === 429) break;
+      return json({
+        error: 'ai_upstream_error',
+        message: 'El proveedor de IA respondió con un error.',
+        status: nimResp.status
+      }, 502);
+    }
+
+    if (!nimData) {
+      return json({
+        error: 'nvidia_rate_limited',
+        message: 'Los modelos de NVIDIA alcanzaron temporalmente su límite gratuito. Espera un momento e inténtalo nuevamente.',
+        status: lastUpstreamStatus
+      }, 503);
+    }
+
+    var choice = nimData?.choices?.[0];
+    var replyText = choice?.message?.content || '';
+    var continuationResult = isExamRequest
+      ? { content: replyText, continued: false }
+      : await completeTruncatedStudyAnswer(replyText, choice, activeModel, messages, mode, apiKey);
+    replyText = continuationResult.content;
+
+    var parsedJson = null;
+    if (body.format === 'json' || body.subject || replyText.trim().startsWith('{')) {
+      parsedJson = extractJsonObjectFromText(replyText);
+    }
+
+    var verification = null;
+    if (isExamRequest) {
+      var initialValidation = validateAdmissionQuestion(parsedJson);
+      verification = {
+        mode: qualityMode,
+        generatorModel: nimData.model || activeModel,
+        criticModel: null,
+        criticApplied: false,
+        structureScore: initialValidation.structureScore,
+        issues: initialValidation.issues
+      };
+      // El segundo modelo es opcional en modo verificado y actúa también como
+      // reparación automática si el generador entrega una estructura defectuosa.
+      if (qualityMode === 'verified' || !initialValidation.valid) {
+        var review = await reviewAdmissionQuestion(parsedJson || { respuestaSinEstructurar: replyText }, {
+          subject: subject,
+          diff: diff,
+          topic: topic
+        }, env, apiKey);
+        verification.criticModel = review.model;
+        if (review.ok) {
+          parsedJson = review.question;
+          replyText = JSON.stringify(parsedJson);
+          verification.criticApplied = true;
+          verification.structureScore = review.validation.structureScore;
+          verification.issues = review.validation.issues;
+        } else if (!initialValidation.valid) {
+          return json({
+            error: 'ai_invalid_structure',
+            message: 'La IA no pudo producir una pregunta con estructura académica válida. Inténtalo nuevamente.',
+            validation: initialValidation,
+            verification: verification
+          }, 502);
+        }
+      }
+    } else if (qualityMode === 'verified' && replyText.trim()) {
+      var originalQuestion = lastUserMsg ? lastUserMsg.content : '';
+      var answerReview = await reviewStudyAnswer(replyText, originalQuestion, env, apiKey);
+      verification = {
+        mode: qualityMode,
+        generatorModel: nimData.model || activeModel,
+        criticModel: answerReview.model,
+        criticApplied: answerReview.ok,
+        continuationApplied: continuationResult.continued
+      };
+      if (answerReview.ok) replyText = answerReview.answer;
+    }
+
+    return json({
+      ok: true,
+      model: nimData.model || activeModel,
+      fallbackUsed: activeModel !== requestedModel,
+      qualityMode: qualityMode,
+      verification: verification,
+      continuationApplied: continuationResult.continued,
+      message: {
+        role: 'assistant',
+        content: replyText
+      },
+      data: parsedJson,
+      usage: nimData.usage || null
+    });
+  } catch (fetchError) {
+    if (fetchError.name === 'AbortError') {
+      return json({ error: 'timeout', message: 'La solicitud al modelo de IA tardó demasiado tiempo.' }, 504);
+    }
+    return json({ error: 'ai_dispatch_error', message: 'No fue posible completar la consulta de IA.' }, 500);
+  }
+}
+
+async function handleAiEmbed(request, env) {
+  if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
+  if (!rateLimit(request, 'ai_embed', 20, 60000)) return json({ error: 'rate_limited' }, 429);
+  var declaredLength = Number(request.headers.get('Content-Length') || 0);
+  if (declaredLength > 16384) return json({ error: 'payload_too_large' }, 413);
+  var auth = await verifySession(request, env);
+  if (env.REQUIRE_AUTH_FOR_AI === 'true' && !auth) {
+    return json({ error: 'login_required', message: 'Inicia sesión para usar las herramientas de IA.' }, 401);
+  }
+  var apiKey = env.NVIDIA_API_KEY;
+  if (!apiKey) return json({ error: 'model_not_configured', message: 'API de embeddings no configurada.' }, 503);
+
+  var body = null;
+  try { body = await request.json(); } catch (_) { return json({ error: 'invalid_json' }, 400); }
+  var textInput = cleanText(body.input || body.text || '', 2000);
+  if (!textInput) return json({ error: 'missing_input', message: 'Texto requerido para embedding.' }, 400);
+
+  var embedModel = cleanText(env.NVIDIA_EMBEDDING_MODEL || NVIDIA_DEFAULT_EMBED_MODEL, 100);
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function () { controller.abort(); }, 15000);
+
+  try {
+    var resp = await fetch(NVIDIA_EMBED_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify({
+        model: embedModel,
+        input: [textInput],
+        input_type: 'query'
+      }),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    if (!resp.ok) return json({ error: 'embed_upstream_error', status: resp.status }, 502);
+    var data = await resp.json();
+    return json({
+      ok: true,
+      model: embedModel,
+      embedding: data?.data?.[0]?.embedding || null,
+      ragReady: false,
+      note: 'Endpoint preparado para vector embeddings. RAG no está activo sin un índice vectorial configurado.'
+    });
+  } catch (_) {
+    clearTimeout(timeoutId);
+    return json({ error: 'embed_error', message: 'Error procesando embedding.' }, 500);
+  }
 }
 
 const EXAM_ROOT = '/exam/finalV1';
@@ -2535,7 +3103,8 @@ export async function onRequest(context) {
     if (apiPath.startsWith('classes/')) return handleClasses(request, context.env, apiPath.slice(8));
     if (apiPath.startsWith('exam/')) return handleExam(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('unitalk/')) return handleUnitalk(request, context.env, apiPath.slice(8));
-    if (apiPath === 'ai/support') return handleAi(request, context.env);
+    if (apiPath === 'ai/study' || apiPath === 'ai/support') return handleAiStudy(request, context.env);
+    if (apiPath === 'ai/embed') return handleAiEmbed(request, context.env);
     return json({ error: 'not_found' }, 404);
   } catch (error) {
     return json({ error: 'server_error', detail: String(error && error.message || error) }, 500);

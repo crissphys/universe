@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Información CEPREUNI | Universe to Study</title>
+  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
+  <meta name="color-scheme" content="dark light"><link rel="icon" href="/assets/home-access/universe-logo.png">
+  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css"><link rel="stylesheet" href="/universe-ui/platform.css"><link rel="stylesheet" href="/universe-ui/refinements.css"><script type="module" src="/universe-ui/app.js"></script>
+<link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/auth.js" defer></script><link rel="stylesheet" href="/universe-ui/native/informacion-cepreuni.css"><link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/admission-engine.js" defer></script><script src="/informacion-cepreuni.js" defer></script></head>
+<body data-native="informacion-cepreuni" class="in-platform">
+  <a class="skip-link" href="#native-main">Saltar al contenido</a>
+  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
+  <div class="space-shade" aria-hidden="true"></div>
+  <header class="header">
+    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+    <nav class="nav" aria-label="Navegación principal"><a href="/explorar" data-en="Platform">Plataforma</a><a href="/cepreuni">CEPREUNI</a><a href="/biblioteca" data-en="Library">Biblioteca</a><a href="/planificador" data-en="Planner">Planificador</a></nav>
+    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
+  </header>
+  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a></nav>
+  <main id="main" hidden>
+    <section id="origin" class="hero chapter">
+      <div class="hero-grid wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
+          <h1><span data-en="Your curiosity.">Tu curiosidad.</span><br><span class="outline-word" data-en="A new dimension.">Otra dimensión.</span></h1>
+          <p class="hero-description" data-en="Every great idea begins with a question. Connect knowledge, practice and purpose in one place.">Toda gran idea empieza con una pregunta. Conecta conocimiento, práctica y propósito en un solo lugar.</p>
+<div class="hero-cta"><a class="button primary" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
+          <p class="hero-note" data-en="For curious minds. For your next step.">Para mentes curiosas. Para tu siguiente paso.</p>
+        </div>
+        <div class="galaxy-label" aria-hidden="true"><span class="target-cross"></span><span>UNIVERSE / ORIGIN<br><small>EL CONOCIMIENTO NO TIENE UN SOLO CENTRO</small></span></div>
+      </div>
+      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
+    </section>
+    <section id="system" class="system chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
+      <div class="command-panel reveal">
+        <div class="command-main"><div class="command-meta"><span class="orb-small" aria-hidden="true"></span><strong>UNIVERSE <span>EXPLORER</span></strong></div><h3 data-en="Where does your mind want to go?">¿A dónde quiere ir tu mente?</h3>
+          <form id="intent-form"><label for="intent" class="sr-only">Tu objetivo de estudio</label><input id="intent" maxlength="220" autocomplete="off" placeholder="Quiero entender física, organizarme, encontrar un libro…" required><button type="submit" aria-label="Encontrar mi ruta"><span data-icon="arrow-right"></span></button></form>
+          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam ↗">Preparar mi primera PC ↗</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book ↗">Encontrar un libro ↗</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week ↗">Organizar mi semana ↗</button></div>
+          <p class="command-disclaimer" data-en="Local resource finder. No connected AI, API usage or external transmission of your text.">Buscador local de recursos. Sin IA conectada, consumo de API ni envío de tu texto.</p>
+          <div id="intent-result" class="intent-result" aria-live="polite" hidden></div>
+        </div><div class="command-visual" aria-hidden="true"><div class="core-orbit one"></div><div class="core-orbit two"></div><div class="core-orbit three"></div><div class="core-sphere"></div><span class="core-caption">PREGUNTA → CONECTA → AVANZA</span></div>
+      </div>
+      <div class="workspace reveal">
+        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
+        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
+      </div>
+    </section>
+    <section id="resources" class="resources chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
+      <div class="resource-grid">
+        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
+        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/ciclopre20271"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="Academic archive">Archivo académico</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Explore the evaluations and solutions archive.">Explora el archivo de evaluaciones y soluciones.</p></div><span data-icon="arrow-up-right"></span></a></div>
+      </div>
+    </section>
+    <section id="trajectory" class="trajectory chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
+      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
+      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
+    </section>
+  </main>
+<main id="native-main" class="native-shell"><div class="platform native-platform">
+<aside class="side-rail"><span>TODO CONECTA</span><nav aria-label="Secciones de Universe"><a href="/explorar"><span data-icon="grid"></span>Plataforma</a><a href="/cepreuni" aria-current="page"><span data-icon="cap"></span>CEPREUNI</a><a href="/biblioteca"><span data-icon="book"></span>Biblioteca</a><a href="/temario"><span data-icon="list"></span>Temario</a><a href="/clases"><span data-icon="play"></span>Clases</a><a href="/planificador"><span data-icon="calendar"></span>Planificador</a><a href="/simulacros"><span data-icon="target"></span>Simulacros</a><a href="/examenes"><span data-icon="layers"></span>Exámenes</a><a href="/admision"><span data-icon="cap"></span>Admisión UNI</a><a href="/calculadora"><span data-icon="calculator"></span>Calculadora</a><a href="/unitalk"><span data-icon="users"></span>UNITALK</a><a href="/ranking"><span data-icon="orbit"></span>Ranking</a><a href="/docentes-cepreuni"><span data-icon="grid"></span>Guía de aulas</a></nav></aside>
+<div class="platform-body">
+<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / Información CEPREUNI</span></div>
+<div class="page-head"><span class="eyebrow">UNIVERSE / INFORMACION CEPREUNI</span><h1 id="page-title" tabindex="-1">Información CEPREUNI</h1><p>Normas oficiales, estrategia de estudio y consejos prácticos en un solo lugar. Elige tu perfil para ver únicamente la información que necesitas.</p></div>
+<div class="page-view native-view"><div class="ci-page">
+    
+
+    <section class="ci-selector" id="elige-tu-ruta" aria-labelledby="selector-title">
+      <div class="ci-section-heading centered">
+        <span>Antes de comenzar</span>
+        <h2 id="selector-title">¿Para quién es esta guía?</h2>
+        <p>Puedes cambiar de vista cuando quieras sin salir de la página.</p>
+      </div>
+      <div class="ci-persona-grid p-grid" role="tablist" aria-label="Selecciona tu perfil">
+        <button class="ci-persona student" type="button" role="tab" aria-selected="false" aria-controls="student-guide" data-ci-profile="student">
+          <span class="ci-persona-icon" aria-hidden="true">E</span>
+          <span><small>Voy a estudiar</small><strong>Seré estudiante CEPREUNI</strong><em>Organización, convivencia, evaluaciones, horarios y recursos.</em></span>
+          <b aria-hidden="true">→</b>
+        </button>
+        <button class="ci-persona family" type="button" role="tab" aria-selected="false" aria-controls="family-guide" data-ci-profile="family">
+          <span class="ci-persona-icon" aria-hidden="true">F</span>
+          <span><small>Voy a acompañar</small><strong>Seré padre o madre de un estudiante CEPREUNI</strong><em>Seguimiento, pagos, hábitos, notas y apoyo académico.</em></span>
+          <b aria-hidden="true">→</b>
+        </button>
+      </div>
+    </section>
+
+    <section class="ci-guide" id="student-guide" data-ci-panel="student" role="tabpanel" hidden>
+      <div class="ci-panel-top p-panel">
+        <div><span>Ruta del estudiante</span><h2>Estudiar con estrategia, no con improvisación</h2></div>
+        <button type="button" data-ci-reset>Elegir otro perfil</button>
+      </div>
+
+      <nav class="ci-jump" aria-label="Índice del estudiante">
+        <a href="#focus">Enfoque</a><a href="#community">Canales</a><a href="#principles">4 principios</a><a href="#study-plan">Plan de estudio</a><a href="#evaluation">Evaluación</a><a href="#schedule">Horarios y salones</a><a href="#resources">Recursos</a><a href="#documents">Documentos</a>
+      </nav>
+
+      <section class="ci-block p-panel" id="focus">
+        <div class="ci-block-heading p-panel"><span>01</span><div><small>Protege tu tiempo</small><h3>Compañeros que suman, rutina que se sostiene</h3></div></div>
+        <div class="ci-two-col">
+          <article class="ci-card accent-blue p-panel p-tile"><h4>No te metas en la vida de nadie ni busques volverte famoso</h4><p>En CEPREUNI es fácil confundir socializar con dedicarle atención a todo el mundo. Hay personas muy persuasivas que conversan, hacen planes o crean drama durante horas; cuando lo notas, ya perdiste el bloque que necesitabas para estudiar. Ten compañeros, conversa y sé amable, pero no conviertas la popularidad, los rumores o la vida ajena en tu prioridad.</p><ul><li>Elige pocos compañeros responsables y observa si realmente estudian.</li><li>No confundas “pasarla bien” con una amistad que te aleja de tu objetivo.</li><li>Si una persona insiste en romper tu horario, limita el contacto sin discutir.</li><li>No participes en chismes, peleas, exposiciones públicas ni capturas de conversaciones.</li></ul></article>
+          <article class="ci-card accent-mint p-panel p-tile"><h4>Forma un grupo de estudio pequeño y útil</h4><p>Trabaja con 3 o 4 personas que cumplan horarios. No se reúnan solo para conversar: cada sesión debe tener teoría, problemas, corrección y una lista final de dudas. La biblioteca funciona mejor cuando cada integrante llega con una tarea concreta.</p><ul><li>Turno mañana: almuerza primero y luego estudia en la biblioteca o en un espacio permitido.</li><li>Turno tarde: llega con anticipación para encontrar la biblioteca más tranquila.</li><li>Reparte temas y haz que cada persona explique un procedimiento.</li><li>Si el grupo deja de estudiar, aléjate sin culpa y vuelve a tu rutina individual.</li></ul></article>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel" id="community">
+        <div class="ci-block-heading p-panel"><span>02</span><div><small>Higiene digital</small><h3>Canales útiles sin saturar tu teléfono ni tu cabeza</h3></div></div>
+        <div class="ci-community-layout">
+          <article class="ci-card p-panel p-tile"><h4>No entres a todos los canales</h4><p>Universe, Gokuismo y Dibujitos son nombres conocidos entre estudiantes y pueden aportar materiales o avisos. Otros espacios se concentran en show, spam, fotos y mensajes repetidos que saturan la memoria del teléfono y tu atención. Ninguno reemplaza una fuente oficial: revisa fecha, autoría y confirma los avisos importantes.</p><div class="ci-checks"><span>Desactiva la descarga automática</span><span>Silencia lo no urgente</span><span>Sal del spam</span><span>Contrasta con CEPREUNI</span></div></article>
+          <article class="ci-card dark p-panel p-tile"><h4>Si decides crear un canal</h4><p>Administrarlo consume tiempo. Hazlo simple, publica solo cuando aporte y expresa opiniones con respeto. Si no quieres exponer tu identidad, no publiques tu número, código, horarios ni fotos tomadas siempre desde tu asiento, porque la posición de la cámara puede revelar quién eres. No subas rostros, notas o conversaciones ajenas. Algunos docentes no aceptan fotografías o grabaciones y pueden comunicarlo a coordinación; pide permiso antes de registrar una clase.</p><a class="ci-inline-link" href="/terminos">Revisar normas de comunidad →</a></article>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel" id="principles">
+        <div class="ci-block-heading p-panel"><span>03</span><div><small>Lo que los estudiantes comentan</small><h3>Cuatro principios informales de la vida CEPREUNI</h3></div></div>
+        <div class="ci-principles">
+          <article><b>1</b><h4>Casi todo material termina circulando</h4><p>Materiales, repasos, libros, pizarras y enlaces suelen aparecer en internet o en algún Drive de forma gratuita. Eso no vuelve anónima la autoría ni elimina licencias: una marca de agua puede quitarse, así que si elaboras algo propio aporta explicación, fecha y fuente, y comparte solo aquello que tengas derecho a distribuir.</p></article>
+          <article><b>2</b><h4>Cualquier momento vergonzoso puede convertirse en burla</h4><p>Una caída, una risa, una ropa llamativa o un error pequeño puede terminar en fotos, videos, apodos o comentarios. Ocurre con frecuencia, pero no es normal ni está justificado. No alimentes la cadena. Si te pasa, guarda evidencia, bloquea y repórtalo a coordinación o a una persona adulta de confianza.</p></article>
+          <article><b>3</b><h4>Lo ocurrido en CEPREUNI puede llegar hasta la UNI</h4><p>La información pasa entre salones, canales y ciclos; al repetirse puede exagerarse o deformarse. Piensa antes de publicar y no entregues material que pueda usarse contra ti o contra otra persona. Un mensaje privado deja de ser privado cuando alguien hace una captura.</p></article>
+          <article><b>4</b><h4>Los “cicleros” conocen el terreno, pero no siempre tienen la razón</h4><p>Se llama así, informalmente, a quienes llevan dos o más ciclos CEPREUNI o ya rindieron dos o más procesos de admisión. Suelen conocer profesores, salones y rutinas. Escucha su experiencia, pero verifica los datos y no sustituyas la guía oficial por un rumor.</p></article>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel" id="study-plan">
+        <div class="ci-block-heading p-panel"><span>04</span><div><small>Sistema semanal</small><h3>Cómo estudiar sin llegar tarde al temario</h3></div></div>
+        <div class="ci-study-layout">
+          <article class="ci-plan">
+            <div><strong>1</strong><span><b>Un curso de Humanidades por día</b>El mismo lunes, martes o día que te dicten Economía, Historia, Literatura u otro curso, termina su teoría y crea una hoja de conceptos. No lo acumules para el fin de semana.</span></div>
+            <div><strong>2</strong><span><b>Adelanta cuando tengas espacio</b>Si acabas el tema del día, lee el siguiente. Avanzar durante las primeras semanas te deja tiempo para comprender los temas finales, que suelen sentirse más pesados.</span></div>
+            <div><strong>3</strong><span><b>Teoría y preguntas</b>Economía exige teoría y problemas; Historia exige ordenar muchos procesos, personajes y fechas. Resuelve preguntas después de cada lectura, no solo subrayes.</span></div>
+            <div><strong>4</strong><span><b>Ciencias todos los días</b>Practica un bloque de problemas, corrige el procedimiento y registra el error. Reserva más tiempo para Química y para funciones trigonométricas.</span></div>
+            <div><strong>5</strong><span><b>No olvides los cursos menos visibles</b>Incluye Psicología, Geografía e Inglés aunque no siempre aparezcan con la misma claridad en la programación principal. Usa las clases y resúmenes enlazados en esta página.</span></div>
+            <div><strong>6</strong><span><b>Cierre semanal real</b>Haz un mini simulacro, revisa tus materiales incompletos y define qué adelantarás la semana siguiente.</span></div>
+          </article>
+          <aside class="ci-priority">
+            <span>Atención especial</span>
+            <h4>Economía, Historia, Química y Trigonometría</h4>
+            <p>Economía combina teoría y problemas; Historia exige ordenar procesos y fechas. Química suele complicarse en los últimos temas, así que no la postergues. En Trigonometría, domina identidades, ecuaciones y especialmente funciones trigonométricas antes de aumentar la dificultad.</p>
+            <div class="ci-mini-grid p-grid"><span>Teoría</span><span>Ejemplos</span><span>Práctica</span><span>Corrección</span></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel" id="evaluation">
+        <div class="ci-block-heading p-panel"><span>05</span><div><small>Cómo funciona el ingreso directo</small><h3>Evaluaciones, ponderado y obligaciones</h3></div></div>
+        <div class="ci-evaluation-grid p-grid">
+          <article class="ci-formula-card p-panel p-tile"><span>Excepto Arquitectura</span><strong>PID = S + 2EP1 + 4EP2 + 6EF</strong><p><b>S</b> suma las cinco mejores notas de PC1 a PC6 y añade PC7, que no se descarta. EP1 vale 2, EP2 vale 4 y el examen final vale 6.</p></article>
+          <article class="ci-formula-card architecture p-panel p-tile"><span>Arquitectura</span><strong>PAD = PID + 1.54(SV + PVD)</strong><p>Además del ponderado general, considera las pruebas vocacionales y la prueba de aptitud vocacional. Revisa cada convocatoria porque sus fechas y condiciones pueden cambiar.</p></article>
+          <article class="ci-obligation-card p-panel p-tile"><h4>Para conservar el derecho al ingreso directo</h4><ul><li>Asiste todos los días y llega a tiempo.</li><li>La guía 2026-2 fijó un máximo de 24 faltas injustificadas.</li><li>Cuatro tardanzas equivalían a una falta.</li><li>Justifica ausencias con sustento dentro del plazo indicado.</li><li>Mantén las cuotas al día antes de evaluaciones.</li></ul></article>
+        </div>
+        <div class="ci-scholarship-note p-panel"><strong>Becas y semibecas:</strong><span>la guía 2026-2 indicó que podían solicitarse desde el segundo mes por buen rendimiento y situación económica; el primer puesto de la prueba de selección obtenía beca automática. Las condiciones de conservación deben confirmarse en la guía del nuevo ciclo.</span></div>
+        <div class="ci-competition-note p-panel"><strong>No estás en una academia común: estás compitiendo por una vacante.</strong><p>En el ciclo PRE cada punto afecta tu posición frente a postulantes que pueden elegir la misma carrera. No uses solamente “aprobar con 11” como meta: revisa los mínimos históricos, el avance del grupo y la demanda de tu especialidad. Una nota aceptable para una carrera puede ser insuficiente para otra.</p><div><a href="/calculadora">Calcular mi situación</a><a href="/ranking">Comparar ciclos</a></div></div>
+      </section>
+
+      <section class="ci-block p-panel" id="schedule">
+        <div class="ci-block-heading p-panel"><span>06</span><div><small>Referencia 2026-2</small><h3>Horario compacto y asistencia</h3></div></div>
+        <div class="ci-schedule-notice"><strong>Este horario es histórico.</strong><span>Puede cambiar en 2027-1. Verifica siempre la guía y el aula virtual del nuevo ciclo.</span></div>
+        <div class="ci-schedule-grid p-grid">
+          <article class="ci-shift"><div><span>Turno mañana</span><strong>07:30 - 13:45</strong></div><p>Ingreso desde las 07:00. Tolerancia hasta las 07:45.</p><div class="ci-days"><span>Lun<em>Álg. / Trig.</em></span><span>Mar<em>Geo. / Física</em></span><span>Mié<em>Álg. / Arit.</em></span><span>Jue<em>Geo. / Física</em></span><span>Vie<em>Quím. / Arit.</em></span><span>Sáb<em>Quím. / Trig.</em></span></div><small>Humanidades se ubicó al final del turno. Los módulos intercambian el orden de los bloques.</small></article>
+          <article class="ci-shift"><div><span>Turno tarde</span><strong>14:25 - 20:40</strong></div><p>Ingreso desde las 14:00. Tolerancia hasta las 14:40.</p><div class="ci-days"><span>Lun<em>Álg. / Trig.</em></span><span>Mar<em>Geo. / Física</em></span><span>Mié<em>Álg. / Arit.</em></span><span>Jue<em>Geo. / Física</em></span><span>Vie<em>Quím. / Arit.</em></span><span>Sáb<em>Quím. / Trig.</em></span></div><small>Humanidades se ubicó al inicio del turno. La asignatura específica puede variar entre salones.</small></article>
+        </div>
+        <div class="ci-schedule-notice"><strong>Laboratorio de Física:</strong><span>la guía 2026-2 indicó clases de laboratorio obligatorias fuera del horario teórico.</span></div>
+        <div class="ci-classroom-truth" id="classroom-strategy">
+          <div class="ci-classroom-title"><span aria-hidden="true">!</span><div><small>PRÁCTICA INFORMAL · NO ES UN DERECHO DEL ESTUDIANTE</small><strong>Lo que algunos llaman “colarse” a otro salón</strong></div></div>
+          <p>Algunos estudiantes buscan escuchar a un profesor distinto cuando sienten que aprenden mejor con él. La versión directa de esta práctica es la siguiente:</p>
+          <ol>
+            <li><b>Primera semana:</b> recorren los pasillos, observan qué profesor dicta en cada salón y ubican a quienes ya conocen o les recomendaron.</li>
+            <li><b>Desde la semana siguiente:</b> llegan muy temprano al salón elegido, incluso si la clase buscada será en la segunda hora, y se sientan antes de que llegue la mayoría para parecer parte de ese grupo.</li>
+            <li><b>Días de entrega de material:</b> regresan a su salón oficial para recibir el módulo, registrar asistencia y evitar problemas con su entrega.</li>
+            <li><b>Pizarras y apuntes:</b> toman fotografías para repasar o buscan las pizarras compartidas en Drive. Fotografiar, grabar o compartir una clase requiere permiso del docente y respeto a la privacidad de los demás.</li>
+          </ol>
+          <div class="ci-classroom-caution"><strong>Ten presente el riesgo:</strong><span>entrar sin autorización puede contradecir las reglas de aforo, asistencia o identificación. Coordinación o el docente pueden pedirte que regreses a tu aula. La opción segura es solicitar permiso, usar asesorías o pedir apuntes. Nunca ocupes el asiento de otro estudiante ni pierdas una evaluación o entrega de material por estar en otro salón.</span></div>
+          <p>También circula la idea de que algunos salones con promedios bajos se reorganizan o cierran después del primer o segundo parcial. No aparece como regla automática en la guía revisada: pregunta a tu profesor por el puesto del salón y confirma cualquier cambio con coordinación antes de actuar.</p>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel" id="resources">
+        <div class="ci-block-heading p-panel"><span>07</span><div><small>Accesos recomendados</small><h3>Herramientas para organizar el ciclo</h3></div></div>
+        <div class="ci-resource-grid p-grid">
+          <a href="/fijas-cepreuni"><b>Fijas CEPREUNI</b><span>Frecuencia histórica por evaluación y curso.</span><em>Explorar →</em></a>
+          <a href="/temario#temario-cepreuni"><b>Temario CEPREUNI</b><span>Temas acumulados y asignaturas por prueba.</span><em>Revisar →</em></a>
+          <a href="/calculadora"><b>Calculadora</b><span>Ponderado, descarte y comparación por carrera.</span><em>Calcular →</em></a>
+          <a href="/biblioteca"><b>Biblioteca Universe</b><span>Material organizado por curso y colección.</span><em>Abrir →</em></a>
+        </div>
+        <div class="ci-video-grid p-grid">
+          <a class="ci-video" href="https://www.youtube.com/watch?v=lPUal5j63UE" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="https://i.ytimg.com/vi/lPUal5j63UE/hqdefault.jpg" alt="Clase de Psicología sobre la memoria en el canal Universe"><span><small>PSICOLOGÍA</small><strong>Semana 9: la memoria</strong><em>Ver en YouTube →</em></span></a>
+          <a class="ci-video" href="https://www.youtube.com/watch?v=KGkS1ZDK5-Y" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="https://i.ytimg.com/vi/KGkS1ZDK5-Y/hqdefault.jpg" alt="Superresumen de Geografía para CEPREUNI en el canal Universe"><span><small>GEOGRAFÍA</small><strong>Superresumen para la 2.ª PC</strong><em>Ver en YouTube →</em></span></a>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel" id="documents">
+        <div class="ci-block-heading p-panel"><span>08</span><div><small>Lectura completa</small><h3>Documentos para consultar dentro de la página</h3></div></div>
+        <div class="ci-doc-tabs" role="tablist" aria-label="Selecciona el documento">
+          <button class="active" type="button" data-doc="guide" role="tab" aria-selected="true">Guía del estudiante 2026-2</button>
+          <button type="button" data-doc="library" role="tab" aria-selected="false">Manual de biblioteca</button>
+        </div>
+        <article class="ci-document active" data-doc-panel="guide">
+          <div class="ci-document-head"><div><strong>Guía oficial de referencia</strong><span>Organización, evaluaciones, asistencia, pagos, horarios y disciplina.</span></div><a href="/assets/docs/guia-estudiante-cepreuni-2026-2.pdf" target="_blank">Abrir PDF</a></div>
+          <iframe title="Guía del estudiante CEPREUNI 2026-2" loading="lazy" src="/assets/docs/guia-estudiante-cepreuni-2026-2.pdf#view=FitH"></iframe>
+        </article>
+        <article class="ci-document" data-doc-panel="library" hidden>
+          <div class="ci-document-head"><div><strong>Manual de operaciones de biblioteca</strong><span>Guía editorial de Universe, no reglamento oficial. Confirma horarios y normas con la biblioteca.</span></div><a href="/assets/docs/manual-biblioteca-cepreuni.pdf" target="_blank">Abrir PDF</a></div>
+          <iframe title="Manual de operaciones de biblioteca CEPREUNI" loading="lazy" data-src="/assets/docs/manual-biblioteca-cepreuni.pdf#view=FitH"></iframe>
+        </article>
+      </section>
+    </section>
+
+    <section class="ci-guide" id="family-guide" data-ci-panel="family" role="tabpanel" hidden>
+      <div class="ci-panel-top p-panel">
+        <div><span>Ruta de la familia</span><h2>Acompañar con atención, evidencia y calma</h2></div>
+        <button type="button" data-ci-reset>Elegir otro perfil</button>
+      </div>
+      <div class="ci-family-intro"><strong>No es solo “estudiar”: es competir por una vacante.</strong><p>El ciclo PRE combina preparación e ingreso directo. Acompañar bien significa crear condiciones, revisar información oficial y conversar sobre dificultades sin convertir cada nota en una amenaza.</p></div>
+
+      <section class="ci-block p-panel">
+        <div class="ci-block-heading p-panel"><span>01</span><div><small>Seguimiento responsable</small><h3>Una rutina familiar que sí ayuda</h3></div></div>
+        <div class="ci-family-checklist">
+          <article><b>Lunes</b><span>Definir tres metas académicas alcanzables.</span></article>
+          <article><b>Durante la semana</b><span>Preguntar qué aprendió y qué todavía no entiende.</span></article>
+          <article><b>Práctica mínima</b><span>Proponer al menos 20 preguntas pendientes del material de ciencias y 20 del material de humanidades, ajustando la carga si hay agotamiento.</span></article>
+          <article><b>Fin de semana</b><span>Revisar errores, asistencia y próximas evaluaciones.</span></article>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel">
+        <div class="ci-block-heading p-panel"><span>02</span><div><small>Datos oficiales</small><h3>Pagos, asistencia y comunicación</h3></div></div>
+        <div class="ci-two-col">
+          <article class="ci-card p-panel p-tile"><h4>Lo que indicó la guía 2026-2</h4><ul><li>La asistencia diaria y puntual fue obligatoria.</li><li>Más de 24 faltas injustificadas implicaban perder el derecho al ingreso directo.</li><li>Cuatro tardanzas equivalían a una falta.</li><li>Dos o más faltas semanales podían reportarse al apoderado.</li><li>Las notas, asistencias y tardanzas podían consultarse con el código y clave del estudiante.</li></ul><p class="ci-footnote">Estas reglas deben confirmarse cuando CEPREUNI publique la guía 2027-1.</p></article>
+          <article class="ci-card accent-gold p-panel p-tile"><h4>Cuotas consignadas en 2026-2</h4><div class="ci-payment-table"><span><b>2.ª cuota</b><em>04 abr 2026</em><strong>S/ 510</strong></span><span><b>3.ª cuota</b><em>02 may 2026</em><strong>S/ 510</strong></span><span><b>4.ª cuota</b><em>30 may 2026</em><strong>S/ 510</strong></span><span><b>5.ª cuota</b><em>27 jun 2026</em><strong>S/ 510</strong></span></div><p>La guía señaló 10 % de descuento por pagar las cinco cuotas al contado y exigió estar al día para rendir evaluaciones. Estos montos son históricos, no una tarifa vigente.</p><a class="ci-inline-link" href="https://www.cepre.uni.edu.pe/" target="_blank" rel="noopener noreferrer">Ver CEPREUNI oficial →</a></article>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel">
+        <div class="ci-block-heading p-panel"><span>03</span><div><small>Interpretar sin etiquetar</small><h3>Cómo leer una nota vigesimal</h3></div></div>
+        <p class="ci-context">Esta escala es una orientación de seguimiento solicitada para esta guía. No es una regla oficial ni predice por sí sola el ingreso: la carrera, el ciclo, los ponderados y el rendimiento de los demás postulantes cambian el contexto.</p>
+        <div class="ci-score-scale">
+          <article class="critical"><strong>0 - 9.99</strong><span>Necesita reconstruir bases, identificar vacíos y recibir apoyo frecuente.</span></article>
+          <article class="watch"><strong>10 - 11.49</strong><span>Hay avance, pero conviene reforzar constancia y corrección de errores.</span></article>
+          <article class="good"><strong>11.5 - 13.99</strong><span>Rendimiento competitivo en desarrollo; mantenga seguimiento semanal.</span></article>
+          <article class="strong"><strong>14 o más</strong><span>Muy buen desempeño. Mantenga hábitos, descanso y revisión de la carrera elegida.</span></article>
+        </div>
+        <div class="ci-safe-note p-panel"><strong>Para carreras de alta demanda:</strong><p>No use “aprobar con 11” como única referencia. Compare con mínimos históricos, fórmula ponderada y evolución del ciclo. Revise los datos junto con el estudiante, no a escondidas.</p><div><a href="/calculadora">Abrir calculadora</a><a href="/ranking">Comparar máximos y mínimos</a></div></div>
+      </section>
+
+      <section class="ci-block p-panel">
+        <div class="ci-block-heading p-panel"><span>04</span><div><small>Materiales de apoyo</small><h3>Libros físicos y biblioteca digital</h3></div></div>
+        <div class="ci-book-grid p-grid">
+          <article><span>GEOMETRÍA Y TRIGONOMETRÍA</span><strong>Buscano o Lumbreras</strong><p>Un libro físico permite marcar, dibujar y practicar sin fatiga de pantalla. Compare el contenido con el sílabo vigente.</p></article>
+          <article><span>ARITMÉTICA</span><strong>Lumbreras</strong><p>Útil para teoría progresiva y práctica. Priorice los capítulos que coincidan con la programación semanal.</p></article>
+          <article><span>FÍSICA Y QUÍMICA</span><strong>Lumbreras, Buscano y textos base</strong><p>Para ampliar: Química de Raymond Chang y Física universitaria, comenzando por capítulos introductorios.</p></article>
+          <article><span>ACCESO DIGITAL</span><strong>Biblioteca Universe</strong><p>Use PDFs legalmente disponibles como complemento. Para sesiones largas, alterne pantalla, papel y pausas visuales.</p><a href="/biblioteca">Explorar biblioteca →</a></article>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel">
+        <div class="ci-block-heading p-panel"><span>05</span><div><small>Docencia y bienestar</small><h3>Qué hacer cuando una clase no está funcionando</h3></div></div>
+        <div class="ci-two-col">
+          <article class="ci-card p-panel p-tile"><h4>Pregunte con ejemplos</h4><p>En vez de “¿el profesor enseña mal?”, pregunte: “¿qué tema no entendiste?”, “¿qué ejemplo faltó?” o “¿qué resultado obtuviste después de practicar?”. Así podrá distinguir una dificultad personal de un problema sostenido de enseñanza.</p></article>
+          <article class="ci-card p-panel p-tile"><h4>Use el canal correcto</h4><p>La guía indica comunicar primero la inquietud al docente; si no se resuelve, al coordinador de curso, luego a coordinación general y finalmente a dirección. Presente hechos, fechas y solicitudes concretas.</p></article>
+        </div>
+      </section>
+
+      <section class="ci-block p-panel">
+        <div class="ci-block-heading p-panel"><span>06</span><div><small>Documento base</small><h3>Lea la guía junto con el estudiante</h3></div></div>
+        <article class="ci-document active">
+          <div class="ci-document-head"><div><strong>Guía del estudiante CEPREUNI 2026-2</strong><span>Referencia completa hasta que se publique y verifique la edición 2027-1.</span></div><a href="/assets/docs/guia-estudiante-cepreuni-2026-2.pdf" target="_blank">Abrir PDF</a></div>
+          <iframe title="Guía CEPREUNI para familias" loading="lazy" data-family-pdf="/assets/docs/guia-estudiante-cepreuni-2026-2.pdf#view=FitH"></iframe>
+        </article>
+      </section>
+    </section>
+  </div><div class="ci-warning-modal" id="ci-student-warning" role="dialog" aria-modal="true" aria-labelledby="ci-warning-title" aria-describedby="ci-warning-copy" hidden>
+    <div class="ci-warning-backdrop" data-ci-warning-close></div>
+    <section class="ci-warning-dialog" tabindex="-1">
+      <div class="ci-warning-sign" aria-hidden="true">
+        <svg viewBox="0 0 64 64"><path d="M32 6 59 55H5L32 6Z"></path><path d="M32 22v16"></path><circle cx="32" cy="47" r="2"></circle></svg>
+      </div>
+      <span class="ci-warning-label">CUIDADO · LECTURA PARA ESTUDIANTES</span>
+      <h2 id="ci-warning-title">Esta guía habla sin filtro sobre la vida dentro de CEPREUNI</h2>
+      <p id="ci-warning-copy">Encontrarás experiencias informales sobre presión social, burlas, canales, profesores, cambios de salón y la práctica que algunos alumnos llaman “colarse”. El contenido es directo y puede dar una impresión dura, pero busca prevenirte. No es un reglamento oficial ni autoriza incumplir normas, invadir aulas, grabar sin permiso o acosar a otra persona.</p>
+      <div class="ci-warning-points"><span>Separa los hechos de los rumores.</span><span>Confirma las reglas con coordinación.</span><span>Protege tu tiempo, identidad y seguridad.</span></div>
+      <div class="ci-warning-actions">
+        <button class="ci-warning-cancel" type="button" data-ci-warning-close>Volver</button>
+        <button class="ci-warning-accept" type="button" data-ci-warning-accept>Entiendo, ver la guía completa</button>
+      </div>
+    </section>
+  </div><section class="ci-hero" aria-labelledby="ci-title">
+      <div class="ci-hero-copy">
+        <a class="ci-back" href="/cepreuni">CEPREUNI / Información</a>
+        <span class="ci-kicker">Una guía para empezar con claridad</span>
+        
+        
+        <div class="ci-source-strip">
+          <span>Base oficial: Guía del estudiante 2026-2</span>
+          <span>Próxima revisión: ciclo 2027-1</span>
+        </div>
+      </div>
+      <aside class="ci-hero-summary p-panel" aria-label="Resumen de la guía">
+        <div><strong>20</strong><span>semanas del ciclo PRE 2026-2</span></div>
+        <div><strong>7 PC</strong><span>más parciales y examen final</span></div>
+        <div><strong>2 rutas</strong><span>estudiante y familia</span></div>
+      </aside>
+    </section></div>
+</div></div></main><footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
+  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
+  <div class="immersion-controls" hidden>
+    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
+    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
+    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
+    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
+    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
+  </div>
+  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
+  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
+  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
+  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
+</body></html>
