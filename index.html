@@ -1,307 +1,75 @@
 <!doctype html>
-<html lang="es" data-universe-page="home">
+<html lang="es" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Universe to Study | Tu ruta de ingreso</title>
-  <meta name="description" content="Prepara tu ingreso a la UNI y San Marcos con temarios, clases, simulacros, herramientas CEPREUNI y una comunidad de estudio en un solo lugar.">
-  <link rel="canonical" href="https://universetostudy.com/">
-  <meta name="application-name" content="Universe to Study">
-  <meta name="theme-color" content="#071f55">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Universe to Study">
-  <meta property="og:title" content="Universe to Study | Tu ruta de ingreso">
-  <meta property="og:description" content="Organiza tu preparación para la UNI y San Marcos desde una sola plataforma.">
-  <meta property="og:url" content="https://universetostudy.com/">
-
-  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1">
-  <link rel="manifest" href="/site.webmanifest?v=1">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Sora:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=solid-5">
-  <link rel="stylesheet" href="/universe-polish.css?v=solid-5">
-  <link rel="stylesheet" href="/home.css?v=home-15">
-  <link rel="stylesheet" href="/components/text-type/TextType.css?v=text-type-3">
-  <link rel="stylesheet" href="/components/card-swap/CardSwap.css?v=card-swap-2">
-  <link rel="stylesheet" href="/home-minimal.css?v=logos-6">
-
-  <script>
-    (function () {
-      try {
-        if (localStorage.getItem('universe_theme') === 'dark') {
-          document.documentElement.setAttribute('data-universe-theme', 'dark');
-        }
-      } catch (error) {}
-    })();
-  </script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-NK0XVN4NF5');
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebSite",
-    "name":"Universe to Study",
-    "url":"https://universetostudy.com/",
-    "description":"Plataforma gratuita de preparación preuniversitaria para la UNI y San Marcos.",
-    "inLanguage":"es-PE"
-  }
-  </script>
-</head>
-<body class="home-page">
-  <a class="home-skip" href="#contenido">Saltar al contenido</a>
-
-  <div class="home-ambient" aria-hidden="true">
-    <span class="home-orbit orbit-one"></span>
-    <span class="home-orbit orbit-two"></span>
-    <span class="home-orbit orbit-three"></span>
-    <span class="home-glow glow-one"></span>
-    <span class="home-glow glow-two"></span>
-    <span class="home-spark spark-one"></span>
-    <span class="home-spark spark-two"></span>
-    <span class="home-spark spark-three"></span>
-    <span class="home-spark spark-four"></span>
-  </div>
-
-  <nav class="home-nav" aria-label="Navegación principal">
-    <div class="home-nav-inner">
-      <a class="home-brand" data-route="home" href="/" aria-label="Universe to Study, inicio">
-        <span class="home-brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 32 32"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"></path></svg>
-        </span>
-        <span>Universe <b>to Study</b></span>
-      </a>
-      <button class="home-menu-toggle" id="home-menu-toggle" type="button" aria-expanded="false" aria-controls="home-nav-links">
-        <span></span><span></span><span></span><span class="sr-only">Abrir menú</span>
-      </button>
-      <ul class="home-nav-links" id="home-nav-links">
-        <li><a data-route="home" href="/">Inicio</a></li>
-        <li><a data-route="admission" href="/admision">Admisión</a></li>
-        <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
-        <li><a data-route="planner" href="/planificador">Planificador</a></li>
-        <li><a data-route="syllabus" href="/temario">Temario</a></li>
-        <li><a data-route="classes" href="/clases">Clases</a></li>
-        <li><a data-route="unitalk" href="/unitalk">UNITALK</a></li>
-        <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
-        <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
-      </ul>
-      <div class="home-account-slot" id="home-account-slot" aria-label="Acceso a la cuenta"></div>
-      <button aria-label="Cambiar tema" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" title="Cambiar tema" type="button">
-        <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.8A8.7 8.7 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"></path></svg>
-        <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
-      </button>
-    </div>
-  </nav>
-
-  <main id="contenido">
-    <section class="home-hero" aria-labelledby="home-title">
-      <div class="home-hero-copy home-reveal">
-        <div class="home-eyebrow"><span></span> Preparación gratuita para UNI y San Marcos</div>
-        <h1 id="home-title">Tu ruta de ingreso <span class="text-type-sr-only">empieza aquí.</span><span class="text-type home-text-type" id="home-text-type" aria-hidden="true">empieza aquí.</span></h1>
-        <p class="home-lead">Convierte un objetivo grande en un plan claro. Revisa el temario, practica con simulacros, compara tu avance y estudia acompañado desde un solo lugar.</p>
-        <div class="home-actions" id="home-hero-actions">
-          <a class="home-btn home-btn-primary" href="/admision">Explorar admisión <span aria-hidden="true">→</span></a>
-          <a class="home-btn home-btn-ghost" href="/clases">Entrar a clases</a>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Universe — El origen de tu siguiente idea</title>
+  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
+  <meta name="color-scheme" content="dark light"><link rel="icon" href="/assets/home-access/universe-logo.png">
+  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css"><link rel="stylesheet" href="/universe-ui/platform.css"><link rel="stylesheet" href="/universe-ui/refinements.css"><script type="module" src="/universe-ui/app.js"></script>
+<link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/auth.js" defer></script></head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
+  <div class="space-shade" aria-hidden="true"></div>
+  <header class="header">
+    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+    <nav class="nav" aria-label="Navegación principal"><a href="/explorar" data-en="Platform">Plataforma</a><a href="/cepreuni">CEPREUNI</a><a href="/biblioteca" data-en="Library">Biblioteca</a><a href="/planificador" data-en="Planner">Planificador</a></nav>
+    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
+  </header>
+  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a></nav>
+  <main id="main">
+    <section id="origin" class="hero chapter">
+      <div class="hero-grid wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
+          <h1><span data-en="Your curiosity.">Tu curiosidad.</span><br><span class="outline-word" data-en="A new dimension.">Otra dimensión.</span></h1>
+          <p class="hero-description" data-en="Every great idea begins with a question. Connect knowledge, practice and purpose in one place.">Toda gran idea empieza con una pregunta. Conecta conocimiento, práctica y propósito en un solo lugar.</p>
+<div class="hero-cta"><a class="button primary" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
+          <p class="hero-note" data-en="For curious minds. For your next step.">Para mentes curiosas. Para tu siguiente paso.</p>
         </div>
-        <div class="home-proof home-hero-facts" aria-label="Datos clave de la convocatoria">
-          <span><b>3</b><small>pruebas UNI</small></span>
-          <span><b>1,630</b><small>vacantes 2026-2</small></span>
-          <span><b>34</b><small>especialidades</small></span>
-          <span class="home-active-users" aria-live="polite" aria-label="Calculando personas activas"><b data-active-visitor-count>…</b><small data-active-visitor-label>personas activas</small></span>
-        </div>
+        <div class="galaxy-label" aria-hidden="true"><span class="target-cross"></span><span>UNIVERSE / ORIGIN<br><small>EL CONOCIMIENTO NO TIENE UN SOLO CENTRO</small></span></div>
+      </div>
+      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
+    </section>
+    <section id="system" class="system chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
+      <div class="command-panel reveal">
+        <div class="command-main"><div class="command-meta"><span class="orb-small" aria-hidden="true"></span><strong>UNIVERSE <span>EXPLORER</span></strong></div><h3 data-en="Where does your mind want to go?">¿A dónde quiere ir tu mente?</h3>
+          <form id="intent-form"><label for="intent" class="sr-only">Tu objetivo de estudio</label><input id="intent" maxlength="220" autocomplete="off" placeholder="Quiero entender física, organizarme, encontrar un libro…" required><button type="submit" aria-label="Encontrar mi ruta"><span data-icon="arrow-right"></span></button></form>
+          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam ↗">Preparar mi primera PC ↗</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book ↗">Encontrar un libro ↗</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week ↗">Organizar mi semana ↗</button></div>
+          <p class="command-disclaimer" data-en="Local resource finder. No connected AI, API usage or external transmission of your text.">Buscador local de recursos. Sin IA conectada, consumo de API ni envío de tu texto.</p>
+          <div id="intent-result" class="intent-result" aria-live="polite" hidden></div>
+        </div><div class="command-visual" aria-hidden="true"><div class="core-orbit one"></div><div class="core-orbit two"></div><div class="core-orbit three"></div><div class="core-sphere"></div><span class="core-caption">PREGUNTA → CONECTA → AVANZA</span></div>
+      </div>
+      <div class="workspace reveal">
+        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
+        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
       </div>
     </section>
-
-    <section class="home-section home-features" aria-labelledby="features-title">
-      <div class="home-route-visual home-card-swap-visual home-reveal" aria-label="Funciones principales de Universe to Study">
-        <div class="home-card-swap-intro"><span class="home-card-kicker">Funciones esenciales</span><h2 id="features-title">Todo lo que necesitas para avanzar.</h2><p>Planifica, practica, aprende y conecta sin perder tiempo buscando.</p></div>
-        <div class="card-swap-container" id="home-card-swap" aria-label="Tarjetas de funciones principales">
-          <article class="card home-feature-card" data-card-swap-card data-label="Organiza" data-label-en="Plan">
-            <header><span class="home-feature-card-badge"><i>01</i> Planifica</span><span class="home-feature-card-number">01/04</span></header>
-            <h2>Organiza tu preparación</h2><p>Convierte el temario en un plan semanal y encuentra rápidamente la información del ciclo.</p>
-            <nav class="home-feature-links" aria-label="Herramientas de organización">
-              <a href="/planificador"><span class="home-feature-link-icon" aria-hidden="true">✓</span><span><b>Planificador de estudio</b><small>Crea y ajusta tu cronograma</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="/temario"><span class="home-feature-link-icon" aria-hidden="true">≡</span><span><b>Temarios organizados</b><small>Consulta los contenidos oficiales</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="/cepreuni"><span class="home-feature-link-icon" aria-hidden="true">C</span><span><b>Espacio CEPREUNI</b><small>Fechas, materiales y herramientas</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-            </nav>
-          </article>
-          <article class="card home-feature-card" data-card-swap-card data-card-tone="violet" data-label="Practica" data-label-en="Practice">
-            <header><span class="home-feature-card-badge"><i>02</i> Practica</span><span class="home-feature-card-number">02/04</span></header>
-            <h2>Practica y mide tu avance</h2><p>Entrena con tiempo real, revisa exámenes anteriores y estima tus resultados.</p>
-            <nav class="home-feature-links" aria-label="Herramientas de práctica">
-              <a href="/simulacros"><span class="home-feature-link-icon" aria-hidden="true">▶</span><span><b>Simulacros cronometrados</b><small>Practica como en el examen</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="/examenes"><span class="home-feature-link-icon" aria-hidden="true">▤</span><span><b>Exámenes anteriores</b><small>Revisa convocatorias pasadas</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="/calculadora"><span class="home-feature-link-icon" aria-hidden="true">%</span><span><b>Calculadora CEPREUNI</b><small>Interpreta tus puntajes</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-            </nav>
-          </article>
-          <article class="card home-feature-card" data-card-swap-card data-card-tone="cyan" data-label="Aprende" data-label-en="Learn">
-            <header><span class="home-feature-card-badge"><i>03</i> Aprende</span><span class="home-feature-card-number">03/04</span></header>
-            <h2>Aprende con recursos ordenados</h2><p>Encuentra clases, libros y materiales clasificados por curso y editorial.</p>
-            <nav class="home-feature-links" aria-label="Recursos de aprendizaje">
-              <a href="/clases"><span class="home-feature-link-icon" aria-hidden="true">▷</span><span><b>Clases por tema</b><small>Repasa cada curso a tu ritmo</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="/biblioteca"><span class="home-feature-link-icon" aria-hidden="true">B</span><span><b>Biblioteca Universe</b><small>Explora libros y colecciones</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="/cepreuni/ciclopre20271"><span class="home-feature-link-icon" aria-hidden="true">27</span><span><b>Materiales 2027-1</b><small>Accede a las entregas CEPREUNI</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-            </nav>
-          </article>
-          <article class="card home-feature-card" data-card-swap-card data-card-tone="green" data-label="Conecta" data-label-en="Connect">
-            <header><span class="home-feature-card-badge"><i>04</i> Conecta</span><span class="home-feature-card-number">04/04</span></header>
-            <h2>Conecta con la comunidad</h2><p>Pregunta, comparte materiales y conserva una identidad única en toda la plataforma.</p>
-            <nav class="home-feature-links" aria-label="Funciones de comunidad">
-              <a href="/unitalk"><span class="home-feature-link-icon" aria-hidden="true">U</span><span><b>Entrar a UNITALK</b><small>Publica y conversa con estudiantes</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="/account"><span class="home-feature-link-icon" aria-hidden="true">@</span><span><b>Mi perfil Universe</b><small>Configura tu identidad académica</small></span><span class="home-feature-link-arrow" aria-hidden="true">→</span></a>
-              <a href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer"><span class="home-feature-link-icon" aria-hidden="true">?</span><span><b>Soporte directo</b><small>Recibe ayuda por WhatsApp</small></span><span class="home-feature-link-arrow" aria-hidden="true">↗</span></a>
-            </nav>
-          </article>
-        </div>
-        <div class="home-card-swap-controls"><span class="home-card-swap-status" data-card-swap-status aria-live="polite">1/4 · Organiza</span><button type="button" data-card-swap-previous aria-label="Tarjeta anterior">←</button><button type="button" data-card-swap-next aria-label="Siguiente tarjeta">→</button></div>
+    <section id="resources" class="resources chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
+      <div class="resource-grid">
+        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
+        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/ciclopre20271"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="Academic archive">Archivo académico</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Explore the evaluations and solutions archive.">Explora el archivo de evaluaciones y soluciones.</p></div><span data-icon="arrow-up-right"></span></a></div>
       </div>
     </section>
-
-    <section class="home-section home-channels" aria-labelledby="channels-title">
-      <div class="home-access-heading home-reveal">
-        <span class="home-section-label">Accesos importantes</span>
-        <h2 id="channels-title">Encuéntranos donde ya estudias.</h2>
-        <p>Presiona un logotipo para abrir su enlace oficial.</p>
-      </div>
-      <div class="home-access-logo-grid">
-        <a class="home-access-logo access-uni home-reveal" href="https://admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Admisión UNI" title="Admisión UNI">
-          <img src="/assets/home-access/uni.png" alt="Universidad Nacional de Ingeniería" width="2312" height="781" loading="lazy">
-        </a>
-        <a class="home-access-logo access-cepre home-reveal" href="https://www.cepre.uni.edu.pe/" target="_blank" rel="noopener noreferrer" aria-label="Abrir CEPREUNI" title="CEPREUNI">
-          <img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="400" height="400" loading="lazy">
-        </a>
-        <a class="home-access-logo access-youtube home-reveal" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="Abrir YouTube de Universe" title="YouTube">
-          <img src="/assets/home-access/youtube.png" alt="YouTube" width="4096" height="4096" loading="lazy">
-        </a>
-        <a class="home-access-logo access-whatsapp home-reveal" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp de Universe" title="WhatsApp">
-          <img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="1600" height="1136" loading="lazy">
-        </a>
-        <a class="home-access-logo access-drive home-reveal" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" target="_blank" rel="noopener noreferrer" aria-label="Abrir Drive de Universe" title="Google Drive">
-          <img src="/assets/home-access/drive.png" alt="Google Drive" width="960" height="890" loading="lazy">
-        </a>
-        <a class="home-access-logo access-tiktok home-reveal" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="Abrir TikTok de Universe" title="TikTok">
-          <img src="/assets/home-access/tiktok.png" alt="TikTok" width="3688" height="4167" loading="lazy">
-        </a>
-        <a class="home-access-logo access-linktree home-reveal" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Abrir Linktree de Universe" title="Linktree">
-          <img src="/assets/home-access/linktree.png" alt="Linktree" width="3840" height="2160" loading="lazy">
-        </a>
-      </div>
+    <section id="trajectory" class="trajectory chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
+      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
+      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
     </section>
-
-    <section class="home-section home-exams" aria-labelledby="exam-title">
-      <div class="home-exams-heading home-reveal">
-        <span class="home-section-label">EVALUACIONES 2027-1</span>
-        <h2 id="exam-title">Tus próximas evaluaciones.</h2>
-        <p>Consulta en un solo lugar las cuentas regresivas del Ciclo Preuniversitario, Ciclo Básico y Ciclo IEN.</p>
-      </div>
-      <div class="home-exam-grid">
-        <article class="home-exam-card exam-pre-one home-countdown home-reveal" data-target="2026-09-13T09:00:00-05:00" data-complete="Primera práctica calificada finalizada">
-          <header><span>PRIMERA PC</span><i>Ciclo Pre</i></header><h3>Primera práctica calificada</h3><p><b>13 SEP</b><span>Domingo · 9:00 a. m.</span></p>
-          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
-          <strong class="countdown-caption">Tiempo restante</strong>
-        </article>
-        <article class="home-exam-card exam-pre-two home-countdown home-reveal" data-target="2026-09-27T00:00:00-05:00" data-complete="Segunda práctica calificada finalizada">
-          <header><span>SEGUNDA PC</span><i>Ciclo Pre</i></header><h3>Segunda práctica calificada</h3><p><b>27 SEP</b><span>Domingo · 00:00 (medianoche)</span></p>
-          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
-          <strong class="countdown-caption">Tiempo restante</strong>
-        </article>
-        <article class="home-exam-card exam-basic-one home-countdown home-reveal" data-target="2026-09-13T09:00:00-05:00" data-complete="Primera evaluación calificada finalizada">
-          <header><span>PRIMERA EC</span><i>Ciclo Básico</i></header><h3>Primera evaluación calificada</h3><p><b>13 SEP</b><span>Domingo · 9:00 a. m.</span></p>
-          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
-          <strong class="countdown-caption">Tiempo restante</strong>
-        </article>
-        <article class="home-exam-card exam-basic-two home-countdown home-reveal" data-target="2026-09-27T00:00:00-05:00" data-complete="Segunda evaluación calificada finalizada">
-          <header><span>SEGUNDA EC</span><i>Ciclo Básico</i></header><h3>Segunda evaluación calificada</h3><p><b>27 SEP</b><span>Domingo · 00:00 (medianoche)</span></p>
-          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
-          <strong class="countdown-caption">Tiempo restante</strong>
-        </article>
-        <article class="home-exam-card exam-ien home-countdown home-reveal" data-target="2026-09-20T09:00:00-05:00" data-complete="Examen parcial presencial finalizado">
-          <header><span>EXAMEN PARCIAL</span><i>Ciclo IEN</i></header><h3>Examen parcial presencial</h3><p><b>20 SEP</b><span>Domingo · 9:00 a. m.</span></p>
-          <div class="countdown-units" aria-live="polite"><span><b data-count="days">--</b><small>días</small></span><span><b data-count="hours">--</b><small>horas</small></span><span><b data-count="minutes">--</b><small>min</small></span><span><b data-count="seconds">--</b><small>seg</small></span></div>
-          <strong class="countdown-caption">Tiempo restante</strong>
-        </article>
-      </div>
-      <a class="home-exam-official home-reveal" href="https://www.cepre.uni.edu.pe/" target="_blank" rel="noopener noreferrer"><span>Fechas del Ciclo Preuniversitario CEPREUNI 2027-1</span><b>Ir a CEPREUNI ↗</b></a>
-    </section>
-
-    <section class="home-section home-modules" id="modulos" aria-labelledby="modules-title">
-      <div class="home-section-head home-reveal">
-        <div><span class="home-section-label">Tu plataforma</span><h2 id="modules-title">Elige lo que necesitas hoy.</h2></div>
-        <p>Menos menús repetidos y más accesos útiles. Cada módulo resuelve una parte distinta de tu preparación.</p>
-      </div>
-      <div class="home-bento">
-        <a class="home-module module-admission home-reveal" href="/admision">
-          <span class="module-index">01</span>
-          <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10 12 4l9 6-9 6zM6 13v5M18 13v5M4 20h16"></path></svg></span>
-          <div><span class="module-tag">Proceso de ingreso</span><h3>Admisión</h3><p>Puntajes ideales, resultados históricos, modalidades y datos para decidir con contexto.</p></div>
-          <span class="module-link">Abrir admisión →</span>
-        </a>
-        <a class="home-module module-cepre home-reveal" href="/cepreuni">
-          <span class="module-index">02</span>
-          <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V7l8-4 8 4v12M8 19v-7h8v7M2 21h20"></path></svg></span>
-          <div><span class="module-tag">Ingreso directo</span><h3>CEPREUNI</h3><p>Máximos y mínimos, ranking, calculadora, ingresantes, temario y guía de aulas.</p></div>
-          <span class="module-link">Ver herramientas →</span>
-        </a>
-        <a class="home-module module-classes home-reveal" href="/clases">
-          <span class="module-index">03</span>
-          <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7zM4 4v16"></path></svg></span>
-          <div><span class="module-tag">Aprende por tema</span><h3>Clases</h3><p>Videos organizados por curso con preguntas para reforzar lo estudiado.</p></div>
-          <span class="module-link">Elegir una clase →</span>
-        </a>
-        <a class="home-module module-library home-reveal" href="/biblioteca">
-          <span class="module-index">04</span>
-          <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h6v16H4zM14 4h6v16h-6zM7 8h1M17 8h1"></path></svg></span>
-          <div><span class="module-tag">Recursos ordenados</span><h3>Biblioteca</h3><p>Busca materiales, formularios y colecciones desde un índice claro.</p></div>
-          <span class="module-link">Explorar biblioteca →</span>
-        </a>
-        <a class="home-module module-sim home-reveal" href="/simulacros">
-          <span class="module-index">05</span>
-          <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
-          <div><span class="module-tag">Entrena con tiempo</span><h3>Simulacros</h3><p>Practica con formatos UNI y San Marcos, revisa tu resultado y vuelve a intentarlo.</p></div>
-          <span class="module-link">Iniciar práctica →</span>
-        </a>
-        <a class="home-module module-talk home-reveal" href="/unitalk">
-          <span class="module-index">06</span>
-          <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4zM8 9h8M8 13h5"></path></svg></span>
-          <div><span class="module-tag">Comunidad Universe</span><h3>UNITALK</h3><p>Comparte preguntas, recursos y avances con otros estudiantes de forma responsable.</p></div>
-          <span class="module-link">Entrar a UNITALK →</span>
-        </a>
-        <a class="home-module module-planner home-reveal" href="/planificador">
-          <span class="module-index">07</span>
-          <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M7 3v4M17 3v4M3 10h18M7 14h3M14 14h3M7 18h3"></path></svg></span>
-          <div><span class="module-tag">Ruta personal de estudio</span><h3>Planificador</h3><p>Crea un cronograma con todos los temas UNI o las semanas CEPREUNI, edítalo y estudia con recordatorios y temporizador.</p></div>
-          <span class="module-link">Crear mi cronograma →</span>
-        </a>
-      </div>
-    </section>
-
   </main>
-
-  <footer class="home-footer">
-    <div class="home-footer-main">
-      <div class="home-footer-brand"><a href="/">Universe to Study</a><p>Recursos, herramientas y comunidad para una preparación preuniversitaria con orden.</p></div>
-      <div><h3>Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/planificador">Planificador</a><a href="/clases">Clases</a><a href="/biblioteca">Biblioteca</a></div>
-      <div><h3>Practica</h3><a href="/simulacros">Simulacros</a><a href="/temario">Temario</a><a href="/unitalk">UNITALK</a><a href="/calculadora">Calculadora</a></div>
-      <div><h3>Confianza</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a></div>
-    </div>
-    <div class="home-footer-bottom"><span>© <b id="home-year">2026</b> Universe to Study</span><span><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer">Soporte por WhatsApp</a></span></div>
-  </footer>
-
-  <a id="support-v2-fab" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" title="Soporte por WhatsApp"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.2c-1.4 0-2.8-.4-4-1.1l-.3-.2-3.1.8.8-3-.2-.3A7.7 7.7 0 1 1 12 19.2Zm4.3-5.5c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.2l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.3-3.2-2.9-.2-.3.2-.5.6-1 .1-.2.1-.3 0-.5l-.7-1.8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.7 1.1 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.2-.3-.2-.5-.3Z"></path></svg><span>WhatsApp</span></a>
-
-  <script src="/home.js?v=home-8" defer></script>
-  <script src="/components/text-type/TextType.js?v=text-type-3" defer></script>
-  <script src="/components/card-swap/CardSwap.js?v=card-swap-2" defer></script>
-<script src="/universe-polish.js?v=solid-11" defer></script>
-</body>
-</html>
+<footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
+  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
+  <div class="immersion-controls" hidden>
+    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
+    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
+    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
+    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
+    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
+  </div>
+  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
+  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
+  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
+  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
+</body></html>

@@ -1,0 +1,45 @@
+/* Functional workspaces share the same Universe shell and visual tokens. */
+body[data-native] #main,body[data-native] .chapter-nav{display:none!important}
+.native-shell{position:relative;z-index:2;width:min(1320px,calc(100% - 48px));margin:132px auto 72px;min-height:65vh;color:var(--text,#f5f5f7);font-family:Manrope,Arial,sans-serif}
+.native-shell *{box-sizing:border-box;max-width:100%}
+.native-shell :is(h1,h2,h3,h4,p){color:inherit;font-family:inherit}
+.native-shell h1{font-size:clamp(2rem,4.5vw,4rem);line-height:1.12;letter-spacing:-.05em;margin:16px 0 24px}
+.native-shell h2{font-size:clamp(1.4rem,2.5vw,2rem);line-height:1.25}
+.native-shell p{line-height:1.75}
+.native-shell :is(input,select,textarea,button){font:inherit}
+.native-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border:1px solid var(--line,#ffffff25);border-radius:12px;background:var(--panel,#111);color:inherit;padding:12px;min-width:0}
+.native-shell :is(button,.btn){border:1px solid var(--line,#ffffff25);border-radius:12px;background:var(--panel,#141414);color:inherit;padding:10px 16px;cursor:pointer}
+.native-shell :is(button,a):focus-visible{outline:2px solid #6c9cff;outline-offset:4px}
+.native-shell :is(.section-sub,.section-desc,.muted){color:var(--muted,#a5a5ae)}
+.native-shell :is(.section-label,.eyebrow){color:#91afff;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase}
+.native-shell :is(.universe-page-stage,.universe-page-stage-inner,.universe-static-page,main,.section,.ranking-section,.universe-legal-page,.universe-legal-shell,.universe-exams-page){background:transparent!important;padding-top:0;min-height:0}
+.native-shell .universe-legal-shell{max-width:900px;margin:auto}
+.native-shell :is(.card,.panel,.account-card,.admission-card,.ci-card,.docente-card,.ranking-card,.universe-exam-card){background:var(--panel,#111c)!important;border:1px solid var(--line,#ffffff20);border-radius:20px;box-shadow:none;backdrop-filter:blur(16px);padding:24px}
+/* Catch-all: any light/white surface inside a native tool, by naming convention rather than an exhaustive
+   list — every real page invents its own card/panel/box class names. Elements that intentionally carry a
+   brand-color background (buttons, status pills) are excluded via :not() below. */
+.native-shell :is([class*="-card"],[class*="-panel"],[class*="-box"],[class*="Card"],[class*="Panel"]):not(button):not(a):not([class*="pill"]):not([class*="badge"]):not([class*="chip"]){background:var(--panel,#12141c)!important;color:inherit!important;border-color:var(--line,#ffffff20)!important}
+.native-shell :is([class*="-card"],[class*="-panel"],[class*="-box"]) :is(h1,h2,h3,h4,h5,p,span,li,td,th,label,strong,b){color:inherit!important}
+.native-shell :is(.admission-hero,[class*="-hero"]):not(button):not(a){background:var(--panel,#12141c)!important}
+.native-shell :is(table){border-collapse:collapse;width:100%;font-size:.86rem}
+.native-shell :is(td,th){padding:12px;border-bottom:1px solid var(--line,#ffffff20);text-align:left}
+.native-shell :is(.table-wrap,.ranking-table-wrap){overflow:auto}
+.native-breadcrumb{display:flex;gap:12px;align-items:center;font-size:.75rem;color:var(--muted,#aaa);margin-bottom:28px}
+html[data-theme=dark] .native-shell{--bg:#050505;--bg2:#111;--surface:#111;--card:#141414;--text:#f4f4f6;--muted:#aaa;--border:#ffffff24;--navy:#f4f4f6;color-scheme:dark}
+html[data-theme=dark] .native-shell{--navy:#080808;--white:#f4f4f6;--gray:#aaa;--surface-2:#191919;--electric:#86aaff;--violet:#9aaee0;--purple:#b9c4e0;--cyan:#86aaff;--lime:#b9c4e0}
+.native-shell :is(h1,h2,h3,h4,.section-title,.section-sub,button,input,label,select,textarea){font-family:Manrope,Arial,sans-serif!important}
+html[data-theme=dark] .native-shell :is(.quiz-selector,.quiz-header,.subject-btn,.quiz-stats,.ranking-toolbar,.ranking-table,.ranking-summary,.account-card,.ci-card,.docente-card,.admission-panel){background:#111b!important;color:#f4f4f6!important;border-color:#ffffff24!important;box-shadow:none!important}
+.native-shell #quiz-panel:not(.active):not(.open){display:none}
+.native-shell :is(.universe-exams-page,.universe-legal-page){padding:0!important}
+html[data-theme=dark] #native-main :is(#quiz-panel,.qsb-icon,.quiz-subject-btn,.quiz-ai-note,.tp-header,.tp-back){background:#101012!important;color:#f2f2f6!important;border-color:#ffffff28!important}
+html[data-theme=dark] #native-main .quiz-subject-btn.active{background:#263047!important;border-color:#799aff!important}
+.native-shell .quiz-ai-note{padding:16px!important;margin:20px 0;border-radius:14px}
+html[data-theme=dark] .native-shell :is(.account-page,.planner-page,.unitalk-stage,.ci-page,.docentes-page,.admission-page){background:transparent!important;color:#f4f4f6}
+body[data-native]>.header{height:auto;min-height:64px;z-index:40}
+body[data-native] .header .nav{position:static;display:flex;background:none;border:0;padding:0;box-shadow:none;width:auto;height:auto}
+body[data-native] .header .account{position:static}
+body[data-native] .footer{position:relative;z-index:2}
+[data-google-signin-slot]{display:inline-flex;min-height:44px;align-items:center;font-size:.8rem;color:var(--muted,#a5a5ae)}
+.google-signin{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#202124;border-radius:9px;min-height:46px;padding:12px 18px;border:1px solid #dadce0;font-size:12px}
+.account-cloud-link{display:block;margin:18px 0}
+@media(max-width:760px){.native-shell{width:calc(100% - 28px);margin-top:112px}.native-shell :is(.grid,.admission-grid){grid-template-columns:1fr}.native-shell :is(td,th){padding:9px;font-size:.75rem}}

@@ -1,0 +1,220 @@
+{
+  "routes": [
+    "",
+    "explorar",
+    "biblioteca",
+    "biblioteca/universe",
+    "biblioteca/cuzcano",
+    "biblioteca/lumbreras",
+    "biblioteca/librosuniversitarios",
+    "cepreuni",
+    "cepreuni/ciclopre20271",
+    "temario",
+    "clases",
+    "planificador",
+    "fijas-cepreuni",
+    "calculadora",
+    "account"
+  ],
+  "natives": {
+    "account/cloud": {
+      "file": "account.html",
+      "scripts": [
+        "cepre-codes.js",
+        "account.js"
+      ],
+      "contentLength": 14211
+    },
+    "planificador/seguimiento": {
+      "file": "planificador.html",
+      "scripts": [
+        "planner-syllabus-data.js",
+        "cepreuni-2027-data.js",
+        "universe-ui/admission-engine.js",
+        "planner.js"
+      ],
+      "contentLength": 23419
+    },
+    "unitalk": {
+      "file": "unitalk.html",
+      "scripts": [
+        "unitalk.js"
+      ],
+      "contentLength": 10286
+    },
+    "examenes": {
+      "file": "examenes.html",
+      "scripts": [
+        "universe-ui/native/examenes-1.js",
+        "universe-ai.js"
+      ],
+      "contentLength": 11448
+    },
+    "simulacros": {
+      "file": "simulacros.html",
+      "scripts": [
+        "simulacro-archive-data.js",
+        "simulacro-final-data.js",
+        "simulacro-final.js"
+      ],
+      "contentLength": 315
+    },
+    "ranking": {
+      "file": "ranking.html",
+      "scripts": [
+        "cepre-2026-2-official.js",
+        "universe-ui/native/ranking-1.js",
+        "cepre-history-2025-2.js",
+        "universe-ui/native/ranking-2.js"
+      ],
+      "contentLength": 7690
+    },
+    "admision": {
+      "file": "admision.html",
+      "scripts": [
+        "admission-2026-2-exam1-summary.js",
+        "admission-2026-2-exam2-summary.js",
+        "admission-2026-2-exam3-summary.js",
+        "admission-dashboard.js",
+        "admission-data.js",
+        "universe-ui/admission-engine.js",
+        "admission-ideal-tools.js",
+        "san-marcos-data.js",
+        "san-marcos-features.js"
+      ],
+      "contentLength": 15026
+    },
+    "docentes-cepreuni": {
+      "file": "docentes-cepreuni.html",
+      "scripts": [
+        "teacher-data.js",
+        "docentes-cepreuni.js",
+        "universe-ui/admission-engine.js"
+      ],
+      "contentLength": 1774
+    },
+    "informacion-cepreuni": {
+      "file": "informacion-cepreuni.html",
+      "scripts": [
+        "universe-ui/admission-engine.js",
+        "informacion-cepreuni.js"
+      ],
+      "contentLength": 28442
+    },
+    "privacidad": {
+      "file": "privacidad.html",
+      "scripts": [],
+      "contentLength": 5562
+    },
+    "terminos": {
+      "file": "terminos.html",
+      "scripts": [],
+      "contentLength": 3976
+    },
+    "nosotros": {
+      "file": "nosotros.html",
+      "scripts": [],
+      "contentLength": 1285
+    },
+    "metodologia-editorial": {
+      "file": "metodologia-editorial.html",
+      "scripts": [],
+      "contentLength": 1324
+    },
+    "correcciones": {
+      "file": "correcciones.html",
+      "scripts": [],
+      "contentLength": 906
+    },
+    "contacto": {
+      "file": "contacto.html",
+      "scripts": [],
+      "contentLength": 891
+    },
+    "aula": {
+      "file": "clases.html",
+      "scripts": [
+        "classes-data.js",
+        "classes.js"
+      ],
+      "contentLength": 401
+    },
+    "biblioteca/recursos": {
+      "file": "biblioteca.html",
+      "scripts": [],
+      "contentLength": 33293
+    },
+    "autores/criss-vasquez": {
+      "file": "autores/criss-vasquez/index.html",
+      "scripts": [],
+      "contentLength": 971
+    },
+    "autores/luhana-belen": {
+      "file": "autores/luhana-belen/index.html",
+      "scripts": [],
+      "contentLength": 963
+    },
+    "calculadora-admision": {
+      "file": "calculadora-admision.html",
+      "scripts": [
+        "admission-data.js",
+        "admission-calculator.js"
+      ],
+      "contentLength": 5395
+    },
+    "fichas-admision": {
+      "file": "fichas-admision.html",
+      "scripts": [
+        "admission-frequency-data.js",
+        "fichas-admision.js"
+      ],
+      "contentLength": 2894
+    },
+    "guias/como-interpretar-ranking-cepreuni": {
+      "file": "guias/como-interpretar-ranking-cepreuni/index.html",
+      "scripts": [],
+      "contentLength": 1072
+    },
+    "guias/como-se-calcula-puntaje-cepreuni-2026-2": {
+      "file": "guias/como-se-calcula-puntaje-cepreuni-2026-2/index.html",
+      "scripts": [],
+      "contentLength": 1519
+    },
+    "ingresantes-cepreuni": {
+      "file": "ingresantes-cepreuni.html",
+      "scripts": [
+        "cepre-cutoffs.js",
+        "cepre-2026-2-official.js",
+        "ingresantes-cepreuni.js",
+        "universe-ui/admission-engine.js"
+      ],
+      "contentLength": 2227
+    },
+    "ingresantes-uni-2026-2": {
+      "file": "ingresantes-uni-2026-2.html",
+      "scripts": [
+        "admission-2026-2-entrants-data.js",
+        "admission-entrants.js"
+      ],
+      "contentLength": 3955
+    },
+    "ranking-admision": {
+      "file": "ranking-admision.html",
+      "scripts": [
+        "admission-2026-2-ranking-data.js",
+        "admission-ranking.js"
+      ],
+      "contentLength": 3398
+    },
+    "resultados-admision": {
+      "file": "resultados-admision.html",
+      "scripts": [
+        "admission-data.js",
+        "universe-ui/admission-engine.js",
+        "san-marcos-data.js",
+        "san-marcos-features.js"
+      ],
+      "contentLength": 2606
+    }
+  }
+}
