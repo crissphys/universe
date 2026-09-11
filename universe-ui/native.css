@@ -1,135 +1,65 @@
-/* The design system for Universe's real tools.
-   The legacy stylesheets now ship stripped of every paint property (see strip-legacy.mjs), so they only
-   place things. Everything visible on a tool page is defined here, once, and therefore looks the same
-   across every tool instead of each page carrying its own old look. */
+/* Compatibility layer for the real tools — not a second design system.
+   The tools now sit in the platform's own frame (.platform > .side-rail + .platform-body) and their
+   blocks carry the platform's own components (.p-panel, .p-grid, .p-tile, .button), so platform.css and
+   refinements.css do the designing. What is left here is only what those sheets never had to cover:
+   form controls, tables and a few widgets that exist solely inside the tools. */
 
-.native-shell{
-  --ns-bg:#07080d;
-  --ns-panel:#101219;
-  --ns-panel-high:#151824;
-  --ns-ink:#f4f5f8;
-  --ns-ink-soft:#9ea1b2;
-  --ns-line:rgba(255,255,255,.09);
-  --ns-line-strong:rgba(255,255,255,.16);
-  --ns-accent:#8fb0ff;
-  --ns-accent-ink:#0a0c14;
-  --ns-radius:18px;
-  --ns-ease:cubic-bezier(.23,1,.32,1);
-  position:relative;z-index:2;
-  width:min(1240px,calc(100% - 48px));margin:128px auto 96px;min-height:62vh;
-  color:var(--ns-ink);font-family:Manrope,Arial,sans-serif;font-size:15px;line-height:1.6;
-}
 body[data-native] #main,body[data-native] .chapter-nav{display:none!important}
 body[data-native]>.header{height:auto;min-height:64px;z-index:40}
 body[data-native] .header .nav{position:static;display:flex;background:none;border:0;padding:0;box-shadow:none;width:auto;height:auto}
 body[data-native] .header .account{position:static}
 body[data-native] .footer{position:relative;z-index:2}
-
+.native-shell{position:relative;z-index:2;margin:118px 0 80px;min-height:60vh}
 .native-shell *{box-sizing:border-box;max-width:100%;min-width:0}
-.native-shell :is(h1,h2,h3,h4,h5,h6){font-family:inherit;color:var(--ns-ink);letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
-.native-shell h1{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.045em;margin:.2em 0 .5em}
-.native-shell h2{font-size:clamp(1.35rem,2.2vw,1.9rem);margin:1.6em 0 .6em}
-.native-shell h3{font-size:1.1rem;margin:1.4em 0 .5em}
-.native-shell :is(p,li,td,th,dd,dt,label,figcaption){color:var(--ns-ink-soft)}
-.native-shell :is(strong,b,h1,h2,h3,h4,h5,h6){color:var(--ns-ink)}
-.native-shell p{max-width:72ch}
-.native-shell a{color:var(--ns-accent);text-decoration:none;transition:opacity .15s var(--ns-ease)}
-.native-shell a:hover{opacity:.72}
-.native-shell :is(.section-label,.eyebrow,[class*="eyebrow"],[class*="kicker"]){display:inline-block;color:var(--ns-accent);font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
-.native-shell :is(.muted,.section-sub,.section-desc,small,[class*="-hint"],[class*="-note"]){color:var(--ns-ink-soft)}
-.native-shell img{border-radius:12px}
-.native-shell hr{border:0;border-top:1px solid var(--ns-line);margin:32px 0}
+/* Legacy page wrappers are containers, never surfaces — the platform frame is the surface now. */
+.native-view :is([class*="-page"],[class*="-stage"],[class*="-shell"],[class*="-section"],[class*="-wrap"]){background:none;border:0;padding:0;min-height:0}
+.native-view>:is(section,article)+:is(section,article){margin-top:34px}
 
-/* Page scaffolding the legacy markup provides: these are containers, never surfaces. */
-.native-shell :is(main,.section,.wrap,.container,[class$="-page"],[class$="-stage"],[class$="-shell"],[class$="-grid"],[class$="-list"],[class$="-row"],[class$="-actions"],[class$="-toolbar"]){background:none;padding-top:0;min-height:0}
-.native-shell .universe-legal-shell{max-width:820px;margin-inline:auto}
+/* Type: follow the platform's scale rather than inventing a second one. */
+/* Legacy heading sizes are structural, so they survive the strip and come back as 60px display type in
+   the middle of a page. The platform has one heading scale; these win on order over the page's own. */
+.page-view.native-view :is(h1,h2,h3,h4,h5){letter-spacing:-.5px;line-height:1.25;margin:0 0 12px;font-weight:500}
+.page-view.native-view :is(h1,h2){font-size:21px}
+.page-view.native-view :is(h3,h4,h5){font-size:16px}
+.native-view :is(p,li,dd,label,figcaption,small){color:var(--muted);font-size:11px;line-height:1.9}
+.native-view p{max-width:70ch}
+.native-view :is(strong,b){color:var(--text)}
+.native-view img{border-radius:10px}
+.native-view hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 
-/* Surfaces.
-   A surface has to earn itself. The old design boxed everything — hero in a box, each section in a box,
-   each block inside that section in another box — which is what made every page read as a stack of
-   slabs. Here the page itself is the surface: sections are separated by space, and only a genuinely
-   repeated unit (a card in a grid) is drawn as an object you could pick up. */
-.native-shell :is(.card,.panel,[class*="-card"],[class*="-tile"],[class*="-panel"],[class*="Card"],[class*="Panel"]
-):not(button):not(a):not(li):not([class*="pill"]):not([class*="badge"]):not([class*="chip"]):not([class*="tag"]):not([class*="-page"]):not([class*="-grid"]):not([class*="-list"]):not([class*="-wrap"]){
-  background:var(--ns-panel);border:1px solid var(--ns-line);border-radius:var(--ns-radius);padding:20px;
+/* Controls the platform sheets do not define, matched to .button's proportions. */
+.native-view :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea){
+  font:inherit;font-size:11px;color:var(--text);background:var(--soft,#ffffff08);
+  border:1px solid var(--line);border-radius:10px;padding:11px 13px;width:100%;
+  transition:border-color .2s cubic-bezier(.23,1,.32,1);
 }
-/* Surfaces never stack. A card inside a card is just a region of that card. */
-.native-shell :is(.card,.panel,[class*="-card"],[class*="-tile"],[class*="-panel"]) :is(.card,.panel,[class*="-card"],[class*="-tile"],[class*="-panel"]){
-  background:none;border:0;border-radius:0;padding:0;
-}
+.native-view :is(input,select,textarea):focus{border-color:#97b5ff65;outline:none}
+.native-view :is(input,textarea)::placeholder{color:var(--muted);opacity:.7}
+.native-view input:is([type=checkbox],[type=radio],[type=range]){width:auto;accent-color:var(--blue,#97b5ff)}
+.native-view :is(button,.button,a.button,[role=button]):active{transform:scale(.97)}
+.native-view :is(button,.button){transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .2s,background-color .2s}
+.native-view :is(button,a,input,select,textarea):focus-visible{outline:2px solid #97b5ff;outline-offset:3px}
 
-/* Sections are rhythm, not containers. */
-.native-shell > :is(section,article,div),.native-shell section[id]{background:none;border:0;padding:0;margin-block:clamp(40px,6vw,72px)}
-.native-shell > :first-child{margin-top:0}
-
-/* The hero is the page opening itself — no slab behind it, just air and a closing rule. */
-.native-shell :is([class*="-hero"],[class*="-banner"],[class*="-overview"],[class*="-intro"]):not(button):not(a):not([class*="-card"]){
-  background:none;background-image:none;border:0;border-bottom:1px solid var(--ns-line);border-radius:0;
-  padding:0 0 clamp(28px,4vw,48px);margin-bottom:clamp(32px,5vw,56px);
-}
-.native-shell :is([class*="-hero"],[class*="-banner"]) :is(h1,h2){margin-top:0}
-
-/* Controls. */
-.native-shell :is(button,.btn,[class*="-btn"],a.button,[role=button]){
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  font:inherit;font-weight:600;color:var(--ns-ink);
-  background:var(--ns-panel-high);border:1px solid var(--ns-line-strong);border-radius:12px;
-  padding:10px 18px;min-height:42px;cursor:pointer;text-decoration:none;
-  transition:transform .16s var(--ns-ease),background-color .16s var(--ns-ease),opacity .16s var(--ns-ease);
-}
-.native-shell :is(button,.btn,[class*="-btn"],a.button):hover{background:#1c2030}
-/* Instant physical feedback on press — the single detail that makes a UI feel like it is listening. */
-.native-shell :is(button,.btn,[class*="-btn"],a.button,[role=button]):active{transform:scale(.97)}
-.native-shell :is(button,.btn,[class*="-btn"],a.button):disabled,.native-shell [aria-disabled=true]{opacity:.45;cursor:not-allowed}
-.native-shell :is(button,.btn,[class*="-btn"],a.button):is(.primary,[class*="primary"],[class*="cta"]){background:var(--ns-accent);border-color:transparent;color:var(--ns-accent-ink)}
-.native-shell :is(button,.btn,[class*="-btn"]):is(.primary,[class*="primary"]):hover{background:#a6c0ff}
-.native-shell :is(button,[class*="-btn"]):is(.ghost,.secondary,[class*="ghost"]){background:transparent}
-.native-shell :is(button,[class*="-btn"]):is(.active,[aria-pressed=true],[aria-selected=true]){background:#243050;border-color:var(--ns-accent)}
-.native-shell :is(input,select,textarea){
-  font:inherit;color:var(--ns-ink);background:var(--ns-panel-high);
-  border:1px solid var(--ns-line-strong);border-radius:12px;padding:11px 14px;width:100%;
-  transition:border-color .16s var(--ns-ease);
-}
-.native-shell :is(input,select,textarea):focus{border-color:var(--ns-accent);outline:none}
-.native-shell :is(input[type=checkbox],input[type=radio],input[type=range]){width:auto;padding:0;accent-color:var(--ns-accent)}
-.native-shell ::placeholder{color:#70737f}
-.native-shell :is(button,a,input,select,textarea):focus-visible{outline:2px solid var(--ns-accent);outline-offset:3px}
-
-/* Status pills keep their job (short, loud, informative) without the old palette. */
-.native-shell :is([class*="pill"],[class*="badge"],[class*="chip"],[class*="tag"]):not(input){
-  display:inline-flex;align-items:center;gap:6px;background:#1b2033;color:var(--ns-ink);
-  border:1px solid var(--ns-line);border-radius:999px;padding:4px 12px;font-size:.74rem;font-weight:600;letter-spacing:.02em;
-}
-
-/* Data. */
-.native-shell table{border-collapse:collapse;width:100%;font-size:.88rem}
-.native-shell :is(td,th){padding:12px 14px;border-bottom:1px solid var(--ns-line);text-align:left}
-.native-shell th{color:var(--ns-ink);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
-.native-shell tbody tr{transition:background-color .15s var(--ns-ease)}
-.native-shell tbody tr:hover{background:rgba(255,255,255,.03)}
-.native-shell :is(.table-wrap,[class*="table-wrap"]){overflow-x:auto;border:1px solid var(--ns-line);border-radius:var(--ns-radius)}
-.native-shell :is(ul,ol):not([class]){padding-left:1.2em}
-.native-shell :is(ul,ol):not([class]) li{margin:.4em 0}
+/* Tables: the tools are full of them and the platform never needed one. */
+.native-view table{border-collapse:collapse;width:100%;font-size:11px}
+.native-view :is(td,th){padding:11px 12px;border-bottom:1px solid var(--line);text-align:left}
+.native-view th{color:var(--text);font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.native-view td{color:var(--muted)}
+.native-view tbody tr{transition:background-color .15s cubic-bezier(.23,1,.32,1)}
+.native-view tbody tr:hover{background:#ffffff06}
+.native-view [class*="table-wrap"]{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
 
 /* Overlays. */
-.native-shell :is(dialog,[role=dialog],[class*="modal"]):not([class*="-open"]){color:var(--ns-ink)}
-.native-shell :is(dialog,[role=dialog]){background:var(--ns-panel);border:1px solid var(--ns-line-strong);border-radius:20px;padding:28px;max-width:min(560px,92vw)}
-.native-shell dialog::backdrop{background:rgba(4,5,9,.72);backdrop-filter:blur(6px)}
-.native-shell [class*="toast"]{background:var(--ns-panel-high);border:1px solid var(--ns-line-strong);border-radius:14px;padding:12px 16px}
+.native-view :is(dialog,[role=dialog]){background:var(--solid,#0f1117);border:1px solid var(--line);border-radius:15px;padding:25px;max-width:min(560px,92vw);color:var(--text)}
+.native-view dialog::backdrop{background:#04050988;backdrop-filter:blur(6px)}
+.native-view [class*="toast"]{border:1px solid var(--line);border-radius:12px;padding:12px 15px}
 
-.native-breadcrumb{display:flex;gap:10px;align-items:center;font-size:.75rem;color:var(--ns-ink-soft);margin-bottom:28px}
-.native-breadcrumb a{color:var(--ns-ink-soft)}
-[data-google-signin-slot]{display:inline-flex;min-height:44px;align-items:center;font-size:.8rem;color:var(--ns-ink-soft)}
-.google-signin{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#202124;border-radius:10px;min-height:46px;padding:12px 18px;border:1px solid #dadce0;font-size:13px;font-weight:600}
+[data-google-signin-slot]{display:inline-flex;min-height:44px;align-items:center;font-size:10px;color:var(--muted)}
+.google-signin{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#202124;border-radius:9px;min-height:44px;padding:12px 18px;border:1px solid #dadce0;font-size:12px;font-weight:600}
 .account-cloud-link{display:block;margin:18px 0}
 
-/* Entrance: the tool content fades up once, so a page never snaps into place. */
-@media (prefers-reduced-motion:no-preference){
-  .native-shell{animation:ns-in .42s var(--ns-ease) both}
-  @keyframes ns-in{from{opacity:0;transform:translateY(8px)}}
-}
 @media(max-width:760px){
-  .native-shell{width:calc(100% - 28px);margin-top:104px}
-  .native-shell [class*="-grid"]{grid-template-columns:1fr!important}
-  .native-shell :is(td,th){padding:9px;font-size:.78rem}
+  .native-shell{margin-top:96px}
+  .native-view [class*="-grid"]{grid-template-columns:1fr!important}
+  .native-view :is(td,th){padding:8px;font-size:10px}
 }
