@@ -1,287 +1,75 @@
-<!DOCTYPE html>
-<html lang="es" data-universe-page="planner">
+<!doctype html>
+<html lang="es" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Planificador de estudio | Universe to Study</title>
-  <meta name="description" content="Crea un cronograma de estudio personalizado para CEPREUNI, academia o preparación autodidacta con todos los temas UNI, calendario editable y técnica Pomodoro.">
-  <link rel="canonical" href="https://universetostudy.com/planificador">
-  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1">
-  <meta name="theme-color" content="#071a3d">
-  <script>
-    (function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();
-    (function(){try{var p=location.pathname;if(/\.html$/i.test(p))history.replaceState(null,'',p.replace(/\.html$/i,'')+location.search+location.hash)}catch(e){}})();
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Sora:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=solid-5">
-  <link rel="stylesheet" href="/universe-polish.css?v=solid-5">
-  <link rel="stylesheet" href="/universe-design-v2.css?v=design-2">
-  <link rel="stylesheet" href="/planner.css?v=motion-1">
-</head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Universe — El origen de tu siguiente idea</title>
+  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
+  <meta name="color-scheme" content="dark light"><link rel="icon" href="/assets/home-access/universe-logo.png">
+  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css"><link rel="stylesheet" href="/universe-ui/platform.css"><link rel="stylesheet" href="/universe-ui/refinements.css"><script type="module" src="/universe-ui/app.js"></script>
+<link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/auth.js" defer></script></head>
 <body>
-  <div id="universe-page-loader" role="status" aria-live="polite">
-    <div class="upl-card"><div class="upl-orbit"><span></span></div><strong>Cargando planificador</strong><small>Preparando tus temarios y calendario...</small></div>
-  </div>
-
-  <nav>
-    <a class="nav-logo" data-route="home" href="/">Universe to Study</a>
-    <ul class="nav-links">
-      <li><a data-route="home" href="/">Inicio</a></li>
-      <li><a data-route="admission" href="/admision">Admisión</a></li>
-      <li><a data-route="cepre" href="/cepreuni">CEPREUNI</a></li>
-      <li><a data-route="planner" href="/planificador">Planificador</a></li>
-      <li><a data-route="syllabus" href="/temario">Temario</a></li>
-      <li><a data-route="classes" href="/clases">Clases</a></li>
-      <li><a data-route="library" href="/biblioteca">Biblioteca</a></li>
-      <li><a data-route="simulators" href="/simulacros">Simulacros</a></li>
-    </ul>
-    <div class="nav-actions">
-      <button aria-label="Cambiar tema" class="universe-theme-toggle nav-theme-toggle" id="universe-theme-toggle" onclick="toggleUniverseTheme()" title="Cambiar tema" type="button">
-        <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.8A8.7 8.7 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"></path></svg>
-        <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
-      </button>
-    </div>
-  </nav>
-
-  <main class="planner-page" id="planner-main" data-i18n-ignore>
-    <section class="planner-auth" id="planner-auth">
-      <div class="planner-auth-art" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-        <div class="planner-orbit orbit-one"><i></i></div><div class="planner-orbit orbit-two"><i></i></div>
-        <div class="planner-u-mark"><b>U</b><i></i></div>
-        <em class="planner-float-card card-calendar">PLAN</em><em class="planner-float-card card-focus">FOCUS</em><em class="planner-float-card card-progress">100%</em>
-      </div>
-      <div class="planner-auth-copy">
-        <span class="planner-kicker" data-planner-t="privatePlan">ACCESO PRIVADO Y SINCRONIZADO</span>
-        <h1 data-planner-t="platformTitle">Plataforma Universe</h1>
-        <p data-planner-t="platformCopy">Entra a tu espacio de estudio o crea una cuenta propia de Universe.</p>
-
-        <div class="planner-auth-tabs" role="tablist" aria-label="Tipo de acceso">
-          <button class="active" data-auth-mode="login" type="button" role="tab" aria-selected="true" data-planner-t="signIn">Ingresar</button>
-          <button data-auth-mode="register" type="button" role="tab" aria-selected="false" data-planner-t="createAccount">Crear cuenta</button>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
+  <div class="space-shade" aria-hidden="true"></div>
+  <header class="header">
+    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+    <nav class="nav" aria-label="Navegación principal"><a href="/explorar" data-en="Platform">Plataforma</a><a href="/cepreuni">CEPREUNI</a><a href="/biblioteca" data-en="Library">Biblioteca</a><a href="/planificador" data-en="Planner">Planificador</a></nav>
+    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
+  </header>
+  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a></nav>
+  <main id="main">
+    <section id="origin" class="hero chapter">
+      <div class="hero-grid wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
+          <h1><span data-en="Your curiosity.">Tu curiosidad.</span><br><span class="outline-word" data-en="A new dimension.">Otra dimensión.</span></h1>
+          <p class="hero-description" data-en="Every great idea begins with a question. Connect knowledge, practice and purpose in one place.">Toda gran idea empieza con una pregunta. Conecta conocimiento, práctica y propósito en un solo lugar.</p>
+<div class="hero-cta"><a class="button primary" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
+          <p class="hero-note" data-en="For curious minds. For your next step.">Para mentes curiosas. Para tu siguiente paso.</p>
         </div>
-        <form class="planner-credentials" id="planner-credentials" novalidate>
-          <label><span data-planner-t="username">Nombre de usuario</span><input id="planner-auth-username" name="username" autocomplete="username" maxlength="24" placeholder="tu_usuario" required></label>
-          <label><span data-planner-t="password">Contraseña de Universe</span><input id="planner-auth-password" name="password" type="password" autocomplete="current-password" maxlength="72" placeholder="8 caracteres o más" required></label>
-          <button class="planner-primary planner-credential-submit" id="planner-auth-submit" type="submit" data-planner-t="enterPlatform">Entrar a la plataforma</button>
-          <p class="planner-auth-status" id="planner-auth-status" role="status" aria-live="polite"></p>
-        </form>
-
-        <div class="planner-auth-divider"><span data-planner-t="orGoogle">o continúa con Google</span></div>
-        <h2 class="planner-google-heading" data-planner-t="signInTitle">Inicia con Google para crear tu horario</h2>
-        <button class="planner-google-button" id="planner-login" type="button"><span class="planner-google">G</span><span data-planner-t="continueGoogle">Continuar con Google</span></button>
-        <small data-planner-t="authNote">Nunca solicitamos ni guardamos tu contraseña de Gmail.</small>
+        <div class="galaxy-label" aria-hidden="true"><span class="target-cross"></span><span>UNIVERSE / ORIGIN<br><small>EL CONOCIMIENTO NO TIENE UN SOLO CENTRO</small></span></div>
+      </div>
+      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
+    </section>
+    <section id="system" class="system chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
+      <div class="command-panel reveal">
+        <div class="command-main"><div class="command-meta"><span class="orb-small" aria-hidden="true"></span><strong>UNIVERSE <span>EXPLORER</span></strong></div><h3 data-en="Where does your mind want to go?">¿A dónde quiere ir tu mente?</h3>
+          <form id="intent-form"><label for="intent" class="sr-only">Tu objetivo de estudio</label><input id="intent" maxlength="220" autocomplete="off" placeholder="Quiero entender física, organizarme, encontrar un libro…" required><button type="submit" aria-label="Encontrar mi ruta"><span data-icon="arrow-right"></span></button></form>
+          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam ↗">Preparar mi primera PC ↗</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book ↗">Encontrar un libro ↗</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week ↗">Organizar mi semana ↗</button></div>
+          <p class="command-disclaimer" data-en="Local resource finder. No connected AI, API usage or external transmission of your text.">Buscador local de recursos. Sin IA conectada, consumo de API ni envío de tu texto.</p>
+          <div id="intent-result" class="intent-result" aria-live="polite" hidden></div>
+        </div><div class="command-visual" aria-hidden="true"><div class="core-orbit one"></div><div class="core-orbit two"></div><div class="core-orbit three"></div><div class="core-sphere"></div><span class="core-caption">PREGUNTA → CONECTA → AVANZA</span></div>
+      </div>
+      <div class="workspace reveal">
+        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
+        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
       </div>
     </section>
-
-    <section class="planner-wizard" id="planner-wizard" hidden>
-      <header class="planner-wizard-head">
-        <div><span class="planner-kicker" data-planner-t="setup">CONFIGURACIÓN INICIAL</span><h2 data-planner-t="buildRoute">Construyamos tu ruta de estudio</h2><p id="planner-welcome"></p></div>
-        <ol class="planner-steps" aria-label="Progreso del registro">
-          <li class="active" data-step-indicator="1"><b>1</b><span data-planner-t="profile">Perfil</span></li>
-          <li data-step-indicator="2"><b>2</b><span data-planner-t="schedule">Horario</span></li>
-          <li data-step-indicator="3"><b>3</b><span data-planner-t="goal">Meta</span></li>
-        </ol>
-      </header>
-
-      <form id="planner-setup-form">
-        <section class="planner-step-panel active" data-step="1">
-          <div class="planner-question-head"><span>01</span><div><h3 data-planner-t="studentQuestion">¿Qué tipo de estudiante eres?</h3><p data-planner-t="studentHelp">Esto define el temario y la forma en que distribuiremos tus semanas.</p></div></div>
-          <label class="planner-field planner-username"><span data-planner-t="username">Nombre de usuario</span><div><b>@</b><input id="planner-username" autocomplete="username" maxlength="24" pattern="[a-z0-9_-]{3,24}" placeholder="tu_usuario" required></div><small data-planner-t="usernameHelp">Entre 3 y 24 caracteres: letras minúsculas, números, guion o guion bajo.</small></label>
-          <div class="planner-choice-grid student-types" id="planner-student-types">
-            <button class="planner-choice blue" data-student-type="cepreuni" type="button"><span class="choice-icon">C</span><strong>CEPREUNI 2027-1</strong><small data-planner-t="cepreDescription">Ruta semanal según prácticas y parciales.</small><i data-planner-t="select">Seleccionar</i></button>
-            <button class="planner-choice red" data-student-type="academy" type="button"><span class="choice-icon">A</span><strong data-planner-t="academy">Academia</strong><small data-planner-t="academyDescription">Preparación basada en el temario de admisión UNI.</small><i data-planner-t="select">Seleccionar</i></button>
-            <button class="planner-choice green" data-student-type="independent" type="button"><span class="choice-icon">I</span><strong data-planner-t="independent">Autodidacta</strong><small data-planner-t="independentDescription">Una ruta completa para estudiar por tu cuenta.</small><i data-planner-t="select">Seleccionar</i></button>
-          </div>
-
-          <div class="planner-conditional planner-profile-subview" id="planner-cepre-cycle" hidden>
-            <button class="planner-inline-back" type="button" data-profile-choice-back>← <span data-planner-t="back">Atrás</span></button>
-            <h4 data-planner-t="cepreCycleQuestion">¿Qué ciclo CEPREUNI 2027-1 llevarás?</h4>
-            <div class="planner-pill-options">
-              <button type="button" data-cepre-cycle="preuniversitario" data-planner-t="preCycle">Ciclo preuniversitario</button>
-              <button type="button" data-cepre-cycle="basico" data-planner-t="basicCycle">Ciclo básico</button>
-              <button type="button" data-cepre-cycle="ien" data-planner-t="cycleI">Ciclo IEN</button>
-            </div>
-          </div>
-
-          <div class="planner-conditional planner-profile-subview" id="planner-academies" hidden>
-            <button class="planner-inline-back" type="button" data-profile-choice-back>← <span data-planner-t="back">Atrás</span></button>
-            <div class="planner-subheading"><div><h4 data-planner-t="academyQuestion">¿En qué academia estudias?</h4><p data-planner-t="academyHelp">Elige una opción o escribe el nombre de otra academia.</p></div><label class="planner-search"><span>⌕</span><input id="academy-search" type="search" placeholder="Buscar academia"></label></div>
-            <div class="academy-grid" id="academy-grid"></div>
-            <div class="planner-custom-academy" id="custom-academy-wrap" hidden>
-              <label class="planner-field"><span data-planner-t="otherAcademy">Nombre de la otra academia</span><input id="custom-academy" maxlength="60" placeholder="Escribe el nombre completo"></label>
-              <button class="planner-primary planner-subview-continue" id="planner-custom-academy-continue" type="button"><span data-planner-t="continue">Continuar</span> →</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="planner-step-panel" data-step="2" hidden>
-          <div class="planner-question-head"><span>02</span><div><h3 data-planner-t="shiftQuestion">¿En qué horario quieres organizar tus sesiones?</h3><p data-planner-t="shiftHelp">Elige un turno o crea una franja propia; distribuiremos ahí tus bloques y descansos.</p></div></div>
-          <div class="planner-shift-grid">
-            <button class="planner-shift" data-shift="morning" type="button"><span>☀</span><div><small data-planner-t="morning">MAÑANA</small><strong>7:00 a. m. — 2:00 p. m.</strong><p data-planner-t="blocksBreaks">4 bloques · 3 descansos</p></div></button>
-            <button class="planner-shift" data-shift="afternoon" type="button"><span>◐</span><div><small data-planner-t="afternoon">TARDE</small><strong>2:00 p. m. — 8:00 p. m.</strong><p data-planner-t="blocksBreaks">4 bloques · 3 descansos</p></div></button>
-            <button class="planner-shift custom" data-shift="custom" type="button"><span>◷</span><div><small data-planner-t="customSchedule">HORARIO PERSONALIZADO</small><strong data-planner-t="chooseHours">Tú eliges la hora</strong><p data-planner-t="customScheduleCopy">Se ajusta a tu disponibilidad real</p></div></button>
-          </div>
-          <div class="planner-custom-shift" id="planner-custom-shift" hidden>
-            <div>
-              <label class="planner-field"><span data-planner-t="customStartTime">Quiero empezar a estudiar a las</span><input id="planner-custom-start" type="time" value="08:00" step="300"></label>
-              <span class="planner-custom-shift-arrow" aria-hidden="true">→</span>
-              <label class="planner-field"><span data-planner-t="customEndTime">Quiero terminar de estudiar a las</span><input id="planner-custom-end" type="time" value="14:00" step="300"></label>
-            </div>
-            <p id="planner-custom-summary" role="status" aria-live="polite"></p>
-          </div>
-
-          <div class="planner-question-head compact"><span>03</span><div><h3 data-planner-t="focusQuestion">¿Qué área necesita más espacio?</h3><p data-planner-t="focusHelp">Todas seguirán presentes; el área elegida recibirá más bloques.</p></div></div>
-          <div class="planner-focus-grid">
-            <button class="planner-focus science" data-focus="science" type="button"><span>⚗</span><strong data-planner-t="sciences">Ciencias</strong><small data-planner-t="scienceSubjects">Física y Química</small></button>
-            <button class="planner-focus math" data-focus="math" type="button"><span>∑</span><strong data-planner-t="mathematics">Matemáticas</strong><small data-planner-t="mathSubjects">Aritmética, Álgebra, Geometría y Trigonometría</small></button>
-            <button class="planner-focus humanities" data-focus="humanities" type="button"><span>⌁</span><strong data-planner-t="humanities">Humanidades</strong><small data-planner-t="humanitiesSubjects">Lectura, lenguaje y sociedad</small></button>
-            <button class="planner-focus all" data-focus="all" type="button"><span>◎</span><strong data-planner-t="allCourses">Todos los cursos</strong><small data-planner-t="balanced">Distribución equilibrada</small></button>
-          </div>
-        </section>
-
-        <section class="planner-step-panel" data-step="3" hidden>
-          <div class="planner-question-head"><span>04</span><div><h3 data-planner-t="datesQuestion">¿Desde cuándo y hasta qué fecha estudiarás?</h3><p data-planner-t="datesHelp">Puedes cambiar estas fechas después sin perder tus preferencias.</p></div></div>
-          <div class="planner-date-layout">
-            <label class="planner-field"><span data-planner-t="startDate">Fecha de inicio</span><input id="planner-start-date" type="date" required></label>
-            <div class="planner-end-options">
-              <button type="button" data-end-mode="cepre-final"><span>CEPREUNI</span><strong id="planner-cepre-end-title" data-planner-t="weekBeforeFinal">Una semana antes del examen final</strong><small id="planner-cepre-end-date">31 enero 2027</small></button>
-              <button type="button" data-end-mode="admission"><span>ADMISIÓN UNI</span><strong data-planner-t="admissionGoal">Proceso 2027-1</strong><small data-planner-t="admissionDate">14 febrero 2027 · fecha objetivo editable</small></button>
-              <button type="button" data-end-mode="custom"><span data-planner-t="custom">PERSONALIZADO</span><strong data-planner-t="chooseDate">Elegir otra fecha</strong><small data-planner-t="yourOwnGoal">Define tu propia meta</small></button>
-            </div>
-            <label class="planner-field" id="planner-end-date-wrap"><span data-planner-t="endDate">Fecha final</span><input id="planner-end-date" type="date" required><small data-planner-t="officialCheck">Podrás ajustarla cuando se publique el cronograma oficial.</small></label>
-          </div>
-          <div class="planner-plan-preview" id="planner-preview"></div>
-        </section>
-
-        <div class="planner-wizard-actions">
-          <button class="planner-secondary" id="planner-back" type="button" hidden>← <span data-planner-t="back">Atrás</span></button>
-          <p id="planner-setup-status" role="status" aria-live="polite"></p>
-          <button class="planner-primary" id="planner-next" type="button"><span data-planner-t="continue">Continuar</span> →</button>
-          <button class="planner-primary generate" id="planner-generate" type="submit" hidden><span data-planner-t="generate">Crear mi cronograma</span> <b>✦</b></button>
-        </div>
-      </form>
-    </section>
-
-    <section class="planner-dashboard" id="planner-dashboard" hidden>
-      <header class="planner-dashboard-head">
-        <div class="planner-profile-chip"><span id="planner-avatar">U</span><div><small data-planner-t="myPlan">MI PLAN DE ESTUDIO</small><strong id="planner-profile-name">@usuario</strong><p id="planner-profile-path"></p></div></div>
-        <div class="planner-dashboard-actions">
-          <button id="planner-export" type="button">⇩ <span data-planner-t="exportCalendar">Exportar calendario</span></button>
-          <button id="planner-reconfigure" type="button">⚙ <span data-planner-t="reconfigure">Reconfigurar</span></button>
-        </div>
-      </header>
-
-      <div class="planner-dashboard-grid">
-        <aside class="planner-sidebar">
-          <article class="planner-today-card">
-            <span class="planner-kicker" data-planner-t="today">HOY</span>
-            <strong id="planner-today-date"></strong>
-            <div id="planner-today-list"></div>
-          </article>
-          <article class="planner-progress-card">
-            <div><span data-planner-t="progress">Progreso del plan</span><strong id="planner-progress-value">0%</strong></div>
-            <i><b id="planner-progress-bar"></b></i>
-            <small id="planner-progress-copy"></small>
-          </article>
-          <article class="planner-sharing-card">
-            <div class="planner-sharing-head"><span>◎</span><div><strong data-planner-t="planPrivacy">Privacidad del plan</strong><small data-planner-t="planPrivacyHelp">Tú decides si otras personas pueden verlo.</small></div></div>
-            <div class="planner-visibility-options" role="group" aria-label="Privacidad del plan">
-              <button class="active" data-plan-visibility="private" type="button" data-planner-t="privateVisibility">Privado</button>
-              <button data-plan-visibility="public" type="button" data-planner-t="publicVisibility">Público</button>
-            </div>
-            <label class="planner-public-note" id="planner-public-note-wrap" hidden><span data-planner-t="publicComment">Comentario público</span><textarea id="planner-public-note" maxlength="500" placeholder="Cuenta para qué sirve tu plan..."></textarea><small><b id="planner-public-note-count">0</b>/500</small></label>
-            <button class="planner-share-save" id="planner-save-sharing" type="button" data-planner-t="savePrivacy">Guardar privacidad</button>
-            <p id="planner-sharing-status" role="status" aria-live="polite"></p>
-          </article>
-          <article class="planner-sidebar-action technique">
-            <span>◴</span><div><strong data-planner-t="focusTimer">Cronómetro de enfoque</strong><small id="planner-technique-label">50 min + 10 min</small></div><button id="planner-open-techniques" type="button" data-planner-t="open">Abrir</button>
-          </article>
-          <article class="planner-sidebar-action notify">
-            <span>♢</span><div><strong data-planner-t="reminders">Recordatorios</strong><small id="planner-notification-label" data-planner-t="notificationsOff">Notificaciones desactivadas</small></div><button id="planner-enable-notifications" type="button" data-planner-t="enable">Activar</button>
-          </article>
-          <article class="planner-legend">
-            <strong data-planner-t="legend">Leyenda</strong>
-            <span><i class="math"></i><b data-planner-t="mathArea">Matemática</b></span><span><i class="science"></i><b data-planner-t="sciences">Ciencias</b></span><span><i class="humanities"></i><b data-planner-t="humanities">Humanidades</b></span><span><i class="exam"></i><b data-planner-t="assessment">Evaluación</b></span>
-          </article>
-        </aside>
-
-        <section class="planner-calendar-panel">
-          <header class="planner-calendar-toolbar">
-            <div class="planner-calendar-nav"><button id="planner-prev" type="button" aria-label="Periodo anterior">←</button><button id="planner-today" type="button" data-planner-t="todayButton">Hoy</button><button id="planner-next-period" type="button" aria-label="Periodo siguiente">→</button><strong id="planner-period-title"></strong></div>
-            <div class="planner-view-tabs"><button class="active" data-calendar-view="week" type="button" data-planner-t="week">Semana</button><button data-calendar-view="month" type="button" data-planner-t="month">Mes</button><button class="planner-add-event" id="planner-add-event" type="button">＋ <span data-planner-t="addBlock">Añadir bloque</span></button></div>
-          </header>
-          <div class="planner-calendar" id="planner-calendar" aria-live="polite"></div>
-          <div class="planner-calendar-note"><span>i</span><p data-planner-t="calendarNote">Las fechas CEPREUNI de este plan sirven para organizar el estudio. Confírmalas cuando la institución publique el cronograma 2027-1.</p></div>
-        </section>
+    <section id="resources" class="resources chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
+      <div class="resource-grid">
+        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
+        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/ciclopre20271"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="Academic archive">Archivo académico</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Explore the evaluations and solutions archive.">Explora el archivo de evaluaciones y soluciones.</p></div><span data-icon="arrow-up-right"></span></a></div>
       </div>
-
-      <section class="planner-community-plans" aria-labelledby="planner-community-title">
-        <header><div><span class="planner-kicker" data-planner-t="communityPlansKicker">PLANES DE LA COMUNIDAD</span><h2 id="planner-community-title" data-planner-t="communityPlansTitle">Mira cómo estudian otras personas</h2><p data-planner-t="communityPlansCopy">Explora planes compartidos voluntariamente por estudiantes de CEPREUNI, academias y preparación autodidacta.</p></div><button id="planner-refresh-public" type="button">↻ <span data-planner-t="refresh">Actualizar</span></button></header>
-        <div class="planner-public-grid" id="planner-public-plans"><p class="planner-public-empty" data-planner-t="loadingPublicPlans">Cargando planes públicos...</p></div>
-      </section>
+    </section>
+    <section id="trajectory" class="trajectory chapter wrap">
+      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
+      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
+      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
     </section>
   </main>
-
-  <dialog class="planner-dialog" id="planner-event-dialog" data-i18n-ignore>
-    <form method="dialog" id="planner-event-form">
-      <header><div><span class="planner-kicker" data-planner-t="editCalendar">EDITAR CALENDARIO</span><h2 id="planner-event-title" data-planner-t="studyBlock">Bloque de estudio</h2></div><button id="planner-event-close" aria-label="Cerrar" type="button">×</button></header>
-      <input id="planner-event-id" type="hidden">
-      <div class="planner-dialog-grid">
-        <label class="planner-field"><span data-planner-t="date">Fecha</span><input id="planner-event-date" type="date" required></label>
-        <label class="planner-field"><span data-planner-t="area">Área</span><select id="planner-event-area"><option value="Matemática" data-planner-t="mathArea">Matemática</option><option value="Ciencias" data-planner-t="sciences">Ciencias</option><option value="Humanidades" data-planner-t="humanities">Humanidades</option><option value="General" data-planner-t="general">General</option></select></label>
-        <label class="planner-field"><span data-planner-t="start">Inicio</span><input id="planner-event-start" type="time" required></label>
-        <label class="planner-field"><span data-planner-t="end">Fin</span><input id="planner-event-end" type="time" required></label>
-        <label class="planner-field full"><span data-planner-t="course">Curso</span><input id="planner-event-course" maxlength="60" required></label>
-        <label class="planner-field full"><span data-planner-t="topic">Tema o tarea</span><textarea id="planner-event-topic" maxlength="220" required></textarea></label>
-      </div>
-      <div class="planner-dialog-actions"><button class="planner-danger" id="planner-delete-event" type="button" hidden data-planner-t="delete">Eliminar</button><button class="planner-secondary" id="planner-complete-event" type="button" hidden data-planner-t="markDone">Marcar completado</button><span></span><button class="planner-secondary" id="planner-event-cancel" type="button" data-planner-t="cancel">Cancelar</button><button class="planner-primary" id="planner-save-event" type="button" data-planner-t="saveBlock">Guardar bloque</button></div>
-    </form>
-  </dialog>
-
-  <dialog class="planner-dialog planner-public-dialog" id="planner-public-dialog" data-i18n-ignore>
-    <div class="planner-public-detail">
-      <header><div><span class="planner-kicker" data-planner-t="publicPlan">PLAN PÚBLICO</span><h2 id="planner-public-dialog-title">Plan de estudio</h2></div><button id="planner-public-dialog-close" aria-label="Cerrar" type="button">×</button></header>
-      <div id="planner-public-dialog-body"></div>
-    </div>
-  </dialog>
-
-  <dialog class="planner-dialog technique-dialog" id="planner-technique-dialog" data-i18n-ignore>
-    <form method="dialog">
-      <header><div><span class="planner-kicker" data-planner-t="focusTechniques">TÉCNICAS DE ENFOQUE</span><h2 data-planner-t="chooseRhythm">Elige un ritmo que puedas sostener</h2></div><button value="cancel" aria-label="Cerrar" type="submit">×</button></header>
-      <div class="planner-technique-options" id="planner-technique-options">
-        <button data-technique="20-5" type="button"><strong>20 + 5</strong><span data-planner-t="quickStart">Inicio ligero</span><small data-planner-t="quickStartCopy">20 minutos de enfoque y 5 de pausa. Útil para empezar o recuperar el hábito.</small></button>
-        <button data-technique="25-5" type="button"><strong>25 + 5</strong><span>Pomodoro clásico</span><small data-planner-t="pomodoroCopy">Una tarea concreta, sin interrupciones, seguida de una pausa breve.</small></button>
-        <button data-technique="50-10" type="button"><strong>50 + 10</strong><span data-planner-t="deepBlock">Bloque profundo</span><small data-planner-t="deepBlockCopy">Adecuado para teoría más práctica o resolución continua de problemas.</small></button>
-        <button data-technique="90-20" type="button"><strong>90 + 20</strong><span data-planner-t="longCycle">Ciclo largo</span><small data-planner-t="longCycleCopy">Para simulacros parciales o temas extensos. Úsalo solo si ya sostienes la atención.</small></button>
-      </div>
-      <section class="planner-timer">
-        <div class="planner-timer-ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52"></circle><circle id="planner-timer-progress" cx="60" cy="60" r="52"></circle></svg><div><strong id="planner-timer-clock">50:00</strong><span id="planner-timer-phase">ENFOQUE</span></div></div>
-        <div><h3 data-planner-t="oneTask">Una sesión, una tarea.</h3><p data-planner-t="timerAdvice">Antes de iniciar, define qué tema y cuántos ejercicios terminarás. Durante la pausa, levántate, mira lejos de la pantalla y toma agua.</p><div class="planner-timer-actions"><button id="planner-timer-reset" type="button"><span>↺</span> <b data-planner-t="reset">Reiniciar</b></button><button class="planner-primary" id="planner-timer-toggle" type="button">▶ Iniciar</button></div></div>
-      </section>
-    </form>
-  </dialog>
-
-  <footer>
-    <div class="footer-top">
-      <div><div class="footer-logo">Universe to Study</div><div class="footer-tagline">Recursos, seguimiento y comunidad para una preparación preuniversitaria con orden.</div></div>
-      <div class="footer-links"><h4>Plataforma</h4><ul><li><a href="/admision">Admisión</a></li><li><a href="/cepreuni">CEPREUNI</a></li><li><a href="/planificador">Planificador</a></li><li><a href="/clases">Clases</a></li><li><a href="/biblioteca">Biblioteca</a></li></ul></div>
-      <div class="footer-links"><h4>Practica</h4><ul><li><a href="/simulacros">Simulacros</a></li><li><a href="/temario">Temario</a></li><li><a href="/unitalk">UNITALK</a></li><li><a href="/calculadora">Calculadora</a></li></ul></div>
-      <div class="footer-links"><h4>Confianza</h4><ul><li><a href="/nosotros">Nosotros</a></li><li><a href="/metodologia-editorial">Metodología</a></li><li><a href="/correcciones">Correcciones</a></li><li><a href="/contacto">Contacto</a></li></ul></div>
-    </div>
-    <div class="footer-bottom"><div class="footer-copy">© 2026 Universe to Study.</div><div class="footer-legal"><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a><a href="https://wa.me/51963385410" target="_blank" rel="noopener noreferrer">Soporte</a></div></div>
-  </footer>
-
-  <script src="/planner-syllabus-data.js?v=planner-1"></script>
-  <script src="/cepreuni-2027-data.js?v=cepre-2027-1"></script>
-  <script src="/universe-i18n-catalog.js?v=i18n-4" defer></script>
-  <script src="/universe-i18n.js?v=i18n-4" defer></script>
-  <script src="/universe-admission.js?v=security-3"></script>
-  <script src="/universe-polish.js?v=solid-11" defer></script>
-  <script src="/planner.js?v=planner-11" defer></script>
-</body>
-</html>
+<footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
+  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
+  <div class="immersion-controls" hidden>
+    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
+    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
+    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
+    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
+    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
+  </div>
+  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
+  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
+  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
+  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
+</body></html>
