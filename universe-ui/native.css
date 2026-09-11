@@ -20,7 +20,15 @@ body[data-native] #main,body[data-native] .chapter-nav{display:none!important}
    brand-color background (buttons, status pills) are excluded via :not() below. */
 .native-shell :is([class*="-card"],[class*="-panel"],[class*="-box"],[class*="Card"],[class*="Panel"]):not(button):not(a):not([class*="pill"]):not([class*="badge"]):not([class*="chip"]){background:var(--panel,#12141c)!important;color:inherit!important;border-color:var(--line,#ffffff20)!important}
 .native-shell :is([class*="-card"],[class*="-panel"],[class*="-box"]) :is(h1,h2,h3,h4,h5,p,span,li,td,th,label,strong,b){color:inherit!important}
-.native-shell :is(.admission-hero,[class*="-hero"]):not(button):not(a){background:var(--panel,#12141c)!important}
+.native-shell :is(.admission-hero,[class*="-hero"],[class*="-overview"],[class*="-banner"],[class*="-header"]):not(button):not(a):not([class*="pill"]):not([class*="badge"]){background:var(--panel,#12141c)!important;background-image:none!important}
+/* Second pass: many legacy pages style bare tags (unclassed <article>/<a>/<span>) directly, so class-name
+   matching alone misses them. Force every element actually painting a light surface back to the dark
+   palette, but leave real brand-color pills/badges/buttons alone. */
+.native-shell :is(article,section,li,td):not([class*="pill"]):not([class*="badge"]):not([class*="chip"]):not([class*="tag"]){background-color:var(--panel,#12141c)}
+.native-shell a:not(.button):not([class*="btn"]):not([class*="pill"]):not([class*="badge"]){background-color:transparent!important}
+.native-shell :is(.admission-btn,[class*="-btn"]).ghost{background:var(--panel,#12141c)!important;color:inherit!important;border-color:var(--line,#ffffff30)!important}
+.native-shell input:not([type=checkbox]):not([type=radio]):not([type=range]),.native-shell button:not([class*="pill"]):not([class*="badge"]):not([class*="chip"]){background-color:var(--panel,#12141c)!important;color:inherit!important;border-color:var(--line,#ffffff20)!important}
+.native-shell input::placeholder{color:var(--muted,#a5a5ae)!important}
 .native-shell :is(table){border-collapse:collapse;width:100%;font-size:.86rem}
 .native-shell :is(td,th){padding:12px;border-bottom:1px solid var(--line,#ffffff20);text-align:left}
 .native-shell :is(.table-wrap,.ranking-table-wrap){overflow:auto}
