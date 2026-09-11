@@ -117,13 +117,18 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
   filter:grayscale(1) brightness(0) invert(1);opacity:.62;
   transition:opacity .2s cubic-bezier(.23,1,.32,1);
 }
-:root[data-theme] .brand-rail a.brand-cepreuni img{height:31px}
-:root[data-theme] .brand-rail a.brand-drive img{height:30px}
-:root[data-theme] .brand-rail a.brand-linktree img{height:23px}
-:root[data-theme] .brand-rail a.brand-tiktok img{height:33px}
-:root[data-theme] .brand-rail a.brand-uni img{height:18px}
-:root[data-theme] .brand-rail a.brand-whatsapp img{height:26px}
-:root[data-theme] .brand-rail a.brand-youtube img{height:31px}
+/* Tamaño por ÁREA DE TINTA, no por recuadro: los PNG traen rellenos transparentes muy distintos
+   (YouTube 87%, CEPREUNI 68%, Linktree 65%, frente a 0% en UNI, Drive y TikTok), así que igualar el
+   recuadro dejaba unas marcas diminutas y otras enormes. Se mide el rectángulo real de cada marca, se
+   escala para que todas ocupen la misma área visible y se recorta el relleno con clip-path, con margen
+   negativo para que ese hueco tampoco cuente en el espaciado. */
+:root[data-theme] .brand-rail a.brand-uni img{height:16px;clip-path:inset(0% 0% 0% 0%);margin:0px 0px 0px 0px}
+:root[data-theme] .brand-rail a.brand-cepreuni img{height:49px;clip-path:inset(27.5% 14.5% 30% 10.5%);margin:-13px -7px -15px -5px}
+:root[data-theme] .brand-rail a.brand-youtube img{height:75px;clip-path:inset(41.33% 11.08% 41.33% 11.08%);margin:-31px -8px -31px -8px}
+:root[data-theme] .brand-rail a.brand-whatsapp img{height:33px;clip-path:inset(7.57% 20.06% 7.57% 20.06%);margin:-2px -9px -2px -9px}
+:root[data-theme] .brand-rail a.brand-drive img{height:27px;clip-path:inset(0% 0% 0% 0%);margin:0px 0px 0px 0px}
+:root[data-theme] .brand-rail a.brand-tiktok img{height:29px;clip-path:inset(0% 0.03% 0% 0%);margin:0px 0px 0px 0px}
+:root[data-theme] .brand-rail a.brand-linktree img{height:35px;clip-path:inset(32.13% 0.55% 32.13% 0.52%);margin:-11px 0px -11px 0px}
 :root[data-theme] .brand-rail a.brand-link:hover{transform:translateY(-2px)}
 :root[data-theme] .brand-rail a.brand-link:hover img{opacity:1}
 :root[data-theme=light] .brand-rail a.brand-link img{filter:grayscale(1) brightness(0);opacity:.6}
