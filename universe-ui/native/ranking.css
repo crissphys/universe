@@ -33,33 +33,33 @@ html[data-universe-page] .post-timestamp,
 html[data-universe-page] .post-location { display:none !important; }
 
 html[data-universe-page],html[data-universe-page] body {
-  width:100% !important;
-  min-height:100% !important;
-  margin:0 !important;
-  overflow-x:hidden !important;
+  width:100%;
+  min-height:100%;
+  margin:0;
+  overflow-x:hidden;
 }
 html[data-universe-page] {
-  height:auto !important;
-  overflow-y:auto !important;
+  height:auto;
+  overflow-y:auto;
   overscroll-behavior-y:auto !important;
   touch-action:pan-y !important;
 }
 html[data-universe-page] body {
-  height:auto !important;
-  min-height:100svh !important;
-  overflow-y:visible !important;
+  height:auto;
+  min-height:100svh;
+  overflow-y:visible;
   -webkit-overflow-scrolling:touch;
   touch-action:pan-y !important;
 }
 html[data-universe-page] #page-content {
-  position:relative !important;
-  z-index:1 !important;
+  position:relative;
+  z-index:1;
   box-sizing:border-box !important;
-  width:100% !important;
-  min-height:100svh !important;
-  margin:0 !important;
-  padding:0 !important;
-  overflow:visible !important;
+  width:100%;
+  min-height:100svh;
+  margin:0;
+  padding:0;
+  overflow:visible;
 }
 html[data-universe-page] #main-wrapper,
 html[data-universe-page] #page_body,
@@ -74,24 +74,24 @@ html[data-universe-page] #Blog1 .post-body-container,
 html[data-universe-page] #Blog1 .post-body {
   display:block !important;
   box-sizing:border-box !important;
-  width:100% !important;
-  max-width:none !important;
-  min-width:0 !important;
-  margin:0 !important;
-  padding:0 !important;
+  width:100%;
+  max-width:none;
+  min-width:0;
+  margin:0;
+  padding:0;
   
   
   
-  overflow:visible !important;
+  overflow:visible;
 }
 
 html[data-universe-page] .universe-static-page {
   --universe-page-gutter:clamp(1rem,4vw,4.5rem);
   box-sizing:border-box;
-  width:100% !important;
-  max-width:none !important;
+  width:100%;
+  max-width:none;
   min-height:100%;
-  margin:0 !important;
+  margin:0;
 }
 html[data-universe-page] .universe-page-stage {
   box-sizing:border-box;
@@ -112,41 +112,41 @@ html[data-universe-page] .universe-page-stage-inner > .universe-exams-page,
 html[data-universe-page] .universe-page-stage-inner > .universe-library-layout,
 html[data-universe-page] .universe-library-layout > .section {
   box-sizing:border-box !important;
-  width:100% !important;
-  max-width:none !important;
-  margin-inline:auto !important;
-  padding-inline:0 !important;
-  padding-top:clamp(1.75rem,3.2vw,3rem) !important;
+  width:100%;
+  max-width:none;
+  margin-inline:auto;
+  padding-inline:0;
+  padding-top:clamp(1.75rem,3.2vw,3rem);
 }
 html[data-universe-page] .universe-page-stage :where(.section-label,.section-title,.section-sub) {
-  margin-left:auto !important;
-  margin-right:auto !important;
-  text-align:center !important;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
 }
 html[data-universe-page] .universe-page-stage .section-label { display:flex; width:max-content; max-width:100%; }
-html[data-universe-page] .universe-legal-page { padding-bottom:4rem !important; }
+html[data-universe-page] .universe-legal-page { padding-bottom:4rem; }
 html[data-universe-page] .universe-legal-page .section-title {
-  max-width:100% !important;
-  font-size:clamp(1.8rem,4.2vw,3.55rem) !important;
-  line-height:1.02 !important;
+  max-width:100%;
+  font-size:clamp(1.8rem,4.2vw,3.55rem);
+  line-height:1.02;
   word-break:normal !important;
-  overflow-wrap:normal !important;
+  overflow-wrap:normal;
   text-wrap:balance;
 }
 html[data-universe-page] .universe-legal-grid {
   display:grid !important;
-  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  gap:1rem !important;
-  width:100% !important;
-  margin-top:1.7rem !important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+  width:100%;
+  margin-top:1.7rem;
 }
 html[data-universe-page] .universe-legal-grid .legal-card {
   box-sizing:border-box !important;
-  min-width:0 !important;
-  min-height:190px !important;
-  height:auto !important;
-  margin:0 !important;
-  padding:clamp(1rem,1.8vw,1.35rem) !important;
+  min-width:0;
+  min-height:190px;
+  height:auto;
+  margin:0;
+  padding:clamp(1rem,1.8vw,1.35rem);
   
   
   
@@ -154,12 +154,12 @@ html[data-universe-page] .universe-legal-grid .legal-card {
   
 }
 html[data-universe-page] .universe-legal-grid .legal-card h3 {
-  margin:0 0 .75rem !important;
+  margin:0 0 .75rem;
   
-  text-align:left !important;
+  text-align:left;
 }
-html[data-universe-page] .universe-legal-grid .legal-card ul { margin:.15rem 0 0 !important; padding-left:1.15rem !important; }
-html[data-universe-page] .universe-legal-grid .legal-card li { margin:.42rem 0 !important;  line-height:1.55 !important; text-align:left !important; }
+html[data-universe-page] .universe-legal-grid .legal-card ul { margin:.15rem 0 0; padding-left:1.15rem; }
+html[data-universe-page] .universe-legal-grid .legal-card li { margin:.42rem 0;  line-height:1.55; text-align:left; }
 html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:1 / -1; }
 html[data-universe-page='ranking'] .universe-page-stage-inner,
 html[data-universe-page='library'] .universe-page-stage-inner { width:min(1720px,100%); }
@@ -306,7 +306,7 @@ html[data-universe-page='ranking'] .cepre-v2-code {
   left:0;
   z-index:1;
   
-  text-align:left !important;
+  text-align:left;
   
   
 }
@@ -319,7 +319,7 @@ html[data-universe-page='ranking'] .cepre-v2-position {
   min-width:80px;
   
   
-  text-align:center !important;
+  text-align:center;
   
   font-variant-numeric:tabular-nums;
 }
@@ -373,18 +373,18 @@ html[data-universe-page='ranking'] .cepre-v2-stat strong {
   font-size:.78rem;
 }
 @media(min-width:901px){
-  html[data-universe-page='ranking'] .universe-page-stage { padding-top:1.15rem !important; }
-  html[data-universe-page='ranking'] #ranking-cepreuni { padding-top:.8rem !important; }
+  html[data-universe-page='ranking'] .universe-page-stage { padding-top:1.15rem; }
+  html[data-universe-page='ranking'] #ranking-cepreuni { padding-top:.8rem; }
   html[data-universe-page='ranking'] #ranking-cepreuni > .reveal:first-child {
     display:grid;
     grid-template-columns:minmax(310px,.62fr) minmax(320px,.9fr);
     align-items:end;
     gap:.35rem 1.35rem;
-    margin-bottom:.75rem !important;
+    margin-bottom:.75rem;
   }
   html[data-universe-page='ranking'] #ranking-cepreuni :is(.section-label,.section-title,.section-sub) {
-    margin:0 !important;
-    text-align:left !important;
+    margin:0;
+    text-align:left;
   }
   html[data-universe-page='ranking'] #ranking-cepreuni .section-label {
     justify-self:start;
@@ -392,18 +392,18 @@ html[data-universe-page='ranking'] .cepre-v2-stat strong {
   }
   html[data-universe-page='ranking'] #ranking-cepreuni .section-title {
     grid-column:1;
-    font-size:clamp(2rem,3.2vw,3.25rem) !important;
-    line-height:.95 !important;
+    font-size:clamp(2rem,3.2vw,3.25rem);
+    line-height:.95;
   }
   html[data-universe-page='ranking'] #ranking-cepreuni .section-sub {
     grid-column:2;
     grid-row:1 / span 2;
     align-self:center;
-    max-width:720px !important;
+    max-width:720px;
   }
-  html[data-universe-page='ranking'] .cepre-v2-shell { margin-top:.75rem !important; }
-  html[data-universe-page='ranking'] .cepre-v2-controls { padding:10px 12px !important; align-items:center !important; }
-  html[data-universe-page='ranking'] .cepre-v2-search { min-height:38px !important; }
+  html[data-universe-page='ranking'] .cepre-v2-shell { margin-top:.75rem; }
+  html[data-universe-page='ranking'] .cepre-v2-controls { padding:10px 12px; align-items:center !important; }
+  html[data-universe-page='ranking'] .cepre-v2-search { min-height:38px; }
 }
 html[data-universe-page='ranking'] .cepre-v2-summary {
   padding:15px 20px;
@@ -423,9 +423,9 @@ html[data-universe-page='ranking'] .cepre-v2-summary {
 @media(max-width:760px){
   html[data-universe-page] .universe-static-page { --universe-page-gutter:.9rem; }
   html[data-universe-page] .universe-page-stage { padding-top:4.15rem; }
-  html[data-universe-page] .universe-legal-page .section-title { font-size:clamp(1.55rem,7.2vw,2.35rem) !important; }
-  html[data-universe-page] .universe-legal-grid { grid-template-columns:minmax(0,1fr) !important; }
-  html[data-universe-page] .universe-legal-grid .legal-card { min-height:0 !important; }
+  html[data-universe-page] .universe-legal-page .section-title { font-size:clamp(1.55rem,7.2vw,2.35rem); }
+  html[data-universe-page] .universe-legal-grid { grid-template-columns:minmax(0,1fr); }
+  html[data-universe-page] .universe-legal-grid .legal-card { min-height:0; }
   html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:auto; }
   html[data-universe-page='ranking'] .ranking-shell { margin-top:1.5rem;  }
   html[data-universe-page='ranking'] .ranking-table { min-width:1280px; }
@@ -441,11 +441,11 @@ html[data-universe-page],html[data-universe-page] body{min-height:100%;}
 
 /* Botón de tema: fijo abajo a la izquierda, fuera del header */
 html[data-universe-page] body > nav .nav-theme-toggle{
-  position:fixed!important;
-  left:max(14px,calc(env(safe-area-inset-left) + 14px))!important;
-  bottom:max(16px,calc(env(safe-area-inset-bottom) + 16px))!important;
-  z-index:2147482455!important;
-  width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;
+  position:fixed;
+  left:max(14px,calc(env(safe-area-inset-left) + 14px));
+  bottom:max(16px,calc(env(safe-area-inset-bottom) + 16px));
+  z-index:2147482455;
+  width:48px;height:48px;min-width:48px;min-height:48px;
   display:grid!important;place-items:center!important;
   
   
@@ -453,24 +453,24 @@ html[data-universe-page] body > nav .nav-theme-toggle{
 }
 html[data-universe-page] body.support-v2-active > nav .nav-theme-toggle{pointer-events:none!important;}
 @media(max-width:620px){
-  html[data-universe-page] body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px))!important;bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px))!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;}
+  html[data-universe-page] body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px));bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px));width:44px;height:44px;min-width:44px;min-height:44px;}
 }
 
 /* Soporte: botón pegado correctamente a la esquina en celular */
 @media(max-width:620px){
-  html[data-universe-page] body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px))!important;padding:12px!important;}
-  html[data-universe-page] body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px))!important;bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px))!important;}
+  html[data-universe-page] body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px));padding:12px;}
+  html[data-universe-page] body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px));}
 }
 
 /* Ranking: ancho real y columna PC sin blanco en oscuro */
-html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1840px,calc(100vw - 1rem))!important;max-width:none!important;}
-html[data-universe-page='ranking'] .ranking-section{padding-inline:0!important;}
-html[data-universe-page='ranking'] .cepre-v2-shell{width:100%!important;max-width:none!important;margin-inline:0!important;}
-html[data-universe-page='ranking'] .cepre-v2-wrap{max-height:none!important;height:auto!important;}
+html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1840px,calc(100vw - 1rem));max-width:none;}
+html[data-universe-page='ranking'] .ranking-section{padding-inline:0;}
+html[data-universe-page='ranking'] .cepre-v2-shell{width:100%;max-width:none;margin-inline:0;}
+html[data-universe-page='ranking'] .cepre-v2-wrap{max-height:none;height:auto;}
 
 
-html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1880px,calc(100vw - 2rem))!important}
-html[data-universe-page='ranking'] .ranking-section{padding:0!important}
+html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1880px,calc(100vw - 2rem))}
+html[data-universe-page='ranking'] .ranking-section{padding:0}
 html[data-universe-page='ranking'] .ranking-v3-layout{
   display:grid;
   grid-template-columns:clamp(290px,19vw,350px) minmax(0,1fr);
@@ -479,21 +479,21 @@ html[data-universe-page='ranking'] .ranking-v3-layout{
   align-items:start;
 }
 html[data-universe-page='ranking'] .ranking-v3-heading{grid-area:heading;padding:12px 8px 0}
-html[data-universe-page='ranking'] .ranking-v3-heading .section-label{display:inline-flex!important;margin:0 0 10px!important}
+html[data-universe-page='ranking'] .ranking-v3-heading .section-label{display:inline-flex!important;margin:0 0 10px}
 html[data-universe-page='ranking'] .ranking-v3-heading .section-title{
-  margin:0!important;
+  margin:0;
   
-  font-size:clamp(2.25rem,4vw,4.65rem)!important;
-  line-height:.9!important;
+  font-size:clamp(2.25rem,4vw,4.65rem);
+  line-height:.9;
   letter-spacing:-.025em;
-  text-align:left!important;
+  text-align:left;
 }
 html[data-universe-page='ranking'] .ranking-v3-heading .section-sub{
-  max-width:860px!important;
-  margin:14px 0 0!important;
+  max-width:860px;
+  margin:14px 0 0;
   
   
-  text-align:left!important;
+  text-align:left;
 }
 html[data-universe-page='ranking'] .ranking-v3-content{grid-area:content;min-width:0;display:grid;gap:22px}
 html[data-universe-page='ranking'] .ranking-v3-view-tabs{
@@ -557,11 +557,11 @@ html[data-universe-page='ranking'] .ranking-v3-history-head p{
 }
 html[data-universe-page='ranking'] .cepre-v2-stats{
   display:grid!important;
-  gap:8px!important;
-  min-height:0!important;
+  gap:8px;
+  min-height:0;
   margin-top:17px;
-  padding:0!important;
-  overflow:visible!important;
+  padding:0;
+  overflow:visible;
   
   
 }
@@ -569,11 +569,11 @@ html[data-universe-page='ranking'] .cepre-v2-stat{
   display:grid!important;
   grid-template-columns:minmax(0,1fr) auto;
   align-items:center!important;
-  gap:10px!important;
+  gap:10px;
   width:100%;
-  height:auto!important;
+  height:auto;
   min-height:58px;
-  padding:10px 12px!important;
+  padding:10px 12px;
   
   
   
@@ -613,15 +613,15 @@ html[data-universe-page='ranking'] .ranking-v3-formula-note{
   
 }
 html[data-universe-page='ranking'] .cepre-v2-shell{
-  width:100%!important;
-  margin:0!important;
-  overflow:hidden!important;
+  width:100%;
+  margin:0;
+  overflow:hidden;
   
   
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-controls{padding:16px 18px!important;}
+html[data-universe-page='ranking'] .cepre-v2-controls{padding:16px 18px;}
 html[data-universe-page='ranking'] .ranking-v3-history{
   overflow:hidden;
   
@@ -698,24 +698,24 @@ html[data-universe-page='ranking'] .ranking-v3-range:after{content:"20";position
 html[data-universe-page='ranking'] .ranking-v3-range i{position:absolute;z-index:1;top:4px;height:10px;}
 html[data-universe-page='ranking'] .ranking-v3-range b{position:absolute;z-index:2;top:1px;width:3px;height:16px;translate:-1px 0}
 html[data-universe-page='ranking'] .ranking-v3-no-admission{display:inline-flex;padding:5px 8px;font-size:.62rem;}
-html[data-universe-page='ranking'] .ranking-v3-history-empty{padding:32px!important;text-align:center!important}
+html[data-universe-page='ranking'] .ranking-v3-history-empty{padding:32px;text-align:center}
 html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13px 24px;}
 @media(max-width:1180px){
   html[data-universe-page='ranking'] .ranking-v3-layout{grid-template-columns:270px minmax(0,1fr);gap:16px}
   html[data-universe-page='ranking'] .ranking-v3-history-head{align-items:flex-start;flex-direction:column}
 }
 @media(max-width:900px){
-  html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(100% - 1rem,1000px)!important}
+  html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(100% - 1rem,1000px)}
   html[data-universe-page='ranking'] .ranking-v3-layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"heading" "aside" "content"}
   html[data-universe-page='ranking'] .ranking-v3-insights{position:static;max-height:none}
-  html[data-universe-page='ranking'] .cepre-v2-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html[data-universe-page='ranking'] .cepre-v2-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   html[data-universe-page='ranking'] .ranking-v3-benchmarks{grid-template-columns:1fr}
 }
 @media(max-width:560px){
   html[data-universe-page='ranking'] .ranking-v3-heading{padding-inline:4px}
-  html[data-universe-page='ranking'] .ranking-v3-heading .section-title{font-size:2.65rem!important}
+  html[data-universe-page='ranking'] .ranking-v3-heading .section-title{font-size:2.65rem}
   html[data-universe-page='ranking'] .ranking-v3-insights{padding:18px 14px;}
-  html[data-universe-page='ranking'] .cepre-v2-stats{grid-template-columns:1fr!important}
+  html[data-universe-page='ranking'] .cepre-v2-stats{grid-template-columns:1fr}
   html[data-universe-page='ranking'] .cepre-v2-stat{min-height:54px}
   html[data-universe-page='ranking'] .ranking-v3-history-head{padding:20px 16px 15px}
   html[data-universe-page='ranking'] .ranking-v3-history-filters{width:100%;display:grid;grid-template-columns:1fr 1fr}
@@ -726,20 +726,20 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
 @media(min-width:901px){
   html[data-universe-page='ranking'],
   html[data-universe-page='ranking'] body{
-    height:100%!important;
-    min-height:100%!important;
-    overflow:hidden!important;
+    height:100%;
+    min-height:100%;
+    overflow:hidden;
   }
   html[data-universe-page='ranking'] body>nav{
-    position:fixed!important;
-    z-index:1000!important;
-    inset:0 0 auto 0!important;
-    transform:none!important;
-    width:100%!important;
-    max-width:none!important;
-    height:78px!important;
-    margin:0!important;
-    padding:0 28px!important;
+    position:fixed;
+    z-index:1000;
+    inset:0 0 auto 0;
+    transform:none;
+    width:100%;
+    max-width:none;
+    height:78px;
+    margin:0;
+    padding:0 28px;
     
     
     
@@ -751,7 +751,7 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     flex:0 0 auto;
     
     
-    letter-spacing:-.04em!important;
+    letter-spacing:-.04em;
   }
   html[data-universe-page='ranking'] body>nav .nav-links{
     flex:1 1 auto;
@@ -759,30 +759,30 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
   }
   html[data-universe-page='ranking'] body>nav .nav-actions{flex:0 0 auto}
   html[data-universe-page='ranking'] .universe-static-page{
-    height:100svh!important;
-    min-height:100svh!important;
-    overflow:hidden!important;
+    height:100svh;
+    min-height:100svh;
+    overflow:hidden;
     
   }
   html[data-universe-page='ranking'] .universe-page-stage{
-    height:100svh!important;
-    min-height:100svh!important;
-    padding:78px 0 0!important;
-    overflow:hidden!important;
+    height:100svh;
+    min-height:100svh;
+    padding:78px 0 0;
+    overflow:hidden;
   }
   html[data-universe-page='ranking'] .universe-page-stage-inner,
   html[data-universe-page='ranking'] .ranking-section{
-    width:100%!important;
-    height:100%!important;
-    min-height:0!important;
-    margin:0!important;
-    overflow:hidden!important;
+    width:100%;
+    height:100%;
+    min-height:0;
+    margin:0;
+    overflow:hidden;
   }
   html[data-universe-page='ranking'] .universe-page-stage-inner>.ranking-section{
-    padding:0!important;
+    padding:0;
   }
   html[data-universe-page='ranking'] body .universe-static-page .universe-page-stage .universe-page-stage-inner>.ranking-section{
-    padding-top:0!important;
+    padding-top:0;
   }
   html[data-universe-page='ranking'] .ranking-v3-layout{
     width:100%;
@@ -798,34 +798,34 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
   }
   html[data-universe-page='ranking'] .ranking-v3-heading{
     min-width:0;
-    padding:22px 30px 14px!important;
+    padding:22px 30px 14px;
     
     
   }
   html[data-universe-page='ranking'] .ranking-v3-heading .section-label{
-    margin-bottom:8px!important;
+    margin-bottom:8px;
     
     
   }
   html[data-universe-page='ranking'] .ranking-v3-heading .section-title{
     
     
-    letter-spacing:-.045em!important;
+    letter-spacing:-.045em;
   }
   html[data-universe-page='ranking'] .ranking-v3-heading .section-sub{
-    max-width:1000px!important;
-    margin-top:9px!important;
+    max-width:1000px;
+    margin-top:9px;
     
     
   }
   html[data-universe-page='ranking'] .ranking-v3-insights{
-    position:relative!important;
-    top:auto!important;
+    position:relative;
+    top:auto;
     align-self:stretch!important;
     width:100%;
     height:100%;
-    max-height:none!important;
-    padding:22px 14px 78px!important;
+    max-height:none;
+    padding:22px 14px 78px;
     
     
     
@@ -864,7 +864,7 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
   html[data-universe-page='ranking'] .cepre-v2-wrap{
     flex:1 1 auto;
     min-height:0;
-    overflow:auto!important;
+    overflow:auto;
     overscroll-behavior:contain;
   }
   html[data-universe-page='ranking'] .ranking-v3-history{
@@ -889,24 +889,24 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
 @media(max-width:900px){
   html[data-universe-page='ranking'],
   html[data-universe-page='ranking'] body{
-    width:100%!important;
-    overflow-x:hidden!important;
+    width:100%;
+    overflow-x:hidden;
   }
   html[data-universe-page='ranking'] body>nav{
-    position:sticky!important;
-    z-index:1000!important;
-    inset:0 0 auto!important;
-    transform:none!important;
+    position:sticky;
+    z-index:1000;
+    inset:0 0 auto;
+    transform:none;
     display:grid!important;
     grid-template-columns:minmax(0,1fr) auto;
     grid-template-rows:56px 42px;
     align-items:center;
-    width:100%!important;
-    max-width:none!important;
-    min-height:98px!important;
-    margin:0!important;
-    padding:0 10px!important;
-    overflow:hidden!important;
+    width:100%;
+    max-width:none;
+    min-height:98px;
+    margin:0;
+    padding:0 10px;
+    overflow:hidden;
     
     
     
@@ -921,7 +921,7 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     min-width:0;
     
     
-    letter-spacing:-.035em!important;
+    letter-spacing:-.035em;
     white-space:nowrap;
   }
   html[data-universe-page='ranking'] body>nav .nav-actions{
@@ -935,34 +935,34 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     display:flex!important;
     justify-content:flex-start!important;
     align-items:center;
-    gap:6px!important;
-    width:100%!important;
+    gap:6px;
+    width:100%;
     min-width:0;
-    margin:0!important;
-    padding:0 2px 8px!important;
-    overflow-x:auto!important;
-    overflow-y:hidden!important;
+    margin:0;
+    padding:0 2px 8px;
+    overflow-x:auto;
+    overflow-y:hidden;
     white-space:nowrap;
     scrollbar-width:none;
     scroll-snap-type:x proximity;
   }
   html[data-universe-page='ranking'] body>nav .nav-links::-webkit-scrollbar{display:none}
   html[data-universe-page='ranking'] body>nav .nav-links li{
-    flex:0 0 auto!important;
+    flex:0 0 auto;
     scroll-snap-align:start;
   }
   html[data-universe-page='ranking'] body>nav .nav-links a{
-    min-height:30px!important;
-    padding:0 10px!important;
-    font-size:.64rem!important;
+    min-height:30px;
+    padding:0 10px;
+    font-size:.64rem;
   }
   html[data-universe-page='ranking'] .universe-page-stage{
-    min-height:0!important;
-    padding:0 0 22px!important;
+    min-height:0;
+    padding:0 0 22px;
   }
-  html[data-universe-page='ranking'] .universe-page-stage-inner{width:100%!important}
+  html[data-universe-page='ranking'] .universe-page-stage-inner{width:100%}
   html[data-universe-page='ranking'] .ranking-section{
-    padding:10px!important;
+    padding:10px;
   }
   html[data-universe-page='ranking'] .ranking-v3-layout{
     grid-template-columns:minmax(0,1fr);
@@ -972,44 +972,44 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     min-width:0;
   }
   html[data-universe-page='ranking'] .ranking-v3-heading{
-    padding:8px 4px 2px!important;
+    padding:8px 4px 2px;
   }
   html[data-universe-page='ranking'] .ranking-v3-heading .section-title{
     
-    letter-spacing:-.045em!important;
+    letter-spacing:-.045em;
   }
   html[data-universe-page='ranking'] .ranking-v3-heading .section-sub{
-    margin-top:10px!important;
-    font-size:.82rem!important;
-    line-height:1.48!important;
+    margin-top:10px;
+    font-size:.82rem;
+    line-height:1.48;
   }
   html[data-universe-page='ranking'] .ranking-v3-insights{
-    position:static!important;
-    max-height:none!important;
-    overflow:visible!important;
-    padding:17px 14px!important;
+    position:static;
+    max-height:none;
+    overflow:visible;
+    padding:17px 14px;
     
   }
   html[data-universe-page='ranking'] .ranking-v3-insights-head h3{
-    font-size:1.32rem!important;
+    font-size:1.32rem;
   }
   html[data-universe-page='ranking'] .cepre-v2-stats{
     display:flex!important;
-    grid-template-columns:none!important;
-    gap:8px!important;
+    grid-template-columns:none;
+    gap:8px;
     width:100%;
     margin-top:14px;
-    padding:0 0 5px!important;
-    overflow-x:auto!important;
-    overflow-y:hidden!important;
+    padding:0 0 5px;
+    overflow-x:auto;
+    overflow-y:hidden;
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
   }
   html[data-universe-page='ranking'] .cepre-v2-stats::-webkit-scrollbar{display:none}
   html[data-universe-page='ranking'] .cepre-v2-stat{
-    flex:0 0 172px!important;
-    min-width:172px!important;
-    min-height:62px!important;
+    flex:0 0 172px;
+    min-width:172px;
+    min-height:62px;
     scroll-snap-align:start;
   }
   html[data-universe-page='ranking'] .ranking-v3-formula-note{
@@ -1024,26 +1024,26 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     gap:22px;
     margin:0 5px;
     overflow-x:auto;
-    overflow-y:hidden!important;
+    overflow-y:hidden;
     white-space:nowrap;
     scrollbar-width:none;
   }
   html[data-universe-page='ranking'] .ranking-v3-view-tabs::-webkit-scrollbar{display:none}
   html[data-universe-page='ranking'] .cepre-v2-shell,
   html[data-universe-page='ranking'] .ranking-v3-history{
-    width:100%!important;
+    width:100%;
     min-width:0;
     
   }
   html[data-universe-page='ranking'] .cepre-v2-controls{
-    padding:14px!important;
+    padding:14px;
   }
   html[data-universe-page='ranking'] .cepre-v2-wrap{
     width:100%;
-    height:62svh!important;
-    min-height:430px!important;
-    max-height:620px!important;
-    overflow:auto!important;
+    height:62svh;
+    min-height:430px;
+    max-height:620px;
+    overflow:auto;
     overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
   }
