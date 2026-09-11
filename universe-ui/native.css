@@ -44,17 +44,28 @@ body[data-native] .footer{position:relative;z-index:2}
 .native-shell :is(main,.section,.wrap,.container,[class$="-page"],[class$="-stage"],[class$="-shell"],[class$="-grid"],[class$="-list"],[class$="-row"],[class$="-actions"],[class$="-toolbar"]){background:none;padding-top:0;min-height:0}
 .native-shell .universe-legal-shell{max-width:820px;margin-inline:auto}
 
-/* Surfaces. Every legacy page invents its own card class, so match the convention rather than the name. */
-.native-shell :is(.card,.panel,section[id],article,
-  [class*="-card"],[class*="-panel"],[class*="-box"],[class*="-tile"],[class*="-item"],[class*="Card"],[class*="Panel"]
-):not(button):not(a):not(li):not([class*="pill"]):not([class*="badge"]):not([class*="chip"]):not([class*="tag"]):not([class*="-page"]):not([class*="-grid"]):not([class*="-list"]){
-  background:var(--ns-panel);border:1px solid var(--ns-line);border-radius:var(--ns-radius);padding:24px;
+/* Surfaces.
+   A surface has to earn itself. The old design boxed everything — hero in a box, each section in a box,
+   each block inside that section in another box — which is what made every page read as a stack of
+   slabs. Here the page itself is the surface: sections are separated by space, and only a genuinely
+   repeated unit (a card in a grid) is drawn as an object you could pick up. */
+.native-shell :is(.card,.panel,[class*="-card"],[class*="-tile"],[class*="-panel"],[class*="Card"],[class*="Panel"]
+):not(button):not(a):not(li):not([class*="pill"]):not([class*="badge"]):not([class*="chip"]):not([class*="tag"]):not([class*="-page"]):not([class*="-grid"]):not([class*="-list"]):not([class*="-wrap"]){
+  background:var(--ns-panel);border:1px solid var(--ns-line);border-radius:var(--ns-radius);padding:20px;
 }
-.native-shell section[id]{padding:28px}
-.native-shell :is(.card,.panel,[class*="-card"],[class*="-panel"]) :is(.card,.panel,[class*="-card"],[class*="-panel"]){background:var(--ns-panel-high)}
-/* Hero/banner blocks were the loudest part of the old design — here they are just the first panel. */
-.native-shell :is([class*="-hero"],[class*="-banner"],[class*="-overview"],[class*="-intro"]):not(button):not(a){
-  background:var(--ns-panel);background-image:none;border:1px solid var(--ns-line);border-radius:var(--ns-radius);padding:clamp(24px,4vw,44px);
+/* Surfaces never stack. A card inside a card is just a region of that card. */
+.native-shell :is(.card,.panel,[class*="-card"],[class*="-tile"],[class*="-panel"]) :is(.card,.panel,[class*="-card"],[class*="-tile"],[class*="-panel"]){
+  background:none;border:0;border-radius:0;padding:0;
+}
+
+/* Sections are rhythm, not containers. */
+.native-shell > :is(section,article,div),.native-shell section[id]{background:none;border:0;padding:0;margin-block:clamp(40px,6vw,72px)}
+.native-shell > :first-child{margin-top:0}
+
+/* The hero is the page opening itself — no slab behind it, just air and a closing rule. */
+.native-shell :is([class*="-hero"],[class*="-banner"],[class*="-overview"],[class*="-intro"]):not(button):not(a):not([class*="-card"]){
+  background:none;background-image:none;border:0;border-bottom:1px solid var(--ns-line);border-radius:0;
+  padding:0 0 clamp(28px,4vw,48px);margin-bottom:clamp(32px,5vw,56px);
 }
 .native-shell :is([class*="-hero"],[class*="-banner"]) :is(h1,h2){margin-top:0}
 
