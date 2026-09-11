@@ -41,7 +41,7 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 :root[data-theme=light] .logo-tile .tile-logo img{filter:saturate(0) contrast(1.1)}
 
 .catalog-identity{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:0 0 22px;border-bottom:1px solid var(--line);margin-bottom:25px;color:var(--text);font-size:14px}.catalog-identity small{color:var(--muted);font-size:11px}
-.catalog-logo{display:flex;align-items:center;height:56px;flex-shrink:0;opacity:.9;transition:opacity .2s}.catalog-logo:hover{opacity:1}
+.catalog-logo{display:flex;align-items:center;height:84px;flex-shrink:0;opacity:.9;transition:opacity .2s}.catalog-logo:hover{opacity:1}
 .catalog-logo img{height:100%;width:auto;max-width:220px;object-fit:contain;filter:invert(1) saturate(0) brightness(1.4) contrast(.9)}
 :root[data-theme=light] .catalog-logo img{filter:saturate(0) contrast(1.1)}
 .catalog-options{display:flex;align-items:center;justify-content:space-between;gap:15px;font-size:12px;color:var(--muted)}.catalog-options label{display:flex;align-items:center;gap:8px}.catalog-options input{accent-color:var(--blue);width:16px;height:16px}
@@ -150,3 +150,23 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 .publisher-card.is-flat img{filter:grayscale(1) invert(1);opacity:.9;mix-blend-mode:screen}
 .publisher-card.is-flat:hover img{opacity:1}
 :root[data-theme=light] .publisher-card.is-flat img{filter:grayscale(1);opacity:.85;mix-blend-mode:multiply}
+
+/* Subdivisión por curso dentro de una sección del catálogo. */
+.catalog-course{margin-top:26px}
+.catalog-course:first-child{margin-top:0}
+.catalog-course h4{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.catalog-course h4::after{content:"";flex:1;height:1px;background:var(--line)}
+.catalog-course h4 small{order:1;font-size:10px;letter-spacing:0;text-transform:none}
+@media(max-width:600px){.catalog-logo{height:62px}}
+
+/* Resultados de búsqueda agrupados por dominio: temario, biblioteca, materiales y clases responden a
+   la misma palabra, y agruparlos es lo que convierte una lista en un mapa de siguientes pasos. */
+.search-group{margin-bottom:18px}
+.search-group h4{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:9px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.search-group h4::after{content:"";flex:1;height:1px;background:var(--line)}
+.search-group h4 small{order:1;font-size:9px;letter-spacing:0}
+.search-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.intent-group{display:block;margin:14px 0 6px;font-size:9px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted)}
