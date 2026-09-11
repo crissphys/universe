@@ -1,70 +1,26 @@
-<!doctype html>
-<html lang="es" data-theme="dark">
+<!DOCTYPE html>
+<html lang="es" data-universe-page="unitalk">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UNITALK | Universe to Study</title>
-  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
-  <meta name="color-scheme" content="dark light"><link rel="icon" href="/assets/home-access/universe-logo.png">
-  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css"><link rel="stylesheet" href="/universe-ui/platform.css"><link rel="stylesheet" href="/universe-ui/refinements.css"><script type="module" src="/universe-ui/app.js"></script>
-<link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/auth.js" defer></script><link rel="stylesheet" href="/universe-ui/native/unitalk.css"><link rel="stylesheet" href="/universe-ui/native.css"><link rel="stylesheet" href="/universe-ui/unitalk-native.css"><script src="/unitalk.js" defer></script></head>
-<body data-native="unitalk" class="in-platform">
-  <a class="skip-link" href="#native-main">Saltar al contenido</a>
-  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
-  <div class="space-shade" aria-hidden="true"></div>
-  <header class="header">
-    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
-    <nav class="nav" aria-label="Navegación principal"><a href="/explorar" data-en="Platform">Plataforma</a><a href="/cepreuni">CEPREUNI</a><a href="/biblioteca" data-en="Library">Biblioteca</a><a href="/planificador" data-en="Planner">Planificador</a></nav>
-    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
-  </header>
-  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a></nav>
-  <main id="main" hidden>
-    <section id="origin" class="hero chapter">
-      <div class="hero-grid wrap">
-        <div class="hero-copy">
-          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
-          <h1><span data-en="Your curiosity.">Tu curiosidad.</span><br><span class="outline-word" data-en="A new dimension.">Otra dimensión.</span></h1>
-          <p class="hero-description" data-en="Every great idea begins with a question. Connect knowledge, practice and purpose in one place.">Toda gran idea empieza con una pregunta. Conecta conocimiento, práctica y propósito en un solo lugar.</p>
-<div class="hero-cta"><a class="button primary" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
-          <p class="hero-note" data-en="For curious minds. For your next step.">Para mentes curiosas. Para tu siguiente paso.</p>
-        </div>
-        <div class="galaxy-label" aria-hidden="true"><span class="target-cross"></span><span>UNIVERSE / ORIGIN<br><small>EL CONOCIMIENTO NO TIENE UN SOLO CENTRO</small></span></div>
-      </div>
-      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
-    </section>
-    <section id="system" class="system chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
-      <div class="command-panel reveal">
-        <div class="command-main"><div class="command-meta"><span class="orb-small" aria-hidden="true"></span><strong>UNIVERSE <span>EXPLORER</span></strong></div><h3 data-en="Where does your mind want to go?">¿A dónde quiere ir tu mente?</h3>
-          <form id="intent-form"><label for="intent" class="sr-only">Tu objetivo de estudio</label><input id="intent" maxlength="220" autocomplete="off" placeholder="Quiero entender física, organizarme, encontrar un libro…" required><button type="submit" aria-label="Encontrar mi ruta"><span data-icon="arrow-right"></span></button></form>
-          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam ↗">Preparar mi primera PC ↗</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book ↗">Encontrar un libro ↗</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week ↗">Organizar mi semana ↗</button></div>
-          <p class="command-disclaimer" data-en="Local resource finder. No connected AI, API usage or external transmission of your text.">Buscador local de recursos. Sin IA conectada, consumo de API ni envío de tu texto.</p>
-          <div id="intent-result" class="intent-result" aria-live="polite" hidden></div>
-        </div><div class="command-visual" aria-hidden="true"><div class="core-orbit one"></div><div class="core-orbit two"></div><div class="core-orbit three"></div><div class="core-sphere"></div><span class="core-caption">PREGUNTA → CONECTA → AVANZA</span></div>
-      </div>
-      <div class="workspace reveal">
-        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
-        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
-      </div>
-    </section>
-    <section id="resources" class="resources chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
-      <div class="resource-grid">
-        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
-        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/ciclopre20271"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="Academic archive">Archivo académico</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Explore the evaluations and solutions archive.">Explora el archivo de evaluaciones y soluciones.</p></div><span data-icon="arrow-up-right"></span></a></div>
-      </div>
-    </section>
-    <section id="trajectory" class="trajectory chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
-      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
-      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
-    </section>
-  </main>
-<main id="native-main" class="native-shell"><div class="platform native-platform">
-<aside class="side-rail"><span>TODO CONECTA</span><nav aria-label="Secciones de Universe"><a href="/explorar"><span data-icon="grid"></span>Plataforma</a><a href="/cepreuni"><span data-icon="cap"></span>CEPREUNI</a><a href="/biblioteca"><span data-icon="book"></span>Biblioteca</a><a href="/temario"><span data-icon="list"></span>Temario</a><a href="/clases"><span data-icon="play"></span>Clases</a><a href="/planificador"><span data-icon="calendar"></span>Planificador</a><a href="/simulacros"><span data-icon="target"></span>Simulacros</a><a href="/examenes"><span data-icon="layers"></span>Exámenes</a><a href="/admision"><span data-icon="cap"></span>Admisión UNI</a><a href="/calculadora"><span data-icon="calculator"></span>Calculadora</a><a href="/unitalk" aria-current="page"><span data-icon="users"></span>UNITALK</a><a href="/ranking"><span data-icon="orbit"></span>Ranking</a><a href="/docentes-cepreuni"><span data-icon="grid"></span>Guía de aulas</a></nav></aside>
-<div class="platform-body">
-<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / UNITALK</span></div>
-<div class="page-head"><span class="eyebrow">UNIVERSE / UNITALK</span><h1 id="page-title" tabindex="-1">UNITALK</h1><p>El texto de la publicación será la pregunta. Añade entre 2 y 4 alternativas.</p></div>
-<div class="page-view native-view"><div class="unitalk-stage">
+  <meta name="description" content="Comunidad académica de Universe to Study para compartir avances, dudas y consejos entre postulantes.">
+  <link rel="canonical" href="https://universetostudy.com/unitalk">
+  <link rel="icon" href="/favicon.ico?v=1" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1">
+  <meta name="theme-color" content="#eaf2ff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=unitalk-app-1">
+  <link rel="stylesheet" href="/universe-polish.css?v=solid-5">
+  <link rel="stylesheet" href="/unitalk.css?v=unitalk-comments-1">
+  <script>(function(){try{if(localStorage.getItem('universe_theme')==='dark')document.documentElement.setAttribute('data-universe-theme','dark')}catch(e){}})();</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK0XVN4NF5"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NK0XVN4NF5');</script>
+</head>
+<body class="unitalk-body">
+  <main class="unitalk-stage">
     <section class="unitalk-device" aria-label="Plataforma UNITALK">
       <div class="unitalk-app">
         <header class="unitalk-topbar">
@@ -77,7 +33,7 @@
           </label>
           <div class="unitalk-top-actions">
             <a class="unitalk-top-help" href="/terminos#unitalk" aria-label="Normas de UNITALK">?</a>
-            <button class="unitalk-account-button button" id="unitalk-account-button" type="button" aria-label="Abrir opciones de cuenta" aria-expanded="false">
+            <button class="unitalk-account-button" id="unitalk-account-button" type="button" aria-label="Abrir opciones de cuenta" aria-expanded="false">
               <span class="unitalk-account-avatar" id="unitalk-top-avatar">U</span>
               <span id="unitalk-top-name">Mi cuenta</span><b aria-hidden="true">⌄</b>
             </button>
@@ -98,7 +54,7 @@
             <button class="unitalk-nav-item" type="button" data-view="profile"><span>♙</span> Perfil</button>
             <button class="unitalk-nav-item" type="button" data-view="settings"><span>⚙</span> Ajustes</button>
           </nav>
-          <section class="unitalk-sidebar-card p-panel p-tile">
+          <section class="unitalk-sidebar-card">
             <span>Tu espacio académico</span>
             <strong>Comparte y aprende con tu comunidad.</strong>
             <button id="unitalk-sidebar-publish" type="button">Crear publicación</button>
@@ -115,14 +71,14 @@
                 <textarea id="unitalk-post-text" maxlength="400" rows="2" placeholder="¿Qué quieres compartir con la comunidad?" aria-label="Texto de la publicación"></textarea>
               </div>
               <div class="unitalk-composer-tools">
-                <span class="unitalk-mode-chip p-chip" id="unitalk-mode-chip" hidden>💬 Publicación de discusión</span>
+                <span class="unitalk-mode-chip" id="unitalk-mode-chip" hidden>💬 Publicación de discusión</span>
                 <span><b id="unitalk-char-count">0</b>/400 caracteres</span>
               </div>
-              <section class="unitalk-attachment-panel p-panel" id="unitalk-attachment-panel" hidden>
+              <section class="unitalk-attachment-panel" id="unitalk-attachment-panel" hidden>
                 <div id="unitalk-attachment-preview"></div>
                 <button id="unitalk-attachment-remove" type="button" aria-label="Quitar archivo">×</button>
               </section>
-              <section class="unitalk-poll-panel p-panel" id="unitalk-poll-panel" hidden>
+              <section class="unitalk-poll-panel" id="unitalk-poll-panel" hidden>
                 <div class="unitalk-poll-builder-head"><strong>Nueva encuesta</strong><button id="unitalk-poll-close" type="button" aria-label="Quitar encuesta">×</button></div>
                 <p>El texto de la publicación será la pregunta. Añade entre 2 y 4 alternativas.</p>
                 <div class="unitalk-poll-builder-options" id="unitalk-poll-options"></div>
@@ -148,54 +104,51 @@
               <button class="unitalk-tab" type="button" data-filter="recent">Recientes</button>
               <button class="unitalk-tab" type="button" data-filter="mine">Mis publicaciones</button>
             </div>
-            <div class="unitalk-feed-summary p-panel" id="unitalk-feed-summary">Publicaciones recomendadas</div>
+            <div class="unitalk-feed-summary" id="unitalk-feed-summary">Publicaciones recomendadas</div>
             <section id="unitalk-feed" class="unitalk-feed" aria-live="polite"><div class="unitalk-loading">Cargando publicaciones...</div></section>
           </section>
           <section class="unitalk-page-view" id="unitalk-page-view" hidden></section>
         </section>
 
         <aside class="unitalk-rightbar">
-          <section class="unitalk-side-panel p-panel">
-            <div class="unitalk-panel-title p-panel">Actividad reciente</div>
+          <section class="unitalk-side-panel">
+            <div class="unitalk-panel-title">Actividad reciente</div>
             <div id="unitalk-recent-activity" class="unitalk-recent-activity"><div class="unitalk-activity-empty">Actualiza el feed para ver las publicaciones recientes.</div></div>
-            <button class="unitalk-panel-button button" data-view="explore" type="button">Explorar conversaciones</button>
+            <button class="unitalk-panel-button" data-view="explore" type="button">Explorar conversaciones</button>
           </section>
-          <section class="unitalk-side-panel p-panel">
-            <div class="unitalk-panel-title p-panel">Comunidad que construimos</div>
+          <section class="unitalk-side-panel">
+            <div class="unitalk-panel-title">Comunidad que construimos</div>
             <div class="unitalk-community-number" id="unitalk-community-count">—</div>
             <div class="unitalk-community-label">publicaciones compartidas</div>
             <div class="unitalk-faces" aria-hidden="true"><span>U</span><span>π</span><span>Σ</span><span>+</span></div>
-            <button class="unitalk-panel-button button" id="unitalk-join-button" type="button">Únete y participa</button>
+            <button class="unitalk-panel-button" id="unitalk-join-button" type="button">Únete y participa</button>
           </section>
-          <button class="unitalk-privacy-card p-panel p-tile" data-view="settings" type="button"><span>🛡</span><span><strong>Tu privacidad importa</strong><small>Tú decides qué datos muestra tu perfil.</small></span></button>
+          <button class="unitalk-privacy-card" data-view="settings" type="button"><span>🛡</span><span><strong>Tu privacidad importa</strong><small>Tú decides qué datos muestra tu perfil.</small></span></button>
         </aside>
       </div>
     </section>
-  </div><div class="unitalk-modal" id="unitalk-conversation-modal" hidden>
+  </main>
+
+  <div class="unitalk-modal" id="unitalk-conversation-modal" hidden>
     <button class="unitalk-modal-backdrop" type="button" data-close-modal="unitalk-conversation-modal" aria-label="Cerrar conversación"></button>
-    <section class="unitalk-conversation-panel p-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-conversation-title">
+    <section class="unitalk-conversation-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-conversation-title">
       <header><strong id="unitalk-conversation-title">Conversación</strong><button type="button" data-close-modal="unitalk-conversation-modal" aria-label="Cerrar">×</button></header>
       <div id="unitalk-conversation-content" class="unitalk-conversation-content"><div class="unitalk-loading">Cargando conversación...</div></div>
       <form class="unitalk-comment-compose" id="unitalk-comment-form"><textarea id="unitalk-comment-input" maxlength="250" placeholder="Escribe un comentario respetuoso..." aria-label="Comentario"></textarea><button id="unitalk-comment-send" type="submit">Comentar</button></form>
     </section>
-  </div><div class="unitalk-modal" id="unitalk-profile-modal" hidden>
+  </div>
+
+  <div class="unitalk-modal" id="unitalk-profile-modal" hidden>
     <button class="unitalk-modal-backdrop" type="button" data-close-modal="unitalk-profile-modal" aria-label="Cerrar perfil"></button>
-    <section class="unitalk-profile-panel p-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-profile-name">
+    <section class="unitalk-profile-panel" role="dialog" aria-modal="true" aria-labelledby="unitalk-profile-name">
       <button class="unitalk-modal-close" type="button" data-close-modal="unitalk-profile-modal" aria-label="Cerrar">×</button>
       <div id="unitalk-profile-content"><div class="unitalk-loading">Cargando perfil...</div></div>
     </section>
-  </div><div id="unitalk-toast" class="unitalk-toast" role="status" aria-live="polite"></div></div>
-</div></div></main><footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
-  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
-  <div class="immersion-controls" hidden>
-    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
-    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
-    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
-    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
-    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
   </div>
-  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
-  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
-  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
-  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
-</body></html>
+
+  <div id="unitalk-toast" class="unitalk-toast" role="status" aria-live="polite"></div>
+
+  <script src="/unitalk.js?v=profile-unified-1" defer></script>
+<script src="/universe-polish.js?v=solid-11" defer></script>
+</body>
+</html>

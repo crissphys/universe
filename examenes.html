@@ -6,7 +6,7 @@
   <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
   <meta name="color-scheme" content="dark light"><link rel="icon" href="/assets/home-access/universe-logo.png">
   <base href="/"><link rel="stylesheet" href="/universe-ui/style.css"><link rel="stylesheet" href="/universe-ui/platform.css"><link rel="stylesheet" href="/universe-ui/refinements.css"><script type="module" src="/universe-ui/app.js"></script>
-<link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/auth.js" defer></script><link rel="stylesheet" href="/universe-ui/native/examenes.css"><link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/native/examenes-1.js" defer></script><script src="/universe-ai.js" defer></script></head>
+<link rel="stylesheet" href="/universe-ui/native.css"><script src="/universe-ui/auth.js" defer></script><link rel="stylesheet" href="/universe-ui/native/examenes.css"><link rel="stylesheet" href="/universe-ui/native.css"></head>
 <body data-native="examenes" class="in-platform">
   <a class="skip-link" href="#native-main">Saltar al contenido</a>
   <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
@@ -62,138 +62,9 @@
 <main id="native-main" class="native-shell"><div class="platform native-platform">
 <aside class="side-rail"><span>TODO CONECTA</span><nav aria-label="Secciones de Universe"><a href="/explorar"><span data-icon="grid"></span>Plataforma</a><a href="/cepreuni"><span data-icon="cap"></span>CEPREUNI</a><a href="/biblioteca"><span data-icon="book"></span>Biblioteca</a><a href="/temario"><span data-icon="list"></span>Temario</a><a href="/clases"><span data-icon="play"></span>Clases</a><a href="/planificador"><span data-icon="calendar"></span>Planificador</a><a href="/simulacros"><span data-icon="target"></span>Simulacros</a><a href="/examenes" aria-current="page"><span data-icon="layers"></span>Exámenes</a><a href="/admision"><span data-icon="cap"></span>Admisión UNI</a><a href="/calculadora"><span data-icon="calculator"></span>Calculadora</a><a href="/unitalk"><span data-icon="users"></span>UNITALK</a><a href="/ranking"><span data-icon="orbit"></span>Ranking</a><a href="/docentes-cepreuni"><span data-icon="grid"></span>Guía de aulas</a></nav></aside>
 <div class="platform-body">
-<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / Exámenes CEPREUNI</span></div>
-<div class="page-head"><span class="eyebrow">UNIVERSE / EXAMENES</span><h1 id="page-title" tabindex="-1">Exámenes CEPREUNI</h1></div>
-<div class="page-view native-view"><div id="quiz-panel">
-  <div class="tp-header">
-    <button aria-label="Cerrar" class="tp-back universe-panel-close p-panel" onclick="closeQuiz()" type="button">×</button>
-    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;color:var(--cyan);">SIMULACRO · IA · TIPO UNI</div>
-    <div class="tp-header-logo">Universe to Study</div>
-  </div>
-  <div class="quiz-body">
-    <div class="quiz-mode-banner" id="quiz-mode-banner">
-      <div>
-        <strong>MODO EXTREMO UNI REAL</strong>
-        <div style="font-size:.82rem;color:#cbd5e1;margin-top:.2rem;">Examen activo: todos los cursos, sin cantidad fija de preguntas.</div>
-      </div>
-      <div class="quiz-timer" id="quiz-timer">03:00:00</div>
-    </div>
-    <div id="quiz-setup">
-      <div style="margin-bottom:1.5rem;">
-        <div id="quiz-mode-title" style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;margin-bottom:.4rem;">GENERADOR DE PREGUNTAS</div>
-        <div id="quiz-mode-desc" style="font-size:.9rem;color:var(--gray);line-height:1.6;">Selecciona el curso, el nivel de dificultad y genera preguntas estilo UNI con IA. Puedes subir PDFs, apuntes, fotos o capturas para preguntas personalizadas.</div>
-      </div>
-      <div class="quiz-ai-note p-panel" id="quiz-ai-note">UniverseAI genera preguntas nuevas con 5 alternativas y solución conceptual, combinando patrones tipo UNI con el tema o material que subas. El modo verificado añade una segunda IA revisora.</div>
-
-      <div id="quiz-subject-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:.8rem;">Selecciona el Curso</div>
-      <div class="quiz-selector" id="quiz-subject-grid">
-        <div class="quiz-subject-btn active button" data-area="math" data-subject="Aritmética" onclick="selectSubject(this)"><div class="qsb-icon">∑</div>Aritmética</div>
-        <div class="quiz-subject-btn button" data-area="math" data-subject="Álgebra" onclick="selectSubject(this)"><div class="qsb-icon">√</div>Álgebra</div>
-        <div class="quiz-subject-btn button" data-area="math" data-subject="Geometría" onclick="selectSubject(this)"><div class="qsb-icon">📐</div>Geometría</div>
-        <div class="quiz-subject-btn button" data-area="math" data-subject="Trigonometría" onclick="selectSubject(this)"><div class="qsb-icon">△</div>Trigonometría</div>
-        <div class="quiz-subject-btn button" data-area="math" data-subject="Cálculo" onclick="selectSubject(this)"><div class="qsb-icon">∫</div>Cálculo</div>
-        <div class="quiz-subject-btn button" data-area="science" data-subject="Física" onclick="selectSubject(this)"><div class="qsb-icon">⚡</div>Física</div>
-        <div class="quiz-subject-btn button" data-area="science" data-subject="Química" onclick="selectSubject(this)"><div class="qsb-icon">🧪</div>Química</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Razonamiento Verbal" onclick="selectSubject(this)"><div class="qsb-icon">📚</div>Raz. Verbal</div>
-        <div class="quiz-subject-btn button" data-area="math" data-subject="Razonamiento Matemático" onclick="selectSubject(this)"><div class="qsb-icon">➕</div>Raz. Matemático</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Literatura" onclick="selectSubject(this)"><div class="qsb-icon">🖊️</div>Literatura</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Historia" onclick="selectSubject(this)"><div class="qsb-icon">⌛</div>Historia</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Geografía" onclick="selectSubject(this)"><div class="qsb-icon">🌍</div>Geografía</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Economía" onclick="selectSubject(this)"><div class="qsb-icon">💰</div>Economía</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Filosofía" onclick="selectSubject(this)"><div class="qsb-icon">☯️</div>Filosofía</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Lógica" onclick="selectSubject(this)"><div class="qsb-icon">⚙️</div>Lógica</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Actualidad" onclick="selectSubject(this)"><div class="qsb-icon">📰</div>Actualidad</div>
-        <div class="quiz-subject-btn button" data-area="humanities" data-subject="Inglés" onclick="selectSubject(this)"><div class="qsb-icon">🇬🇧</div>Inglés</div>
-      </div>
-
-      <div id="quiz-diff-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:.5rem 0 .8rem;">Dificultad</div>
-      <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.2rem;">
-        <button class="quiz-subject-btn diff-btn active button" data-diff="difícil" onclick="selectDiff(this)" style="min-width:100px;padding:.6rem 1rem;">🔥 Difícil</button>
-        <button class="quiz-subject-btn diff-btn button" data-diff="muy difícil" onclick="selectDiff(this)" style="min-width:100px;padding:.6rem 1rem;">💀 Muy difícil</button>
-        <button class="quiz-subject-btn diff-btn button" data-diff="nivel UNI extremo" onclick="selectDiff(this)" style="min-width:100px;padding:.6rem 1rem;">🏆 Extremo UNI</button>
-      </div>
-
-      <div class="quiz-quality-control" aria-labelledby="quiz-quality-label">
-        <div>
-          <div id="quiz-quality-label" class="quiz-control-label">Calidad de generación</div>
-          <p id="quiz-quality-help">Respuesta rápida, con revisión automática de estructura y coherencia básica.</p>
-        </div>
-        <div class="quiz-quality-options" role="group" aria-label="Calidad de generación">
-          <button class="quiz-quality-btn active button" data-quality="fast" type="button" onclick="selectQualityMode(this)">
-            <strong>Rápida</strong><span>1 IA + validador</span>
-          </button>
-          <button class="quiz-quality-btn button" data-quality="verified" type="button" onclick="selectQualityMode(this)">
-            <strong>Verificada</strong><span>2 IA revisan</span>
-          </button>
-        </div>
-      </div>
-
-      <div id="quiz-upload-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;">Subir material multimodal</div>
-      <label class="quiz-upload-zone" for="quiz-file-input" id="quiz-upload-zone" ondragleave="this.classList.remove('dragover')" ondragover="event.preventDefault();this.classList.add('dragover')" ondrop="handleDropUpload(event)">
-        <div class="upload-zone-grid p-grid">
-          <div class="upload-icon"><svg aria-hidden="true" class="uicon" viewbox="0 0 24 24"><path d="M11 16V7.85l-3.05 3.05-1.4-1.4L12 4.05l5.45 5.45-1.4 1.4L13 7.85V16h-2Zm-5 4a2 2 0 0 1-2-2v-3h2v3h12v-3h2v3a2 2 0 0 1-2 2H6Z"></path></svg></div>
-          <div>
-            <div class="upload-title">Arrastra tu PDF, foto o captura aquí</div>
-            <div class="upload-sub">Acepta PDF, TXT, MD, PNG, JPG y WEBP. Los PDFs/TXT se leen en local; las imágenes se convierten en contexto visual guiado.</div>
-            <div id="quiz-file-name" style="margin-top:.5rem;font-size:.82rem;color:var(--cyan);"></div>
-          </div>
-          <div class="upload-pill p-chip">Elegir archivo</div>
-        </div>
-      </label>
-      <input accept=".pdf,.txt,.md,image/png,image/jpeg,image/webp,image/*" id="quiz-file-input" onchange="handleFileUpload(this)" style="display:none;" type="file"></input>
-      <div class="image-context-box p-panel" id="quiz-image-context">
-        <img alt="Vista previa del material visual" class="image-preview" id="quiz-image-preview"></img>
-        <textarea class="image-notes" id="quiz-image-notes" oninput="updateImageContextFromNotes()" placeholder="Detalle visible de la imagen: tema, datos, gráfico, fórmula o pregunta que quieres practicar."></textarea>
-      </div>
-
-      <button class="quiz-generate-btn button" id="quiz-gen-btn" onclick="generateQuestion()">GENERAR PREGUNTA CON UNIVERSEAI</button>
-
-      <div class="quiz-score-bar" id="quiz-scorebar" style="display:none;">
-        <span>PUNTAJE ACTUAL</span>
-        <div><span class="quiz-score-val" id="quiz-score-display">0</span> <span>/ <span id="quiz-total-display">0</span></span></div>
-        <span id="quiz-pct-display" style="color:var(--cyan);">-</span>
-      </div>
-    </div>
-
-    <div id="quiz-question-area"></div>
-  </div>
-</div><section class="universe-exams-page" id="examenes-cepreuni-page">
-  <div class="universe-exams-shell">
-    <div class="section-label">Archivo académico</div>
-    
-    <p class="section-sub">Esta sección está preparada para ordenar los enlaces de Google Drive por ciclo, evaluación y sede. Los archivos se incorporarán aquí cuando proporciones los enlaces.</p>
-    <section class="universe-ai-entry" aria-labelledby="universe-ai-entry-title">
-      <div class="universe-ai-entry-copy">
-        <span class="universe-ai-entry-kicker">Tutor académico con IA</span>
-        <h2 id="universe-ai-entry-title">Pregunta a UniverseAI</h2>
-        <p>Escribe una duda de cualquier curso o abre el generador para practicar con preguntas tipo UNI.</p>
-      </div>
-      <label class="universe-ai-entry-label" for="universe-ai-question">¿Qué deseas estudiar?</label>
-      <textarea id="universe-ai-question" rows="4" maxlength="4000" placeholder="Ejemplo: Explícame el teorema de Pitágoras y crea un ejemplo tipo UNI." onkeydown="if(event.key==='Enter' &amp;&amp; (event.ctrlKey || event.metaKey)){event.preventDefault();askUniverseAIFromPage();}"></textarea>
-      <div class="universe-ai-depth-control">
-        <label for="universe-ai-depth">Tipo de respuesta</label>
-        <select id="universe-ai-depth">
-          <option value="fast">Equilibrada y rápida</option>
-          <option value="conceptual">Conceptual · 1 IA</option>
-          <option value="verified">Verificada · 2 IA (más lenta)</option>
-        </select>
-      </div>
-      <div class="universe-ai-entry-actions">
-        <button class="universe-ai-primary" id="universe-ai-ask-button" type="button" onclick="askUniverseAIFromPage()">Preguntar a UniverseAI</button>
-        <button class="universe-ai-secondary" type="button" onclick="openQuiz()">Abrir generador de preguntas</button>
-        <button class="universe-ai-secondary" type="button" onclick="openQuizMaterial()">Practicar con mis apuntes</button>
-      </div>
-      <p class="universe-ai-entry-hint">También puedes enviar tu consulta con Ctrl + Enter.</p>
-      <div class="universe-ai-entry-answer" id="universe-ai-entry-answer" role="status" aria-live="polite" hidden></div>
-    </section>
-    <div class="universe-exams-grid p-grid">
-      <article class="universe-exam-placeholder"><strong>Prácticas calificadas</strong><span>PC1 a PC7, separadas por ciclo y sede.</span></article>
-      <article class="universe-exam-placeholder"><strong>Exámenes parciales</strong><span>Primer y segundo examen parcial con solucionarios disponibles.</span></article>
-      <article class="universe-exam-placeholder"><strong>Exámenes finales</strong><span>Evaluaciones finales e ingreso directo CEPREUNI.</span></article>
-      <article class="universe-exam-placeholder"><strong>Solucionarios</strong><span>Documentos y videos organizados junto a cada evaluación.</span></article>
-    </div>
-  </div>
-</section></div>
+<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / Generador de exámenes</span></div>
+<div class="page-head"><span class="eyebrow">UNIVERSE / EXAMENES</span><h1 id="page-title" tabindex="-1">Generador de exámenes</h1><p>Esta herramienta está en construcción. Todavía no hay exámenes disponibles: cuando el generador esté listo aparecerá aquí.</p></div>
+<div class="page-view native-view"><section class="p-panel p-panel"><p><a class="button button" href="/temario">Ver el temario</a> <a class="button button" href="/biblioteca">Ir a la biblioteca</a></p></section></div>
 </div></div></main><footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/nosotros">Nosotros</a><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
   <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
   <div class="immersion-controls" hidden>

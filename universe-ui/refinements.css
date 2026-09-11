@@ -18,10 +18,10 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 .brand-link{display:flex!important;align-items:center;justify-content:center;width:128px;height:72px;padding:8px!important;background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;opacity:.67;transition:opacity .25s,transform .25s;flex-shrink:0}
 .brand-link img{object-fit:contain;width:100%;height:100%;filter:none;transition:filter .25s}
 .brand-link:hover,.brand-link:focus-visible{opacity:1;transform:translateY(-3px)}
-:root[data-theme=dark] .brand-linktree img,:root[data-theme=dark] .brand-universe img{filter:invert(1)}
+
 :root[data-theme=dark] .brand-youtube img,:root[data-theme=dark] .brand-uni img,:root[data-theme=dark] .brand-cepreuni img,:root[data-theme=dark] .brand-lumbreras img{filter:invert(1) hue-rotate(180deg)}
-:root[data-theme=light] .brand-link img{filter:none}
-.brand-tiktok img,.brand-whatsapp img,.brand-drive img,.brand-cuzcano img{filter:none!important}
+
+
 .brand-whatsapp,.brand-drive,.brand-tiktok{width:65px}
 .brand-rail .brand-cepreuni{width:105px}.brand-rail .brand-universe{width:160px}.brand-rail .brand-uni{width:144px}
 .brand-link:focus-visible{outline:2px solid var(--blue);outline-offset:8px}
@@ -99,3 +99,28 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 .grade-row input:invalid{border-color:#fba3a3}.score-side{display:grid;gap:20px;position:sticky;top:110px}.score-big{font-size:clamp(42px,5vw,64px);letter-spacing:-3px;font-weight:500;margin:20px 0;font-variant-numeric:tabular-nums}.score-big small{font-size:17px;color:var(--muted);letter-spacing:0;margin-left:7px}.score-side p{font-size:11px;line-height:1.9;color:var(--muted)}.score-breakdown{display:grid;gap:12px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}.score-breakdown>span{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:10px;color:var(--muted)}.score-breakdown b{font:13px monospace;color:var(--text)}.score-goal{padding-top:14px;margin-top:16px;border-top:1px solid var(--line);font-size:11px;line-height:1.8;color:var(--muted)}.score-goal strong{color:var(--text)}.score-error{color:#f5a4a4;font-size:12px;line-height:1.8;min-height:1em}.score-history{margin:28px 0}.score-history .p-subhead{margin:0 0 20px}.score-history h2{font-size:21px}.history-summary{display:flex;align-items:center;gap:22px;margin:18px 0 30px}.history-summary b{font-size:34px;letter-spacing:-1px;font-weight:400}.history-summary span{font-size:11px;color:var(--muted);max-width:190px}.table-scroll{overflow-x:auto}.score-history table{width:100%;border-collapse:collapse;text-align:left;font-size:12px}.score-history th{font-size:10px;color:var(--muted);font-weight:500;padding:12px 8px}.score-history td{padding:17px 8px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}.score-bar{min-width:100px;width:100%;height:5px;border-radius:4px;background:var(--soft);position:relative;font-size:9px;line-height:8px;color:var(--muted)}.score-bar i{position:absolute;height:5px;background:var(--blue);border-radius:4px}.score-method summary{cursor:pointer;font-size:13px}.score-method p{font-size:12px;line-height:1.9;color:var(--muted)}.score-method a{color:var(--blue)}
 @media(max-width:1100px){.score-layout{grid-template-columns:minmax(0,1fr)}.score-side{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}.orbital-instrument{max-width:330px}.brand-rail{gap:14px}.brand-link{width:110px}}
 @media(max-width:600px){.score-side{grid-template-columns:minmax(0,1fr)}.score-selectors{grid-template-columns:minmax(0,1fr)}.score-grades{gap:15px 10px}.score-layout>.p-panel{padding:22px 18px}.score-history .p-subhead{display:block}.score-history .p-subhead>span{display:block;margin-top:10px}.catalog-options{flex-wrap:wrap}.catalog-divider{grid-template-columns:minmax(0,1fr)}.catalog-divider small{grid-column:1}.catalog-section>h3{font-size:13px}.orbital-instrument{max-width:320px;margin-top:28px}.p-feature:has(.orbital-instrument){grid-template-columns:minmax(0,1fr)}.brand-rail{gap:18px;padding:25px 0}.brand-link{width:98px;height:60px}.brand-rail .brand-uni{width:128px}.brand-rail .brand-universe{width:142px}.brand-whatsapp,.brand-drive,.brand-tiktok{width:50px}.catalog-identity .brand-link{width:140px}.catalog-identity{font-size:12px}.catalog-identity small{font-size:10px}.history-summary{gap:15px}.score-history td{padding:14px 5px}}
+
+/* Brand rail — uncropped, uniform, monochrome.
+   The previous treatment absolutely positioned each logo inside an overflow:hidden box and scaled it by
+   a per-brand --logo-width, which cropped WhatsApp, Drive and TikTok outright and gave every mark a
+   different visual weight. Logos are not illustrations: they belong at one size, whole, in one colour,
+   so the row reads as a quiet list of places rather than a wall of brand colour. */
+:root[data-theme] .brand-rail{gap:clamp(20px,3.4vw,46px);padding:46px 0}
+:root[data-theme] .brand-rail a.brand-link{
+  overflow:visible;width:104px;height:52px;padding:10px 14px!important;
+  border:1px solid var(--line)!important;border-radius:12px;
+  transition:border-color .2s cubic-bezier(.23,1,.32,1),transform .2s cubic-bezier(.23,1,.32,1);
+}
+:root[data-theme] .brand-rail a.brand-link img{
+  position:static;left:auto;top:auto;transform:none;
+  /* One cap height for every mark: a square icon and a wide wordmark then read as the same size,
+     which capping both dimensions never achieves. */
+  height:26px;width:auto;max-width:100%;object-fit:contain;
+  /* Flatten each mark to a single silhouette, then hold it back so the row is grey, not white. */
+  filter:grayscale(1) brightness(0) invert(1);opacity:.72;
+  transition:opacity .2s cubic-bezier(.23,1,.32,1);
+}
+:root[data-theme] .brand-rail a.brand-link:hover{border-color:#97b5ff55;transform:translateY(-2px)}
+:root[data-theme] .brand-rail a.brand-link:hover img{opacity:1}
+:root[data-theme=light] .brand-rail a.brand-link img{filter:grayscale(1) brightness(0);opacity:.6}
+@media(max-width:760px){:root[data-theme] .brand-rail a.brand-link{width:84px;height:44px}:root[data-theme] .brand-rail a.brand-link img{height:21px}}
