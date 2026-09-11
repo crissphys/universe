@@ -44,10 +44,85 @@ const desc=t=>en()?t.descEn:t.desc;
 function externalLinks(){ $$('a[href^="https://"]').forEach(a=>{a.target='_blank';a.rel='noopener noreferrer'})}
 function toolHTML(t){return `<a class="tool-card" href="https://universetostudy.com${t.url}">${icon(t.icon)}${icon('arrow-up-right','tool-arrow')}<h3>${title(t)}</h3><p>${desc(t)}</p></a>`}
 function renderTools(){ $('#workspace-content').innerHTML=modes[mode].map(id=>toolHTML(tools.find(t=>t.id===id))).join('');$('#workspace-content').setAttribute('aria-labelledby','tab-'+mode);externalLinks() }
-function normalize(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
-function matches(q){const words=normalize(q).split(/\s+/).filter(w=>w.length>2&&!['quiero','para','una','uno','los','las','del','que','con','como','busco'].includes(w));return tools.map(t=>({t,score:words.reduce((n,w)=>n+(normalize([t.name,t.en,t.keys].join(' ')).includes(w)?1:0),0)})).filter(x=>!words.length||x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.t)}
-function search(){const q=$('#tool-search').value;const hits=matches(q);$('#search-results').innerHTML=hits.length?hits.map(t=>`<a class="search-row" href="https://universetostudy.com${t.url}">${icon(t.icon)}<div>${title(t)}<small>${desc(t)}</small></div><span>↗</span></a>`).join(''):`<p>${en()?'No matches. Try “books”, “classes” or “planner”.':'No encontramos coincidencias. Prueba «libros», «clases» o «planificador».'}</p>`;externalLinks()}
-function intent(){const hits=matches($('#intent').value).slice(0,3);const result=$('#intent-result');result.hidden=false;result.replaceChildren();const heading=document.createElement('strong');heading.textContent=en()?'Your next connections':'Tus siguientes conexiones';result.append(heading);if(!hits.length){const p=document.createElement('p');p.textContent=en()?'Try a topic or tool such as books, physics or a weekly plan.':'Prueba con un tema o herramienta, como libros, física o plan semanal.';result.append(p)}hits.forEach(t=>{const a=document.createElement('a');a.textContent=title(t)+' ↗';a.href='https://universetostudy.com'+t.url;result.append(a)});externalLinks()}
+function normalize(s){return String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()}
+// Buscar "física" devolvía tres herramientas y nada más, cuando la plataforma sabe muchísimo sobre
+// física: el temario de admisión, el de CEPREUNI, el de San Marcos, los libros de la biblioteca, los
+// universitarios, los materiales del ciclo y los videos de clase. El índice cubre ahora todo eso, para
+// que una palabra devuelva de verdad las siguientes conexiones y no solo el nombre de una pestaña.
+const STOP=['quiero','para','una','uno','los','las','del','que','con','como','busco','sobre','tema','temas'];
+const GROUPS=[['tool','Herramientas','Tools'],['syllabus','Temario','Syllabus'],['library','Biblioteca','Library'],['material','Materiales del ciclo','Cycle materials'],['class','Clases','Classes']];
+let indexRows=null,indexPromise=null;
+function row(kind,label,sub,url,extra){return {kind,label,sub,url,keys:normalize([label,sub,extra].join(' '))}}
+function buildIndex(d,videos){
+ const rows=tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' ')));
+ const s=d.syllabus||{};
+ for(const [id,c] of Object.entries(s.temarios||{})){
+  rows.push(row('syllabus',c.name,`Temario · ${(c.semanas||[]).length} semanas de admisión y ${(c.cepreSemanas||[]).length} de CEPREUNI`,'/temario',id+' '+(c.cat||'')));
+  for(const m of [...(c.semanas||[]),...(c.cepreSemanas||[])])for(const t of m.topics||[])
+   rows.push(row('syllabus',t.title.replace(/^\d+\.\s*/,''),`${c.name} · ${m.label}`,'/temario',(t.items||[]).join(' ').slice(0,400)));
+ }
+ for(const c of s.sanMarcos?.courses||[]){
+  rows.push(row('syllabus',c.name,`San Marcos · ${c.topics.length} temas`,'/temario',c.group));
+  for(const t of c.topics)rows.push(row('syllabus',t.split('. ')[0].slice(0,90),`San Marcos · ${c.name}`,'/temario',t));
+ }
+ const ROUTES={universe:'/biblioteca/universe',cuzcano:'/biblioteca/cuzcano',lumbreras:'/biblioteca/lumbreras',college:'/biblioteca/librosuniversitarios',materials:'/cepreuni/ciclopre20271'};
+ for(const [key,list] of Object.entries(d.catalogs||{}))for(const b of list)
+  rows.push(row(key==='materials'?'material':'library',b.title,[b.series,b.author].filter(Boolean).join(' · '),ROUTES[key]||'/biblioteca',b.catalog+' '+b.section));
+ for(const p of d.publishers||[])rows.push(row('library',p.name,'Editorial','/biblioteca',''));
+ for(const c of d.videoIndex?.courses||[])rows.push(row('class',c.title,`${c.videoCount} clases · ${c.area}`,'/clases',c.slug));
+ if(videos)for(const [slug,list] of Object.entries(videos))for(const v of list)
+  rows.push(row('class',v.title,[v.topicLabel,v.channel].filter(Boolean).join(' · '),'/clases',slug));
+ return rows;
+}
+function loadIndex(){
+ if(indexRows)return Promise.resolve(indexRows);
+ if(!indexPromise)indexPromise=Promise.all([
+  fetch('/universe-ui/data/platform.json').then(r=>r.json()),
+  fetch('/universe-ui/data/videos.json').then(r=>r.json()).catch(()=>null),
+ ]).then(([d,v])=>{indexRows=buildIndex(d,v);return indexRows}).catch(()=>{indexRows=tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' ')));return indexRows});
+ return indexPromise;
+}
+function words(q){return normalize(q).split(/\s+/).filter(w=>w.length>2&&!STOP.includes(w))}
+function matchRows(q,rows){
+ const ws=words(q);
+ if(!ws.length)return rows.filter(r=>r.kind==='tool');
+ return rows.map(r=>{let score=0;for(const w of ws){const i=r.keys.indexOf(w);if(i<0)return null;score+=i===0?3:i<40?2:1}
+  return {r,score:score+(r.kind==='tool'?2:0)}}).filter(Boolean).sort((a,b)=>b.score-a.score).map(x=>x.r);
+}
+// Mantiene la firma anterior: el resto del archivo sigue pidiendo herramientas.
+function matches(q){const ws=words(q);return tools.filter(t=>!ws.length||ws.every(w=>normalize([t.name,t.en,t.keys].join(' ')).includes(w)))}
+function groupHits(hits,perGroup){
+ return GROUPS.map(([kind,es,ens])=>({kind,name:en()?ens:es,items:hits.filter(h=>h.kind===kind),shown:hits.filter(h=>h.kind===kind).slice(0,perGroup)})).filter(g=>g.items.length);
+}
+function renderSearch(hits){
+ const box=$('#search-results');
+ if(!hits.length){box.innerHTML=`<p>${en()?'No matches. Try “physics”, “books” or “planner”.':'No encontramos coincidencias. Prueba «física», «libros» o «planificador».'}</p>`;return}
+ box.innerHTML=groupHits(hits,6).map(g=>`<div class="search-group"><h4>${esc2(g.name)}<small>${g.items.length}</small></h4>${g.shown.map(h=>`<a class="search-row" href="${esc2(h.url)}"><div>${esc2(h.label)}<small>${esc2(h.sub)}</small></div><span>→</span></a>`).join('')}</div>`).join('');
+}
+const esc2=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function search(){
+ const q=$('#tool-search').value;
+ renderSearch(matchRows(q,indexRows||[]));
+ loadIndex().then(rows=>{if($('#tool-search').value===q)renderSearch(matchRows(q,rows))});
+}
+function intent(){
+ const q=$('#intent').value,result=$('#intent-result');
+ result.hidden=false;
+ const paint=rows=>{
+  const hits=matchRows(q,rows);
+  result.replaceChildren();
+  const heading=document.createElement('strong');
+  heading.textContent=en()?'Your next connections':'Tus siguientes conexiones';
+  result.append(heading);
+  if(!hits.length){const p=document.createElement('p');p.textContent=en()?'Try a topic or a tool: physics, books, weekly plan.':'Prueba con un tema o una herramienta: física, libros, plan semanal.';result.append(p);return}
+  for(const g of groupHits(hits,3)){
+   const label=document.createElement('span');label.className='intent-group';label.textContent=`${g.name} · ${g.items.length}`;result.append(label);
+   for(const h of g.shown){const a=document.createElement('a');a.href=h.url;a.textContent=h.label;a.title=h.sub;result.append(a)}
+  }
+ };
+ paint(indexRows||[]);
+ loadIndex().then(rows=>{if($('#intent').value===q)paint(rows)});
+}
 $('#intent-form').addEventListener('submit',e=>{e.preventDefault();intent()});$$('[data-intent]').forEach(b=>b.addEventListener('click',()=>{$('#intent').value=b.dataset.intent;intent()}));
 $$('[data-mode]').forEach(b=>{b.addEventListener('click',()=>{mode=b.dataset.mode;$$('[data-mode]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));renderTools()});b.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const tabs=$$('[data-mode]');let i=tabs.indexOf(b);i=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;tabs[i].focus();tabs[i].click()}})});
 const events=[{day:13,time:'09:00',cycle:'pre',name:'Primera práctica calificada',en:'First graded practice',date:'2026-09-13T09:00:00-05:00'},{day:27,time:'00:00',cycle:'pre',name:'Segunda práctica calificada',en:'Second graded practice',date:'2026-09-27T00:00:00-05:00'},{day:13,time:'09:00',cycle:'basic',name:'Primera evaluación calificada',en:'First graded evaluation',date:'2026-09-13T09:00:00-05:00'},{day:27,time:'00:00',cycle:'basic',name:'Segunda evaluación calificada',en:'Second graded evaluation',date:'2026-09-27T00:00:00-05:00'},{day:20,time:'09:00',cycle:'ien',name:'Examen parcial presencial',en:'In-person midterm exam',date:'2026-09-20T09:00:00-05:00'}];
