@@ -35,21 +35,6 @@
       ],
       "contentLength": 23419
     },
-    "unitalk": {
-      "file": "unitalk.html",
-      "scripts": [
-        "unitalk.js"
-      ],
-      "contentLength": 10286
-    },
-    "examenes": {
-      "file": "examenes.html",
-      "scripts": [
-        "universe-ui/native/examenes-1.js",
-        "universe-ai.js"
-      ],
-      "contentLength": 11448
-    },
     "simulacros": {
       "file": "simulacros.html",
       "scripts": [
