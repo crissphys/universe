@@ -39,7 +39,7 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 .logo-tile .tile-logo{display:flex;align-items:center;justify-content:flex-start;width:140px;height:46px;margin-bottom:20px;position:relative;overflow:hidden}
 .logo-tile .tile-logo img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:invert(1) saturate(0) brightness(1.4) contrast(.9)}
 :root[data-theme=light] .logo-tile .tile-logo img{filter:saturate(0) contrast(1.1)}
-.logo-tile .tile-logo:has(img[src*="cepreuni"]) img{position:absolute;left:50%;top:50%;max-width:none;max-height:none;width:calc(100% * 1.55);height:auto;transform:translate(-48%,-48.5%)}
+
 .catalog-identity{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:0 0 22px;border-bottom:1px solid var(--line);margin-bottom:25px;color:var(--text);font-size:14px}.catalog-identity small{color:var(--muted);font-size:11px}
 .catalog-logo{display:flex;align-items:center;height:56px;flex-shrink:0;opacity:.9;transition:opacity .2s}.catalog-logo:hover{opacity:1}
 .catalog-logo img{height:100%;width:auto;max-width:220px;object-fit:contain;filter:invert(1) saturate(0) brightness(1.4) contrast(.9)}
@@ -124,3 +124,25 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 :root[data-theme] .brand-rail a.brand-link:hover img{opacity:1}
 :root[data-theme=light] .brand-rail a.brand-link img{filter:grayscale(1) brightness(0);opacity:.6}
 @media(max-width:760px){:root[data-theme] .brand-rail a.brand-link{width:84px;height:44px}:root[data-theme] .brand-rail a.brand-link img{height:21px}}
+
+/* Catálogo de editoriales. Mismo principio que la fila de marcas: nada se recorta, todas comparten
+   altura de caja y color, para que la rejilla se lea como un índice y no como publicidad. */
+.publisher-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.publisher-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:16px;
+  min-height:104px;padding:18px;border:1px solid var(--line);border-radius:14px;text-decoration:none;
+  transition:border-color .2s cubic-bezier(.23,1,.32,1),transform .2s cubic-bezier(.23,1,.32,1)}
+.publisher-card:hover{border-color:#97b5ff55;transform:translateY(-2px)}
+.publisher-card:active{transform:scale(.985)}
+.publisher-card img{height:26px;width:auto;max-width:100%;object-fit:contain;
+  filter:grayscale(1) brightness(0) invert(1);opacity:.72;transition:opacity .2s cubic-bezier(.23,1,.32,1)}
+.publisher-card:hover img{opacity:1}
+.publisher-card span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+:root[data-theme=light] .publisher-card img{filter:grayscale(1) brightness(0);opacity:.68}
+
+/* Los logos de editorial vienen en dos formatos y no admiten el mismo tratamiento: unos son marcas
+   recortadas sobre transparencia (funcionan como silueta) y otros son imágenes planas con fondo claro
+   sólido, que como silueta se volverían un rectángulo blanco. A estos se les invierte el valor y se
+   funden en modo screen, con lo que su fondo —ahora negro— desaparece dentro del panel. */
+.publisher-card.is-flat img{filter:grayscale(1) invert(1);opacity:.9;mix-blend-mode:screen}
+.publisher-card.is-flat:hover img{opacity:1}
+:root[data-theme=light] .publisher-card.is-flat img{filter:grayscale(1);opacity:.85;mix-blend-mode:multiply}
