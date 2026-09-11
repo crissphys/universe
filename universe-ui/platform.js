@@ -124,9 +124,9 @@ function syllabus(out){const temarios=data.syllabus.temarios;const marcos=data.s
  show();renderExam();
 }
 function buildPlan(profile){
- const {focus,days,start,weeks,blocksPerDay}=profile;
- const weights={};AREAS.forEach(([name])=>weights[name]=name===focus?3:1);
- const pools={};AREAS.forEach(([name,ids])=>{pools[name]=ids.map(id=>{const c=data.syllabus.temarios[id];const mods=c.cepreSemanas||c.semanas||[];const topics=mods.flatMap(m=>(m.topics||[]).map(t=>({group:m.label,title:t.title.replace(/^\d+\.\s*/,'')})));return {id,name:c.name,topics,pos:0}})});
+ const {focus,days,start,weeks,blocksPerDay,focusCourses=[]}=profile;
+ const pick=new Set(focusCourses);const weights={};AREAS.forEach(([name,ids])=>{const n=ids.filter(id=>pick.has(id)).length;weights[name]=n?1+n:(name===focus?3:1)});
+ const pools={};AREAS.forEach(([name,ids])=>{pools[name]=ids.flatMap(id=>Array(pick.has(id)?2:1).fill(0).map(()=>{const c=data.syllabus.temarios[id];const mods=c.cepreSemanas||c.semanas||[];const topics=mods.flatMap(m=>(m.topics||[]).map(t=>({group:m.label,title:t.title.replace(/^\d+\.\s*/,'')})));return {id,name:c.name,topics,pos:0}}))});
  const cursor={};AREAS.forEach(([name])=>cursor[name]=0);
  const counts={};AREAS.forEach(([name])=>counts[name]=0);
  function nextForArea(name){const courses=pools[name];for(let tries=0;tries<courses.length;tries++){const idx=cursor[name]%courses.length;cursor[name]++;const course=courses[idx];if(course.pos<course.topics.length){const t=course.topics[course.pos++];return {area:name,courseId:course.id,course:course.name,group:t.group,title:t.title,type:'study'}}}
@@ -137,10 +137,99 @@ function buildPlan(profile){
  return entries;
 }
 function planWeekStart(iso){const d=new Date(iso+'T00:00:00');const day=d.getDay()||7;d.setDate(d.getDate()-(day-1));return d}
+// Academias registradas en la base de datos de Universe (planner.js del sitio real).
+const ACADEMIES=['Pitágoras','César Vallejo','ADUNI','Trilce','Pamer','Exclusiva UNI','ASEUNI','ADCUNI','Academia Ingeniería','Formación UNI','Aula 20','ACUNI','Grupo Ciencias','Vonex','Saco Oliveros','Savia','Integral Class','Academia Prisma','Academia Euclides','Academia Apolo','Academia Mendel','Otra academia'];
+const CEPRE_CYCLES=[['pre','Ciclo preuniversitario'],['basico','Ciclo básico'],['ien','Ciclo IEN']];
+const SHIFTS=[['morning','Mañana','07:00 – 14:00'],['afternoon','Tarde','14:00 – 20:00'],['custom','Personalizado','Tú eliges las horas']];
+// Fechas estimadas: el calendario oficial del proceso no está publicado en el repositorio, así que se
+// muestran como estimación y el estudiante puede cambiarlas.
+const GOALS=[['cepre','Examen final CEPREUNI','2027-01-31','Una semana antes del final del ciclo'],['admision','Admisión UNI 2027-1','2027-02-14','Día del examen de admisión'],['custom','Fecha personalizada','','Tú eliges el día']];
+const planCourses=()=>AREAS.flatMap(([area,ids])=>ids.filter(id=>data.syllabus.temarios[id]).map(id=>({id,area,name:data.syllabus.temarios[id].name})));
+
 function planner(out){
  let plan=store.get('plan',null);
- out.innerHTML=`<div class="p-panel plan-setup" id="plan-setup"><div class="p-row"><div><span class="p-label">TU TRAYECTORIA / CONFIGURA TU PLAN</span><h2 style="margin-top:12px">Genera tu horario de estudio.</h2></div></div><p class="source-note">Elige tu enfoque y tu disponibilidad. Distribuimos tus cursos por área, en el orden real del temario CEPREUNI, y damos prioridad a la que más peso tenga.</p><div class="plan-fields"><label>Dale prioridad a<select id="plan-focus" class="p-select">${AREAS.map(([n])=>`<option value="${esc(n)}">${esc(n)}</option>`).join('')}<option value="balanced">Equilibrado</option></select></label><label>Empieza el<input class="p-input" type="date" id="plan-start"></label><label>Duración<select id="plan-weeks" class="p-select"><option value="2">2 semanas</option><option value="4" selected>4 semanas</option><option value="8">8 semanas</option></select></label><label>Bloques por día<select id="plan-blocks" class="p-select"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></label></div><div class="plan-days" id="plan-days">${[['1','L'],['2','M'],['3','X'],['4','J'],['5','V'],['6','S']].map(([v,l])=>`<label><input type="checkbox" value="${v}" checked>${l}</label>`).join('')}</div><button class="button primary" id="plan-generate" type="button">Generar mi plan</button></div><div id="plan-calendar" hidden><div class="p-row" style="margin:28px 0 14px"><div><span class="p-label">TU SEMANA</span><h2 style="margin-top:8px" id="plan-week-label"></h2></div><div class="p-chips"><button id="plan-prev" type="button">← Semana</button><button id="plan-next" type="button">Semana →</button><button id="plan-reset" class="text-button" type="button">Reconfigurar</button></div></div><p class="p-result" id="plan-progress-label" aria-live="polite"></p><div class="progress-line"><i id="plan-progress-bar"></i></div><div class="plan-week" id="plan-week"></div><p class="source-note">Tu plan y tu avance se guardan solo en este navegador. Puedes reconfigurarlo cuando quieras; no se comparte ni se sincroniza con tu cuenta.</p></div><a class="button account-cloud-link" href="/planificador/seguimiento">Mi seguimiento y calendario →</a>${sub('¿No sabes por dónde empezar?')}<div class="p-grid two">${tile('/temario','Tu mapa de conceptos','Explora los temas antes de organizar tus sesiones.','list')}${tile('/fijas-cepreuni','Prepara tu Primera PC','Consulta los tipos de problema del modelo histórico.','target')}</div>`;
- const today=new Date();today.setMinutes(today.getMinutes()-today.getTimezoneOffset());$('#plan-start').value=today.toISOString().slice(0,10);
+ const today=new Date();today.setMinutes(today.getMinutes()-today.getTimezoneOffset());
+ const iso=d=>d.toISOString().slice(0,10);
+ const courses=planCourses();
+ const draft={track:'',cycle:'',academy:'',shift:'morning',from:'07:00',to:'14:00',focus:[],goal:'cepre',goalDate:'2027-01-31',start:iso(today),blocksPerDay:2,days:[1,2,3,4,5,6]};
+ let step=1;
+
+ out.innerHTML=`<div id="plan-setup"><ol class="plan-steps" id="plan-steps">${['Tu punto de partida','Horario y prioridades','Tu meta'].map((t,i)=>`<li${i?'':' aria-current="step"'}><b>${i+1}</b>${esc(t)}</li>`).join('')}</ol>
+
+<section class="p-panel plan-step" data-step="1"><span class="p-label">PASO 1 / TU PUNTO DE PARTIDA</span><h2>¿Cómo estás estudiando ahora?</h2><p>De esto depende el ritmo del plan y el temario que usamos como base.</p>
+<div class="plan-choices" id="plan-track">${[['cepre','Estudio en CEPREUNI','Ruta semanal según prácticas y parciales.'],['academy','Estudio en una academia','Preparación basada en el temario de admisión UNI.'],['self','Soy autodidacta','Tú marcas el ritmo, nosotros el orden.']].map(([v,t,d])=>`<button type="button" class="plan-choice" data-track="${v}"><b>${esc(t)}</b><small>${esc(d)}</small></button>`).join('')}</div>
+<div id="plan-track-detail" hidden></div>
+<div class="page-actions"><button class="button primary" id="plan-next-1" type="button">Continuar</button></div></section>
+
+<section class="p-panel plan-step" data-step="2" hidden><span class="p-label">PASO 2 / HORARIO Y PRIORIDADES</span><h2>¿Cuándo estudias y qué necesita más espacio?</h2>
+<div class="plan-choices" id="plan-shift">${SHIFTS.map(([v,t,d])=>`<button type="button" class="plan-choice" data-shift="${v}"${v==='morning'?' aria-pressed="true"':''}><b>${esc(t)}</b><small>${esc(d)}</small></button>`).join('')}</div>
+<div class="plan-fields" id="plan-custom-hours" hidden><label>Empiezo a las<input class="p-input" type="time" id="plan-from" value="07:00"></label><label>Termino a las<input class="p-input" type="time" id="plan-to" value="14:00"></label></div>
+<div class="plan-fields"><label>Días disponibles<span class="plan-days" id="plan-days">${[['1','L'],['2','M'],['3','X'],['4','J'],['5','V'],['6','S']].map(([v,l])=>`<label><input type="checkbox" value="${v}" checked>${l}</label>`).join('')}</span></label><label>Bloques por día<select id="plan-blocks" class="p-select"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select></label></div>
+<h3 style="margin-top:26px">Cursos que necesitan más espacio</h3><p>Todos siguen en el plan; los que elijas reciben más bloques. Puedes elegir varios.</p>
+<div class="p-chips plan-focus" id="plan-focus"><button type="button" data-focus="all" aria-pressed="false">Todos los cursos</button>${courses.map(c=>`<button type="button" data-focus="${esc(c.id)}" aria-pressed="false">${esc(c.name)}</button>`).join('')}</div>
+<div class="page-actions"><button class="button" id="plan-back-2" type="button">Atrás</button><button class="button primary" id="plan-next-2" type="button">Continuar</button></div></section>
+
+<section class="p-panel plan-step" data-step="3" hidden><span class="p-label">PASO 3 / TU META</span><h2>¿Hasta cuándo planificamos?</h2>
+<div class="plan-choices" id="plan-goal">${GOALS.map(([v,t,d,note])=>`<button type="button" class="plan-choice" data-goal="${v}"${v==='cepre'?' aria-pressed="true"':''}><b>${esc(t)}</b><small>${esc(note)}</small>${d?`<span class="plan-est">${esc(d.split('-').reverse().join('/'))} · estimada</span>`:''}</button>`).join('')}</div>
+<div class="plan-fields"><label>Empiezo el<input class="p-input" type="date" id="plan-start" value="${iso(today)}"></label><label>Fecha de la meta<input class="p-input" type="date" id="plan-goal-date" value="2027-01-31"></label></div>
+<p class="p-notice" id="plan-summary" aria-live="polite"></p>
+<div class="page-actions"><button class="button" id="plan-back-3" type="button">Atrás</button><button class="button primary" id="plan-generate" type="button">Crear mi cronograma</button></div>
+<p class="source-note">Las fechas de CEPREUNI y de admisión son estimaciones: el calendario oficial del proceso 2027-1 aún no está publicado. Puedes cambiarlas.</p></section></div>
+
+<div id="plan-calendar" hidden><div class="p-row" style="margin:28px 0 14px"><div><span class="p-label">TU SEMANA</span><h2 style="margin-top:8px" id="plan-week-label"></h2></div><div class="p-chips"><button id="plan-prev" type="button">← Semana</button><button id="plan-next" type="button">Semana →</button><button id="plan-add" type="button">+ Añadir sesión</button><button id="plan-reset" class="text-button" type="button">Reconfigurar</button></div></div><p class="p-result" id="plan-progress-label" aria-live="polite"></p><div class="progress-line"><i id="plan-progress-bar"></i></div><div class="plan-week" id="plan-week"></div><p class="source-note">Tu plan y tu avance se guardan solo en este navegador. Pasa el cursor sobre un bloque para eliminarlo.</p></div>
+
+<dialog id="plan-add-dialog"><form method="dialog"><h3>Añadir una sesión</h3><div class="plan-fields"><label>Día<input class="p-input" type="date" id="add-date"></label><label>Tipo<select class="p-select" id="add-type"><option value="study">Estudio de un tema</option><option value="review">Repaso</option><option value="practice">Práctica dirigida</option></select></label><label>Curso<select class="p-select" id="add-course">${courses.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('')}</select></label><label>Descripción<input class="p-input" type="text" id="add-title" placeholder="Ej. Repasar cinemática"></label></div><div class="page-actions"><button class="button" value="cancel" type="submit">Cancelar</button><button class="button primary" id="add-confirm" value="ok" type="submit">Añadir</button></div></form></dialog>
+
+<a class="button account-cloud-link" href="/planificador/seguimiento">Mi seguimiento y calendario →</a>${sub('¿No sabes por dónde empezar?')}<div class="p-grid two">${tile('/temario','Tu mapa de conceptos','Explora los temas antes de organizar tus sesiones.','list')}${tile('/fijas-cepreuni','Prepara tu Primera PC','Consulta los tipos de problema del modelo histórico.','target')}</div>`;
+
+ const show=()=>{$$('#plan-setup .plan-step').forEach(x=>x.hidden=+x.dataset.step!==step);
+  $$('#plan-steps li').forEach((li,k)=>{li.toggleAttribute('aria-current',k+1===step);li.classList.toggle('is-done',k+1<step)})};
+ // Se marca entre hermanos: seleccionar por [aria-pressed] solo alcanzaba a los botones que ya traían
+ // el atributo, de modo que la opción recién elegida nunca llegaba a marcarse.
+ const press=el=>[...el.parentElement.children].forEach(x=>x.setAttribute('aria-pressed',String(x===el)));
+ // Un único manejador delegado en la raíz del planificador. Repartir manejadores por nodo obligaba a
+ // reengancharlos cada vez que una respuesta reescribe su pregunta de seguimiento, y bastaba con que la
+ // vista se volviera a renderizar para que el asistente se quedara pidiendo un dato ya elegido.
+ const chosen=sel=>$(sel+' [aria-pressed="true"]')?.dataset||{};
+ const readState=()=>({track:chosen('#plan-track').track||'',cycle:chosen('#plan-cycle').cycle||'',
+  academy:$('#plan-academy')?.value||'',shift:chosen('#plan-shift').shift||'morning',
+  goal:chosen('#plan-goal').goal||'cepre',
+  focus:$$('#plan-focus [data-focus][aria-pressed="true"]').map(b=>b.dataset.focus).filter(f=>f!=='all')});
+
+ document.addEventListener('click',e=>{const anchor=e.target.closest('a[href]');if(anchor){const target=new URL(anchor.href,location.href);if(["/account/cloud","/planificador/seguimiento","/simulacros","/ranking","/admision","/docentes-cepreuni","/informacion-cepreuni","/privacidad","/terminos","/nosotros","/metodologia-editorial","/correcciones","/contacto","/aula","/biblioteca/recursos","/autores/criss-vasquez","/autores/luhana-belen","/biblioteca/seleccion-de-preguntas","/calculadora-admision","/fichas-admision","/guias/como-interpretar-ranking-cepreuni","/guias/como-se-calcula-puntaje-cepreuni-2026-2","/ingresantes-cepreuni","/ingresantes-uni-2026-2","/ranking-admision","/resultados-admision"].includes(target.pathname.replace(/\/$/,'')))return;}if(!$('#plan-setup'))return;
+  const t=e.target.closest('[data-track]');
+  if(t){press(t);const d=$('#plan-track-detail');
+   if(t.dataset.track==='cepre'){d.hidden=false;d.innerHTML=`<h3>¿Qué ciclo CEPREUNI 2027-1 llevarás?</h3><div class="p-chips" id="plan-cycle">${CEPRE_CYCLES.map(([v,x])=>`<button type="button" data-cycle="${v}" aria-pressed="false">${esc(x)}</button>`).join('')}</div>`}
+   else if(t.dataset.track==='academy'){d.hidden=false;d.innerHTML=`<h3>¿En qué academia estudias?</h3><select class="p-select" id="plan-academy"><option value="">Elige tu academia</option>${ACADEMIES.map(a=>`<option>${esc(a)}</option>`).join('')}</select><label id="plan-academy-other" hidden>Nombre de la academia<input class="p-input" type="text" id="plan-academy-name"></label>`}
+   else{d.hidden=true;d.innerHTML=''}
+   return}
+  const c=e.target.closest('[data-cycle]');if(c){press(c);return}
+  const sh=e.target.closest('[data-shift]');if(sh){press(sh);$('#plan-custom-hours').hidden=sh.dataset.shift!=='custom';return}
+  const g=e.target.closest('[data-goal]');if(g){press(g);const spec=GOALS.find(x=>x[0]===g.dataset.goal);if(spec&&spec[2])$('#plan-goal-date').value=spec[2];summary();return}
+  const f=e.target.closest('[data-focus]');if(f){
+   if(f.dataset.focus==='all'){const on=f.getAttribute('aria-pressed')!=='true';$$('#plan-focus [data-focus]').forEach(x=>x.setAttribute('aria-pressed',String(on)))}
+   else{f.setAttribute('aria-pressed',String(f.getAttribute('aria-pressed')!=='true'));
+    $('#plan-focus [data-focus="all"]').setAttribute('aria-pressed',String(readState().focus.length===courses.length))}
+   return}
+ });
+ document.addEventListener('change',e=>{if(!$('#plan-setup'))return;
+  if(e.target.id==='plan-academy')$('#plan-academy-other').hidden=e.target.value!=='Otra academia';
+  if(['plan-start','plan-goal-date','plan-blocks'].includes(e.target.id)||e.target.closest('#plan-days'))summary();
+ });
+
+ $('#plan-next-1').onclick=()=>{const st=readState();
+  if(!st.track){toast('Elige cómo estás estudiando ahora.');return}
+  if(st.track==='cepre'&&!st.cycle){toast('Elige tu ciclo CEPREUNI.');return}
+  if(st.track==='academy'&&!st.academy){toast('Elige o escribe tu academia.');return}
+  step=2;show()};
+ $('#plan-back-2').onclick=()=>{step=1;show()};
+ $('#plan-next-2').onclick=()=>{step=3;show();summary()};
+ const weeksTo=()=>{const a=new Date($('#plan-start').value||iso(today)),b=new Date($('#plan-goal-date').value||draft.goalDate);
+  return Math.max(1,Math.min(30,Math.ceil((b-a)/6048e5)))};
+ const summary=()=>{const w=weeksTo(),d=$$('#plan-days input:checked').length,b=+$('#plan-blocks').value,n=w*d*b,f=readState().focus.length;
+  $('#plan-summary').textContent=`${w} semanas · ${d} días por semana · ${n} sesiones · alrededor de ${Math.round(n*1.5)} horas planificadas${f?` · prioridad en ${f} curso${f>1?'s':''}`:''}.`};
+ $('#plan-back-3').onclick=()=>{step=2;show()};
+
  let weekOffset=0;
  const dayNames=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
  const renderWeek=()=>{
@@ -152,26 +241,42 @@ function planner(out){
   const done=plan.entries.filter(e=>e.done).length;
   $('#plan-progress-label').textContent=`${done} / ${plan.entries.length} bloques completados`;
   $('#plan-progress-bar').style.width=(plan.entries.length?done/plan.entries.length*100:0)+'%';
-  const cells=[];for(let i=0;i<7;i++){const d=new Date(start);d.setDate(d.getDate()+i);const iso=d.toISOString().slice(0,10);const items=plan.entries.filter(e=>e.date===iso);cells.push({iso,label:dayNames[d.getDay()],date:fmt(d),items,isSunday:d.getDay()===0})}
-  $('#plan-week').innerHTML=cells.map(c=>`<div class="plan-day${c.items.length?'':' plan-day-empty'}"><header><b>${c.label}</b><span>${c.date}</span></header>${c.items.length?c.items.map(it=>`<label class="plan-block ${it.type==='review'?'is-review':''}"><input type="checkbox" data-block="${esc(it.id)}" ${it.done?'checked':''}><span class="p-label">${esc(it.area)}</span><b>${esc(it.course)}</b><small>${esc(it.group)} · ${esc(it.title)}</small></label>`).join(''):`<p class="source-note">${c.isSunday?'Descanso':'Sin bloques'}</p>`}</div>`).join('');
-  $$('[data-block]').forEach(cb=>cb.onchange=()=>{const entry=plan.entries.find(e=>e.id===cb.dataset.block);if(entry)entry.done=cb.checked;store.set('plan',plan);renderWeek()});
+  const cells=[];for(let i=0;i<7;i++){const d=new Date(start);d.setDate(d.getDate()+i);const day=iso(d);const items=plan.entries.filter(e=>e.date===day);cells.push({iso:day,label:dayNames[d.getDay()],date:fmt(d),items,isSunday:d.getDay()===0})}
+  $('#plan-week').innerHTML=cells.map(c=>`<div class="plan-day${c.items.length?'':' plan-day-empty'}"><header><b>${c.label}</b><span>${c.date}</span><button class="plan-day-add" type="button" data-add-day="${c.iso}" aria-label="Añadir sesión el ${c.label}">+</button></header>${c.items.length?c.items.map(it=>`<div class="plan-block-wrap"><label class="plan-block ${it.type==='review'?'is-review':''}"><input type="checkbox" data-block="${esc(it.id)}" ${it.done?'checked':''}><span class="p-label">${esc(it.area||'')}</span><b>${esc(it.course)}</b><small>${esc([it.group,it.title].filter(Boolean).join(' · '))}</small></label><button class="plan-remove" type="button" data-remove="${esc(it.id)}" aria-label="Eliminar este bloque">×</button></div>`).join(''):`<p class="source-note">${c.isSunday?'Descanso':'Sin bloques'}</p>`}</div>`).join('');
+  $$('[data-block]').forEach(cb=>cb.onchange=()=>{const e=plan.entries.find(x=>x.id===cb.dataset.block);if(e)e.done=cb.checked;store.set('plan',plan);renderWeek()});
+  $$('[data-remove]').forEach(b=>b.onclick=()=>{plan.entries=plan.entries.filter(e=>e.id!==b.dataset.remove);store.set('plan',plan);renderWeek()});
+  $$('[data-add-day]').forEach(b=>b.onclick=()=>openAdd(b.dataset.addDay));
  };
+ const openAdd=day=>{$('#add-date').value=day||iso(today);$('#plan-add-dialog').showModal()};
+ $('#plan-add-dialog').addEventListener('close',()=>{
+  if($('#plan-add-dialog').returnValue!=='ok')return;
+  const id=$('#add-course').value,c=courses.find(x=>x.id===id);
+  plan.entries.push({id:'x'+Date.now().toString(36),date:$('#add-date').value,type:$('#add-type').value,area:c?.area||'',courseId:id,course:c?.name||'',group:'Añadido por ti',title:$('#add-title').value.trim()||'Sesión libre',done:false});
+  store.set('plan',plan);renderWeek();
+ });
+ $('#plan-add').onclick=()=>openAdd();
+
  const showCalendar=()=>{$('#plan-setup').hidden=true;$('#plan-calendar').hidden=false;weekOffset=0;renderWeek()};
- if(plan&&plan.entries?.length){showCalendar()}
+ if(plan&&plan.entries?.length)showCalendar();else show();
+
  $('#plan-generate').onclick=()=>{
-  const focus=$('#plan-focus').value,start=$('#plan-start').value||today.toISOString().slice(0,10),weeks=+$('#plan-weeks').value,blocksPerDay=+$('#plan-blocks').value;
   const days=$$('#plan-days input:checked').map(i=>+i.value);
   if(!days.length){toast('Elige al menos un día disponible.');return}
-  const profile={focus,start,weeks,blocksPerDay,days};
+  const st=readState();
+  const profile={...draft,...st,academy:st.academy==='Otra academia'?($('#plan-academy-name')?.value.trim()||'Otra academia'):st.academy,
+   start:$('#plan-start').value||iso(today),goalDate:$('#plan-goal-date').value,
+   weeks:weeksTo(),blocksPerDay:+$('#plan-blocks').value,days,
+   from:st.shift==='custom'?$('#plan-from').value:(st.shift==='afternoon'?'14:00':'07:00'),to:st.shift==='custom'?$('#plan-to').value:(st.shift==='afternoon'?'20:00':'14:00'),
+   focusCourses:st.focus};
   const entries=buildPlan(profile);
   plan={profile,entries,createdAt:new Date().toISOString()};
   if(!store.set('plan',plan))toast('No se pudo guardar el plan en este navegador.');
-  toast('Tu plan se generó a partir del temario real.');
+  toast(`Cronograma de ${profile.weeks} semanas creado a partir del temario real.`);
   showCalendar();
  };
  $('#plan-prev').onclick=()=>{if(weekOffset>0){weekOffset--;renderWeek()}};
  $('#plan-next').onclick=()=>{weekOffset++;renderWeek()};
- $('#plan-reset').onclick=()=>{$('#plan-calendar').hidden=true;$('#plan-setup').hidden=false};
+ $('#plan-reset').onclick=()=>{$('#plan-calendar').hidden=true;$('#plan-setup').hidden=false;step=1;show()};
 }
 function fixed(out){renderFijas(out,data)}
 // Small arithmetic parser. No eval, Function constructor, or remote requests.
@@ -194,6 +299,6 @@ export function startPlatform(api){ui=api;home=$('main');const shell=document.cr
  localize();new MutationObserver(localize).observe(document.body,{childList:true,subtree:true});
  $('.skip-link').addEventListener('click',e=>{e.preventDefault();const target=home.hidden?$('#page-title'):home;target?.scrollIntoView({behavior:'instant'});target?.focus({preventScroll:true})});
  const go=async(url)=>{$$('dialog[open]').forEach(d=>d.close());const u=new URL(url,location.origin);history.pushState({},'',u.pathname+u.search+u.hash);await route(true);scrollTo({top:0,behavior:'instant'});if(u.hash)setTimeout(()=>{try{$(u.hash)?.scrollIntoView({behavior:'instant'})}catch{}},60)};
- document.addEventListener('click',e=>{const anchor=e.target.closest('a[href]');if(anchor){const target=new URL(anchor.href,location.href);if(["/account/cloud","/planificador/seguimiento","/simulacros","/ranking","/admision","/docentes-cepreuni","/informacion-cepreuni","/privacidad","/terminos","/nosotros","/metodologia-editorial","/correcciones","/contacto","/aula","/biblioteca/recursos","/autores/criss-vasquez","/autores/luhana-belen","/biblioteca/seleccion-de-preguntas","/calculadora-admision","/fichas-admision","/guias/como-interpretar-ranking-cepreuni","/guias/como-se-calcula-puntaje-cepreuni-2026-2","/ingresantes-cepreuni","/ingresantes-uni-2026-2","/ranking-admision","/resultados-admision"].includes(target.pathname.replace(/\/$/,'')))return;}if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;const a=e.target.closest('a');if(!a||a.hasAttribute('data-live')||a.hasAttribute('download'))return;const href=a.getAttribute('href');if(!href||href==='data:,')return;let u;try{u=new URL(href,location.href)}catch{return}if(u.origin!==location.origin&&!['universetostudy.com','www.universetostudy.com'].includes(u.hostname))return;const p=u.pathname.replace(/\/$/,'').replace(/\.html$/,'')||'/';if(p!=='/'&&!routes[p])return;e.preventDefault();if(p==='/'&&pathName()==='/'&&u.hash){$(u.hash)?.scrollIntoView({behavior:'smooth'});return}go(p+u.search+u.hash)});
+ document.addEventListener('click',e=>{if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;const a=e.target.closest('a');if(!a||a.hasAttribute('data-live')||a.hasAttribute('download'))return;const href=a.getAttribute('href');if(!href||href==='data:,')return;let u;try{u=new URL(href,location.href)}catch{return}if(u.origin!==location.origin&&!['universetostudy.com','www.universetostudy.com'].includes(u.hostname))return;const p=u.pathname.replace(/\/$/,'').replace(/\.html$/,'')||'/';if(p!=='/'&&!routes[p])return;e.preventDefault();if(p==='/'&&pathName()==='/'&&u.hash){$(u.hash)?.scrollIntoView({behavior:'smooth'});return}go(p+u.search+u.hash)});
  addEventListener('popstate',()=>route());route();return{navigate:go};
 }

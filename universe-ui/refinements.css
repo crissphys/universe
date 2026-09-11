@@ -175,3 +175,39 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 .search-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
 .intent-group{display:block;margin:14px 0 6px;font-size:9px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--muted)}
+
+/* Asistente del planificador: tres pasos, una decisión por pantalla. */
+.plan-steps{display:flex;flex-wrap:wrap;gap:10px 26px;list-style:none;margin:0 0 24px;padding:0}
+.plan-steps li{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.plan-steps li b{display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--line);border-radius:50%;font-size:10px}
+.plan-steps li[aria-current]{color:var(--text)}
+.plan-steps li[aria-current] b{background:var(--text);color:var(--bg);border-color:var(--text)}
+.plan-steps li.is-done b{border-color:#97b5ff65;color:#97b5ff}
+.plan-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}
+.plan-choice{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;
+  padding:16px;border:1px solid var(--line);border-radius:14px;background:none;color:var(--text);cursor:pointer;
+  transition:border-color .2s cubic-bezier(.23,1,.32,1),transform .16s cubic-bezier(.23,1,.32,1)}
+.plan-choice:hover{border-color:#97b5ff55}
+.plan-choice:active{transform:scale(.985)}
+.plan-choice[aria-pressed=true]{border-color:#97b5ff;background:#97b5ff10}
+.plan-choice b{font-size:13px;font-weight:600}
+.plan-choice small{color:var(--muted);font-size:10px;line-height:1.7}
+.plan-est{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#97b5ff}
+.plan-focus{max-height:none}
+.plan-focus button[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+/* Un bloque se elimina donde está: el botón aparece al apuntarlo, no en un menú aparte. */
+.plan-block-wrap{position:relative}
+.plan-remove{position:absolute;top:6px;right:6px;width:22px;height:22px;display:grid;place-items:center;
+  border:1px solid #ff6b6b55;border-radius:50%;background:#2a1214;color:#ff8d8d;font-size:13px;line-height:1;
+  cursor:pointer;opacity:0;transition:opacity .15s cubic-bezier(.23,1,.32,1),transform .15s cubic-bezier(.23,1,.32,1)}
+.plan-block-wrap:hover .plan-remove,.plan-remove:focus-visible{opacity:1}
+.plan-remove:hover{background:#ff6b6b;color:#1a0b0c}
+.plan-remove:active{transform:scale(.9)}
+.plan-day header{display:flex;align-items:baseline;gap:8px}
+.plan-day-add{margin-left:auto;width:20px;height:20px;display:grid;place-items:center;border:1px solid var(--line);
+  border-radius:50%;background:none;color:var(--muted);cursor:pointer;font-size:12px;line-height:1;
+  transition:border-color .2s,color .2s,transform .15s cubic-bezier(.23,1,.32,1)}
+.plan-day-add:hover{border-color:#97b5ff;color:#97b5ff}
+.plan-day-add:active{transform:scale(.9)}
+#plan-add-dialog{border:1px solid var(--line);border-radius:16px;background:var(--solid,#0f1117);color:var(--text);padding:24px;max-width:min(460px,92vw)}
+#plan-add-dialog::backdrop{background:#04050988;backdrop-filter:blur(6px)}
