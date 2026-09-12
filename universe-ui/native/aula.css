@@ -44,11 +44,7 @@
   align-items: center;
   margin-bottom: .75rem;
   padding: .95rem 1.1rem;
-  
-  
-  
-  
-  
+
 }
 
 .classes-topic-topbar h1 {
@@ -96,10 +92,7 @@
 }
 
 .classes-pill {
-  
-  
-  
-  
+
   padding: .55rem .8rem;
   font-size: .82rem;
   
@@ -112,12 +105,7 @@
   align-items: center;
   justify-content: center;
   gap: .45rem;
-  
-  
-  
-  
-  
-  
+
   padding: .82rem 1.05rem;
   
   cursor: pointer;
@@ -141,19 +129,12 @@
   gap: 1rem;
   margin-bottom: 1rem;
   padding: clamp(1rem, 2vw, 1.4rem);
-  
-  
-  
-  
-  
-  
+
 }
 
 .classes-bank-banner span,
 .classes-bank-banner strong {
-  
-  
-  
+
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -179,10 +160,7 @@
   gap: .8rem;
   align-items: end;
   padding: 1rem;
-  
-  
-  
-  
+
 }
 
 .classes-explorer-controls label {
@@ -198,10 +176,7 @@
 .classes-explorer-controls select {
   width: 100%;
   min-height: 46px;
-  
-  
-  
-  
+
   padding: 0 .9rem;
   
   
@@ -249,9 +224,7 @@
   height: 58px;
   display: grid;
   place-items: center;
-  
-  
-  
+
   font-size: 1.6rem;
   
   
@@ -281,9 +254,7 @@
 .classes-topic-meta span {
   
   padding: .42rem .65rem;
-  
-  
-  
+
   font-size: .78rem;
   
 }
@@ -355,10 +326,7 @@
   height: min(78vh, 920px);
   min-height: 620px;
   aspect-ratio: auto;
-  
-  
-  
-  
+
 }
 
 .classes-video-title {
@@ -412,9 +380,7 @@
 .classes-login-box,
 .classes-empty,
 .classes-error {
-  
-  
-  
+
   padding: 1.1rem;
 }
 
@@ -438,9 +404,7 @@
 }
 
 .classes-question-card {
-  
-  
-  
+
   padding: 1rem;
 }
 
@@ -481,9 +445,7 @@
   
   display: grid;
   place-items: center;
-  
-  
-  
+
 }
 
 .classes-question-image {

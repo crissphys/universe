@@ -41,8 +41,8 @@ const modes={learn:['syllabus','classes','library'],practice:['mock','exams','ca
 const en=()=>prefs.lang==='en';
 const title=t=>en()?t.en:t.name;
 const desc=t=>en()?t.descEn:t.desc;
-function externalLinks(){ $$('a[href^="https://"]').forEach(a=>{a.target='_blank';a.rel='noopener noreferrer'})}
-function toolHTML(t){return `<a class="tool-card" href="https://universetostudy.com${t.url}">${icon(t.icon)}${icon('arrow-up-right','tool-arrow')}<h3>${title(t)}</h3><p>${desc(t)}</p></a>`}
+function externalLinks(){ $$('a[href^="https://"]').forEach(a=>{const u=new URL(a.href);if(u.origin===location.origin||['universetostudy.com','www.universetostudy.com'].includes(u.hostname))return;a.target='_blank';a.rel='noopener noreferrer'})}
+function toolHTML(t){return `<a class="tool-card" href="${t.url}">${icon(t.icon)}${icon('arrow-up-right','tool-arrow')}<h3>${title(t)}</h3><p>${desc(t)}</p></a>`}
 function renderTools(){ $('#workspace-content').innerHTML=modes[mode].map(id=>toolHTML(tools.find(t=>t.id===id))).join('');$('#workspace-content').setAttribute('aria-labelledby','tab-'+mode);externalLinks() }
 function normalize(s){return String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()}
 // Buscar "física" devolvía tres herramientas y nada más, cuando la plataforma sabe muchísimo sobre
