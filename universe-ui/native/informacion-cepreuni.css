@@ -1,7 +1,7 @@
 .native-shell {
 
-html[data-universe-page='admission'],html[data-universe-page='cepre']{scroll-behavior:smooth;overflow-y:auto}
-html[data-universe-page='admission'] body,html[data-universe-page='cepre'] body{min-height:100svh;overflow-y:auto}
+html[data-universe-page='admission']{scroll-behavior:smooth;overflow-y:auto}
+html[data-universe-page='admission'] body{min-height:100svh;overflow-y:auto}
 .admission-page{width:min(1520px,calc(100vw - 34px));margin:24px auto 70px;padding-bottom:20px;}
 .admission-hero{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.8fr);gap:24px;align-items:stretch;margin:20px auto 22px}.admission-hero.small{grid-template-columns:minmax(0,1.4fr) minmax(280px,.55fr)}
 .admission-hero-copy{position:relative;overflow:hidden;padding:clamp(28px,4vw,56px)}.admission-hero-copy:before{content:'';position:absolute;inset:auto -120px -120px auto;width:300px;height:300px;pointer-events:none}.admission-kicker{display:inline-flex;gap:8px;align-items:center;margin-bottom:12px;padding:7px 12px;letter-spacing:.11em;text-transform:uppercase}.admission-kicker:before{content:'●';font-size:10px}
@@ -89,7 +89,7 @@ html{scroll-behavior:smooth}
 
 /* ===== AUTO-PATCH: restored visual properties missing from the original port (script-generated) ===== */
 html[data-universe-page='admission'] body{background-color:var(--bg) !important;color:var(--text) !important}
-html[data-universe-page='cepre'] body{background-color:var(--bg) !important;color:var(--text) !important}
+
 .admission-page{font-family:var(--display);color:var(--text)}
 .admission-hero-copy{border:1px solid var(--line);border-radius:30px;background:var(--surface);box-shadow:0 30px 80px rgba(0,0,0,.35);backdrop-filter:none}
 .admission-hero-card{border:1px solid var(--line);border-radius:30px;background:var(--surface);box-shadow:0 30px 80px rgba(0,0,0,.35);backdrop-filter:none}
@@ -375,3 +375,9 @@ body.support-v2-active :is(#peru-clock,.universe-theme-toggle){opacity:.18 !impo
 }
 
 }
+/* Rescued from the impossible html[data-universe-page] nesting inside .native-shell (body can't be its descendant). */
+body{min-height:100svh;overflow-y:auto}
+body{background-color:var(--bg) !important;color:var(--text) !important}
+
+/* Rescued: same nesting issue, this one targeted <html> itself. */
+html{scroll-behavior:smooth;overflow-y:auto}

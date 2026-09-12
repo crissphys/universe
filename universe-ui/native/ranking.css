@@ -1,57 +1,11 @@
 .native-shell {
 
-html[data-universe-page] #blogger-header,
-html[data-universe-page] #blogger-footer,
-html[data-universe-page] #Header1,
-html[data-universe-page] #PageList1,
-html[data-universe-page] #Navbar1,
-html[data-universe-page] #Attribution1,
-html[data-universe-page] .header-outer,
-html[data-universe-page] .tabs-outer,
-html[data-universe-page] .navbar,
-html[data-universe-page] .widget.Header,
-html[data-universe-page] .widget.PageList,
-html[data-universe-page] .post-title,
-html[data-universe-page] .post-header,
-html[data-universe-page] .post-footer,
-html[data-universe-page] .post-share-buttons,
-html[data-universe-page] .share-buttons,
-html[data-universe-page] .share-buttons-container,
-html[data-universe-page] .byline,
-html[data-universe-page] #comments,
-html[data-universe-page] .comments,
-html[data-universe-page] .comment-form,
-html[data-universe-page] .feed-links,
-html[data-universe-page] .blog-feeds,
-html[data-universe-page] .blog-pager,
-html[data-universe-page] .Attribution,
-html[data-universe-page] .footer-outer,
-html[data-universe-page] .sidebar-container,
-html[data-universe-page] .post-author,
-html[data-universe-page] .post-labels,
-html[data-universe-page] .post-timestamp,
-html[data-universe-page] .post-location { display:none !important; }
+#blogger-header,#blogger-footer,#Header1,#PageList1,#Navbar1,#Attribution1,.header-outer,.tabs-outer,.navbar,.widget.Header,.widget.PageList,.post-title,.post-header,.post-footer,.post-share-buttons,.share-buttons,.share-buttons-container,.byline,#comments,.comments,.comment-form,.feed-links,.blog-feeds,.blog-pager,.Attribution,.footer-outer,.sidebar-container,.post-author,.post-labels,.post-timestamp,.post-location{ display:none !important; }
 
-html[data-universe-page],html[data-universe-page] body {
-  width:100%;
-  min-height:100%;
-  margin:0;
-  overflow-x:hidden;
-}
-html[data-universe-page] {
-  height:auto;
-  overflow-y:auto;
-  overscroll-behavior-y:auto !important;
-  touch-action:pan-y !important;
-}
-html[data-universe-page] body {
-  height:auto;
-  min-height:100svh;
-  overflow-y:visible;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-y !important;
-}
-html[data-universe-page] #page-content {
+
+
+
+#page-content{
   position:relative;
   z-index:1;
   box-sizing:border-box !important;
@@ -61,17 +15,7 @@ html[data-universe-page] #page-content {
   padding:0;
   overflow:visible;
 }
-html[data-universe-page] #main-wrapper,
-html[data-universe-page] #page_body,
-html[data-universe-page] #Blog1,
-html[data-universe-page] #Blog1 .widget-content,
-html[data-universe-page] #Blog1 .blog-posts,
-html[data-universe-page] #Blog1 .post-outer-container,
-html[data-universe-page] #Blog1 .post-outer,
-html[data-universe-page] #Blog1 article,
-html[data-universe-page] #Blog1 .post,
-html[data-universe-page] #Blog1 .post-body-container,
-html[data-universe-page] #Blog1 .post-body {
+#main-wrapper,#page_body,#Blog1,#Blog1 .widget-content,#Blog1 .blog-posts,#Blog1 .post-outer-container,#Blog1 .post-outer,#Blog1 article,#Blog1 .post,#Blog1 .post-body-container,#Blog1 .post-body{
   display:block !important;
   box-sizing:border-box !important;
   width:100%;
@@ -85,7 +29,7 @@ html[data-universe-page] #Blog1 .post-body {
   overflow:visible;
 }
 
-html[data-universe-page] .universe-static-page {
+.universe-static-page{
   --universe-page-gutter:clamp(1rem,4vw,4.5rem);
   box-sizing:border-box;
   width:100%;
@@ -93,24 +37,19 @@ html[data-universe-page] .universe-static-page {
   min-height:100%;
   margin:0;
 }
-html[data-universe-page] .universe-page-stage {
+.universe-page-stage{
   box-sizing:border-box;
   width:100%;
   min-width:0;
   padding:clamp(4.5rem,6vw,5.5rem) var(--universe-page-gutter) 0;
 }
-html[data-universe-page] .universe-page-stage-inner {
+.universe-page-stage-inner{
   box-sizing:border-box;
   width:min(1600px,100%);
   min-width:0;
   margin-inline:auto;
 }
-html[data-universe-page] .universe-page-stage-inner > .section,
-html[data-universe-page] .universe-page-stage-inner > .ranking-section,
-html[data-universe-page] .universe-page-stage-inner > .universe-legal-page,
-html[data-universe-page] .universe-page-stage-inner > .universe-exams-page,
-html[data-universe-page] .universe-page-stage-inner > .universe-library-layout,
-html[data-universe-page] .universe-library-layout > .section {
+.universe-page-stage-inner > .section,.universe-page-stage-inner > .ranking-section,.universe-page-stage-inner > .universe-legal-page,.universe-page-stage-inner > .universe-exams-page,.universe-page-stage-inner > .universe-library-layout,.universe-library-layout > .section{
   box-sizing:border-box !important;
   width:100%;
   max-width:none;
@@ -118,14 +57,14 @@ html[data-universe-page] .universe-library-layout > .section {
   padding-inline:0;
   padding-top:clamp(1.75rem,3.2vw,3rem);
 }
-html[data-universe-page] .universe-page-stage :where(.section-label,.section-title,.section-sub) {
+.universe-page-stage :where(.section-label,.section-title,.section-sub){
   margin-left:auto;
   margin-right:auto;
   text-align:center;
 }
-html[data-universe-page] .universe-page-stage .section-label { display:flex; width:max-content; max-width:100%; }
-html[data-universe-page] .universe-legal-page { padding-bottom:4rem; }
-html[data-universe-page] .universe-legal-page .section-title {
+.universe-page-stage .section-label{ display:flex; width:max-content; max-width:100%; }
+.universe-legal-page{ padding-bottom:4rem; }
+.universe-legal-page .section-title{
   max-width:100%;
   font-size:clamp(1.8rem,4.2vw,3.55rem);
   line-height:1.02;
@@ -133,14 +72,14 @@ html[data-universe-page] .universe-legal-page .section-title {
   overflow-wrap:normal;
   text-wrap:balance;
 }
-html[data-universe-page] .universe-legal-grid {
+.universe-legal-grid{
   display:grid !important;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:1rem;
   width:100%;
   margin-top:1.7rem;
 }
-html[data-universe-page] .universe-legal-grid .legal-card {
+.universe-legal-grid .legal-card{
   box-sizing:border-box !important;
   min-width:0;
   min-height:190px;
@@ -153,26 +92,20 @@ html[data-universe-page] .universe-legal-grid .legal-card {
   
   
 }
-html[data-universe-page] .universe-legal-grid .legal-card h3 {
+.universe-legal-grid .legal-card h3{
   margin:0 0 .75rem;
   
   text-align:left;
 }
-html[data-universe-page] .universe-legal-grid .legal-card ul { margin:.15rem 0 0; padding-left:1.15rem; }
-html[data-universe-page] .universe-legal-grid .legal-card li { margin:.42rem 0;  line-height:1.55; text-align:left; }
-html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:1 / -1; }
-html[data-universe-page='ranking'] .universe-page-stage-inner,
-html[data-universe-page='library'] .universe-page-stage-inner { width:min(1720px,100%); }
+.universe-legal-grid .legal-card ul{ margin:.15rem 0 0; padding-left:1.15rem; }
+.universe-legal-grid .legal-card li{ margin:.42rem 0;  line-height:1.55; text-align:left; }
+.universe-legal-grid .legal-card:last-child:nth-child(odd){ grid-column:1 / -1; }
+.universe-page-stage-inner,html[data-universe-page='library'] .universe-page-stage-inner{ width:min(1720px,100%); }
 html[data-universe-page='terms'] .universe-page-stage-inner,
 html[data-universe-page='privacy'] .universe-page-stage-inner { width:min(1380px,100%); }
-html[data-universe-page] #universe-code-cursor,
-html[data-universe-page] #chat-overlay:not(.open),
-html[data-universe-page] #chat-panel:not(.open) { pointer-events:none !important; }
-html[data-universe-page] #chat-overlay.open,
-html[data-universe-page] #chat-panel.open { pointer-events:auto !important; }
-html[data-universe-page] {
-  --universe-arrow-cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='32' viewBox='0 0 26 32'%3E%3Cpath d='M3.5 3.5v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2H24z' fill='%232563eb' opacity='.48'/%3E%3Cpath d='M2 2v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2h9.4z' fill='%23050505' stroke='%23ffffff' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2,default;
-}
+#universe-code-cursor,#chat-overlay:not(.open),#chat-panel:not(.open){ pointer-events:none !important; }
+#chat-overlay.open,#chat-panel.open{ pointer-events:auto !important; }
+
 html.universe-arrow-cursor,
 html.universe-arrow-cursor body,
 html.universe-arrow-cursor body * { cursor:var(--universe-arrow-cursor) !important; }
@@ -182,13 +115,9 @@ html.universe-arrow-cursor #universe-code-cursor { display:none !important; }
   html.universe-arrow-cursor body,
   html.universe-arrow-cursor body * { cursor:auto !important; }
 }
-html[data-universe-page] .universe-static-page,
-html[data-universe-page] .universe-static-page footer,
-html[data-universe-page] .universe-static-page a,
-html[data-universe-page] .universe-static-page button { position:relative; pointer-events:auto; }
-html[data-universe-page] footer .footer-links ul { display:grid; gap:.12rem; padding-left:0; list-style:none; }
-html[data-universe-page] footer .footer-links a,
-html[data-universe-page] footer .footer-legal a {
+.universe-static-page,.universe-static-page footer,.universe-static-page a,.universe-static-page button{ position:relative; pointer-events:auto; }
+footer .footer-links ul{ display:grid; gap:.12rem; padding-left:0; list-style:none; }
+footer .footer-links a,footer .footer-legal a{
   display:inline-flex;
   align-items:center;
   min-height:34px;
@@ -197,13 +126,12 @@ html[data-universe-page] footer .footer-legal a {
   
   
 }
-html[data-universe-page] footer .footer-links a:hover,
-html[data-universe-page] footer .footer-legal a:hover {
+footer .footer-links a:hover,footer .footer-legal a:hover{
   
   
   transform:translateX(2px);
 }
-html[data-universe-page='ranking'] .cepre-v2-shell {
+.cepre-v2-shell{
   overflow:hidden;
   max-width:1280px;
   margin:2rem auto 0;
@@ -212,7 +140,7 @@ html[data-universe-page='ranking'] .cepre-v2-shell {
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-controls {
+.cepre-v2-controls{
   display:flex;
   align-items:flex-end;
   justify-content:space-between;
@@ -220,8 +148,8 @@ html[data-universe-page='ranking'] .cepre-v2-controls {
   padding:16px;
   
 }
-html[data-universe-page='ranking'] .cepre-v2-search-box { flex:1 1 340px; max-width:520px; }
-html[data-universe-page='ranking'] .cepre-v2-control-label {
+.cepre-v2-search-box{ flex:1 1 340px; max-width:520px; }
+.cepre-v2-control-label{
   display:block;
   margin-bottom:6px;
   
@@ -229,7 +157,7 @@ html[data-universe-page='ranking'] .cepre-v2-control-label {
   
   text-transform:uppercase;
 }
-html[data-universe-page='ranking'] .cepre-v2-search {
+.cepre-v2-search{
   width:100%;
   min-height:44px;
   padding:0 13px;
@@ -240,7 +168,7 @@ html[data-universe-page='ranking'] .cepre-v2-search {
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-site-group {
+.cepre-v2-site-group{
   display:inline-flex;
   gap:3px;
   padding:4px;
@@ -248,7 +176,7 @@ html[data-universe-page='ranking'] .cepre-v2-site-group {
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-site-button {
+.cepre-v2-site-button{
   min-height:36px;
   padding:0 14px;
   
@@ -259,28 +187,27 @@ html[data-universe-page='ranking'] .cepre-v2-site-button {
   font-size:.8rem;
   
 }
-html[data-universe-page='ranking'] .cepre-v2-wrap {
+.cepre-v2-wrap{
   overflow:auto;
   max-height:none;
   height:auto;
   
   scrollbar-gutter:stable;
 }
-html[data-universe-page='ranking'] .cepre-v2-table {
+.cepre-v2-table{
   width:100%;
   min-width:1372px;
   table-layout:fixed;
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-table th,
-html[data-universe-page='ranking'] .cepre-v2-table td {
+.cepre-v2-table th,.cepre-v2-table td{
   padding:8px 9px;
   
   text-align:center;
   white-space:nowrap;
 }
-html[data-universe-page='ranking'] .cepre-v2-table thead th {
+.cepre-v2-table thead th{
   position:sticky;
   z-index:2;
   
@@ -289,19 +216,18 @@ html[data-universe-page='ranking'] .cepre-v2-table thead th {
   
   text-transform:uppercase;
 }
-html[data-universe-page='ranking'] .cepre-v2-table thead tr:first-child th {
+.cepre-v2-table thead tr:first-child th{
   top:0;
   height:38px;
   
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-table thead tr:nth-child(2) th {
+.cepre-v2-table thead tr:nth-child(2) th{
   top:38px;
   height:42px;
 }
-html[data-universe-page='ranking'] .cepre-v2-table tbody th,
-html[data-universe-page='ranking'] .cepre-v2-code {
+.cepre-v2-table tbody th,.cepre-v2-code{
   position:sticky;
   left:0;
   z-index:1;
@@ -310,9 +236,9 @@ html[data-universe-page='ranking'] .cepre-v2-code {
   
   
 }
-html[data-universe-page='ranking'] thead .cepre-v2-code { z-index:4; }
+thead .cepre-v2-code{ z-index:4; }
 
-html[data-universe-page='ranking'] .cepre-v2-position {
+.cepre-v2-position{
   position:sticky;
   left:0;
   z-index:2;
@@ -323,13 +249,12 @@ html[data-universe-page='ranking'] .cepre-v2-position {
   
   font-variant-numeric:tabular-nums;
 }
-html[data-universe-page='ranking'] .cepre-v2-code,
-html[data-universe-page='ranking'] .cepre-v2-table tbody th {
+.cepre-v2-code,.cepre-v2-table tbody th{
   left:80px;
 }
-html[data-universe-page='ranking'] thead .cepre-v2-position { z-index:5; }
-html[data-universe-page='ranking'] .cepre-v2-table tbody td { font-variant-numeric:tabular-nums; }
-html[data-universe-page='ranking'] .cepre-v2-stats {
+thead .cepre-v2-position{ z-index:5; }
+.cepre-v2-table tbody td{ font-variant-numeric:tabular-nums; }
+.cepre-v2-stats{
   display:flex;
   align-items:center;
   gap:8px;
@@ -340,7 +265,7 @@ html[data-universe-page='ranking'] .cepre-v2-stats {
   
   scrollbar-width:thin;
 }
-html[data-universe-page='ranking'] .cepre-v2-stats-title {
+.cepre-v2-stats-title{
   flex:0 0 auto;
   padding-right:10px;
   
@@ -349,7 +274,7 @@ html[data-universe-page='ranking'] .cepre-v2-stats-title {
   letter-spacing:.04em;
   text-transform:uppercase;
 }
-html[data-universe-page='ranking'] .cepre-v2-stat {
+.cepre-v2-stat{
   display:flex;
   flex:0 0 auto;
   align-items:center;
@@ -361,51 +286,51 @@ html[data-universe-page='ranking'] .cepre-v2-stat {
   
   white-space:nowrap;
 }
-html[data-universe-page='ranking'] .cepre-v2-stat span {
+.cepre-v2-stat span{
   
   font-size:.66rem;
   
   text-transform:uppercase;
 }
-html[data-universe-page='ranking'] .cepre-v2-stat strong {
+.cepre-v2-stat strong{
   
   
   font-size:.78rem;
 }
 @media(min-width:901px){
-  html[data-universe-page='ranking'] .universe-page-stage { padding-top:1.15rem; }
-  html[data-universe-page='ranking'] #ranking-cepreuni { padding-top:.8rem; }
-  html[data-universe-page='ranking'] #ranking-cepreuni > .reveal:first-child {
+  .universe-page-stage{ padding-top:1.15rem; }
+  #ranking-cepreuni{ padding-top:.8rem; }
+  #ranking-cepreuni > .reveal:first-child{
     display:grid;
     grid-template-columns:minmax(310px,.62fr) minmax(320px,.9fr);
     align-items:end;
     gap:.35rem 1.35rem;
     margin-bottom:.75rem;
   }
-  html[data-universe-page='ranking'] #ranking-cepreuni :is(.section-label,.section-title,.section-sub) {
+  #ranking-cepreuni :is(.section-label,.section-title,.section-sub){
     margin:0;
     text-align:left;
   }
-  html[data-universe-page='ranking'] #ranking-cepreuni .section-label {
+  #ranking-cepreuni .section-label{
     justify-self:start;
     grid-column:1;
   }
-  html[data-universe-page='ranking'] #ranking-cepreuni .section-title {
+  #ranking-cepreuni .section-title{
     grid-column:1;
     font-size:clamp(2rem,3.2vw,3.25rem);
     line-height:.95;
   }
-  html[data-universe-page='ranking'] #ranking-cepreuni .section-sub {
+  #ranking-cepreuni .section-sub{
     grid-column:2;
     grid-row:1 / span 2;
     align-self:center;
     max-width:720px;
   }
-  html[data-universe-page='ranking'] .cepre-v2-shell { margin-top:.75rem; }
-  html[data-universe-page='ranking'] .cepre-v2-controls { padding:10px 12px; align-items:center !important; }
-  html[data-universe-page='ranking'] .cepre-v2-search { min-height:38px; }
+  .cepre-v2-shell{ margin-top:.75rem; }
+  .cepre-v2-controls{ padding:10px 12px; align-items:center !important; }
+  .cepre-v2-search{ min-height:38px; }
 }
-html[data-universe-page='ranking'] .cepre-v2-summary {
+.cepre-v2-summary{
   padding:15px 20px;
   
   
@@ -413,33 +338,31 @@ html[data-universe-page='ranking'] .cepre-v2-summary {
   line-height:1.55;
 }
 @media(max-width:760px){
-  html[data-universe-page='ranking'] .cepre-v2-controls { align-items:stretch; flex-direction:column; }
-  html[data-universe-page='ranking'] .cepre-v2-search-box { max-width:none; flex-basis:auto; }
-  html[data-universe-page='ranking'] .cepre-v2-site-group { display:grid; grid-template-columns:repeat(3,1fr); }
-  html[data-universe-page='ranking'] .cepre-v2-table { min-width:1280px; }
-  html[data-universe-page='ranking'] .cepre-v2-table th,
-  html[data-universe-page='ranking'] .cepre-v2-table td { padding:7px 8px; }
+  .cepre-v2-controls{ align-items:stretch; flex-direction:column; }
+  .cepre-v2-search-box{ max-width:none; flex-basis:auto; }
+  .cepre-v2-site-group{ display:grid; grid-template-columns:repeat(3,1fr); }
+  .cepre-v2-table{ min-width:1280px; }
+  .cepre-v2-table th,.cepre-v2-table td{ padding:7px 8px; }
 }
 @media(max-width:760px){
-  html[data-universe-page] .universe-static-page { --universe-page-gutter:.9rem; }
-  html[data-universe-page] .universe-page-stage { padding-top:4.15rem; }
-  html[data-universe-page] .universe-legal-page .section-title { font-size:clamp(1.55rem,7.2vw,2.35rem); }
-  html[data-universe-page] .universe-legal-grid { grid-template-columns:minmax(0,1fr); }
-  html[data-universe-page] .universe-legal-grid .legal-card { min-height:0; }
-  html[data-universe-page] .universe-legal-grid .legal-card:last-child:nth-child(odd) { grid-column:auto; }
-  html[data-universe-page='ranking'] .ranking-shell { margin-top:1.5rem;  }
-  html[data-universe-page='ranking'] .ranking-table { min-width:1280px; }
-  html[data-universe-page='ranking'] .ranking-table th,
-  html[data-universe-page='ranking'] .ranking-table td { padding:12px 13px; }
+  .universe-static-page{ --universe-page-gutter:.9rem; }
+  .universe-page-stage{ padding-top:4.15rem; }
+  .universe-legal-page .section-title{ font-size:clamp(1.55rem,7.2vw,2.35rem); }
+  .universe-legal-grid{ grid-template-columns:minmax(0,1fr); }
+  .universe-legal-grid .legal-card{ min-height:0; }
+  .universe-legal-grid .legal-card:last-child:nth-child(odd){ grid-column:auto; }
+  .ranking-shell{ margin-top:1.5rem;  }
+  .ranking-table{ min-width:1280px; }
+  .ranking-table th,.ranking-table td{ padding:12px 13px; }
 }
 
 
 
 
 /* Fondo de cuadr?cula conectado en toda la pantalla */
-html[data-universe-page],html[data-universe-page] body{min-height:100%;}
+html[data-universe-page]{min-height:100%;}
 
-/* Botón de tema: fijo abajo a la izquierda, fuera del header */
+/* Botón de tema: fijo abajo a la izquierda,fuera del header */
 html[data-universe-page] body > nav .nav-theme-toggle{
   position:fixed;
   left:max(14px,calc(env(safe-area-inset-left) + 14px));
@@ -451,36 +374,36 @@ html[data-universe-page] body > nav .nav-theme-toggle{
   
   
 }
-html[data-universe-page] body.support-v2-active > nav .nav-theme-toggle{pointer-events:none!important;}
+
 @media(max-width:620px){
-  html[data-universe-page] body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px));bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px));width:44px;height:44px;min-width:44px;min-height:44px;}
+  
 }
 
 /* Soporte: botón pegado correctamente a la esquina en celular */
 @media(max-width:620px){
-  html[data-universe-page] body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px));padding:12px;}
-  html[data-universe-page] body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px));}
+  
+  
 }
 
 /* Ranking: ancho real y columna PC sin blanco en oscuro */
 html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1840px,calc(100vw - 1rem));max-width:none;}
-html[data-universe-page='ranking'] .ranking-section{padding-inline:0;}
-html[data-universe-page='ranking'] .cepre-v2-shell{width:100%;max-width:none;margin-inline:0;}
-html[data-universe-page='ranking'] .cepre-v2-wrap{max-height:none;height:auto;}
+.ranking-section{padding-inline:0;}
+.cepre-v2-shell{width:100%;max-width:none;margin-inline:0;}
+.cepre-v2-wrap{max-height:none;height:auto;}
 
 
-html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1880px,calc(100vw - 2rem))}
-html[data-universe-page='ranking'] .ranking-section{padding:0}
-html[data-universe-page='ranking'] .ranking-v3-layout{
+.universe-page-stage-inner{width:min(1880px,calc(100vw - 2rem))}
+.ranking-section{padding:0}
+.ranking-v3-layout{
   display:grid;
   grid-template-columns:clamp(290px,19vw,350px) minmax(0,1fr);
   grid-template-areas:"aside heading" "aside content";
   gap:18px 22px;
   align-items:start;
 }
-html[data-universe-page='ranking'] .ranking-v3-heading{grid-area:heading;padding:12px 8px 0}
-html[data-universe-page='ranking'] .ranking-v3-heading .section-label{display:inline-flex!important;margin:0 0 10px}
-html[data-universe-page='ranking'] .ranking-v3-heading .section-title{
+.ranking-v3-heading{grid-area:heading;padding:12px 8px 0}
+.ranking-v3-heading .section-label{display:inline-flex!important;margin:0 0 10px}
+.ranking-v3-heading .section-title{
   margin:0;
   
   font-size:clamp(2.25rem,4vw,4.65rem);
@@ -488,21 +411,21 @@ html[data-universe-page='ranking'] .ranking-v3-heading .section-title{
   letter-spacing:-.025em;
   text-align:left;
 }
-html[data-universe-page='ranking'] .ranking-v3-heading .section-sub{
+.ranking-v3-heading .section-sub{
   max-width:860px;
   margin:14px 0 0;
   
   
   text-align:left;
 }
-html[data-universe-page='ranking'] .ranking-v3-content{grid-area:content;min-width:0;display:grid;gap:22px}
-html[data-universe-page='ranking'] .ranking-v3-view-tabs{
+.ranking-v3-content{grid-area:content;min-width:0;display:grid;gap:22px}
+.ranking-v3-view-tabs{
   display:flex;
   gap:28px;
   margin:0 7px -6px;
   
 }
-html[data-universe-page='ranking'] .ranking-v3-view-tabs button{
+.ranking-v3-view-tabs button{
   position:relative;
   
   
@@ -511,7 +434,7 @@ html[data-universe-page='ranking'] .ranking-v3-view-tabs button{
   
   cursor:pointer;
 }
-html[data-universe-page='ranking'] .ranking-v3-view-tabs button[aria-selected='true']:after{
+.ranking-v3-view-tabs button[aria-selected='true']:after{
   content:"";
   position:absolute;
   left:0;
@@ -521,8 +444,8 @@ html[data-universe-page='ranking'] .ranking-v3-view-tabs button[aria-selected='t
   
   
 }
-html[data-universe-page='ranking'] :is(#ranking-v3-current-panel,#ranking-v3-history-panel)[hidden]{display:none!important}
-html[data-universe-page='ranking'] .ranking-v3-insights{
+:is(#ranking-v3-current-panel,#ranking-v3-history-panel)[hidden]{display:none!important}
+.ranking-v3-insights{
   grid-area:aside;
   position:sticky;
   top:92px;
@@ -536,26 +459,24 @@ html[data-universe-page='ranking'] .ranking-v3-insights{
   
   scrollbar-width:thin;
 }
-html[data-universe-page='ranking'] .ranking-v3-eyebrow{
+.ranking-v3-eyebrow{
   display:block;
   
   
   letter-spacing:.14em;
   text-transform:uppercase;
 }
-html[data-universe-page='ranking'] .ranking-v3-insights-head h3,
-html[data-universe-page='ranking'] .ranking-v3-history-head h3{
+.ranking-v3-insights-head h3,.ranking-v3-history-head h3{
   margin:7px 0 8px;
   
   
 }
-html[data-universe-page='ranking'] .ranking-v3-insights-head p,
-html[data-universe-page='ranking'] .ranking-v3-history-head p{
+.ranking-v3-insights-head p,.ranking-v3-history-head p{
   margin:0;
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-stats{
+.cepre-v2-stats{
   display:grid!important;
   gap:8px;
   min-height:0;
@@ -565,7 +486,7 @@ html[data-universe-page='ranking'] .cepre-v2-stats{
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-stat{
+.cepre-v2-stat{
   display:grid!important;
   grid-template-columns:minmax(0,1fr) auto;
   align-items:center!important;
@@ -580,29 +501,26 @@ html[data-universe-page='ranking'] .cepre-v2-stat{
   
   white-space:normal!important;
 }
-html[data-universe-page='ranking'] .cepre-v2-stat>div:last-child{text-align:right}
-html[data-universe-page='ranking'] .cepre-v2-stat span,
-html[data-universe-page='ranking'] .cepre-v2-stat small,
-html[data-universe-page='ranking'] .cepre-v2-stat strong,
-html[data-universe-page='ranking'] .cepre-v2-stat em{display:block}
-html[data-universe-page='ranking'] .cepre-v2-stat span{
+.cepre-v2-stat>div:last-child{text-align:right}
+.cepre-v2-stat span,.cepre-v2-stat small,.cepre-v2-stat strong,.cepre-v2-stat em{display:block}
+.cepre-v2-stat span{
   
   
   letter-spacing:.02em;
   text-transform:none!important;
 }
-html[data-universe-page='ranking'] .cepre-v2-stat small{
+.cepre-v2-stat small{
   margin-top:5px;
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-stat em{
+.cepre-v2-stat em{
   margin-top:4px;
   
   
   font-style:normal;
 }
-html[data-universe-page='ranking'] .ranking-v3-formula-note{
+.ranking-v3-formula-note{
   display:grid;
   gap:5px;
   margin-top:12px;
@@ -612,7 +530,7 @@ html[data-universe-page='ranking'] .ranking-v3-formula-note{
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-shell{
+.cepre-v2-shell{
   width:100%;
   margin:0;
   overflow:hidden;
@@ -621,15 +539,15 @@ html[data-universe-page='ranking'] .cepre-v2-shell{
   
   
 }
-html[data-universe-page='ranking'] .cepre-v2-controls{padding:16px 18px;}
-html[data-universe-page='ranking'] .ranking-v3-history{
+.cepre-v2-controls{padding:16px 18px;}
+.ranking-v3-history{
   overflow:hidden;
   
   
   
   
 }
-html[data-universe-page='ranking'] .ranking-v3-history-head{
+.ranking-v3-history-head{
   display:flex;
   align-items:flex-end;
   justify-content:space-between;
@@ -637,16 +555,16 @@ html[data-universe-page='ranking'] .ranking-v3-history-head{
   padding:24px 24px 18px;
   
 }
-html[data-universe-page='ranking'] .ranking-v3-history-head>div:first-child{max-width:760px}
-html[data-universe-page='ranking'] .ranking-v3-history-filters{display:flex;gap:12px;flex:0 0 auto}
-html[data-universe-page='ranking'] .ranking-v3-history-filters>div>span{
+.ranking-v3-history-head>div:first-child{max-width:760px}
+.ranking-v3-history-filters{display:flex;gap:12px;flex:0 0 auto}
+.ranking-v3-history-filters>div>span{
   display:block;
   margin:0 0 5px 4px;
   
   
   text-transform:uppercase;
 }
-html[data-universe-page='ranking'] .ranking-v3-segmented{
+.ranking-v3-segmented{
   display:flex;
   gap:3px;
   padding:4px;
@@ -654,7 +572,7 @@ html[data-universe-page='ranking'] .ranking-v3-segmented{
   
   
 }
-html[data-universe-page='ranking'] .ranking-v3-segmented button{
+.ranking-v3-segmented button{
   min-height:34px;
   padding:0 13px;
   
@@ -664,73 +582,65 @@ html[data-universe-page='ranking'] .ranking-v3-segmented button{
   
   cursor:pointer;
 }
-html[data-universe-page='ranking'] .ranking-v3-benchmarks{
+.ranking-v3-benchmarks{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:10px;
   padding:16px 24px;
   
 }
-html[data-universe-page='ranking'] .ranking-v3-benchmarks article{
+.ranking-v3-benchmarks article{
   padding:14px 15px;
   
   
   
 }
-html[data-universe-page='ranking'] .ranking-v3-benchmarks span,
-html[data-universe-page='ranking'] .ranking-v3-benchmarks strong,
-html[data-universe-page='ranking'] .ranking-v3-benchmarks small{display:block}
-html[data-universe-page='ranking'] .ranking-v3-benchmarks span{text-transform:uppercase}
-html[data-universe-page='ranking'] .ranking-v3-benchmarks strong{margin-top:5px;}
-html[data-universe-page='ranking'] .ranking-v3-benchmarks small{margin-top:3px;}
-html[data-universe-page='ranking'] .ranking-v3-history-wrap{overflow-x:auto}
-html[data-universe-page='ranking'] .ranking-v3-history-table{width:100%;min-width:980px;}
-html[data-universe-page='ranking'] .ranking-v3-history-table th,
-html[data-universe-page='ranking'] .ranking-v3-history-table td{padding:11px 12px;text-align:center;font-size:.76rem}
-html[data-universe-page='ranking'] .ranking-v3-history-table thead th{text-transform:uppercase}
-html[data-universe-page='ranking'] .ranking-v3-history-table tbody th{text-align:left;}
-html[data-universe-page='ranking'] .ranking-v3-history-table td:first-child{text-align:left;white-space:nowrap}
-html[data-universe-page='ranking'] .ranking-v3-history-table td:first-child strong{margin-left:7px;}
-html[data-universe-page='ranking'] .ranking-v3-faculty{display:inline-flex;padding:4px 7px;}
-html[data-universe-page='ranking'] .ranking-v3-range{position:relative;width:100%;min-width:190px;height:18px;}
-html[data-universe-page='ranking'] .ranking-v3-range:before{content:"0";position:absolute;left:6px;top:2px;font-size:.52rem}
-html[data-universe-page='ranking'] .ranking-v3-range:after{content:"20";position:absolute;right:6px;top:2px;font-size:.52rem}
-html[data-universe-page='ranking'] .ranking-v3-range i{position:absolute;z-index:1;top:4px;height:10px;}
-html[data-universe-page='ranking'] .ranking-v3-range b{position:absolute;z-index:2;top:1px;width:3px;height:16px;translate:-1px 0}
-html[data-universe-page='ranking'] .ranking-v3-no-admission{display:inline-flex;padding:5px 8px;font-size:.62rem;}
-html[data-universe-page='ranking'] .ranking-v3-history-empty{padding:32px;text-align:center}
-html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13px 24px;}
+.ranking-v3-benchmarks span,.ranking-v3-benchmarks strong,.ranking-v3-benchmarks small{display:block}
+.ranking-v3-benchmarks span{text-transform:uppercase}
+.ranking-v3-benchmarks strong{margin-top:5px;}
+.ranking-v3-benchmarks small{margin-top:3px;}
+.ranking-v3-history-wrap{overflow-x:auto}
+.ranking-v3-history-table{width:100%;min-width:980px;}
+.ranking-v3-history-table th,.ranking-v3-history-table td{padding:11px 12px;text-align:center;font-size:.76rem}
+.ranking-v3-history-table thead th{text-transform:uppercase}
+.ranking-v3-history-table tbody th{text-align:left;}
+.ranking-v3-history-table td:first-child{text-align:left;white-space:nowrap}
+.ranking-v3-history-table td:first-child strong{margin-left:7px;}
+.ranking-v3-faculty{display:inline-flex;padding:4px 7px;}
+.ranking-v3-range{position:relative;width:100%;min-width:190px;height:18px;}
+.ranking-v3-range:before{content:"0";position:absolute;left:6px;top:2px;font-size:.52rem}
+.ranking-v3-range:after{content:"20";position:absolute;right:6px;top:2px;font-size:.52rem}
+.ranking-v3-range i{position:absolute;z-index:1;top:4px;height:10px;}
+.ranking-v3-range b{position:absolute;z-index:2;top:1px;width:3px;height:16px;translate:-1px 0}
+.ranking-v3-no-admission{display:inline-flex;padding:5px 8px;font-size:.62rem;}
+.ranking-v3-history-empty{padding:32px;text-align:center}
+.ranking-v3-history-note{margin:0;padding:13px 24px;}
 @media(max-width:1180px){
-  html[data-universe-page='ranking'] .ranking-v3-layout{grid-template-columns:270px minmax(0,1fr);gap:16px}
-  html[data-universe-page='ranking'] .ranking-v3-history-head{align-items:flex-start;flex-direction:column}
+  .ranking-v3-layout{grid-template-columns:270px minmax(0,1fr);gap:16px}
+  .ranking-v3-history-head{align-items:flex-start;flex-direction:column}
 }
 @media(max-width:900px){
-  html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(100% - 1rem,1000px)}
-  html[data-universe-page='ranking'] .ranking-v3-layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"heading" "aside" "content"}
-  html[data-universe-page='ranking'] .ranking-v3-insights{position:static;max-height:none}
-  html[data-universe-page='ranking'] .cepre-v2-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  html[data-universe-page='ranking'] .ranking-v3-benchmarks{grid-template-columns:1fr}
+  .universe-page-stage-inner{width:min(100% - 1rem,1000px)}
+  .ranking-v3-layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"heading" "aside" "content"}
+  .ranking-v3-insights{position:static;max-height:none}
+  .cepre-v2-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ranking-v3-benchmarks{grid-template-columns:1fr}
 }
 @media(max-width:560px){
-  html[data-universe-page='ranking'] .ranking-v3-heading{padding-inline:4px}
-  html[data-universe-page='ranking'] .ranking-v3-heading .section-title{font-size:2.65rem}
-  html[data-universe-page='ranking'] .ranking-v3-insights{padding:18px 14px;}
-  html[data-universe-page='ranking'] .cepre-v2-stats{grid-template-columns:1fr}
-  html[data-universe-page='ranking'] .cepre-v2-stat{min-height:54px}
-  html[data-universe-page='ranking'] .ranking-v3-history-head{padding:20px 16px 15px}
-  html[data-universe-page='ranking'] .ranking-v3-history-filters{width:100%;display:grid;grid-template-columns:1fr 1fr}
-  html[data-universe-page='ranking'] .ranking-v3-segmented{display:grid;grid-template-columns:1fr}
-  html[data-universe-page='ranking'] .ranking-v3-benchmarks{padding:13px 16px}
-  html[data-universe-page='ranking'] .ranking-v3-history-note{padding-inline:16px}
+  .ranking-v3-heading{padding-inline:4px}
+  .ranking-v3-heading .section-title{font-size:2.65rem}
+  .ranking-v3-insights{padding:18px 14px;}
+  .cepre-v2-stats{grid-template-columns:1fr}
+  .cepre-v2-stat{min-height:54px}
+  .ranking-v3-history-head{padding:20px 16px 15px}
+  .ranking-v3-history-filters{width:100%;display:grid;grid-template-columns:1fr 1fr}
+  .ranking-v3-segmented{display:grid;grid-template-columns:1fr}
+  .ranking-v3-benchmarks{padding:13px 16px}
+  .ranking-v3-history-note{padding-inline:16px}
 }
 @media(min-width:901px){
-  html[data-universe-page='ranking'],
-  html[data-universe-page='ranking'] body{
-    height:100%;
-    min-height:100%;
-    overflow:hidden;
-  }
-  html[data-universe-page='ranking'] body>nav{
+  
+  body>nav{
     position:fixed;
     z-index:1000;
     inset:0 0 auto 0;
@@ -747,44 +657,41 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     
     
   }
-  html[data-universe-page='ranking'] body>nav .nav-logo{
+  body>nav .nav-logo{
     flex:0 0 auto;
     
     
     letter-spacing:-.04em;
   }
-  html[data-universe-page='ranking'] body>nav .nav-links{
+  body>nav .nav-links{
     flex:1 1 auto;
     justify-content:center!important;
   }
-  html[data-universe-page='ranking'] body>nav .nav-actions{flex:0 0 auto}
-  html[data-universe-page='ranking'] .universe-static-page{
+  body>nav .nav-actions{flex:0 0 auto}
+  .universe-static-page{
     height:100svh;
     min-height:100svh;
     overflow:hidden;
     
   }
-  html[data-universe-page='ranking'] .universe-page-stage{
+  .universe-page-stage{
     height:100svh;
     min-height:100svh;
     padding:78px 0 0;
     overflow:hidden;
   }
-  html[data-universe-page='ranking'] .universe-page-stage-inner,
-  html[data-universe-page='ranking'] .ranking-section{
+  .universe-page-stage-inner,.ranking-section{
     width:100%;
     height:100%;
     min-height:0;
     margin:0;
     overflow:hidden;
   }
-  html[data-universe-page='ranking'] .universe-page-stage-inner>.ranking-section{
+  .universe-page-stage-inner>.ranking-section{
     padding:0;
   }
-  html[data-universe-page='ranking'] body .universe-static-page .universe-page-stage .universe-page-stage-inner>.ranking-section{
-    padding-top:0;
-  }
-  html[data-universe-page='ranking'] .ranking-v3-layout{
+  
+  .ranking-v3-layout{
     width:100%;
     height:100%;
     min-height:0;
@@ -796,29 +703,29 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     overflow:hidden;
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-heading{
+  .ranking-v3-heading{
     min-width:0;
     padding:22px 30px 14px;
     
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-heading .section-label{
+  .ranking-v3-heading .section-label{
     margin-bottom:8px;
     
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-heading .section-title{
+  .ranking-v3-heading .section-title{
     
     
     letter-spacing:-.045em;
   }
-  html[data-universe-page='ranking'] .ranking-v3-heading .section-sub{
+  .ranking-v3-heading .section-sub{
     max-width:1000px;
     margin-top:9px;
     
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-insights{
+  .ranking-v3-insights{
     position:relative;
     top:auto;
     align-self:stretch!important;
@@ -832,10 +739,10 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-insights-head{
+  .ranking-v3-insights-head{
     padding:0 6px;
   }
-  html[data-universe-page='ranking'] .ranking-v3-content{
+  .ranking-v3-content{
     min-height:0;
     grid-template-rows:auto minmax(0,1fr);
     gap:14px;
@@ -843,16 +750,15 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     overflow:hidden;
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-view-tabs{
+  .ranking-v3-view-tabs{
     flex:0 0 auto;
     margin:0 6px;
   }
-  html[data-universe-page='ranking'] #ranking-v3-current-panel,
-  html[data-universe-page='ranking'] #ranking-v3-history-panel{
+  #ranking-v3-current-panel,#ranking-v3-history-panel{
     height:100%;
     min-height:0;
   }
-  html[data-universe-page='ranking'] .cepre-v2-shell{
+  .cepre-v2-shell{
     display:flex;
     flex-direction:column;
     height:100%;
@@ -860,14 +766,14 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     
     
   }
-  html[data-universe-page='ranking'] .cepre-v2-controls{flex:0 0 auto}
-  html[data-universe-page='ranking'] .cepre-v2-wrap{
+  .cepre-v2-controls{flex:0 0 auto}
+  .cepre-v2-wrap{
     flex:1 1 auto;
     min-height:0;
     overflow:auto;
     overscroll-behavior:contain;
   }
-  html[data-universe-page='ranking'] .ranking-v3-history{
+  .ranking-v3-history{
     display:flex;
     flex-direction:column;
     height:100%;
@@ -875,10 +781,8 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-history-head,
-  html[data-universe-page='ranking'] .ranking-v3-benchmarks,
-  html[data-universe-page='ranking'] .ranking-v3-history-note{flex:0 0 auto}
-  html[data-universe-page='ranking'] .ranking-v3-history-wrap{
+  .ranking-v3-history-head,.ranking-v3-benchmarks,.ranking-v3-history-note{flex:0 0 auto}
+  .ranking-v3-history-wrap{
     flex:1 1 auto;
     min-height:0;
     overflow:auto;
@@ -887,12 +791,8 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
 }
 @
 @media(max-width:900px){
-  html[data-universe-page='ranking'],
-  html[data-universe-page='ranking'] body{
-    width:100%;
-    overflow-x:hidden;
-  }
-  html[data-universe-page='ranking'] body>nav{
+  
+  body>nav{
     position:sticky;
     z-index:1000;
     inset:0 0 auto;
@@ -914,7 +814,7 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     
     
   }
-  html[data-universe-page='ranking'] body>nav .nav-logo{
+  body>nav .nav-logo{
     grid-column:1;
     grid-row:1;
     justify-self:start;
@@ -924,12 +824,12 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     letter-spacing:-.035em;
     white-space:nowrap;
   }
-  html[data-universe-page='ranking'] body>nav .nav-actions{
+  body>nav .nav-actions{
     grid-column:2;
     grid-row:1;
     justify-self:end;
   }
-  html[data-universe-page='ranking'] body>nav .nav-links{
+  body>nav .nav-links{
     grid-column:1/-1;
     grid-row:2;
     display:flex!important;
@@ -946,54 +846,54 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     scrollbar-width:none;
     scroll-snap-type:x proximity;
   }
-  html[data-universe-page='ranking'] body>nav .nav-links::-webkit-scrollbar{display:none}
-  html[data-universe-page='ranking'] body>nav .nav-links li{
+  body>nav .nav-links::-webkit-scrollbar{display:none}
+  body>nav .nav-links li{
     flex:0 0 auto;
     scroll-snap-align:start;
   }
-  html[data-universe-page='ranking'] body>nav .nav-links a{
+  body>nav .nav-links a{
     min-height:30px;
     padding:0 10px;
     font-size:.64rem;
   }
-  html[data-universe-page='ranking'] .universe-page-stage{
+  .universe-page-stage{
     min-height:0;
     padding:0 0 22px;
   }
-  html[data-universe-page='ranking'] .universe-page-stage-inner{width:100%}
-  html[data-universe-page='ranking'] .ranking-section{
+  .universe-page-stage-inner{width:100%}
+  .ranking-section{
     padding:10px;
   }
-  html[data-universe-page='ranking'] .ranking-v3-layout{
+  .ranking-v3-layout{
     grid-template-columns:minmax(0,1fr);
     grid-template-areas:"heading" "aside" "content";
     gap:12px;
     width:100%;
     min-width:0;
   }
-  html[data-universe-page='ranking'] .ranking-v3-heading{
+  .ranking-v3-heading{
     padding:8px 4px 2px;
   }
-  html[data-universe-page='ranking'] .ranking-v3-heading .section-title{
+  .ranking-v3-heading .section-title{
     
     letter-spacing:-.045em;
   }
-  html[data-universe-page='ranking'] .ranking-v3-heading .section-sub{
+  .ranking-v3-heading .section-sub{
     margin-top:10px;
     font-size:.82rem;
     line-height:1.48;
   }
-  html[data-universe-page='ranking'] .ranking-v3-insights{
+  .ranking-v3-insights{
     position:static;
     max-height:none;
     overflow:visible;
     padding:17px 14px;
     
   }
-  html[data-universe-page='ranking'] .ranking-v3-insights-head h3{
+  .ranking-v3-insights-head h3{
     font-size:1.32rem;
   }
-  html[data-universe-page='ranking'] .cepre-v2-stats{
+  .cepre-v2-stats{
     display:flex!important;
     grid-template-columns:none;
     gap:8px;
@@ -1005,22 +905,22 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
   }
-  html[data-universe-page='ranking'] .cepre-v2-stats::-webkit-scrollbar{display:none}
-  html[data-universe-page='ranking'] .cepre-v2-stat{
+  .cepre-v2-stats::-webkit-scrollbar{display:none}
+  .cepre-v2-stat{
     flex:0 0 172px;
     min-width:172px;
     min-height:62px;
     scroll-snap-align:start;
   }
-  html[data-universe-page='ranking'] .ranking-v3-formula-note{
+  .ranking-v3-formula-note{
     margin-top:9px;
     padding:12px;
   }
-  html[data-universe-page='ranking'] .ranking-v3-content{
+  .ranking-v3-content{
     min-width:0;
     gap:12px;
   }
-  html[data-universe-page='ranking'] .ranking-v3-view-tabs{
+  .ranking-v3-view-tabs{
     gap:22px;
     margin:0 5px;
     overflow-x:auto;
@@ -1028,17 +928,16 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     white-space:nowrap;
     scrollbar-width:none;
   }
-  html[data-universe-page='ranking'] .ranking-v3-view-tabs::-webkit-scrollbar{display:none}
-  html[data-universe-page='ranking'] .cepre-v2-shell,
-  html[data-universe-page='ranking'] .ranking-v3-history{
+  .ranking-v3-view-tabs::-webkit-scrollbar{display:none}
+  .cepre-v2-shell,.ranking-v3-history{
     width:100%;
     min-width:0;
     
   }
-  html[data-universe-page='ranking'] .cepre-v2-controls{
+  .cepre-v2-controls{
     padding:14px;
   }
-  html[data-universe-page='ranking'] .cepre-v2-wrap{
+  .cepre-v2-wrap{
     width:100%;
     height:62svh;
     min-height:430px;
@@ -1047,15 +946,15 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
   }
-  html[data-universe-page='ranking'] .ranking-v3-history-head{
+  .ranking-v3-history-head{
     gap:14px;
     padding:18px 15px 14px;
   }
-  html[data-universe-page='ranking'] .ranking-v3-history-filters{
+  .ranking-v3-history-filters{
     width:100%;
     grid-template-columns:1fr 1fr;
   }
-  html[data-universe-page='ranking'] .ranking-v3-benchmarks{
+  .ranking-v3-benchmarks{
     display:flex;
     grid-template-columns:none;
     gap:8px;
@@ -1064,12 +963,12 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
   }
-  html[data-universe-page='ranking'] .ranking-v3-benchmarks::-webkit-scrollbar{display:none}
-  html[data-universe-page='ranking'] .ranking-v3-benchmarks article{
+  .ranking-v3-benchmarks::-webkit-scrollbar{display:none}
+  .ranking-v3-benchmarks article{
     flex:0 0 190px;
     scroll-snap-align:start;
   }
-  html[data-universe-page='ranking'] .ranking-v3-history-wrap{
+  .ranking-v3-history-wrap{
     width:100%;
     height:60svh;
     min-height:420px;
@@ -1081,3 +980,60 @@ html[data-universe-page='ranking'] .ranking-v3-history-note{margin:0;padding:13p
 }
 
 }
+/* Rescued from the impossible html[data-universe-page] nesting inside .native-shell (body can't be its descendant). */
+body{
+  width:100%;
+  min-height:100%;
+  margin:0;
+  overflow-x:hidden;
+}
+body{
+  height:auto;
+  min-height:100svh;
+  overflow-y:visible;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y !important;
+}
+body{min-height:100%;}
+body.support-v2-active > nav .nav-theme-toggle{pointer-events:none!important;}
+body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px));bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px));width:44px;height:44px;min-width:44px;min-height:44px;}
+body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px));padding:12px;}
+body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px));}
+body{
+    height:100%;
+    min-height:100%;
+    overflow:hidden;
+  }
+body .universe-static-page .universe-page-stage .universe-page-stage-inner>.ranking-section{
+    padding-top:0;
+  }
+body{
+    width:100%;
+    overflow-x:hidden;
+  }
+
+/* Rescued: same nesting issue, this one targeted <html> itself. */
+html{
+  width:100%;
+  min-height:100%;
+  margin:0;
+  overflow-x:hidden;
+}
+html{
+  height:auto;
+  overflow-y:auto;
+  overscroll-behavior-y:auto !important;
+  touch-action:pan-y !important;
+}
+html{
+  --universe-arrow-cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='32' viewBox='0 0 26 32'%3E%3Cpath d='M3.5 3.5v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2H24z' fill='%232563eb' opacity='.48'/%3E%3Cpath d='M2 2v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2h9.4z' fill='%23050505' stroke='%23ffffff' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2,default;
+}
+html{
+    height:100%;
+    min-height:100%;
+    overflow:hidden;
+  }
+html{
+    width:100%;
+    overflow-x:hidden;
+  }
