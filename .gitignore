@@ -5,3 +5,6 @@ tmp/
 *.local.json
 classes-questions-private/
 __pycache__/
+.claude/
+.wrangler/
+output/

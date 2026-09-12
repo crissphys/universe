@@ -134,4 +134,25 @@
   }
 }
 
+
+/* ===== AUTO-PATCH: restored visual properties missing from the original port (script-generated) ===== */
+.editorial-hero{border:1px solid rgba(37, 99, 235, .18) !important;border-radius:34px !important;background:radial-gradient(circle at 16% 0%, rgba(96, 165, 250, .28), transparent 35%),var(--surface) !important;box-shadow:0 28px 90px rgba(15, 23, 42, .11) !important}
+.editorial-kicker{font-family:var(--display) !important;color:var(--blue) !important;font-weight:950 !important}
+.editorial-hero h1{font-family:var(--display) !important;font-weight:400 !important;color:var(--text) !important}
+.editorial-lead{color:var(--muted) !important}
+.article-card{background:var(--surface) !important;border:1px solid var(--line) !important;border-radius:28px !important;box-shadow:0 22px 70px rgba(15, 23, 42, .08) !important;backdrop-filter:none}
+.side-card{background:var(--surface) !important;border:1px solid var(--line) !important;border-radius:28px !important;box-shadow:0 22px 70px rgba(15, 23, 42, .08) !important;backdrop-filter:none}
+.article-card h2{font-family:var(--display) !important;font-weight:800 !important;color:var(--text) !important}
+.side-card h2{font-family:var(--display) !important;font-weight:800 !important;color:var(--text) !important}
+.article-card h3{color:var(--blue) !important}
+.article-card p{color:var(--muted) !important}
+.article-card li{color:var(--muted) !important}
+.side-card p{color:var(--muted) !important}
+.side-card li{color:var(--muted) !important}
+.note-box{border-radius:22px !important;border:1px solid rgba(37, 99, 235, .16) !important;background:var(--surface) !important;color:var(--blue) !important}
+.warning-box{border-radius:22px !important;border:1px solid rgba(37, 99, 235, .16) !important;background:var(--surface) !important;color:var(--blue) !important}
+.example-box{border-radius:22px !important;border:1px solid rgba(37, 99, 235, .16) !important;background:var(--surface) !important;color:var(--blue) !important}
+.side-card a{color:var(--blue) !important;font-weight:850 !important}
+.article-card a{color:var(--blue) !important;font-weight:850 !important}
+
 }

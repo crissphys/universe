@@ -130,7 +130,7 @@
     set('examTopStudent', tiedLabel(stats.maximumStudent, stats.maximumCount || 1, 'máximo'));
     set('examLowScore', points(stats.minimum));
     set('examLowStudent', tiedLabel(stats.minimumStudent, stats.minimumCount || 1, 'mínimo'));
-    set('examMeanCaption', 'Promedio: ' + points(stats.mean) + ' puntos · barra naranja');
+    set('examMeanCaption', 'Promedio: ' + points(stats.mean) + ' puntos · barra blanca');
   }
   function renderScoring() {
     var scoring = data.scoring || (currentKey === 'humanidades' ? { correct: 6, wrong: -1.2, blank: 0 } : {});

@@ -140,4 +140,55 @@
   .ufa-note { grid-template-columns: 1fr; }
 }
 
+
+/* ===== AUTO-PATCH: restored visual properties missing from the original port (script-generated) ===== */
+.ufa-page{color:var(--text);font-family:"DM Sans", Inter, system-ui, sans-serif}
+.ufa-hero{border:1px solid rgba(82, 138, 222, .2);border-radius:34px;background:radial-gradient(circle at 84% 3%, rgba(92, 165, 255, .35), transparent 31%),
+    radial-gradient(circle at 5% 100%, rgba(95, 86, 231, .15), transparent 34%),var(--surface);box-shadow:0 30px 90px rgba(32, 78, 143, .14)}
+.ufa-hero::after{opacity:.35;background-image:linear-gradient(rgba(37, 99, 235, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 99, 235, .08) 1px, transparent 1px)}
+.ufa-kicker{color:#2467cc;font-weight:800}
+.ufa-hero h1{font-weight:700}
+.ufa-hero-copy > p{color:var(--muted)}
+.ufa-btn{border:1px solid rgba(37, 99, 235, .2);border-radius:14px;background:var(--surface);color:#1d4ed8;font-weight:800;text-decoration:none;box-shadow:0 8px 22px rgba(32, 78, 143, .06)}
+.ufa-hero-panel{border:1px solid rgba(255, 255, 255, .8);border-radius:26px;background:var(--surface);box-shadow:inset 0 0 0 1px rgba(65, 117, 193, .08), 0 18px 50px rgba(31, 76, 139, .1);backdrop-filter:none}
+.ufa-panel-label{color:#2467cc;font-weight:900}
+.ufa-panel-number{border-bottom:1px solid var(--line)}
+.ufa-panel-number span{color:var(--muted);font-weight:700}
+.ufa-hero-panel p{color:var(--muted)}
+.ufa-workspace{border:1px solid var(--line);border-radius:28px;background:var(--surface);box-shadow:0 24px 64px rgba(35, 72, 125, .08)}
+.ufa-section-head p{color:var(--muted)}
+.ufa-summary{border:1px solid rgba(37, 99, 235, .15);border-radius:999px;background:var(--surface);color:#1d5bb7;font-weight:900}
+.ufa-legend{color:var(--muted)}
+.ufa-legend i{border-radius:999px;background:linear-gradient(90deg, #1687e8, #10a46f, #f28b22)}
+.ufa-exam-tab{border:1px solid var(--line);border-radius:17px;background:var(--surface);color:#43566f;font:inherit;transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+.ufa-exam-tab:hover{border-color:rgba(37, 99, 235, .3)}
+.ufa-exam-tab span{color:#7a8ca2;font-weight:900}
+.ufa-exam-tab small{color:#7a8ca2;font-weight:700}
+.ufa-filters{border:1px solid var(--line);border-radius:17px;background:var(--surface)}
+.ufa-filter{border:0;border-radius:12px;background:transparent;color:#4a5d76;font:inherit;font-weight:800}
+.ufa-card{border:1px solid color-mix(in srgb, var(--blue) 26%, #d7e1ef);border-radius:24px;background:var(--surface);box-shadow:0 16px 44px rgba(25, 64, 119, .07)}
+.ufa-card::before{background:var(--surface)}
+.ufa-course-mark{border-radius:15px;background:color-mix(in srgb, var(--blue) 13%, #fff);color:var(--blue);font-family:"Rajdhani", sans-serif;font-weight:800}
+.ufa-course-title > span{color:var(--blue);font-weight:900}
+.ufa-course-title p{color:var(--muted)}
+.ufa-total{border-radius:13px;background:color-mix(in srgb, var(--blue) 9%, #fff);color:var(--blue)}
+.ufa-total span{font-weight:800}
+.ufa-card-guide{color:#8a98aa;font-weight:800}
+.ufa-topic{border:1px solid transparent;border-radius:14px;background:var(--surface);transition:border-color .18s ease, transform .18s ease, background .18s ease}
+.ufa-topic:hover{border-color:color-mix(in srgb, var(--blue) 24%, transparent);background:color-mix(in srgb, var(--blue) 4%, #fff)}
+.ufa-topic-rank{border-radius:11px;background:color-mix(in srgb, var(--blue) 13%, #fff);color:var(--blue);font-weight:900}
+.ufa-topic-count{color:var(--blue);font-weight:900}
+.ufa-topic-bar{border-radius:999px;background:var(--surface)}
+.ufa-topic-bar i{border-radius:inherit;background:var(--surface)}
+.ufa-topic small{color:var(--muted)}
+.ufa-expand{border:1px solid color-mix(in srgb, var(--blue) 26%, #d7e1ef);border-radius:13px;background:color-mix(in srgb, var(--blue) 6%, #fff);color:var(--blue);font:inherit;font-weight:900}
+.ufa-expand b{border-radius:8px;background:var(--blue);color:#fff}
+.ufa-complete{border-radius:13px;background:var(--surface);color:var(--muted);font-weight:700}
+.ufa-note{border:1px solid rgba(245, 158, 11, .24);border-radius:18px;background:var(--surface);color:#7c4a03}
+@media (max-width: 680px){
+.ufa-hero{border-radius:24px}
+.ufa-hero-panel{border-radius:20px}
+.ufa-workspace{border-radius:21px}
+}
+
 }
