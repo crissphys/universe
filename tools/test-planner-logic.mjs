@@ -143,10 +143,9 @@ if (Math.min(...balancedValues) === 0 || Math.max(...balancedValues) / Math.min(
   throw new Error(`All-subject priority is not balanced: ${JSON.stringify(balancedMinutes)}`);
 }
 
-const html = fs.readFileSync(new URL('../planificador.html', import.meta.url), 'utf8');
-const cepreHtml = fs.readFileSync(new URL('../cepreuni.html', import.meta.url), 'utf8');
+// planner.js now powers the tracking page; /planificador uses the galaxy renderer.
+const html = fs.readFileSync(new URL('../planificador/seguimiento/index.html', import.meta.url), 'utf8');
 const syllabusHtml = fs.readFileSync(new URL('../temario.html', import.meta.url), 'utf8');
-if (!cepreHtml.includes('id="cepre-schedules-app"') || !cepreHtml.includes('/cepreuni-2027-data.js') || !cepreHtml.includes('/cepreuni-schedules.js')) throw new Error('CEPREUNI schedules are not wired into the page');
 if (syllabusHtml.includes('id="horario-cepreuni"') || syllabusHtml.includes('HORARIO<br>CEPREUNI 2026-2')) throw new Error('Legacy CEPREUNI schedule is still present in the syllabus page');
 const referencedIds = [...plannerSource.matchAll(/\$\('([^']+)'\)/g)].map((match) => match[1]);
 const missingIds = [...new Set(referencedIds)].filter((id) => !html.includes(`id="${id}"`));

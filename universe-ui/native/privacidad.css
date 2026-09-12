@@ -1,9 +1,4 @@
-.native-shell {
-
-#blogger-header,#blogger-footer,#Header1,#PageList1,#Navbar1,#Attribution1,.header-outer,.tabs-outer,.navbar,.widget.Header,.widget.PageList,.post-title,.post-header,.post-footer,.post-share-buttons,.share-buttons,.share-buttons-container,.byline,#comments,.comments,.comment-form,.feed-links,.blog-feeds,.blog-pager,.Attribution,.footer-outer,.sidebar-container,.post-author,.post-labels,.post-timestamp,.post-location{ display:none !important; }
-
-
-
+.native-shell {.navbar{ display:none !important; }
 
 #page-content{
   position:relative;
@@ -15,19 +10,7 @@
   padding:0;
   overflow:visible;
 }
-#main-wrapper,#page_body,#Blog1,#Blog1 .widget-content,#Blog1 .blog-posts,#Blog1 .post-outer-container,#Blog1 .post-outer,#Blog1 article,#Blog1 .post,#Blog1 .post-body-container,#Blog1 .post-body{
-  display:block !important;
-  box-sizing:border-box !important;
-  width:100%;
-  max-width:none;
-  min-width:0;
-  margin:0;
-  padding:0;
-  
-  
-  
-  overflow:visible;
-}
+
 
 .universe-static-page{
   --universe-page-gutter:clamp(1rem,4vw,4.5rem);
@@ -86,11 +69,7 @@
   height:auto;
   margin:0;
   padding:clamp(1rem,1.8vw,1.35rem);
-  
-  
-  
-  
-  
+
 }
 .universe-legal-grid .legal-card h3{
   margin:0 0 .75rem;
@@ -100,21 +79,9 @@
 .universe-legal-grid .legal-card ul{ margin:.15rem 0 0; padding-left:1.15rem; }
 .universe-legal-grid .legal-card li{ margin:.42rem 0;  line-height:1.55; text-align:left; }
 .universe-legal-grid .legal-card:last-child:nth-child(odd){ grid-column:1 / -1; }
-html[data-universe-page='ranking'] .universe-page-stage-inner,
-html[data-universe-page='library'] .universe-page-stage-inner { width:min(1720px,100%); }
-html[data-universe-page='terms'] .universe-page-stage-inner,.universe-page-stage-inner{ width:min(1380px,100%); }
+.universe-page-stage-inner{ width:min(1380px,100%); }
 #universe-code-cursor,#chat-overlay:not(.open),#chat-panel:not(.open){ pointer-events:none !important; }
-#chat-overlay.open,#chat-panel.open{ pointer-events:auto !important; }
 
-html.universe-arrow-cursor,
-html.universe-arrow-cursor body,
-html.universe-arrow-cursor body * { cursor:var(--universe-arrow-cursor) !important; }
-html.universe-arrow-cursor #universe-code-cursor { display:none !important; }
-@media (pointer:coarse){
-  html.universe-arrow-cursor,
-  html.universe-arrow-cursor body,
-  html.universe-arrow-cursor body * { cursor:auto !important; }
-}
 .universe-static-page,.universe-static-page footer,.universe-static-page a,.universe-static-page button{ position:relative; pointer-events:auto; }
 footer .footer-links ul{ display:grid; gap:.12rem; padding-left:0; list-style:none; }
 footer .footer-links a,footer .footer-legal a{
@@ -140,43 +107,10 @@ footer .footer-links a:hover,footer .footer-legal a:hover{
   .universe-legal-grid .legal-card:last-child:nth-child(odd){ grid-column:auto; }
 }
 
-
-
-
-/* Fondo de cuadr?cula conectado en toda la pantalla */
-html[data-universe-page]{min-height:100%;}
-
-/* Botón de tema: fijo abajo a la izquierda,fuera del header */
-html[data-universe-page] body > nav .nav-theme-toggle{
-  position:fixed;
-  left:max(14px,calc(env(safe-area-inset-left) + 14px));
-  bottom:max(16px,calc(env(safe-area-inset-bottom) + 16px));
-  z-index:2147482455;
-  width:48px;height:48px;min-width:48px;min-height:48px;
-  display:grid!important;place-items:center!important;
-  
-  
-  
-}
-
-@media(max-width:620px){
-  
-}
-
 /* Soporte: botón pegado correctamente a la esquina en celular */
-@media(max-width:620px){
-  
-  
-}
-
-/* Ranking: ancho real y columna PC sin blanco en oscuro */
-html[data-universe-page='ranking'] .universe-page-stage-inner{width:min(1840px,calc(100vw - 1rem));max-width:none;}
-html[data-universe-page='ranking'] .ranking-section{padding-inline:0;}
-html[data-universe-page='ranking'] .cepre-v2-shell{width:100%;max-width:none;margin-inline:0;}
-html[data-universe-page='ranking'] .cepre-v2-wrap{max-height:min(68vh,680px);}
 
 }
-/* Rescued from the impossible html[data-universe-page] nesting inside .native-shell (body can't be its descendant). */
+
 body{
   width:100%;
   min-height:100%;
@@ -191,10 +125,6 @@ body{
   touch-action:pan-y !important;
 }
 body{min-height:100%;}
-body.support-v2-active > nav .nav-theme-toggle{pointer-events:none!important;}
-body > nav .nav-theme-toggle{left:max(10px,calc(env(safe-area-inset-left) + 10px));bottom:max(10px,calc(env(safe-area-inset-bottom) + 10px));width:44px;height:44px;min-width:44px;min-height:44px;}
-body > #support-v2-fab{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px));padding:12px;}
-body > #support-v2-hint{right:max(10px,calc(env(safe-area-inset-right) + 10px));bottom:max(68px,calc(env(safe-area-inset-bottom) + 68px));}
 
 /* Rescued: same nesting issue, this one targeted <html> itself. */
 html{
@@ -208,7 +138,4 @@ html{
   overflow-y:auto;
   overscroll-behavior-y:auto !important;
   touch-action:pan-y !important;
-}
-html{
-  --universe-arrow-cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='32' viewBox='0 0 26 32'%3E%3Cpath d='M3.5 3.5v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2H24z' fill='%232563eb' opacity='.48'/%3E%3Cpath d='M2 2v23l6.5-5.8 5.2 10.5 4.4-2.1-5-10.2h9.4z' fill='%23050505' stroke='%23ffffff' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2,default;
 }

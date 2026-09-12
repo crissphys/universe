@@ -67,9 +67,7 @@
 
 .article-card,
 .side-card {
-  
-  
-  
+
   padding: clamp(1.15rem, 2vw, 2rem);
   
   
@@ -115,16 +113,12 @@
 .example-box {
   
   padding: 1rem 1.1rem;
-  
-  
-  
+
 }
 
 .side-card a,
 .article-card a {
-  
-  
-  
+
   text-underline-offset: 3px !important;
 }
 

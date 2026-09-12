@@ -1,61 +1,79 @@
+/* Shared galaxy palette; UNITALK retains its feed layout and controls. */
+:root{color-scheme:dark;--ut-bg:#060608;--ut-ink:#f5f5f7;--ut-muted:#a1a2b0;--ut-line:#ffffff1d;--ut-card:#0d0e14;--ut-surface:#101220;--ut-blue-soft:#151a2c;--ut-blue:#97b5ff;--ut-on-accent:#11121a}
+:root[data-theme=light]{color-scheme:light;--ut-bg:#f6f7fa;--ut-ink:#151722;--ut-muted:#626575;--ut-line:#161a2826;--ut-card:#fff;--ut-surface:#eceef4;--ut-blue-soft:#e1e8fa;--ut-blue:#355bb0;--ut-on-accent:#fff}
+body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}button,a,input,textarea{touch-action:manipulation}a{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ut-blue);outline-offset:3px}[hidden]{display:none!important}
 /* UNITALK re-skinned in the new Universe design language. Structure/behaviour untouched — only the
    surface: dark near-black panels, Manrope, the site's blue accent, no light-mode branding. */
-body.unitalk-body{background:#060608!important;color:#f5f5f7!important;font-family:Manrope,Arial,sans-serif!important}
-.unitalk-app{background:#060608!important}
-.unitalk-topbar,.unitalk-sidebar{background:#060608!important;border-color:#ffffff1d!important}
-.unitalk-brand{color:#f5f5f7!important}
-.unitalk-brand small{color:#a1a2b0!important}
-.unitalk-search,.unitalk-top-help,.unitalk-account-menu{background:#0d0e14!important;border-color:#ffffff1d!important;color:#f5f5f7!important}
-.unitalk-search input,.unitalk-search input[type=search]{background:transparent!important;background-color:transparent!important;color:#f5f5f7!important;-webkit-text-fill-color:#f5f5f7}
-.unitalk-search input::placeholder{color:#a1a2b0!important}
-.unitalk-account-button{color:#f5f5f7!important}
-.unitalk-account-button b{color:#a1a2b0!important}
-.unitalk-account-menu a,.unitalk-account-menu button{color:#c7cbe0!important}
-.unitalk-account-menu a:hover,.unitalk-account-menu button:hover{background:#151725!important;color:#97b5ff!important}
-.unitalk-nav-item{color:#a1a2b0!important}
-.unitalk-nav-item:hover{background:#101220!important;color:#dbe4ff!important}
-.unitalk-nav-item.active{border-left-color:#97b5ff!important;background:#151a2c!important;color:#97b5ff!important}
-.unitalk-nav-item.active>span{color:#97b5ff!important}
-.unitalk-sidebar-card{background:linear-gradient(145deg,#151a2c,#0a0b12)!important;border:1px solid #ffffff1d;box-shadow:none!important}
-.unitalk-sidebar-card button{background:#f5f5f7!important;color:#11121a!important}
-.unitalk-sidebar-link{color:#a1a2b0!important}
-.unitalk-feed-shell,.unitalk-rightbar{background:#060608!important}
-.unitalk-composer,.unitalk-post,.unitalk-page-card,.unitalk-side-panel,.unitalk-privacy-card,.unitalk-conversation-panel,.unitalk-profile-panel,.unitalk-loading,.unitalk-empty{background:#0d0e14!important;border:1px solid #ffffff1d!important;box-shadow:none!important;color:#f5f5f7!important}
-.unitalk-composer textarea,.unitalk-comment-compose textarea{background:transparent!important;color:#f5f5f7!important}
-.unitalk-composer textarea::placeholder{color:#a1a2b0!important}
-.unitalk-composer-actions,.unitalk-post-actions,.unitalk-tabs{border-color:#ffffff1d!important}
-.unitalk-compose-action,.unitalk-action{background:#101220!important;color:#a1a2b0!important}
-.unitalk-compose-action:hover,.unitalk-compose-action.active,.unitalk-action:hover{background:#151a2c!important;color:#97b5ff!important}
-.unitalk-mode-chip{background:#151a2c!important;color:#97b5ff!important}
-.unitalk-publish{background:#f5f5f7!important;color:#11121a!important;box-shadow:none!important}
+body.unitalk-body{background:var(--ut-bg)!important;color:var(--ut-ink)!important;font-family:Manrope,Arial,sans-serif!important}
+.unitalk-app{background:var(--ut-bg)!important}
+.unitalk-topbar,.unitalk-sidebar{background:var(--ut-bg)!important;border-color:var(--ut-line)!important}
+.unitalk-brand{color:var(--ut-ink)!important}
+.unitalk-brand small{color:var(--ut-muted)!important}
+.unitalk-search,.unitalk-top-help,.unitalk-account-menu{background:var(--ut-card)!important;border-color:var(--ut-line)!important;color:var(--ut-ink)!important}
+.unitalk-search input,.unitalk-search input[type=search]{background:transparent!important;background-color:transparent!important;color:var(--ut-ink)!important;-webkit-text-fill-color:var(--ut-ink)}
+.unitalk-search input::placeholder{color:var(--ut-muted)!important}
+.unitalk-account-button{color:var(--ut-ink)!important}
+.unitalk-account-button b{color:var(--ut-muted)!important}
+.unitalk-account-menu a,.unitalk-account-menu button{color:var(--ut-ink)!important}
+.unitalk-account-menu a:hover,.unitalk-account-menu button:hover{background:var(--ut-blue-soft)!important;color:var(--ut-blue)!important}
+.unitalk-nav-item{color:var(--ut-muted)!important}
+.unitalk-nav-item:hover{background:var(--ut-surface)!important;color:var(--ut-ink)!important}
+.unitalk-nav-item.active{border-left-color:var(--ut-blue)!important;background:var(--ut-blue-soft)!important;color:var(--ut-blue)!important}
+.unitalk-nav-item.active>span{color:var(--ut-blue)!important}
+.unitalk-sidebar-card{background:linear-gradient(145deg,var(--ut-blue-soft),#0a0b12)!important;border:1px solid var(--ut-line);box-shadow:none!important}
+.unitalk-sidebar-card button{background:var(--ut-ink)!important;color:var(--ut-on-accent)!important}
+.unitalk-sidebar-link{color:var(--ut-muted)!important}
+.unitalk-feed-shell,.unitalk-rightbar{background:var(--ut-bg)!important}
+.unitalk-composer,.unitalk-post,.unitalk-page-card,.unitalk-side-panel,.unitalk-privacy-card,.unitalk-conversation-panel,.unitalk-profile-panel,.unitalk-loading,.unitalk-empty{background:var(--ut-card)!important;border:1px solid var(--ut-line)!important;box-shadow:none!important;color:var(--ut-ink)!important}
+.unitalk-composer textarea,.unitalk-comment-compose textarea{background:transparent!important;color:var(--ut-ink)!important}
+.unitalk-composer textarea::placeholder{color:var(--ut-muted)!important}
+.unitalk-composer-actions,.unitalk-post-actions,.unitalk-tabs{border-color:var(--ut-line)!important}
+.unitalk-compose-action,.unitalk-action{background:var(--ut-surface)!important;color:var(--ut-muted)!important}
+.unitalk-compose-action:hover,.unitalk-compose-action.active,.unitalk-action:hover{background:var(--ut-blue-soft)!important;color:var(--ut-blue)!important}
+.unitalk-mode-chip{background:var(--ut-blue-soft)!important;color:var(--ut-blue)!important}
+.unitalk-publish{background:var(--ut-ink)!important;color:var(--ut-on-accent)!important;box-shadow:none!important}
 .unitalk-publish:hover{background:#fff!important}
-.unitalk-status{color:#a1a2b0!important}
-.unitalk-tab{color:#a1a2b0!important}
-.unitalk-tab.active{color:#f5f5f7!important}
-.unitalk-tab.active:after{background:#97b5ff!important}
-.unitalk-feed-summary{color:#a1a2b0!important}
-.unitalk-user-link strong{color:#f5f5f7!important}
-.unitalk-user-link small,.unitalk-time{color:#a1a2b0!important}
-.unitalk-post-text{color:#e3e5f0!important}
-.unitalk-post-label{background:#151a2c!important;color:#97b5ff!important}
-.unitalk-comment{background:#101220!important}
-.unitalk-comment p{color:#c7cbe0!important}
-.unitalk-hashtag,.unitalk-inline-link{color:#97b5ff!important}
-.unitalk-avatar,.unitalk-account-avatar{background:linear-gradient(135deg,#345abb,#151a2c)!important}
-.unitalk-page-heading h1,.unitalk-page-card h2,.unitalk-conversation-panel>header,.unitalk-profile-hero h2{color:#f5f5f7!important}
-.unitalk-page-heading p,.unitalk-page-card p,.unitalk-profile-hero p{color:#a1a2b0!important}
-.unitalk-topic-card,.unitalk-profile-fact,.unitalk-attachment-panel,.unitalk-poll-panel,.unitalk-poll,.unitalk-attachment-file,.unitalk-post-file,.unitalk-poll-builder-option input,.unitalk-poll-option{background:#101220!important;border-color:#ffffff1d!important;color:#e3e5f0!important}
-.unitalk-topic-card strong,.unitalk-profile-summary .unitalk-handle,.unitalk-profile-cta{color:#97b5ff!important}
-.unitalk-profile-cta{background:#97b5ff!important;color:#11121a!important}
-.unitalk-panel-title,.unitalk-community-number{color:#f5f5f7!important}
-.unitalk-panel-button{background:#151a2c!important;color:#97b5ff!important}
-.unitalk-switch{background:#26283a!important}
-.unitalk-switch.active{background:#97b5ff!important}
+.unitalk-status{color:var(--ut-muted)!important}
+.unitalk-tab{color:var(--ut-muted)!important}
+.unitalk-tab.active{color:var(--ut-ink)!important}
+.unitalk-tab.active:after{background:var(--ut-blue)!important}
+.unitalk-feed-summary{color:var(--ut-muted)!important}
+.unitalk-user-link strong{color:var(--ut-ink)!important}
+.unitalk-user-link small,.unitalk-time{color:var(--ut-muted)!important}
+.unitalk-post-text{color:var(--ut-ink)!important}
+.unitalk-post-label{background:var(--ut-blue-soft)!important;color:var(--ut-blue)!important}
+.unitalk-comment{background:var(--ut-surface)!important}
+.unitalk-comment p{color:var(--ut-ink)!important}
+.unitalk-hashtag,.unitalk-inline-link{color:var(--ut-blue)!important}
+.unitalk-avatar,.unitalk-account-avatar{background:linear-gradient(135deg,#345abb,var(--ut-blue-soft))!important}
+.unitalk-page-heading h1,.unitalk-page-card h2,.unitalk-conversation-panel>header,.unitalk-profile-hero h2{color:var(--ut-ink)!important}
+.unitalk-page-heading p,.unitalk-page-card p,.unitalk-profile-hero p{color:var(--ut-muted)!important}
+.unitalk-topic-card,.unitalk-profile-fact,.unitalk-attachment-panel,.unitalk-poll-panel,.unitalk-poll,.unitalk-attachment-file,.unitalk-post-file,.unitalk-poll-builder-option input,.unitalk-poll-option{background:var(--ut-surface)!important;border-color:var(--ut-line)!important;color:var(--ut-ink)!important}
+.unitalk-topic-card strong,.unitalk-profile-summary .unitalk-handle,.unitalk-profile-cta{color:var(--ut-blue)!important}
+.unitalk-profile-cta{background:var(--ut-blue)!important;color:var(--ut-on-accent)!important}
+.unitalk-panel-title,.unitalk-community-number{color:var(--ut-ink)!important}
+.unitalk-panel-button{background:var(--ut-blue-soft)!important;color:var(--ut-blue)!important}
+.unitalk-switch{background:var(--ut-line)!important}
+.unitalk-switch.active{background:var(--ut-blue)!important}
 .unitalk-modal-backdrop{background:rgba(0,0,0,.72)!important}
-.unitalk-conversation-content{background:#060608!important}
-.unitalk-comment-compose{background:#0d0e14!important;border-color:#ffffff1d!important}
-.unitalk-comment-compose textarea{border-color:#ffffff1d!important}
-.unitalk-comment-compose button{background:#97b5ff!important;color:#11121a!important}
-.unitalk-toast{background:#0d0e14!important;border:1px solid #ffffff1d;color:#f5f5f7!important}
-.unitalk-modal-close,.unitalk-conversation-panel>header button{background:#151a2c!important;color:#a1a2b0!important}
+.unitalk-conversation-content{background:var(--ut-bg)!important}
+.unitalk-comment-compose{background:var(--ut-card)!important;border-color:var(--ut-line)!important}
+.unitalk-comment-compose textarea{border-color:var(--ut-line)!important}
+.unitalk-comment-compose button{background:var(--ut-blue)!important;color:var(--ut-on-accent)!important}
+.unitalk-toast{background:var(--ut-card)!important;border:1px solid var(--ut-line);color:var(--ut-ink)!important}
+.unitalk-modal-close,.unitalk-conversation-panel>header button{background:var(--ut-blue-soft)!important;color:var(--ut-muted)!important}
 :is(.unitalk-app,.unitalk-topbar,.unitalk-sidebar,.unitalk-composer,.unitalk-post,.unitalk-page-card,.unitalk-side-panel,.unitalk-privacy-card,.unitalk-conversation-panel,.unitalk-profile-panel,.unitalk-comment,.unitalk-loading,.unitalk-empty,.unitalk-topic-card,.unitalk-profile-fact,.unitalk-attachment-panel,.unitalk-poll-panel,.unitalk-poll,.unitalk-comment-compose,.unitalk-search,.unitalk-top-help,.unitalk-account-menu,.unitalk-toast){font-family:Manrope,Arial,sans-serif!important}
+
+.unitalk-brand-mark svg{width:100%;height:100%;fill:currentColor}
+.unitalk-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.unitalk-brand-mark{display:block;width:34px;height:34px;flex:0 0 34px}
+.unitalk-body :is(button,input,textarea,a,h1,h2,h3,strong,small){font-family:Manrope,Arial,sans-serif!important}
+.unitalk-body :is(button,input,textarea){border:0}
+.unitalk-search input{padding:0;box-shadow:none}
+.unitalk-privacy-card{color:var(--ut-ink)!important}
+.unitalk-privacy-card strong,.unitalk-setting strong{color:var(--ut-ink)!important}
+.unitalk-privacy-card small,.unitalk-setting small{color:var(--ut-muted)!important}
+.unitalk-sidebar-card{background:var(--ut-card)!important}
+.unitalk-publish:hover{background:var(--ut-ink)!important;opacity:.9}
+.unitalk-avatar,.unitalk-account-avatar{color:#fff!important}
+@media(max-width:760px){.unitalk-search input,.unitalk-composer textarea,.unitalk-comment-compose textarea{font-size:16px!important}}

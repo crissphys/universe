@@ -1,20 +1,6 @@
 .native-shell {
 .universe-page-simulators {
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   min-height: 72vh;
   
   
@@ -73,11 +59,7 @@
   place-items: center;
   width: 42px;
   height: 42px;
-  
-  
-  
-  
-  
+
 }
 
 .ufe-brand-copy {
@@ -86,10 +68,7 @@
 }
 
 .ufe-card {
-  
-  
-  
-  
+
   padding: clamp(16px, 2.5vw, 24px);
 }
 
@@ -99,9 +78,7 @@
   gap: 16px;
   align-items: end;
   padding: 16px;
-  
-  
-  
+
 }
 
 .ufe-preview-question {
@@ -135,9 +112,7 @@
   align-items: center;
   width: max-content;
   max-width: 100%;
-  
-  
-  
+
   padding: 6px 10px;
   font-size: .77rem;
   
@@ -150,10 +125,7 @@
   justify-content: center;
   gap: 8px;
   min-height: 42px;
-  
-  
-  
-  
+
   padding: 9px 14px;
   
   cursor: pointer;
@@ -175,10 +147,7 @@
   width: 100%;
   min-height: 110px;
   resize: vertical;
-  
-  
-  
-  
+
   padding: 12px 14px;
   
 }
@@ -222,9 +191,7 @@
 
 .ufe-live-strip {
   justify-content: space-between;
-  
-  
-  
+
   padding: 13px 16px;
 }
 
@@ -241,10 +208,7 @@
 .ufe-live-dot {
   width: 10px;
   height: 10px;
-  
-  
-  
-  
+
 }
 
 .ufe-live-number {
@@ -254,9 +218,7 @@
 }
 
 .ufe-live-detail span {
-  
-  
-  
+
   padding: 7px 11px;
   font-size: .84rem;
 }
@@ -271,9 +233,7 @@
 .ufe-stat {
   display: grid;
   gap: 4px;
-  
-  
-  
+
   padding: 14px;
 }
 
@@ -351,11 +311,7 @@
 .ufe-q-btn {
   min-width: 0;
   min-height: 34px;
-  
-  
-  
-  
-  
+
   cursor: pointer;
 }
 
@@ -378,10 +334,7 @@
   gap: 8px;
   margin: 14px 0 4px;
   padding: 14px 16px;
-  
-  
-  
-  
+
   font-size: 1.08em;
   
 }
@@ -427,9 +380,7 @@
   max-width: 100%;
   margin: 14px auto 2px;
   padding: 10px 16px;
-  
-  
-  
+
   font-size: 1.12em;
   
   overflow-wrap: anywhere;
@@ -509,10 +460,7 @@
   display: block;
   width: min(100%, 520px);
   height: auto;
-  
-  
-  
-  
+
 }
 
 .ufe-question-visual .ufe-main-diagram {
@@ -532,9 +480,7 @@
   align-items: start;
   margin: 0;
   padding: 8px;
-  
-  
-  
+
 }
 
 .ufe-graph-choice-grid figure:last-child {
@@ -574,10 +520,7 @@
   gap: 11px;
   width: 100%;
   min-height: 46px;
-  
-  
-  
-  
+
   padding: 10px 13px;
   text-align: left;
   
@@ -610,10 +553,7 @@
   justify-content: center;
   width: min(100%, 620px);
   padding: 16px;
-  
-  
-  
-  
+
   font-size: 1.18rem;
 }
 
@@ -631,9 +571,7 @@
   justify-content: center;
   min-height: 90px;
   padding: 12px;
-  
-  
-  
+
 }
 
 .ufe-sum {
@@ -736,9 +674,7 @@
 }
 
 .ufe-course-score > div {
-  
-  
-  
+
   padding: 10px;
 }
 
@@ -759,9 +695,7 @@
 }
 
 .ufe-review-item {
-  
-  
-  
+
   overflow: hidden;
 }
 
@@ -812,17 +746,12 @@
 }
 
 .ufe-review-answers p {
-  
-  
-  
+
   padding: 10px;
 }
 
 .ufe-error {
-  
-  
-  
-  
+
   padding: 12px 14px;
 }
 

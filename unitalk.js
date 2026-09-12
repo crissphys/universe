@@ -255,7 +255,7 @@
   }
   function requireAccount(error) {
     if (!error || (error.message !== 'login_required' && error.status !== 401)) return false;
-    if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true });
+    if (window.UniverseGoogleAuth) location.assign('/account');
     else toast('Inicia sesión con Google para participar.');
     return true;
   }
@@ -641,19 +641,20 @@
       return;
     }
     if (view === 'settings') {
-      var dark = document.documentElement.getAttribute('data-universe-theme') === 'dark';
+      var dark = document.documentElement.dataset.theme === 'dark';
       root.innerHTML = '<div class="unitalk-page-heading"><div><h1>Ajustes</h1><p>Personaliza tu experiencia sin cambiar la privacidad de tu cuenta.</p></div></div><section class="unitalk-page-card"><div class="unitalk-settings-list">' +
         settingRow('dark', 'Modo oscuro', 'Aplica el mismo tema a todo Universe to Study.', dark) + settingRow('compact', 'Vista compacta', 'Muestra más publicaciones en la pantalla.', readFlag(COMPACT_KEY)) + settingRow('motion', 'Reducir animaciones', 'Desactiva efectos decorativos de la interfaz.', readFlag(MOTION_KEY)) +
         '</div></section><section class="unitalk-page-card"><h2>Perfil y privacidad</h2><p>Tu Gmail, teléfono y permisos de administrador nunca aparecen en UNITALK. La identidad y privacidad se administran juntas desde tu perfil único.</p><a class="unitalk-profile-cta" href="/account">Abrir configuración del perfil</a></section>';
     }
   }
   function settingRow(key, title, description, active) {
-    return '<div class="unitalk-setting"><div><strong>' + safe(title) + '</strong><small>' + safe(description) + '</small></div><button class="unitalk-switch ' + (active ? 'active' : '') + '" type="button" data-setting="' + safe(key) + '" aria-label="Cambiar ' + safe(title) + '"></button></div>';
+    return '<div class="unitalk-setting"><div><strong>' + safe(title) + '</strong><small>' + safe(description) + '</small></div><button class="unitalk-switch ' + (active ? 'active' : '') + '" type="button" aria-pressed="' + active + '" data-setting="' + safe(key) + '" aria-label="Cambiar ' + safe(title) + '"></button></div>';
   }
   function switchSetting(key) {
     if (key === 'dark') {
-      if (window.toggleUniverseTheme) window.toggleUniverseTheme();
-      else document.documentElement.toggleAttribute('data-universe-theme');
+      var theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem('universe-galaxy-theme', theme); } catch (error) {}
     } else if (key === 'compact') writeFlag(COMPACT_KEY, !readFlag(COMPACT_KEY));
     else if (key === 'motion') writeFlag(MOTION_KEY, !readFlag(MOTION_KEY));
     setBodyPreferences();
@@ -710,7 +711,7 @@
     });
     $('unitalk-profile-action').onclick = function () { location.href = '/account'; };
     $('unitalk-sidebar-publish').onclick = function () { setView('home'); setTimeout(function () { $('unitalk-post-text').focus(); }, 0); };
-    $('unitalk-join-button').onclick = function () { if (!currentGoogleUser() && window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); else { setView('home'); $('unitalk-post-text').focus(); } };
+    $('unitalk-join-button').onclick = function () { if (!currentGoogleUser() && window.UniverseGoogleAuth) location.assign('/account'); else { setView('home'); $('unitalk-post-text').focus(); } };
     $('unitalk-menu-toggle').onclick = function () {
       var open = !$('unitalk-sidebar').classList.contains('open');
       $('unitalk-sidebar').classList.toggle('open', open);
@@ -719,7 +720,7 @@
     };
     $('unitalk-sidebar-overlay').onclick = function () { $('unitalk-sidebar').classList.remove('open'); $('unitalk-sidebar-overlay').classList.remove('show'); $('unitalk-menu-toggle').setAttribute('aria-expanded', 'false'); };
     $('unitalk-account-button').onclick = function () {
-      if (!currentGoogleUser()) { if (window.UniverseGoogleAuth) UniverseGoogleAuth.open({ account: true }); return; }
+      if (!currentGoogleUser()) { if (window.UniverseGoogleAuth) location.assign('/account'); return; }
       var open = $('unitalk-account-menu').hidden;
       $('unitalk-account-menu').hidden = !open;
       this.setAttribute('aria-expanded', String(open));
