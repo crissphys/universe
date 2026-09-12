@@ -55,6 +55,10 @@ body[data-native] .footer{position:relative;z-index:2}
 .native-view tbody tr{transition:background-color .15s cubic-bezier(.23,1,.32,1)}
 .native-view tbody tr:hover{background:#ffffff06}
 .native-view [class*="table-wrap"]{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+/* Whatever the tool calls its own table wrapper, it needs to scroll horizontally when the table
+   is wider than the platform column — otherwise the table either clips or forces the whole page wide. */
+.native-view :has(>table){overflow-x:auto}
+.native-view table{min-width:max-content}
 
 /* Overlays. */
 .native-view :is(dialog,[role=dialog]){background:var(--solid,#0f1117);border:1px solid var(--line);border-radius:15px;padding:25px;max-width:min(560px,92vw);color:var(--text)}
@@ -69,6 +73,7 @@ body[data-native] .footer{position:relative;z-index:2}
   .native-shell{margin-top:96px}
   .native-view [class*="-grid"]{grid-template-columns:1fr!important}
   .native-view :is(td,th){padding:8px;font-size:10px}
+  body[data-native] .header .nav{display:none}
 }
 
 /* Separación devuelta a las listas heredadas.
