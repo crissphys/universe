@@ -1,4 +1,5 @@
 # Mientras se aplican mejoras, el sitio sirve una sola página.
 # /api/* lo atiende functions/api/[[path]].js, que tiene prioridad sobre estas reglas.
 /assets/* /assets/:splat 200
+/ /index.html 200
 /* / 302
