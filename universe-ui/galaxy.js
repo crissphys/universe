@@ -16,9 +16,9 @@ export async function createGalaxy(canvas,initial){
   function signed(scale){return (rand()<.5?-1:1)*Math.pow(rand(),2.7)*scale}
   const vertex=`attribute float aSize; attribute float aSeed; varying vec3 vColor; varying float vSeed; uniform float uTime; uniform float uPixelRatio; uniform float uCloud;
   void main(){vColor=color;vSeed=aSeed;vec4 mv=modelViewMatrix*vec4(position,1.);gl_Position=projectionMatrix*mv;float twinkle=0.9+0.1*sin(uTime*.45+aSeed*60.);gl_PointSize=clamp(aSize*uPixelRatio*(125./max(1.,-mv.z))*twinkle,1.,uCloud>0.5?100.:10.);}`;
-  const fragment=`varying vec3 vColor; varying float vSeed; uniform float uOpacity; uniform float uCloud;
-  void main(){vec2 uv=gl_PointCoord-.5;float d=length(uv);if(d>.5)discard;float strength=uCloud>.5?exp(-d*d*22.)*smoothstep(.5,.12,d):pow(max(0.,1.-d*2.),3.);gl_FragColor=vec4(vColor,strength*uOpacity);}`;
-  function pointMaterial(cloud,opacity){const m=new THREE.ShaderMaterial({vertexShader:vertex,fragmentShader:fragment,uniforms:{uTime:{value:0},uPixelRatio:{value:1},uCloud:{value:cloud?1:0},uOpacity:{value:opacity}},vertexColors:true,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});materials.push(m);return m}
+  const fragment=`varying vec3 vColor; varying float vSeed; uniform float uOpacity; uniform float uCloud; uniform float uDark;
+  void main(){vec2 uv=gl_PointCoord-.5;float d=length(uv);if(d>.5)discard;float strength=uCloud>.5?exp(-d*d*22.)*smoothstep(.5,.12,d):pow(max(0.,1.-d*2.),3.);vec3 col=mix(vColor,vec3(.078,.094,.137),uDark);gl_FragColor=vec4(col,strength*uOpacity);}`;
+  function pointMaterial(cloud,opacity){const m=new THREE.ShaderMaterial({vertexShader:vertex,fragmentShader:fragment,uniforms:{uTime:{value:0},uPixelRatio:{value:1},uCloud:{value:cloud?1:0},uOpacity:{value:opacity},uDark:{value:settings.theme==='light'?1:0}},vertexColors:true,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});materials.push(m);return m}
   function spiral(count,cloud=false){
     const positions=new Float32Array(count*3),colors=new Float32Array(count*3),sizes=new Float32Array(count),seeds=new Float32Array(count);
     const center=new THREE.Color('#fff1e6'),outside=new THREE.Color('#8596bd'),c=new THREE.Color();
@@ -51,7 +51,8 @@ export async function createGalaxy(canvas,initial){
     galaxy.rotation.set(.10+t*.55,Math.PI*.1+time*.014+t*1.7,-.27+t*.5);
     if(immersive){galaxy.position.x*=.15;galaxy.position.y=0;camera.position.z-=2}
     background.rotation.y=time*.002+t*.07;
-    const shade=settings.theme==='light'?.8:1;materials.forEach(m=>{m.uniforms.uTime.value=time;if(m===stars.material)m.uniforms.uOpacity.value=.85*shade});
+    const shade=settings.theme==='light'?.8:1,dark=settings.theme==='light'?1:0;materials.forEach(m=>{m.uniforms.uTime.value=time;m.uniforms.uDark.value=dark;if(m===stars.material)m.uniforms.uOpacity.value=.85*shade});
+    background.material.color.set(settings.theme==='light'?'#2a3348':'#dbe4ff');
     canvas.dataset.scroll=progress.toFixed(3);
   }
   function draw(now){frame=0;if(disposed||document.hidden||settings.quality==='off'||!renderer)return;
