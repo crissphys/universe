@@ -47,51 +47,6 @@
 
   installUniverseI18n();
 
-  function installUniverseDesignV3() {
-    if (!document.head) return;
-    if (!document.getElementById('uts-fonts-v2')) {
-      var fonts = document.createElement('link');
-      fonts.id = 'uts-fonts-v2';
-      fonts.rel = 'stylesheet';
-      fonts.href = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap';
-      document.head.appendChild(fonts);
-    }
-    if (!document.getElementById('uts-design-v2')) {
-      var design = document.createElement('link');
-      design.id = 'uts-design-v2';
-      design.rel = 'stylesheet';
-      design.href = '/universe-design-v2.css?v=solid-12';
-      document.head.appendChild(design);
-    }
-    if (!document.getElementById('uts-design-v3')) {
-      var designV3 = document.createElement('link');
-      designV3.id = 'uts-design-v3';
-      designV3.rel = 'stylesheet';
-      designV3.href = '/universe-design-v3.css?v=solid-2';
-      document.head.appendChild(designV3);
-    }
-
-    function keepDesignLast() {
-      var sheetV2 = document.getElementById('uts-design-v2');
-      var sheetV3 = document.getElementById('uts-design-v3');
-      if (sheetV2 && document.body) {
-        document.body.appendChild(sheetV2);
-      }
-      if (sheetV3 && document.body) {
-        document.body.appendChild(sheetV3);
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', keepDesignLast, { once: true });
-    } else {
-      keepDesignLast();
-    }
-    window.addEventListener('load', keepDesignLast, { once: true });
-  }
-
-  installUniverseDesignV3();
-
   var GOOGLE_CLIENT_ID = '410302293146-nr50k7kovcpd5kuekfd49ddqc041612g.apps.googleusercontent.com';
   var GOOGLE_SCRIPT_ID = 'uts-google-identity-script';
   var AUTH_KEY = 'universe_google_user';
