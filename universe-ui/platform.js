@@ -1,4 +1,4 @@
-import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js';
+import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20260912-cleanup';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
