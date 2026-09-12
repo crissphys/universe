@@ -911,4 +911,79 @@
   }
 }
 
+
+/* ===== AUTO-PATCH: restored visual properties missing from the original port (script-generated) ===== */
+.universe-page-simulators{background:radial-gradient(circle at 8% 4%, rgba(9, 103, 194, .10), transparent 28rem),
+    var(--bg);color:var(--ufe-text)}
+#uni-final-app{font-family:"DM Sans", Inter, system-ui, sans-serif}
+.ufe-options{border:0}
+.ufe-admin-row{border-top:1px solid var(--line)}
+.ufe-brand-mark{border-radius:50%;background:var(--blue);color:var(--surface);font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-title{font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-card h2{font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-card h3{font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-card{border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:0 18px 46px rgba(25, 65, 105, .08)}
+.ufe-admin-exam-picker{border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb, var(--blue) 5%, var(--surface))}
+.ufe-badge{border-radius:999px;background:var(--surface);color:var(--blue);font-weight:800}
+.ufe-btn{border:1px solid var(--line);border-radius:13px;background:var(--surface);color:var(--ufe-text);font:800 .9rem/1.2 "Rajdhani", sans-serif;transition:transform .16s ease, border-color .16s ease, background .16s ease}
+.ufe-btn:hover{border-color:var(--blue)}
+.ufe-btn:disabled{opacity:.48}
+.ufe-input{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ufe-text);font:inherit}
+.ufe-login-icon{border-radius:50%;font-weight:900;background:var(--surface);color:var(--blue)}
+.ufe-warning-icon{border-radius:50%;font-weight:900;background:var(--ufe-warning-soft);color:var(--ufe-warning)}
+.ufe-live-strip{border:1px solid color-mix(in srgb, var(--ufe-success) 35%, var(--line));border-radius:18px;background:var(--ufe-success-soft)}
+.ufe-live-total small{color:var(--muted)}
+.ufe-live-dot{border-radius:50%;background:var(--ufe-success);box-shadow:0 0 0 5px color-mix(in srgb, var(--ufe-success) 18%, transparent)}
+.ufe-live-number{font-family:"Rajdhani", sans-serif}
+.ufe-live-detail span{border:1px solid color-mix(in srgb, var(--ufe-success) 28%, var(--line));border-radius:999px;background:var(--surface)}
+.ufe-stat{border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.ufe-progress{border-radius:999px;background:var(--surface)}
+.ufe-progress > span{background:var(--blue);transition:width .2s ease}
+.ufe-countdown{font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-code{font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-course-title{color:var(--muted);font-weight:800}
+.ufe-q-btn{border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ufe-text);font-weight:800}
+.ufe-question-copy{font-weight:700}
+.ufe-equation-stack{border:1px solid var(--line);border-radius:14px;background:var(--surface);font-family:Georgia, "Times New Roman", serif;font-weight:500}
+.ufe-statement-list{border:1px solid var(--line);border-radius:14px;background:var(--surface);font-family:Georgia, "Times New Roman", serif;font-weight:500}
+.ufe-parametric-list{border:1px solid var(--line);border-radius:14px;background:var(--surface);font-family:Georgia, "Times New Roman", serif;font-weight:500}
+.ufe-radicand{border-top:1.7px solid currentColor}
+.ufe-display-equation{border-radius:12px;background:var(--surface);font-family:Georgia, "Times New Roman", serif;font-weight:500}
+.ufe-display-equation small{color:var(--muted);font-family:inherit}
+.ufe-frac > span:first-child{border-bottom:1.6px solid currentColor}
+.ufe-overline{border-top:1.6px solid currentColor}
+.ufe-data-table{background:var(--surface)}
+.ufe-data-table th{border:1px solid var(--blue);background:var(--surface);color:var(--ufe-text);font-weight:800}
+.ufe-data-table td{border:1px solid var(--blue)}
+.ufe-passage{border-left:4px solid var(--blue);background:var(--surface)}
+.ufe-question-visual{color:var(--ufe-text)}
+.ufe-source-question-image{border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 12px 30px rgba(15, 35, 61, .10)}
+.ufe-graph-choice-grid figure{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.ufe-graph-choice-grid svg{color:var(--ufe-text)}
+.ufe-graph-choice-grid svg > path{fill:none;stroke:currentColor}
+.ufe-graph-choice-grid svg > circle{fill:none;stroke:currentColor}
+.ufe-graph-choice-grid svg > ellipse{fill:none;stroke:currentColor}
+.ufe-graph-choice-grid svg text{fill:currentColor}
+.ufe-option{border:1px solid var(--line);border-radius:13px;background:var(--surface);color:var(--ufe-text);font:inherit}
+.ufe-option-letter{font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-matrix{border-left:2px solid currentColor;border-right:2px solid currentColor}
+.ufe-matrix-equation{border:1px solid var(--line);border-radius:16px;background:var(--surface);font-family:Georgia, "Times New Roman", serif}
+.ufe-matrix-choice-grid > div{border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.ufe-sum b{font-weight:500}
+.ufe-admin-person small{color:var(--muted)}
+.ufe-table th{border-bottom:1px solid var(--line);color:var(--muted);font-family:"Rajdhani", sans-serif;font-weight:700}
+.ufe-table td{border-bottom:1px solid var(--line)}
+.ufe-ranking-score strong{font-family:"Rajdhani", sans-serif}
+.ufe-ranking-score span{color:var(--muted)}
+.ufe-ranking-note > small{color:var(--muted)}
+.ufe-course-score > div{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.ufe-course-score span{color:var(--muted)}
+.ufe-review-item{border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.ufe-review-item summary small{color:var(--muted)}
+.ufe-review-answers span{color:var(--muted)}
+.ufe-review-source{color:var(--muted)}
+.ufe-review-body{border-top:1px solid var(--line)}
+.ufe-review-answers p{border:1px solid var(--line);border-radius:11px;background:var(--surface)}
+.ufe-error{border:1px solid color-mix(in srgb, var(--ufe-danger) 38%, var(--line));border-radius:14px;background:var(--ufe-danger-soft);color:var(--ufe-danger)}
+
 }
