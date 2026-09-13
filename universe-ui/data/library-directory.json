@@ -1,0 +1,629 @@
+{
+  "groups": [
+    {
+      "id": "libros-por-curso",
+      "title": "Libros por curso",
+      "url": "https://drive.google.com/drive/folders/1AGtC9DCbsobPH1aRAPy-VRhowwtg_NJB",
+      "items": [
+        {
+          "id": "1txqyuCy7n4N_n8C5VE1B-9VE_lEp44T0",
+          "title": "➗ | ÁLGEBRA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1txqyuCy7n4N_n8C5VE1B-9VE_lEp44T0",
+          "type": "folder"
+        },
+        {
+          "id": "1pEi2Z_Gp-2u7Hq3B7eXU0GEkbCPzy2jl",
+          "title": "🧍 | ANATOMÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1pEi2Z_Gp-2u7Hq3B7eXU0GEkbCPzy2jl",
+          "type": "folder"
+        },
+        {
+          "id": "11YmKnmwU8DOniTzY0IizTjkOOZGE5qil",
+          "title": "🟰 | ARITMÉTICA LIBROS",
+          "url": "https://drive.google.com/drive/folders/11YmKnmwU8DOniTzY0IizTjkOOZGE5qil",
+          "type": "folder"
+        },
+        {
+          "id": "14ZUpKl3bW7aw5WCpfQ-ssJcbByAnfFEx",
+          "title": "🍃 | BIOLOGÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/14ZUpKl3bW7aw5WCpfQ-ssJcbByAnfFEx",
+          "type": "folder"
+        },
+        {
+          "id": "1Cl6BFOPc6cUluZr9gkst96ugaqqzxlo1",
+          "title": "⌨️ | CÍVICA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1Cl6BFOPc6cUluZr9gkst96ugaqqzxlo1",
+          "type": "folder"
+        },
+        {
+          "id": "1YZE5cJOtorIJxtcyyy9RTRoDkrtQpVME",
+          "title": "💰 | ECONOMÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1YZE5cJOtorIJxtcyyy9RTRoDkrtQpVME",
+          "type": "folder"
+        },
+        {
+          "id": "19EuMul1C_Iwy0Gs_sYc92ksvfFis8zX4",
+          "title": "💡 | FILOSOFÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/19EuMul1C_Iwy0Gs_sYc92ksvfFis8zX4",
+          "type": "folder"
+        },
+        {
+          "id": "1nxFY1OTI3gdBOOqv7aENrrF6LXnYMkQ8",
+          "title": "⚡ | FÍSICA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1nxFY1OTI3gdBOOqv7aENrrF6LXnYMkQ8",
+          "type": "folder"
+        },
+        {
+          "id": "1bW_5cKNj8iPcGmrc9LxoN2AVOniHFTHx",
+          "title": "🗺️ | GEOGRAFÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1bW_5cKNj8iPcGmrc9LxoN2AVOniHFTHx",
+          "type": "folder"
+        },
+        {
+          "id": "19Q6BugPPeqE8v-81I9o8-Au8mY84varI",
+          "title": "📏 | GEOMETRÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/19Q6BugPPeqE8v-81I9o8-Au8mY84varI",
+          "type": "folder"
+        },
+        {
+          "id": "1hSZnysy05nUlTpCxL1I1klSUEj1hYCAn",
+          "title": "📟 | HISTORIA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1hSZnysy05nUlTpCxL1I1klSUEj1hYCAn",
+          "type": "folder"
+        },
+        {
+          "id": "1RUnD0JK7AatjSxxRwxLUDVZF7fTf-akq",
+          "title": "🇬🇧 | INGLÉS LIBROS",
+          "url": "https://drive.google.com/drive/folders/1RUnD0JK7AatjSxxRwxLUDVZF7fTf-akq",
+          "type": "folder"
+        },
+        {
+          "id": "1Q4iMJwqQmtz8P2dH-_2242YVHBC9PqPi",
+          "title": "👄 | LENGUAJE LIBROS",
+          "url": "https://drive.google.com/drive/folders/1Q4iMJwqQmtz8P2dH-_2242YVHBC9PqPi",
+          "type": "folder"
+        },
+        {
+          "id": "1ll0RLcGIxo4nvBFNZtKcZ8hgwuDEYqYq",
+          "title": "✒️ | LITERATURA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1ll0RLcGIxo4nvBFNZtKcZ8hgwuDEYqYq",
+          "type": "folder"
+        },
+        {
+          "id": "1-zIr9ohIZbRqnSIRCd36_LVCkU3Qzt8m",
+          "title": "🧠 | PSICOLOGÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1-zIr9ohIZbRqnSIRCd36_LVCkU3Qzt8m",
+          "type": "folder"
+        },
+        {
+          "id": "1RfpXwLv08dMWpAUn1g2G666x-dRnwJA0",
+          "title": "🧪 | QUÍMICA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1RfpXwLv08dMWpAUn1g2G666x-dRnwJA0",
+          "type": "folder"
+        },
+        {
+          "id": "19UByNOnm5NxcQwH-GUUn_Z2S9Apu9BpY",
+          "title": "💿 | RAZONAMIENTOS LIBROS",
+          "url": "https://drive.google.com/drive/folders/19UByNOnm5NxcQwH-GUUn_Z2S9Apu9BpY",
+          "type": "folder"
+        },
+        {
+          "id": "1yKmserLf6BMeIP3e8WNxSQ_k4if9Gg2b",
+          "title": "📐 | TRIGONOMETRÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1yKmserLf6BMeIP3e8WNxSQ_k4if9Gg2b",
+          "type": "folder"
+        }
+      ]
+    },
+    {
+      "id": "resumenes-preuniversitarios",
+      "title": "Resúmenes preuniversitarios",
+      "url": "https://drive.google.com/drive/folders/1AGbXyZwSSBQC6YOACsFZ5jhAIacX-lS6",
+      "items": [
+        {
+          "id": "1UgJKzhIUfmdiHyG_gubT7Qs4mExIS9BG",
+          "title": "❌ | ÁLGEBRA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1UgJKzhIUfmdiHyG_gubT7Qs4mExIS9BG",
+          "type": "folder"
+        },
+        {
+          "id": "1JYxv_ZMuBDaHyM3z7Za2F2UnFp9SeU8s",
+          "title": "🧍🏻 | ANATOMÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1JYxv_ZMuBDaHyM3z7Za2F2UnFp9SeU8s",
+          "type": "folder"
+        },
+        {
+          "id": "11sT_aX23XvvFAt135AhGo213kku1OkX4",
+          "title": "➕ | ARITMÉTICA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/11sT_aX23XvvFAt135AhGo213kku1OkX4",
+          "type": "folder"
+        },
+        {
+          "id": "1ov-KbzpEHmeXddG2KSiTT7jQDo7GJ4Zk",
+          "title": "🛠️ | ARQUITECTURA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1ov-KbzpEHmeXddG2KSiTT7jQDo7GJ4Zk",
+          "type": "folder"
+        },
+        {
+          "id": "1A56Lu1cP2C4uotiUdqPu2Gqa6JxPcR2J",
+          "title": "🍃 | BIOLOGÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1A56Lu1cP2C4uotiUdqPu2Gqa6JxPcR2J",
+          "type": "folder"
+        },
+        {
+          "id": "1xxdfGs87KDXAfJBCEezXiK7SyyLI5oKg",
+          "title": "✋🏻 | CÍVICA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1xxdfGs87KDXAfJBCEezXiK7SyyLI5oKg",
+          "type": "folder"
+        },
+        {
+          "id": "1pOgR3UpgkZCXxzfNlF-b4s7oRSk3UhAt",
+          "title": "💰 | ECONOMÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1pOgR3UpgkZCXxzfNlF-b4s7oRSk3UhAt",
+          "type": "folder"
+        },
+        {
+          "id": "1EV9LwqFqCNrWXl1wGKUgojcK4kjHR5Ph",
+          "title": "☁️ | FILOSOFÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1EV9LwqFqCNrWXl1wGKUgojcK4kjHR5Ph",
+          "type": "folder"
+        },
+        {
+          "id": "1MN_5F8TxAc7E2SkwEj356eq21AB3ILas",
+          "title": "🧲 | FÍSICA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1MN_5F8TxAc7E2SkwEj356eq21AB3ILas",
+          "type": "folder"
+        },
+        {
+          "id": "1-VJH_uNnbroeRnnSqexCTazv18FPBM03",
+          "title": "🗺️ | GEOGRAFÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1-VJH_uNnbroeRnnSqexCTazv18FPBM03",
+          "type": "folder"
+        },
+        {
+          "id": "147ELsd-FpAbqgpDAduYEgkb6c_7QfS_v",
+          "title": "📏 | GEOMETRÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/147ELsd-FpAbqgpDAduYEgkb6c_7QfS_v",
+          "type": "folder"
+        },
+        {
+          "id": "1wmpj9WE1_r9Y1GEHUBBTI9zvU1xc3Ukr",
+          "title": "🐵 | HISTORIA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1wmpj9WE1_r9Y1GEHUBBTI9zvU1xc3Ukr",
+          "type": "folder"
+        },
+        {
+          "id": "15YIXgqDmVYJdPKT5rseThrraL4aQEBbg",
+          "title": "🗣️ | INGLÉS RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/15YIXgqDmVYJdPKT5rseThrraL4aQEBbg",
+          "type": "folder"
+        },
+        {
+          "id": "1dKsjJyw9FU1_aC8vQvT6uziug1dBQQaU",
+          "title": "👄 | LENGUAJE RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1dKsjJyw9FU1_aC8vQvT6uziug1dBQQaU",
+          "type": "folder"
+        },
+        {
+          "id": "1jEBl_EoE9VLpMXJFhLW_vrYGghK1mlLG",
+          "title": "✒️ | LITERATURA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1jEBl_EoE9VLpMXJFhLW_vrYGghK1mlLG",
+          "type": "folder"
+        },
+        {
+          "id": "1nCS4sbfJydKLg0RNLYrbirMuYU_YFehD",
+          "title": "🧠 | PSICOLOGÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1nCS4sbfJydKLg0RNLYrbirMuYU_YFehD",
+          "type": "folder"
+        },
+        {
+          "id": "1pGS9dKqf59PRxRW6ojUQTP4fg8dQiQ3o",
+          "title": "🧪 | QUÍMICA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1pGS9dKqf59PRxRW6ojUQTP4fg8dQiQ3o",
+          "type": "folder"
+        },
+        {
+          "id": "1LN2gvATv7NpEEtqDFjJgzMaduRoCxaL4",
+          "title": "Razonamiento Matemático RESÚMENES.pdf",
+          "url": "https://drive.google.com/file/d/1LN2gvATv7NpEEtqDFjJgzMaduRoCxaL4/view?usp=drivesdk",
+          "type": "file"
+        },
+        {
+          "id": "1stRoMnMfeoGw_fcSd2_3HUxbiLCxiAXj",
+          "title": "🚄 | RAZONAMIENTO VERBAL RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1stRoMnMfeoGw_fcSd2_3HUxbiLCxiAXj",
+          "type": "folder"
+        },
+        {
+          "id": "1gyJBhWzKB1-bDXBe4j2uX-DKiCY-_ud4",
+          "title": "📐 | TRIGONOMETRÍA RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1gyJBhWzKB1-bDXBe4j2uX-DKiCY-_ud4",
+          "type": "folder"
+        }
+      ]
+    },
+    {
+      "id": "resumenes-universitarios",
+      "title": "Resúmenes universitarios",
+      "url": "https://drive.google.com/drive/folders/1Kv3luqK1ztSIuKLS2bSS5eQFflIS2uIi",
+      "items": [
+        {
+          "id": "1dQg3NqSihHubVnUqNwHU5IdGgXcZysIg",
+          "title": "🖥️ | ÁLGEBRA LINEAL (Criss) RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1dQg3NqSihHubVnUqNwHU5IdGgXcZysIg",
+          "type": "folder"
+        },
+        {
+          "id": "1L45nAggbrZBf__kxPr_w_vuLkAWamEte",
+          "title": "📈 | CÁLCULO DIFERENCIAL RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1L45nAggbrZBf__kxPr_w_vuLkAWamEte",
+          "type": "folder"
+        },
+        {
+          "id": "195FUQmpepbLEKxo37CM-hFEQ060JsOdz",
+          "title": "🧲 | FÍSICA 1 RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/195FUQmpepbLEKxo37CM-hFEQ060JsOdz",
+          "type": "folder"
+        },
+        {
+          "id": "1KPvW65-iR_wmbbrjmjv_tPT_kFNRvUqx",
+          "title": "🖥️ | INTRODUCCIÓN A LA COMPUTACIÓN (Criss) RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1KPvW65-iR_wmbbrjmjv_tPT_kFNRvUqx",
+          "type": "folder"
+        },
+        {
+          "id": "1DLWY7FEZlZL6IF3J5q8sFhI4WztpjAwT",
+          "title": "⚗️ | QUÍMICA 1 (Criss) RESÚMENES",
+          "url": "https://drive.google.com/drive/folders/1DLWY7FEZlZL6IF3J5q8sFhI4WztpjAwT",
+          "type": "folder"
+        }
+      ]
+    },
+    {
+      "id": "academias",
+      "title": "Academias",
+      "url": "https://drive.google.com/drive/folders/1kCgf7tTv3UT3LE26dcPXG_NdWX20fz56",
+      "items": [
+        {
+          "id": "17ofYTi1-CrZFjkOPl1xHOpcvBYKtO4Wl",
+          "title": "🏢 | ACADEMIAS ADICIONALES (ACCESO DIRECTO)",
+          "url": "https://drive.google.com/file/d/17ofYTi1-CrZFjkOPl1xHOpcvBYKtO4Wl/view?usp=drivesdk",
+          "type": "file"
+        },
+        {
+          "id": "1AExAdQ1lidhcqwGN7ak68lrQILUk5V4M",
+          "title": "🟧 | ACEM",
+          "url": "https://drive.google.com/drive/folders/1AExAdQ1lidhcqwGN7ak68lrQILUk5V4M",
+          "type": "folder"
+        },
+        {
+          "id": "11xfUhsARxpwE7dm-77q83HkNm7f91KtB",
+          "title": "🟦 | ASEUNI — 2026-2",
+          "url": "https://drive.google.com/drive/folders/11xfUhsARxpwE7dm-77q83HkNm7f91KtB",
+          "type": "folder"
+        },
+        {
+          "id": "1Q-Lf_F31-VFd6eAU55G038bcUpx36H97",
+          "title": "🟨 | CEPREVI",
+          "url": "https://drive.google.com/drive/folders/1Q-Lf_F31-VFd6eAU55G038bcUpx36H97",
+          "type": "folder"
+        },
+        {
+          "id": "1q1vWDyDlc2nriDH5IYoABlKgv36g8IH_",
+          "title": "🟥 | CESAR VALLEJO - MATERIALES",
+          "url": "https://drive.google.com/drive/folders/1q1vWDyDlc2nriDH5IYoABlKgv36g8IH_",
+          "type": "folder"
+        },
+        {
+          "id": "1ulI7-srxO-jL1konVxRZCLoOcsQrDzft",
+          "title": "👽 | CÉSAR VALLEJO 2026 — MATERIAL DE ALDAIR",
+          "url": "https://drive.google.com/drive/folders/1ulI7-srxO-jL1konVxRZCLoOcsQrDzft",
+          "type": "folder"
+        },
+        {
+          "id": "1gVKDtTDTvUJmYRlyr5rzU34ozvx7OUhn",
+          "title": "🟧 | EXCLUSIVA — 2026-2",
+          "url": "https://drive.google.com/drive/folders/1gVKDtTDTvUJmYRlyr5rzU34ozvx7OUhn",
+          "type": "folder"
+        },
+        {
+          "id": "1ZGrErTmRVRfOe0sJcMPPWptaKNPSzPcq",
+          "title": "🟧 | EXCLUSIVA — CICLO FREE",
+          "url": "https://drive.google.com/drive/folders/1ZGrErTmRVRfOe0sJcMPPWptaKNPSzPcq",
+          "type": "folder"
+        },
+        {
+          "id": "1o4ITBQ0ITlCyw-b9GA6ST1u3dIXK4jg6",
+          "title": "🟫 | GSM",
+          "url": "https://drive.google.com/drive/folders/1o4ITBQ0ITlCyw-b9GA6ST1u3dIXK4jg6",
+          "type": "folder"
+        },
+        {
+          "id": "1DoOixEboFhOavHBiwQhOPzlULyK5_jvx",
+          "title": "🟪 | K-BANILLAS — MATERIALES",
+          "url": "https://drive.google.com/drive/folders/1DoOixEboFhOavHBiwQhOPzlULyK5_jvx",
+          "type": "folder"
+        },
+        {
+          "id": "1_VhV7zCBeFE9TFNiRtEGOucRnEM7QBOM",
+          "title": "🟦 | NOSTRADAMUS",
+          "url": "https://drive.google.com/drive/folders/1_VhV7zCBeFE9TFNiRtEGOucRnEM7QBOM",
+          "type": "folder"
+        },
+        {
+          "id": "1HwIar33pF0EQusnhxf4v62c5W9086fai",
+          "title": "Pitágoras — Anual 2020.pdf",
+          "url": "https://drive.google.com/file/d/1HwIar33pF0EQusnhxf4v62c5W9086fai/view?usp=drivesdk",
+          "type": "file"
+        },
+        {
+          "id": "1XeFbfOiVtmbKkNDEpplQRDaBFSJbasBF",
+          "title": "🟨 | SACO OLIVEROS — MATERIAL OFICIAL GRATUITO",
+          "url": "https://drive.google.com/drive/folders/1XeFbfOiVtmbKkNDEpplQRDaBFSJbasBF",
+          "type": "folder"
+        },
+        {
+          "id": "12dzpTuOwvNWRA2SmNpgStEnQgApRqNAj",
+          "title": "🟩 | SAVIA — 2027-1 (ACCESO DIRECTO)",
+          "url": "https://drive.google.com/file/d/12dzpTuOwvNWRA2SmNpgStEnQgApRqNAj/view?usp=drivesdk",
+          "type": "file"
+        },
+        {
+          "id": "16Hofo6h5f-93ShRV0yOgGIms7IbZzdKx",
+          "title": "Solucionario — Simulacro 9 Regular — 23-05-2026.pdf",
+          "url": "https://drive.google.com/file/d/16Hofo6h5f-93ShRV0yOgGIms7IbZzdKx/view?usp=drivesdk",
+          "type": "file"
+        },
+        {
+          "id": "1AsdX9xQzQoxHR2f3Rqo4ALo0wEImrp7L",
+          "title": "🟪 | VON NEUMANN",
+          "url": "https://drive.google.com/drive/folders/1AsdX9xQzQoxHR2f3Rqo4ALo0wEImrp7L",
+          "type": "folder"
+        },
+        {
+          "id": "1QUOne2QVczXBdcdg95Igv52Mdd60xd1s",
+          "title": "🟨 | VONEX",
+          "url": "https://drive.google.com/drive/folders/1QUOne2QVczXBdcdg95Igv52Mdd60xd1s",
+          "type": "folder"
+        }
+      ]
+    },
+    {
+      "id": "universidades",
+      "title": "Universidades",
+      "url": "https://drive.google.com/drive/folders/1NEKNF10wjm0XCknRULA4n2Jxb9wFgksV",
+      "items": [
+        {
+          "id": "1sv8B-j6HHyglH4XkqCcrFu7gb8VmPOfi",
+          "title": "🎓 |  UNP · Exámenes, prácticas y solucionarios",
+          "url": "https://drive.google.com/drive/folders/1sv8B-j6HHyglH4XkqCcrFu7gb8VmPOfi",
+          "type": "folder"
+        },
+        {
+          "id": "11Gvz5f-zDfQzH-E-oIoRgAh_2eumrcrr",
+          "title": "🟦 | OXFORD UNIVERSITY (UK)",
+          "url": "https://drive.google.com/drive/folders/11Gvz5f-zDfQzH-E-oIoRgAh_2eumrcrr",
+          "type": "folder"
+        },
+        {
+          "id": "1dERQWJkmmlF2v4nPLN3R6qP336j-TiDU",
+          "title": "🚢 | PONTIFICIA UNIVERSIDAD CATÓLICA DEL PERÚ",
+          "url": "https://drive.google.com/drive/folders/1dERQWJkmmlF2v4nPLN3R6qP336j-TiDU",
+          "type": "folder"
+        },
+        {
+          "id": "19wnRXDIIwzClwF5GPMwJtWkAc2tGXVqw",
+          "title": "📌 | UNIVERSIDAD HERMILIO VALDIZAN",
+          "url": "https://drive.google.com/drive/folders/19wnRXDIIwzClwF5GPMwJtWkAc2tGXVqw",
+          "type": "folder"
+        },
+        {
+          "id": "1C7ntWW5ANGvWnM6ZFpJD4-pevGpTZtix",
+          "title": "🌠 | UNIVERSIDAD NACIONAL DE INGENIERÍA",
+          "url": "https://drive.google.com/drive/folders/1C7ntWW5ANGvWnM6ZFpJD4-pevGpTZtix",
+          "type": "folder"
+        },
+        {
+          "id": "14_VhnFBTP_-JJibb6djQy7DA3drUBl0a",
+          "title": "🛢️ | UNIVERSIDAD NACIONAL DE TRUJILLO",
+          "url": "https://drive.google.com/drive/folders/14_VhnFBTP_-JJibb6djQy7DA3drUBl0a",
+          "type": "folder"
+        },
+        {
+          "id": "1Dghcy6wAmUTcwl9Yd5udX1u_O_njHgAz",
+          "title": "🗃️ | UNIVERSIDAD NACIONAL DEL CALLAO",
+          "url": "https://drive.google.com/drive/folders/1Dghcy6wAmUTcwl9Yd5udX1u_O_njHgAz",
+          "type": "folder"
+        },
+        {
+          "id": "1_1yjZYC1QP__8SSm4-Ckq7D8hJknhrgw",
+          "title": "📍 | UNIVERSIDAD NACIONAL DEL CENTRO DEL PERÚ",
+          "url": "https://drive.google.com/drive/folders/1_1yjZYC1QP__8SSm4-Ckq7D8hJknhrgw",
+          "type": "folder"
+        },
+        {
+          "id": "1er2x42PJey2DisxbTUj7Y3w1vQ5fMo90",
+          "title": "💴 | UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS",
+          "url": "https://drive.google.com/drive/folders/1er2x42PJey2DisxbTUj7Y3w1vQ5fMo90",
+          "type": "folder"
+        },
+        {
+          "id": "1qdVpoCtNvnhU9emErsaMN6EMxms3_lZB",
+          "title": "🙏🏻 | UNIVERSIDAD NACIONAL SAN AGUSTIN DE AREQUIPA",
+          "url": "https://drive.google.com/drive/folders/1qdVpoCtNvnhU9emErsaMN6EMxms3_lZB",
+          "type": "folder"
+        }
+      ]
+    },
+    {
+      "id": "editoriales-drive",
+      "title": "Libros por editorial",
+      "url": "https://drive.google.com/drive/folders/1QtDFJJ3mfmhpzQLK492hTa_MRPRT1nnz",
+      "items": [
+        {
+          "id": "13JOXO5B9A4xtOc-KB1BHBDErB68N1k38",
+          "title": "☢️ TRILCE",
+          "url": "https://drive.google.com/drive/folders/13JOXO5B9A4xtOc-KB1BHBDErB68N1k38",
+          "type": "folder"
+        },
+        {
+          "id": "13kH67Jmg40LSw7irxAfSUd7_E-kSeQjI",
+          "title": "♠️ SAN MARCOS",
+          "url": "https://drive.google.com/drive/folders/13kH67Jmg40LSw7irxAfSUd7_E-kSeQjI",
+          "type": "folder"
+        },
+        {
+          "id": "1YLLisOefNPpzseyE60vqx-OQPgo2CY--",
+          "title": "✒️ MEGABYTE",
+          "url": "https://drive.google.com/drive/folders/1YLLisOefNPpzseyE60vqx-OQPgo2CY--",
+          "type": "folder"
+        },
+        {
+          "id": "1OnQWM1F9ZAhlUqywO85Hu_DbJ6Bm3KQy",
+          "title": "🏛️ MANHATTAN EDITORES",
+          "url": "https://drive.google.com/drive/folders/1OnQWM1F9ZAhlUqywO85Hu_DbJ6Bm3KQy",
+          "type": "folder"
+        },
+        {
+          "id": "1Mc2m5jgNCu-fcqVazoWrlzsx4eSvhDbz",
+          "title": "📂 CUZCANO",
+          "url": "https://drive.google.com/drive/folders/1Mc2m5jgNCu-fcqVazoWrlzsx4eSvhDbz",
+          "type": "folder"
+        },
+        {
+          "id": "1YIXSWqz5iAVJ6iH0F5-qiSHqciTsyS6h",
+          "title": "📄 PAMER",
+          "url": "https://drive.google.com/drive/folders/1YIXSWqz5iAVJ6iH0F5-qiSHqciTsyS6h",
+          "type": "folder"
+        },
+        {
+          "id": "1gkGNNcssZKzYZvgQKGrV7rG7XKlFfF4i",
+          "title": "📌 EDITORIAL RODO",
+          "url": "https://drive.google.com/drive/folders/1gkGNNcssZKzYZvgQKGrV7rG7XKlFfF4i",
+          "type": "folder"
+        },
+        {
+          "id": "1zoj6Ik1qEu0xA3-wR7JjLvxWCvJLikfL",
+          "title": "📗 DECO",
+          "url": "https://drive.google.com/drive/folders/1zoj6Ik1qEu0xA3-wR7JjLvxWCvJLikfL",
+          "type": "folder"
+        },
+        {
+          "id": "1hTa25fyJmgWAk_iEhKJRc5UQUkRGf5vU",
+          "title": "🖤 EDITORIAL MOSHERA",
+          "url": "https://drive.google.com/drive/folders/1hTa25fyJmgWAk_iEhKJRc5UQUkRGf5vU",
+          "type": "folder"
+        },
+        {
+          "id": "1XfSDRBGrq2puk9vWWzbljmcGvc3y3l2Q",
+          "title": "🧭 RUBIÑOS 2012",
+          "url": "https://drive.google.com/drive/folders/1XfSDRBGrq2puk9vWWzbljmcGvc3y3l2Q",
+          "type": "folder"
+        },
+        {
+          "id": "1yss4NHqP2a78mnujQ4hkb4RIIxlIj06O",
+          "title": "💾 | CEPREUNI LIBROS",
+          "url": "https://drive.google.com/drive/folders/1yss4NHqP2a78mnujQ4hkb4RIIxlIj06O",
+          "type": "folder"
+        },
+        {
+          "id": "1C5l7hi4YAYWPCN2-6QhGzFQe7Ta-GuYE",
+          "title": "💿 | COLECCIÓN GOÑI",
+          "url": "https://drive.google.com/drive/folders/1C5l7hi4YAYWPCN2-6QhGzFQe7Ta-GuYE",
+          "type": "folder"
+        },
+        {
+          "id": "1n1x9mvt1i6nNGJfxG_4L_54FNEYen8x9",
+          "title": "💼 | EDICIONES ANKO",
+          "url": "https://drive.google.com/drive/folders/1n1x9mvt1i6nNGJfxG_4L_54FNEYen8x9",
+          "type": "folder"
+        },
+        {
+          "id": "1JgKie7JxdimbJBTGP_XzsmOnl4KgQFfg",
+          "title": "💳 | EDITORIAL DELTA",
+          "url": "https://drive.google.com/drive/folders/1JgKie7JxdimbJBTGP_XzsmOnl4KgQFfg",
+          "type": "folder"
+        },
+        {
+          "id": "1z6vb1Qg7loWW2b-iEBYF-fS40rNH3zTB",
+          "title": "💫 | EDITORIAL UNIVERSE",
+          "url": "https://drive.google.com/drive/folders/1z6vb1Qg7loWW2b-iEBYF-fS40rNH3zTB",
+          "type": "folder"
+        },
+        {
+          "id": "1Iv4LmUcG8wpZSMDaY5bAe7vBL6cPxrcX",
+          "title": "📕 | LUMBRERAS",
+          "url": "https://drive.google.com/drive/folders/1Iv4LmUcG8wpZSMDaY5bAe7vBL6cPxrcX",
+          "type": "folder"
+        }
+      ]
+    },
+    {
+      "id": "otras-colecciones",
+      "title": "Más colecciones y especialidades",
+      "url": "https://drive.google.com/drive/folders/1QIux3SJg3fmzU1vZt8O8GfR4egcBx5Eu",
+      "items": [
+        {
+          "id": "1UuIJAHjOEDdDCvjay1kTWJEEXbOfzeni",
+          "title": "🕍 | ARQUITECTURA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1UuIJAHjOEDdDCvjay1kTWJEEXbOfzeni",
+          "type": "folder"
+        },
+        {
+          "id": "1zmwNACUZkn1nN7bUvSPlwg8raUvMG-JV",
+          "title": "📘 | CÁLCULO, ANÁLISIS Y PRECÁLCULO — LIBROS",
+          "url": "https://drive.google.com/drive/folders/1zmwNACUZkn1nN7bUvSPlwg8raUvMG-JV",
+          "type": "folder"
+        },
+        {
+          "id": "1dvMkPTe50daLR3QYpS_HtFm_nLk3zvqt",
+          "title": "📹 | CLASES GRABADAS",
+          "url": "https://drive.google.com/drive/folders/1dvMkPTe50daLR3QYpS_HtFm_nLk3zvqt",
+          "type": "folder"
+        },
+        {
+          "id": "1Bt_jnh1yFx56SLMgJWfMoAAsHh7ENpg1",
+          "title": "📚 | COLECCIÓN GENERAL",
+          "url": "https://drive.google.com/drive/folders/1Bt_jnh1yFx56SLMgJWfMoAAsHh7ENpg1",
+          "type": "folder"
+        },
+        {
+          "id": "1NyBAoyI9TPHQnMR1vICsMt3pHlB5OBSU",
+          "title": "☎️ | FÍSICA UNI LIBROS",
+          "url": "https://drive.google.com/drive/folders/1NyBAoyI9TPHQnMR1vICsMt3pHlB5OBSU",
+          "type": "folder"
+        },
+        {
+          "id": "1KTksAyYgZYAoCKXLrAzcmh8kRmVk09a-",
+          "title": "⭕ | GEOMETRÍA DESCRIPTIVA",
+          "url": "https://drive.google.com/drive/folders/1KTksAyYgZYAoCKXLrAzcmh8kRmVk09a-",
+          "type": "folder"
+        },
+        {
+          "id": "1TMESbsXqS_SOPQRZbFAiwSxqfaym8Dm3",
+          "title": "🦺 | INGENIERÍA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1TMESbsXqS_SOPQRZbFAiwSxqfaym8Dm3",
+          "type": "folder"
+        },
+        {
+          "id": "1cy0W1JhSybT6bek5ZDj8wApDpk77ZW1g",
+          "title": "💬 | INGLÉS LIBROS",
+          "url": "https://drive.google.com/drive/folders/1cy0W1JhSybT6bek5ZDj8wApDpk77ZW1g",
+          "type": "folder"
+        },
+        {
+          "id": "1YygOeAwt34BTci_nq8qW2hqf1pW1m8Bb",
+          "title": "➕ | MATERIAL COMPLEMENTARIO",
+          "url": "https://drive.google.com/drive/folders/1YygOeAwt34BTci_nq8qW2hqf1pW1m8Bb",
+          "type": "folder"
+        },
+        {
+          "id": "1Wf0ijktGY9lcxakp0pEM-MGPLwsPM4JJ",
+          "title": "🩺 | MEDICINA LIBROS",
+          "url": "https://drive.google.com/drive/folders/1Wf0ijktGY9lcxakp0pEM-MGPLwsPM4JJ",
+          "type": "folder"
+        }
+      ]
+    }
+  ]
+}

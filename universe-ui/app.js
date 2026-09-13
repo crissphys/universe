@@ -22,7 +22,7 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches){
 const tools=[
  {id:'syllabus',name:'Temario',en:'Syllabus',desc:'Conoce el mapa. Identifica los conceptos que necesitas dominar.',descEn:'Know the map. Identify the concepts you need to master.',url:'/temario',icon:'list',keys:'temas algebra fisica aritmetica matematica química'},
  {id:'classes',name:'Clases',en:'Classes',desc:'Dale contexto a cada idea. Aprende a tu ritmo.',descEn:'Give every idea context. Learn at your own pace.',url:'/clases',icon:'play',keys:'videos profesor explicacion entender aprender newton'},
- {id:'library',name:'Biblioteca',en:'Library',desc:'Libros, editoriales y colecciones para ampliar tu universo.',descEn:'Books, publishers and collections to expand your universe.',url:'/biblioteca',icon:'book',keys:'libro pdf lectura material algebra física química'},
+ {id:'library',name:'Biblioteca',en:'Library',desc:'Libros, editoriales y colecciones para ampliar tu universo.',descEn:'Books, publishers and collections to expand your universe.',url:'/biblioteca',icon:'book',keys:'libro pdf lectura material algebra física química resumenes formularios academias universidades cursos'},
  {id:'mock',name:'Simulacros',en:'Mock exams',desc:'Convierte conocimiento en criterio. Practica y revisa.',descEn:'Turn knowledge into judgment. Practice and review.',url:'/simulacros',icon:'target',keys:'practicar prueba preguntas examen evaluar pc'},
  {id:'exams',name:'Archivo de exámenes',en:'Exam archive',desc:'Explora evaluaciones y soluciones de ciclos anteriores.',descEn:'Explore evaluations and solutions from previous cycles.',url:'/examenes',icon:'layers',keys:'examen pc parcial final soluciones evaluaciones'},
 {id:'calculator',name:'Calculadora',en:'Calculator',desc:'Calcula tu puntaje CEPREUNI según tus notas y carrera.',descEn:'Calculate your CEPREUNI score and compare historical cutoffs.',url:'/calculadora',icon:'calculator',keys:'calcular puntaje operaciones numeros'},
@@ -54,8 +54,9 @@ const STOP=['quiero','para','una','uno','los','las','del','que','con','como','bu
 const GROUPS=[['tool','Herramientas','Tools'],['syllabus','Temario','Syllabus'],['library','Biblioteca','Library'],['material','Materiales del ciclo','Cycle materials'],['class','Clases','Classes']];
 let indexRows=null,indexPromise=null;
 function row(kind,label,sub,url,extra){return {kind,label,sub,url,keys:normalize([label,sub,extra].join(' '))}}
-function buildIndex(d,videos){
+function buildIndex(d,videos,directory){
  const rows=tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' ')));
+ for(const g of directory?.groups||[])for(const item of g.items)rows.push(row('library',item.title,g.title,'/biblioteca#'+g.id,''));
  const s=d.syllabus||{};
  for(const [id,c] of Object.entries(s.temarios||{})){
   rows.push(row('syllabus',c.name,`Temario · ${(c.semanas||[]).length} semanas de admisión y ${(c.cepreSemanas||[]).length} de CEPREUNI`,'/temario',id+' '+(c.cat||'')));
@@ -80,7 +81,8 @@ function loadIndex(){
  if(!indexPromise)indexPromise=Promise.all([
   fetch('/universe-ui/data/platform.json').then(r=>r.json()),
   fetch('/universe-ui/data/videos.json').then(r=>r.json()).catch(()=>null),
- ]).then(([d,v])=>{indexRows=buildIndex(d,v);return indexRows}).catch(()=>{indexRows=tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' ')));return indexRows});
+  fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
+ ]).then(([d,v,directory])=>{indexRows=buildIndex(d,v,directory);return indexRows}).catch(()=>{indexRows=tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' ')));return indexRows});
  return indexPromise;
 }
 function words(q){return normalize(q).split(/\s+/).filter(w=>w.length>2&&!STOP.includes(w))}
