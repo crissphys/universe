@@ -148,7 +148,7 @@ const chapters=$$('.chapter');let scrollScheduled=false;
 function scrollState(){const active=chapters.reduce((best,s)=>s.getBoundingClientRect().top<innerHeight*.55?s:best,chapters[0]);$$('.chapter-nav a').forEach(a=>a.classList.toggle('active',a.hash==='#'+active.id));space?.setScroll(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight));scrollScheduled=false}
 addEventListener('scroll',()=>{if(!scrollScheduled){scrollScheduled=true;requestAnimationFrame(scrollState)}},{passive:true});
 translate();
-const {startPlatform}=await import('./platform.js?v=20260912-cleanup');
+const {startPlatform}=await import('./platform.js?v=20260913-library');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 const {orbitHTML,mountOrbits}=await import('./orbit.js');
 $('.command-visual').innerHTML=orbitHTML();mountOrbits();
