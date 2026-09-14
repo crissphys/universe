@@ -17435,7 +17435,7 @@
         "title": "Solucionario 1",
         "url": "https://drive.google.com/file/d/180G0ufWjo0upKFwSWpMhNuOAqynExsll/view?usp=drive_link",
         "image": "/biblioteca/cuzcano/assets/quimica-cepreuni-1.jpg",
-        "series": "CEPREUNI · Química",
+        "series": "CEPREUNI 2015-2 · Química",
         "author": "Prof. Joel K. Rojas Mendoza",
         "upcoming": false
       },
@@ -17445,7 +17445,7 @@
         "title": "Solucionario 2",
         "url": "https://drive.google.com/file/d/1wj1ykr6aGFFkO3GZue28CCt-jkcpNQVT/view?usp=drive_link",
         "image": "/biblioteca/cuzcano/assets/quimica-cepreuni-2.jpg",
-        "series": "CEPREUNI · Química",
+        "series": "CEPREUNI 2015-2 · Química",
         "author": "Prof. Joel K. Rojas Mendoza",
         "upcoming": false
       },
@@ -17455,7 +17455,7 @@
         "title": "Solucionario 3",
         "url": "https://drive.google.com/file/d/15kK8hXhYrHbEpAUHVnYzf4855ROhBFsn/view?usp=drive_link",
         "image": "/biblioteca/cuzcano/assets/quimica-cepreuni-3.jpg",
-        "series": "CEPREUNI · Química",
+        "series": "CEPREUNI 2015-2 · Química",
         "author": "Prof. Joel K. Rojas Mendoza",
         "upcoming": false
       },
@@ -17465,7 +17465,7 @@
         "title": "Solucionario 4",
         "url": "https://drive.google.com/file/d/1EN0I_nCIO_ELsQ2nY_CKaKYCTbGDCRpl/view?usp=drive_link",
         "image": "/biblioteca/cuzcano/assets/quimica-cepreuni-4.jpg",
-        "series": "CEPREUNI · Química",
+        "series": "CEPREUNI 2015-2 · Química",
         "author": "Prof. Joel K. Rojas Mendoza",
         "upcoming": false
       },
@@ -17475,7 +17475,7 @@
         "title": "Solucionario 5",
         "url": "https://drive.google.com/file/d/1b1gIlTeuWkCHor3xmq40yswoVTiEppas/view?usp=drive_link",
         "image": "/biblioteca/cuzcano/assets/quimica-cepreuni-5.jpg",
-        "series": "CEPREUNI · Química",
+        "series": "CEPREUNI 2015-2 · Química",
         "author": "Prof. Joel K. Rojas Mendoza",
         "upcoming": false
       },
@@ -17485,8 +17485,68 @@
         "title": "Solucionario 6",
         "url": "https://drive.google.com/file/d/1l8_QvPBwxU8_OSYtVmllfdU0FQ61k4b2/view?usp=drive_link",
         "image": "/biblioteca/cuzcano/assets/quimica-cepreuni-6.jpg",
-        "series": "CEPREUNI · Química",
+        "series": "CEPREUNI 2015-2 · Química",
         "author": "Prof. Joel K. Rojas Mendoza",
+        "upcoming": false
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2015-2",
+        "section": "Trigonometría",
+        "title": "Solucionario 1",
+        "url": "https://drive.google.com/file/d/1PPyvmLQDo-_kaMlVxK91147aZDH_QBtV/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/trigonometria-cepreuni-1.png",
+        "series": "CEPREUNI 2015-2 · Trigonometría",
+        "author": "Prof. Glomar Rojas Mena",
+        "upcoming": false
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2015-2",
+        "section": "Trigonometría",
+        "title": "Solucionario 2",
+        "url": "https://drive.google.com/file/d/1iWZBvAQbVaDMNhcoNlOYKijQ-zqVd_G9/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/trigonometria-cepreuni-2.png",
+        "series": "CEPREUNI 2015-2 · Trigonometría",
+        "author": "Prof. Glomar Rojas Mena",
+        "upcoming": false
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2015-2",
+        "section": "Trigonometría",
+        "title": "Solucionario 3",
+        "url": "https://drive.google.com/file/d/1ZytfSLpbtV0APpgMM4wyf_a4JKuWUDEj/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/trigonometria-cepreuni-3.png",
+        "series": "CEPREUNI 2015-2 · Trigonometría",
+        "author": "Prof. Glomar Rojas Mena",
+        "upcoming": false
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2015-2",
+        "section": "Trigonometría",
+        "title": "Solucionario 4",
+        "url": "https://drive.google.com/file/d/1FAQE4NeOPpvDniucYUa1Xq-uQJx2A9P7/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/trigonometria-cepreuni-4.png",
+        "series": "CEPREUNI 2015-2 · Trigonometría",
+        "author": "Prof. Glomar Rojas Mena",
+        "upcoming": false
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2015-2",
+        "section": "Trigonometría",
+        "title": "Solucionario 5",
+        "url": "https://drive.google.com/file/d/1XkVfIGCk4Ntk7FyQKmfUWRRC4nWMQS8q/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/trigonometria-cepreuni-5.png",
+        "series": "CEPREUNI 2015-2 · Trigonometría",
+        "author": "Prof. Glomar Rojas Mena",
+        "upcoming": false
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2015-2",
+        "section": "Trigonometría",
+        "title": "Solucionario 6",
+        "url": "https://drive.google.com/file/d/15NfYUMNgJxpc9TgHXSXQna7-eUS6B5un/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/trigonometria-cepreuni-6.png",
+        "series": "CEPREUNI 2015-2 · Trigonometría",
+        "author": "Prof. Glomar Rojas Mena",
         "upcoming": false
       },
       {
