@@ -1,3 +1,4 @@
+import './ranking-survey-loader.js?v=20260914-global1';
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const storage = {get(k,d){try{return localStorage.getItem('universe-galaxy-'+k)??d}catch{return d}},set(k,v){try{localStorage.setItem('universe-galaxy-'+k,String(v))}catch{}}};
