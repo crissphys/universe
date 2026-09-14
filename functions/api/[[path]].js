@@ -40,6 +40,19 @@ const ACADEMIES = [
 const ACADEMIC_TRACKS = ['cepreuni', 'uni-student', 'san-marcos', 'academy', 'independent'];
 const TARGETS = ['UNI', 'San Marcos', 'Otra universidad', 'Aún no lo decido'];
 const COMMUNITY_INTENTS = ['offering', 'seeking', 'both', 'networking'];
+const UNI_SURVEY_FACULTIES = {
+  FAUA: ['Arquitectura', 'Urbanismo'],
+  FC: ['Física', 'Matemática', 'Química', 'Ingeniería Física', 'Ciencia de la Computación'],
+  FIA: ['Ingeniería Sanitaria', 'Ingeniería de Higiene y Seguridad Industrial', 'Ingeniería Ambiental'],
+  FIC: ['Ingeniería Civil'],
+  FIEECS: ['Ingeniería Económica', 'Ingeniería Estadística'],
+  FIEE: ['Ingeniería Eléctrica', 'Ingeniería Electrónica', 'Ingeniería de Telecomunicaciones', 'Ingeniería de Ciberseguridad', 'Ingeniería Biomédica'],
+  FIGMM: ['Ingeniería Geológica', 'Ingeniería Metalúrgica', 'Ingeniería de Minas'],
+  FIIS: ['Ingeniería Industrial', 'Ingeniería de Sistemas', 'Ingeniería de Software', 'Ingeniería de Inteligencia Artificial'],
+  FIM: ['Ingeniería Mecánica', 'Ingeniería Mecánica Eléctrica', 'Ingeniería Naval', 'Ingeniería Mecatrónica', 'Ingeniería Aeroespacial'],
+  FIP: ['Ingeniería de Petróleo y Gas Natural', 'Ingeniería Petroquímica'],
+  FIQT: ['Ingeniería Química', 'Ingeniería Textil']
+};
 const UNIT_ROOT = '/community/unitalkV1';
 const SITE_ROOT = '/site/universeV1';
 const AUTH_ROOT = '/private/universeAuthV1';
@@ -912,11 +925,126 @@ async function authMe(request, env) {
   });
 }
 
+var rankingSurveyCodeCache;
+
+function rankingSurveyFacultyForCareer(career) {
+  return Object.keys(UNI_SURVEY_FACULTIES).find(function (faculty) {
+    return UNI_SURVEY_FACULTIES[faculty].includes(career);
+  }) || '';
+}
+
+function publicRankingSurvey(row) {
+  if (!row || typeof row !== 'object') return null;
+  return {
+    completed: row.completed === true,
+    cycle: cleanText(row.cycle, 20),
+    route: row.route === 'cepreuni' ? 'cepreuni' : row.route === 'admission' ? 'admission' : '',
+    cepreTrack: row.cepreTrack === 'basic' ? 'basic' : row.cepreTrack === 'pre' ? 'pre' : '',
+    code: cleanText(row.code, 12),
+    faculty: cleanText(row.faculty, 12),
+    careers: Array.isArray(row.careers) ? row.careers.slice(0, 3).map(function (career) { return cleanText(career, 80); }) : [],
+    updatedAt: Number(row.updatedAt) || 0
+  };
+}
+
+async function rankingSurveyCodes(request) {
+  if (rankingSurveyCodeCache) return rankingSurveyCodeCache;
+  var assetUrl = new URL('/universe-ui/data/cepre-2027-1-ranking.js', request.url);
+  var response = await fetch(assetUrl.toString(), { headers: { Accept: 'application/javascript' } });
+  if (!response.ok) throw new Error('ranking_data_unavailable');
+  var source = await response.text();
+  var match = source.match(/window\.UNIVERSE_CEPRE_2027_1=(\{[\s\S]*\});?\s*$/);
+  if (!match) throw new Error('ranking_data_invalid');
+  var data = JSON.parse(match[1]);
+  rankingSurveyCodeCache = {
+    pre: new Set((Array.isArray(data.pre) ? data.pre : []).map(function (row) { return cleanText(row && row[0], 12); })),
+    basic: new Set((Array.isArray(data.basic) ? data.basic : []).map(function (row) { return cleanText(row && row[0], 12); }))
+  };
+  return rankingSurveyCodeCache;
+}
+
+async function handleRankingSurvey(request, env, auth, method, data) {
+  if (!auth || auth.provider !== 'google' || !auth.email) return json({ error: 'gmail_required' }, 401);
+  var submissionPath = SITE_ROOT + '/rankingSurvey2027_1/submissions/' + cleanId(auth.id);
+  if (method === 'GET') {
+    return json({ survey: publicRankingSurvey(await firebase(env, submissionPath, 'GET')) });
+  }
+  if (method !== 'PUT') return json({ error: 'method_not_allowed' }, 405);
+  if (!rateLimit(request, 'ranking-survey-' + auth.id, 12, 60000)) return json({ error: 'rate_limited' }, 429);
+
+  data = data && typeof data === 'object' ? data : {};
+  var route = data.route === 'cepreuni' ? 'cepreuni' : data.route === 'admission' ? 'admission' : '';
+  var rawCareers = Array.isArray(data.careers) ? data.careers : [];
+  var careers = rawCareers.slice(0, 3).map(function (career) { return cleanText(career, 80); }).filter(Boolean);
+  if (!route || !careers.length || new Set(careers).size !== careers.length) return json({ error: 'invalid_career_selection' }, 400);
+
+  var faculty = cleanText(data.faculty, 12).toUpperCase();
+  var cepreTrack = '';
+  var code = '';
+  if (route === 'admission') {
+    if (!Object.prototype.hasOwnProperty.call(UNI_SURVEY_FACULTIES, faculty) || careers.length > 3 || careers.some(function (career) { return !UNI_SURVEY_FACULTIES[faculty].includes(career); })) {
+      return json({ error: 'invalid_career_selection' }, 400);
+    }
+  } else {
+    if (careers.length !== 1) return json({ error: 'invalid_career_selection' }, 400);
+    faculty = rankingSurveyFacultyForCareer(careers[0]);
+    if (!faculty) return json({ error: 'invalid_career_selection' }, 400);
+    cepreTrack = data.cepreTrack === 'basic' ? 'basic' : data.cepreTrack === 'pre' ? 'pre' : '';
+    code = cleanText(data.code, 12).toUpperCase().replace(/\s+/g, '');
+    if (!cepreTrack || !/^[A-Z0-9]{6,12}$/.test(code)) return json({ error: 'invalid_code' }, 400);
+    var validCodes = await rankingSurveyCodes(request);
+    if (!validCodes[cepreTrack].has(code)) return json({ error: 'invalid_code' }, 400);
+  }
+
+  var now = Date.now();
+  var survey = {
+    completed: true,
+    cycle: '2027-1',
+    route,
+    cepreTrack,
+    code,
+    faculty,
+    careers,
+    userId: auth.id,
+    email: auth.email,
+    provider: 'google',
+    createdAt: now,
+    updatedAt: now
+  };
+  var existing = await firebase(env, submissionPath, 'GET');
+  if (existing && Number(existing.createdAt)) survey.createdAt = Number(existing.createdAt);
+
+  var ownerPath = '';
+  var ownerWasCreated = false;
+  if (route === 'cepreuni') {
+    ownerPath = SITE_ROOT + '/rankingSurvey2027_1/codeOwners/' + code;
+    var owner = await firebase(env, ownerPath, 'GET');
+    if (owner && owner.userId && owner.userId !== auth.id) return json({ error: 'code_already_claimed' }, 409);
+    if (!owner) {
+      ownerWasCreated = await firebaseReserve(env, ownerPath, { userId: auth.id, track: cepreTrack, claimedAt: now });
+      if (!ownerWasCreated) {
+        owner = await firebase(env, ownerPath, 'GET');
+        if (!owner || owner.userId !== auth.id) return json({ error: 'code_already_claimed' }, 409);
+      }
+    }
+  }
+
+  try {
+    await firebase(env, submissionPath, 'PUT', survey);
+  } catch (error) {
+    if (ownerWasCreated && ownerPath) await firebase(env, ownerPath, 'DELETE').catch(function () {});
+    throw error;
+  }
+  return json({ ok: true, survey: publicRankingSurvey(survey) });
+}
+
 async function handleSite(request, env, subpath) {
   var auth = await verifySession(request, env);
   var method = request.method.toUpperCase();
   var path = '/' + subpath.replace(/^\/+/, '').replace(/\.json$/i, '');
   var data = method === 'GET' || method === 'DELETE' ? undefined : await request.json().catch(function () { return {}; });
+
+  if (path === '/ranking-survey-2027-1') return handleRankingSurvey(request, env, auth, method, data);
 
   if (method === 'GET' && path === '/public') return json(sanitizePublicSiteData(await firebase(env, SITE_ROOT + '/public', 'GET')));
 

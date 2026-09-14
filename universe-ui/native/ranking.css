@@ -1178,3 +1178,51 @@ html{
   .ranking-2027-table{min-width:1080px}
   .ranking-2027-note{padding:0 .2rem}
 }
+
+/* UNIverseAI ranking survey */
+html.ranking-survey-open{overflow:hidden}
+.ranking-survey-overlay{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:1.25rem;background:rgba(2,6,15,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;transition:opacity .22s ease}
+.ranking-survey-overlay.is-visible{opacity:1}
+.ranking-survey-dialog{position:relative;width:min(100%,620px);max-height:min(88vh,760px);overflow:auto;box-sizing:border-box;padding:2.1rem;border:1px solid color-mix(in srgb,var(--accent,#2563eb) 38%,rgba(255,255,255,.2));border-radius:26px;background:radial-gradient(circle at 82% 0%,color-mix(in srgb,var(--accent,#2563eb) 22%,transparent),transparent 38%),color-mix(in srgb,var(--surface,#101318) 96%,#071125);box-shadow:0 30px 90px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.06);color:var(--text,#f5f5f7);outline:none;transform:translateY(16px) scale(.98);transition:transform .24s ease}
+.ranking-survey-overlay.is-visible .ranking-survey-dialog{transform:none}
+.ranking-survey-orb{width:52px;height:52px;display:grid;place-items:center;margin-bottom:1.1rem;border-radius:18px;background:linear-gradient(135deg,#7c5cff,#28c8ff);box-shadow:0 12px 32px rgba(72,110,255,.34);color:#fff;font-weight:900;font-size:1.25rem}
+.ranking-survey-orb span{filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
+.ranking-survey-eyebrow{margin-bottom:.55rem;color:color-mix(in srgb,var(--accent,#60a5fa) 72%,#fff);font-size:.7rem;font-weight:850;letter-spacing:.14em}
+.ranking-survey-dialog h2{margin:0;font-size:clamp(1.75rem,5vw,2.55rem);line-height:1.05;letter-spacing:-.04em}
+.ranking-survey-content{margin-top:1rem}
+.ranking-survey-lead,.ranking-survey-question{margin:.7rem 0 1.35rem;color:var(--muted,#aab2c0);font-size:1rem;line-height:1.65}
+.ranking-survey-question{color:var(--text,#f5f5f7);font-weight:700;text-align:center}
+.ranking-survey-actions,.ranking-survey-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.ranking-survey-choice-grid{grid-template-columns:1fr}
+.ranking-survey-button{min-height:48px;padding:.78rem 1rem;border:1px solid color-mix(in srgb,var(--line,#334155) 75%,transparent);border-radius:14px;background:color-mix(in srgb,var(--surface-2,#172033) 82%,transparent);color:var(--text,#f5f5f7);font:inherit;font-weight:750;cursor:pointer;transition:transform .16s ease,border-color .16s ease,background .16s ease}
+.ranking-survey-button:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--accent,#60a5fa) 65%,#fff)}
+.ranking-survey-button:focus-visible{outline:3px solid color-mix(in srgb,var(--accent,#60a5fa) 50%,transparent);outline-offset:2px}
+.ranking-survey-button.is-primary{border-color:transparent;background:linear-gradient(135deg,#6552ff,#219bff);color:#fff}
+.ranking-survey-button:disabled{opacity:.65;cursor:wait;transform:none}
+.ranking-survey-footer{display:flex;justify-content:flex-start;margin-top:1rem}
+.ranking-survey-footer .ranking-survey-button{min-height:40px;padding:.55rem .85rem;background:transparent}
+.ranking-survey-form{display:grid;gap:.7rem}
+.ranking-survey-form>label,.ranking-survey-priorities label{display:grid;gap:.42rem;color:var(--muted,#aab2c0);font-size:.76rem;font-weight:800;letter-spacing:.04em}
+.ranking-survey-form input,.ranking-survey-form select{width:100%;min-height:49px;box-sizing:border-box;padding:.72rem .85rem;border:1px solid color-mix(in srgb,var(--line,#334155) 78%,transparent);border-radius:13px;background:color-mix(in srgb,var(--surface,#101318) 90%,#000);color:var(--text,#f5f5f7);font:inherit}
+.ranking-survey-form input:focus,.ranking-survey-form select:focus{outline:2px solid color-mix(in srgb,var(--accent,#60a5fa) 62%,transparent);border-color:var(--accent,#60a5fa)}
+.ranking-survey-error{min-height:1.2rem;margin:0;color:#ff9a9a;font-size:.8rem;line-height:1.45}
+.ranking-survey-code-confirm{display:grid;gap:.25rem;margin:1.1rem 0;padding:1.15rem;border:1px solid color-mix(in srgb,var(--accent,#60a5fa) 35%,var(--line,#334155));border-radius:18px;background:color-mix(in srgb,var(--accent,#2563eb) 10%,var(--surface,#101318));text-align:center;font-size:1.65rem;font-weight:900;letter-spacing:.07em}
+.ranking-survey-code-confirm span{color:var(--muted,#aab2c0);font-size:.76rem;font-weight:700;letter-spacing:.02em}
+.ranking-survey-priorities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;margin-top:.35rem}
+.ranking-survey-priorities[hidden]{display:none}
+.ranking-survey-review{display:grid;gap:.45rem;margin:1rem 0;padding:1rem 1.1rem;border-radius:16px;background:color-mix(in srgb,var(--accent,#2563eb) 9%,var(--surface-2,#172033))}
+.ranking-survey-review strong{font-size:1rem}
+.ranking-survey-review span{color:var(--muted,#aab2c0);font-size:.85rem;line-height:1.35}
+.ranking-survey-save{display:grid;gap:.75rem}
+.ranking-survey-account{display:grid;gap:.2rem;padding:.85rem 1rem;border:1px solid color-mix(in srgb,#34d399 38%,var(--line,#334155));border-radius:14px;background:rgba(52,211,153,.08)}
+.ranking-survey-account span{color:#86efac;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.ranking-survey-account strong{overflow-wrap:anywhere}
+.ranking-survey-google{min-height:44px;display:flex;align-items:center;justify-content:center}
+.ranking-survey-privacy{margin:.2rem 0;color:var(--muted,#aab2c0);font-size:.76rem;line-height:1.5;text-align:center}
+@media(max-width:680px){
+  .ranking-survey-overlay{padding:.7rem;align-items:end}
+  .ranking-survey-dialog{width:100%;max-height:92vh;padding:1.35rem;border-radius:22px 22px 16px 16px}
+  .ranking-survey-orb{width:44px;height:44px;border-radius:15px;margin-bottom:.85rem}
+  .ranking-survey-actions{grid-template-columns:1fr}
+  .ranking-survey-priorities{grid-template-columns:1fr}
+}
