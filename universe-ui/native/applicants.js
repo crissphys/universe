@@ -19,17 +19,17 @@
     var term = search.value.trim().toLocaleLowerCase('es');
     var list = rows.filter(function (row) { return row.career.toLocaleLowerCase('es').includes(term) || row.faculty.toLocaleLowerCase('es').includes(term); });
     list.sort(function (a, b) {
-      var aCount = tab === 'cepre' ? a.ceprePre + a.cepreBasic : a.admissionFirst;
-      var bCount = tab === 'cepre' ? b.ceprePre + b.cepreBasic : b.admissionFirst;
+      var aCount = tab === 'cepre' ? a.ceprePre : a.admissionFirst;
+      var bCount = tab === 'cepre' ? b.ceprePre : b.admissionFirst;
       return bCount - aCount || a.career.localeCompare(b.career, 'es');
     });
-    text('table-heading', tab === 'cepre' ? 'CEPREUNI 2027-1' : 'Admisión UNI 2027-1');
-    text('table-description', tab === 'cepre' ? 'Una carrera por participante; ciclos Pre y Básico separados.' : 'Primera opción y presencia entre las tres preferencias de la misma facultad.');
-    head.innerHTML = tab === 'cepre' ? '<tr><th>Pos.</th><th>Carrera</th><th>Facultad</th><th>Pre</th><th>Básico</th><th>Total</th></tr>' : '<tr><th>Pos.</th><th>Carrera</th><th>Facultad</th><th>1.ª opción</th><th>Cualquier opción</th></tr>';
+    text('table-heading', tab === 'cepre' ? 'CEPREUNI · Pre 2027-1' : 'Admisión UNI + Básico 2027-1');
+    text('table-description', tab === 'cepre' ? 'Solo el Ciclo Pre, que puede acceder por ingreso directo.' : 'Básico se suma a Admisión. Una respuesta por persona; la carrera de Básico cuenta como primera opción.');
+    head.innerHTML = tab === 'cepre' ? '<tr><th>Pos.</th><th>Carrera</th><th>Facultad</th><th>Postulantes</th></tr>' : '<tr><th>Pos.</th><th>Carrera</th><th>Facultad</th><th>1.ª opción</th><th>De Básico</th><th>Cualquier opción</th></tr>';
     body.replaceChildren();
-    if (!list.length) { var empty = document.createElement('tr'); var cell = document.createElement('td'); cell.colSpan = tab === 'cepre' ? 6 : 5; cell.textContent = rows.length ? 'No hay carreras con ese nombre.' : 'No hay datos disponibles.'; empty.appendChild(cell); body.appendChild(empty); return; }
+    if (!list.length) { var empty = document.createElement('tr'); var cell = document.createElement('td'); cell.colSpan = tab === 'cepre' ? 4 : 6; cell.textContent = rows.length ? 'No hay carreras con ese nombre.' : 'No hay datos disponibles.'; empty.appendChild(cell); body.appendChild(empty); return; }
     list.forEach(function (row, index) {
-      var values = tab === 'cepre' ? [index + 1, row.career, row.faculty, row.ceprePre, row.cepreBasic, row.ceprePre + row.cepreBasic] : [index + 1, row.career, row.faculty, row.admissionFirst, row.admissionAny];
+      var values = tab === 'cepre' ? [index + 1, row.career, row.faculty, row.ceprePre] : [index + 1, row.career, row.faculty, row.admissionFirst, row.admissionBasic, row.admissionAny];
       var tr = document.createElement('tr');
       values.forEach(function (value) { var td = document.createElement('td'); td.textContent = value; tr.appendChild(td); });
       body.appendChild(tr);
@@ -43,8 +43,8 @@
       rows = Array.isArray(result.careers) ? result.careers : [];
       text('count-total', result.totals.all);
       text('count-cepre', result.totals.cepreuni);
-      text('count-cepre-detail', 'Pre ' + result.totals.ceprePre + ' · Básico ' + result.totals.cepreBasic);
       text('count-admission', result.totals.admission);
+      text('count-admission-detail', 'Admisión ' + result.totals.admissionDirect + ' · Básico ' + result.totals.admissionBasic);
       text('last-updated', 'Actualizado: ' + new Date(result.updatedAt).toLocaleString('es-PE') + ' · Se revisan nuevas respuestas cada 30 segundos.');
       render();
     } catch (_) { text('last-updated', 'No se pudieron consultar las cifras en este momento. Se intentará nuevamente.'); }

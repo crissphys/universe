@@ -935,18 +935,24 @@ async function handleRankingSurveySummary(env) {
   var careerRows = {};
   Object.keys(UNI_SURVEY_FACULTIES).forEach(function (faculty) {
     UNI_SURVEY_FACULTIES[faculty].forEach(function (career) {
-      careerRows[career] = { career: career, faculty: faculty, ceprePre: 0, cepreBasic: 0, admissionFirst: 0, admissionAny: 0 };
+      careerRows[career] = { career: career, faculty: faculty, ceprePre: 0, admissionBasic: 0, admissionFirst: 0, admissionAny: 0 };
     });
   });
-  var totals = { all: 0, cepreuni: 0, ceprePre: 0, cepreBasic: 0, admission: 0 };
+  var totals = { all: 0, cepreuni: 0, ceprePre: 0, admission: 0, admissionDirect: 0, admissionBasic: 0 };
   Object.values(submissions).forEach(function (row) {
     if (!row || row.completed !== true || row.cycle !== '2027-1' || !Array.isArray(row.careers)) return;
     if (row.route === 'cepreuni' && ['pre', 'basic'].includes(row.cepreTrack) && row.careers.length === 1 && careerRows[row.careers[0]]) {
-      totals.all++; totals.cepreuni++;
-      var key = row.cepreTrack === 'pre' ? 'ceprePre' : 'cepreBasic';
-      totals[key]++; careerRows[row.careers[0]][key]++;
+      totals.all++;
+      if (row.cepreTrack === 'pre') {
+        totals.cepreuni++; totals.ceprePre++; careerRows[row.careers[0]].ceprePre++;
+      } else {
+        totals.admission++; totals.admissionBasic++;
+        careerRows[row.careers[0]].admissionBasic++;
+        careerRows[row.careers[0]].admissionFirst++;
+        careerRows[row.careers[0]].admissionAny++;
+      }
     } else if (row.route === 'admission' && row.careers.length > 0 && row.careers.length <= 3 && row.careers.every(function (career) { return careerRows[career] && careerRows[career].faculty === row.faculty; })) {
-      totals.all++; totals.admission++;
+      totals.all++; totals.admission++; totals.admissionDirect++;
       careerRows[row.careers[0]].admissionFirst++;
       new Set(row.careers).forEach(function (career) { careerRows[career].admissionAny++; });
     }
