@@ -2,7 +2,6 @@
   var STORAGE_KEY = 'universe_ranking_survey_2027_1_complete';
   var source = window.UNIVERSE_CEPRE_2027_1;
   if (!source || !window.UniverseGoogleAuth) return;
-  try { if (localStorage.getItem(STORAGE_KEY) === 'yes') return; } catch (_) {}
 
   var faculties = {
     FAUA: { name: 'Arquitectura, Urbanismo y Artes', careers: ['Arquitectura', 'Urbanismo'] },
@@ -44,9 +43,12 @@
     if (markComplete) {
       try { localStorage.setItem(STORAGE_KEY, 'yes'); } catch (_) {}
     }
-    overlay.classList.remove('is-visible');
+    if (!overlay) return;
+    var closing = overlay;
+    overlay = null;
+    closing.classList.remove('is-visible');
     document.documentElement.classList.remove('ranking-survey-open');
-    setTimeout(function () { overlay.remove(); }, 240);
+    setTimeout(function () { closing.remove(); }, 240);
   }
 
   function intro() {
@@ -142,7 +144,7 @@
 
   function askCepreCareer(message) {
     setView('¿A qué carrera postulas?', 'ÚLTIMO PASO ACADÉMICO',
-      '<p class="ranking-survey-lead">Esta información se guardará de forma privada para funciones futuras; todavía no se mostrará en el ranking.</p>' +
+      '<p class="ranking-survey-lead">Tu carrera se sumará al conteo público sin mostrar tu código ni tu cuenta.</p>' +
       '<form class="ranking-survey-form" data-survey-form="cepre-career"><label for="ranking-survey-career">Carrera</label>' +
       '<select id="ranking-survey-career" required>' + allCareerOptions(state.careers[0] || '') + '</select>' +
       '<p class="ranking-survey-error" role="alert">' + esc(message || '') + '</p>' +
@@ -245,8 +247,9 @@
   }
 
   function success() {
+    window.dispatchEvent(new CustomEvent('universe-ranking-survey-saved'));
     setView('¡Listo!', 'INFORMACIÓN GUARDADA',
-      '<p class="ranking-survey-lead">Tu información quedó vinculada a tu cuenta Google y guardada de manera privada. No se mostrará en el ranking por ahora.</p>' +
+      '<p class="ranking-survey-lead">Tu elección quedó vinculada a tu cuenta Google. Solo se mostrará en el conteo agregado, sin tu código ni tu correo.</p>' +
       '<div class="ranking-survey-actions">' + button('Finalizar', 'finish-saved', true) + '</div>');
   }
 
@@ -277,7 +280,7 @@
       else if (name === 'route-cepre') { state.route = 'cepreuni'; chooseCepreTrack(); }
       else if (name === 'route-admission') { state.route = 'admission'; askAdmissionCareers(''); }
       else if (name === 'cepre-track') chooseCepreTrack();
-      else if (name === 'track-pre' || name === 'track-basic') { state.cepreTrack = name === 'track-basic' ? 'basic' : 'pre'; state.code = ''; askCode(''); }
+      else if (name === 'track-pre' || name === 'track-basic') { var nextTrack = name === 'track-basic' ? 'basic' : 'pre'; if (state.cepreTrack !== nextTrack) state.code = ''; state.cepreTrack = nextTrack; askCode(''); }
       else if (name === 'verify-code') verifyCode();
       else if (name === 'edit-code') askCode('');
       else if (name === 'confirm-view') confirmCode();
@@ -304,16 +307,17 @@
     if (overlay && document.body.contains(overlay) && (state.careers.length || state.route === 'admission')) accountGate('');
   });
 
-  Promise.resolve(window.UniverseGoogleAuth.refresh()).then(async function () {
-    if (isGoogleUser()) {
-      try {
-        var existing = await window.UniverseGoogleAuth.siteApi('/ranking-survey-2027-1', 'GET');
-        if (existing && existing.survey && existing.survey.completed === true) {
-          try { localStorage.setItem(STORAGE_KEY, 'yes'); } catch (_) {}
-          return;
-        }
-      } catch (_) {}
+  window.UniverseRankingSurvey = {
+    open: function (existing) {
+      if (overlay) return;
+      state = existing && existing.completed ? {
+        route: existing.route || '', cepreTrack: existing.cepreTrack || '', code: existing.code || '',
+        faculty: existing.faculty || '', careers: Array.isArray(existing.careers) ? existing.careers.slice(0, 3) : []
+      } : { route: '', cepreTrack: '', code: '', faculty: '', careers: [] };
+      create();
+      if (existing && existing.completed) requestAnimationFrame(function () {
+        if (overlay) chooseRoute();
+      });
     }
-    create();
-  }).catch(create);
+  };
 })();
