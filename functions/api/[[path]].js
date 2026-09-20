@@ -926,6 +926,35 @@ async function authMe(request, env) {
 }
 
 var rankingSurveyCodeCache;
+var rankingSurveySummaryCache;
+
+async function handleRankingSurveySummary(env) {
+  var now = Date.now();
+  if (rankingSurveySummaryCache && now - rankingSurveySummaryCache.at < 30000) return json(rankingSurveySummaryCache.data);
+  var submissions = await firebase(env, SITE_ROOT + '/rankingSurvey2027_1/submissions', 'GET') || {};
+  var careerRows = {};
+  Object.keys(UNI_SURVEY_FACULTIES).forEach(function (faculty) {
+    UNI_SURVEY_FACULTIES[faculty].forEach(function (career) {
+      careerRows[career] = { career: career, faculty: faculty, ceprePre: 0, cepreBasic: 0, admissionFirst: 0, admissionAny: 0 };
+    });
+  });
+  var totals = { all: 0, cepreuni: 0, ceprePre: 0, cepreBasic: 0, admission: 0 };
+  Object.values(submissions).forEach(function (row) {
+    if (!row || row.completed !== true || row.cycle !== '2027-1' || !Array.isArray(row.careers)) return;
+    if (row.route === 'cepreuni' && ['pre', 'basic'].includes(row.cepreTrack) && row.careers.length === 1 && careerRows[row.careers[0]]) {
+      totals.all++; totals.cepreuni++;
+      var key = row.cepreTrack === 'pre' ? 'ceprePre' : 'cepreBasic';
+      totals[key]++; careerRows[row.careers[0]][key]++;
+    } else if (row.route === 'admission' && row.careers.length > 0 && row.careers.length <= 3 && row.careers.every(function (career) { return careerRows[career] && careerRows[career].faculty === row.faculty; })) {
+      totals.all++; totals.admission++;
+      careerRows[row.careers[0]].admissionFirst++;
+      new Set(row.careers).forEach(function (career) { careerRows[career].admissionAny++; });
+    }
+  });
+  var data = { cycle: '2027-1', totals: totals, careers: Object.values(careerRows), updatedAt: now };
+  rankingSurveySummaryCache = { at: now, data: data };
+  return json(data);
+}
 
 function rankingSurveyFacultyForCareer(career) {
   return Object.keys(UNI_SURVEY_FACULTIES).find(function (faculty) {
@@ -1035,6 +1064,12 @@ async function handleRankingSurvey(request, env, auth, method, data) {
     if (ownerWasCreated && ownerPath) await firebase(env, ownerPath, 'DELETE').catch(function () {});
     throw error;
   }
+  if (existing && existing.route === 'cepreuni' && existing.code && existing.code !== code) {
+    var previousOwnerPath = SITE_ROOT + '/rankingSurvey2027_1/codeOwners/' + cleanText(existing.code, 12);
+    var previousOwner = await firebase(env, previousOwnerPath, 'GET').catch(function () { return null; });
+    if (previousOwner && previousOwner.userId === auth.id) await firebase(env, previousOwnerPath, 'DELETE').catch(function () {});
+  }
+  rankingSurveySummaryCache = null;
   return json({ ok: true, survey: publicRankingSurvey(survey) });
 }
 
@@ -1044,6 +1079,7 @@ async function handleSite(request, env, subpath) {
   var path = '/' + subpath.replace(/^\/+/, '').replace(/\.json$/i, '');
   var data = method === 'GET' || method === 'DELETE' ? undefined : await request.json().catch(function () { return {}; });
 
+  if (path === '/ranking-survey-2027-1/summary' && method === 'GET') return handleRankingSurveySummary(env);
   if (path === '/ranking-survey-2027-1') return handleRankingSurvey(request, env, auth, method, data);
 
   if (method === 'GET' && path === '/public') return json(sanitizePublicSiteData(await firebase(env, SITE_ROOT + '/public', 'GET')));
