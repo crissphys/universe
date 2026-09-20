@@ -150,3 +150,13 @@
 .article-card a{color:var(--blue) !important;font-weight:850 !important}
 
 }
+
+/* ===== Mensaje del fundador ===== */
+.native-shell .founder-message .eyebrow{margin-bottom:.9rem}
+.native-shell .founder-message h2{margin:0 0 1.2rem}
+.native-shell .founder-message p{max-width:70ch}
+.native-shell .founder-message strong{color:var(--text)}
+.native-shell .founder-message .pull-quote{margin:1.4rem 0 1.8rem;padding:1.1rem 1.4rem;border-left:3px solid var(--blue);border-radius:0 20px 20px 0;background:var(--soft);font-family:var(--display);font-size:clamp(1.35rem,2.4vw,2rem);line-height:1.25;letter-spacing:-.03em}
+.native-shell .founder-message .pull-quote strong{font-weight:800}
+.native-shell .founder-message .signature{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--line);line-height:1.6}
+.native-shell .founder-message{margin-top:clamp(1rem,2vw,1.7rem)}
