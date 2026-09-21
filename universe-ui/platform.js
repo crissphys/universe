@@ -1,6 +1,6 @@
 import {renderDirectory} from './library-directory.js';
 import {renderExams} from './cepreuni-exams.js';
-import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20260912-cleanup';
+import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20260921-previews';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
