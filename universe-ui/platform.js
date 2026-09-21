@@ -17,7 +17,7 @@ const routes={
  '/explorar':['Tu universo de estudio','PLATAFORMA / 01','Un lugar para conectar lo que aprendes, lo que practicas y lo que quieres alcanzar.'],
  '/biblioteca':['Conocimiento en órbita.','BIBLIOTECA / 02','Encuentra tu siguiente lectura. Colecciones, materiales y libros organizados para acompañarte antes y después del ingreso.'],
  '/biblioteca/universe':['Hecho en Universe.','UNIVERSE × CICLESOLUS','Solucionarios CEPREUNI 2027-1. La colección conserva las portadas, los autores y la disponibilidad del catálogo.'],
- '/biblioteca/cuzcano':['Catálogo Cuzcano.','BIBLIOTECA / EDITORIALES','Material preuniversitario y solucionarios CEPREUNI organizados por curso.'],
+ '/biblioteca/cuzcano':['Catálogo Cuzcano.','BIBLIOTECA / EDITORIALES','Material preuniversitario, solucionarios CEPREUNI y fascículos de Física organizados por curso.'],
  '/biblioteca/lumbreras':['Catálogo Lumbreras.','BIBLIOTECA / EDITORIALES','Explora las colecciones y encuentra el libro que acompaña a tu siguiente tema.'],
  '/biblioteca/librosuniversitarios':['Más allá del ingreso.','BIBLIOTECA / UNIVERSITARIA','Raymond Chang y coautores. Química y fisicoquímica, con sus ediciones e idiomas identificados.'],
  '/cepreuni/ciclopre20271':['Tu material. Tu avance.','CEPREUNI / CICLO PRE 2027-1','Documentos del ciclo, libros y clases. Las mismas fuentes, en un espacio más claro.'],
