@@ -17818,6 +17818,76 @@
         "series": "CEPREUNI 2015-2 · Física",
         "author": "Prof. Jorge Atalaya Z.",
         "upcoming": false
+      },
+      {
+        "catalog": "FASCÍCULOS DE FÍSICA",
+        "section": "Problemas de Física",
+        "title": "Fascículo 1: Análisis dimensional",
+        "url": "https://drive.google.com/file/d/1O4cBSioAQ1yFR_7h4e7RIFSrsnhny9tC/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/fisica-fasciculo-1.webp",
+        "series": "Fascículos de Física · Problemas",
+        "author": "Efraín Tarazona T.",
+        "upcoming": false
+      },
+      {
+        "catalog": "FASCÍCULOS DE FÍSICA",
+        "section": "Problemas de Física",
+        "title": "Fascículo 2: Análisis vectorial",
+        "url": "https://drive.google.com/file/d/1Ot4JkySCtdDcyBV4sjvA0b4nV9yWjYbf/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/fisica-fasciculo-2.webp",
+        "series": "Fascículos de Física · Problemas",
+        "author": "Efraín Tarazona T.",
+        "upcoming": false
+      },
+      {
+        "catalog": "FASCÍCULOS DE FÍSICA",
+        "section": "Problemas de Física",
+        "title": "Fascículo 4: Cinemática II",
+        "url": "https://drive.google.com/file/d/1kFY9irWVdV9vwjBSM_N66ReZhqtJR5Uk/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/fisica-fasciculo-4.webp",
+        "series": "Fascículos de Física · Problemas",
+        "author": "Efraín Tarazona T.",
+        "upcoming": false
+      },
+      {
+        "catalog": "FASCÍCULOS DE FÍSICA",
+        "section": "Problemas de Física",
+        "title": "Fascículo 5: Gráficas del movimiento mecánico",
+        "url": "https://drive.google.com/file/d/1hDN04WCX2304ub2YptsRsDSKjFNdtt54/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/fisica-fasciculo-5.webp",
+        "series": "Fascículos de Física · Problemas",
+        "author": "Efraín Tarazona T.",
+        "upcoming": false
+      },
+      {
+        "catalog": "FASCÍCULOS DE FÍSICA",
+        "section": "Problemas de Física",
+        "title": "Fascículo 8: Dinámica",
+        "url": "https://drive.google.com/file/d/1kVRKh4BBZIvcr1-64O8XdbKCgLptLvof/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/fisica-fasciculo-8.webp",
+        "series": "Fascículos de Física · Problemas",
+        "author": "Efraín Tarazona T.",
+        "upcoming": false
+      },
+      {
+        "catalog": "FASCÍCULOS DE FÍSICA",
+        "section": "Problemas de Física",
+        "title": "Fascículo 11: Cantidad de movimiento, impulsión y choques",
+        "url": "https://drive.google.com/file/d/1MjMFIO8Y0M6TD8I_f4Qzgk5WUZ7PYQAD/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/fisica-fasciculo-11.webp",
+        "series": "Fascículos de Física · Problemas",
+        "author": "Efraín Tarazona T.",
+        "upcoming": false
+      },
+      {
+        "catalog": "FASCÍCULOS DE FÍSICA",
+        "section": "Problemas de Física",
+        "title": "Fascículo 13: Ondas mecánicas",
+        "url": "https://drive.google.com/file/d/1LiwSmLUHAYpFRHKc__n5ZaXl3jqBfaKr/view?usp=drive_link",
+        "image": "/biblioteca/cuzcano/assets/fisica-fasciculo-13.webp",
+        "series": "Fascículos de Física · Problemas",
+        "author": "Efraín Tarazona T.",
+        "upcoming": false
       }
     ],
     "lumbreras": [
