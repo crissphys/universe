@@ -16988,16 +16988,6 @@
       {
         "catalog": "MATERIALES CEPREUNI",
         "section": "ARITMÉTICA",
-        "title": "Razones y proporciones",
-        "url": "https://drive.google.com/file/d/13_o5ADd6OgMpyOpQnCvHfFcbDK4RbKPt/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/aritmetica-semana-1-razones-proporciones-pre-2027-1.webp",
-        "series": "Aritmética · Semana 1",
-        "author": "24 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "ARITMÉTICA",
         "title": "Aritmética · Semana 2 · Magnitudes proporcionales",
         "url": "https://drive.google.com/file/d/15uzMGs9fG-upbRKVkYjvbUbaLSD20NsW/view?usp=drivesdk",
         "image": "/assets/library/editorials/cepreuni.png",
@@ -17037,66 +17027,6 @@
       },
       {
         "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOMETRÍA",
-        "title": "Geometría · Sesión 1a · Nociones básicas",
-        "url": "https://docs.google.com/presentation/d/1dFSbKWXUoKOdlE0hv580gpe6hIkLLyox/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Geometría · Presentación",
-        "author": "Geometría",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOMETRÍA",
-        "title": "Geometría · Sesión 1b · Ángulos",
-        "url": "https://docs.google.com/presentation/d/1cxnenwMzsnKdA-1NL3GJH-zxx09brO37/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Geometría · Presentación",
-        "author": "Geometría",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOMETRÍA",
-        "title": "Geometría · Sesión 2a · Triángulos y líneas notables",
-        "url": "https://docs.google.com/presentation/d/1G_maDowJgh6lzBFenvr8q0WrF3z0tUb3/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Geometría · Presentación",
-        "author": "Geometría",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOMETRÍA",
-        "title": "Geometría · Sesión 2b · Congruencia",
-        "url": "https://docs.google.com/presentation/d/1FQ1gzzsQXJo3V-3OU8GonRdvpXWuFkvm/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Geometría · Presentación",
-        "author": "Geometría",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOMETRÍA",
-        "title": "Geometría · Sesión 3a · Aplicaciones de la congruencia",
-        "url": "https://docs.google.com/presentation/d/1Vb7YLf0YFHDJy5TUgiEtqERWOINYByRM/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Geometría · Presentación",
-        "author": "Geometría",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOMETRÍA",
-        "title": "Geometría · Sesión 3b · Polígonos",
-        "url": "https://docs.google.com/presentation/d/19D0gDU_WI3X6J8tUoR2DZ_nvraiTHkWz/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Geometría · Presentación",
-        "author": "Geometría",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
         "section": "TRIGONOMETRÍA",
         "title": "Trigonometría — Sílabo",
         "url": "https://drive.google.com/file/d/1ray1vWed2upwr7Q8eOk4BlJ9U48MJ1tr/view?usp=drive_link",
@@ -17118,41 +17048,11 @@
       {
         "catalog": "MATERIALES CEPREUNI",
         "section": "TRIGONOMETRÍA",
-        "title": "Sistemas de medidas angulares",
-        "url": "https://drive.google.com/file/d/196TBqzbB1SiPfQZZrF2BE-2QbUixyEf6/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/trigonometria-semana-1-1-sistemas-medidas-angulares-pre-2027-1.webp",
-        "series": "Trigonometría · Semana 1.1",
-        "author": "30 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "TRIGONOMETRÍA",
-        "title": "Sector circular",
-        "url": "https://drive.google.com/file/d/1D0CT2JIMo9tpBHg1vVPEulmpuTBczmqx/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/trigonometria-semana-1-2-sector-circular-pre-2027-1.webp",
-        "series": "Trigonometría · Semana 1.2",
-        "author": "31 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "TRIGONOMETRÍA",
         "title": "Ruedas y poleas",
         "url": "https://drive.google.com/file/d/1g9TlQkihlSF_K8hQC7vK1CjaoHZMmn_q/view?usp=drive_link",
         "image": "/cepreuni/ciclopre20271/assets/trigonometria-semana-1-2-ruedas-poleas-pre-2027-1.webp",
         "series": "Trigonometría · Semana 1.2",
         "author": "8 páginas · Material de apoyo",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "TRIGONOMETRÍA",
-        "title": "Aplicaciones de la longitud de arco",
-        "url": "https://drive.google.com/file/d/1sX1mFE3BZxAQDAJgLBuuChcKCK8ADln9/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/trigonometria-semana-2-1-longitud-arco-pre-2027-1.webp",
-        "series": "Trigonometría · Semana 2.1",
-        "author": "27 páginas · Diapositivas",
         "upcoming": false
       },
       {
@@ -17267,42 +17167,12 @@
       },
       {
         "catalog": "MATERIALES CEPREUNI",
-        "section": "LENGUAJE",
-        "title": "Lenguaje · Semana 2 · Mayúsculas",
-        "url": "https://docs.google.com/presentation/d/1rjiS_mkjIA2W0A6-NDhz4nIUg_sXNxZt/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Lenguaje · Presentación",
-        "author": "Lenguaje",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "LENGUAJE",
-        "title": "Lenguaje · Semana 3 · Sílaba",
-        "url": "https://docs.google.com/presentation/d/1KKUfgCA2rSiyxryCyQdeSbSklBKt9GFD/edit?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Lenguaje · Presentación",
-        "author": "Lenguaje",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
         "section": "RAZONAMIENTO VERBAL",
         "title": "Razonamiento Verbal — Libro 1",
         "url": "https://drive.google.com/file/d/1f_Jh0cdK_nP2aLmXpwv-3k04zYbBeNEF/view?usp=drive_link",
         "image": "/cepreuni/ciclopre20271/assets/razonamiento-verbal-libro-1-pre-2027-1.webp",
         "series": "Razonamiento Verbal · Primer material",
         "author": "38 páginas · Material sin claves",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "RAZONAMIENTO VERBAL",
-        "title": "Definiciones",
-        "url": "https://drive.google.com/file/d/1Xxs6AB4nUlUixber5cj_SnZ_EGyNHcKq/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/razonamiento-verbal-semana-1-definiciones-pre-2027-1.webp",
-        "series": "Razonamiento Verbal · Semana 1",
-        "author": "21 páginas · Diapositivas",
         "upcoming": false
       },
       {
@@ -17317,46 +17187,6 @@
       },
       {
         "catalog": "MATERIALES CEPREUNI",
-        "section": "HISTORIA",
-        "title": "Hominización y prehistoria",
-        "url": "https://drive.google.com/file/d/1tJvKrX9LYsNvbMzPktD2MWLkRZG_2KDI/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/historia-semana-1-hominizacion-y-prehistoria-pre-2027-1.webp",
-        "series": "Historia · Semana 1",
-        "author": "14 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "HISTORIA",
-        "title": "Poblamiento americano y peruano",
-        "url": "https://drive.google.com/file/d/1yaeA60kAQnY1T0mVJcM90KVBz_zk5eQJ/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/historia-semana-2-poblamiento-americano-y-peruano-pre-2027-1.webp",
-        "series": "Historia · Semana 2",
-        "author": "12 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "HISTORIA",
-        "title": "Historia · PPT 03 · Florez",
-        "url": "https://drive.google.com/file/d/1I_Wt9BToFt-QeyQegG9FyYm45D9Tex1S/view?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Historia · PDF",
-        "author": "Historia",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "HISTORIA",
-        "title": "Historia · PPT 04 · Trillo",
-        "url": "https://drive.google.com/file/d/1oHE4X6kn3ng_83WKIgNS1HVC2vea5Krx/view?usp=drivesdk",
-        "image": "/assets/library/editorials/cepreuni.png",
-        "series": "Historia · PDF",
-        "author": "Historia",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
         "section": "GEOGRAFÍA",
         "title": "Geografía — Libro 1",
         "url": "https://drive.google.com/file/d/1lGCMPXDePvAWumqCl1fNyZ5-Z203J-V_/view?usp=drive_link",
@@ -17367,112 +17197,12 @@
       },
       {
         "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOGRAFÍA",
-        "title": "Teoría geográfica y localización",
-        "url": "https://drive.google.com/file/d/1nsUgIe4qQ0Rcw96RQRKeB0iyLgHDzfzH/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/geografia-tema-1-teoria-geografica-y-localizacion-pre-2027-1.webp",
-        "series": "Geografía · Tema 1",
-        "author": "25 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOGRAFÍA",
-        "title": "Representación del espacio geográfico",
-        "url": "https://drive.google.com/file/d/1z7E8pd0IOMLJ2Yi9TJrFRvKHB_ng2bxH/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/geografia-tema-2-representacion-espacio-pre-2027-1.webp",
-        "series": "Geografía · Tema 2",
-        "author": "24 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOGRAFÍA",
-        "title": "Perú en el contexto geopolítico",
-        "url": "https://drive.google.com/file/d/1IU3qHPKVSuedaPMm0HPWEgYNGMOIlgQ-/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/geografia-tema-3-contexto-geopolitico-pre-2027-1.webp",
-        "series": "Geografía · Tema 3",
-        "author": "20 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOGRAFÍA",
-        "title": "Perú y los acuerdos de integración",
-        "url": "https://drive.google.com/file/d/1fDN-Ie3li8wcVNh5BxgWwxcOHQIi4WNp/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/geografia-tema-4-acuerdos-integracion-pre-2027-1.webp",
-        "series": "Geografía · Tema 4",
-        "author": "27 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "GEOGRAFÍA",
-        "title": "Geografía humana y dinámica poblacional",
-        "url": "https://drive.google.com/file/d/12OEnMRBerHgiPZaJcwe-eJyy-K9Gu880/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/geografia-tema-5-dinamica-poblacional-pre-2027-1.webp",
-        "series": "Geografía · Tema 5",
-        "author": "20 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
         "section": "FILOSOFÍA",
         "title": "Filosofía — Libro 1",
         "url": "https://drive.google.com/file/d/15axCnFbga5tkmOYu4SzcOpzxoydU0gVK/view?usp=drive_link",
         "image": "/cepreuni/ciclopre20271/assets/filosofia-libro-1-pre-2027-1.webp",
         "series": "Filosofía · Primer material",
         "author": "43 páginas · Material de estudio",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "FILOSOFÍA",
-        "title": "Introducción a la filosofía",
-        "url": "https://drive.google.com/file/d/1rKWX-5XHkq1thVzzGsHCkPJJhsL91X3t/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/filosofia-semana-1-introduccion-a-la-filosofia-pre-2027-1.webp",
-        "series": "Filosofía · Semana 1",
-        "author": "17 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "FILOSOFÍA",
-        "title": "Período cosmológico",
-        "url": "https://drive.google.com/file/d/1NPdZBxAQV7_HNOX4BAxjBDtxr2YSKcvO/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/filosofia-semana-2-periodo-cosmologico-pre-2027-1.webp",
-        "series": "Filosofía · Semana 2",
-        "author": "26 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "FILOSOFÍA",
-        "title": "Período antropológico y Platón",
-        "url": "https://drive.google.com/file/d/1bg92ICVnsz0wUFazTDi8DAg0ebDzDUfu/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/filosofia-semana-3-periodo-antropologico-y-platon-pre-2027-1.webp",
-        "series": "Filosofía · Semana 3",
-        "author": "19 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "FILOSOFÍA",
-        "title": "Aristóteles y filosofía helenística",
-        "url": "https://drive.google.com/file/d/1RCitXNTqll40AhkvY3J9pdJBWuBBUaDh/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/filosofia-semana-4-aristoteles-y-filosofia-helenistica-pre-2027-1.webp",
-        "series": "Filosofía · Semana 4",
-        "author": "21 páginas · Diapositivas",
-        "upcoming": false
-      },
-      {
-        "catalog": "MATERIALES CEPREUNI",
-        "section": "FILOSOFÍA",
-        "title": "Filosofía moderna: Descartes y Hume",
-        "url": "https://drive.google.com/file/d/1Eu7Fm6aEcPfs--5lV534JHm0BLvxu3cJ/view?usp=drive_link",
-        "image": "/cepreuni/ciclopre20271/assets/filosofia-semana-5-filosofia-moderna-descartes-y-hume-pre-2027-1.webp",
-        "series": "Filosofía · Semana 5",
-        "author": "20 páginas · Diapositivas",
         "upcoming": false
       },
       {
