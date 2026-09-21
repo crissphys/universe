@@ -21,7 +21,7 @@ export function renderCatalog(out,key,data){
  // añade un nivel de jerarquía que no aporta nada.
  const courseOf=b=>(b.series||'').split('·')[0].trim();
  // En materiales CEPREUNI cada sección es un curso: se subdivide por tipo (sílabo, libro, clases, videos).
- const typeOf=b=>{const r=(b.series||'').split('·').slice(1).join('·');return /Sílabo|Horario|Documento/i.test(r)?'Sílabo y horarios':/Primer material|Material teórico|Libro/i.test(r)?'Libro':/Video/i.test(r)?'Videos':/Solucionario/i.test(r)?'Solucionarios':'Clases y material'};
+ const typeOf=b=>{const r=(b.series||'').split('·').slice(1).join('·');return /Sílabo|Horario|Documento/i.test(r)?'Sílabo y horarios':/Primer material|Material teórico|Libro/i.test(r)?'Libro':/Video/i.test(r)?'Videos':/Solucionario/i.test(r)?'Solucionarios':/Repaso/i.test(r)?'Repasos':'Clases y material'};
  function typeBlocks(items){const types=[...new Set(items.map(typeOf))];
   if(types.length<2)return `<div class="p-books">${items.map(book).join('')}</div>`;
   return types.map(x=>`<div class="catalog-course"><h4>${esc(x)}<small>${items.filter(b=>typeOf(b)===x).length}</small></h4><div class="p-books">${items.filter(b=>typeOf(b)===x).map(book).join('')}</div></div>`).join('')}
