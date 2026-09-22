@@ -6,7 +6,7 @@
   <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
   <meta name="color-scheme" content="dark light"><link rel="icon" href="/favicon.svg">
   <base href="/"><link rel="stylesheet" href="/universe-ui/style.css?v=20260912-cleanup"><link rel="stylesheet" href="/universe-ui/platform.css?v=20260913-library"><link rel="stylesheet" href="/universe-ui/refinements.css?v=20260912-cleanup"><script type="module" src="/universe-ui/app.js?v=20260920-applicants"></script>
-<script src="/universe-ui/auth.js?v=20260912-cleanup" defer></script><link rel="stylesheet" href="/universe-ui/native/account-cloud.css?v=20260912-cleanup"><link rel="stylesheet" href="/universe-ui/native.css?v=20260912-cleanup"><script src="/cepre-codes.js?v=20260912-cleanup" defer></script><script src="/account.js?v=20260912-cleanup" defer></script></head>
+<script src="/universe-ui/auth.js?v=20260912-cleanup" defer></script><link rel="stylesheet" href="/universe-ui/native/account-cloud.css?v=20260912-cleanup"><link rel="stylesheet" href="/universe-ui/native.css?v=20260912-cleanup"><script src="/cepre-codes.js?v=20260912-cleanup" defer></script><script src="/account.js?v=20260912-cleanup" defer></script><script src="/universe-ui/comunicados.js?v=1" defer></script></head>
 <body data-native="account/cloud" class="in-platform">
   <a class="skip-link" href="#native-main">Saltar al contenido</a>
   <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
@@ -176,20 +176,39 @@
         <div id="unitalk-report-status" class="account-status">Puedes revisar la publicación en UNITALK y marcar el reporte como atendido o descartado.</div>
       </article>
 
-      <article class="account-card p-panel p-tile">
+      <article id="comunicados-admin" class="account-card p-panel p-tile">
         <span class="account-kicker">Administrador</span>
-        <h2>Comunicado emergente del inicio</h2>
+        <h2>Comunicados</h2>
+        <p>Publica todos los que necesites. Cada persona verá cada comunicado una sola vez, en la página donde esté, y podrá cerrarlo con la X. Después queda disponible para todos en el botón «Comunicados».</p>
         <div class="account-form">
-          <div class="account-field"><label>Activo</label><select id="ann-active"><option value="true">Mostrar</option><option value="false">Ocultar</option></select></div>
-          <div class="account-field"><label>Título</label><input id="ann-title" placeholder="Nuevo comunicado"></div>
-          <div class="account-field full"><label>Mensaje</label><textarea id="ann-text" placeholder="Escribe el comunicado que verán todos."></textarea></div>
-          <div class="account-field"><label>Imágenes por URL</label><textarea id="ann-image-url" placeholder="Una dirección https:// por línea"></textarea></div>
-          <div class="account-field"><label>Subir imágenes</label><input id="ann-image-file" type="file" accept="image/png,image/jpeg,image/webp" multiple></div>
-          <p class="announcement-image-help">Puedes añadir todas las fotos que necesites. Cada archivo debe pesar menos de 750 KB para que el comunicado cargue con rapidez.</p>
+          <div class="account-field"><label for="com-title">Título</label><input id="com-title" maxlength="140" placeholder="Título del comunicado" autocomplete="off"></div>
+          <div class="account-field"><label for="com-subtitle">Subtítulo</label><input id="com-subtitle" maxlength="220" placeholder="Subtítulo (opcional)" autocomplete="off"></div>
+          <div class="account-field full">
+            <label id="com-body-label">Mensaje</label>
+            <div class="com-editor-box">
+              <div class="com-toolbar" role="toolbar" aria-label="Formato del texto">
+                <button type="button" data-com-fmt="bold" aria-pressed="false" aria-label="Negrita" title="Negrita (Ctrl+B)"><b>N</b></button>
+                <button type="button" data-com-fmt="italic" aria-pressed="false" aria-label="Cursiva" title="Cursiva (Ctrl+I)"><i>K</i></button>
+                <button type="button" data-com-fmt="underline" aria-pressed="false" aria-label="Subrayado" title="Subrayado (Ctrl+U)"><u>S</u></button>
+                <button type="button" data-com-fmt="strike" aria-pressed="false" aria-label="Tachado" title="Tachado"><s>T</s></button>
+                <span class="com-toolbar-gap" aria-hidden="true"></span>
+                <button type="button" data-com-fmt="sub" aria-pressed="false" aria-label="Subíndice" title="Subíndice"><span>x<sub>2</sub></span></button>
+                <button type="button" data-com-fmt="sup" aria-pressed="false" aria-label="Superíndice" title="Superíndice"><span>x<sup>2</sup></span></button>
+              </div>
+              <div id="com-body" class="com-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="com-body-label" data-placeholder="Escribe el comunicado. Los enlaces, correos y teléfonos se ponen en azul y se pueden tocar."></div>
+            </div>
+          </div>
+          <div class="account-field full">
+            <label for="com-image">Imagen (opcional, de cualquier tamaño)</label>
+            <input id="com-image" type="file" accept="image/*">
+            <small>Se optimiza automáticamente y se muestra completa, sin recortes, adaptada a la pantalla de cada persona.</small>
+          </div>
         </div>
-        <div id="ann-preview-gallery" class="announcement-preview-gallery" aria-label="Imágenes del comunicado"></div>
-        <div class="account-actions"><button class="account-btn button" type="button" data-save-ann>Publicar comunicado</button></div>
-        <div id="ann-status" class="account-status">Los usuarios lo verán en la página principal.</div>
+        <figure id="com-image-preview" class="com-image-preview" hidden><img alt="Vista previa de la imagen del comunicado"><button type="button" data-clear-com-image aria-label="Quitar imagen">×</button></figure>
+        <div class="account-actions"><button class="account-btn button primary" type="button" data-save-com>Publicar comunicado</button></div>
+        <div id="com-status" class="account-status" role="status">Los comunicados nuevos aparecen para todos apenas los publicas.</div>
+        <h3 class="com-list-title">Comunicados publicados <span id="com-count">0</span></h3>
+        <div id="com-list" class="admin-event-list com-list"><div class="account-status">Cargando comunicados...</div></div>
       </article>
 
       <article class="account-card p-panel p-tile">

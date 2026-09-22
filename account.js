@@ -22,7 +22,8 @@
     secureSessionRefreshed: false,
     public: {},
     reports: [],
-    announcementImages: [],
+    comunicados: [],
+    comImage: null,
     extraEvents: []
   };
 
@@ -376,13 +377,8 @@
     state.public = adminData[0] || {};
     state.reports = adminData[1] && adminData[1].reports || [];
     renderReports();
-    var a = state.public.announcement || {}, s = state.public.schedule || {}, c = s.countdowns || {};
-    $('ann-active').value = String(a.active !== false);
-    $('ann-title').value = a.title || '';
-    $('ann-text').value = a.text || '';
-    state.announcementImages = Array.isArray(a.images) ? a.images.slice() : (a.image ? [a.image] : []);
-    $('ann-image-url').value = state.announcementImages.filter(function (src) { return String(src).indexOf('data:') !== 0; }).join('\n');
-    renderAnnouncementImages();
+    var s = state.public.schedule || {}, c = s.countdowns || {};
+    loadComunicados();
     $('final-title').value = (c.final && c.final.title) || 'Examen final CEPREUNI';
     $('final-target').value = fromIso(c.final && c.final.target) || '2026-08-02T09:00';
     $('final-label').value = (c.final && c.final.label) || 'Dom. 2 ago - 9:00 AM';
@@ -439,33 +435,209 @@
     el.textContent = msg;
     el.dataset.state = type || '';
   }
-  function announcementUrls() {
-    var value = $('ann-image-url') ? $('ann-image-url').value : '';
-    return String(value || '').split(/\r?\n/).map(function (src) { return src.trim(); }).filter(function (src) { return /^https:\/\/[^\s"'<>]+$/i.test(src); });
+  // ---- Comunicados: varios, con imagen, título, subtítulo y texto con formato ----
+  var COMUNICADO_TEXT_LIMIT = 6000;
+  var COMUNICADO_IMAGE_SIDE = 2400;
+  var COMUNICADO_IMAGE_CHARS = 3000000;
+  var COM_COMMANDS = { bold: 'bold', italic: 'italic', underline: 'underline', strike: 'strikeThrough', sub: 'subscript', sup: 'superscript' };
+  var COM_ERRORS = {
+    title_required: 'Escribe un título.',
+    body_too_long: 'El mensaje supera los 6000 caracteres.',
+    image_invalid: 'La imagen no es válida. Prueba con otra.',
+    rate_limited: 'Demasiados intentos seguidos. Espera un minuto.',
+    admin_required: 'Solo el administrador puede hacer esto. Vuelve a iniciar sesión.'
+  };
+  function comApi(route, method, data) {
+    var headers = { 'Content-Type': 'application/json' };
+    try {
+      var token = localStorage.getItem(AUTH_TOKEN_KEY);
+      if (token) headers.Authorization = 'Bearer ' + token;
+    } catch (error) {}
+    var opt = { method: method || 'GET', cache: 'no-store', headers: headers };
+    if (data !== undefined) opt.body = JSON.stringify(data);
+    return fetch(API_BASE + '/comunicados' + route, opt).then(async function (r) {
+      var payload = await r.json().catch(function () { return {}; });
+      if (!r.ok) throw new Error(payload.error || 'http_' + r.status);
+      return payload;
+    });
   }
-  function syncAnnouncementUrls() {
-    var uploaded = state.announcementImages.filter(function (src) { return String(src).indexOf('data:image/') === 0; });
-    state.announcementImages = uploaded.concat(announcementUrls()).filter(function (src, index, list) { return list.indexOf(src) === index; });
+  function comError(error) {
+    return COM_ERRORS[error && error.message] || 'No se pudo completar la acción. Revisa tu conexión e inténtalo de nuevo.';
   }
-  function renderAnnouncementImages() {
-    var root = $('ann-preview-gallery');
+  function notifyComunicadosChanged() {
+    window.dispatchEvent(new CustomEvent('universe-comunicados-changed'));
+  }
+  async function loadComunicados() {
+    try {
+      var result = await comApi('', 'GET');
+      state.comunicados = Array.isArray(result.comunicados) ? result.comunicados : [];
+      renderComunicados();
+    } catch (error) {
+      status('com-status', 'No se pudieron cargar los comunicados publicados.', 'bad');
+    }
+  }
+  function renderComunicados() {
+    var root = $('com-list');
     if (!root) return;
-    root.innerHTML = state.announcementImages.map(function (src, index) {
-      return '<figure class="announcement-preview-item"><img src="' + safe(src) + '" alt="Vista previa ' + (index + 1) + '"><button type="button" data-remove-ann-image="' + index + '" aria-label="Quitar imagen ' + (index + 1) + '">×</button></figure>';
-    }).join('');
-    root.querySelectorAll('[data-remove-ann-image]').forEach(function (button) {
-      button.onclick = function () {
-        state.announcementImages.splice(Number(button.dataset.removeAnnImage), 1);
-        $('ann-image-url').value = state.announcementImages.filter(function (src) { return String(src).indexOf('data:') !== 0; }).join('\n');
-        renderAnnouncementImages();
+    if ($('com-count')) $('com-count').textContent = String(state.comunicados.length);
+    root.innerHTML = state.comunicados.length ? state.comunicados.map(function (item) {
+      var when = item.createdAt ? new Date(item.createdAt).toLocaleString('es-PE', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+      return '<div class="com-item" data-com-id="' + safe(item.id) + '">' +
+        '<div class="com-item-thumb">' + (item.image ? '<img alt="" loading="lazy" src="' + safe(item.image) + '">' : '<span aria-hidden="true">📢</span>') + '</div>' +
+        '<div class="com-item-copy"><strong>' + safe(item.title) + '</strong>' + (item.subtitle ? '<span>' + safe(item.subtitle) + '</span>' : '') + '<small>' + safe(when) + '</small></div>' +
+        '<button class="account-btn danger button" type="button" data-del-com="' + safe(item.id) + '">Eliminar</button></div>';
+    }).join('') : '<div class="account-status">Todavía no hay comunicados publicados.</div>';
+    root.querySelectorAll('[data-del-com]').forEach(function (button) {
+      button.onclick = async function () {
+        if (!window.confirm('¿Eliminar este comunicado? Dejará de mostrarse para todos.')) return;
+        button.disabled = true;
+        try {
+          await comApi('/' + encodeURIComponent(button.dataset.delCom), 'DELETE');
+          state.comunicados = state.comunicados.filter(function (item) { return item.id !== button.dataset.delCom; });
+          renderComunicados();
+          status('com-status', 'Comunicado eliminado.', 'good');
+          notifyComunicadosChanged();
+        } catch (error) {
+          button.disabled = false;
+          status('com-status', comError(error), 'bad');
+        }
       };
     });
   }
-  async function saveAnnouncement() {
+  // Reduce cualquier imagen (de cualquier tamaño o formato) sin recortarla ni deformarla.
+  function compressComunicadoImage(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var image = new Image();
+      image.onerror = function () { URL.revokeObjectURL(url); reject(new Error('unreadable')); };
+      image.onload = function () {
+        URL.revokeObjectURL(url);
+        var width = image.naturalWidth, height = image.naturalHeight;
+        if (!width || !height) { reject(new Error('unreadable')); return; }
+        var scale = Math.min(1, COMUNICADO_IMAGE_SIDE / Math.max(width, height));
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var qualities = [0.9, 0.82, 0.74, 0.66, 0.58];
+        for (var attempt = 0; attempt < 9; attempt += 1) {
+          var w = Math.max(1, Math.round(width * scale)), h = Math.max(1, Math.round(height * scale));
+          canvas.width = w; canvas.height = h;
+          ctx.clearRect(0, 0, w, h);
+          ctx.drawImage(image, 0, 0, w, h);
+          var quality = qualities[Math.min(attempt, qualities.length - 1)];
+          var dataUrl = canvas.toDataURL('image/webp', quality);
+          if (dataUrl.indexOf('data:image/webp') !== 0) {
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, w, h);
+            ctx.globalCompositeOperation = 'source-over';
+            dataUrl = canvas.toDataURL('image/jpeg', quality);
+          }
+          if (dataUrl.length <= COMUNICADO_IMAGE_CHARS) {
+            resolve({ dataUrl: dataUrl, width: w, height: h, kb: Math.round(dataUrl.length * 0.75 / 1024) });
+            return;
+          }
+          if (attempt >= qualities.length - 1) scale *= 0.82;
+        }
+        reject(new Error('too_large'));
+      };
+      image.src = url;
+    });
+  }
+  function clearComunicadoImage() {
+    state.comImage = null;
+    if ($('com-image')) $('com-image').value = '';
+    if ($('com-image-preview')) {
+      $('com-image-preview').hidden = true;
+      $('com-image-preview').querySelector('img').removeAttribute('src');
+    }
+  }
+  async function pickComunicadoImage(file) {
+    if (!/^image\//i.test(file.type)) { status('com-status', 'Elige un archivo de imagen (JPG, PNG, WebP, etc.).', 'bad'); return; }
+    status('com-status', 'Preparando la imagen...', 'warn');
+    try {
+      state.comImage = await compressComunicadoImage(file);
+      $('com-image-preview').querySelector('img').src = state.comImage.dataUrl;
+      $('com-image-preview').hidden = false;
+      status('com-status', 'Imagen lista (' + state.comImage.width + ' × ' + state.comImage.height + ' px, ' + state.comImage.kb + ' KB). Se mostrará completa, sin recortes.', 'good');
+    } catch (error) {
+      clearComunicadoImage();
+      status('com-status', 'No se pudo leer esa imagen. Prueba con otro archivo JPG, PNG o WebP.', 'bad');
+    }
+  }
+  function comEditorText() {
+    return ($('com-body').textContent || '').replace(/\xa0/g, ' ').trim();
+  }
+  function syncComEditorState() {
+    var editor = $('com-body');
+    if (!editor) return;
+    editor.dataset.empty = comEditorText() === '' ? 'true' : 'false';
+    document.querySelectorAll('[data-com-fmt]').forEach(function (button) {
+      var pressed = false;
+      try { pressed = document.activeElement === editor && document.queryCommandState(COM_COMMANDS[button.dataset.comFmt]); } catch (error) {}
+      button.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    });
+  }
+  async function saveComunicado() {
     if (!isAdmin()) return;
-    syncAnnouncementUrls();
-    await api('/public/announcement', 'PUT', { active: $('ann-active').value === 'true', title: $('ann-title').value.trim(), text: $('ann-text').value.trim(), image: state.announcementImages[0] || '', images: state.announcementImages, updatedAt: Date.now(), updatedBy: state.user.email });
-    status('ann-status', 'Comunicado publicado correctamente.', 'good');
+    var title = $('com-title').value.trim();
+    if (!title) { status('com-status', 'Escribe un título.', 'bad'); $('com-title').focus(); return; }
+    if (comEditorText().length > COMUNICADO_TEXT_LIMIT) { status('com-status', 'El mensaje supera los 6000 caracteres.', 'bad'); return; }
+    var button = document.querySelector('[data-save-com]');
+    button.disabled = true;
+    status('com-status', 'Publicando comunicado...', 'warn');
+    try {
+      await comApi('', 'POST', {
+        title: title,
+        subtitle: $('com-subtitle').value.trim(),
+        body: comEditorText() ? $('com-body').innerHTML : '',
+        image: state.comImage ? state.comImage.dataUrl : '',
+        imageWidth: state.comImage ? state.comImage.width : 0,
+        imageHeight: state.comImage ? state.comImage.height : 0
+      });
+      $('com-title').value = '';
+      $('com-subtitle').value = '';
+      $('com-body').innerHTML = '';
+      clearComunicadoImage();
+      syncComEditorState();
+      status('com-status', 'Comunicado publicado. Ya lo ve todo el mundo.', 'good');
+      await loadComunicados();
+      notifyComunicadosChanged();
+    } catch (error) {
+      status('com-status', comError(error), 'bad');
+    } finally {
+      button.disabled = false;
+    }
+  }
+  function bindComunicados() {
+    var editor = $('com-body');
+    if (!editor) return;
+    editor.dataset.empty = 'true';
+    document.querySelectorAll('[data-com-fmt]').forEach(function (button) {
+      // mousedown no le quita la selección al editor; el clic aplica el formato.
+      button.addEventListener('mousedown', function (event) { event.preventDefault(); });
+      button.addEventListener('click', function () {
+        editor.focus();
+        try { document.execCommand('styleWithCSS', false, false); } catch (error) {}
+        document.execCommand(COM_COMMANDS[button.dataset.comFmt], false, null);
+        syncComEditorState();
+      });
+    });
+    editor.addEventListener('paste', function (event) {
+      event.preventDefault();
+      var text = (event.clipboardData || window.clipboardData).getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+    ['input', 'keyup', 'mouseup', 'focus', 'blur'].forEach(function (name) { editor.addEventListener(name, syncComEditorState); });
+    document.addEventListener('selectionchange', function () { if (document.activeElement === editor) syncComEditorState(); });
+    $('com-image').addEventListener('change', function () {
+      var file = this.files && this.files[0];
+      if (file) pickComunicadoImage(file);
+    });
+    document.querySelector('[data-clear-com-image]').onclick = function () {
+      clearComunicadoImage();
+      status('com-status', 'Imagen quitada.', 'warn');
+    };
+    document.querySelector('[data-save-com]').onclick = saveComunicado;
   }
   async function saveSchedule() {
     if (!isAdmin()) return;
@@ -538,30 +710,9 @@
     ['academic-track', 'academy-name', 'academy-cycle', 'cepre-cycle', 'cepre-program', 'uni-career', 'uni-cycle', 'community-intent', 'community-target'].forEach(function (id) {
       if ($(id)) $(id).addEventListener('change', toggleAcademicFields);
     });
-    document.querySelector('[data-save-ann]').onclick = saveAnnouncement;
+    bindComunicados();
     document.querySelector('[data-save-schedule]').onclick = saveSchedule;
     document.querySelector('[data-add-event]').onclick = addEvent;
-    $('ann-image-url').addEventListener('change', function () { syncAnnouncementUrls(); renderAnnouncementImages(); });
-    $('ann-image-file').onchange = function () {
-      var input = this;
-      var files = Array.from(input.files || []);
-      if (!files.length) return;
-      var valid = files.filter(function (file) { return /^image\/(?:png|jpeg|webp)$/i.test(file.type) && file.size <= 750000; });
-      if (valid.length !== files.length) status('ann-status', 'Se omitieron imágenes inválidas o mayores de 750 KB.', 'bad');
-      Promise.all(valid.map(function (file) {
-        return new Promise(function (resolve) {
-          var reader = new FileReader();
-          reader.onload = function () { resolve(String(reader.result || '')); };
-          reader.onerror = function () { resolve(''); };
-          reader.readAsDataURL(file);
-        });
-      })).then(function (images) {
-        state.announcementImages = state.announcementImages.concat(images.filter(Boolean)).filter(function (src, index, list) { return list.indexOf(src) === index; });
-        renderAnnouncementImages();
-        if (valid.length === files.length) status('ann-status', valid.length + (valid.length === 1 ? ' imagen añadida.' : ' imágenes añadidas.'), 'good');
-      });
-      input.value = '';
-    };
     $('community-avatar-file').onchange = function () {
       var file = this.files && this.files[0];
       if (file) prepareCommunityAvatar(file);

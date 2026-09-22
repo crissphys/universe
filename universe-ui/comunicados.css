@@ -1,0 +1,106 @@
+/* Comunicados: popup de una sola vez, botón flotante y lista completa. Usa los tokens del sitio. */
+:root{--uc-bg:var(--solid);--uc-surface:var(--surface);--uc-line:var(--line);--uc-muted:var(--muted);--uc-text:var(--text);--uc-font:var(--display,Manrope,system-ui,sans-serif);--uc-link:#5aa2ff;--uc-ease:cubic-bezier(.23,1,.32,1);--uc-img-h:min(68dvh,760px)}
+:root[data-theme=light]{--uc-link:#0b57d0}
+/* Páginas heredadas sin las variables del sitio nuevo: paleta oscura propia. */
+html[data-uc-standalone]{--uc-bg:#111218;--uc-surface:#0d0e14ee;--uc-line:#ffffff24;--uc-muted:#a1a2b0;--uc-text:#f5f5f7;--uc-font:system-ui,-apple-system,"Segoe UI",sans-serif}
+html.uc-lock{overflow:hidden}
+
+/* ---------- Botón flotante ---------- */
+.uc-fab{position:fixed;left:24px;bottom:24px;z-index:12;display:flex;align-items:center;gap:10px;padding:13px 17px;border-radius:30px;border:1px solid var(--uc-line);background:var(--uc-surface);color:var(--uc-text);font:600 10px/1 var(--uc-font);letter-spacing:.02em;backdrop-filter:blur(14px) saturate(160%);cursor:pointer;transition:transform 160ms var(--uc-ease),border-color 200ms ease;animation:uc-fab-in .5s var(--uc-ease) .2s backwards}
+.uc-fab:active{transform:scale(.97)}
+.uc-fab svg{width:17px;height:17px}
+.uc-fab b{display:grid;place-items:center;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--uc-link);color:#fff;font-size:10px;font-weight:700;font-variant-numeric:tabular-nums}
+body.immersive .uc-fab{display:none}
+@media(hover:hover) and (pointer:fine){.uc-fab:hover{transform:translateY(-2px);border-color:var(--uc-link)}.uc-fab:active{transform:scale(.97)}}
+@keyframes uc-fab-in{from{opacity:0;transform:translateY(8px)}}
+
+/* ---------- Diálogo (material translúcido) ---------- */
+dialog.uc-dialog{position:fixed;padding:0;margin:auto;border:1px solid var(--uc-line);border-top-color:color-mix(in srgb,var(--uc-text) 22%,var(--uc-line));border-radius:20px;background:color-mix(in srgb,var(--uc-bg) 92%,transparent);backdrop-filter:blur(28px) saturate(170%);color:var(--uc-text);width:min(94vw,var(--uc-width,720px));max-width:none;max-height:min(92dvh,980px);overflow:hidden;box-shadow:0 1px 0 color-mix(in srgb,var(--uc-text) 8%,transparent) inset,0 40px 120px -20px #000c,0 12px 32px -12px #0008;will-change:transform,opacity}
+dialog.uc-dialog[open]{display:flex;flex-direction:column;animation:uc-in 300ms var(--uc-ease) backwards}
+dialog.uc-dialog::backdrop{background:#0009;backdrop-filter:blur(12px)}
+dialog.uc-dialog[open]::backdrop{animation:uc-fade 300ms ease-out backwards}
+/* La salida es más rápida que la entrada: el sistema responde, la persona ya decidió. */
+dialog.uc-dialog[data-closing]{animation:uc-out 170ms var(--uc-ease) forwards}
+dialog.uc-dialog[data-closing]::backdrop{animation:uc-fade-out 170ms ease-out forwards}
+dialog.uc-dialog[data-dragging]{transition:none;animation:none}
+dialog.uc-dialog[data-released]{transition:transform 240ms var(--uc-ease),opacity 200ms ease-out}
+dialog.uc-panel{--uc-width:820px}
+@keyframes uc-in{from{opacity:0;transform:translateY(14px) scale(.96)}}
+@keyframes uc-out{to{opacity:0;transform:translateY(6px) scale(.97)}}
+@keyframes uc-fade{from{opacity:0}}
+@keyframes uc-fade-out{to{opacity:0}}
+@keyframes uc-rise{from{opacity:0;transform:translateY(10px)}}
+
+.uc-scroll{overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;min-height:0}
+.uc-card{padding:clamp(20px,3.6vw,34px)}
+.uc-panel .uc-card+.uc-card{border-top:1px solid var(--uc-line)}
+
+/* Aparición escalonada del contenido (cortos, 45 ms entre elementos). */
+.uc-popup .uc-card>*,.uc-panel .uc-card:nth-child(-n+3)>*{animation:uc-rise 360ms var(--uc-ease) backwards}
+.uc-card>:nth-child(1){animation-delay:70ms!important}
+.uc-card>:nth-child(2){animation-delay:115ms!important}
+.uc-card>:nth-child(3){animation-delay:160ms!important}
+.uc-card>:nth-child(4){animation-delay:205ms!important}
+.uc-card>:nth-child(5){animation-delay:250ms!important}
+
+.uc-meta{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 18px;min-height:40px}
+.uc-popup .uc-meta{padding-right:54px}
+.uc-eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--uc-muted)}
+.uc-eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--uc-link);box-shadow:0 0 12px var(--uc-link)}
+.uc-date{font-size:11px;color:var(--uc-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.uc-close{transition:transform 160ms var(--uc-ease),background-color 200ms ease}
+.uc-close:active{transform:scale(.94)}
+.uc-popup .uc-close{position:absolute;top:14px;right:14px;z-index:3;width:44px;height:44px;background:color-mix(in srgb,var(--uc-bg) 80%,transparent);backdrop-filter:blur(12px)}
+/* Agarradera para cerrar arrastrando hacia abajo (solo en pantallas táctiles). */
+.uc-grab{display:none;flex:none;justify-content:center;align-items:flex-start;padding:8px 0 4px;touch-action:none;cursor:grab}
+.uc-grab i{width:38px;height:5px;border-radius:3px;background:color-mix(in srgb,var(--uc-text) 26%,transparent)}
+@media(pointer:coarse){.uc-grab{display:flex}}
+
+/* ---------- Imagen: siempre completa, sin recortes y sin saltos de layout ---------- */
+.uc-figure{position:relative;margin:0 auto 22px;border-radius:14px;overflow:hidden;background:color-mix(in srgb,var(--uc-text) 7%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--uc-text) 10%,transparent) inset}
+.uc-figure.has-ratio{width:min(100%,calc(var(--w)*1px),calc(var(--r)*var(--uc-img-h)));aspect-ratio:var(--r)}
+.uc-figure.has-ratio img{display:block;width:100%;height:100%;object-fit:contain}
+.uc-figure:not(.has-ratio){display:flex;align-items:center;justify-content:center}
+.uc-figure:not(.has-ratio) img{display:block;width:auto;height:auto;max-width:100%;max-height:var(--uc-img-h);object-fit:contain}
+.uc-figure img{opacity:0;transition:opacity 260ms ease-out}
+.uc-figure img.is-loaded{opacity:1}
+
+/* ---------- Texto ---------- */
+.uc-title{margin:0;font-size:clamp(23px,3.6vw,34px);line-height:1.1;letter-spacing:-.035em;font-weight:700;overflow-wrap:anywhere;text-wrap:balance}
+.uc-sub{margin:12px 0 0;font-size:clamp(14px,1.6vw,17px);line-height:1.55;letter-spacing:-.005em;color:var(--uc-muted);overflow-wrap:anywhere;text-wrap:pretty}
+.uc-body{margin-top:20px;font-size:clamp(14.5px,1.5vw,15.5px);line-height:1.75;color:var(--uc-text);overflow-wrap:anywhere;text-wrap:pretty}
+.uc-body sub,.uc-body sup{font-size:.72em;line-height:0}
+.uc-body a{color:var(--uc-link);font-weight:600;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,var(--uc-link) 55%,transparent);transition:text-decoration-color 160ms ease}
+@media(hover:hover) and (pointer:fine){.uc-body a:hover{text-decoration-color:var(--uc-link)}}
+
+/* ---------- Lista completa ---------- */
+.uc-panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px 16px clamp(20px,3.6vw,34px);border-bottom:1px solid transparent;background:color-mix(in srgb,var(--uc-bg) 60%,transparent);transition:border-color 200ms ease}
+.uc-panel[data-scrolled] .uc-panel-head{border-bottom-color:var(--uc-line)}
+.uc-panel-head h2{margin:0;font-size:22px;letter-spacing:-.04em}
+.uc-panel-head small{display:block;margin-top:4px;font-size:11px;color:var(--uc-muted)}
+
+@media(max-width:760px){
+  .uc-fab{left:15px;bottom:15px;padding:11px 14px;font-size:9px}
+  dialog.uc-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);border-radius:18px}
+  :root{--uc-img-h:min(62dvh,640px)}
+}
+@media(max-height:520px){:root{--uc-img-h:min(70dvh,760px)}}
+
+/* ---------- Accesibilidad: movimiento, transparencia y contraste ---------- */
+@media(prefers-reduced-motion:reduce){
+  dialog.uc-dialog[open]{animation:uc-fade 200ms ease-out backwards}
+  dialog.uc-dialog[data-closing]{animation:uc-fade-out 120ms ease-out forwards}
+  .uc-popup .uc-card>*,.uc-panel .uc-card>*,.uc-fab{animation:none}
+}
+.motion-off dialog.uc-dialog[open]{animation:uc-fade 200ms ease-out backwards}
+.motion-off .uc-popup .uc-card>*,.motion-off .uc-panel .uc-card>*,.motion-off .uc-fab{animation:none}
+@media(prefers-reduced-transparency:reduce){
+  dialog.uc-dialog{background:var(--uc-bg);backdrop-filter:none}
+  dialog.uc-dialog::backdrop{backdrop-filter:none;background:#000c}
+  .uc-fab,.uc-popup .uc-close,.uc-panel-head{backdrop-filter:none;background:var(--uc-bg)}
+}
+@media(prefers-contrast:more){
+  dialog.uc-dialog{border-color:var(--uc-text)}
+  .uc-body a{text-decoration-color:var(--uc-link)}
+}
