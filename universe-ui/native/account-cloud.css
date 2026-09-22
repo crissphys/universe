@@ -54,3 +54,38 @@
     @media(max-width:560px){.account-profile-identity{grid-template-columns:1fr;text-align:center}.account-profile-copy p{margin-inline:auto}.account-profile-badges{justify-content:center}.account-profile-overview>.account-btn{align-self:center}.account-avatar-editor .account-avatar{width:96px;height:96px}.settings-section{padding:22px 16px}.account-settings-intro,.account-save-bar{padding:22px 16px}.account-save-bar .account-actions{display:grid}.account-save-bar .account-btn{width:100%}}
   
 }
+
+/* Comunicados: editor con formato, vista previa de imagen y lista para eliminar. */
+#comunicados-admin>p{margin:0 0 16px;line-height:1.55}
+#comunicados-admin .com-editor-box{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--soft)}
+#comunicados-admin .com-editor-box:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 22%,transparent)}
+#comunicados-admin .com-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:6px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--solid) 70%,transparent)}
+#comunicados-admin .com-toolbar button{display:grid;place-items:center;min-width:36px;height:34px;padding:0 9px;border:1px solid transparent;border-radius:7px;font-size:14px;line-height:1;cursor:pointer}
+#comunicados-admin .com-toolbar button:hover{background:var(--soft);border-color:var(--line)}
+#comunicados-admin .com-toolbar button[aria-pressed=true]{background:var(--blue);color:var(--bg);border-color:var(--blue)}
+#comunicados-admin .com-toolbar sub,#comunicados-admin .com-toolbar sup{font-size:.7em}
+#comunicados-admin .com-toolbar-gap{width:1px;height:20px;margin:0 4px;background:var(--line)}
+#comunicados-admin .com-editor{min-height:150px;max-height:380px;overflow:auto;padding:13px 14px;font-size:14px;line-height:1.7;outline:0;overflow-wrap:anywhere}
+#comunicados-admin .com-editor[data-empty=true]:before{content:attr(data-placeholder);color:var(--muted);pointer-events:none}
+#comunicados-admin .com-editor sub,#comunicados-admin .com-editor sup{font-size:.72em;line-height:0}
+#comunicados-admin .com-image-preview{position:relative;display:flex;justify-content:center;margin:14px 0 0;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+#comunicados-admin .com-image-preview[hidden]{display:none}
+#comunicados-admin .com-image-preview img{display:block;max-width:100%;max-height:300px;width:auto;height:auto;object-fit:contain;border-radius:8px}
+#comunicados-admin .com-image-preview button{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--solid);font-size:20px;line-height:1;cursor:pointer}
+#comunicados-admin .com-list-title{margin:26px 0 0;font-size:1.05rem;display:flex;align-items:center;gap:10px}
+#comunicados-admin .com-list-title span{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 8px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:.78rem}
+#comunicados-admin .com-item{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:14px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+#comunicados-admin .com-item-thumb{width:64px;height:64px;border-radius:8px;overflow:hidden;display:grid;place-items:center;background:color-mix(in srgb,var(--text) 8%,transparent);font-size:1.4rem}
+#comunicados-admin .com-item-thumb img{width:100%;height:100%;object-fit:cover}
+#comunicados-admin .com-item-copy{min-width:0}
+#comunicados-admin .com-item-copy strong{display:block;overflow-wrap:anywhere;line-height:1.3}
+#comunicados-admin .com-item-copy span{display:block;margin-top:2px;overflow-wrap:anywhere;color:var(--muted);font-size:.85rem}
+#comunicados-admin .com-item-copy small{display:block;margin-top:4px;color:var(--muted);font-size:.75rem}
+@media(max-width:560px){#comunicados-admin .com-item{grid-template-columns:52px minmax(0,1fr)}#comunicados-admin .com-item-thumb{width:52px;height:52px}#comunicados-admin .com-item .account-btn{grid-column:1/-1}}
+#comunicados-admin .account-actions .account-btn,#comunicados-admin .com-item .account-btn{border:1px solid var(--line);border-radius:10px;background:var(--soft);transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 200ms ease,border-color 200ms ease}
+#comunicados-admin .account-btn:active{transform:scale(.97)}
+#comunicados-admin .account-btn.primary{background:var(--text);color:var(--bg);border-color:var(--text)}
+#comunicados-admin .account-btn.danger{color:#ff8f8f;border-color:color-mix(in srgb,#ff8f8f 40%,var(--line))}
+#comunicados-admin .account-btn:disabled{opacity:.55}
+#comunicados-admin .com-toolbar button span{display:inline-block;line-height:1}
+:root[data-theme=light] #comunicados-admin .account-btn.danger{color:#c0362c;border-color:color-mix(in srgb,#c0362c 40%,var(--line))}

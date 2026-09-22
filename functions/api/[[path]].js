@@ -398,6 +398,93 @@ function sanitizePublicSiteData(data) {
   };
 }
 
+const COMUNICADOS_ROOT = SITE_ROOT + '/comunicados';
+const COMUNICADO_IMAGES_ROOT = SITE_ROOT + '/comunicadoImages';
+const COMUNICADO_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
+const COMUNICADO_IMAGE_MAX_BASE64 = 4200000;
+const COMUNICADO_BODY_MAX_TEXT = 6000;
+const RICH_TAGS = { b: 'b', strong: 'b', i: 'i', em: 'i', u: 'u', ins: 'u', s: 's', strike: 's', del: 's', sub: 'sub', sup: 'sup' };
+const RICH_BLOCKS = ['div', 'p', 'li', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'tr'];
+
+function escapeHtml(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function decodeBasicEntities(value) {
+  return String(value)
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&amp;/gi, '&');
+}
+
+// Deja pasar solo negrita, cursiva, subrayado, tachado, subíndice, superíndice y saltos de línea.
+// Todo lo demás (atributos, scripts, estilos, enlaces) se descarta; el texto se escapa.
+function sanitizeRichText(value, maxText) {
+  var source = cleanText(value, 60000);
+  var tokens = source.match(/<!--[\s\S]*?-->|<\/?[a-zA-Z][^>]*>|[^<]+|</g) || [];
+  var out = '';
+  var stack = [];
+  var skipUntil = '';
+  var textLength = 0;
+  for (var i = 0; i < tokens.length; i += 1) {
+    var token = tokens[i];
+    if (token.charAt(0) === '<' && token.length > 1) {
+      if (token.slice(0, 4) === '<!--') continue;
+      var tag = /^<\s*(\/?)\s*([a-zA-Z][a-zA-Z0-9]*)/.exec(token);
+      if (!tag) continue;
+      var closing = tag[1] === '/';
+      var name = tag[2].toLowerCase();
+      if (skipUntil) {
+        if (closing && name === skipUntil) skipUntil = '';
+        continue;
+      }
+      if (!closing && (name === 'script' || name === 'style')) { skipUntil = name; continue; }
+      if (name === 'br') { if (!closing) out += '<br>'; continue; }
+      if (RICH_TAGS[name]) {
+        var canonical = RICH_TAGS[name];
+        if (!closing) {
+          if (stack.length < 6) { stack.push(canonical); out += '<' + canonical + '>'; }
+        } else {
+          var at = stack.lastIndexOf(canonical);
+          if (at >= 0) while (stack.length > at) out += '</' + stack.pop() + '>';
+        }
+        continue;
+      }
+      if (RICH_BLOCKS.indexOf(name) >= 0 && out && !/<br>$/.test(out)) out += '<br>';
+      continue;
+    }
+    if (skipUntil) continue;
+    var text = decodeBasicEntities(token).replace(/[\r\n\t]+/g, ' ');
+    textLength += text.length;
+    out += escapeHtml(text);
+  }
+  if (textLength > maxText) return null;
+  out = out.replace(/(?:<br>){3,}/g, '<br><br>').replace(/^(?:<br>)+/, '').replace(/(?:<br>)+$/, '');
+  while (stack.length) out += '</' + stack.pop() + '>';
+  return { html: out, textLength: textLength };
+}
+
+function publicComunicado(id, row) {
+  row = row && typeof row === 'object' ? row : {};
+  id = cleanId(row.id || id).slice(0, 64);
+  var body = sanitizeRichText(row.body, COMUNICADO_BODY_MAX_TEXT);
+  var createdAt = Number(row.createdAt) || 0;
+  var hasImage = row.hasImage === true;
+  return {
+    id: id,
+    title: cleanText(row.title, 140),
+    subtitle: cleanText(row.subtitle, 220),
+    body: body ? body.html : '',
+    image: hasImage ? '/api/site/comunicados/' + id + '/image?v=' + createdAt : '',
+    imageWidth: hasImage ? Math.max(0, Math.min(20000, Math.round(Number(row.imageWidth)) || 0)) : 0,
+    imageHeight: hasImage ? Math.max(0, Math.min(20000, Math.round(Number(row.imageHeight)) || 0)) : 0,
+    createdAt: createdAt
+  };
+}
+
 function sanitizeImage(value) {
   var src = '';
   if (typeof value === 'string') src = value;
@@ -1079,6 +1166,75 @@ async function handleRankingSurvey(request, env, auth, method, data) {
   return json({ ok: true, survey: publicRankingSurvey(survey) });
 }
 
+async function handleComunicados(request, env, auth, method, path, data) {
+  var imageRoute = path.match(/^\/comunicados\/([a-zA-Z0-9_-]{1,64})\/image$/);
+  if (imageRoute && method === 'GET') {
+    var stored = await firebase(env, COMUNICADO_IMAGES_ROOT + '/' + imageRoute[1], 'GET');
+    if (!stored || !stored.data || !COMUNICADO_IMAGE_TYPES.includes(stored.mime)) return json({ error: 'not_found' }, 404);
+    return new Response(decodeBase64(stored.data), {
+      headers: {
+        'Content-Type': stored.mime,
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        'X-Content-Type-Options': 'nosniff'
+      }
+    });
+  }
+
+  if (path === '/comunicados' && method === 'GET') {
+    var rows = await firebase(env, COMUNICADOS_ROOT, 'GET') || {};
+    var list = Object.keys(rows).map(function (key) { return publicComunicado(key, rows[key]); })
+      .filter(function (item) { return item.id && item.title; });
+    list.sort(function (left, right) { return right.createdAt - left.createdAt; });
+    return json({ comunicados: list.slice(0, 300) }, 200, { 'Cache-Control': 'public, max-age=15' });
+  }
+
+  if (!auth || !auth.admin) return json({ error: 'admin_required' }, 403);
+
+  if (path === '/comunicados' && method === 'POST') {
+    if (!rateLimit(request, 'comunicados-create', 30, 60000)) return json({ error: 'rate_limited' }, 429);
+    data = data && typeof data === 'object' ? data : {};
+    var title = cleanText(data.title, 140);
+    if (!title) return json({ error: 'title_required' }, 400);
+    var body = sanitizeRichText(data.body, COMUNICADO_BODY_MAX_TEXT);
+    if (!body) return json({ error: 'body_too_long' }, 400);
+    var image = null;
+    if (data.image) {
+      var parts = /^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/.exec(String(data.image));
+      if (!parts || parts[2].length > COMUNICADO_IMAGE_MAX_BASE64) return json({ error: 'image_invalid' }, 400);
+      var head = null;
+      try { head = decodeBase64(parts[2].slice(0, 64)); } catch (error) { head = null; }
+      if (!validAttachmentSignature('image', parts[1], head)) return json({ error: 'image_invalid' }, 400);
+      image = { mime: parts[1], data: parts[2] };
+    }
+    var id = Date.now().toString(36) + randomHex(3);
+    var record = {
+      id: id,
+      title: title,
+      subtitle: cleanText(data.subtitle, 220),
+      body: body.html,
+      hasImage: !!image,
+      imageWidth: image ? Math.max(0, Math.min(20000, Math.round(Number(data.imageWidth)) || 0)) : 0,
+      imageHeight: image ? Math.max(0, Math.min(20000, Math.round(Number(data.imageHeight)) || 0)) : 0,
+      createdAt: Date.now(),
+      createdBy: auth.id
+    };
+    if (image) await firebase(env, COMUNICADO_IMAGES_ROOT + '/' + id, 'PUT', image);
+    await firebase(env, COMUNICADOS_ROOT + '/' + id, 'PUT', record);
+    return json({ ok: true, comunicado: publicComunicado(id, record) });
+  }
+
+  var target = path.match(/^\/comunicados\/([a-zA-Z0-9_-]{1,64})$/);
+  if (target && method === 'DELETE') {
+    await Promise.all([
+      firebase(env, COMUNICADOS_ROOT + '/' + target[1], 'DELETE'),
+      firebase(env, COMUNICADO_IMAGES_ROOT + '/' + target[1], 'DELETE')
+    ]);
+    return json({ ok: true });
+  }
+
+  return json({ error: 'method_not_allowed' }, 405);
+}
+
 async function handleSite(request, env, subpath) {
   var auth = await verifySession(request, env);
   var method = request.method.toUpperCase();
@@ -1142,6 +1298,7 @@ async function handleSite(request, env, subpath) {
     return json({ ok: true, active: activeVisitors, windowSeconds: SITE_PRESENCE_WINDOW_MS / 1000 });
   }
 
+  if (path === '/comunicados' || path.startsWith('/comunicados/')) return handleComunicados(request, env, auth, method, path, data);
   if (method === 'GET' && path.startsWith('/public/')) {
     var publicData = sanitizePublicSiteData(await firebase(env, SITE_ROOT + '/public', 'GET'));
     return json(path === '/public/announcement' ? publicData.announcement : path === '/public/schedule' ? publicData.schedule : {});
