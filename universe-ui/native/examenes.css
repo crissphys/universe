@@ -1,1 +1,306 @@
+/* Exámenes de admisión UNI. Todo cuelga de #uexam: native.css aplica reglas amplias a los textos,
+   imágenes y tablas de .native-view, y el identificador asegura que estas ganen sin !important. */
+#uexam{
+  --ok:#22c55e;--bad:#f43f5e;--warn:#f59e0b;--accent:#6f96ff;
+  --paper:#fcfcfd;--ink:#101218;
+  color:var(--text);font-size:14px;line-height:1.7;
+}
+:root[data-theme=light] #uexam{--ok:#15803d;--bad:#be123c;--warn:#b45309;--accent:#2f5bd3}
+#uexam :is(p,li,small,dt,dd,label){font-size:inherit;line-height:inherit;color:inherit;max-width:none;margin:0}
+#uexam :is(h2,h3){font-weight:600;letter-spacing:-.4px;line-height:1.2;margin:0;color:var(--text)}
+#uexam b,#uexam strong{color:inherit;font-weight:700}
+#uexam .xpill small{font-size:8.5px;line-height:1.5;color:#ffffffe6}
+#uexam .xpill:hover{color:#fff}
 
+body.uexam-focus .page-head{display:none}
+body.uexam-focus .page-topline{margin-bottom:20px}
+
+.uexam__kick{display:block;font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.uexam__years{margin:0 0 30px}
+/* Selector de proceso: cuadrícula pareja; la etiqueta «Próximamente» va en su propia línea. */
+#uexam .uexam__years{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+#uexam .uexam__years .xpill em{grid-column:1/-1;justify-self:start;margin-top:4px}
+@media(max-width:1100px){#uexam .uexam__years{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){#uexam .uexam__years{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.uexam__loading{padding:60px 0;color:var(--muted);text-align:center}
+
+/* Botones propios: mismas proporciones que .button, sin heredar sus reglas de contexto. */
+#uexam .uexam__btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:11px 18px;margin:0;
+  border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--text);
+  font:600 12px/1.2 var(--display);text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .2s,background-color .2s;
+}
+#uexam .uexam__btn:hover{border-color:color-mix(in srgb,var(--accent) 60%,transparent)}
+#uexam .uexam__btn:disabled{opacity:.4;cursor:default}
+#uexam .uexam__btn--primary{background:#f3f4f9;color:#11121a;border-color:#fff}
+#uexam .uexam__btn--primary:hover{box-shadow:0 0 26px #b9cbff2b}
+:root[data-theme=light] #uexam .uexam__btn--primary{background:#141820;color:#fff;border-color:#141820}
+#uexam .uexam__btn--danger{background:var(--bad);border-color:var(--bad);color:#fff}
+#uexam .uexam__link{background:none;border:0;padding:6px 2px;color:var(--muted);font:500 12px var(--display);cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+#uexam .uexam__link:hover,#uexam .uexam__link.is-on{color:var(--warn)}
+#uexam .uexam__back{display:inline-flex;font-size:12px;color:var(--muted);text-decoration:none;margin-bottom:18px}
+#uexam .uexam__back:hover{color:var(--text)}
+
+/* ─── Portada del proceso ─── */
+.uexam__intro,.uexam__test,.uexam__total,.uexam__soon,.uexam__score,.uexam__breakdown,.uexam__card{
+  border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--solid) 84%,transparent);backdrop-filter:blur(14px);
+}
+.uexam__intro{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:26px 34px;padding:30px;margin-bottom:18px}
+#uexam .uexam__intro h2{font-size:clamp(24px,3vw,34px);margin:12px 0 12px}
+#uexam .uexam__introcopy p{color:var(--muted);font-size:13px;line-height:1.85}
+.uexam__facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0;align-self:start}
+.uexam__facts>div{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--soft)}
+#uexam .uexam__facts dt{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#uexam .uexam__facts dd{font-size:30px;font-weight:700;letter-spacing:-1px;line-height:1.1;margin-top:4px}
+#uexam .uexam__facts>div:nth-child(2) dd,#uexam .uexam__facts>div:nth-child(3) dd{color:var(--accent)}
+.uexam__rules{grid-column:1/-1;list-style:none;margin:0;padding:18px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 26px}
+#uexam .uexam__rules li{position:relative;padding-left:18px;color:var(--muted);font-size:12.5px;line-height:1.75}
+.uexam__rules li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+#uexam .uexam__rules b{color:var(--text)}
+
+.uexam__tests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.uexam__test{display:flex;flex-direction:column;padding:22px;transition:border-color .25s,transform .25s}
+.uexam__test:hover{border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.uexam__test[data-state=live]{border-color:color-mix(in srgb,var(--warn) 60%,transparent)}
+.uexam__test[data-state=done]{border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
+#uexam .uexam__test h3{font-size:19px;margin:10px 0 10px}
+.uexam__meta{display:flex;flex-wrap:wrap;gap:6px}
+#uexam .uexam__meta span{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 10px;color:var(--text)}
+#uexam .uexam__blurb{color:var(--muted);font-size:12px;line-height:1.75;margin:14px 0 8px}
+#uexam .uexam__scoring{font-size:11px;color:var(--muted);margin-bottom:16px}
+.uexam__status{margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
+#uexam .uexam__state{display:block;font-size:12px;color:var(--muted);margin-bottom:12px}
+#uexam .uexam__state.is-live{color:var(--warn)}
+#uexam .uexam__state.is-done{color:var(--text)}
+#uexam .uexam__state.is-done b{color:var(--ok);font-size:15px}
+.uexam__actions{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+
+.uexam__total{margin-top:14px;padding:20px 24px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px}
+#uexam .uexam__total p{font-size:13px;color:var(--muted)}
+#uexam .uexam__total p b{font-size:30px;color:var(--text);letter-spacing:-1px}
+#uexam .uexam__total small{font-size:11px;color:var(--muted);flex-basis:100%}
+
+.uexam__soon{padding:34px;max-width:720px}
+#uexam .uexam__soon h2{font-size:28px;margin:12px 0}
+#uexam .uexam__soon p{color:var(--muted);font-size:13px;margin-bottom:12px}
+#uexam .uexam__soon .uexam__btn{margin-top:8px}
+
+/* ─── Rindiendo una prueba ─── */
+.uexam__bar{
+  position:sticky;top:10px;z-index:6;display:flex;align-items:center;gap:14px 20px;flex-wrap:wrap;
+  padding:12px 16px 14px;margin-bottom:16px;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  background:color-mix(in srgb,var(--solid) 92%,transparent);backdrop-filter:blur(16px);box-shadow:0 14px 40px -24px #000;
+}
+#uexam .uexam__bar .uexam__back{margin:0}
+.uexam__bartitle{display:flex;flex-direction:column;min-width:0;flex:1}
+#uexam .uexam__bartitle span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#uexam .uexam__bartitle b{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uexam__clock{display:flex;flex-direction:column;align-items:center;padding:4px 14px;border-radius:10px;border:1px solid var(--line);background:var(--soft)}
+.uexam__clock span{font:700 22px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;letter-spacing:.5px}
+#uexam .uexam__clock small{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+.uexam__clock.is-low{border-color:var(--warn);color:var(--warn)}
+.uexam__clock.is-critical{border-color:var(--bad);color:var(--bad);animation:uexam-pulse 1s ease-in-out infinite}
+@keyframes uexam-pulse{50%{opacity:.55}}
+.uexam__progress{display:flex;align-items:baseline;gap:2px;font-size:12px;color:var(--muted)}
+#uexam .uexam__progress b{font-size:20px;color:var(--text)}
+.uexam__timeline{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--line)}
+.uexam__timeline i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--warn));transition:width 1s linear}
+
+.uexam__work{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:16px;align-items:start}
+.uexam__card{padding:26px 28px;outline:none}
+.uexam__qhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:18px}
+.uexam__qnum{font-size:20px;font-weight:700;letter-spacing:-.4px}
+#uexam .uexam__qnum small{font-size:13px;font-weight:500;color:var(--muted)}
+.uexam__subject{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);border-radius:20px;padding:4px 11px}
+.uexam__stem{font-size:15.5px;line-height:1.8}
+.uexam__stem .katex-display{margin:14px 0;overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.uexam__stem .katex{font-size:1.08em}
+.uexam__items{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+#uexam .uexam__items li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px;font-size:15px;line-height:1.75;padding:10px 14px;border-radius:10px;background:var(--soft);border:1px solid var(--line)}
+#uexam .uexam__items li>span{font-weight:700;color:var(--accent)}
+#uexam .uexam__after{margin-top:14px;font-size:15px}
+.uexam__passage{margin:12px 0;padding:14px 18px;border-left:3px solid var(--accent);border-radius:0 12px 12px 0;background:var(--soft);font-size:14.5px;line-height:1.85;text-align:justify;hyphens:auto}
+.uexam__verse{margin:12px 0;padding:14px 22px;border-left:3px solid var(--accent);background:var(--soft);border-radius:0 12px 12px 0;font-style:italic;line-height:1.9}
+.uexam__quote,.uexam__pair,.uexam__seq,.uexam__title,.uexam__data,.uexam__opline{display:block;margin:12px 0}
+.uexam__quote{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line)}
+.uexam__pair{font-weight:700;letter-spacing:.06em}
+.uexam__seq{text-align:center;font:italic 18px/1.6 "Times New Roman",Times,serif;letter-spacing:.06em}
+.uexam__title{font-weight:700;letter-spacing:.08em;text-align:center}
+.uexam__data{font-size:13.5px;color:var(--muted)}
+.uexam__nobr{white-space:nowrap}
+.uexam__blank{display:inline-block;width:78px;border-bottom:1.5px solid currentColor;margin:0 3px;vertical-align:-2px}
+.uexam__opline{text-align:center;font:italic 18px/1.6 "Times New Roman",Times,serif}
+/* Operadores □ y ○ de la pregunta 12. native.css anula min-width en todo el marco: el id lo recupera. */
+#uexam .uexam__sq{display:inline-flex;align-items:center;justify-content:center;border:1.6px solid currentColor;padding:6px 8px;min-width:34px;min-height:34px;vertical-align:middle}
+#uexam .uexam__ci{display:inline-flex;align-items:center;justify-content:center;border:1.6px solid currentColor;border-radius:50%;padding:8px 12px;min-width:34px;min-height:34px;vertical-align:middle}
+#uexam .uexam__sq--mini,#uexam .uexam__ci--mini{min-width:15px;width:15px;min-height:15px;height:15px;padding:0;vertical-align:-2px}
+
+/* Tablas del cuadernillo (valores veritativos, cuadrado mágico) y la de resultados. */
+#uexam .uexam__tablewrap{overflow-x:auto;margin:14px 0}
+#uexam .uexam__tablewrap table{min-width:0;width:auto;margin:0 auto;border-collapse:collapse;font-size:15px}
+#uexam .uexam__tablewrap :is(td,th){padding:8px 14px;text-align:center;color:var(--text);border:0;border-bottom:1px solid var(--line);font-size:15px;letter-spacing:0;text-transform:none}
+#uexam .uexam__truth thead th{border-bottom:1.5px solid var(--text)}
+#uexam .uexam__truth :is(td,th):first-child{border-right:1.5px solid var(--text);text-align:left}
+#uexam .uexam__truth thead th:first-child span{display:block;font-size:13px}
+#uexam .uexam__magic td{width:62px;height:52px;border:1.5px solid var(--text);font:17px "Times New Roman",Times,serif}
+
+/* Figuras recortadas del cuadernillo: siempre sobre papel claro, en ambos temas. */
+#uexam .uexam__fig{margin:16px auto;padding:14px;background:var(--paper);border-radius:14px;display:flex;justify-content:center;width:fit-content;max-width:100%;box-shadow:0 0 0 1px var(--line)}
+#uexam .uexam__fig img{display:block;max-width:100%;height:auto;border-radius:0}
+#uexam .uexam__fig--svg{width:min(100%,470px)}
+/* style.css pinta todo svg como icono (trazo claro de 1,5 px); la figura del cuadernillo es tinta sobre papel. */
+#uexam .uexam__fig--svg svg{display:block;width:100%;height:auto;color:var(--ink);stroke:var(--ink);stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter}
+#uexam .uexam__fig--options{margin-top:18px}
+
+/* Alternativas */
+.uexam__opts{display:grid;gap:10px;margin-top:22px}
+.uexam__opts--cols3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.uexam__opts--list{grid-template-columns:1fr}
+.uexam__opts--letters{grid-template-columns:repeat(5,minmax(0,1fr))}
+#uexam .uexam__opt{
+  display:flex;align-items:center;gap:12px;width:100%;min-height:52px;margin:0;padding:10px 14px;text-align:left;cursor:pointer;
+  border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--text);font:500 15px/1.5 var(--display);
+  transition:border-color .18s,background-color .18s,transform .16s cubic-bezier(.23,1,.32,1);
+}
+#uexam .uexam__opts--letters .uexam__opt{justify-content:center}
+#uexam .uexam__opt:hover:not(:disabled){border-color:color-mix(in srgb,var(--accent) 60%,transparent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.uexam__letter{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);font-weight:700;font-size:13px;color:var(--muted);transition:background-color .18s,color .18s,border-color .18s}
+/* Sin overflow propio: los acentos de KaTeX (î, ĵ) desbordan 2 px y dibujarían una barra de scroll.
+   Solo una alternativa que de verdad no cabe (fitOptions le pone .is-wide) se desplaza en horizontal. */
+#uexam .uexam__otext{min-width:0;overflow-wrap:anywhere}
+#uexam .uexam__opt.is-wide .uexam__otext{overflow-x:auto;overflow-y:hidden;padding:2px 0 6px}
+#uexam .uexam__opt.is-picked{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 15%,transparent)}
+#uexam .uexam__opt.is-picked .uexam__letter{background:var(--accent);border-color:var(--accent);color:#fff}
+#uexam .uexam__opt:disabled{cursor:default}
+#uexam .uexam__opt.is-key{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+#uexam .uexam__opt.is-key .uexam__letter{background:var(--ok);border-color:var(--ok);color:#fff}
+#uexam .uexam__opt.is-miss{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 13%,transparent)}
+#uexam .uexam__opt.is-miss .uexam__letter{background:var(--bad);border-color:var(--bad);color:#fff}
+
+.uexam__qfoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.uexam__qtools{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center}
+
+/* Navegador de preguntas */
+.uexam__nav{position:sticky;top:112px;border:1px solid var(--line);border-radius:16px;padding:16px;background:color-mix(in srgb,var(--solid) 84%,transparent);backdrop-filter:blur(14px);max-height:calc(100vh - 130px);overflow:auto}
+#uexam .uexam__navopen{display:none}
+.uexam__navgroup+.uexam__navgroup{margin-top:12px}
+#uexam .uexam__navgroup>span{display:block;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.uexam__nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:5px}
+#uexam .uexam__nums button,#uexam .uexam__map button{
+  position:relative;height:34px;min-width:0;margin:0;padding:0;border-radius:8px;border:1px solid var(--line);background:none;color:var(--muted);
+  font:600 11.5px var(--display);cursor:pointer;transition:background-color .15s,border-color .15s,color .15s;
+}
+#uexam .uexam__nums button:hover{border-color:var(--accent);color:var(--text)}
+#uexam .uexam__nums button.is-answered{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:color-mix(in srgb,var(--accent) 55%,transparent);color:var(--text)}
+#uexam .uexam__nums button.is-current{outline:2px solid var(--text);outline-offset:1px;color:var(--text)}
+#uexam .uexam__nums button.is-flagged::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--warn)}
+.uexam__legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+#uexam .uexam__legend span{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;color:var(--muted)}
+.uexam__legend span::before{content:"";width:11px;height:11px;border-radius:3px;border:1px solid var(--line)}
+.uexam__legend .is-answered::before{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent)}
+.uexam__legend .is-flagged::before{background:var(--warn);border-radius:50%;border-color:var(--warn)}
+.uexam__legend .is-current::before{outline:2px solid var(--text);outline-offset:0}
+
+/* ─── Resultados ─── */
+.uexam__score{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px;padding:28px;margin-bottom:14px}
+#uexam .uexam__score h2{font-size:26px;margin:10px 0 6px}
+.uexam__big{display:flex;align-items:baseline;gap:10px;margin:6px 0 10px}
+#uexam .uexam__big b{font-size:clamp(46px,7vw,72px);letter-spacing:-3px;line-height:1;color:var(--text)}
+#uexam .uexam__big span{font-size:14px;color:var(--muted)}
+#uexam .uexam__when{font-size:12px;color:var(--muted)}
+#uexam .uexam__timeup{display:block;color:var(--warn);font-weight:600;margin-bottom:4px}
+#uexam .uexam__compare{font-size:12.5px;color:var(--muted);margin-top:10px}
+#uexam .uexam__compare b{color:var(--text)}
+.uexam__tally{display:grid;gap:10px;margin:0;align-self:center}
+.uexam__tally>div{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:0 10px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--soft)}
+#uexam .uexam__tally dt{font-size:12px;color:var(--muted)}
+#uexam .uexam__tally dd{font-size:26px;font-weight:700;grid-row:span 2;align-self:center}
+#uexam .uexam__tally small{font-size:11px;color:var(--muted)}
+.uexam__tally .is-right{border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
+.uexam__tally .is-right dd{color:var(--ok)}
+.uexam__tally .is-wrong{border-color:color-mix(in srgb,var(--bad) 45%,transparent)}
+.uexam__tally .is-wrong dd{color:var(--bad)}
+
+.uexam__breakdown{padding:22px 24px;margin-bottom:24px}
+#uexam .uexam__breakdown h3,#uexam .uexam__review h3{font-size:18px;margin-bottom:12px}
+#uexam .uexam__breakdown table{width:100%;margin:0}
+#uexam .uexam__breakdown :is(td,th){font-size:13px;text-align:right;padding:9px 10px}
+#uexam .uexam__breakdown :is(td,th):first-child{text-align:left}
+#uexam .uexam__breakdown thead th{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+#uexam .uexam__breakdown tbody th{font-weight:600}
+
+.uexam__review>header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.uexam__filters{display:flex;flex-wrap:wrap;gap:6px}
+#uexam .uexam__filters button{border:1px solid var(--line);border-radius:20px;background:none;color:var(--muted);padding:7px 13px;font:500 11.5px var(--display);cursor:pointer}
+#uexam .uexam__filters button[aria-pressed=true]{background:var(--text);border-color:var(--text);color:var(--bg)}
+.uexam__map{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:5px;margin:14px 0 18px}
+#uexam .uexam__map button.is-right{background:color-mix(in srgb,var(--ok) 22%,transparent);border-color:color-mix(in srgb,var(--ok) 60%,transparent);color:var(--text)}
+#uexam .uexam__map button.is-wrong{background:color-mix(in srgb,var(--bad) 22%,transparent);border-color:color-mix(in srgb,var(--bad) 60%,transparent);color:var(--text)}
+.uexam__list{display:grid;gap:14px}
+.uexam__card--review{scroll-margin-top:20px}
+.uexam__card--review.is-right{border-left:3px solid var(--ok)}
+.uexam__card--review.is-wrong{border-left:3px solid var(--bad)}
+.uexam__card--review.is-blank{border-left:3px solid var(--muted)}
+#uexam .uexam__verdict{margin-top:16px;padding:10px 14px;border-radius:10px;font-size:13px;background:var(--soft);border:1px solid var(--line)}
+#uexam .uexam__verdict.is-right{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
+#uexam .uexam__verdict.is-wrong{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,transparent)}
+.uexam__again{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* Diálogo de confirmación (native.css ya le da caja y fondo). */
+#uexam .uexam__dialog{max-width:min(460px,92vw);padding:26px}
+#uexam .uexam__dialog h2{font-size:20px;margin-bottom:10px}
+#uexam .uexam__dialog p{color:var(--muted);font-size:13.5px;line-height:1.75}
+#uexam .uexam__dialog p b{color:var(--text)}
+.uexam__dialogactions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;margin-top:20px}
+
+@media(max-width:1180px){
+  .uexam__tests{grid-template-columns:1fr}
+  .uexam__intro{grid-template-columns:1fr}
+  .uexam__facts{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:980px){
+  .uexam__work{grid-template-columns:1fr}
+  .uexam__nav{position:static;max-height:none;order:-1;padding:10px}
+  #uexam .uexam__navopen{display:flex;width:100%;justify-content:space-between;align-items:center;background:none;border:0;color:var(--text);font:600 12.5px var(--display);padding:6px 4px;cursor:pointer}
+  #uexam .uexam__navopen::after{content:"▾";color:var(--muted)}
+  #uexam .uexam__navopen[aria-expanded=true]::after{content:"▴"}
+  .uexam__navbody{display:none;padding:10px 4px 4px}
+  .uexam__nav.is-open .uexam__navbody{display:block}
+  .uexam__score{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  #uexam{font-size:14px}
+  .uexam__intro{padding:20px}
+  .uexam__facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .uexam__rules{grid-template-columns:1fr}
+  .uexam__bar{top:6px;gap:6px 10px;padding:9px 12px 11px}
+  .uexam__bartitle{order:-1;flex-basis:100%}
+  #uexam .uexam__bartitle span{display:none}
+  #uexam .uexam__bartitle b{font-size:13px}
+  #uexam .uexam__bar .uexam__back{display:none}
+  .uexam__clock{flex-direction:row;padding:3px 10px}
+  .uexam__clock span{font-size:18px}
+  #uexam .uexam__clock small,#uexam .uexam__wide{display:none}
+  .uexam__progress{margin-right:auto}
+  #uexam .uexam__bar .uexam__btn{min-height:36px;padding:8px 14px;font-size:11.5px}
+  .uexam__card{padding:18px 16px}
+  .uexam__stem{font-size:15px}
+  .uexam__stem .katex{font-size:.96em}
+  #uexam .uexam__opt{padding:10px;gap:9px}
+  #uexam .uexam__opt .katex{font-size:1.04em}
+  .uexam__letter{width:26px;height:26px;font-size:12px}
+  #uexam .uexam__items li{grid-template-columns:28px minmax(0,1fr);padding:10px 12px}
+  .uexam__opts--cols3{grid-template-columns:1fr 1fr}
+  .uexam__opts--letters{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  #uexam .uexam__opts--letters .uexam__opt{padding:8px 0}
+  .uexam__passage{text-align:left;padding:12px 14px}
+  .uexam__qfoot{justify-content:center}
+  .uexam__qfoot>.uexam__btn{flex:1}
+  .uexam__qtools{order:3;flex-basis:100%}
+  .uexam__score{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .uexam__clock.is-critical{animation:none}
+  .uexam__timeline i{transition:none}
+}
