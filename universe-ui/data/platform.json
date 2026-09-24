@@ -18595,8 +18595,8 @@
         "catalog": "LIBROS ROJOS NUEVOS",
         "section": "Libros",
         "title": "Geometría Plana",
-        "url": "https://drive.google.com/file/d/1u8p-MhN6n5mJaR6nj4pUMDSGNKnc-iWq/view?usp=drive_link",
-        "image": "/assets/library/lumbreras/libros-rojos-nuevos/geometria-plana.png",
+        "url": "https://drive.google.com/file/d/1SmCzoBQ8xiqLAHNByo7GwkHBEVVPzWoT/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1SmCzoBQ8xiqLAHNByo7GwkHBEVVPzWoT&sz=w1000",
         "series": "Colección Ciencias y Humanidades · Edición Nueva",
         "author": "",
         "upcoming": false
@@ -20398,6 +20398,236 @@
         "url": "https://drive.google.com/file/d/1lHmdwQSs07EzuFtZsf0YEYI789w5bIBw/view?usp=drive_link",
         "image": "/assets/library/lumbreras/seleccion-de-preguntas/01_08_UNCP_quimica.png",
         "series": "Solucionario UNCP",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "LIBROS ROJOS NUEVOS",
+        "section": "Libros",
+        "title": "Química — Tomo II",
+        "url": "https://drive.google.com/file/d/1axPpcnQngWPG9BpJu1REdKTNsKX0YoGW/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1axPpcnQngWPG9BpJu1REdKTNsKX0YoGW&sz=w1000",
+        "series": "Colección Ciencias y Humanidades · Edición Nueva · Tomo II",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "LIBROS ROJOS NUEVOS",
+        "section": "Libros",
+        "title": "Álgebra — Tomo II",
+        "url": "https://drive.google.com/file/d/10L5REmownCVc2OqUpxAFySLrEBhkivzj/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=10L5REmownCVc2OqUpxAFySLrEBhkivzj&sz=w1000",
+        "series": "Colección Ciencias y Humanidades · Edición Nueva · Tomo II",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Compendios Académicos UNI",
+        "section": "Compendios Rojos UNI — Edición antigua",
+        "title": "Matemática",
+        "url": "https://drive.google.com/file/d/1i67aXES94HrvH-HOnPAPJrDi30K19iED/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1i67aXES94HrvH-HOnPAPJrDi30K19iED&sz=w1000",
+        "series": "Compendios Rojos UNI · Edición antigua",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Compendios Académicos UNI",
+        "section": "Compendios Rojos UNI — Edición antigua",
+        "title": "Trigonometría",
+        "url": "https://drive.google.com/file/d/1GUpJma_OQo7gK16SiRMQ68fCVmKQqW5o/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1GUpJma_OQo7gK16SiRMQ68fCVmKQqW5o&sz=w1000",
+        "series": "Compendios Rojos UNI · Edición antigua",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Compendios Académicos UNI",
+        "section": "Compendios Rojos UNI — Edición antigua",
+        "title": "Álgebra",
+        "url": "https://drive.google.com/file/d/1TtZioMHbBvtLyVPJ_BOvd73XY8a2PYVg/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1TtZioMHbBvtLyVPJ_BOvd73XY8a2PYVg&sz=w1000",
+        "series": "Compendios Rojos UNI · Edición antigua",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Compendios Académicos UNI",
+        "section": "Compendios Rojos UNI — Edición antigua",
+        "title": "Aritmética",
+        "url": "https://drive.google.com/file/d/1pHw3b5LwvrBWaFcpfU7StzkNaaqU88F6/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1pHw3b5LwvrBWaFcpfU7StzkNaaqU88F6&sz=w1000",
+        "series": "Compendios Rojos UNI · Edición antigua",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Compendios Académicos UNI",
+        "section": "Compendios Rojos UNI — Edición antigua",
+        "title": "Geometría",
+        "url": "https://drive.google.com/file/d/1we8VHwJhdwqkrPKdiPdp8pymQv8BGvEC/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1we8VHwJhdwqkrPKdiPdp8pymQv8BGvEC&sz=w1000",
+        "series": "Compendios Rojos UNI · Edición antigua",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Compendios Académicos UNI",
+        "section": "Compendios Rojos UNI — Edición antigua",
+        "title": "Química",
+        "url": "https://drive.google.com/file/d/10vMqURlyklMzuCAaN2chbuwd0IKIMUAD/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=10vMqURlyklMzuCAaN2chbuwd0IKIMUAD&sz=w1000",
+        "series": "Compendios Rojos UNI · Edición antigua",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Selección de Preguntas",
+        "section": "Selección de Preguntas Libros",
+        "title": "Selección de preguntas UNSA — Versión adicional",
+        "url": "https://drive.google.com/file/d/1ogtJQMpAVAz-7wKpYUltgoS0wdyhmiKu/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1ogtJQMpAVAz-7wKpYUltgoS0wdyhmiKu&sz=w1000",
+        "series": "Selección complementaria",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Selección de Preguntas",
+        "section": "Selección de Preguntas Libros",
+        "title": "DECO 2018 UNMSM",
+        "url": "https://drive.google.com/file/d/18r1912Jw9628hWIg_gVGs2CBQ_7JTgzz/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=18r1912Jw9628hWIg_gVGs2CBQ_7JTgzz&sz=w1000",
+        "series": "UNMSM",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Selección de Preguntas",
+        "section": "Solucionarios UNI",
+        "title": "Solucionario de Admisión UNI",
+        "url": "https://drive.google.com/file/d/1T1o6jiN7pYLAcpeQcZjnY8wgL1IKtkTO/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1T1o6jiN7pYLAcpeQcZjnY8wgL1IKtkTO&sz=w1000",
+        "series": "UNI",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Selección de Preguntas",
+        "section": "Solucionarios UNMSM",
+        "title": "Solucionario de Admisión SM — Áreas A, B y C",
+        "url": "https://drive.google.com/file/d/1FZFN_5n4aYzrHY59cx3r5Yui1aY_Y8Ro/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1FZFN_5n4aYzrHY59cx3r5Yui1aY_Y8Ro&sz=w1000",
+        "series": "UNMSM · Áreas A, B y C",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Selección de Preguntas",
+        "section": "Solucionarios UNMSM",
+        "title": "Solucionario de Admisión SM — Áreas D y E",
+        "url": "https://drive.google.com/file/d/1nJADG0vbv6ytBkJMWUgHs5RIqDY2z5eC/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1nJADG0vbv6ytBkJMWUgHs5RIqDY2z5eC&sz=w1000",
+        "series": "UNMSM · Áreas D y E",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "OBRAS ADICIONALES LUMBRERAS",
+        "section": "Material complementario",
+        "title": "Lumbreras — Temas frecuentes",
+        "url": "https://drive.google.com/file/d/18MNBcZnn5nzf1B6Fajy_oRffqg4luI54/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=18MNBcZnn5nzf1B6Fajy_oRffqg4luI54&sz=w1000",
+        "series": "Obras adicionales Lumbreras",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "OBRAS ADICIONALES LUMBRERAS",
+        "section": "Razonamiento Verbal",
+        "title": "Comprensión de lectura: argumentación e interpretación",
+        "url": "https://drive.google.com/file/d/1v8swf69zwZ2A0SjG2vCevSIU855KjkDJ/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1v8swf69zwZ2A0SjG2vCevSIU855KjkDJ&sz=w1000",
+        "series": "Obras adicionales Lumbreras",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "OBRAS ADICIONALES LUMBRERAS",
+        "section": "Secundaria",
+        "title": "Matemática 1 — Libro escolar de secundaria",
+        "url": "https://drive.google.com/file/d/1LWKWSOvjYCw7XT9OrCmr4jJxrDzeFoMS/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1LWKWSOvjYCw7XT9OrCmr4jJxrDzeFoMS&sz=w1000",
+        "series": "Obras adicionales Lumbreras",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "OBRAS ADICIONALES LUMBRERAS",
+        "section": "Básico",
+        "title": "Serie Académica — Básico 1",
+        "url": "https://drive.google.com/file/d/1dtQ_WdRYSkZZvcwS8kZGgU2PzAfWL5rP/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1dtQ_WdRYSkZZvcwS8kZGgU2PzAfWL5rP&sz=w1000",
+        "series": "Obras adicionales Lumbreras",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "OBRAS ADICIONALES LUMBRERAS",
+        "section": "Formularios",
+        "title": "Pequeño formulario",
+        "url": "https://drive.google.com/file/d/1o--ZrwFhbtRO66IJw5zue70zJyIKqyFf/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1o--ZrwFhbtRO66IJw5zue70zJyIKqyFf&sz=w1000",
+        "series": "Obras adicionales Lumbreras",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "OBRAS ADICIONALES LUMBRERAS",
+        "section": "Geografía",
+        "title": "Geografía — Sociedad y naturaleza",
+        "url": "https://drive.google.com/file/d/1Ivb1wwCw1NJliMMN9Tk-Hk-LagNyru_W/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1Ivb1wwCw1NJliMMN9Tk-Hk-LagNyru_W&sz=w1000",
+        "series": "Obras adicionales Lumbreras",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "OBRAS ADICIONALES LUMBRERAS",
+        "section": "Psicología",
+        "title": "Psicología — Una perspectiva científica",
+        "url": "https://drive.google.com/file/d/1VPF9JmjWVk8p44Vz_5k1NFrt0-CkXslY/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1VPF9JmjWVk8p44Vz_5k1NFrt0-CkXslY&sz=w1000",
+        "series": "Obras adicionales Lumbreras",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Temas Selectos",
+        "section": "Lenguaje",
+        "title": "Ortografía — Nueva edición",
+        "url": "https://drive.google.com/file/d/1OQWJ8YspWpBqOqqvllgBrZw5iw4FOgvH/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1OQWJ8YspWpBqOqqvllgBrZw5iw4FOgvH&sz=w1000",
+        "series": "Temas Selectos · Lenguaje",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "LIBROS AZULES",
+        "section": "Colección Ciencias y Humanidades",
+        "title": "Problemas resueltos de Razonamiento Matemático — Ingenio y creatividad para nuevos retos",
+        "url": "https://drive.google.com/file/d/1C9HdLv821kKgIHtVSCTjBYlM9cVrW8bC/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1C9HdLv821kKgIHtVSCTjBYlM9cVrW8bC&sz=w1000",
+        "series": "Colección Ciencias y Humanidades",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Temas Selectos",
+        "section": "Economía",
+        "title": "Sistema monetario",
+        "url": "https://drive.google.com/file/d/1qq2mfDcRD9PkrxFxjRr5WDdoxrEVOHjh/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1qq2mfDcRD9PkrxFxjRr5WDdoxrEVOHjh&sz=w1000",
+        "series": "Temas Selectos · Economía",
         "author": "",
         "upcoming": false
       }
