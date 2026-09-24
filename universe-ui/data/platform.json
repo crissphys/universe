@@ -18596,7 +18596,7 @@
         "section": "Libros",
         "title": "Geometría Plana",
         "url": "https://drive.google.com/file/d/1SmCzoBQ8xiqLAHNByo7GwkHBEVVPzWoT/view?usp=drivesdk",
-        "image": "https://drive.google.com/thumbnail?id=1SmCzoBQ8xiqLAHNByo7GwkHBEVVPzWoT&sz=w1000",
+        "image": "/assets/library/lumbreras/libros-rojos-nuevos/geometria-plana.png",
         "series": "Colección Ciencias y Humanidades · Edición Nueva",
         "author": "",
         "upcoming": false
@@ -20436,7 +20436,7 @@
         "section": "Libros",
         "title": "Química — Tomo II",
         "url": "https://drive.google.com/file/d/1axPpcnQngWPG9BpJu1REdKTNsKX0YoGW/view?usp=drivesdk",
-        "image": "https://drive.google.com/thumbnail?id=1axPpcnQngWPG9BpJu1REdKTNsKX0YoGW&sz=w1000",
+        "image": "/assets/library/lumbreras/libros-rojos-nuevos/quimica-tomo-ii.png",
         "series": "Colección Ciencias y Humanidades · Edición Nueva · Tomo II",
         "author": "",
         "upcoming": false
@@ -20446,7 +20446,7 @@
         "section": "Libros",
         "title": "Álgebra — Tomo II",
         "url": "https://drive.google.com/file/d/10L5REmownCVc2OqUpxAFySLrEBhkivzj/view?usp=drivesdk",
-        "image": "https://drive.google.com/thumbnail?id=10L5REmownCVc2OqUpxAFySLrEBhkivzj&sz=w1000",
+        "image": "/assets/library/lumbreras/libros-rojos-nuevos/algebra-tomo-ii.png",
         "series": "Colección Ciencias y Humanidades · Edición Nueva · Tomo II",
         "author": "",
         "upcoming": false
@@ -20626,7 +20626,7 @@
         "section": "Lenguaje",
         "title": "Ortografía — Nueva edición",
         "url": "https://drive.google.com/file/d/1OQWJ8YspWpBqOqqvllgBrZw5iw4FOgvH/view?usp=drivesdk",
-        "image": "https://drive.google.com/thumbnail?id=1OQWJ8YspWpBqOqqvllgBrZw5iw4FOgvH&sz=w1000",
+        "image": "/assets/library/lumbreras/temas-selectos/lenguaje/ortografia-nueva-edicion.jpg",
         "series": "Temas Selectos · Lenguaje",
         "author": "",
         "upcoming": false
