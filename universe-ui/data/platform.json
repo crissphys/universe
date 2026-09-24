@@ -18723,6 +18723,16 @@
       },
       {
         "catalog": "LIBROS AZULES",
+        "section": "Colección Ciencias y Humanidades",
+        "title": "Problemas resueltos de Razonamiento Matemático — Ingenio y creatividad para nuevos retos",
+        "url": "https://drive.google.com/file/d/1C9HdLv821kKgIHtVSCTjBYlM9cVrW8bC/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1C9HdLv821kKgIHtVSCTjBYlM9cVrW8bC&sz=w1000",
+        "series": "Colección Ciencias y Humanidades",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "LIBROS AZULES",
         "section": "Edición Especial",
         "title": "Razonamiento Verbal I",
         "url": "https://drive.google.com/file/d/1R8rVxomB22qN-qubFgVQ4KqJu80DKV5o/view?usp=drive_link",
@@ -18787,6 +18797,16 @@
         "title": "Filosofía",
         "url": "https://drive.google.com/file/d/1qcapDwro4YoMg-WmtNoGJ84yxU9jEZBJ/view?usp=drive_link",
         "image": "/assets/library/lumbreras/libros-azules-edicion-especial/filosofia.png",
+        "series": "Libros Azules · Edición Especial",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "LIBROS AZULES",
+        "section": "Edición Especial",
+        "title": "Psicología — Una perspectiva científica",
+        "url": "https://drive.google.com/file/d/1VPF9JmjWVk8p44Vz_5k1NFrt0-CkXslY/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1VPF9JmjWVk8p44Vz_5k1NFrt0-CkXslY&sz=w1000",
         "series": "Libros Azules · Edición Especial",
         "author": "",
         "upcoming": false
@@ -19208,6 +19228,16 @@
         "url": "https://drive.google.com/file/d/1k-bq1-7MzprT_Q4C7cSMTr5hkinWxJlW/view?usp=drive_link",
         "image": "/assets/library/lumbreras/temas-selectos/biologia/seres-vivos-origen-evolucion-y-clasificacion.jpg",
         "series": "Temas Selectos · Biología",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "Temas Selectos",
+        "section": "Economía",
+        "title": "Sistema monetario",
+        "url": "https://drive.google.com/file/d/1qq2mfDcRD9PkrxFxjRr5WDdoxrEVOHjh/view?usp=drivesdk",
+        "image": "https://drive.google.com/thumbnail?id=1qq2mfDcRD9PkrxFxjRr5WDdoxrEVOHjh&sz=w1000",
+        "series": "Temas Selectos · Economía",
         "author": "",
         "upcoming": false
       },
@@ -20592,42 +20622,12 @@
         "upcoming": false
       },
       {
-        "catalog": "OBRAS ADICIONALES LUMBRERAS",
-        "section": "Psicología",
-        "title": "Psicología — Una perspectiva científica",
-        "url": "https://drive.google.com/file/d/1VPF9JmjWVk8p44Vz_5k1NFrt0-CkXslY/view?usp=drivesdk",
-        "image": "https://drive.google.com/thumbnail?id=1VPF9JmjWVk8p44Vz_5k1NFrt0-CkXslY&sz=w1000",
-        "series": "Obras adicionales Lumbreras",
-        "author": "",
-        "upcoming": false
-      },
-      {
         "catalog": "Temas Selectos",
         "section": "Lenguaje",
         "title": "Ortografía — Nueva edición",
         "url": "https://drive.google.com/file/d/1OQWJ8YspWpBqOqqvllgBrZw5iw4FOgvH/view?usp=drivesdk",
         "image": "https://drive.google.com/thumbnail?id=1OQWJ8YspWpBqOqqvllgBrZw5iw4FOgvH&sz=w1000",
         "series": "Temas Selectos · Lenguaje",
-        "author": "",
-        "upcoming": false
-      },
-      {
-        "catalog": "LIBROS AZULES",
-        "section": "Colección Ciencias y Humanidades",
-        "title": "Problemas resueltos de Razonamiento Matemático — Ingenio y creatividad para nuevos retos",
-        "url": "https://drive.google.com/file/d/1C9HdLv821kKgIHtVSCTjBYlM9cVrW8bC/view?usp=drivesdk",
-        "image": "https://drive.google.com/thumbnail?id=1C9HdLv821kKgIHtVSCTjBYlM9cVrW8bC&sz=w1000",
-        "series": "Colección Ciencias y Humanidades",
-        "author": "",
-        "upcoming": false
-      },
-      {
-        "catalog": "Temas Selectos",
-        "section": "Economía",
-        "title": "Sistema monetario",
-        "url": "https://drive.google.com/file/d/1qq2mfDcRD9PkrxFxjRr5WDdoxrEVOHjh/view?usp=drivesdk",
-        "image": "https://drive.google.com/thumbnail?id=1qq2mfDcRD9PkrxFxjRr5WDdoxrEVOHjh&sz=w1000",
-        "series": "Temas Selectos · Economía",
         "author": "",
         "upcoming": false
       }

@@ -80,7 +80,7 @@ function buildIndex(d,videos,directory){
 function loadIndex(){
  if(indexRows)return Promise.resolve(indexRows);
  if(!indexPromise)indexPromise=Promise.all([
-  fetch('/universe-ui/data/platform.json').then(r=>r.json()),
+  fetch('/universe-ui/data/platform.json?v=20260924-library-layout').then(r=>r.json()),
   fetch('/universe-ui/data/videos.json').then(r=>r.json()).catch(()=>null),
   fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
  ]).then(([d,v,directory])=>{indexRows=buildIndex(d,v,directory);return indexRows}).catch(()=>{indexRows=tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' ')));return indexRows});
@@ -149,7 +149,7 @@ const chapters=$$('.chapter');let scrollScheduled=false;
 function scrollState(){const active=chapters.reduce((best,s)=>s.getBoundingClientRect().top<innerHeight*.55?s:best,chapters[0]);$$('.chapter-nav a').forEach(a=>a.classList.toggle('active',a.hash==='#'+active.id));space?.setScroll(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight));scrollScheduled=false}
 addEventListener('scroll',()=>{if(!scrollScheduled){scrollScheduled=true;requestAnimationFrame(scrollState)}},{passive:true});
 translate();
-const {startPlatform}=await import('./platform.js?v=20260913-library');
+const {startPlatform}=await import('./platform.js?v=20260924-library-layout');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 const {orbitHTML,mountOrbits}=await import('./orbit.js');
 $('.command-visual').innerHTML=orbitHTML();mountOrbits();
