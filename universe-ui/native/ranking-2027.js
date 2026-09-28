@@ -12,7 +12,8 @@
 
   var tracks = {
     pre: {
-      label: 'Ciclo Pre',
+      label: 'Pre Lima',
+      sede: 'Lima',
       maximum: 150,
       sourceKey: 'pre',
       exams: [
@@ -45,6 +46,7 @@
       ]
     }
   };
+  tracks.juliaca = Object.assign({}, tracks.pre, { label: 'Pre Juliaca', sede: 'Juliaca' });
   var activeTrack = 'pre';
 
   function esc(value) {
@@ -64,7 +66,9 @@
   }
 
   function normalizeRows(track) {
-    return (source[track.sourceKey] || []).map(function (raw, index) {
+    return (source[track.sourceKey] || []).filter(function (raw) {
+      return !track.sede || (raw.sede || 'Lima') === track.sede;
+    }).map(function (raw, index) {
       var row = Array.isArray(raw) ? { code: raw[0] } : Object.assign({}, raw);
       if (Array.isArray(raw)) row[track.sourceKey === 'pre' ? 'pc1' : 'e1'] = raw[1];
       row.originalIndex = index;
@@ -116,7 +120,7 @@
     var mean = published.length ? published.reduce(function (total, row) { return total + row.average; }, 0) / published.length : null;
     stats.innerHTML = [
       ['Códigos', rows.length.toLocaleString('es-PE'), track.label],
-      ['Con nota', published.length.toLocaleString('es-PE'), 'Primera evaluación publicada'],
+      ['Con nota', published.length.toLocaleString('es-PE'), 'Evaluaciones publicadas'],
       ['Mayor nota', top ? format(top.average) : '-', top ? 'Código ' + top.code : 'Sin resultados'],
       ['Promedio', format(mean), 'Solo evaluaciones publicadas']
     ].map(function (item) {
@@ -149,7 +153,8 @@
 
   section.querySelectorAll('[data-ranking-2027-track]').forEach(function (button) {
     button.addEventListener('click', function () {
-      activeTrack = button.getAttribute('data-ranking-2027-track') === 'basic' ? 'basic' : 'pre';
+      var selectedTrack = button.getAttribute('data-ranking-2027-track');
+      activeTrack = tracks[selectedTrack] ? selectedTrack : 'pre';
       section.querySelectorAll('[data-ranking-2027-track]').forEach(function (item) {
         item.setAttribute('aria-pressed', String(item === button));
       });
