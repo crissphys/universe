@@ -107,3 +107,20 @@
 @keyframes book-target{0%,100%{box-shadow:0 0 0 2px #9a8bd4,0 0 0 8px #7d60af00}50%{box-shadow:0 0 0 2px #9a8bd4,0 0 0 10px #7d60af40}}
 .p-book.is-target{border-radius:14px;box-shadow:0 0 0 2px #9a8bd4;animation:book-target 1.1s ease-in-out 3}
 :root.motion-off .p-book.is-target{animation:none}
+
+/* DRIVE UNIVERSE: archivos del Drive en el buscador */
+.drive-group .entry-group-head span,.drive-group>h4{color:#b9a8ff}
+.drive-icon{flex:none;display:grid;place-items:center;width:30px;height:38px;border-radius:5px;font-size:7.5px;font-weight:700;letter-spacing:.04em;color:#fff;background:#5b6475;box-shadow:inset 0 -10px 0 #0000001f}
+.drive-icon[data-kind=pdf]{background:#d6453d}
+.drive-icon[data-kind=doc]{background:#3b6fd8}
+.drive-icon[data-kind=slides]{background:#d9822b}
+.drive-icon[data-kind=sheet]{background:#2e9d5b}
+.drive-icon[data-kind=image]{background:#8a5cd6}
+.drive-icon[data-kind=media]{background:#c43f87}
+.drive-icon[data-kind=zip]{background:#7a6a4f}
+.drive-row>span:not(.drive-icon){flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.drive-row small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+.search-row.drive-row>svg{width:14px;height:14px;color:var(--muted)}
+#search-drive .search-group{margin-top:18px}
+.drive-more{display:block;width:100%;margin-top:10px;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:12px;color:var(--muted)}
+.drive-more:hover{color:var(--text)}

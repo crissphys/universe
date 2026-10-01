@@ -1,0 +1,37 @@
+name: Drive Universe index
+
+# Regenerates universe-ui/data/drive-index.json from the public Universe Drive (read-only, no secrets)
+# and commits it when files were added, renamed or removed. Also runnable by hand from the Actions tab.
+on:
+  schedule:
+    - cron: '17 9 * * *'   # every day, 04:17 Lima
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: drive-index
+  cancel-in-progress: false
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Crawl Drive
+        run: node scripts/index-drive.mjs
+      - name: Commit if the file list changed
+        run: |
+          # generatedAt always changes; only commit when the files themselves did.
+          if git diff --quiet -- universe-ui/data/drive-index.json; then exit 0; fi
+          node -e "const f=p=>{const d=JSON.parse(p);delete d.generatedAt;return JSON.stringify(d)};const {execSync}=require('child_process');const a=f(execSync('git show HEAD:universe-ui/data/drive-index.json').toString());const b=f(require('fs').readFileSync('universe-ui/data/drive-index.json','utf8'));process.exit(a===b?1:0)" || { git checkout -- universe-ui/data/drive-index.json; exit 0; }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add universe-ui/data/drive-index.json
+          git commit -m "Update Drive Universe index"
+          git push
