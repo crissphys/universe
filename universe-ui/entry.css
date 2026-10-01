@@ -25,7 +25,8 @@
 #origin .entry-copy .hero-description{max-width:480px;margin:0 auto 32px;line-height:1.8;text-align:center}
 
 /* Buscador */
-#origin #intent-form{position:relative;width:min(100%,680px);display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--solid) 78%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 24px 70px #00000070,inset 0 1px 0 #ffffff0d;transition:border-color .2s,box-shadow .2s}
+/* z-index: la lista de resultados queda por encima de los atajos y los exámenes UNI (posicionados). */
+#origin #intent-form{position:relative;z-index:5;width:min(100%,680px);display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--solid) 78%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 24px 70px #00000070,inset 0 1px 0 #ffffff0d;transition:border-color .2s,box-shadow .2s}
 #origin #intent-form:focus-within{border-color:#9a8bd480;box-shadow:0 24px 70px #00000070,0 0 0 4px #7d60af29}
 .entry-search-icon{display:grid;color:var(--muted)}
 .entry-search-icon svg{width:18px;height:18px}
