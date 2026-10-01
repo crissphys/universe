@@ -95,8 +95,10 @@ function buildIndex(d,videos,directory){
   for(const t of c.topics)rows.push(row('syllabus',t.split('. ')[0].slice(0,90),`San Marcos · ${c.name}`,'/temario',t));
  }
  const ROUTES={amautas:'/biblioteca/amautas',universe:'/biblioteca/universe',cuzcano:'/biblioteca/cuzcano',lumbreras:'/biblioteca/lumbreras',college:'/biblioteca/librosuniversitarios',materials:'/cepreuni/ciclopre20271'};
- for(const [key,list] of Object.entries(d.catalogs||{}))for(const b of list)
-  rows.push(row(key==='materials'?'material':'library',b.title,[b.series,b.author].filter(Boolean).join(' · '),ROUTES[key]||'/biblioteca',b.catalog+' '+b.section));
+ // Cada libro lleva su portada (la misma que muestra el catálogo) y el enlace a su posición: ?libro=<índice>.
+ const thumb=b=>{const id=(b.url||'').match(/\/d\/([^/?]+)|[?&]id=([^&]+)/);return (b.drivePreview||b.image==='/assets/library/editorials/cepreuni.png')&&id?`https://drive.google.com/thumbnail?id=${id[1]||id[2]}&sz=w200`:b.image||''};
+ for(const [key,list] of Object.entries(d.catalogs||{}))list.forEach((b,i)=>
+  rows.push({...row(key==='materials'?'material':'library',b.title,[b.series,b.author].filter(Boolean).join(' · '),key==='examenes'?'/cepreuni/examenes':ROUTES[key]?ROUTES[key]+'?libro='+i:'/biblioteca',b.catalog+' '+b.section),image:thumb(b)}));
  for(const p of d.publishers||[])rows.push(row('library',p.name,'Editorial','/biblioteca',''));
  for(const c of d.videoIndex?.courses||[])rows.push(row('class',c.title,`${c.videoCount} clases · ${c.area}`,'/clases',c.slug));
  if(videos)for(const [slug,list] of Object.entries(videos))for(const v of list)
@@ -137,7 +139,7 @@ function groupHits(hits,perGroup){
 function renderSearch(hits){
  const box=$('#search-results');
  if(!hits.length){box.innerHTML=`<p>${en()?'No matches. Try “physics”, “books” or “planner”.':'No encontramos coincidencias. Prueba «física», «libros» o «planificador».'}</p>`;return}
- box.innerHTML=groupHits(hits,6).map(g=>`<div class="search-group"><h4>${esc2(g.name)}<small>${g.items.length}</small></h4>${g.shown.map(h=>`<a class="search-row" href="${esc2(h.url)}"><div>${esc2(h.label)}<small>${esc2(h.sub)}</small></div><span>→</span></a>`).join('')}</div>`).join('');
+ box.innerHTML=groupHits(hits,6).map(g=>`<div class="search-group"><h4>${esc2(g.name)}<small>${g.items.length}</small></h4>${g.shown.map(h=>`<a class="search-row" href="${esc2(h.url)}">${h.image?`<img class="search-thumb" src="${esc2(h.image)}" alt="" loading="lazy" width="30" height="40">`:''}<div>${esc2(h.label)}<small>${esc2(h.sub)}</small></div><span>→</span></a>`).join('')}</div>`).join('');
 }
 const esc2=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function search(){
@@ -175,7 +177,7 @@ function finderPaint(rows){
  for(const g of groups){
   const group=document.createElement('div');group.className='entry-group';group.setAttribute('role','group');group.setAttribute('aria-labelledby','intent-group-'+g.kind);
   group.innerHTML=`<div class="entry-group-head" id="intent-group-${g.kind}"><span>${esc2(g.name)}</span><small>${g.items.length}</small></div>`;
-  for(const h of g.shown){const a=document.createElement('a');a.className='entry-option';a.id='intent-option-'+n++;a.setAttribute('role','option');a.href=h.url;a.innerHTML=`<span>${esc2(h.label)}<small>${esc2(h.sub)}</small></span>${icon('arrow-right')}`;group.append(a)}
+  for(const h of g.shown){const a=document.createElement('a');a.className='entry-option';a.id='intent-option-'+n++;a.setAttribute('role','option');a.href=h.url;a.innerHTML=`${h.image?`<img class="entry-thumb" src="${esc2(h.image)}" alt="" loading="lazy" width="30" height="40">`:''}<span>${esc2(h.label)}<small>${esc2(h.sub)}</small></span>${icon('arrow-right')}`;group.append(a)}
   finder.list.append(group);
  }
  if(groups.reduce((t,g)=>t+g.shown.length,0)<hits.length){
@@ -239,7 +241,7 @@ function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserve
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform}=await import('./platform.js?v=20261001-editoriales');
+const {startPlatform}=await import('./platform.js?v=20261001-books');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 if(!startsHome)wakeStrands();
 const visual=$('.command-visual');if(visual){const {orbitHTML,mountOrbits}=await import('./orbit.js');visual.innerHTML=orbitHTML();mountOrbits()}

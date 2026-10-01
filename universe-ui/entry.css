@@ -98,3 +98,12 @@
 #origin .xhome{display:flex;flex-direction:column;align-items:center;margin-top:30px}
 #origin .xhome .xpills{justify-content:center}
 @media(max-width:600px){#origin .xhome{align-items:stretch;width:100%}}
+
+/* Portadas en los resultados y libro marcado al llegar desde el buscador */
+#origin .entry-option{justify-content:flex-start}
+.entry-option>span{flex:1}
+.entry-thumb,.search-thumb{width:30px;height:40px;flex:none;object-fit:cover;border-radius:4px;background:#ffffff12;box-shadow:0 2px 8px #0006}
+.search-row>div{flex:1;min-width:0}
+@keyframes book-target{0%,100%{box-shadow:0 0 0 2px #9a8bd4,0 0 0 8px #7d60af00}50%{box-shadow:0 0 0 2px #9a8bd4,0 0 0 10px #7d60af40}}
+.p-book.is-target{border-radius:14px;box-shadow:0 0 0 2px #9a8bd4;animation:book-target 1.1s ease-in-out 3}
+:root.motion-off .p-book.is-target{animation:none}
