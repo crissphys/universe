@@ -1,3 +1,4 @@
+import {loadDrive,searchDrive,driveMeta,fileIcon} from './drive-search.js?v=20261001-drive';
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const storage = {get(k,d){try{return localStorage.getItem('universe-galaxy-'+k)??d}catch{return d}},set(k,v){try{localStorage.setItem('universe-galaxy-'+k,String(v))}catch{}}};
@@ -136,6 +137,19 @@ function groupHits(hits,perGroup){
  const rank=new Map(hits.map((h,i)=>[h,i]));
  return GROUPS.map(([kind,es,ens])=>({kind,name:en()?ens:es,items:hits.filter(h=>h.kind===kind),shown:hits.filter(h=>h.kind===kind).slice(0,perGroup)})).filter(g=>g.items.length).sort((a,b)=>rank.get(a.items[0])-rank.get(b.items[0]));
 }
+// DRIVE UNIVERSE: todo el Drive de Universe (índice local generado por scripts/index-drive.mjs).
+// Cada resultado abre el archivo directamente en Google Drive.
+const DRIVE_LABEL={pdf:'PDF',doc:'DOC',slides:'PPT',sheet:'XLS',image:'IMG',media:'MP4',zip:'ZIP',file:'FILE'};
+function driveRow(f,cls,id){const kind=fileIcon(f.type);return `<a class="${cls} drive-row" ${id?`id="${id}" role="option"`:''} href="${esc2(f.url)}" data-live target="_blank" rel="noopener noreferrer"><span class="drive-icon" data-kind="${kind}">${f.ext&&f.ext.length<=4?esc2(f.ext.toUpperCase()):DRIVE_LABEL[kind]}</span><span>${esc2(f.title)}<small>${esc2(f.path||'Drive Universe')}</small></span>${icon('arrow-up-right')}</a>`}
+let driveShown=20;
+function renderDrive(q){
+ const box=$('#search-drive');if(!box)return;
+ if(!q.trim()){box.innerHTML='';return}
+ const r=searchDrive(q),meta=driveMeta();
+ if(!meta){box.innerHTML=`<div class="search-group drive-group"><h4>Drive Universe</h4><p class="entry-note">${en()?'Loading the Drive index…':'Cargando el índice del Drive…'}</p></div>`;return}
+ box.innerHTML=`<div class="search-group drive-group"><h4>Drive Universe<small>${r.hits.length}${r.similar?(en()?' · similar':' · similares'):''}</small></h4>${r.hits.length?r.hits.slice(0,driveShown).map(f=>driveRow(f,'search-row')).join(''):`<p class="entry-note">${en()?'No files match.':'Ningún archivo coincide.'}</p>`}${r.hits.length>driveShown?`<button type="button" class="drive-more">${en()?'Show more results':'Ver más resultados'} (${r.hits.length-driveShown})</button>`:''}</div>`;
+ box.querySelector('.drive-more')?.addEventListener('click',()=>{driveShown+=20;renderDrive(q)});
+}
 function renderSearch(hits){
  const box=$('#search-results');
  if(!hits.length){box.innerHTML=`<p>${en()?'No matches. Try “physics”, “books” or “planner”.':'No encontramos coincidencias. Prueba «física», «libros» o «planificador».'}</p>`;return}
@@ -144,6 +158,7 @@ function renderSearch(hits){
 const esc2=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function search(){
  const q=$('#tool-search').value;
+ driveShown=20;renderDrive(q);loadDrive().then(()=>{if($('#tool-search').value===q)renderDrive(q)}).catch(()=>{});
  renderSearch(matchRows(q,indexRows||[]));
  loadIndex().then(rows=>{if($('#tool-search').value===q)renderSearch(matchRows(q,rows))});
 }
@@ -171,8 +186,8 @@ function finderPaint(rows){
  finder.list.replaceChildren();
  const note=text=>{const p=document.createElement('p');p.className='entry-note';p.textContent=text;finder.list.append(p)};
  if(!rows){note(en()?'Searching…':'Buscando…');finderOpen(true);return}
- const hits=matchRows(q,rows);
- if(!hits.length){note(en()?'No matches. Try “physics”, “books” or “planner”.':'Sin coincidencias. Prueba «física», «libros» o «planificador».');finderOpen(true);return}
+ const hits=matchRows(q,rows),drive=searchDrive(q);
+ if(!hits.length&&!drive.hits.length&&driveMeta()){note(en()?'No matches. Try “physics”, “books” or “planner”.':'Sin coincidencias. Prueba «física», «libros» o «planificador».');finderOpen(true);return}
  let n=0;const groups=groupHits(hits,3);
  for(const g of groups){
   const group=document.createElement('div');group.className='entry-group';group.setAttribute('role','group');group.setAttribute('aria-labelledby','intent-group-'+g.kind);
@@ -186,16 +201,26 @@ function finderPaint(rows){
  more.addEventListener('click',()=>{$('#tool-search').value=q;finderOpen(false);openDialog($('#search-dialog'))});
  finder.list.append(more);
  }
+ const dg=document.createElement('div');dg.className='entry-group drive-group';dg.setAttribute('role','group');dg.setAttribute('aria-labelledby','intent-group-drive');
+ dg.innerHTML=`<div class="entry-group-head" id="intent-group-drive"><span>Drive Universe</span><small>${driveMeta()?drive.hits.length+(drive.similar?(en()?' · similar':' · similares'):''):'…'}</small></div>`
+  +(driveMeta()?drive.hits.slice(0,10).map(f=>driveRow(f,'entry-option','intent-option-'+n++)).join(''):`<p class="entry-note">${en()?'Loading the Drive index…':'Cargando el índice del Drive…'}</p>`);
+ if(drive.hits.length>10){dg.insertAdjacentHTML('beforeend',`<button type="button" class="entry-option entry-more" id="intent-option-${n++}" role="option"><span>${en()?`See more Drive results (${drive.hits.length})`:`Ver más resultados del Drive (${drive.hits.length})`}</span>${icon('grid')}</button>`);
+  dg.lastElementChild.addEventListener('click',()=>{$('#tool-search').value=q;finderOpen(false);openDialog($('#search-dialog'))})}
+ if(driveMeta()&&!drive.hits.length)dg.insertAdjacentHTML('beforeend',`<p class="entry-note">${en()?'No files match.':'Ningún archivo coincide.'}</p>`);
+ finder.list.append(dg);
  finderOpen(true);finderActive(0);
 }
 function finderSearch(){
  const q=finder.input.value;
  finderPaint(indexRows);
+ loadDrive().then(()=>{if(finder.input.value===q&&indexRows)finderPaint(indexRows)}).catch(()=>{});
  return loadIndex().then(rows=>{if(finder.input.value===q)finderPaint(rows)});
 }
+// Escribir rápido no recalcula en cada tecla: espera 180 ms de pausa.
+let finderTimer=0;const finderDebounced=()=>{clearTimeout(finderTimer);finderTimer=setTimeout(finderSearch,180)};
 if(finder.form){
- finder.input.addEventListener('input',finderSearch);
- finder.input.addEventListener('focus',()=>{loadIndex();if(finder.input.value.trim()&&finder.list.hidden)finderSearch()});
+ finder.input.addEventListener('input',finderDebounced);
+ finder.input.addEventListener('focus',()=>{loadIndex();loadDrive().catch(()=>{});if(finder.input.value.trim()&&finder.list.hidden)finderSearch()});
  finder.input.addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(finder.list.hidden){if(finder.input.value.trim())finderSearch();return}finderActive(finder.active+(e.key==='ArrowDown'?1:-1))}
   else if(e.key==='Escape'){if(!finder.list.hidden){e.preventDefault();finderOpen(false)}else if(finder.input.value){finder.input.value='';finderSearch()}}
@@ -217,7 +242,7 @@ function renderEvents(){$('#events').innerHTML=events.filter(e=>cycle==='all'||c
 function tick(){$$('[data-deadline]').forEach(e=>{const delta=Date.parse(e.dataset.deadline)-Date.now();if(delta<=0){e.textContent=en()?'Date reached':'Fecha alcanzada';return}const m=Math.floor(delta/60000),d=Math.floor(m/1440),h=Math.floor(m%1440/60);e.innerHTML=`${String(d).padStart(2,'0')}d : ${String(h).padStart(2,'0')}h : ${String(m%60).padStart(2,'0')}m<small>${en()?'UNTIL YOUR NEXT STEP':'PARA TU SIGUIENTE PASO'}</small>`})}
 $$('[data-cycle]').forEach(b=>b.addEventListener('click',()=>{cycle=b.dataset.cycle;$$('[data-cycle]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderEvents()}));setInterval(tick,30000);
 function openDialog(d){lastFocus=document.activeElement;d.showModal();document.body.classList.add('modal-open');if(d.id==='search-dialog'){$('#tool-search').focus();search()}}
-$$('.search-trigger').forEach(b=>b.addEventListener('click',()=>openDialog($('#search-dialog'))));$$('.settings-trigger').forEach(b=>b.addEventListener('click',()=>openDialog($('#preferences'))));$$('.close-dialog').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));$$('dialog').forEach(d=>{d.addEventListener('close',()=>{document.body.classList.remove('modal-open');lastFocus?.focus()});d.addEventListener('click',e=>{if(e.target===d){const rect=d.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)d.close()}})});$('#tool-search').addEventListener('input',search);
+$$('.search-trigger').forEach(b=>b.addEventListener('click',()=>openDialog($('#search-dialog'))));$$('.settings-trigger').forEach(b=>b.addEventListener('click',()=>openDialog($('#preferences'))));$$('.close-dialog').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));$$('dialog').forEach(d=>{d.addEventListener('close',()=>{document.body.classList.remove('modal-open');lastFocus?.focus()});d.addEventListener('click',e=>{if(e.target===d){const rect=d.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)d.close()}})});{let t=0;$('#tool-search').addEventListener('input',()=>{clearTimeout(t);t=setTimeout(search,180)})}
 $$('[data-en]').forEach(e=>e.dataset.es=e.innerHTML);
 function translate(){document.documentElement.lang=prefs.lang;$$('[data-en]').forEach(e=>e.innerHTML=en()?e.dataset.en:e.dataset.es);$('#intent').placeholder=en()?'Search topics, books, classes…':'Busca temas, libros, clases…';if(!finder.list.hidden)finderPaint(indexRows);$('#tool-search').placeholder=en()?'Books, classes, calculator…':'Busca libros, clases, calculadora…';renderTools();renderEvents();search();renderMotion();externalLinks()}
 function renderMotion(){const enabled=prefs.motion;document.documentElement.classList.toggle('motion-off',!enabled);$$('.motion-trigger').forEach(b=>{b.setAttribute('aria-pressed',String(!enabled));b.querySelector('[data-icon]').innerHTML=icon(enabled?'pause':'play');b.querySelector('[data-motion-label]').textContent=en()?(enabled?'Pause motion':'Motion paused'):(enabled?'Pausar movimiento':'Activar movimiento')});$('#motion').checked=prefs.motion;space?.configure({...prefs,motion:enabled});strands?.setMotion(enabled&&!immersive);if(!enabled)$$('.pending').forEach(e=>e.classList.remove('pending'))}
