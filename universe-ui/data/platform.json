@@ -16914,7 +16914,7 @@
     "lumbreras": "/assets/library/editorials/lumbreras.png",
     "amautas": "/assets/library/editorials/amautas.png",
     "manhattan": "/assets/library/editorials/manhattan-wordmark.png",
-    "rubinos": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-covers-2012c"
+    "rubinos": "/assets/library/editorials/rubinos.png?v=20261009-rubinos-quimica-2016d"
   },
   "catalogs": {
     "materials": [
@@ -23239,11 +23239,11 @@
       },
       {
         "catalog": "LA ENCICLOPEDIA",
-        "section": "2012",
+        "section": "2016",
         "title": "Química",
         "url": "https://drive.google.com/file/d/1fVeUHN-2AZeGvvc0ZOWpo-15O9SbEnol/view?usp=drive_link",
         "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
-        "series": "La Enciclopedia · 2012",
+        "series": "La Enciclopedia · 2016",
         "author": "Rubiños Ediciones",
         "upcoming": false,
         "drivePreview": true,
@@ -23481,7 +23481,7 @@
     {
       "name": "Rubiños Ediciones",
       "href": "/biblioteca/rubinos",
-      "logo": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-covers-2012c",
+      "logo": "/assets/library/editorials/rubinos.png?v=20261009-rubinos-quimica-2016d",
       "action": "Catálogo",
       "flat": false
     },
