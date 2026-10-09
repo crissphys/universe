@@ -16913,7 +16913,8 @@
     "cuzcano": "/assets/library/editorials/cuzcano.png",
     "lumbreras": "/assets/library/editorials/lumbreras.png",
     "amautas": "/assets/library/editorials/amautas.png",
-    "manhattan": "/assets/library/editorials/manhattan-wordmark.png"
+    "manhattan": "/assets/library/editorials/manhattan-wordmark.png",
+    "rubinos": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-2012b"
   },
   "catalogs": {
     "materials": [
@@ -23190,6 +23191,92 @@
         "upcoming": false,
         "sourceTitle": "TRIGONOMETRÍA - MANHATTAN 2020-1"
       }
+    ],
+    "rubinos": [
+      {
+        "catalog": "LA ENCICLOPEDIA",
+        "section": "2012",
+        "title": "Aritmética",
+        "url": "https://drive.google.com/file/d/1-7bvhISqWpfaBwJJ0pKRZZEhykrPQDfB/view?usp=drive_link",
+        "image": "https://lh3.googleusercontent.com/d/1-7bvhISqWpfaBwJJ0pKRZZEhykrPQDfB=w800",
+        "series": "La Enciclopedia · 2012",
+        "author": "Rubiños Ediciones",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "ARITMETICA LA ENCICLOPEDIA 2012 - RUBIÑOS"
+      },
+      {
+        "catalog": "LA ENCICLOPEDIA",
+        "section": "2012",
+        "title": "Álgebra",
+        "url": "https://drive.google.com/file/d/10ALelnnPuzwjR_bf2H-LVetsDawEYivY/view?usp=drive_link",
+        "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
+        "series": "La Enciclopedia · 2012",
+        "author": "Rubiños Ediciones",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "Algebra La Enciclopedia 2012 - Rubiños"
+      },
+      {
+        "catalog": "LA ENCICLOPEDIA",
+        "section": "2012",
+        "title": "Física",
+        "url": "https://drive.google.com/file/d/100OC3Ow55FryUiZilgHHQ69tmRV9VYFo/view?usp=drive_link",
+        "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
+        "series": "La Enciclopedia · 2012",
+        "author": "Rubiños Ediciones",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "FISICA LA ENCICLOPEDIA 2012 - RUBIÑOS"
+      },
+      {
+        "catalog": "LA ENCICLOPEDIA",
+        "section": "2012",
+        "title": "Geometría",
+        "url": "https://drive.google.com/file/d/1bo-jR9osmBDrEGsfJ1nYgx2nnTc-KIEQ/view?usp=drive_link",
+        "image": "https://lh3.googleusercontent.com/d/1bo-jR9osmBDrEGsfJ1nYgx2nnTc-KIEQ=w800",
+        "series": "La Enciclopedia · 2012",
+        "author": "Rubiños Ediciones",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "GEOMETRIA LA ENCICLOPEDIA 2012 - RUBIÑOS"
+      },
+      {
+        "catalog": "LA ENCICLOPEDIA",
+        "section": "2012",
+        "title": "Química",
+        "url": "https://drive.google.com/file/d/1fVeUHN-2AZeGvvc0ZOWpo-15O9SbEnol/view?usp=drive_link",
+        "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
+        "series": "La Enciclopedia · 2012",
+        "author": "Rubiños Ediciones",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "QUIMICA LA ENCICLOPEDIA 2012 - RUBIÑOS"
+      },
+      {
+        "catalog": "LA ENCICLOPEDIA",
+        "section": "2012",
+        "title": "Razonamiento Matemático",
+        "url": "https://drive.google.com/file/d/1CQxa6A2d1VDvYyaIhgdLmVfjmNgnF1i8/view?usp=drive_link",
+        "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
+        "series": "La Enciclopedia · 2012",
+        "author": "Rubiños Ediciones",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "RM LA ENCICLOPEDIA 2012 - RUBIÑOS"
+      },
+      {
+        "catalog": "LA ENCICLOPEDIA",
+        "section": "2012",
+        "title": "Trigonometría",
+        "url": "https://drive.google.com/file/d/1XTyacPFxhGmsda8du7-J4VeKP0203WB5/view?usp=drive_link",
+        "image": "https://lh3.googleusercontent.com/d/1XTyacPFxhGmsda8du7-J4VeKP0203WB5=w800",
+        "series": "La Enciclopedia · 2012",
+        "author": "Rubiños Ediciones",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "TRIGONOMETRIA LA ENCICLOPEDIA 2012 - RUBIÑOS"
+      }
     ]
   },
   "videoIndex": {
@@ -23398,11 +23485,11 @@
       "flat": true
     },
     {
-      "name": "Rubiños",
-      "href": "https://drive.google.com/drive/folders/1XfSDRBGrq2puk9vWWzbljmcGvc3y3l2Q",
-      "logo": "/assets/library/editorials/rubinos.png",
-      "action": "Abrir",
-      "flat": true
+      "name": "Rubiños Ediciones",
+      "href": "/biblioteca/rubinos",
+      "logo": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-2012b",
+      "action": "Catálogo",
+      "flat": false
     },
     {
       "name": "Editorial San Marcos",
