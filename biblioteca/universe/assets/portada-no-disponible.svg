@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" role="img" aria-labelledby="title desc">
+  <title id="title">Editorial Universe · vista previa</title>
+  <desc id="desc">Portada de respaldo para un documento cuyo archivo no ofrece miniatura.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#071322"/>
+      <stop offset=".55" stop-color="#172f52"/>
+      <stop offset="1" stop-color="#070d18"/>
+    </linearGradient>
+    <pattern id="stars" width="86" height="86" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="19" r="1.5" fill="#d9e8ff" opacity=".6"/>
+      <circle cx="58" cy="61" r="1" fill="#84b8ff" opacity=".5"/>
+      <circle cx="76" cy="11" r="1" fill="#fff" opacity=".4"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#stars)"/>
+  <rect x="38" y="38" width="524" height="724" rx="10" fill="none" stroke="#91b8ee" stroke-opacity=".55" stroke-width="2"/>
+  <circle cx="300" cy="300" r="126" fill="#0d1b31" stroke="#6ba4ec" stroke-opacity=".65" stroke-width="3"/>
+  <path d="M300 182c-68 0-123 55-123 123s55 123 123 123 123-55 123-123" fill="none" stroke="#8bc2ff" stroke-opacity=".75" stroke-width="3"/>
+  <path d="M300 213v142m-71-71h142" stroke="#dcecff" stroke-opacity=".78" stroke-width="10" stroke-linecap="round"/>
+  <text x="300" y="500" fill="#f4f8ff" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="6" text-anchor="middle">EDITORIAL</text>
+  <text x="300" y="566" fill="#f4f8ff" font-family="Arial,sans-serif" font-size="54" font-weight="800" letter-spacing="3" text-anchor="middle">UNIVERSE</text>
+  <path d="M166 601h268" stroke="#8bc2ff" stroke-width="3"/>
+  <text x="300" y="658" fill="#dbeaff" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="2" text-anchor="middle">VISTA PREVIA</text>
+  <text x="300" y="694" fill="#b9cee8" font-family="Arial,sans-serif" font-size="15" text-anchor="middle">Abre el documento en Google Drive</text>
+</svg>

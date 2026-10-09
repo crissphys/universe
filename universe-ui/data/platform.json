@@ -17860,6 +17860,90 @@
         "series": "CEPREUNI 2027-1",
         "author": "UNIVERSE × CICLESOLUS",
         "upcoming": true
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "2DA EDICIÓN",
+        "title": "Filosofía",
+        "url": "https://drive.google.com/file/d/1JbaHwbqrJ4OZKIfaeBPX8TvE_i2XlR-e/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/portada-no-disponible.svg",
+        "series": "Primeros Resúmenes · 2.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "Primeros Resúmenes de Filosofia 2da ED — Editorial UNIVERSE"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "2DA EDICIÓN",
+        "title": "Psicología",
+        "url": "https://drive.google.com/file/d/17AvFxcpVONbJArfXmPC9DKiA_UkiiyIn/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/portada-no-disponible.svg",
+        "series": "Primeros Resúmenes · 2.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "Primeros Resúmenes de Psicologia 2da ED — Editorial UNIVERSE"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "2DA EDICIÓN",
+        "title": "Historia",
+        "url": "https://drive.google.com/file/d/1tQ8htdFJ762sROcOeSFcNa1veQ1ZIAPt/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/portada-no-disponible.svg",
+        "series": "Primeros Resúmenes · 2.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "Primeros Resúmenes de Historia 2da ED — Editorial UNIVERSE"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "2DA EDICIÓN",
+        "title": "Literatura",
+        "url": "https://drive.google.com/file/d/1OLecBfdSvAETO3iZCK3cZKlIWMEuQ3jc/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/portada-no-disponible.svg",
+        "series": "Primeros Resúmenes · 2.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "Primeros Resúmenes de Literatura 2da ED — Editorial UNIVERSE"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "2DA EDICIÓN",
+        "title": "Lenguaje",
+        "url": "https://drive.google.com/file/d/1DKuIO1QvFULIbDXyc9RE-6owS55TVX_6/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/portada-no-disponible.svg",
+        "series": "Primeros Resúmenes · 2.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "Primeros Resúmenes de Lenguaje 2da ED — Editorial UNIVERSE"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "3RA EDICIÓN",
+        "title": "Historia",
+        "url": "https://drive.google.com/file/d/1hO7inDd2BRudc_DV94F7_qtGHKFd8Iyj/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/primeros-resumenes-historia-3ra.webp",
+        "series": "Primeros Resúmenes · 3.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": false,
+        "sourceTitle": "📂 PRIMEROS RESUMENES HISTORIA 3RA EDICIÓN.pdf"
+      },
+      {
+        "catalog": "2DAS PCS (POR TEMAS)",
+        "section": "FÍSICA",
+        "title": "Física · Pruebas Calificadas por Temas",
+        "url": "https://drive.google.com/file/d/1-E1JIRR0lIWzlDAedu5t421zSjD7clLr/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/portada-no-disponible.svg",
+        "series": "2das PCS · Por temas",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": true,
+        "sourceTitle": "FÍSICA 2DAS PCS (POR TEMAS) - UNIVERSE.pdf"
       }
     ],
     "cuzcano": [
