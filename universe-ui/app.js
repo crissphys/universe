@@ -266,7 +266,7 @@ function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserve
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform}=await import('./platform.js?v=20261009-rubinos-quimica-2016d');
+const {startPlatform}=await import('./platform.js?v=20261009-canonical-routes');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 if(!startsHome)wakeStrands();
 const visual=$('.command-visual');if(visual){const {orbitHTML,mountOrbits}=await import('./orbit.js');visual.innerHTML=orbitHTML();mountOrbits()}
