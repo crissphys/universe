@@ -109,7 +109,7 @@ function buildIndex(d,videos,directory){
 function loadIndex(){
  if(indexRows)return Promise.resolve(indexRows);
  if(!indexPromise)indexPromise=Promise.all([
-  fetch('/universe-ui/data/platform.json?v=20261009-rodo-library').then(r=>r.json()),
+  fetch('/universe-ui/data/platform.json?v=20261009-rodo-catalogo-v2').then(r=>r.json()),
   fetch('/universe-ui/data/videos.json').then(r=>r.json()).catch(()=>null),
   fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
  ]).then(([d,v,directory])=>{indexRows=buildIndex(d,v,directory);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
