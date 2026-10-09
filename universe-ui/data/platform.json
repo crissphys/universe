@@ -16914,7 +16914,7 @@
     "lumbreras": "/assets/library/editorials/lumbreras.png",
     "amautas": "/assets/library/editorials/amautas.png",
     "manhattan": "/assets/library/editorials/manhattan-wordmark.png",
-    "rubinos": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-2012b"
+    "rubinos": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-covers-2012c"
   },
   "catalogs": {
     "materials": [
@@ -23198,11 +23198,10 @@
         "section": "2012",
         "title": "Aritmética",
         "url": "https://drive.google.com/file/d/1-7bvhISqWpfaBwJJ0pKRZZEhykrPQDfB/view?usp=drive_link",
-        "image": "https://lh3.googleusercontent.com/d/1-7bvhISqWpfaBwJJ0pKRZZEhykrPQDfB=w800",
+        "image": "/biblioteca/rubinos/assets/covers/aritmetica-2012.webp",
         "series": "La Enciclopedia · 2012",
         "author": "Rubiños Ediciones",
         "upcoming": false,
-        "drivePreview": true,
         "sourceTitle": "ARITMETICA LA ENCICLOPEDIA 2012 - RUBIÑOS"
       },
       {
@@ -23210,11 +23209,10 @@
         "section": "2012",
         "title": "Álgebra",
         "url": "https://drive.google.com/file/d/10ALelnnPuzwjR_bf2H-LVetsDawEYivY/view?usp=drive_link",
-        "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
+        "image": "/biblioteca/rubinos/assets/covers/algebra-2012.webp",
         "series": "La Enciclopedia · 2012",
         "author": "Rubiños Ediciones",
         "upcoming": false,
-        "drivePreview": true,
         "sourceTitle": "Algebra La Enciclopedia 2012 - Rubiños"
       },
       {
@@ -23222,11 +23220,10 @@
         "section": "2012",
         "title": "Física",
         "url": "https://drive.google.com/file/d/100OC3Ow55FryUiZilgHHQ69tmRV9VYFo/view?usp=drive_link",
-        "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
+        "image": "/biblioteca/rubinos/assets/covers/fisica-2012.webp",
         "series": "La Enciclopedia · 2012",
         "author": "Rubiños Ediciones",
         "upcoming": false,
-        "drivePreview": true,
         "sourceTitle": "FISICA LA ENCICLOPEDIA 2012 - RUBIÑOS"
       },
       {
@@ -23234,11 +23231,10 @@
         "section": "2012",
         "title": "Geometría",
         "url": "https://drive.google.com/file/d/1bo-jR9osmBDrEGsfJ1nYgx2nnTc-KIEQ/view?usp=drive_link",
-        "image": "https://lh3.googleusercontent.com/d/1bo-jR9osmBDrEGsfJ1nYgx2nnTc-KIEQ=w800",
+        "image": "/biblioteca/rubinos/assets/covers/geometria-2012.webp",
         "series": "La Enciclopedia · 2012",
         "author": "Rubiños Ediciones",
         "upcoming": false,
-        "drivePreview": true,
         "sourceTitle": "GEOMETRIA LA ENCICLOPEDIA 2012 - RUBIÑOS"
       },
       {
@@ -23258,11 +23254,10 @@
         "section": "2012",
         "title": "Razonamiento Matemático",
         "url": "https://drive.google.com/file/d/1CQxa6A2d1VDvYyaIhgdLmVfjmNgnF1i8/view?usp=drive_link",
-        "image": "/biblioteca/rubinos/assets/portada-no-disponible.svg",
+        "image": "/biblioteca/rubinos/assets/covers/razonamiento-matematico-2012.webp",
         "series": "La Enciclopedia · 2012",
         "author": "Rubiños Ediciones",
         "upcoming": false,
-        "drivePreview": true,
         "sourceTitle": "RM LA ENCICLOPEDIA 2012 - RUBIÑOS"
       },
       {
@@ -23270,11 +23265,10 @@
         "section": "2012",
         "title": "Trigonometría",
         "url": "https://drive.google.com/file/d/1XTyacPFxhGmsda8du7-J4VeKP0203WB5/view?usp=drive_link",
-        "image": "https://lh3.googleusercontent.com/d/1XTyacPFxhGmsda8du7-J4VeKP0203WB5=w800",
+        "image": "/biblioteca/rubinos/assets/covers/trigonometria-2012.webp",
         "series": "La Enciclopedia · 2012",
         "author": "Rubiños Ediciones",
         "upcoming": false,
-        "drivePreview": true,
         "sourceTitle": "TRIGONOMETRIA LA ENCICLOPEDIA 2012 - RUBIÑOS"
       }
     ]
@@ -23487,7 +23481,7 @@
     {
       "name": "Rubiños Ediciones",
       "href": "/biblioteca/rubinos",
-      "logo": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-2012b",
+      "logo": "/assets/library/editorials/rubinos.png?v=20261008-rubinos-covers-2012c",
       "action": "Catálogo",
       "flat": false
     },
