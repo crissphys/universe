@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" role="img" aria-labelledby="title desc">
+  <title id="title">Vista previa de Editorial Rodo</title>
+  <desc id="desc">Portada editorial de respaldo para documentos sin miniatura disponible.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#321019"/>
+      <stop offset=".55" stop-color="#761d28"/>
+      <stop offset="1" stop-color="#1b1118"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#fff8ef"/>
+      <stop offset="1" stop-color="#f0ded0"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#fff" stroke-opacity=".06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#grid)"/>
+  <path d="M52 58h496v684H52z" fill="none" stroke="#f4d8c8" stroke-opacity=".52" stroke-width="2"/>
+  <path d="M72 78h456v644H72z" fill="none" stroke="#f4d8c8" stroke-opacity=".22"/>
+  <circle cx="300" cy="296" r="146" fill="#111018" fill-opacity=".24" stroke="#e55c52" stroke-opacity=".42" stroke-width="2"/>
+  <path d="M188 208h186a30 30 0 0 1 30 30v155H218a30 30 0 0 1-30-30z" fill="url(#paper)" opacity=".98"/>
+  <path d="M218 208v185m186-155H218a30 30 0 0 0-30 30" fill="none" stroke="#30151d" stroke-opacity=".62" stroke-width="8"/>
+  <path d="M218 250h125M218 274h108M218 298h124M218 322h92" stroke="#8c2630" stroke-opacity=".36" stroke-width="6" stroke-linecap="round"/>
+  <text x="300" y="468" fill="#fff8ef" font-family="Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="8" text-anchor="middle">EDITORIAL</text>
+  <text x="300" y="540" fill="#fff8ef" font-family="Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="4" text-anchor="middle">RODO</text>
+  <path d="M190 572h220" stroke="#ed6155" stroke-width="5"/>
+  <text x="300" y="635" fill="#fff8ef" font-family="Arial, sans-serif" font-size="21" font-weight="700" letter-spacing="3" text-anchor="middle">VISTA PREVIA</text>
+  <text x="300" y="672" fill="#f2d9cf" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">Abre el PDF en Google Drive</text>
+</svg>
