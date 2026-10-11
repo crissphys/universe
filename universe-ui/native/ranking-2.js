@@ -95,6 +95,8 @@
   }
   document.querySelectorAll('[data-history-cycle]').forEach(function(button){button.addEventListener('click',function(){cycle=button.dataset.historyCycle;document.querySelectorAll('[data-history-cycle]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});render();});});
   document.querySelectorAll('[data-history-site]').forEach(function(button){button.addEventListener('click',function(){site=button.dataset.historySite;document.querySelectorAll('[data-history-site]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});render();});});
-  render();
+  if(document.getElementById('ranking-archive-panel')){
+    document.addEventListener('universe:ranking-cycle',function(event){if(event.detail==='history')render();});
+  }else{render();}
 })();
-    
+

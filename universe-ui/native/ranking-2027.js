@@ -60,6 +60,15 @@
 
   function normalized(value) { return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase(); }
   function motionEnabled() { return window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !document.documentElement.classList.contains('motion-off'); }
+  function expandCycles(change) {
+    var cycleCards = document.querySelectorAll('.rk-cycle-card');
+    if (window.gsap && window.Flip && motionEnabled() && window.matchMedia('(min-width:641px)').matches) {
+      window.gsap.registerPlugin(window.Flip);
+      var state = window.Flip.getState(cycleCards);
+      change();
+      window.Flip.from(state, { duration: .5, ease: 'power3.out', simple: true, prune: true });
+    } else change();
+  }
 
   function discardedKey(row, track) {
     var pcs = track.exams.filter(function (exam) { return exam[3] && score(row[exam[0]]) != null; });
@@ -249,16 +258,34 @@
     section.hidden = cycle !== '2027-1';
     var archive = document.getElementById('ranking-archive-panel');
     if (archive) archive.hidden = cycle === '2027-1';
-    document.querySelectorAll('[data-ranking-cycle]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.getAttribute('data-ranking-cycle') === cycle)); });
+    expandCycles(function () {
+      document.querySelectorAll('[data-ranking-cycle]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.getAttribute('data-ranking-cycle') === cycle)); });
+    });
     if (cycle !== '2027-1') setArchiveView(cycle === 'history' ? 'history' : 'current');
+    document.dispatchEvent(new CustomEvent('universe:ranking-cycle', { detail: cycle }));
     process.value = cycle === '2027-1' ? cycle : '2026-2';
     if (window.gsap && motionEnabled()) window.gsap.fromTo(cycle === '2027-1' ? section : archive, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .35, clearProps: 'transform,opacity' });
   }
   document.querySelectorAll('[data-ranking-cycle]').forEach(function (button) { button.addEventListener('click', function () { selectCycle(button.getAttribute('data-ranking-cycle')); }); });
+  document.querySelectorAll('.rk-cycle-card').forEach(function (button) {
+    function highlight() {
+      if (!window.matchMedia('(hover:hover) and (min-width:641px)').matches) return;
+      expandCycles(function () {
+        document.querySelectorAll('.rk-cycle-card').forEach(function (card) { card.classList.toggle('is-hovered', card === button); });
+      });
+    }
+    function release() { expandCycles(function () { button.classList.remove('is-hovered'); }); }
+    button.addEventListener('pointerenter', highlight);
+    button.addEventListener('pointerleave', release);
+    button.addEventListener('focus', highlight);
+    button.addEventListener('blur', release);
+  });
   process.addEventListener('change', function () { selectCycle(process.value); });
 
   render();
   if (window.gsap && motionEnabled()) {
-    window.gsap.fromTo('.rk-hero-copy > *, .rk-cycle-card', { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: .055, duration: .55, ease: 'power3.out', clearProps: 'transform,opacity' });
+    // Keep the headline visible immediately, including on slower mobile CPUs.
+    window.gsap.fromTo('.rk-orbit', { rotation: -12, scale: .92 }, { rotation: 0, scale: 1, duration: .8, ease: 'power3.out', clearProps: 'transform' });
+    window.gsap.fromTo('.rk-cycle-card', { y: 10 }, { y: 0, stagger: .055, duration: .4, ease: 'power3.out', clearProps: 'transform' });
   }
 })();

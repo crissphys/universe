@@ -271,4 +271,9 @@ if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferenc
 if(!startsHome)wakeStrands();
 const visual=$('.command-visual');if(visual){const {orbitHTML,mountOrbits}=await import('./orbit.js');visual.innerHTML=orbitHTML();mountOrbits()}
 const {syncProfileBadge}=await import('./profile.js');syncProfileBadge();
-try{const {createGalaxy}=await import('./galaxy.js');space=await createGalaxy($('#galaxy'),prefs);space.setImmersive(immersive);scrollState()}catch(error){document.body.dataset.space='fallback';$('#scene-status').textContent='FONDO LIGERO';console.warn('Galaxy fallback:',error.message)}
+// Score lookup uses the static cosmic background to keep input responsive.
+if(document.body.dataset.native==='ranking'){
+  document.body.dataset.space='fallback';$('#scene-status').textContent='FONDO LIGERO';
+}else{
+  try{const {createGalaxy}=await import('./galaxy.js');space=await createGalaxy($('#galaxy'),prefs);space.setImmersive(immersive);scrollState()}catch(error){document.body.dataset.space='fallback';$('#scene-status').textContent='FONDO LIGERO';console.warn('Galaxy fallback:',error.message)}
+}

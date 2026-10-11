@@ -297,6 +297,9 @@
   let fab = null;
 
   function showNextPopup() {
+    // Students keep their place while consulting scores; the announcements
+    // button still opens the full list on this page.
+    if (document.body.dataset.native === 'ranking') return;
     if (popup || panel || !queue.length) return;
     const item = queue.shift();
     markSeen(item.id);

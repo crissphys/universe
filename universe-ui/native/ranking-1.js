@@ -75,7 +75,11 @@
     this.setAttribute('aria-pressed','true'); showAll=false; renderStats(); render();
   });
   summary.addEventListener('click',function(ev){if(ev.target&&ev.target.classList.contains('cepre-v2-show-all')){showAll=true;render();}});
-  renderStats();
-  render();
+  // The archive is hidden initially: defer thousands of cells until requested.
+  if(document.getElementById('ranking-archive-panel')){
+    document.addEventListener('universe:ranking-cycle',function(event){
+      if(event.detail==='2026-2'){renderStats();render();}
+    });
+  }else{renderStats();render();}
 })();
-      
+
