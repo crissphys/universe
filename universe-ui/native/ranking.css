@@ -1053,7 +1053,7 @@ html{
 }
 .ranking-2027-table{
   width:100%;
-  min-width:1120px;
+  min-width:1480px;
   border-collapse:separate;
   border-spacing:0;
   table-layout:fixed;
@@ -1099,6 +1099,13 @@ html{
   width:118px;
   font-weight:800;
   color:color-mix(in srgb,var(--accent,#2563eb) 72%,white);
+}
+.ranking-2027-table .ranking-2027-name{
+  width:330px;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  text-align:left;
+  line-height:1.4;
 }
 .ranking-2027-table tbody tr:hover td,
 .ranking-2027-table tbody tr:hover th{background:color-mix(in srgb,var(--accent,#2563eb) 10%,var(--surface,#101318))}
@@ -1175,7 +1182,7 @@ html{
   .ranking-2027-hero h2{font-size:clamp(2.2rem,14vw,4.2rem)}
   .ranking-2027-shell{border-radius:18px}
   .ranking-2027-toolbar{padding:.8rem}
-  .ranking-2027-table{min-width:1080px}
+  .ranking-2027-table{min-width:1480px}
   .ranking-2027-note{padding:0 .2rem}
 }
 
