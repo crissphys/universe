@@ -1,0 +1,26 @@
+.side-rail__eyebrow{display:block;margin:0 12px 13px;color:var(--muted);font-size:8px;letter-spacing:2px}
+.side-rail .branched-menu{--bm-ease-out:cubic-bezier(.23,1,.32,1);--bm-muted:color-mix(in srgb,var(--bm-ink) 58%,transparent);position:relative;display:flex;flex-direction:column;width:fit-content;max-width:min(var(--bm-w),100%);padding-left:14px;color:var(--bm-ink);font-size:var(--bm-font);line-height:1.2}
+.side-rail .branched-menu:before{position:absolute;top:8px;bottom:0;left:0;width:2px;border-radius:1px;background:linear-gradient(to bottom,var(--bm-line),var(--bm-line) 55%,transparent);content:""}
+.side-rail .branched-menu__marker{position:absolute;top:-1px;left:0;z-index:1;width:2px;height:16px;border-radius:1px;background:var(--bm-accent);opacity:0;transition:top 220ms var(--bm-ease-out),opacity 150ms ease}
+.side-rail .branched-menu__marker[data-on]{opacity:1}
+.side-rail .branched-menu__section{display:flex;flex-direction:column}
+.side-rail .branched-menu__head{display:block;margin:0;padding:9px 0;border:0;background:none;color:var(--bm-muted);font:inherit;font-size:calc(var(--bm-font) + 1px);font-weight:500;text-align:left;cursor:pointer;transition:color 200ms ease}
+.side-rail .branched-menu__section[data-open]:not([data-open="false"])>.branched-menu__head,.side-rail .branched-menu__head[data-active]:not([data-active="false"]){color:var(--bm-ink)}
+.side-rail .branched-menu__head:hover{color:var(--bm-ink)}
+.side-rail .branched-menu__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--bm-fold) var(--bm-ease-out)}
+.side-rail .branched-menu__section[data-open]:not([data-open="false"]) .branched-menu__body{grid-template-rows:1fr}
+.side-rail .branched-menu__fold{min-height:0;overflow:hidden}
+.side-rail .branched-menu__tree{position:relative;padding:6px 0;box-sizing:border-box}
+.side-rail .branched-menu__lines{position:absolute;top:0;left:0;overflow:visible;opacity:0;pointer-events:none;transition:opacity 200ms ease}
+.side-rail .branched-menu__section[data-open]:not([data-open="false"]) .branched-menu__lines{opacity:1;transition:opacity 250ms ease 100ms}
+.side-rail .branched-menu__base,.side-rail .branched-menu__reach{fill:none;stroke-width:var(--bm-line-w);stroke-linecap:round;stroke-linejoin:round}
+.side-rail .branched-menu__base{stroke:var(--bm-line)}
+.side-rail .branched-menu__reach{stroke:var(--bm-accent);transition:stroke-dashoffset var(--bm-draw) var(--bm-ease-out)}
+.side-rail .branched-menu__item{display:flex;align-items:center;gap:8px;width:100%;height:var(--bm-row);margin:0;padding:0 0 0 var(--bm-indent);border:0;border-radius:0;background:none;color:var(--bm-muted);font:inherit;text-align:left;transition:color 200ms ease}
+.side-rail .branched-menu__item:hover{color:var(--bm-ink);background:none}
+.side-rail .branched-menu__item[data-active]:not([data-active="false"]){color:var(--bm-accent);font-weight:600}
+.side-rail .branched-menu__icon{display:inline-flex;flex:none}
+.side-rail .branched-menu__icon svg{width:15px;height:15px}
+.side-rail .branched-menu__label{white-space:nowrap}
+@media(max-width:900px){.side-rail__eyebrow{display:none}.side-rail .branched-menu{width:100%;max-width:100%;padding:0 0 8px;flex-direction:row;gap:14px;overflow-x:auto;scrollbar-width:thin}.side-rail .branched-menu:before,.side-rail .branched-menu__marker,.side-rail .branched-menu__lines{display:none}.side-rail .branched-menu__section{flex:none;min-width:max-content}.side-rail .branched-menu__head{padding:8px 9px;border-radius:7px;font-size:11px}.side-rail .branched-menu__section[data-open]:not([data-open="false"])>.branched-menu__head{background:var(--soft);color:var(--text)}.side-rail .branched-menu__body{display:none}.side-rail .branched-menu__section[data-open]:not([data-open="false"]) .branched-menu__body{display:block}.side-rail .branched-menu__tree{height:auto!important;padding:0}.side-rail .branched-menu__item{height:31px;padding:0 9px;font-size:10px}.side-rail .branched-menu__icon{display:none}}
+@media(prefers-reduced-motion:reduce){.side-rail .branched-menu__marker{transition:opacity 150ms ease}.side-rail .branched-menu__body{transition:none}}
