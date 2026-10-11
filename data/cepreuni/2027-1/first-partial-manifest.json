@@ -1,0 +1,43 @@
+{
+  "cycle": "2027-1",
+  "publishedAt": "2026-10-11",
+  "codeMapping": "Full ranking code = 26 + exact published short code",
+  "sources": [
+    {
+      "sede": "Lima",
+      "exam": "ep1",
+      "url": "https://puntajes.admision.uni.edu.pe/primer-parcial-lima.json?v=20261011-2",
+      "sha256": "11ae56c9c353dea601a8d29cb840c0991bdc788f9b8d30b50a60c291bf73461f",
+      "count": 2265,
+      "scored": 2131,
+      "absent": 134,
+      "added": 42,
+      "unmatchedExistingCodes": [
+        "2620221F",
+        "2620987C",
+        "2621038K",
+        "2621156F",
+        "2621390C",
+        "2621572K",
+        "2621722D",
+        "2621835F",
+        "2621870H",
+        "2622069F",
+        "2622155J",
+        "2622181K",
+        "2622197E"
+      ]
+    },
+    {
+      "sede": "Juliaca",
+      "exam": "ep1",
+      "url": "https://puntajes.admision.uni.edu.pe/primer-parcial-juliaca.json?v=20261011-2",
+      "sha256": "e93d1e301bda9738e9724a0cf9710768f946226880d1d2af09ead64b1addc966",
+      "count": 107,
+      "scored": 87,
+      "absent": 20,
+      "added": 11,
+      "unmatchedExistingCodes": []
+    }
+  ]
+}

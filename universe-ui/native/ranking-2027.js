@@ -56,6 +56,7 @@
   }
 
   function score(value) {
+    if (value == null || String(value).trim() === '' || typeof value === 'boolean') return null;
     var number = Number(value);
     return value == null || !Number.isFinite(number) ? null : number;
   }
@@ -97,7 +98,8 @@
       included.push(item);
       if (exam[3]) droppable.push(item);
     });
-    if (track.sourceKey === 'pre' && droppable.length === 6) {
+    // Discard one currently registered PC1–PC6; keep a lone practice and PC7.
+    if (track.sourceKey === 'pre' && droppable.length >= 2) {
       var lowest = droppable.reduce(function (current, item) { return item.value < current.value ? item : current; });
       included = included.filter(function (item) { return item !== lowest; });
     }
@@ -111,7 +113,7 @@
       var weight = exam[2] > 1 ? ' ×' + exam[2] : '';
       return '<th title="' + esc(exam[1] + weight) + '">' + esc(exam[1]) + weight + '</th>';
     }).join('');
-    head.innerHTML = '<tr><th class="ranking-2027-place">Puesto</th><th class="ranking-2027-code">Código</th>' + exams + '<th class="ranking-2027-average">Ponderado</th></tr>';
+    head.innerHTML = '<tr><th class="ranking-2027-place">Puesto</th><th class="ranking-2027-code">Código</th><th class="ranking-2027-name">Nombres y apellidos</th>' + exams + '<th class="ranking-2027-average">Ponderado</th></tr>';
   }
 
   function renderStats(rows, track) {
@@ -131,21 +133,23 @@
   function rowHtml(row, track) {
     var cells = track.exams.map(function (exam) {
       var value = score(row[exam[0]]);
-      return '<td' + (value == null ? ' class="ranking-2027-pending"' : '') + '>' + format(value) + '</td>';
+      var absent = row[exam[0] + 'Status'] === 'AUSENTE';
+      return '<td' + (value == null ? ' class="ranking-2027-pending"' : '') + '>' + (absent ? 'Ausente' : format(value)) + '</td>';
     }).join('');
     var medal = row.place <= 3 ? ' ranking-2027-top ranking-2027-top-' + row.place : '';
-    return '<tr class="' + medal.trim() + '"><td class="ranking-2027-place">' + row.place + '</td><th class="ranking-2027-code" scope="row">' + esc(row.code) + '</th>' + cells + '<td class="ranking-2027-average">' + format(row.average) + '</td></tr>';
+    return '<tr class="' + medal.trim() + '"><td class="ranking-2027-place">' + row.place + '</td><th class="ranking-2027-code" scope="row">' + esc(row.code) + '</th><td class="ranking-2027-name">' + esc(row.name || 'No publicado') + '</td>' + cells + '<td class="ranking-2027-average">' + format(row.average) + '</td></tr>';
   }
 
   function render() {
     var track = tracks[activeTrack];
     var rows = normalizeRows(track);
-    var query = search.value.trim().toUpperCase();
-    var filtered = query ? rows.filter(function (row) { return String(row.code).toUpperCase().indexOf(query) !== -1; }) : rows;
+    function normalized(value) { return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase(); }
+    var query = normalized(search.value.trim());
+    var filtered = query ? rows.filter(function (row) { return normalized(row.code + ' ' + (row.name || '')).indexOf(query) !== -1; }) : rows;
     renderHead(track);
     renderStats(rows, track);
     scale.textContent = track.maximum === 20 ? 'Notas sobre 20' : 'Puntajes sobre 150';
-    body.innerHTML = filtered.length ? filtered.map(function (row) { return rowHtml(row, track); }).join('') : '<tr><td colspan="13" class="ranking-2027-empty">No se encontró ese código en ' + esc(track.label) + ' 2027-1.</td></tr>';
+    body.innerHTML = filtered.length ? filtered.map(function (row) { return rowHtml(row, track); }).join('') : '<tr><td colspan="' + (track.exams.length + 4) + '" class="ranking-2027-empty">No se encontraron resultados en ' + esc(track.label) + ' 2027-1.</td></tr>';
     summary.textContent = query
       ? 'Mostrando ' + filtered.length.toLocaleString('es-PE') + ' coincidencia' + (filtered.length === 1 ? '' : 's') + ' de ' + rows.length.toLocaleString('es-PE') + ' códigos.'
       : 'Mostrando los ' + rows.length.toLocaleString('es-PE') + ' códigos, del primer al último puesto. Solo se ponderan notas publicadas.';
@@ -159,7 +163,7 @@
         item.setAttribute('aria-pressed', String(item === button));
       });
       search.value = '';
-      search.placeholder = 'Buscar código de ' + tracks[activeTrack].label;
+      search.placeholder = 'Código o nombre en ' + tracks[activeTrack].label;
       render();
     });
   });
