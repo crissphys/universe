@@ -1,7 +1,7 @@
 @font-face{font-family:"Brunson";src:url("/biblioteca/literatura/assets/fonts/Brunson.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
 @font-face{font-family:"Creato Display";src:url("/biblioteca/literatura/assets/fonts/CreatoDisplay-Black.otf") format("opentype");font-style:normal;font-weight:900;font-display:swap}
 .literature-catalog{margin-top:20px}
-.native-shell.literature-shell{margin-top:58px}
+.native-shell.literature-shell{margin-top:-2px}
 .page-topline.literature-topline{margin-bottom:12px}
 .literature-title-head{margin:4px auto clamp(32px,5vw,62px);text-align:center}
 .page-head .literature-display-title{display:grid;justify-items:center;gap:0;margin:0;color:var(--text);font-weight:400;letter-spacing:0;line-height:1}
@@ -12,5 +12,5 @@
 .literature-options>span{color:var(--muted);font-size:10px}
 .literature-options .p-result{margin:10px 0}
 .literature-catalog #book-results>.p-empty{border:1px dashed var(--line);border-radius:12px}
-@media(max-width:900px){.native-shell.literature-shell{margin-top:36px}}
+@media(max-width:900px){.native-shell.literature-shell{margin-top:-24px}}
 @media(max-width:600px){.literature-title-head{margin:0 auto 34px}.literature-title-overline{font-size:clamp(20px,6vw,31px)}.literature-title-main{margin-top:-12px;font-size:clamp(104px,28vw,168px);transform:scaleX(.54)}.literature-options{align-items:flex-start;flex-direction:column;gap:2px}.literature-options .p-result{margin:3px 0 8px}}
