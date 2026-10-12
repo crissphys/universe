@@ -1,0 +1,14 @@
+{
+  "cycle": "2027-1",
+  "corrections": [
+    {
+      "code": "2621444A",
+      "sede": "Lima",
+      "exam": "pc1",
+      "previousScore": 70.46,
+      "score": 74.5,
+      "updatedAt": "2026-10-12",
+      "source": "Corrección indicada por el usuario"
+    }
+  ]
+}
