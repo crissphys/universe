@@ -17,3 +17,8 @@ scale and rotation at runtime. No source server requests are needed to render th
 GLTFLoader, BufferGeometryUtils and SkeletonUtils are vendored from Three.js
 0.186.0 (MIT), matching the site's existing Three.js runtime. Only module import
 paths were changed. See ../vendor/THREE-LICENSE.txt.
+
+The runtime loads book-loader.min.js, bundled and minified with esbuild from
+GLTFLoader.js and its two utility dependencies. The existing site Three.js module
+remains external and is shared with the galaxy scene; no second Three.js copy is
+included. Source modules and their MIT license are retained in ../vendor/.
