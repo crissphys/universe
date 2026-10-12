@@ -57,6 +57,7 @@ const pages=[
  {name:'Catálogo Amautas',desc:'Problemas de admisión UNI ordenados por temas. Encuentra tu curso y abre el libro en Google Drive.',url:'/biblioteca/amautas',keys:'editorial amautas problemas admision libros'},
  {name:'Catálogo Lumbreras',desc:'Las colecciones de Lumbreras y el libro que acompaña a tu siguiente tema.',url:'/biblioteca/lumbreras',keys:'editorial lumbreras libros'},
  {name:'Recursos de la biblioteca',desc:'Resúmenes, academias, universidades y libros, con una ruta destacada para UNI y CEPREUNI.',url:'/biblioteca/recursos',keys:'drive carpetas resumenes academias universidades'},
+ {name:'Libros de literatura CEPREUNI',desc:'213 libros con vista previa, organizados por temas, autores y épocas.',url:'/biblioteca/literatura/',keys:'libros literatura obras cepreuni temas autores epocas'},
  {name:'Correcciones',desc:'Reporta una fórmula incorrecta, una nota mal registrada, una fuente dudosa o un error visual.',url:'/correcciones',keys:'error reporte corregir'},
  {name:'Contacto',desc:'Pide ayuda, reporta problemas técnicos o envía observaciones sobre el contenido.',url:'/contacto',keys:'ayuda soporte whatsapp'},
  {name:'Metodología editorial',desc:'Cómo Universe crea, revisa y corrige sus guías, calculadoras y recursos.',url:'/metodologia-editorial',keys:'editorial revision fuentes'},
