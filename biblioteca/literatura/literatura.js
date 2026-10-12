@@ -2,7 +2,6 @@ const DATA_URL="/biblioteca/literatura/books.json?v=20261012-literatura-cepreuni
 const results=document.querySelector("#book-results");
 const search=document.querySelector("#literature-search");
 const count=document.querySelector("#literature-result-count");
-const total=document.querySelector("#literature-total");
 const sort=document.querySelector("#literature-sort");
 const reset=document.querySelector("#literature-reset");
 const modeButtons=[...document.querySelectorAll("[data-group-mode]")];
@@ -84,11 +83,9 @@ results.addEventListener("error",event=>{
 fetch(DATA_URL).then(response=>{if(!response.ok)throw new Error(`HTTP ${response.status}`);return response.json()}).then(data=>{
   if(!Array.isArray(data)||!data.length)throw new Error("Catálogo vacío");
   books=data;
-  total.textContent=String(books.length);
   render();
 }).catch(error=>{
   console.error("No se pudo cargar el catálogo de literatura",error);
-  total.textContent="—";
   count.textContent="No se pudo cargar el catálogo";
   results.innerHTML='<p class="p-empty">No se pudieron cargar los libros. Actualiza la página para intentarlo de nuevo.</p>';
 });
