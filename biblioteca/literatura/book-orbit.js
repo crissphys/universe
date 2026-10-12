@@ -47,7 +47,6 @@ async function initBooks() {
     return { group, closed: source.closed, phase: index * 1.7, x: 0, y: 0, drift: 3, tilt: (index % 2 ? -1 : 1) * .22 };
   });
   const desktop = matchMedia('(min-width:1101px)');
-  const reduced = matchMedia('(prefers-reduced-motion:reduce)');
   let width = 1, height = 1, frame = 0, lastPaint = 0;
 
   function layout() {
@@ -65,51 +64,52 @@ async function initBooks() {
     camera.updateProjectionMatrix();
     const content = document.querySelector('.platform-body').getBoundingClientRect();
     const rail = document.querySelector('.side-rail').getBoundingClientRect();
-    const left = Math.max(36, content.left / 2);
-    const right = Math.min(width - 36, content.right + (width - content.right) / 2);
-    const leftScale = Math.min(128, Math.max(24, content.left * .65), Math.max(24, (height - rail.bottom - 40) / 3.2));
+    const leftScale = Math.min(210, Math.max(54, content.left * .95), Math.max(54, (height - rail.bottom - 30) / 2.8));
+    const rightScale = Math.min(210, Math.max(54, (width - content.right) * .95));
+    const left = Math.max(leftScale * .6 + 12, content.left / 2);
+    const right = Math.min(width - rightScale * .6 - 12, content.right + (width - content.right) / 2);
     const leftTop = Math.min(height - 60, rail.bottom + leftScale * .6 + 18);
     const leftBottom = height - leftScale * .6 - 18;
     const positions = desktop.matches
       ? [[left, leftTop], [right, height * .22], [left, (leftTop + leftBottom) / 2], [right, height * .52], [left, leftBottom], [right, height * .83]]
-      : [[width * .09, height * .28], [width * .88, height * .15], [width * .12, height * .82], [width * .9, height * .77]];
+      : [[width * .14, height * .28], [width * .84, height * .15], [width * .15, height * .82], [width * .85, height * .77]];
     books.forEach((book, index) => {
       book.group.visible = index < positions.length;
       if (!book.group.visible) return;
       book.x = positions[index][0] - width / 2;
       book.y = height / 2 - positions[index][1];
       const available = index % 2 ? width - content.right : content.left;
-      const scale = desktop.matches ? (index % 2 ? Math.min(128, Math.max(24, available * .65)) : leftScale) : Math.min(68, width * .16);
-      book.drift = desktop.matches ? Math.min(5, available * .06) : 3;
+      const scale = desktop.matches ? (index % 2 ? rightScale : leftScale) : Math.min(100, width * .23);
+      book.drift = desktop.matches ? Math.min(12, available * .1) : 6;
       book.group.scale.setScalar(scale * (index === 2 ? .88 : 1));
     });
     paint(performance.now());
   }
 
   function paint(now) {
-    const time = reduced.matches ? 0 : now / 1000;
+    const time = now / 1000;
     books.forEach(book => {
       if (!book.group.visible) return;
-      const wave = time * .52 + book.phase;
-      book.group.position.set(book.x + Math.sin(wave * .7) * book.drift, book.y + Math.sin(wave) * (desktop.matches ? 9 : 5), 0);
-      book.group.rotation.set((book.closed ? .2 : .45) + Math.sin(wave * .8) * .12, (book.closed ? 1.2 : .16) + Math.cos(wave * .65) * .22, book.tilt + Math.sin(wave * .9) * .09);
+      const wave = time * .8 + book.phase;
+      book.group.position.set(book.x + Math.sin(wave * .7) * book.drift, book.y + Math.sin(wave) * (desktop.matches ? 18 : 10), 0);
+      book.group.rotation.set((book.closed ? .2 : .45) + Math.sin(wave * .8) * .18, (book.closed ? 1.2 : .16) + Math.cos(wave * .65) * .32, book.tilt + Math.sin(wave * .9) * .16);
     });
     renderer.render(scene, camera);
   }
 
   function animate(now) {
     frame = 0;
-    if (document.hidden || reduced.matches) return;
+    if (document.hidden) return;
     if (now - lastPaint >= 1000 / 24) { paint(now); lastPaint = now; }
     frame = requestAnimationFrame(animate);
   }
   function resume() {
-    host.dataset.motion = reduced.matches ? 'static' : 'animated';
+    host.dataset.motion = 'animated';
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
     if (!document.hidden) {
       paint(performance.now());
-      if (!reduced.matches) frame = requestAnimationFrame(animate);
+      frame = requestAnimationFrame(animate);
     }
   }
   const observer = new ResizeObserver(layout);
@@ -117,7 +117,6 @@ async function initBooks() {
   observer.observe(document.querySelector('.side-rail'));
   window.addEventListener('resize', layout, { passive: true });
   desktop.addEventListener('change', layout);
-  reduced.addEventListener('change', resume);
   document.addEventListener('visibilitychange', resume);
   renderer.domElement.addEventListener('webglcontextlost', event => { event.preventDefault(); if (frame) cancelAnimationFrame(frame); frame = 0; });
   renderer.domElement.addEventListener('webglcontextrestored', resume);
