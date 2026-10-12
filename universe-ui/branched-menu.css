@@ -7,8 +7,8 @@
 .side-rail .branched-menu__head{display:block;margin:0;padding:9px 0;border:0;background:none;color:var(--bm-muted);font:inherit;font-size:calc(var(--bm-font) + 1px);font-weight:500;text-align:left;cursor:pointer;transition:color 200ms ease}
 .side-rail .branched-menu__section[data-open]:not([data-open="false"])>.branched-menu__head,.side-rail .branched-menu__head[data-active]:not([data-active="false"]){color:var(--bm-ink)}
 .side-rail .branched-menu__head:hover{color:var(--bm-ink)}
-.side-rail .branched-menu__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--bm-fold) var(--bm-ease-out)}
-.side-rail .branched-menu__section[data-open]:not([data-open="false"]) .branched-menu__body{grid-template-rows:1fr}
+.side-rail .branched-menu__body{display:grid;min-height:0;overflow:hidden;grid-template-rows:minmax(0,0fr);transition:grid-template-rows var(--bm-fold) var(--bm-ease-out)}
+.side-rail .branched-menu__section[data-open]:not([data-open="false"]) .branched-menu__body{grid-template-rows:minmax(0,1fr)}
 .side-rail .branched-menu__fold{min-height:0;overflow:hidden}
 .side-rail .branched-menu__tree{position:relative;padding:6px 0;box-sizing:border-box}
 .side-rail .branched-menu__lines{position:absolute;top:0;left:0;overflow:visible;opacity:0;pointer-events:none;transition:opacity 200ms ease}

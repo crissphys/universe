@@ -1,10 +1,10 @@
-import {publisherShowcase,mountPublishers} from './library-showcase.js?v=20261010-universe-economia-3ra-v1';
+import {publisherShowcase,mountPublishers} from './library-showcase.js?v=20261011-editorial-carousel';
 import {renderDirectory} from './library-directory.js';
 import {renderExams} from './cepreuni-exams.js';
 import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20261010-universe-economia-3ra-v1';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
-import {renderBranchedMenu} from './branched-menu.js?v=20261011-branched-menu';
+import {renderBranchedMenu} from './branched-menu.js?v=20261011-left-branch-layout';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -50,7 +50,7 @@ const orbit=orbitHTML;
 const miniBooks=()=>'<div class="mini-books" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" alt=""><img src="/universe-ui/assets/algebra.webp" alt=""><img src="/universe-ui/assets/geometria.webp" alt=""></div>';
 const empty=text=>`<div class="p-empty">${esc(text)}</div>`;
 function toast(text){let el=$('.local-toast');if(!el){el=document.createElement('div');el.className='local-toast';el.setAttribute('role','status');document.body.append(el)}el.textContent=text;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,3500)}
-function pathName(){return decodeURI(location.pathname).replace(/\/$/,'').replace(/\.html$/,'')||'/'}
+function pathName(){const path=decodeURI(location.pathname).replace(/\/$/,'').replace(/\.html$/,'')||'/';return path==='/index'?'/':path}
 function setRouteSeo(title,description,canonical){document.title=title;let meta=$('meta[name="description"]');if(!meta){meta=document.createElement('meta');meta.name='description';document.head.append(meta)}meta.content=description;let link=$('link[rel="canonical"]');if(!link){link=document.createElement('link');link.rel='canonical';document.head.append(link)}link.href=new URL(canonical,location.origin).href}
 function head(path){const r=routes[path]||['Aún no estamos aquí.','UNIVERSE / 404','No encontramos esta página. Puedes volver a la plataforma.'];return `<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / ${esc(r[0].replace(/\.$/,''))}</span></div><div class="page-head"><span class="eyebrow">${r[1]}</span><h1 id="page-title" tabindex="-1">${r[0]}</h1><p>${r[2]}</p></div>`}
 async function route(focus=false){const token=++routeVersion,p=pathName();const isHome=p==='/';home.hidden=!isHome;$('#platform').hidden=isHome;document.body.classList.toggle('in-platform',!isHome);$('.brand').href='/';$('.footer-brand').href='/';$$('.header .nav a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')===p?'page':'false'));if(isHome){setRouteSeo('Universe — El origen de tu siguiente idea','Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.','/');return}const meta=routes[p],title=meta?.[0]||'Página no encontrada';setRouteSeo(`${title} — Universe`,meta?.[2]||'No encontramos esta página. Puedes volver a la plataforma.',p);renderBranchedMenu($('.side-rail'),{activePath:p,renderIcon:name=>ui.icon(name)});view.innerHTML=head(p)+'<div class="page-view" id="page-view"></div>';const out=$('#page-view');if(!data){out.innerHTML=empty('Conectando tus recursos…');try{data=await fetch('/universe-ui/data/platform.json?v=20261010-universe-economia-3ra-v1').then(r=>{if(!r.ok)throw Error('Datos no disponibles');return r.json()});hydrateHumanities(data)}catch{out.innerHTML=note('No se pudieron cargar los recursos. Recarga esta página.');return}}if(token!==routeVersion)return;
@@ -333,4 +333,20 @@ export function startPlatform(api){ui=api;home=$('main');const shell=document.cr
  const go=async(url)=>{$$('dialog[open]').forEach(d=>d.close());const u=new URL(url,location.origin);history.pushState({},'',u.pathname+u.search+u.hash);await route(true);scrollTo({top:0,behavior:'instant'});if(u.hash)setTimeout(()=>{try{$(u.hash)?.scrollIntoView({behavior:'instant'})}catch{}},60)};
  document.addEventListener('click',e=>{if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;const a=e.target.closest('a');if(!a||a.hasAttribute('data-live')||a.hasAttribute('download'))return;const href=a.getAttribute('href');if(!href||href==='data:,')return;let u;try{u=new URL(href,location.href)}catch{return}if(u.origin!==location.origin&&!['universetostudy.com','www.universetostudy.com'].includes(u.hostname))return;const p=u.pathname.replace(/\/$/,'').replace(/\.html$/,'')||'/';if(p!=='/'&&!routes[p])return;e.preventDefault();if(p==='/'&&pathName()==='/'&&u.hash){$(u.hash)?.scrollIntoView({behavior:'smooth'});return}go(p+u.search+u.hash)});
  addEventListener('popstate',()=>route());route();return{navigate:go};
+}
+
+export function startNativeNavigation(renderIcon,{home=false}={}){
+ const header=$('.header');
+ if(!header)return;
+ if(home)$('.platform .side-rail')?.remove();
+ let rail=home?null:$('.native-platform .side-rail');
+ if(!rail&&!home)rail=document.querySelector('.side-rail');
+ if(!rail){
+  rail=document.createElement('aside');
+  rail.className='side-rail';
+  rail.setAttribute('aria-label','Navegación de Universe');
+  header.after(rail);
+ }
+ if(home)document.body.classList.add('home-with-rail');
+ renderBranchedMenu(rail,{activePath:home?'/explorar':pathName(),renderIcon});
 }

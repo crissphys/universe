@@ -259,15 +259,17 @@ addEventListener('scroll',()=>{if(!scrollScheduled){scrollScheduled=true;request
 // Strands (React Bits) en la entrada. Se crea la primera vez que la portada es visible, así las páginas
 // internas (que comparten este HTML con la portada oculta) no abren un contexto WebGL que no usan.
 // Fuera de la portada se espera al router: antes de que oculte la portada, esta se ve un instante.
-const strandsHost=$('.entry-strands .strands-container'),startsHome=['/','/index.html'].includes(location.pathname);
+const strandsHost=$('.entry-strands .strands-container'),startsHome=['/','/index','/index.html'].includes(location.pathname.replace(/\/$/,''));
 function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserver(async entries=>{if(!entries.some(e=>e.isIntersecting))return;wake.disconnect();const stage=strandsHost.parentElement;
  try{const {createStrands}=await import('./strands.js?v=20261001-strands');
   strands=createStrands(strandsHost,{colors:['#492f1c','#7d60af','#06B6D4'],count:4,speed:.2,amplitude:1.1,waviness:2.6,thickness:.7,glow:2.85,taper:5.3,spread:.3,intensity:.7,saturation:1.5,opacity:1,scale:2.3,glass:false,refraction:1,dispersion:1,glassSize:1,motion:prefs.motion&&!immersive});
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform}=await import('./platform.js?v=20261011-branched-menu');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261011-left-branch-layout');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
+else startNativeNavigation(icon);
+if(startsHome) startNativeNavigation(icon,{home:true});
 if(!startsHome)wakeStrands();
 const visual=$('.command-visual');if(visual){const {orbitHTML,mountOrbits}=await import('./orbit.js');visual.innerHTML=orbitHTML();mountOrbits()}
 const {syncProfileBadge}=await import('./profile.js');syncProfileBadge();

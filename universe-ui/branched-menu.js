@@ -23,6 +23,18 @@ const defaults = [
   ] }
 ];
 
+const routeAliases = {
+  '/cepreuni': ['/calculadora', '/fijas-cepreuni', '/informacion-cepreuni', '/ingresantes-cepreuni', '/docentes-cepreuni'],
+  '/admision': ['/cantidad-de-postulantes', '/resultados-admision', '/calculadora-admision', '/fichas-admision', '/ranking', '/ranking-admision', '/ingresantes-uni-2026-2'],
+  '/clases': ['/aula']
+};
+const matchesRoute = (activePath, value) => {
+  const path = value.replace(/\/$/, '') || '/';
+  return activePath === path
+    || (path !== '/' && activePath.startsWith(`${path}/`))
+    || (routeAliases[path] || []).some(alias => activePath === alias || activePath.startsWith(`${alias}/`));
+};
+
 const PAD = 6;
 const MARK = 16;
 const rowY = (index, rowHeight) => PAD + index * rowHeight + rowHeight / 2;
@@ -57,17 +69,13 @@ export function renderBranchedMenu(container, {
   if (!container) return;
   container.querySelector('.branched-menu')?._branchedMenuObserver?.disconnect();
 
-  const activeIndex = items.findIndex(item => item.children?.some(child => {
-    const path = child.value.replace(/\/$/, '') || '/';
-    return activePath === path || (path === '/biblioteca' && activePath.startsWith('/biblioteca/'));
-  }));
+  const matchingIndex = items.findIndex(item => item.children?.some(child => matchesRoute(activePath, child.value)));
+  const fallbackIndex = activePath === '/' ? -1 : items.findIndex(item => item.children?.some(child => child.value === '/explorar'));
+  const activeIndex = matchingIndex >= 0 ? matchingIndex : fallbackIndex;
   const open = new Set(activeIndex >= 0 ? [activeIndex] : []);
   const icon = item => item.icon ? `<span class="branched-menu__icon" aria-hidden="true">${renderIcon(item.icon)}</span>` : '';
   const activeValue = activeIndex >= 0
-    ? items[activeIndex].children.find(child => {
-      const path = child.value.replace(/\/$/, '') || '/';
-      return activePath === path || (path === '/biblioteca' && activePath.startsWith('/biblioteca/'));
-    })?.value
+    ? items[activeIndex].children.find(child => matchesRoute(activePath, child.value))?.value
     : '';
 
   container.innerHTML = `
