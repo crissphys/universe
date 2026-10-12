@@ -19518,6 +19518,28 @@
         "upcoming": false,
         "drivePreview": false,
         "sourceTitle": "📂 PRIMEROS RESUMENES ECONOMIA 3RA EDICIÓN.pdf"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "3RA EDICIÓN",
+        "title": "Literatura",
+        "url": "",
+        "image": "/biblioteca/universe/assets/primeros-resumenes-literatura-3ra.png",
+        "series": "Primeros Resúmenes · 3.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": true,
+        "availabilityLabel": "Aún no disponible"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "3RA EDICIÓN",
+        "title": "Lenguaje",
+        "url": "",
+        "image": "/biblioteca/universe/assets/primeros-resumenes-lenguaje-3ra.png",
+        "series": "Primeros Resúmenes · 3.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": true,
+        "availabilityLabel": "Aún no disponible"
       }
     ],
     "cuzcano": [
