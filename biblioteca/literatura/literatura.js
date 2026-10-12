@@ -1,4 +1,4 @@
-const DATA_URL="/biblioteca/literatura/books.json?v=20261012-literatura-cepreuni-v1";
+const DATA_URL="/biblioteca/literatura/books.json?v=20261012-literatura-cepreuni-v2";
 const list=document.querySelector("#literature-groups");
 const search=document.querySelector("#literature-search");
 const count=document.querySelector("#literature-result-count");
