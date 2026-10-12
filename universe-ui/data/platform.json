@@ -19364,64 +19364,50 @@
     ],
     "universe": [
       {
-        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
-        "section": "Materiales de estudio",
-        "title": "Álgebra",
-        "url": "https://docs.google.com/document/d/1l91eis8UhkKguvjqoJRdiQ2giPopL6uYI5CAr95gtf0/preview",
-        "image": "/biblioteca/universe/assets/algebra.webp",
-        "series": "CEPREUNI 2027-1",
-        "author": "UNIVERSE × CICLESOLUS",
-        "upcoming": false
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "3RA EDICIÓN",
+        "title": "Historia",
+        "url": "https://drive.google.com/file/d/1hO7inDd2BRudc_DV94F7_qtGHKFd8Iyj/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/primeros-resumenes-historia-3ra.webp",
+        "series": "Primeros Resúmenes · 3.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": false,
+        "sourceTitle": "📂 PRIMEROS RESUMENES HISTORIA 3RA EDICIÓN.pdf"
       },
       {
-        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
-        "section": "Materiales de estudio",
-        "title": "Aritmética",
-        "url": "",
-        "image": "/biblioteca/universe/assets/aritmetica.webp",
-        "series": "CEPREUNI 2027-1",
-        "author": "UNIVERSE × CICLESOLUS",
-        "upcoming": true
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "3RA EDICIÓN",
+        "title": "Economía",
+        "url": "https://drive.google.com/file/d/1OKPcqqtVOArb_kotl9VyMEEMyJrSAok1/view?usp=drivesdk",
+        "image": "/biblioteca/universe/assets/primeros-resumenes-economia-3ra.webp",
+        "series": "Primeros Resúmenes · 3.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": false,
+        "sourceTitle": "📂 PRIMEROS RESUMENES ECONOMIA 3RA EDICIÓN.pdf"
       },
       {
-        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
-        "section": "Materiales de estudio",
-        "title": "Geometría",
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "3RA EDICIÓN",
+        "title": "Literatura",
         "url": "",
-        "image": "/biblioteca/universe/assets/geometria.webp",
-        "series": "CEPREUNI 2027-1",
-        "author": "UNIVERSE × CICLESOLUS",
-        "upcoming": true
+        "image": "/biblioteca/universe/assets/primeros-resumenes-literatura-3ra.png",
+        "series": "Primeros Resúmenes · 3.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": true,
+        "availabilityLabel": "Aún no disponible"
       },
       {
-        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
-        "section": "Materiales de estudio",
-        "title": "Trigonometría",
+        "catalog": "PRIMEROS RESÚMENES",
+        "section": "3RA EDICIÓN",
+        "title": "Lenguaje",
         "url": "",
-        "image": "/biblioteca/universe/assets/trigonometria.webp",
-        "series": "CEPREUNI 2027-1",
-        "author": "UNIVERSE × CICLESOLUS",
-        "upcoming": true
-      },
-      {
-        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
-        "section": "Materiales de estudio",
-        "title": "Física",
-        "url": "",
-        "image": "/biblioteca/universe/assets/fisica.webp",
-        "series": "CEPREUNI 2027-1",
-        "author": "UNIVERSE × CICLESOLUS",
-        "upcoming": true
-      },
-      {
-        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
-        "section": "Materiales de estudio",
-        "title": "Química",
-        "url": "",
-        "image": "/biblioteca/universe/assets/quimica.webp",
-        "series": "CEPREUNI 2027-1",
-        "author": "UNIVERSE × CICLESOLUS",
-        "upcoming": true
+        "image": "/biblioteca/universe/assets/primeros-resumenes-lenguaje-3ra.png",
+        "series": "Primeros Resúmenes · 3.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": true,
+        "availabilityLabel": "Aún no disponible"
       },
       {
         "catalog": "PRIMEROS RESÚMENES",
@@ -19484,16 +19470,64 @@
         "sourceTitle": "Primeros Resúmenes de Lenguaje 2da ED — Editorial UNIVERSE"
       },
       {
-        "catalog": "PRIMEROS RESÚMENES",
-        "section": "3RA EDICIÓN",
-        "title": "Historia",
-        "url": "https://drive.google.com/file/d/1hO7inDd2BRudc_DV94F7_qtGHKFd8Iyj/view?usp=drive_link",
-        "image": "/biblioteca/universe/assets/primeros-resumenes-historia-3ra.webp",
-        "series": "Primeros Resúmenes · 3.ª edición",
-        "author": "Editorial Universe",
-        "upcoming": false,
-        "drivePreview": false,
-        "sourceTitle": "📂 PRIMEROS RESUMENES HISTORIA 3RA EDICIÓN.pdf"
+        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
+        "section": "Materiales de estudio",
+        "title": "Álgebra",
+        "url": "https://docs.google.com/document/d/1l91eis8UhkKguvjqoJRdiQ2giPopL6uYI5CAr95gtf0/preview",
+        "image": "/biblioteca/universe/assets/algebra.webp",
+        "series": "CEPREUNI 2027-1",
+        "author": "UNIVERSE × CICLESOLUS",
+        "upcoming": false
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
+        "section": "Materiales de estudio",
+        "title": "Aritmética",
+        "url": "",
+        "image": "/biblioteca/universe/assets/aritmetica.webp",
+        "series": "CEPREUNI 2027-1",
+        "author": "UNIVERSE × CICLESOLUS",
+        "upcoming": true
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
+        "section": "Materiales de estudio",
+        "title": "Geometría",
+        "url": "",
+        "image": "/biblioteca/universe/assets/geometria.webp",
+        "series": "CEPREUNI 2027-1",
+        "author": "UNIVERSE × CICLESOLUS",
+        "upcoming": true
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
+        "section": "Materiales de estudio",
+        "title": "Trigonometría",
+        "url": "",
+        "image": "/biblioteca/universe/assets/trigonometria.webp",
+        "series": "CEPREUNI 2027-1",
+        "author": "UNIVERSE × CICLESOLUS",
+        "upcoming": true
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
+        "section": "Materiales de estudio",
+        "title": "Física",
+        "url": "",
+        "image": "/biblioteca/universe/assets/fisica.webp",
+        "series": "CEPREUNI 2027-1",
+        "author": "UNIVERSE × CICLESOLUS",
+        "upcoming": true
+      },
+      {
+        "catalog": "SOLUCIONARIOS CEPREUNI 2027-1",
+        "section": "Materiales de estudio",
+        "title": "Química",
+        "url": "",
+        "image": "/biblioteca/universe/assets/quimica.webp",
+        "series": "CEPREUNI 2027-1",
+        "author": "UNIVERSE × CICLESOLUS",
+        "upcoming": true
       },
       {
         "catalog": "2DAS PCS (POR TEMAS)",
@@ -19506,40 +19540,6 @@
         "upcoming": false,
         "drivePreview": true,
         "sourceTitle": "FÍSICA 2DAS PCS (POR TEMAS) - UNIVERSE.pdf"
-      },
-      {
-        "catalog": "PRIMEROS RESÚMENES",
-        "section": "3RA EDICIÓN",
-        "title": "Economía",
-        "url": "https://drive.google.com/file/d/1OKPcqqtVOArb_kotl9VyMEEMyJrSAok1/view?usp=drivesdk",
-        "image": "/biblioteca/universe/assets/primeros-resumenes-economia-3ra.webp",
-        "series": "Primeros Resúmenes · 3.ª edición",
-        "author": "Editorial Universe",
-        "upcoming": false,
-        "drivePreview": false,
-        "sourceTitle": "📂 PRIMEROS RESUMENES ECONOMIA 3RA EDICIÓN.pdf"
-      },
-      {
-        "catalog": "PRIMEROS RESÚMENES",
-        "section": "3RA EDICIÓN",
-        "title": "Literatura",
-        "url": "",
-        "image": "/biblioteca/universe/assets/primeros-resumenes-literatura-3ra.png",
-        "series": "Primeros Resúmenes · 3.ª edición",
-        "author": "Editorial Universe",
-        "upcoming": true,
-        "availabilityLabel": "Aún no disponible"
-      },
-      {
-        "catalog": "PRIMEROS RESÚMENES",
-        "section": "3RA EDICIÓN",
-        "title": "Lenguaje",
-        "url": "",
-        "image": "/biblioteca/universe/assets/primeros-resumenes-lenguaje-3ra.png",
-        "series": "Primeros Resúmenes · 3.ª edición",
-        "author": "Editorial Universe",
-        "upcoming": true,
-        "availabilityLabel": "Aún no disponible"
       }
     ],
     "cuzcano": [
