@@ -17,6 +17,15 @@ for (const sede of ['Lima', 'Juliaca']) {
   console.log(`${sede}: ${official.length} official names and results verified`);
 }
 assert.equal(new Set(data.pre.map(row => row.code)).size, data.pre.length);
+const pc1Juliaca = JSON.parse(await fs.readFile('data/cepreuni/2027-1/first-practice-juliaca.json', 'utf8'));
+assert.equal(pc1Juliaca.rows.length, 99);
+for (const [, code, score] of pc1Juliaca.rows) {
+  const row = data.pre.find(row => row.code === code);
+  assert.equal(row.sede, 'Juliaca');
+  assert.equal(row.pc1, score);
+}
+assert.equal(data.pre.filter(row => row.sede === 'Juliaca' && row.pc1 != null).length, 99);
+console.log('Juliaca: 99 visually reviewed first-practice scores verified');
 
 // Exercise the actual browser calculation functions, including future exams.
 const elements = new Map();
