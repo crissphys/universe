@@ -1,6 +1,7 @@
 @font-face{font-family:"Brunson";src:url("/biblioteca/literatura/assets/fonts/Brunson.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
 @font-face{font-family:"Creato Display";src:url("/biblioteca/literatura/assets/fonts/CreatoDisplay-Black.otf") format("opentype");font-style:normal;font-weight:900;font-display:swap}
 .literature-catalog{margin-top:20px}
+.page-topline.literature-topline{margin-bottom:12px}
 .literature-title-head{margin:4px auto clamp(32px,5vw,62px);text-align:center}
 .page-head .literature-display-title{display:grid;justify-items:center;gap:0;margin:0;color:var(--text);font-weight:400;letter-spacing:0;line-height:1}
 .literature-title-overline{position:relative;z-index:1;font-family:"Creato Display",sans-serif;font-size:clamp(23px,4.2vw,54px);font-weight:900;letter-spacing:.045em;line-height:.94}
