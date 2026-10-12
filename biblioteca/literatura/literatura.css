@@ -5,10 +5,10 @@
 .literature-title-head{margin:4px auto clamp(32px,5vw,62px);text-align:center}
 .page-head .literature-display-title{display:grid;justify-items:center;gap:0;margin:0;color:var(--text);font-weight:400;letter-spacing:0;line-height:1}
 .literature-title-overline{position:relative;z-index:1;font-family:"Creato Display",sans-serif;font-size:clamp(23px,4.2vw,54px);font-weight:900;letter-spacing:.045em;line-height:.94}
-.literature-title-main{display:block;font-family:"Brunson",sans-serif;font-size:clamp(58px,11.5vw,188px);font-weight:400;letter-spacing:.015em;line-height:.86;white-space:nowrap}
+.literature-title-main{display:block;font-family:"Brunson",sans-serif;font-size:clamp(116px,23vw,376px);font-weight:400;letter-spacing:.015em;line-height:.86;white-space:nowrap;transform:scaleX(.68);transform-origin:center}
 .literature-filter .p-input{width:100%;flex-basis:100%}
 .literature-index{margin:0 0 12px}
 .literature-options>span{color:var(--muted);font-size:10px}
 .literature-options .p-result{margin:10px 0}
 .literature-catalog #book-results>.p-empty{border:1px dashed var(--line);border-radius:12px}
-@media(max-width:600px){.literature-title-head{margin:0 auto 34px}.literature-title-overline{font-size:clamp(20px,6vw,31px)}.literature-title-main{font-size:clamp(52px,14vw,84px)}.literature-options{align-items:flex-start;flex-direction:column;gap:2px}.literature-options .p-result{margin:3px 0 8px}}
+@media(max-width:600px){.literature-title-head{margin:0 auto 34px}.literature-title-overline{font-size:clamp(20px,6vw,31px)}.literature-title-main{font-size:clamp(104px,28vw,168px);transform:scaleX(.54)}.literature-options{align-items:flex-start;flex-direction:column;gap:2px}.literature-options .p-result{margin:3px 0 8px}}
