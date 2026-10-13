@@ -18,3 +18,24 @@
 .book-orbit canvas{display:block;width:100%;height:100%;pointer-events:none}
 .book-orbit--title{position:absolute;inset:-20px -18px;z-index:0;opacity:.95}
 .literature-title-head .literature-display-title{position:relative;z-index:1}
+
+/* Compact spacing while retaining the catalog's original control sizes. */
+.native-view.literature-catalog .literature-filter{margin-bottom:8px}
+.native-view.literature-catalog .literature-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
+.native-view.literature-catalog .literature-control-leading{display:flex;align-items:center;gap:12px;min-width:0}
+.native-view.literature-catalog .literature-index{margin:0}
+.native-view.literature-catalog .literature-options{flex:none;margin:0}
+.native-view.literature-catalog .literature-options .p-result{margin:0;white-space:nowrap}
+.native-view.literature-catalog .literature-tools{flex-wrap:nowrap;gap:14px;margin:0}
+@media(max-width:1100px){
+  .native-view.literature-catalog .literature-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+  .native-view.literature-catalog .literature-control-leading{justify-content:space-between;flex-wrap:wrap}
+  .native-view.literature-catalog .literature-tools{justify-content:flex-start}
+}
+@media(max-width:600px){
+  .native-view.literature-catalog .literature-filter{margin-bottom:6px}
+  .native-view.literature-catalog .literature-controls{gap:3px;margin-bottom:10px}
+  .native-view.literature-catalog .literature-control-leading{gap:4px 8px}
+  .native-view.literature-catalog .literature-options{margin-left:auto}
+  .native-view.literature-catalog .literature-tools{flex-wrap:wrap;gap:8px}
+}
