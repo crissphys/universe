@@ -5,7 +5,7 @@ export async function renderExams(out) {
   out.innerHTML = '<p role="status">Cargando exámenes…</p>';
   let data;
   try {
-    const response = await fetch('/universe-ui/data/cepreuni-exams.json');
+    const response = await fetch('/universe-ui/data/cepreuni-exams.json?v=20261013-1ep-reconstruidos');
     if (!response.ok) throw new Error('No disponible');
     data = await response.json();
   } catch {

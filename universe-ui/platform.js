@@ -1,6 +1,6 @@
 import {publisherShowcase,mountPublishers} from './library-showcase.js?v=20261011-editorial-carousel';
 import {renderDirectory} from './library-directory.js';
-import {renderExams} from './cepreuni-exams.js';
+import {renderExams} from './cepreuni-exams.js?v=20261013-1ep-reconstruidos';
 import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20261012-college-library-restore-v1';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
