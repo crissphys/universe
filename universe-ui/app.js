@@ -110,7 +110,7 @@ function buildIndex(d,videos,directory){
 function loadIndex(){
  if(indexRows)return Promise.resolve(indexRows);
  if(!indexPromise)indexPromise=Promise.all([
-  fetch('/universe-ui/data/platform.json?v=20261010-universe-economia-3ra-v1').then(r=>r.json()),
+  fetch('/universe-ui/data/platform.json?v=20261012-college-library-restore-v1').then(r=>r.json()),
   fetch('/universe-ui/data/videos.json').then(r=>r.json()).catch(()=>null),
   fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
  ]).then(([d,v,directory])=>{indexRows=buildIndex(d,v,directory);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
@@ -267,7 +267,7 @@ function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserve
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261011-left-branch-layout');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261012-college-library-restore-v1');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});
