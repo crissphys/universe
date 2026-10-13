@@ -17,35 +17,3 @@
 .uni-library-cta b{font-size:15px;font-weight:400}
 @media(max-width:700px){.catalog-identity-uni{min-height:250px;padding:20px 16px 24px}.uni-library-logo{width:min(100%,620px);max-height:125px;margin:12px auto 6px}.uni-library-description{max-width:36ch}.uni-library-footer{margin-top:12px}.uni-library-cta{margin-top:11px}.catalog-identity-uni:after{width:120vw}}
 @media(prefers-reduced-motion:reduce){.uni-library-cta{transition:none}}
-
-/* La página universitaria se recorre primero por curso y luego por autor. */
-.catalog-browser[data-catalog="college"] #book-results{display:grid;gap:clamp(28px,4vw,48px)}
-.catalog-browser[data-catalog="college"] #book-results .catalog-volume{position:relative;margin:0;padding:clamp(16px,2.4vw,30px);border:1px solid #ffffff18;border-radius:18px;background:linear-gradient(145deg,#a7baff0b,transparent 48%),#ffffff03}
-.catalog-browser[data-catalog="college"] #book-results .catalog-divider{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px 20px;margin:0;padding:clamp(16px,2.2vw,24px);border:1px solid #93a9ff45;border-radius:13px;background:linear-gradient(110deg,#93a9ff16,transparent 72%)}
-.catalog-browser[data-catalog="college"] #book-results .catalog-divider>span{grid-column:1/-1;color:#b7c5ff}
-.catalog-browser[data-catalog="college"] #book-results .catalog-divider h2{min-width:0}
-.catalog-browser[data-catalog="college"] #book-results .catalog-divider small{padding:7px 11px;border:1px solid #93a9ff40;border-radius:999px;background:#93a9ff0d;white-space:nowrap}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section{margin:clamp(22px,3vw,34px) 0 0;padding:0 0 0 clamp(12px,2vw,22px);border-left:1px solid #93a9ff45}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>h3{gap:11px;margin:0 0 18px}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>h3>span{flex:none;width:4px;height:20px;background:#93a9ff;border-radius:999px}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>h3>small{margin-left:auto;padding:5px 9px;border:1px solid #ffffff24;border-radius:999px;background:#ffffff07;white-space:nowrap}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(min(100%,172px),1fr));align-items:stretch;gap:18px;overflow:visible;padding:3px 0 7px;scroll-snap-type:none}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book{display:flex;min-width:0;flex-direction:column;padding:11px;border:1px solid #ffffff18;border-radius:12px;background:linear-gradient(160deg,#ffffff09,transparent 46%),#090c12;transition:border-color .2s,transform .2s,background .2s}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book:hover{border-color:#93a9ff80;background:linear-gradient(160deg,#93a9ff12,transparent 56%),#0b0e15;transform:translateY(-3px)}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book:focus-visible{outline:2px solid #b7c5ff;outline-offset:3px}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book .p-cover{width:100%;height:auto;aspect-ratio:.72;padding:14px;border-color:#ffffff16;background:radial-gradient(ellipse at 50% 45%,#93a9ff10,transparent 72%),#ffffff04}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book .p-cover img{max-height:100%;max-width:100%;object-fit:contain}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book .p-label{margin-top:13px}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book h4{margin-top:7px}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book p{margin-top:auto;padding-top:7px}
-.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book .book-action{margin-top:8px;padding-top:9px;border-top:1px solid #ffffff16}
-@media(max-width:760px){
-  .catalog-browser[data-catalog="college"] #book-results{gap:22px}
-  .catalog-browser[data-catalog="college"] #book-results .catalog-volume{padding:14px;border-radius:15px}
-  .catalog-browser[data-catalog="college"] #book-results .catalog-divider{gap:8px 12px;padding:15px;border-radius:11px}
-  .catalog-browser[data-catalog="college"] #book-results .catalog-section{margin-top:23px;padding-left:11px}
-  .catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px 12px!important;padding-bottom:10px}
-  .catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book{padding:0!important}
-  .catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books>.p-book .p-cover{padding:9px}
-}
-@media(max-width:370px){.catalog-browser[data-catalog="college"] #book-results .catalog-section>.p-books{grid-template-columns:minmax(0,1fr)!important}}
