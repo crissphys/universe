@@ -22341,12 +22341,453 @@
     "college": [
       {
         "catalog": "Libros universitarios",
-        "section": "Raymond Chang",
-        "title": "Fisicoquímica para las ciencias químicas y biológicas",
-        "url": "https://drive.google.com/file/d/1PDYFublh9N8cJb4QOYiL4ORCV4nba-UC/view",
-        "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/fisicoquimica-3-es.png",
-        "series": "Español",
-        "author": "Raymond Chang · 3.ª edición · 2008",
+        "section": "James Stewart, Lothar Redlin y Saleem Watson",
+        "title": "Precálculo: Matemáticas para el cálculo",
+        "url": "https://drive.google.com/file/d/1uIpUu9gnlT2Kjd5QvrAlWwlGOlyr3hJQ/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "5.ª edición",
+        "author": "James Stewart, Lothar Redlin y Saleem Watson",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart, Lothar Redlin y Saleem Watson",
+        "title": "Precálculo: Matemáticas para el cálculo",
+        "url": "https://drive.google.com/file/d/1CbzbI9D9XfzAxMWY0QnVsiTyrfdylgXq/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "6.ª edición",
+        "author": "James Stewart, Lothar Redlin y Saleem Watson",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart",
+        "title": "Cálculo de una variable",
+        "url": "https://drive.google.com/file/d/1v4cfhSEf4MoL7i8UvVwIEaJMcobMCoj_/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "4.ª edición",
+        "author": "James Stewart",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart",
+        "title": "Cálculo de una variable",
+        "url": "https://drive.google.com/file/d/18GjlZcu5GOAy7SUQ7A2FnSzm5sJf9pnm/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "6.ª edición",
+        "author": "James Stewart",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart",
+        "title": "Cálculo de una variable",
+        "url": "https://drive.google.com/file/d/1pi64vZ4WXWgJhhteDAlreXNiTUfigbl4/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "7.ª edición",
+        "author": "James Stewart",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart",
+        "title": "Cálculo de varias variables: trascendentes tempranas",
+        "url": "https://drive.google.com/file/d/18Ui_Wr5j0NkynXIM4HJWr-Ua5Kl0fwMW/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "7.ª edición",
+        "author": "James Stewart",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart",
+        "title": "Cálculo de una variable: trascendentes tempranas",
+        "url": "https://drive.google.com/file/d/1G6Du8UqrcQJC0ndW4zvG9QE5vwwCrUvg/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "8.ª edición",
+        "author": "James Stewart",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart, Daniel Clegg y Saleem Watson",
+        "title": "Cálculo: trascendentes tempranas",
+        "url": "https://drive.google.com/file/d/1MT7FOBdYyniyGWBo9SQvRAlRRqcT2i2v/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "9.ª edición",
+        "author": "James Stewart, Daniel Clegg y Saleem Watson",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "James Stewart",
+        "title": "Solucionario — Cálculo de una variable",
+        "url": "https://drive.google.com/file/d/1Xy9sO_kJTmKae4J1eO4QSv5mhxUyWDW9/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "7.ª edición",
+        "author": "James Stewart",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Earle F. Watts y John T. Rule",
+        "title": "Descriptive Geometry",
+        "url": "https://drive.google.com/file/d/1gjIjKmWMCY8V4ucBdYAnZvHd6TjoL6OV/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "01 · 1.ª ed., 4.ª impresión · 1947",
+        "author": "Earle F. Watts y John T. Rule",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "George F. Blessing y Lewis A. Darling",
+        "title": "Elements of Descriptive Geometry",
+        "url": "https://drive.google.com/file/d/1FFk3TVPk8YhB5XHB62v1pPkNKp2QP5Ar/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "02 · 1.ª edición · 1912",
+        "author": "George F. Blessing y Lewis A. Darling",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Albert E. Church",
+        "title": "Plates to Descriptive Geometry: Shades, Shadows and Linear Perspective",
+        "url": "https://drive.google.com/file/d/1u13g75bSYnalf_AHWnrceliGWwl_n3iC/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "03 · 1892",
+        "author": "Albert E. Church",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "S. Edward Warren",
+        "title": "The Elements of Descriptive Geometry, Shadows and Perspective",
+        "url": "https://drive.google.com/file/d/1AlCVORDW64DXEUpNti1PvjRQT-eZGKEp/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "04 · 1.ª edición · 1877",
+        "author": "S. Edward Warren",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Otis Everett Randall",
+        "title": "Elements of Descriptive Geometry",
+        "url": "https://drive.google.com/file/d/17j-DGJWxmDwaYkKF-2yl8ajRa4ZM6F3p/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "05 · 1.ª edición · 1905",
+        "author": "Otis Everett Randall",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Autor no identificado",
+        "title": "Geometría descriptiva — Presentación",
+        "url": "https://drive.google.com/file/d/1m7wNlKU_A1cB-t98-7FZzLRJEYifhRW5/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "06 · Presentación",
+        "author": "Autor no identificado",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Julio César Díaz Zúñiga",
+        "title": "Geometría descriptiva I",
+        "url": "https://drive.google.com/file/d/1gn37btq8uQF1euxGkRNI0zl6SEtTpVEu/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "07 · 1.ª edición · Extracto",
+        "author": "Julio César Díaz Zúñiga",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "A. N. Whitehead",
+        "title": "The Axioms of Descriptive Geometry",
+        "url": "https://drive.google.com/file/d/1UVIRJC6IvFw5hKhCwXhWgfg2hizOaX5p/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "08 · 1.ª edición · 1907",
+        "author": "A. N. Whitehead",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Simón E. Sepúlveda Tabares",
+        "title": "Geometría descriptiva",
+        "url": "https://drive.google.com/file/d/1JvZ1xaW9W3_lgYq8VNV4ch1hZAvk2Ff6/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "09 · 8.ª edición",
+        "author": "Simón E. Sepúlveda Tabares",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "V. O. Gordon y M. A. Sementsov-Oguiyevski",
+        "title": "Curso de geometría descriptiva",
+        "url": "https://drive.google.com/file/d/1E4hPeEHg1mhdjZ2ASE9EC49EStOGOOK3/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "10 · 2.ª edición",
+        "author": "V. O. Gordon y M. A. Sementsov-Oguiyevski",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Miguel de la Torre Carbó",
+        "title": "Geometría descriptiva",
+        "url": "https://drive.google.com/file/d/1ZS4ZG7w70YyV98PQV9HkmDJ4DbxtWHpG/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "11 · 2.ª ed., 5.ª reimp. · 1993",
+        "author": "Miguel de la Torre Carbó",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Fernando Izquierdo Asensi",
+        "title": "Geometría descriptiva superior y aplicada",
+        "url": "https://drive.google.com/file/d/1mThbdsjKy2HnUgybreMPoKDOqz1Zujnp/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "12 · 5.ª edición",
+        "author": "Fernando Izquierdo Asensi",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Francisco Montero López",
+        "title": "Geometría descriptiva tridimensional para arquitectos y diseñadores",
+        "url": "https://drive.google.com/file/d/15MsO-Uqb_dy1P9Un3F2mSC56OWUF-2Ng/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "13 · 1993",
+        "author": "Francisco Montero López",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Harry, Rodolfo, Miguel y Tomás Osers",
+        "title": "Estudio de geometría descriptiva — Tomo I: Proyección cilíndrica (copia 2)",
+        "url": "https://drive.google.com/file/d/1EQlPJjN14rxsKWAfDuJ44e0DyYyeBWZ4/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "14 · 12.ª edición · Copia 2",
+        "author": "Harry, Rodolfo, Miguel y Tomás Osers",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Harry, Rodolfo, Miguel y Tomás Osers",
+        "title": "Estudio de geometría descriptiva — Tomo I: Proyección cilíndrica",
+        "url": "https://drive.google.com/file/d/1yHFK6TEqbdofV5E-brCk6WTABxscet9s/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "15 · 12.ª edición",
+        "author": "Harry, Rodolfo, Miguel y Tomás Osers",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Fernando Izquierdo Asensi",
+        "title": "Geometría descriptiva",
+        "url": "https://drive.google.com/file/d/1_foX4dbNiK9DsN75c-R-yASn0s3i24Lu/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "16 · 24.ª edición",
+        "author": "Fernando Izquierdo Asensi",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "C. L. Deskrep, R. Choza Nosiglia, G. Atúncar Silva y A. Franco Pallete",
+        "title": "Geometría descriptiva: curso superior moderno",
+        "url": "https://drive.google.com/file/d/1PBbaCI76fuWxsevu33v1M3UGGQfe8AFU/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "17 · 12.ª edición",
+        "author": "C. L. Deskrep, R. Choza Nosiglia, G. Atúncar Silva y A. Franco Pallete",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Germán Valencia García",
+        "title": "Geometría descriptiva: paso a paso",
+        "url": "https://drive.google.com/file/d/1Eu-WWyI6Zx99uVjaDYvKbPPA8OYvxRkl/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "18 · 1.ª edición",
+        "author": "Germán Valencia García",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "C. L. Deskrep",
+        "title": "Geometría descriptiva: curso superior moderno",
+        "url": "https://drive.google.com/file/d/1FOh8MxRJ-xBkzKxjJIaDcIC2CODhZNvb/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "19 · 9.ª edición",
+        "author": "C. L. Deskrep",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Jorge Nakamura Muroy",
+        "title": "Geometría descriptiva — Nueva edición",
+        "url": "https://drive.google.com/file/d/1LXCwOW8F6F7oiWEIHTmso529-pui4CZv/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "20 · Nueva edición",
+        "author": "Jorge Nakamura Muroy",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Víctor Vidal Barrena",
+        "title": "Geometría descriptiva",
+        "url": "https://drive.google.com/file/d/1O8_aHAsuivGL0saOT5uIEZMZlLLd0mpm/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "21 · 1.ª edición",
+        "author": "Víctor Vidal Barrena",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Víctor Beder Vidal Barrena",
+        "title": "Geometría descriptiva: teoría y problemas",
+        "url": "https://drive.google.com/file/d/1sFYvKQyjPh-XuQwCIj2VdxwB52uA0ROM/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "22 · 9.ª edición",
+        "author": "Víctor Beder Vidal Barrena",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Física universitaria — Volumen 1",
+        "url": "https://drive.google.com/file/d/1WCmSwiG9jDVhw4WPc3cteKmh2whk5HQc/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "13.ª edición · Volumen 1",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Física universitaria — Volumen 2",
+        "url": "https://drive.google.com/file/d/12Rv_sW6SVFIhbU06Jxv6l0vyGs7Z01HT/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "13.ª edición · Volumen 2",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Solucionario — Física universitaria",
+        "url": "https://drive.google.com/file/d/1QtDr5dI3EnCfSMvRy6wwkQTKfNofBuHw/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "13.ª edición · Solucionario",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Física universitaria — Volumen 1",
+        "url": "https://drive.google.com/file/d/1lxnAQfiEO48XRSYwGLYjjkEpaJb4PsCw/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "12.ª edición · Volumen 1",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Física universitaria — Volumen 2",
+        "url": "https://drive.google.com/file/d/1CDdLsEhC5e_AH5lLeHCh133Zdg_oH8iL/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "12.ª edición · Volumen 2",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Solucionario — Física universitaria",
+        "url": "https://drive.google.com/file/d/1QcAgJ9S4C4VKSCrhGkrtuFwVrV9MadKX/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "12.ª edición · Solucionario",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Física universitaria — Volumen 1",
+        "url": "https://drive.google.com/file/d/1y_fMk1lftz760Cw3pDkaK3PWzbk4q8_D/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "11.ª edición · Volumen 1",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Solucionario — Física universitaria · Volumen 1",
+        "url": "https://drive.google.com/file/d/1Wrl8c2tMvHwB8PAmyq_AXJYhpCHSF9J2/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "11.ª edición · Solucionario 1",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Física universitaria — Volumen 2",
+        "url": "https://drive.google.com/file/d/1FDPc_FVmijzaIRuKkfP5IJfna_bjoGPb/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "11.ª edición · Volumen 2",
+        "author": "Sears y Zemansky",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Sears y Zemansky",
+        "title": "Solucionario — Física universitaria · Volumen 2",
+        "url": "https://drive.google.com/file/d/1tU0OBKYap_cA4TNzPa0riTbaagdjOh5F/view?usp=drivesdk",
+        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
+        "drivePreview": true,
+        "series": "11.ª edición · Solucionario 2",
+        "author": "Sears y Zemansky",
         "upcoming": false
       },
       {
@@ -22355,8 +22796,8 @@
         "title": "Fundamentos de química",
         "url": "https://drive.google.com/file/d/1dSupyrhB_3wTkjZaMbvyawO17kO7N3lA/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/fundamentos-quimica-es.png",
-        "series": "Español",
-        "author": "Raymond Chang · 1.ª edición en español · 2011",
+        "series": "1.ª edición en español · 2011 · Español",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22365,8 +22806,8 @@
         "title": "Chemistry",
         "url": "https://drive.google.com/file/d/1llc-6GhmzPYq9rSYgRfX1Y28aOWf78AQ/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/chemistry-6-en.png",
-        "series": "Inglés",
-        "author": "Raymond Chang · 6th Edition",
+        "series": "6th Edition · Inglés",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22375,8 +22816,8 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/1F8mlILhetgyKORtKwi9scM3JFbnwKRh6/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-10-es.png",
-        "series": "Español",
-        "author": "Raymond Chang · 10.ª edición",
+        "series": "10.ª edición · Español",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22385,8 +22826,8 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/1B0GLrZ_yXQEyGkORL6t5zKmnayTVw-GT/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-9-es.png",
-        "series": "Español",
-        "author": "Raymond Chang · 9.ª edición",
+        "series": "9.ª edición · Español",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22395,8 +22836,8 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/1Rk3evTwtz5wsybhJ7YK8vuxbD4fUfsCM/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-7-es.png",
-        "series": "Español",
-        "author": "Raymond Chang · 7.ª edición",
+        "series": "7.ª edición · Español",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22405,8 +22846,8 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/1C3s00OqXR9QBp2r8kTABriDp-SGtxMrd/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-6-es.png",
-        "series": "Español",
-        "author": "Raymond Chang · 6.ª edición",
+        "series": "6.ª edición · Español",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22415,8 +22856,8 @@
         "title": "Química · Capítulo 1",
         "url": "https://drive.google.com/file/d/1oHcm_BZaze4MNpPtr_noD1EGgRpoCJMR/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/capitulo-1.svg",
-        "series": "Español",
-        "author": "Raymond Chang · El estudio del cambio",
+        "series": "El estudio del cambio · Español",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22425,8 +22866,8 @@
         "title": "Student Solutions Manual · Chemistry",
         "url": "https://drive.google.com/file/d/1dpXlXCKsoxcXnW0QuW0jbToEo8gRWLLN/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/solutions-manual-10.svg",
-        "series": "Inglés",
-        "author": "Raymond Chang · 10th Edition",
+        "series": "10th Edition · Inglés",
+        "author": "Raymond Chang",
         "upcoming": false
       },
       {
@@ -22435,8 +22876,8 @@
         "title": "Chemistry",
         "url": "https://drive.google.com/file/d/1DgRqTu6zKoYup_bFrPJ24ab0JJWJucFK/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/chemistry-12-en.png",
-        "series": "Inglés",
-        "author": "Raymond Chang & Kenneth A. Goldsby · 12th Edition",
+        "series": "12th Edition · Inglés",
+        "author": "Raymond Chang & Kenneth A. Goldsby",
         "upcoming": false
       },
       {
@@ -22445,8 +22886,8 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/10jabcOvZSHg6HQ-erd_MiFy5_EbKyy1l/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-12-es.png",
-        "series": "Español",
-        "author": "Raymond Chang & Kenneth A. Goldsby · 12.ª edición",
+        "series": "12.ª edición · Español",
+        "author": "Raymond Chang & Kenneth A. Goldsby",
         "upcoming": false
       },
       {
@@ -22455,8 +22896,8 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/1AqqyMbruoZbkJA66jlgYsz4wVhVmzKvh/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-11-es.png",
-        "series": "Español",
-        "author": "Raymond Chang & Kenneth A. Goldsby · 11.ª edición",
+        "series": "11.ª edición · Español",
+        "author": "Raymond Chang & Kenneth A. Goldsby",
         "upcoming": false
       },
       {
@@ -22465,8 +22906,8 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/1qZLYpahdkZ9JpJIjQVQW0ZZgAOhOCWnl/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-11-pt.png",
-        "series": "Portugués",
-        "author": "Raymond Chang & Kenneth A. Goldsby · 11.ª edição",
+        "series": "11.ª edição · Portugués",
+        "author": "Raymond Chang & Kenneth A. Goldsby",
         "upcoming": false
       },
       {
@@ -22475,8 +22916,8 @@
         "title": "Chemistry",
         "url": "https://drive.google.com/file/d/1NghfjvUwaMcC10sFfCDYwrLu0EVr7vpO/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/chemistry-15-en.png",
-        "series": "Inglés",
-        "author": "Raymond Chang & Jason Overby · 15th Edition · International Student Edition",
+        "series": "15th Edition · International Student Edition · Inglés",
+        "author": "Raymond Chang & Jason Overby",
         "upcoming": false
       },
       {
@@ -22485,8 +22926,8 @@
         "title": "Chemistry",
         "url": "https://drive.google.com/file/d/1vIbf19h_yMr6CU1exvO7QuRuKcQ2yVvo/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/chemistry-14-en.png",
-        "series": "Inglés",
-        "author": "Raymond Chang & Jason Overby · 14th Edition",
+        "series": "14th Edition · Inglés",
+        "author": "Raymond Chang & Jason Overby",
         "upcoming": false
       },
       {
@@ -22495,8 +22936,8 @@
         "title": "Chemistry",
         "url": "https://drive.google.com/file/d/1rdppqwUJHLit0iV1_veQLdtEBMIWM1a4/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/chemistry-13-en.png",
-        "series": "Inglés",
-        "author": "Raymond Chang & Jason Overby · 13th Edition",
+        "series": "13th Edition · Inglés",
+        "author": "Raymond Chang & Jason Overby",
         "upcoming": false
       },
       {
@@ -22505,8 +22946,18 @@
         "title": "Química",
         "url": "https://drive.google.com/file/d/1oWv0kZgEAB6o4ZMXb_tKk84chYBThHdJ/view",
         "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/quimica-13-es.png",
-        "series": "Español",
-        "author": "Raymond Chang & Jason Overby · 13.ª edición",
+        "series": "13.ª edición · Español",
+        "author": "Raymond Chang & Jason Overby",
+        "upcoming": false
+      },
+      {
+        "catalog": "Libros universitarios",
+        "section": "Raymond Chang",
+        "title": "Fisicoquímica para las ciencias químicas y biológicas",
+        "url": "https://drive.google.com/file/d/1PDYFublh9N8cJb4QOYiL4ORCV4nba-UC/view",
+        "image": "/biblioteca/librosuniversitarios/assets/raymond-chang/fisicoquimica-3-es.png",
+        "series": "3.ª edición · 2008 · Español",
+        "author": "Raymond Chang",
         "upcoming": false
       }
     ],
