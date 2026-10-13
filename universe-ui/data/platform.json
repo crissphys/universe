@@ -19391,12 +19391,11 @@
         "catalog": "PRIMEROS RESÚMENES",
         "section": "3RA EDICIÓN",
         "title": "Literatura",
-        "url": "",
+        "url": "https://drive.google.com/file/d/1PO1wkse-KpA2MDTI1Van1xcCrbinZAhU/view?usp=drive_link",
         "image": "/biblioteca/universe/assets/primeros-resumenes-literatura-3ra.png",
         "series": "Primeros Resúmenes · 3.ª edición",
         "author": "Editorial Universe",
-        "upcoming": true,
-        "availabilityLabel": "Aún no disponible"
+        "upcoming": false
       },
       {
         "catalog": "PRIMEROS RESÚMENES",
