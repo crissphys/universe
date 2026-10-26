@@ -39,16 +39,14 @@ assert.equal(data.basic.filter(row => row.e4 != null).length, 98);
 console.log('3PC (2081 Pre) and 4th evaluation (98 Basic) verified');
 
 // Exercise the actual browser calculation functions, including future exams.
-const elements = new Map();
-const element = () => ({ value: '', querySelectorAll: () => [], addEventListener() {} });
-const document = { querySelectorAll: () => [], getElementById(id) { if (!elements.has(id)) elements.set(id, element()); return elements.get(id); } };
-const browser = { window: { UNIVERSE_CEPRE_2027_1: data }, document };
-const rawScript = await fs.readFile('universe-ui/native/ranking-2027.js', 'utf8');
-const script = rawScript.slice(0, rawScript.lastIndexOf('\n  render();')) + '\n  window.testRanking = { weightedAverage, score, tracks, discardedKey };\n})();';
-vm.runInNewContext(script, browser);
-const { weightedAverage: avg, score, tracks } = browser.window.testRanking;
+// No #rk4 root here: the script only exposes its calculation hooks.
+const document = { querySelectorAll: () => [], getElementById: () => null };
+const browser = { window: { UNIVERSE_CEPRE_2027_1: data }, document, location: { search: '', pathname: '/ranking', hash: '' }, URLSearchParams };
+vm.runInNewContext(await fs.readFile('universe-ui/native/ranking-v4.js', 'utf8'), browser);
+const { weighted, score, tracks } = browser.window.UNIVERSE_RANKING_RK4;
+const avg = (row, track) => weighted(row, track).average;
 const pre = tracks.pre;
-assert.equal(browser.window.testRanking.discardedKey({ pc1: 80, pc2: 100, pc7: 0 }, pre), 'pc1');
+assert.equal(weighted({ pc1: 80, pc2: 100, pc7: 0 }, pre).dropped, 'pc1');
 assert.equal(avg({}, pre), null);
 assert.equal(score(''), null);
 assert.equal(score('  '), null);
