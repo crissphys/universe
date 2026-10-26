@@ -1,0 +1,654 @@
+/* Ranking CEPREUNI: 2027-1 in progress, 2026-2 final and admission ranges by career.
+   Scores come from their own data files; this script only ranks and presents them. */
+(function () {
+  var root = document.getElementById('rk4');
+
+  var current = window.UNIVERSE_CEPRE_2027_1 || null;
+  var official = window.UNIVERSE_CEPRE_2026_2 || {};
+  var supplied2025 = window.UNIVERSE_CEPRE_HISTORY_2025_2 || null;
+  var PAGE = 50;
+  var MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'set', 'oct', 'nov', 'dic'];
+
+  function $(id) { return document.getElementById(id); }
+  function all(selector, scope) { return Array.prototype.slice.call((scope || document).querySelectorAll(selector)); }
+  function esc(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fold(value) { return String(value || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase(); }
+  function score(value) {
+    if (value == null || typeof value === 'boolean' || String(value).trim() === '') return null;
+    var n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  }
+  function fmt(value) { var n = score(value); return n == null ? '—' : n.toFixed(3); }
+  function int(value) { return Number(value || 0).toLocaleString('es-PE'); }
+  function pct(value) {
+    var digits = value < 10 ? 1 : 0;
+    return value.toLocaleString('es-PE', { minimumFractionDigits: digits, maximumFractionDigits: digits }) + ' %';
+  }
+  function date(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || '');
+    return m ? Number(m[3]) + ' ' + MONTHS[Number(m[2]) - 1] + ' ' + m[1] : '—';
+  }
+  function median(values) {
+    if (!values.length) return null;
+    var s = values.slice().sort(function (a, b) { return a - b; });
+    var mid = Math.floor(s.length / 2);
+    return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+  }
+  function kpi(label, value, note) {
+    return '<div><dt>' + esc(label) + '</dt><dd><strong>' + value + '</strong>' + (note ? '<small>' + note + '</small>' : '') + '</dd></div>';
+  }
+  function pager(nav, page, pages, onTurn) {
+    if (!nav) return;
+    if (pages <= 1) { nav.innerHTML = ''; nav.hidden = true; return; }
+    nav.hidden = false;
+    var items = [];
+    var windowStart = Math.max(1, Math.min(page - 2, pages - 4));
+    var windowEnd = Math.min(pages, windowStart + 4);
+    if (windowStart > 1) items.push(1);
+    if (windowStart > 2) items.push('…');
+    for (var i = windowStart; i <= windowEnd; i++) items.push(i);
+    if (windowEnd < pages - 1) items.push('…');
+    if (windowEnd < pages) items.push(pages);
+    nav.innerHTML = '<button type="button" data-page="' + (page - 1) + '"' + (page === 1 ? ' disabled' : '') + '><span aria-hidden="true">←</span> Anterior</button><ol>' + items.map(function (item) {
+      if (item === '…') return '<li aria-hidden="true">…</li>';
+      return '<li><button type="button" data-page="' + item + '"' + (item === page ? ' aria-current="page"' : '') + ' aria-label="Página ' + item + '">' + item + '</button></li>';
+    }).join('') + '</ol><button type="button" data-page="' + (page + 1) + '"' + (page === pages ? ' disabled' : '') + '>Siguiente <span aria-hidden="true">→</span></button>';
+    nav.onclick = function (event) {
+      var button = event.target.closest('button[data-page]');
+      if (!button || button.disabled) return;
+      onTurn(Math.max(1, Math.min(pages, Number(button.getAttribute('data-page')))));
+    };
+  }
+  function scrollIntoViewIfNeeded(el) {
+    if (!el) return;
+    var top = el.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight * 0.6) el.scrollIntoView({ block: 'start', behavior: motionOk() ? 'smooth' : 'auto' });
+  }
+  function motionOk() {
+    return !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) && !document.documentElement.classList.contains('motion-off');
+  }
+  function press(group, attr, value) {
+    all('[' + attr + ']', root).forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.getAttribute(attr) === value));
+    });
+  }
+
+  /* ---------- URL state ---------- */
+  var params = new URLSearchParams(location.search);
+  var state = {
+    view: ({ '2026-2': '2026-2', carreras: 'carreras' })[params.get('vista')] || '2027-1',
+    track: ({ juliaca: 'juliaca', basico: 'basic' })[params.get('sede')] || 'pre',
+    query: params.get('q') || ''
+  };
+  function syncUrl() {
+    var next = new URLSearchParams();
+    if (state.view !== '2027-1') next.set('vista', state.view);
+    if (state.view === '2027-1' && state.track !== 'pre') next.set('sede', state.track === 'basic' ? 'basico' : 'juliaca');
+    if (state.view === '2027-1' && state.query) next.set('q', state.query);
+    var url = location.pathname + (next.toString() ? '?' + next.toString() : '') + location.hash;
+    try { history.replaceState(null, '', url); } catch (e) { /* file:// or sandboxed */ }
+  }
+
+  /* ---------- Tabs ---------- */
+  var tabs = all('[data-rk4-view]', root);
+  var panels = { '2027-1': $('rk4-panel-current'), '2026-2': $('rk4-panel-final'), carreras: $('rk4-panel-careers') };
+  var rendered = {};
+  function selectView(view, focusTab) {
+    state.view = panels[view] ? view : '2027-1';
+    tabs.forEach(function (tab) {
+      var on = tab.getAttribute('data-rk4-view') === state.view;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      if (on && focusTab) tab.focus();
+    });
+    Object.keys(panels).forEach(function (key) { if (panels[key]) panels[key].hidden = key !== state.view; });
+    if (!rendered[state.view]) {
+      rendered[state.view] = true;
+      if (state.view === '2026-2') finalView.init();
+      if (state.view === 'carreras') careersView.init();
+    }
+    syncUrl();
+  }
+  tabs.forEach(function (tab, index) {
+    tab.addEventListener('click', function () { selectView(tab.getAttribute('data-rk4-view')); });
+    tab.addEventListener('keydown', function (event) {
+      var move = { ArrowRight: 1, ArrowLeft: -1, Home: -index, End: tabs.length - 1 - index }[event.key];
+      if (move == null) return;
+      event.preventDefault();
+      var target = tabs[(index + move + tabs.length) % tabs.length];
+      selectView(target.getAttribute('data-rk4-view'), true);
+    });
+  });
+
+  /* ---------- 2027-1 ---------- */
+  var PRE_EXAMS = [
+    { key: 'pc1', label: '1.ª PC', short: '1.ª PC', step: '1PC', weight: 1, drop: true },
+    { key: 'pc2', label: '2.ª PC', short: '2.ª PC', step: '2PC', weight: 1, drop: true },
+    { key: 'ep1', label: '1.er parcial', short: '1.er parcial', step: '1EP', weight: 2, drop: false },
+    { key: 'pc3', label: '3.ª PC', short: '3.ª PC', step: '3PC', weight: 1, drop: true },
+    { key: 'pc4', label: '4.ª PC', short: '4.ª PC', step: '4PC', weight: 1, drop: true },
+    { key: 'ep2', label: '2.º parcial', short: '2.º parcial', step: '2EP', weight: 4, drop: false },
+    { key: 'pc5', label: '5.ª PC', short: '5.ª PC', step: '5PC', weight: 1, drop: true },
+    { key: 'pc6', label: '6.ª PC', short: '6.ª PC', step: '6PC', weight: 1, drop: true },
+    { key: 'pc7', label: '7.ª PC', short: '7.ª PC', step: '7PC', weight: 1, drop: false },
+    { key: 'ef', label: 'Examen final', short: 'Final', step: 'EF', weight: 6, drop: false }
+  ];
+  var BASIC_EXAMS = [];
+  for (var b = 1; b <= 9; b++) BASIC_EXAMS.push({ key: 'e' + b, label: b + '.ª evaluación', short: 'Eval. ' + b, weight: 1, drop: false });
+  var TRACKS = {
+    pre: { label: 'Pre Lima', sede: 'Lima', source: 'pre', max: 150, exams: PRE_EXAMS },
+    juliaca: { label: 'Pre Juliaca', sede: 'Juliaca', source: 'pre', max: 150, exams: PRE_EXAMS },
+    basic: { label: 'Ciclo Básico', sede: null, source: 'basic', max: 20, exams: BASIC_EXAMS }
+  };
+  var cache = {};
+  // Pure calculation hooks for tools/test-cepre-2027-ranking.mjs.
+  window.UNIVERSE_RANKING_RK4 = { weighted: weighted, score: score, tracks: TRACKS };
+  if (!root) return;
+
+  function weighted(row, track) {
+    var included = [], droppable = [];
+    track.exams.forEach(function (exam) {
+      var value = score(row[exam.key]);
+      if (value == null) return;
+      var item = { key: exam.key, value: value, weight: exam.weight };
+      included.push(item);
+      if (exam.drop) droppable.push(item);
+    });
+    var dropped = null;
+    if (track.source === 'pre' && droppable.length >= 2) {
+      dropped = droppable.reduce(function (low, item) { return item.value < low.value ? item : low; });
+      included = included.filter(function (item) { return item !== dropped; });
+    }
+    var weight = included.reduce(function (sum, item) { return sum + item.weight; }, 0);
+    return {
+      average: weight ? included.reduce(function (sum, item) { return sum + item.value * item.weight; }, 0) / weight : null,
+      dropped: dropped ? dropped.key : null,
+      weight: weight
+    };
+  }
+
+  function rowsFor(trackKey) {
+    if (cache[trackKey]) return cache[trackKey];
+    var track = TRACKS[trackKey];
+    var rows = ((current && current[track.source]) || []).filter(function (raw) {
+      return !track.sede || (raw.sede || 'Lima') === track.sede;
+    }).map(function (raw) {
+      var row = Object.assign({}, raw);
+      var result = weighted(row, track);
+      row.average = result.average;
+      row.dropped = result.dropped;
+      row.weight = result.weight;
+      row.search = fold(row.code + ' ' + (row.name || ''));
+      return row;
+    }).sort(function (a, c) {
+      if (a.average == null && c.average != null) return 1;
+      if (a.average != null && c.average == null) return -1;
+      if (a.average != null && c.average != null && a.average !== c.average) return c.average - a.average;
+      return String(a.code).localeCompare(String(c.code));
+    });
+    rows.forEach(function (row, i) { row.place = row.average == null ? null : i + 1; });
+    var scored = rows.filter(function (row) { return row.average != null; });
+    var examRank = {};
+    track.exams.forEach(function (exam) {
+      var list = rows.filter(function (row) { return score(row[exam.key]) != null; }).sort(function (a, c) { return score(c[exam.key]) - score(a[exam.key]); });
+      var ranks = {}, previous = null, place = 0;
+      list.forEach(function (row, i) {
+        var v = score(row[exam.key]);
+        if (v !== previous) { place = i + 1; previous = v; }
+        ranks[row.code] = place;
+      });
+      examRank[exam.key] = { ranks: ranks, count: list.length };
+    });
+    var published = track.exams.filter(function (exam) {
+      return rows.some(function (row) { return score(row[exam.key]) != null || row[exam.key + 'Status']; });
+    });
+    var hasNames = rows.some(function (row) { return row.name; });
+    var hasAbsent = rows.some(function (row) { return track.exams.some(function (exam) { return row[exam.key + 'Status'] === 'AUSENTE'; }); });
+    cache[trackKey] = { rows: rows, scored: scored, examRank: examRank, published: published, track: track, hasNames: hasNames, hasAbsent: hasAbsent };
+    return cache[trackKey];
+  }
+
+  var currentView = (function () {
+    var search = $('rk4-search'), clear = $('rk4-clear'), hint = $('rk4-search-hint');
+    var head = $('rk4-head'), body = $('rk4-body'), cards = $('rk4-cards'), nav = $('rk4-pager');
+    var kpis = $('rk4-kpis'), spotlight = $('rk4-spotlight'), order = $('rk4-order');
+    var allExams = $('rk4-all-exams'), allExamsWrap = $('rk4-all-exams-wrap');
+    var page = 1, focusCode = null, timer = null;
+
+    function cellState(row, exam) {
+      var value = score(row[exam.key]);
+      if (row[exam.key + 'Status'] === 'AUSENTE') return 'absent';
+      if (value == null) return 'pending';
+      return row.dropped === exam.key ? 'dropped' : 'counted';
+    }
+    function cell(row, exam) {
+      var s = cellState(row, exam);
+      if (s === 'absent') return '<td class="rk4-num"><span class="rk4-tag rk4-tag-absent">Ausente</span></td>';
+      if (s === 'pending') return '<td class="rk4-num rk4-pending"><span aria-hidden="true">—</span><span class="sr-only">Sin nota</span></td>';
+      if (s === 'dropped') return '<td class="rk4-num rk4-dropped" title="Nota descartada del ponderado"><s>' + fmt(row[exam.key]) + '</s><span class="sr-only"> (descartada)</span></td>';
+      return '<td class="rk4-num">' + fmt(row[exam.key]) + '</td>';
+    }
+    function placeBadge(place) {
+      if (place == null) return '<span class="rk4-place rk4-place-none" title="Sin notas registradas">—</span>';
+      return '<span class="rk4-place' + (place <= 3 ? ' rk4-medal-' + place : '') + '">' + place + '</span>';
+    }
+    function shownExams(data) {
+      if (data.track.source === 'pre' && allExams && allExams.checked) return data.track.exams;
+      return data.published;
+    }
+
+    function renderSpotlight(row, data) {
+      if (!row) { spotlight.hidden = true; spotlight.innerHTML = ''; return; }
+      var track = data.track, total = data.scored.length;
+      var top = data.scored[0];
+      var mean = total ? data.scored.reduce(function (s, r) { return s + r.average; }, 0) / total : null;
+      var standing = '';
+      if (row.place != null) {
+        var topShare = row.place / total * 100;
+        standing = '<div class="rk4-spot-stats">' +
+          kpi('Puesto en ' + track.label, '<span class="rk4-big">' + int(row.place) + '</span>', 'de ' + int(total) + ' con nota') +
+          kpi(track.source === 'basic' ? 'Promedio' : 'Ponderado', fmt(row.average), 'sobre ' + track.max) +
+          kpi('Ubicación', 'Top ' + pct(Math.max(topShare, 0.1)), row.place === 1 ? 'Primer puesto de ' + track.label : fmt(top.average - row.average) + ' puntos debajo del primero') +
+          kpi('Frente a la media', (row.average >= mean ? '+' : '−') + fmt(Math.abs(row.average - mean)), 'Media de ' + track.label + ': ' + fmt(mean)) +
+          '</div>';
+      } else {
+        standing = '<p class="rk4-spot-empty">Este código no tiene notas registradas todavía, por eso no tiene puesto.</p>';
+      }
+      var exams = data.published.map(function (exam) {
+        var s = cellState(row, exam), rank = data.examRank[exam.key];
+        var status = { counted: 'Cuenta', dropped: 'Descartada', pending: 'Sin nota', absent: 'Ausente' }[s];
+        var value = s === 'absent' ? 'Ausente' : s === 'pending' ? '—' : fmt(row[exam.key]);
+        var detail = rank.ranks[row.code] ? 'Puesto ' + int(rank.ranks[row.code]) + ' de ' + int(rank.count) : status;
+        return '<li data-state="' + s + '"><span class="rk4-spot-exam">' + esc(exam.label) + '<small>peso ' + exam.weight + '</small></span><strong>' + (s === 'dropped' ? '<s>' + value + '</s>' : value) + '</strong><small>' + esc(s === 'dropped' ? 'Descartada · ' + detail : detail) + '</small></li>';
+      }).join('');
+      spotlight.innerHTML = '<header><div><p class="rk4-kicker">' + esc(track.label) + ' · 2027-1</p><h2>' + esc(row.name || (data.hasNames ? 'Nombre no publicado' : 'Código ' + row.code)) + '</h2>' + (row.name || data.hasNames ? '<p class="rk4-code">' + esc(row.code) + (row.name ? '' : ' · este código no figura en la última publicación con nombres') + '</p>' : '<p class="rk4-spot-sub">La UNI no publicó nombres para este ciclo.</p>') + '</div><button type="button" class="rk4-ghost" data-rk4-close>Cerrar</button></header>' + standing + '<ol class="rk4-spot-exams">' + exams + '</ol>';
+      spotlight.hidden = false;
+    }
+
+    function renderKpis(data) {
+      var track = data.track, scored = data.scored;
+      var top = scored[0];
+      var values = scored.map(function (r) { return r.average; });
+      var mean = values.length ? values.reduce(function (s, v) { return s + v; }, 0) / values.length : null;
+      kpis.innerHTML =
+        kpi('Estudiantes en la lista', int(data.rows.length), track.label) +
+        kpi('Con al menos una nota', int(scored.length), int(data.rows.length - scored.length) + ' sin notas registradas') +
+        kpi(track.source === 'basic' ? 'Mayor promedio' : 'Mayor ponderado', top ? fmt(top.average) : '—', top ? esc(top.code) + (top.name ? ' · ' + esc(top.name) : '') : 'Sin resultados') +
+        kpi(track.source === 'basic' ? 'Promedio medio' : 'Ponderado medio', fmt(mean), 'Mediana ' + fmt(median(values)) + ' · sobre ' + track.max);
+    }
+
+    function render(opts) {
+      var data = rowsFor(state.track), track = data.track;
+      var q = fold(state.query.trim());
+      var list = q ? data.rows.filter(function (row) { return row.search.indexOf(q) !== -1; }) : data.rows;
+      var sort = order.value;
+      if (sort !== 'place') {
+        list = list.slice().sort(function (a, c) {
+          if (sort === 'code') return String(a.code).localeCompare(String(c.code));
+          return String(a.name || '￿').localeCompare(String(c.name || '￿'), 'es') || String(a.code).localeCompare(String(c.code));
+        });
+      }
+      var pages = Math.max(1, Math.ceil(list.length / PAGE));
+      if (focusCode) {
+        var at = list.findIndex(function (row) { return row.code === focusCode; });
+        if (at >= 0) page = Math.floor(at / PAGE) + 1;
+      }
+      page = Math.min(Math.max(1, page), pages);
+      var start = (page - 1) * PAGE, visible = list.slice(start, start + PAGE);
+      var exams = shownExams(data);
+
+      var scoreLabel = track.source === 'basic' ? 'Promedio' : 'Ponderado';
+      head.innerHTML = '<tr><th scope="col" class="rk4-col-place">Puesto</th><th scope="col" class="rk4-col-code">Código</th>' + (data.hasNames ? '<th scope="col" class="rk4-col-name">Estudiante</th>' : '') + '<th scope="col" class="rk4-num rk4-col-score">' + scoreLabel + '</th>' + exams.map(function (exam) {
+        return '<th scope="col" class="rk4-num">' + esc(exam.short) + '<small>peso ' + exam.weight + '</small></th>';
+      }).join('') + '</tr>';
+      var empty = q ? 'No encontramos «' + esc(state.query.trim()) + '» en ' + track.label + '. Revisa el código o prueba con otra sede.' : 'Aún no hay estudiantes registrados.';
+      body.innerHTML = visible.length ? visible.map(function (row) {
+        var cls = (row.place && row.place <= 3 ? 'rk4-top' : '') + (row.code === focusCode ? ' is-focus' : '');
+        return '<tr' + (cls.trim() ? ' class="' + cls.trim() + '"' : '') + '><td class="rk4-col-place">' + placeBadge(row.place) + '</td><th scope="row" class="rk4-col-code"><button type="button" class="rk4-code-btn" data-rk4-code="' + esc(row.code) + '" aria-label="Ver detalle de ' + esc(row.code) + '">' + esc(row.code) + '</button></th>' + (data.hasNames ? '<td class="rk4-col-name">' + (row.name ? esc(row.name) : '<span class="rk4-muted">No publicado</span>') + '</td>' : '') + '<td class="rk4-num rk4-col-score">' + fmt(row.average) + '</td>' + exams.map(function (exam) { return cell(row, exam); }).join('') + '</tr>';
+      }).join('') : '<tr><td colspan="' + (exams.length + (data.hasNames ? 4 : 3)) + '" class="rk4-empty">' + empty + '</td></tr>';
+
+      cards.innerHTML = visible.length ? visible.map(function (row) {
+        return '<li><button type="button" class="rk4-card" data-rk4-code="' + esc(row.code) + '">' + placeBadge(row.place) + '<span class="rk4-card-id"><strong>' + esc(row.name || (data.hasNames ? 'Nombre no publicado' : row.code)) + '</strong><small>' + esc(row.name || data.hasNames ? row.code : track.label) + '</small></span><span class="rk4-card-score"><strong>' + fmt(row.average) + '</strong><small>' + scoreLabel + '</small></span></button></li>';
+      }).join('') : '<li class="rk4-empty">' + empty + '</li>';
+
+      pager(nav, page, pages, function (target) { page = target; focusCode = null; render(); scrollIntoViewIfNeeded($('rk4-table-title')); });
+
+      var only = list.length === 1 ? list[0] : null;
+      var focused = focusCode ? data.rows.find(function (row) { return row.code === focusCode; }) : null;
+      renderSpotlight(focused || only, data);
+      renderKpis(data);
+
+      $('rk4-table-title').textContent = track.label + ' · 2027-1';
+      $('rk4-table-sub').textContent = (q ? int(list.length) + (list.length === 1 ? ' resultado' : ' resultados') + ' para «' + state.query.trim() + '» · ' : '') + (list.length ? 'Mostrando ' + int(start + 1) + '–' + int(start + visible.length) + ' de ' + int(list.length) + ' · ' : '') + (track.source === 'basic' ? 'Promedio sobre 20' : 'Ponderado provisional sobre 150');
+      hint.textContent = 'Buscando en ' + track.label + ' (ej. ' + (data.rows[0] ? data.rows[0].code : '') + (data.hasNames ? ' o un apellido). ' : '). La UNI no publicó nombres para este ciclo. ') + (track.source === 'basic' ? 'Notas en escala vigesimal.' : 'El puesto se calcula dentro de cada sede.');
+      clear.hidden = !state.query;
+      allExamsWrap.hidden = track.source !== 'pre';
+      var legend = $('rk4-legend').querySelectorAll('li');
+      legend[0].hidden = track.source !== 'pre';
+      legend[2].hidden = !data.hasAbsent;
+      search.placeholder = data.hasNames ? 'Código o apellidos' : 'Código';
+      all('[data-rk4-method]', root).forEach(function (el) { el.hidden = el.getAttribute('data-rk4-method') !== track.source; });
+      if (opts && opts.reveal) scrollIntoViewIfNeeded(spotlight.hidden ? $('rk4-table-title') : spotlight);
+    }
+
+    function setTrack(key) {
+      state.track = TRACKS[key] ? key : 'pre';
+      press(null, 'data-rk4-track', state.track);
+      page = 1; focusCode = null;
+      render(); syncUrl();
+    }
+    function openCode(code) {
+      focusCode = code; state.query = code; search.value = code;
+      render({ reveal: true }); syncUrl();
+    }
+
+    all('[data-rk4-track]', root).forEach(function (button) {
+      button.addEventListener('click', function () { setTrack(button.getAttribute('data-rk4-track')); });
+    });
+    search.addEventListener('input', function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () { state.query = search.value; page = 1; focusCode = null; render(); syncUrl(); }, 120);
+    });
+    search.addEventListener('keydown', function (event) { if (event.key === 'Escape' && search.value) { event.preventDefault(); clear.click(); } });
+    clear.addEventListener('click', function () { search.value = ''; state.query = ''; page = 1; focusCode = null; render(); syncUrl(); search.focus(); });
+    order.addEventListener('change', function () { page = 1; render(); });
+    allExams.addEventListener('change', function () { render(); });
+    root.addEventListener('click', function (event) {
+      var target = event.target.closest('[data-rk4-code]');
+      if (target && panels['2027-1'].contains(target)) openCode(target.getAttribute('data-rk4-code'));
+      if (event.target.closest('[data-rk4-close]')) clear.click();
+    });
+
+    function renderProgress() {
+      var data = rowsFor('pre'), juliaca = rowsFor('juliaca');
+      var publishedKeys = {};
+      data.published.concat(juliaca.published).forEach(function (exam) { publishedKeys[exam.key] = true; });
+      var done = PRE_EXAMS.filter(function (exam) { return publishedKeys[exam.key]; });
+      var nextExam = PRE_EXAMS.find(function (exam) { return !publishedKeys[exam.key]; });
+      $('rk4-progress-count').innerHTML = '<strong>' + done.length + ' de ' + PRE_EXAMS.length + '</strong> evaluaciones incorporadas';
+      $('rk4-steps').innerHTML = PRE_EXAMS.map(function (exam) {
+        var on = !!publishedKeys[exam.key];
+        return '<li data-done="' + on + '"' + (exam === nextExam ? ' data-next="true"' : '') + ' title="' + esc(exam.label + ' · peso ' + exam.weight) + '"><span class="rk4-step-dot" aria-hidden="true"></span><span class="rk4-step-name" aria-hidden="true">' + esc(exam.step) + '</span><span class="sr-only">' + esc(exam.label) + '</span><span class="rk4-step-weight">×' + exam.weight + '</span><span class="sr-only">' + (on ? ', publicada' : exam === nextExam ? ', siguiente' : ', pendiente') + '</span></li>';
+      }).join('');
+      var missing = PRE_EXAMS.filter(function (exam) { return !publishedKeys[exam.key] && exam.weight > 1; });
+      var note = root.querySelector('.rk4-progress-note');
+      if (note) note.textContent = missing.length ? 'Aún no se incorporan ' + missing.map(function (e) { return 'el ' + e.label.toLowerCase() + ' (peso ' + e.weight + ')'; }).join(' ni ') + ': el ponderado actual es provisional y puede cambiar bastante.' : 'Todas las evaluaciones del ciclo están incorporadas.';
+    }
+
+    function renderSources() {
+      var list = $('rk4-sources');
+      if (!list || !current) return;
+      var s = current.sources || {}, items = [];
+      if (s.pre) items.push('1.ª PC Pre Lima: <code>' + esc(s.pre) + '</code>.');
+      if (s.firstPracticeJuliaca) {
+        var j = s.firstPracticeJuliaca;
+        items.push('1.ª PC Pre Juliaca: publicada el ' + date(j.publishedAt) + ' e incorporada el ' + date(j.importedAt) + ' (' + int(j.count) + ' notas, revisadas fila por fila). ' + (j.codesWithoutPc1 && j.codesWithoutPc1.length ? int(j.codesWithoutPc1.length) + ' códigos de Juliaca no figuran en esa lista.' : ''));
+      }
+      if (s.basic) items.push('1.ª evaluación Ciclo Básico: <code>' + esc(s.basic) + '</code>.');
+      (s.secondEvaluation || []).forEach(function (item) {
+        items.push((item.track === 'basic' ? '2.ª evaluación Ciclo Básico' : '2.ª PC Pre ' + esc(item.sede)) + ': <code>' + esc(item.file) + '</code> (' + int(item.count) + ' notas).');
+      });
+      (s.firstPartial || []).forEach(function (item) {
+        items.push('1.er parcial Pre ' + esc(item.sede) + ': ' + int(item.scored) + ' notas y ' + int(item.absent) + ' ausentes, de la <a href="https://puntajes.admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer">publicación oficial de la UNI</a>.' + (item.unmatchedExistingCodes && item.unmatchedExistingCodes.length ? ' ' + int(item.unmatchedExistingCodes.length) + ' códigos con PC anteriores no aparecen en esa publicación: conservan sus PC y figuran como «No publicado».' : ''));
+      });
+      (s.thirdEvaluation || []).forEach(function (item) {
+        items.push((item.track === 'basic' ? '4.ª evaluación Ciclo Básico' : '3.ª PC Pre ' + esc(item.sede)) + ': <code>' + esc(item.file) + '</code> (' + int(item.count) + ' notas' + (item.absent ? '; ' + int(item.absent) + (item.absent === 1 ? ' ausente, que figura' : ' ausentes, que figuran') + ' sin nota' : '') + ').');
+      });
+      if (s.manualCorrections && s.manualCorrections.count) items.push(int(s.manualCorrections.count) + (s.manualCorrections.count === 1 ? ' corrección manual registrada' : ' correcciones manuales registradas') + ' (' + date(s.manualCorrections.updatedAt) + '). Si encuentras un error, <a href="/correcciones">repórtalo aquí</a>.');
+      list.innerHTML = items.map(function (item) { return '<li>' + item + '</li>'; }).join('');
+    }
+
+    function init() {
+      if (!current) {
+        kpis.innerHTML = '';
+        body.innerHTML = '<tr><td class="rk4-empty">No se pudieron cargar las notas 2027-1. Recarga la página.</td></tr>';
+        return;
+      }
+      $('rk4-updated').textContent = date([current.updatedAt, current.publishedAt].filter(Boolean).sort().pop());
+      ['pre', 'juliaca', 'basic'].forEach(function (key) {
+        var el = root.querySelector('[data-rk4-count="' + key + '"]');
+        if (el) el.textContent = int(rowsFor(key).rows.length);
+      });
+      press(null, 'data-rk4-track', state.track);
+      search.value = state.query;
+      renderProgress();
+      renderSources();
+      render();
+    }
+    return { init: init };
+  })();
+
+  /* ---------- 2026-2 final ---------- */
+  function parseJson(id, fallback) {
+    var node = $(id);
+    try { return node ? JSON.parse(node.textContent || '') : fallback; } catch (e) { return fallback; }
+  }
+  var finalRows = null;
+  function finalData() {
+    if (finalRows) return finalRows;
+    var data = parseJson('cepre2026-ranking-data', []);
+    var examScores = official.examScores || {}, finals = (official.examScores && official.examScores.ef) || official.finalScores || {};
+    var columns = { pc1: 2, pc2: 3, pc3: 4, pc4: 5, pc5: 6, pc6: 7, pc7: 8, ep1: 9, ep2: 10 };
+    var entrants = {};
+    (official.entrants || []).forEach(function (e) { entrants[e.codigo] = e; });
+    finalRows = data.map(function (r) {
+      var row = r.slice();
+      Object.keys(columns).forEach(function (key) {
+        var scores = examScores[key] || {};
+        if (Object.prototype.hasOwnProperty.call(scores, row[1])) row[columns[key]] = Number(scores[row[1]]);
+      });
+      var ef = Object.prototype.hasOwnProperty.call(finals, row[1]) ? Number(finals[row[1]]) : 0;
+      var pcs = row.slice(2, 8).map(Number);
+      var lowest = 0;
+      for (var i = 1; i < 6; i++) if (pcs[i] < pcs[lowest]) lowest = i;
+      var best5 = pcs.reduce(function (s, v) { return s + v; }, 0) - pcs[lowest];
+      var total = (best5 + Number(row[8] || 0) + 2 * Number(row[9] || 0) + 4 * Number(row[10] || 0) + 6 * ef) / 18;
+      return { code: row[1], scores: row.slice(2, 11).map(Number), ef: ef, dropped: lowest, total: total, sede: row[12] || 'Lima', entrant: entrants[row[1]] || null };
+    }).sort(function (a, c) { return c.total - a.total || String(a.code).localeCompare(String(c.code)); });
+    var bySite = {};
+    finalRows.forEach(function (row, i) {
+      row.place = i + 1;
+      bySite[row.sede] = (bySite[row.sede] || 0) + 1;
+      row.sitePlace = bySite[row.sede];
+    });
+    return finalRows;
+  }
+
+  var finalView = (function () {
+    var site = '', page = 1, timer = null;
+    function render() {
+      var rows = finalData();
+      var q = fold($('rk4-final-search').value.trim());
+      var onlyEntrants = $('rk4-final-entrants').checked;
+      var list = rows.filter(function (row) {
+        return (!site || row.sede === site) && (!q || fold(row.code).indexOf(q) !== -1) && (!onlyEntrants || row.entrant);
+      });
+      var pages = Math.max(1, Math.ceil(list.length / PAGE));
+      page = Math.min(page, pages);
+      var start = (page - 1) * PAGE, visible = list.slice(start, start + PAGE);
+      $('rk4-final-body').innerHTML = visible.length ? visible.map(function (row) {
+        var place = site ? row.sitePlace : row.place;
+        var cells = row.scores.map(function (v, i) {
+          var missing = !v, dropped = i === row.dropped;
+          return '<td class="rk4-num' + (missing ? ' rk4-pending' : '') + (dropped ? ' rk4-dropped' : '') + '"' + (missing ? ' title="Sin nota registrada: cuenta como 0"' : dropped ? ' title="Nota descartada"' : '') + '>' + (dropped ? '<s>' + fmt(v) + '</s><span class="sr-only"> (descartada)</span>' : fmt(v)) + '</td>';
+        }).join('');
+        var e = row.entrant;
+        return '<tr' + (place <= 3 ? ' class="rk4-top"' : '') + '><td class="rk4-col-place"><span class="rk4-place' + (place <= 3 ? ' rk4-medal-' + place : '') + '">' + place + '</span></td><th scope="row" class="rk4-col-code"><span class="rk4-mono">' + esc(row.code) + '</span></th><td class="rk4-num rk4-col-score">' + fmt(row.total) + '</td><td>' + (e ? '<span class="rk4-entrant" title="' + esc(e.especialidad + ' · ' + e.facultad) + '"><span class="rk4-tag rk4-tag-in">' + esc(e.codigoEspecialidad) + '</span><span class="rk4-entrant-name">' + esc(e.especialidad) + '</span></span>' : '<span class="rk4-muted">—</span>') + '</td><td>' + esc(row.sede) + '</td>' + cells + '<td class="rk4-num' + (row.ef ? '' : ' rk4-pending') + '"' + (row.ef ? '' : ' title="Sin nota registrada: cuenta como 0"') + '>' + fmt(row.ef) + '</td></tr>';
+      }).join('') : '<tr><td colspan="15" class="rk4-empty">No hay códigos con ese filtro.</td></tr>';
+      pager($('rk4-final-pager'), page, pages, function (target) { page = target; render(); scrollIntoViewIfNeeded($('rk4-final-title')); });
+      $('rk4-final-title').textContent = (onlyEntrants ? 'Ingresantes' : 'Todos los códigos') + (site ? ' · ' + site : ' · Lima y Juliaca');
+      $('rk4-final-sub').textContent = (list.length ? 'Mostrando ' + int(start + 1) + '–' + int(start + visible.length) + ' de ' + int(list.length) : 'Sin resultados') + ' · ' + (site ? 'puesto dentro de la sede' : 'puesto general') + ' · orden por promedio final';
+    }
+    function renderStats() {
+      var rows = finalData().filter(function (row) { return !site || row.sede === site; });
+      var top = rows[0];
+      var withEf = rows.filter(function (row) { return row.ef > 0; });
+      var mean = withEf.length ? withEf.reduce(function (s, r) { return s + r.total; }, 0) / withEf.length : null;
+      var evaluated = official.evaluated || {}, entrantCount = official.entrantCount || {};
+      $('rk4-final-kpis').innerHTML =
+        kpi('Evaluados', int(site ? evaluated[site] : evaluated.total), site ? 'Sede ' + esc(site) : 'Lima ' + int(evaluated.Lima) + ' · Juliaca ' + int(evaluated.Juliaca)) +
+        kpi('Ingresantes CEPREUNI', int(site ? entrantCount[site] : entrantCount.total), site ? 'Sede ' + esc(site) : 'Lima ' + int(entrantCount.Lima) + ' · Juliaca ' + int(entrantCount.Juliaca)) +
+        kpi('Mayor promedio final', top ? fmt(top.total) : '—', top ? 'Código ' + esc(top.code) : '') +
+        kpi('Promedio final medio', fmt(mean), int(withEf.length) + ' códigos con examen final');
+      var labels = ['1.ª PC', '2.ª PC', '3.ª PC', '4.ª PC', '5.ª PC', '6.ª PC', '7.ª PC', '1.er parcial', '2.º parcial', 'Examen final'];
+      $('rk4-exam-stats').innerHTML = labels.map(function (label, i) {
+        var get = function (row) { return i === 9 ? row.ef : row.scores[i]; };
+        var registered = rows.filter(function (row) { return get(row) > 0; });
+        var best = registered.reduce(function (m, row) { return !m || get(row) > get(m) || (get(row) === get(m) && row.code < m.code) ? row : m; }, null);
+        var avg = registered.length ? registered.reduce(function (s, row) { return s + get(row); }, 0) / registered.length : null;
+        return '<tr><th scope="row">' + label + '</th><td class="rk4-num">' + int(registered.length) + '</td><td class="rk4-num">' + fmt(avg) + '</td><td class="rk4-num">' + (best ? fmt(get(best)) : '—') + '</td><td><span class="rk4-mono">' + (best ? esc(best.code) : '—') + '</span></td></tr>';
+      }).join('');
+      $('rk4-exam-stats-sub').textContent = (site ? 'Sede ' + site : 'Lima y Juliaca') + ' · el promedio considera solo los códigos con nota mayor que 0.';
+    }
+    function setSite(value) {
+      site = value; page = 1;
+      press(null, 'data-rk4-final-site', site);
+      renderStats(); render();
+    }
+    function init() {
+      $('rk4-final-published').textContent = date(official.published);
+      if (official.source) $('rk4-final-source').href = official.source;
+      all('[data-rk4-final-site]', root).forEach(function (button) {
+        button.addEventListener('click', function () { setSite(button.getAttribute('data-rk4-final-site')); });
+      });
+      $('rk4-final-search').addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { page = 1; render(); }, 120); });
+      $('rk4-final-entrants').addEventListener('change', function () { page = 1; render(); });
+      renderStats(); render();
+    }
+    return { init: init };
+  })();
+
+  /* ---------- Ranges by career ---------- */
+  var careersView = (function () {
+    var history = {}, cycle = '2026-2', site = 'Lima';
+    var AXIS_MIN = 8, AXIS_MAX = 20;
+    function benchmark() {
+      var rows = finalData().filter(function (row) {
+        var pcs = row.scores.slice(0, 6).filter(function (v) { return v > 0; }).length;
+        return row.sede === site && pcs >= 5 && row.scores[6] > 0 && row.scores[7] > 0 && row.scores[8] > 0 && row.ef > 0;
+      });
+      var average = rows.length ? rows.reduce(function (s, r) { return s + r.total; }, 0) / rows.length / 7.5 : null;
+      return { average: average, count: rows.length };
+    }
+    function projected(siteName) {
+      var ordered = ['2024-2', '2025-2', '2026-1', '2026-2'];
+      var latest = (history['2026-2'] && history['2026-2'][siteName]) || [];
+      return latest.map(function (base) {
+        var series = [];
+        ordered.forEach(function (key) {
+          var rows = (history[key] && history[key][siteName]) || [];
+          var row = rows.find(function (item) { return item[1] === base[1]; });
+          if (row && Number.isFinite(Number(row[3])) && row[3] != null && Number.isFinite(Number(row[4])) && row[4] != null) series.push(row);
+        });
+        if (!series.length) return [base[0], base[1], base[2], null, null, null, null];
+        var first = series[0], last = series[series.length - 1], steps = Math.max(1, series.length - 1);
+        var minTrend = Math.max(-0.7, Math.min(0.7, (Number(last[3]) - Number(first[3])) / steps * 0.55));
+        var maxTrend = Math.max(-0.8, Math.min(0.8, (Number(last[4]) - Number(first[4])) / steps * 0.55));
+        var pMin = Math.max(0, Math.min(20, Number(last[3]) + 0.2 + minTrend));
+        var pMax = Math.max(pMin, Math.min(20, Number(last[4]) + 0.15 + maxTrend));
+        return [base[0], base[1], base[2], Number(pMin.toFixed(3)), Number(pMax.toFixed(3)), null, null];
+      });
+    }
+    function bar(row, marker) {
+      var min = score(row[3]), max = score(row[4]);
+      if (max == null) return '<span class="rk4-muted">Sin ingresantes</span>';
+      var span = AXIS_MAX - AXIS_MIN;
+      var lo = Math.max(AXIS_MIN, min == null ? max : min), hi = Math.max(lo, max);
+      var left = (lo - AXIS_MIN) / span * 100, width = Math.max((hi - lo) / span * 100, 1.2);
+      var m = marker == null ? '' : '<b style="left:' + Math.max(0, Math.min(100, (marker - AXIS_MIN) / span * 100)).toFixed(2) + '%"></b>';
+      return '<div class="rk4-range" role="img" aria-label="Mínimo ' + fmt(min) + ', máximo ' + fmt(max) + '"><i style="left:' + left.toFixed(2) + '%;width:' + width.toFixed(2) + '%"></i>' + m + '</div>';
+    }
+    function render() {
+      var rows = (history[cycle] && history[cycle][site]) || [];
+      var q = fold($('rk4-career-search').value.trim());
+      var sort = $('rk4-careers-order').value;
+      var hasEntrants = rows.some(function (r) { return r[5] != null; });
+      var hasVacancies = rows.some(function (r) { return r[6] != null; });
+      var projection = cycle === '2027-1';
+      var bench = benchmark();
+      var list = rows.filter(function (r) { return !q || fold(r[0] + ' ' + r[1] + ' ' + r[2]).indexOf(q) !== -1; });
+      if (sort !== 'official') {
+        list = list.slice().sort(function (a, c) {
+          if (sort === 'name') return String(a[2]).localeCompare(String(c[2]), 'es');
+          var i = sort === 'min' ? 3 : 4, va = score(a[i]), vc = score(c[i]);
+          if (va == null && vc == null) return 0;
+          if (va == null) return 1;
+          if (vc == null) return -1;
+          return vc - va;
+        });
+      }
+      $('rk4-careers-head').innerHTML = '<tr><th scope="col">Especialidad</th>' + (hasEntrants ? '<th scope="col" class="rk4-num">Ingresantes</th>' : '') + (hasVacancies ? '<th scope="col" class="rk4-num">Vacantes</th>' : '') + '<th scope="col" class="rk4-num">' + (projection ? 'Mínimo proyectado' : 'Mínimo') + '</th><th scope="col" class="rk4-num">' + (projection ? 'Máximo proyectado' : 'Máximo') + '</th><th scope="col" class="rk4-col-range"><span class="rk4-axis" aria-hidden="true"><span>8</span><span>12</span><span>16</span><span>20</span></span><span class="sr-only">Rango en escala de 8 a 20</span></th></tr>';
+      var cols = 4 + (hasEntrants ? 1 : 0) + (hasVacancies ? 1 : 0);
+      $('rk4-careers-body').innerHTML = list.length ? list.map(function (r) {
+        return '<tr><th scope="row"><span class="rk4-career"><span class="rk4-tag">' + esc(r[1]) + '</span><span><strong>' + esc(r[2]) + '</strong><small>' + esc(r[0]) + '</small></span></span></th>' + (hasEntrants ? '<td class="rk4-num" data-label="Ingresantes">' + (r[5] == null ? '<span class="rk4-muted">—</span>' : int(r[5])) + '</td>' : '') + (hasVacancies ? '<td class="rk4-num" data-label="Vacantes">' + (r[6] == null ? '<span class="rk4-muted">—</span>' : int(r[6])) + '</td>' : '') + '<td class="rk4-num" data-label="Mínimo">' + fmt(r[3]) + '</td><td class="rk4-num" data-label="Máximo">' + fmt(r[4]) + '</td><td class="rk4-col-range">' + bar(r, bench.average) + '</td></tr>';
+      }).join('') : '<tr><td colspan="' + cols + '" class="rk4-empty">' + (rows.length ? 'Ninguna especialidad coincide con «' + esc($('rk4-career-search').value.trim()) + '».' : 'No hay datos de ' + esc(site) + ' para el proceso ' + esc(cycle) + '.') + '</td></tr>';
+
+      var withAdmission = rows.filter(function (r) { return score(r[4]) != null; });
+      var entrantsKpi, entrantsNote;
+      if (projection) { entrantsKpi = '—'; entrantsNote = 'Aún no hay ingresantes 2027-1'; }
+      else if (cycle === '2026-2' && official.entrantCount) { entrantsKpi = int(official.entrantCount[site]); entrantsNote = int(official.evaluated && official.evaluated[site]) + ' evaluados en ' + esc(site); }
+      else if (cycle === '2025-2' && supplied2025) { entrantsKpi = int(supplied2025.officialEntrants); entrantsNote = int(supplied2025.ordinaryEntrants) + ' más por examen ordinario'; }
+      else {
+        var sum = rows.reduce(function (s, r) { return s + (Number(r[5]) || 0); }, 0);
+        entrantsKpi = sum ? int(sum) : '—'; entrantsNote = sum ? 'Suma del desglose por especialidad' : 'Sin total incorporado';
+      }
+      var highest = withAdmission.reduce(function (m, r) { return !m || Number(r[3]) > Number(m[3]) ? r : m; }, null);
+      $('rk4-careers-kpis').innerHTML =
+        kpi('Ingresantes CEPREUNI', entrantsKpi, entrantsNote) +
+        kpi(projection ? 'Especialidades con proyección' : 'Especialidades con ingresantes', rows.length ? int(withAdmission.length) + ' de ' + int(rows.length) : '—', esc(cycle) + ' · ' + esc(site)) +
+        kpi(projection ? 'Mínimo proyectado más alto' : 'Mínimo más alto', highest ? fmt(highest[3]) : '—', highest ? esc(highest[2]) : '') +
+        kpi('Promedio final 2026-2', bench.average == null ? '—' : fmt(bench.average), 'Sede ' + esc(site) + ' · ' + int(bench.count) + ' códigos con ciclo completo, sobre 20');
+      $('rk4-careers-title').textContent = (projection ? 'Proyección 2027-1' : 'Proceso ' + cycle) + ' · ' + site;
+      $('rk4-careers-sub').textContent = int(list.length) + ' especialidades · escala vigesimal';
+      $('rk4-marker-legend').textContent = 'Promedio final 2026-2 de ' + site + ' (' + (bench.average == null ? 'sin datos' : fmt(bench.average)) + ' sobre 20), como referencia';
+
+      var callout = $('rk4-careers-callout');
+      callout.hidden = !projection;
+      callout.innerHTML = projection ? '<strong>Proyección referencial, no oficial.</strong> Universe la estima a partir de los rangos 2024-2 a 2026-2 de cada especialidad: sigue la tendencia con cambios acotados y suma un margen moderado. No es un corte oficial ni garantiza una vacante.' : '';
+
+      var note = $('rk4-careers-note');
+      if (projection) note.innerHTML = 'Las especialidades sin rangos previos en la sede aparecen sin proyección.';
+      else if (cycle === '2026-2' && official.source) note.innerHTML = 'Fuente: asignación oficial de vacantes CEPREUNI 2026-2. La publicación no incluye la carrera que eligieron quienes no ingresaron, por eso no se muestra el número de postulantes por carrera. <a href="' + esc(official.source) + '" target="_blank" rel="noopener noreferrer">Ver publicación oficial ↗</a>';
+      else if (cycle === '2025-2' && supplied2025) note.innerHTML = 'Fuente: tabla CEPREUNI de Admisión UNI 2025-2. Hubo ' + int(supplied2025.officialEntrants) + ' ingresantes CEPREUNI y ' + int(supplied2025.ordinaryEntrants) + ' por examen ordinario. La tabla reparte ' + int(supplied2025.listedVacancies) + ' vacantes; el total de ingresantes no se distribuyó por carrera. <a href="' + esc(supplied2025.officialSource) + '" target="_blank" rel="noopener noreferrer">Ver estadística oficial ↗</a>';
+      else if (rows.length) note.textContent = 'Rangos de ingreso CEPREUNI del proceso ' + cycle + ' en ' + site + '.';
+      else note.textContent = '';
+
+      all('[data-rk4-site]', root).forEach(function (button) {
+        var available = !!(history[cycle] && history[cycle][button.getAttribute('data-rk4-site')] && history[cycle][button.getAttribute('data-rk4-site')].length);
+        button.disabled = !available;
+        button.title = available ? '' : 'Sin datos de esta sede para ' + cycle;
+      });
+    }
+    function init() {
+      history = parseJson('ranking-v3-history-data', {}) || {};
+      if (official.ranges) history['2026-2'] = { Lima: official.ranges.Lima || [], Juliaca: official.ranges.Juliaca || [] };
+      if (supplied2025 && Array.isArray(supplied2025.rows)) {
+        history[supplied2025.cycle] = history[supplied2025.cycle] || {};
+        history[supplied2025.cycle][supplied2025.site] = supplied2025.rows;
+      }
+      history['2027-1'] = { Lima: projected('Lima'), Juliaca: projected('Juliaca') };
+      all('[data-rk4-cycle]', root).forEach(function (button) {
+        button.addEventListener('click', function () {
+          cycle = button.getAttribute('data-rk4-cycle');
+          press(null, 'data-rk4-cycle', cycle);
+          if (!(history[cycle] && history[cycle][site] && history[cycle][site].length)) { site = 'Lima'; press(null, 'data-rk4-site', site); }
+          render();
+        });
+      });
+      all('[data-rk4-site]', root).forEach(function (button) {
+        button.addEventListener('click', function () { site = button.getAttribute('data-rk4-site'); press(null, 'data-rk4-site', site); render(); });
+      });
+      $('rk4-career-search').addEventListener('input', render);
+      $('rk4-careers-order').addEventListener('change', render);
+      render();
+    }
+    return { init: init };
+  })();
+
+  currentView.init();
+  selectView(state.view);
+})();
