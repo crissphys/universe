@@ -17,6 +17,11 @@
     });
   }
   function fold(value) { return String(value || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase(); }
+  // Every typed word must appear, in any order: "elmer jara" finds JARA RODRIGUEZ ELMER.
+  function matcher(query) {
+    var words = fold(query).split(/\s+/).filter(Boolean);
+    return function (text) { return words.every(function (word) { return text.indexOf(word) !== -1; }); };
+  }
   function score(value) {
     if (value == null || typeof value === 'boolean' || String(value).trim() === '') return null;
     var n = Number(value);
@@ -53,10 +58,10 @@
     for (var i = windowStart; i <= windowEnd; i++) items.push(i);
     if (windowEnd < pages - 1) items.push('…');
     if (windowEnd < pages) items.push(pages);
-    nav.innerHTML = '<button type="button" data-page="' + (page - 1) + '"' + (page === 1 ? ' disabled' : '') + '><span aria-hidden="true">←</span> Anterior</button><ol>' + items.map(function (item) {
+    nav.innerHTML = '<button type="button" data-page="' + (page - 1) + '"' + (page === 1 ? ' disabled' : '') + '><span aria-hidden="true">←</span><span class="rk4-pager-label"> Anterior</span></button><ol>' + items.map(function (item) {
       if (item === '…') return '<li aria-hidden="true">…</li>';
       return '<li><button type="button" data-page="' + item + '"' + (item === page ? ' aria-current="page"' : '') + ' aria-label="Página ' + item + '">' + item + '</button></li>';
-    }).join('') + '</ol><button type="button" data-page="' + (page + 1) + '"' + (page === pages ? ' disabled' : '') + '>Siguiente <span aria-hidden="true">→</span></button>';
+    }).join('') + '</ol><span class="rk4-pager-count">' + page + ' / ' + pages + '</span><button type="button" data-page="' + (page + 1) + '"' + (page === pages ? ' disabled' : '') + '><span class="rk4-pager-label">Siguiente </span><span aria-hidden="true">→</span></button>';
     nav.onclick = function (event) {
       var button = event.target.closest('button[data-page]');
       if (!button || button.disabled) return;
@@ -67,6 +72,13 @@
     if (!el) return;
     var top = el.getBoundingClientRect().top;
     if (top < 0 || top > window.innerHeight * 0.6) el.scrollIntoView({ block: 'start', behavior: motionOk() ? 'smooth' : 'auto' });
+  }
+  // When the sticky search is pinned, a shorter result list would leave the reader in the footer.
+  function keepResults(input) {
+    var bar = input.closest('.rk4-controls'), panel = input.closest('.rk4-panel');
+    if (!bar || !panel || bar.getBoundingClientRect().top > 1) return;
+    var top = panel.getBoundingClientRect().top + window.pageYOffset;
+    if (window.pageYOffset > top) window.scrollTo(0, top);
   }
   function motionOk() {
     return !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) && !document.documentElement.classList.contains('motion-off');
@@ -213,7 +225,7 @@
   }
 
   var currentView = (function () {
-    var search = $('rk4-search'), clear = $('rk4-clear'), hint = $('rk4-search-hint');
+    var search = $('rk4-search'), clear = $('rk4-clear');
     var head = $('rk4-head'), body = $('rk4-body'), cards = $('rk4-cards'), nav = $('rk4-pager');
     var kpis = $('rk4-kpis'), spotlight = $('rk4-spotlight'), order = $('rk4-order');
     var allExams = $('rk4-all-exams'), allExamsWrap = $('rk4-all-exams-wrap');
@@ -250,13 +262,13 @@
       if (row.place != null) {
         var topShare = row.place / total * 100;
         standing = '<div class="rk4-spot-stats">' +
-          kpi('Puesto en ' + track.label, '<span class="rk4-big">' + int(row.place) + '</span>', 'de ' + int(total) + ' con nota') +
+          kpi('Puesto', '<span class="rk4-big">' + int(row.place) + '</span>', 'de ' + int(total)) +
           kpi(track.source === 'basic' ? 'Promedio' : 'Ponderado', fmt(row.average), 'sobre ' + track.max) +
-          kpi('Ubicación', 'Top ' + pct(Math.max(topShare, 0.1)), row.place === 1 ? 'Primer puesto de ' + track.label : fmt(top.average - row.average) + ' puntos debajo del primero') +
-          kpi('Frente a la media', (row.average >= mean ? '+' : '−') + fmt(Math.abs(row.average - mean)), 'Media de ' + track.label + ': ' + fmt(mean)) +
+          kpi('Ubicación', 'Top ' + pct(Math.max(topShare, 0.1)), row.place === 1 ? 'Primer puesto' : '−' + fmt(top.average - row.average) + ' del 1.º') +
+          kpi('Frente a la media', (row.average >= mean ? '+' : '−') + fmt(Math.abs(row.average - mean)), 'media ' + fmt(mean)) +
           '</div>';
       } else {
-        standing = '<p class="rk4-spot-empty">Este código no tiene notas registradas todavía, por eso no tiene puesto.</p>';
+        standing = '<p class="rk4-spot-empty">Sin notas registradas.</p>';
       }
       var exams = data.published.map(function (exam) {
         var s = cellState(row, exam), rank = data.examRank[exam.key];
@@ -265,7 +277,7 @@
         var detail = rank.ranks[row.code] ? 'Puesto ' + int(rank.ranks[row.code]) + ' de ' + int(rank.count) : status;
         return '<li data-state="' + s + '"><span class="rk4-spot-exam">' + esc(exam.label) + '<small>peso ' + exam.weight + '</small></span><strong>' + (s === 'dropped' ? '<s>' + value + '</s>' : value) + '</strong><small>' + esc(s === 'dropped' ? 'Descartada · ' + detail : detail) + '</small></li>';
       }).join('');
-      spotlight.innerHTML = '<header><div><p class="rk4-kicker">' + esc(track.label) + ' · 2027-1</p><h2>' + esc(row.name || (data.hasNames ? 'Nombre no publicado' : 'Código ' + row.code)) + '</h2>' + (row.name || data.hasNames ? '<p class="rk4-code">' + esc(row.code) + (row.name ? '' : ' · este código no figura en la última publicación con nombres') + '</p>' : '<p class="rk4-spot-sub">La UNI no publicó nombres para este ciclo.</p>') + '</div><button type="button" class="rk4-ghost" data-rk4-close>Cerrar</button></header>' + standing + '<ol class="rk4-spot-exams">' + exams + '</ol>';
+      spotlight.innerHTML = '<header><div><p class="rk4-kicker">' + esc(track.label) + '</p><h2>' + esc(row.name || (data.hasNames ? 'Nombre no publicado' : 'Código ' + row.code)) + '</h2>' + (row.name || data.hasNames ? '<p class="rk4-code">' + esc(row.code) + '</p>' : '') + '</div><button type="button" class="rk4-ghost" data-rk4-close>Cerrar</button></header>' + standing + '<ol class="rk4-spot-exams">' + exams + '</ol>';
       spotlight.hidden = false;
     }
 
@@ -275,16 +287,16 @@
       var values = scored.map(function (r) { return r.average; });
       var mean = values.length ? values.reduce(function (s, v) { return s + v; }, 0) / values.length : null;
       kpis.innerHTML =
-        kpi('Estudiantes en la lista', int(data.rows.length), track.label) +
-        kpi('Con al menos una nota', int(scored.length), int(data.rows.length - scored.length) + ' sin notas registradas') +
-        kpi(track.source === 'basic' ? 'Mayor promedio' : 'Mayor ponderado', top ? fmt(top.average) : '—', top ? esc(top.code) + (top.name ? ' · ' + esc(top.name) : '') : 'Sin resultados') +
-        kpi(track.source === 'basic' ? 'Promedio medio' : 'Ponderado medio', fmt(mean), 'Mediana ' + fmt(median(values)) + ' · sobre ' + track.max);
+        kpi('Estudiantes', int(data.rows.length), int(scored.length) + ' con nota') +
+        kpi('Primer puesto', top ? fmt(top.average) : '—', top ? esc(top.name || top.code) : '') +
+        kpi('Media', fmt(mean), 'Mediana ' + fmt(median(values)));
     }
 
     function render(opts) {
       var data = rowsFor(state.track), track = data.track;
       var q = fold(state.query.trim());
-      var list = q ? data.rows.filter(function (row) { return row.search.indexOf(q) !== -1; }) : data.rows;
+      var hits = matcher(q);
+      var list = q ? data.rows.filter(function (row) { return hits(row.search); }) : data.rows;
       var sort = order.value;
       if (sort !== 'place') {
         list = list.slice().sort(function (a, c) {
@@ -305,7 +317,7 @@
       head.innerHTML = '<tr><th scope="col" class="rk4-col-place">Puesto</th><th scope="col" class="rk4-col-code">Código</th>' + (data.hasNames ? '<th scope="col" class="rk4-col-name">Estudiante</th>' : '') + '<th scope="col" class="rk4-num rk4-col-score">' + scoreLabel + '</th>' + exams.map(function (exam) {
         return '<th scope="col" class="rk4-num">' + esc(exam.short) + '<small>peso ' + exam.weight + '</small></th>';
       }).join('') + '</tr>';
-      var empty = q ? 'No encontramos «' + esc(state.query.trim()) + '» en ' + track.label + '. Revisa el código o prueba con otra sede.' : 'Aún no hay estudiantes registrados.';
+      var empty = q ? 'Sin resultados para «' + esc(state.query.trim()) + '» en ' + track.label + '.' : 'Sin estudiantes registrados.';
       body.innerHTML = visible.length ? visible.map(function (row) {
         var cls = (row.place && row.place <= 3 ? 'rk4-top' : '') + (row.code === focusCode ? ' is-focus' : '');
         return '<tr' + (cls.trim() ? ' class="' + cls.trim() + '"' : '') + '><td class="rk4-col-place">' + placeBadge(row.place) + '</td><th scope="row" class="rk4-col-code"><button type="button" class="rk4-code-btn" data-rk4-code="' + esc(row.code) + '" aria-label="Ver detalle de ' + esc(row.code) + '">' + esc(row.code) + '</button></th>' + (data.hasNames ? '<td class="rk4-col-name">' + (row.name ? esc(row.name) : '<span class="rk4-muted">No publicado</span>') + '</td>' : '') + '<td class="rk4-num rk4-col-score">' + fmt(row.average) + '</td>' + exams.map(function (exam) { return cell(row, exam); }).join('') + '</tr>';
@@ -322,16 +334,14 @@
       renderSpotlight(focused || only, data);
       renderKpis(data);
 
-      $('rk4-table-title').textContent = track.label + ' · 2027-1';
-      $('rk4-table-sub').textContent = (q ? int(list.length) + (list.length === 1 ? ' resultado' : ' resultados') + ' para «' + state.query.trim() + '» · ' : '') + (list.length ? 'Mostrando ' + int(start + 1) + '–' + int(start + visible.length) + ' de ' + int(list.length) + ' · ' : '') + (track.source === 'basic' ? 'Promedio sobre 20' : 'Ponderado provisional sobre 150');
-      hint.textContent = 'Buscando en ' + track.label + ' (ej. ' + (data.rows[0] ? data.rows[0].code : '') + (data.hasNames ? ' o un apellido). ' : '). La UNI no publicó nombres para este ciclo. ') + (track.source === 'basic' ? 'Notas en escala vigesimal.' : 'El puesto se calcula dentro de cada sede.');
+      $('rk4-table-title').textContent = track.label;
+      $('rk4-table-sub').textContent = (list.length ? int(start + 1) + '–' + int(start + visible.length) + ' de ' + int(list.length) : '0 resultados') + ' · sobre ' + track.max;
       clear.hidden = !state.query;
       allExamsWrap.hidden = track.source !== 'pre';
       var legend = $('rk4-legend').querySelectorAll('li');
       legend[0].hidden = track.source !== 'pre';
       legend[2].hidden = !data.hasAbsent;
-      search.placeholder = data.hasNames ? 'Código o apellidos' : 'Código';
-      all('[data-rk4-method]', root).forEach(function (el) { el.hidden = el.getAttribute('data-rk4-method') !== track.source; });
+      search.placeholder = data.hasNames ? 'Busca tu código o nombre' : 'Busca tu código';
       if (opts && opts.reveal) scrollIntoViewIfNeeded(spotlight.hidden ? $('rk4-table-title') : spotlight);
     }
 
@@ -351,7 +361,7 @@
     });
     search.addEventListener('input', function () {
       clearTimeout(timer);
-      timer = setTimeout(function () { state.query = search.value; page = 1; focusCode = null; render(); syncUrl(); }, 120);
+      timer = setTimeout(function () { state.query = search.value; page = 1; focusCode = null; render(); syncUrl(); keepResults(search); }, 120);
     });
     search.addEventListener('keydown', function (event) { if (event.key === 'Escape' && search.value) { event.preventDefault(); clear.click(); } });
     clear.addEventListener('click', function () { search.value = ''; state.query = ''; page = 1; focusCode = null; render(); syncUrl(); search.focus(); });
@@ -369,14 +379,11 @@
       data.published.concat(juliaca.published).forEach(function (exam) { publishedKeys[exam.key] = true; });
       var done = PRE_EXAMS.filter(function (exam) { return publishedKeys[exam.key]; });
       var nextExam = PRE_EXAMS.find(function (exam) { return !publishedKeys[exam.key]; });
-      $('rk4-progress-count').innerHTML = '<strong>' + done.length + ' de ' + PRE_EXAMS.length + '</strong> evaluaciones incorporadas';
+      $('rk4-progress-count').innerHTML = '<strong>' + done.length + '/' + PRE_EXAMS.length + '</strong> evaluaciones';
       $('rk4-steps').innerHTML = PRE_EXAMS.map(function (exam) {
         var on = !!publishedKeys[exam.key];
         return '<li data-done="' + on + '"' + (exam === nextExam ? ' data-next="true"' : '') + ' title="' + esc(exam.label + ' · peso ' + exam.weight) + '"><span class="rk4-step-dot" aria-hidden="true"></span><span class="rk4-step-name" aria-hidden="true">' + esc(exam.step) + '</span><span class="sr-only">' + esc(exam.label) + '</span><span class="rk4-step-weight">×' + exam.weight + '</span><span class="sr-only">' + (on ? ', publicada' : exam === nextExam ? ', siguiente' : ', pendiente') + '</span></li>';
       }).join('');
-      var missing = PRE_EXAMS.filter(function (exam) { return !publishedKeys[exam.key] && exam.weight > 1; });
-      var note = root.querySelector('.rk4-progress-note');
-      if (note) note.textContent = missing.length ? 'Aún no se incorporan ' + missing.map(function (e) { return 'el ' + e.label.toLowerCase() + ' (peso ' + e.weight + ')'; }).join(' ni ') + ': el ponderado actual es provisional y puede cambiar bastante.' : 'Todas las evaluaciones del ciclo están incorporadas.';
     }
 
     function renderSources() {
@@ -386,19 +393,19 @@
       if (s.pre) items.push('1.ª PC Pre Lima: <code>' + esc(s.pre) + '</code>.');
       if (s.firstPracticeJuliaca) {
         var j = s.firstPracticeJuliaca;
-        items.push('1.ª PC Pre Juliaca: publicada el ' + date(j.publishedAt) + ' e incorporada el ' + date(j.importedAt) + ' (' + int(j.count) + ' notas, revisadas fila por fila). ' + (j.codesWithoutPc1 && j.codesWithoutPc1.length ? int(j.codesWithoutPc1.length) + ' códigos de Juliaca no figuran en esa lista.' : ''));
+        items.push('1.ª PC Pre Juliaca (' + date(j.publishedAt) + '): ' + int(j.count) + ' notas.');
       }
       if (s.basic) items.push('1.ª evaluación Ciclo Básico: <code>' + esc(s.basic) + '</code>.');
       (s.secondEvaluation || []).forEach(function (item) {
         items.push((item.track === 'basic' ? '2.ª evaluación Ciclo Básico' : '2.ª PC Pre ' + esc(item.sede)) + ': <code>' + esc(item.file) + '</code> (' + int(item.count) + ' notas).');
       });
       (s.firstPartial || []).forEach(function (item) {
-        items.push('1.er parcial Pre ' + esc(item.sede) + ': ' + int(item.scored) + ' notas y ' + int(item.absent) + ' ausentes, de la <a href="https://puntajes.admision.uni.edu.pe/" target="_blank" rel="noopener noreferrer">publicación oficial de la UNI</a>.' + (item.unmatchedExistingCodes && item.unmatchedExistingCodes.length ? ' ' + int(item.unmatchedExistingCodes.length) + ' códigos con PC anteriores no aparecen en esa publicación: conservan sus PC y figuran como «No publicado».' : ''));
+        items.push('1.er parcial Pre ' + esc(item.sede) + ': ' + int(item.scored) + ' notas, ' + int(item.absent) + ' ausentes.');
       });
       (s.thirdEvaluation || []).forEach(function (item) {
-        items.push((item.track === 'basic' ? '4.ª evaluación Ciclo Básico' : '3.ª PC Pre ' + esc(item.sede)) + ': <code>' + esc(item.file) + '</code> (' + int(item.count) + ' notas' + (item.absent ? '; ' + int(item.absent) + (item.absent === 1 ? ' ausente, que figura' : ' ausentes, que figuran') + ' sin nota' : '') + ').');
+        items.push((item.track === 'basic' ? '4.ª evaluación Ciclo Básico' : '3.ª PC Pre ' + esc(item.sede)) + ': <code>' + esc(item.file) + '</code> (' + int(item.count) + ' notas' + (item.absent ? ', ' + int(item.absent) + (item.absent === 1 ? ' ausente' : ' ausentes') : '') + ').');
       });
-      if (s.manualCorrections && s.manualCorrections.count) items.push(int(s.manualCorrections.count) + (s.manualCorrections.count === 1 ? ' corrección manual registrada' : ' correcciones manuales registradas') + ' (' + date(s.manualCorrections.updatedAt) + '). Si encuentras un error, <a href="/correcciones">repórtalo aquí</a>.');
+      if (s.manualCorrections && s.manualCorrections.count) items.push(int(s.manualCorrections.count) + (s.manualCorrections.count === 1 ? ' corrección manual registrada' : ' correcciones manuales registradas') + '. <a href="/correcciones">Reportar un error</a>');
       list.innerHTML = items.map(function (item) { return '<li>' + item + '</li>'; }).join('');
     }
 
@@ -447,7 +454,8 @@
       for (var i = 1; i < 6; i++) if (pcs[i] < pcs[lowest]) lowest = i;
       var best5 = pcs.reduce(function (s, v) { return s + v; }, 0) - pcs[lowest];
       var total = (best5 + Number(row[8] || 0) + 2 * Number(row[9] || 0) + 4 * Number(row[10] || 0) + 6 * ef) / 18;
-      return { code: row[1], scores: row.slice(2, 11).map(Number), ef: ef, dropped: lowest, total: total, sede: row[12] || 'Lima', entrant: entrants[row[1]] || null };
+      var entrant = entrants[row[1]] || null;
+      return { code: row[1], scores: row.slice(2, 11).map(Number), ef: ef, dropped: lowest, total: total, sede: row[12] || 'Lima', entrant: entrant, search: fold(row[1] + ' ' + (entrant ? entrant.nombres : '')) };
     }).sort(function (a, c) { return c.total - a.total || String(a.code).localeCompare(String(c.code)); });
     var bySite = {};
     finalRows.forEach(function (row, i) {
@@ -462,10 +470,10 @@
     var site = '', page = 1, timer = null;
     function render() {
       var rows = finalData();
-      var q = fold($('rk4-final-search').value.trim());
+      var q = $('rk4-final-search').value.trim(), hits = matcher(q);
       var onlyEntrants = $('rk4-final-entrants').checked;
       var list = rows.filter(function (row) {
-        return (!site || row.sede === site) && (!q || fold(row.code).indexOf(q) !== -1) && (!onlyEntrants || row.entrant);
+        return (!site || row.sede === site) && (!q || hits(row.search)) && (!onlyEntrants || row.entrant);
       });
       var pages = Math.max(1, Math.ceil(list.length / PAGE));
       page = Math.min(page, pages);
@@ -478,10 +486,14 @@
         }).join('');
         var e = row.entrant;
         return '<tr' + (place <= 3 ? ' class="rk4-top"' : '') + '><td class="rk4-col-place"><span class="rk4-place' + (place <= 3 ? ' rk4-medal-' + place : '') + '">' + place + '</span></td><th scope="row" class="rk4-col-code"><span class="rk4-mono">' + esc(row.code) + '</span></th><td class="rk4-num rk4-col-score">' + fmt(row.total) + '</td><td>' + (e ? '<span class="rk4-entrant" title="' + esc(e.especialidad + ' · ' + e.facultad) + '"><span class="rk4-tag rk4-tag-in">' + esc(e.codigoEspecialidad) + '</span><span class="rk4-entrant-name">' + esc(e.especialidad) + '</span></span>' : '<span class="rk4-muted">—</span>') + '</td><td>' + esc(row.sede) + '</td>' + cells + '<td class="rk4-num' + (row.ef ? '' : ' rk4-pending') + '"' + (row.ef ? '' : ' title="Sin nota registrada: cuenta como 0"') + '>' + fmt(row.ef) + '</td></tr>';
-      }).join('') : '<tr><td colspan="15" class="rk4-empty">No hay códigos con ese filtro.</td></tr>';
+      }).join('') : '<tr><td colspan="15" class="rk4-empty">Sin resultados.</td></tr>';
+      $('rk4-final-cards').innerHTML = visible.length ? visible.map(function (row) {
+        var place = site ? row.sitePlace : row.place, e = row.entrant;
+        return '<li><div class="rk4-card"><span class="rk4-place' + (place <= 3 ? ' rk4-medal-' + place : '') + '">' + place + '</span><span class="rk4-card-id"><strong>' + esc(e ? e.nombres : row.code) + '</strong><small>' + (e ? esc(row.code) + ' · ' : '') + esc(row.sede) + '</small>' + (e ? '<span class="rk4-entrant"><span class="rk4-tag rk4-tag-in">' + esc(e.codigoEspecialidad) + '</span><span class="rk4-entrant-name">' + esc(e.especialidad) + '</span></span>' : '') + '</span><span class="rk4-card-score"><strong>' + fmt(row.total) + '</strong><small>Final</small></span></div></li>';
+      }).join('') : '<li class="rk4-empty">Sin resultados.</li>';
       pager($('rk4-final-pager'), page, pages, function (target) { page = target; render(); scrollIntoViewIfNeeded($('rk4-final-title')); });
-      $('rk4-final-title').textContent = (onlyEntrants ? 'Ingresantes' : 'Todos los códigos') + (site ? ' · ' + site : ' · Lima y Juliaca');
-      $('rk4-final-sub').textContent = (list.length ? 'Mostrando ' + int(start + 1) + '–' + int(start + visible.length) + ' de ' + int(list.length) : 'Sin resultados') + ' · ' + (site ? 'puesto dentro de la sede' : 'puesto general') + ' · orden por promedio final';
+      $('rk4-final-title').textContent = (onlyEntrants ? 'Ingresantes · ' : '') + (site || 'Lima y Juliaca');
+      $('rk4-final-sub').textContent = (list.length ? int(start + 1) + '–' + int(start + visible.length) + ' de ' + int(list.length) : '0 resultados') + ' · sobre 150';
     }
     function renderStats() {
       var rows = finalData().filter(function (row) { return !site || row.sede === site; });
@@ -490,10 +502,10 @@
       var mean = withEf.length ? withEf.reduce(function (s, r) { return s + r.total; }, 0) / withEf.length : null;
       var evaluated = official.evaluated || {}, entrantCount = official.entrantCount || {};
       $('rk4-final-kpis').innerHTML =
-        kpi('Evaluados', int(site ? evaluated[site] : evaluated.total), site ? 'Sede ' + esc(site) : 'Lima ' + int(evaluated.Lima) + ' · Juliaca ' + int(evaluated.Juliaca)) +
-        kpi('Ingresantes CEPREUNI', int(site ? entrantCount[site] : entrantCount.total), site ? 'Sede ' + esc(site) : 'Lima ' + int(entrantCount.Lima) + ' · Juliaca ' + int(entrantCount.Juliaca)) +
-        kpi('Mayor promedio final', top ? fmt(top.total) : '—', top ? 'Código ' + esc(top.code) : '') +
-        kpi('Promedio final medio', fmt(mean), int(withEf.length) + ' códigos con examen final');
+        kpi('Evaluados', int(site ? evaluated[site] : evaluated.total), site ? '' : 'Lima ' + int(evaluated.Lima) + ' · Juliaca ' + int(evaluated.Juliaca)) +
+        kpi('Ingresantes', int(site ? entrantCount[site] : entrantCount.total), site ? '' : 'Lima ' + int(entrantCount.Lima) + ' · Juliaca ' + int(entrantCount.Juliaca)) +
+        kpi('Primer puesto', top ? fmt(top.total) : '—', top ? esc(top.entrant ? top.entrant.nombres : top.code) : '') +
+        kpi('Media', fmt(mean), '');
       var labels = ['1.ª PC', '2.ª PC', '3.ª PC', '4.ª PC', '5.ª PC', '6.ª PC', '7.ª PC', '1.er parcial', '2.º parcial', 'Examen final'];
       $('rk4-exam-stats').innerHTML = labels.map(function (label, i) {
         var get = function (row) { return i === 9 ? row.ef : row.scores[i]; };
@@ -502,7 +514,6 @@
         var avg = registered.length ? registered.reduce(function (s, row) { return s + get(row); }, 0) / registered.length : null;
         return '<tr><th scope="row">' + label + '</th><td class="rk4-num">' + int(registered.length) + '</td><td class="rk4-num">' + fmt(avg) + '</td><td class="rk4-num">' + (best ? fmt(get(best)) : '—') + '</td><td><span class="rk4-mono">' + (best ? esc(best.code) : '—') + '</span></td></tr>';
       }).join('');
-      $('rk4-exam-stats-sub').textContent = (site ? 'Sede ' + site : 'Lima y Juliaca') + ' · el promedio considera solo los códigos con nota mayor que 0.';
     }
     function setSite(value) {
       site = value; page = 1;
@@ -515,7 +526,7 @@
       all('[data-rk4-final-site]', root).forEach(function (button) {
         button.addEventListener('click', function () { setSite(button.getAttribute('data-rk4-final-site')); });
       });
-      $('rk4-final-search').addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { page = 1; render(); }, 120); });
+      $('rk4-final-search').addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { page = 1; render(); keepResults($('rk4-final-search')); }, 120); });
       $('rk4-final-entrants').addEventListener('change', function () { page = 1; render(); });
       renderStats(); render();
     }
@@ -570,7 +581,8 @@
       var hasVacancies = rows.some(function (r) { return r[6] != null; });
       var projection = cycle === '2027-1';
       var bench = benchmark();
-      var list = rows.filter(function (r) { return !q || fold(r[0] + ' ' + r[1] + ' ' + r[2]).indexOf(q) !== -1; });
+      var hits = matcher(q);
+      var list = rows.filter(function (r) { return !q || hits(fold(r[0] + ' ' + r[1] + ' ' + r[2])); });
       if (sort !== 'official') {
         list = list.slice().sort(function (a, c) {
           if (sort === 'name') return String(a[2]).localeCompare(String(c[2]), 'es');
@@ -581,46 +593,44 @@
           return vc - va;
         });
       }
-      $('rk4-careers-head').innerHTML = '<tr><th scope="col">Especialidad</th>' + (hasEntrants ? '<th scope="col" class="rk4-num">Ingresantes</th>' : '') + (hasVacancies ? '<th scope="col" class="rk4-num">Vacantes</th>' : '') + '<th scope="col" class="rk4-num">' + (projection ? 'Mínimo proyectado' : 'Mínimo') + '</th><th scope="col" class="rk4-num">' + (projection ? 'Máximo proyectado' : 'Máximo') + '</th><th scope="col" class="rk4-col-range"><span class="rk4-axis" aria-hidden="true"><span>8</span><span>12</span><span>16</span><span>20</span></span><span class="sr-only">Rango en escala de 8 a 20</span></th></tr>';
+      $('rk4-careers-head').innerHTML = '<tr><th scope="col">Especialidad</th>' + (hasEntrants ? '<th scope="col" class="rk4-num">Ingresantes</th>' : '') + (hasVacancies ? '<th scope="col" class="rk4-num">Vacantes</th>' : '') + '<th scope="col" class="rk4-num">Mínimo</th><th scope="col" class="rk4-num">Máximo</th><th scope="col" class="rk4-col-range"><span class="rk4-axis" aria-hidden="true"><span>8</span><span>12</span><span>16</span><span>20</span></span><span class="sr-only">Rango en escala de 8 a 20</span></th></tr>';
       var cols = 4 + (hasEntrants ? 1 : 0) + (hasVacancies ? 1 : 0);
       $('rk4-careers-body').innerHTML = list.length ? list.map(function (r) {
         return '<tr><th scope="row"><span class="rk4-career"><span class="rk4-tag">' + esc(r[1]) + '</span><span><strong>' + esc(r[2]) + '</strong><small>' + esc(r[0]) + '</small></span></span></th>' + (hasEntrants ? '<td class="rk4-num" data-label="Ingresantes">' + (r[5] == null ? '<span class="rk4-muted">—</span>' : int(r[5])) + '</td>' : '') + (hasVacancies ? '<td class="rk4-num" data-label="Vacantes">' + (r[6] == null ? '<span class="rk4-muted">—</span>' : int(r[6])) + '</td>' : '') + '<td class="rk4-num" data-label="Mínimo">' + fmt(r[3]) + '</td><td class="rk4-num" data-label="Máximo">' + fmt(r[4]) + '</td><td class="rk4-col-range">' + bar(r, bench.average) + '</td></tr>';
-      }).join('') : '<tr><td colspan="' + cols + '" class="rk4-empty">' + (rows.length ? 'Ninguna especialidad coincide con «' + esc($('rk4-career-search').value.trim()) + '».' : 'No hay datos de ' + esc(site) + ' para el proceso ' + esc(cycle) + '.') + '</td></tr>';
+      }).join('') : '<tr><td colspan="' + cols + '" class="rk4-empty">' + (rows.length ? 'Sin resultados.' : 'Sin datos de ' + esc(site) + ' en ' + esc(cycle) + '.') + '</td></tr>';
 
       var withAdmission = rows.filter(function (r) { return score(r[4]) != null; });
       var entrantsKpi, entrantsNote;
-      if (projection) { entrantsKpi = '—'; entrantsNote = 'Aún no hay ingresantes 2027-1'; }
-      else if (cycle === '2026-2' && official.entrantCount) { entrantsKpi = int(official.entrantCount[site]); entrantsNote = int(official.evaluated && official.evaluated[site]) + ' evaluados en ' + esc(site); }
-      else if (cycle === '2025-2' && supplied2025) { entrantsKpi = int(supplied2025.officialEntrants); entrantsNote = int(supplied2025.ordinaryEntrants) + ' más por examen ordinario'; }
+      if (projection) { entrantsKpi = '—'; entrantsNote = ''; }
+      else if (cycle === '2026-2' && official.entrantCount) { entrantsKpi = int(official.entrantCount[site]); entrantsNote = int(official.evaluated && official.evaluated[site]) + ' evaluados'; }
+      else if (cycle === '2025-2' && supplied2025) { entrantsKpi = int(supplied2025.officialEntrants); entrantsNote = '+' + int(supplied2025.ordinaryEntrants) + ' por ordinario'; }
       else {
         var sum = rows.reduce(function (s, r) { return s + (Number(r[5]) || 0); }, 0);
-        entrantsKpi = sum ? int(sum) : '—'; entrantsNote = sum ? 'Suma del desglose por especialidad' : 'Sin total incorporado';
+        entrantsKpi = sum ? int(sum) : '—'; entrantsNote = '';
       }
       var highest = withAdmission.reduce(function (m, r) { return !m || Number(r[3]) > Number(m[3]) ? r : m; }, null);
       $('rk4-careers-kpis').innerHTML =
-        kpi('Ingresantes CEPREUNI', entrantsKpi, entrantsNote) +
-        kpi(projection ? 'Especialidades con proyección' : 'Especialidades con ingresantes', rows.length ? int(withAdmission.length) + ' de ' + int(rows.length) : '—', esc(cycle) + ' · ' + esc(site)) +
-        kpi(projection ? 'Mínimo proyectado más alto' : 'Mínimo más alto', highest ? fmt(highest[3]) : '—', highest ? esc(highest[2]) : '') +
-        kpi('Promedio final 2026-2', bench.average == null ? '—' : fmt(bench.average), 'Sede ' + esc(site) + ' · ' + int(bench.count) + ' códigos con ciclo completo, sobre 20');
-      $('rk4-careers-title').textContent = (projection ? 'Proyección 2027-1' : 'Proceso ' + cycle) + ' · ' + site;
-      $('rk4-careers-sub').textContent = int(list.length) + ' especialidades · escala vigesimal';
-      $('rk4-marker-legend').textContent = 'Promedio final 2026-2 de ' + site + ' (' + (bench.average == null ? 'sin datos' : fmt(bench.average)) + ' sobre 20), como referencia';
+        kpi('Ingresantes', entrantsKpi, entrantsNote) +
+        kpi('Carreras', rows.length ? int(withAdmission.length) + '/' + int(rows.length) : '—', projection ? 'con proyección' : 'con ingresantes') +
+        kpi('Mínimo más alto', highest ? fmt(highest[3]) : '—', highest ? esc(highest[2]) : '') +
+        kpi('Promedio 2026-2', bench.average == null ? '—' : fmt(bench.average), 'sobre 20');
+      $('rk4-careers-title').textContent = (projection ? 'Proyección 2027-1' : cycle) + ' · ' + site;
+      $('rk4-careers-sub').textContent = int(list.length) + ' carreras';
+      $('rk4-marker-legend').textContent = 'promedio 2026-2 de ' + site;
 
       var callout = $('rk4-careers-callout');
       callout.hidden = !projection;
-      callout.innerHTML = projection ? '<strong>Proyección referencial, no oficial.</strong> Universe la estima a partir de los rangos 2024-2 a 2026-2 de cada especialidad: sigue la tendencia con cambios acotados y suma un margen moderado. No es un corte oficial ni garantiza una vacante.' : '';
+      callout.textContent = projection ? 'Proyección referencial de Universe, no oficial.' : '';
 
       var note = $('rk4-careers-note');
-      if (projection) note.innerHTML = 'Las especialidades sin rangos previos en la sede aparecen sin proyección.';
-      else if (cycle === '2026-2' && official.source) note.innerHTML = 'Fuente: asignación oficial de vacantes CEPREUNI 2026-2. La publicación no incluye la carrera que eligieron quienes no ingresaron, por eso no se muestra el número de postulantes por carrera. <a href="' + esc(official.source) + '" target="_blank" rel="noopener noreferrer">Ver publicación oficial ↗</a>';
-      else if (cycle === '2025-2' && supplied2025) note.innerHTML = 'Fuente: tabla CEPREUNI de Admisión UNI 2025-2. Hubo ' + int(supplied2025.officialEntrants) + ' ingresantes CEPREUNI y ' + int(supplied2025.ordinaryEntrants) + ' por examen ordinario. La tabla reparte ' + int(supplied2025.listedVacancies) + ' vacantes; el total de ingresantes no se distribuyó por carrera. <a href="' + esc(supplied2025.officialSource) + '" target="_blank" rel="noopener noreferrer">Ver estadística oficial ↗</a>';
-      else if (rows.length) note.textContent = 'Rangos de ingreso CEPREUNI del proceso ' + cycle + ' en ' + site + '.';
+      if (cycle === '2026-2' && official.source) note.innerHTML = '<a href="' + esc(official.source) + '" target="_blank" rel="noopener noreferrer">Fuente oficial 2026-2 ↗</a>';
+      else if (cycle === '2025-2' && supplied2025) note.innerHTML = '<a href="' + esc(supplied2025.officialSource) + '" target="_blank" rel="noopener noreferrer">Estadística oficial 2025-2 ↗</a>';
       else note.textContent = '';
 
       all('[data-rk4-site]', root).forEach(function (button) {
         var available = !!(history[cycle] && history[cycle][button.getAttribute('data-rk4-site')] && history[cycle][button.getAttribute('data-rk4-site')].length);
         button.disabled = !available;
-        button.title = available ? '' : 'Sin datos de esta sede para ' + cycle;
+        button.title = available ? '' : 'Sin datos en ' + cycle;
       });
     }
     function init() {

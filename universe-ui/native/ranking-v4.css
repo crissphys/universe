@@ -47,12 +47,15 @@ body[data-native="ranking"] {
 /* The shared side menu ships light-on-dark inks; keep it legible on the light ranking canvas. */
 :root[data-theme="light"] body[data-native="ranking"] .side-rail .branched-menu { --bm-ink: #11141b !important; --bm-line: rgba(14, 22, 40, .16) !important; --bm-accent: #2d51b0 !important }
 
+body[data-native="ranking"] { --k-page: #060608 }
+:root[data-theme="light"] body[data-native="ranking"] { --k-page: #f6f7fa }
+
 body[data-native="ranking"] .native-shell { margin: 20px 0 56px }
-body[data-native="ranking"] .page-topline { margin: 0 0 28px; color: var(--k-muted); font-size: 12px }
+body[data-native="ranking"] .page-topline { margin: 0 0 24px; color: var(--k-muted); font-size: 12px }
 body[data-native="ranking"] .page-topline a { color: inherit }
 body[data-native="ranking"] .page-topline a:hover { color: var(--k-ink) }
 
-.rk4 { color: var(--k-ink); font-size: 14px; line-height: 1.55; font-variant-numeric: tabular-nums; max-width: 1240px }
+.rk4 { color: var(--k-ink); font-size: 14px; line-height: 1.5; font-variant-numeric: tabular-nums; max-width: 1240px }
 .rk4 *, .rk4 *::before, .rk4 *::after { box-sizing: border-box }
 .rk4 [hidden] { display: none !important }
 .rk4 :where(h1, h2, h3, p, dl, dd, ol, ul) { margin: 0 }
@@ -67,146 +70,126 @@ body[data-native="ranking"] .page-topline a:hover { color: var(--k-ink) }
 .rk4 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0 }
 .rk4-mono, .rk4-code { font-family: var(--k-mono); letter-spacing: 0 }
 .rk4-muted { color: var(--k-muted) }
-.rk4-kicker { color: var(--k-muted); font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase }
+.rk4-kicker { color: var(--k-muted); font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase }
 
 /* Header */
-.rk4-head { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr); gap: clamp(24px, 4vw, 56px); align-items: end; padding-bottom: 32px; border-bottom: 1px solid var(--k-line) }
-.rk4-head h1 { margin-top: 12px; font-size: clamp(34px, 4.4vw, 52px); font-weight: 600; line-height: 1.02; letter-spacing: -.035em; color: var(--k-ink) }
+.rk4-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); gap: 16px 48px; align-items: end }
+.rk4-head h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 600; line-height: 1.05; letter-spacing: -.03em; color: var(--k-ink) }
 .rk4-head h1:focus { outline: none }
-.rk4-lede { margin-top: 16px; max-width: 60ch; font-size: 15.5px; line-height: 1.65; color: var(--k-ink-2); text-wrap: pretty }
-.rk4-meta { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 24px }
-.rk4-meta div { display: grid; gap: 2px }
-.rk4-meta dt { font-size: 11.5px; color: var(--k-muted) }
-.rk4-meta dd { font-size: 13.5px; font-weight: 600; color: var(--k-ink) }
+.rk4-meta { margin-top: 10px; font-size: 13px; color: var(--k-muted) }
+.rk4-meta span { color: var(--k-ink-2) }
 
-.rk4-progress { padding: 20px 20px 18px; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius) }
-.rk4-progress-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px }
-.rk4-progress h2 { white-space: nowrap }
-.rk4-progress h2 { font-size: 13.5px; font-weight: 600 }
+.rk4-progress { padding: 14px 16px; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius) }
+.rk4-progress-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px }
+.rk4-progress h2 { font-size: 13px; font-weight: 600; white-space: nowrap }
 .rk4-progress-head p { font-size: 12.5px; color: var(--k-muted) }
 .rk4-progress-head strong { color: var(--k-ink); font-weight: 600 }
-.rk4-steps { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; margin-top: 16px }
-.rk4-steps li { display: grid; gap: 6px; min-width: 0 }
-.rk4-step-dot { height: 6px; border-radius: 3px; background: var(--k-line-strong) }
+.rk4-steps { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px; margin-top: 10px }
+.rk4-steps li { display: grid; gap: 5px; min-width: 0; text-align: center }
+.rk4-step-dot { height: 5px; border-radius: 3px; background: var(--k-line-strong) }
 .rk4-steps li[data-done="true"] .rk4-step-dot { background: var(--k-accent) }
 .rk4-steps li[data-next="true"] .rk4-step-dot { background: transparent; box-shadow: inset 0 0 0 1.5px var(--k-accent) }
-.rk4-step-name { font-size: 10.5px; font-weight: 600; color: var(--k-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.rk4-step-name { font-size: 10px; font-weight: 600; color: var(--k-ink-2); white-space: nowrap; overflow: hidden }
 .rk4-steps li[data-done="false"] .rk4-step-name { color: var(--k-muted); font-weight: 500 }
-.rk4-step-weight { margin-top: -5px; font-size: 10px; color: var(--k-muted) }
-.rk4-progress-note { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--k-line); font-size: 12.5px; line-height: 1.55; color: var(--k-muted) }
+.rk4-step-weight { display: none }
 
 /* Tabs */
-.rk4-tabs { display: flex; gap: 4px; margin: 28px 0 0; border-bottom: 1px solid var(--k-line); overflow-x: auto; scrollbar-width: none }
-.rk4-tabs::-webkit-scrollbar { display: none }
-.rk4-tabs [role="tab"] { position: relative; display: grid; gap: 1px; flex: 0 0 auto; padding: 12px 18px 14px; border: 0; background: none; text-align: left; color: var(--k-muted); transition: color .16s ease }
-.rk4-tabs [role="tab"] span { font-size: 14.5px; font-weight: 600 }
-.rk4-tabs [role="tab"] small { font-size: 11.5px }
-.rk4-tabs [role="tab"]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 2px; border-radius: 2px; background: var(--k-ink); transform: scaleX(0); transition: transform .22s var(--k-ease) }
+.rk4-tabs { display: flex; gap: 2px; margin-top: 28px; border-bottom: 1px solid var(--k-line) }
+.rk4-tabs [role="tab"] { position: relative; min-height: 44px; padding: 0 18px; border: 0; background: none; color: var(--k-muted); font-size: 14.5px; font-weight: 600; transition: color .16s ease }
+.rk4-tabs [role="tab"]::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 2px; border-radius: 2px; background: var(--k-ink); transform: scaleX(0); transition: transform .22s var(--k-ease) }
 .rk4-tabs [role="tab"][aria-selected="true"] { color: var(--k-ink) }
 .rk4-tabs [role="tab"][aria-selected="true"]::after { transform: scaleX(1) }
-.rk4-tabs [role="tab"][aria-selected="true"] small { color: var(--k-muted) }
 @media (hover: hover) and (pointer: fine) { .rk4-tabs [role="tab"]:hover { color: var(--k-ink) } }
 
-.rk4-panel { padding-top: 28px }
+.rk4-panel { padding-top: 20px }
 .rk4-panel:focus { outline: none }
 @media (prefers-reduced-motion: no-preference) {
-  .rk4-panel:not([hidden]) { animation: rk4-in .24s var(--k-ease) both }
+  .rk4-panel:not([hidden]) { animation: rk4-in .22s var(--k-ease) both }
   @keyframes rk4-in { from { opacity: 0; transform: translateY(4px) } to { opacity: 1; transform: none } }
 }
-.rk4-panel-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 24px }
-.rk4-panel-head h2 { font-size: 22px; font-weight: 600; letter-spacing: -.02em }
-.rk4-panel-head p { margin-top: 6px; max-width: 72ch; color: var(--k-ink-2); text-wrap: pretty }
-.rk4-link { flex: 0 0 auto; font-weight: 600; font-size: 13.5px }
+.rk4-panel-head { margin-bottom: 16px }
+.rk4-panel-head h2 { font-size: 20px; font-weight: 600; letter-spacing: -.02em }
+.rk4-panel-head p { margin-top: 4px; font-size: 13px; color: var(--k-muted) }
 
 /* Controls */
-.rk4-controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px 24px }
-.rk4-control { display: grid; gap: 8px; min-width: 0 }
+.rk4-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px }
 .rk4-control-grow { flex: 1 1 320px }
-.rk4-label { font-size: 12px; font-weight: 600; color: var(--k-ink-2) }
-.rk4-segmented { display: inline-flex; padding: 3px; gap: 2px; background: var(--k-sunken); border: 1px solid var(--k-line); border-radius: 9px; max-width: 100% }
-.rk4-segmented-wrap { flex-wrap: wrap }
-.rk4-segmented button { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; padding: 0 14px; border: 0; border-radius: 6px; background: transparent; color: var(--k-ink-2); font-size: 13.5px; font-weight: 600; white-space: nowrap; transition: background-color .16s ease, color .16s ease, transform .12s var(--k-ease) }
+.rk4-segmented { display: inline-flex; padding: 3px; gap: 2px; background: var(--k-sunken); border: 1px solid var(--k-line); border-radius: 10px; max-width: 100% }
+.rk4-segmented button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; padding: 0 14px; border: 0; border-radius: 7px; background: transparent; color: var(--k-ink-2); font-size: 13.5px; font-weight: 600; white-space: nowrap; transition: background-color .16s ease, color .16s ease, transform .12s var(--k-ease) }
 .rk4-segmented button[aria-pressed="true"] { background: var(--k-surface); color: var(--k-ink); box-shadow: 0 0 0 1px var(--k-line-strong), 0 1px 2px rgba(0, 0, 0, .18) }
 .rk4-segmented button:active:not(:disabled) { transform: scale(.97) }
-.rk4-segmented button:disabled { opacity: .4 }
+.rk4-segmented button:disabled { opacity: .35 }
 @media (hover: hover) and (pointer: fine) { .rk4-segmented button:not([aria-pressed="true"]):not(:disabled):hover { color: var(--k-ink); background: var(--k-line) } }
 .rk4-chip-count { font-size: 11.5px; font-weight: 500; color: var(--k-muted) }
 
 .rk4-field { position: relative; display: flex; align-items: center }
-.rk4-field > svg { position: absolute; left: 13px; width: 18px; height: 18px; fill: none; stroke: var(--k-muted); stroke-width: 1.7; stroke-linecap: round; pointer-events: none }
-.rk4-field input { width: 100%; min-height: 44px; padding: 0 44px 0 40px; border: 1px solid var(--k-line-strong); border-radius: 9px; background: var(--k-surface); color: var(--k-ink); font: inherit; font-size: 16px; transition: border-color .16s ease, box-shadow .16s ease; -webkit-appearance: none; appearance: none }
+.rk4-field > svg { position: absolute; left: 14px; width: 18px; height: 18px; fill: none; stroke: var(--k-muted); stroke-width: 1.7; stroke-linecap: round; pointer-events: none }
+.rk4-field input { width: 100%; min-height: 48px; padding: 0 46px 0 42px; border: 1px solid var(--k-line-strong); border-radius: 10px; background: var(--k-surface); color: var(--k-ink); font: inherit; font-size: 16px; transition: border-color .16s ease, box-shadow .16s ease; -webkit-appearance: none; appearance: none }
 .rk4-field input::placeholder { color: var(--k-muted) }
 .rk4-field input::-webkit-search-cancel-button { -webkit-appearance: none; display: none }
 .rk4-field input:focus { outline: none; border-color: var(--k-accent); box-shadow: 0 0 0 3px var(--k-accent-soft) }
-.rk4-clear { position: absolute; right: 6px; display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 6px; background: transparent }
+.rk4-clear { position: absolute; right: 4px; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 8px; background: transparent }
 .rk4-clear svg { width: 16px; height: 16px; fill: none; stroke: var(--k-muted); stroke-width: 1.8; stroke-linecap: round }
 @media (hover: hover) and (pointer: fine) { .rk4-clear:hover { background: var(--k-line) } }
-.rk4-hint { font-size: 12px; color: var(--k-muted) }
 
-.rk4-check { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; font-size: 13px; color: var(--k-ink-2); cursor: pointer; user-select: none }
-.rk4-check input { width: 16px; height: 16px; margin: 0; accent-color: var(--k-accent) }
-.rk4-check-inline { min-height: 44px }
-.rk4-select { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--k-ink-2) }
-.rk4-select select { min-height: 36px; padding: 0 30px 0 12px; border: 1px solid var(--k-line-strong); border-radius: 8px; background: var(--k-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center / 12px; color: var(--k-ink); font: inherit; font-size: 13px; -webkit-appearance: none; appearance: none }
+.rk4-check { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; font-size: 13px; color: var(--k-ink-2); cursor: pointer; user-select: none }
+.rk4-check input { width: 18px; height: 18px; margin: 0; accent-color: var(--k-accent) }
+.rk4-select select { min-height: 40px; padding: 0 30px 0 12px; border: 1px solid var(--k-line-strong); border-radius: 8px; background: var(--k-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center / 12px; color: var(--k-ink); font: inherit; font-size: 13px; -webkit-appearance: none; appearance: none }
 
 /* KPIs */
-.rk4-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 24px; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius) }
-.rk4-kpis + .rk4-controls { margin-top: 28px }
-.rk4-kpis > div { display: grid; align-content: start; gap: 6px; min-width: 0; padding: 16px 18px }
+.rk4-kpis { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); margin-top: 16px; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius) }
+.rk4-kpis > div { display: grid; align-content: start; gap: 4px; min-width: 0; padding: 14px 16px }
 .rk4-kpis > div + div { border-left: 1px solid var(--k-line) }
 .rk4 dt { font-size: 12px; color: var(--k-muted) }
-.rk4 dd strong { display: block; font-size: 22px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; color: var(--k-ink) }
-.rk4 dd small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.45; color: var(--k-muted); overflow-wrap: anywhere }
+.rk4 dd strong { display: block; font-size: 20px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; color: var(--k-ink) }
+.rk4 dd small { display: block; margin-top: 3px; font-size: 12px; line-height: 1.35; color: var(--k-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 
-/* Spotlight */
-.rk4-spotlight { margin-top: 24px; padding: 22px 22px 20px; border: 1px solid var(--k-line-strong); border-radius: 12px; background: var(--k-surface); scroll-margin-top: 96px }
-@media (prefers-reduced-motion: no-preference) {
-  .rk4-spotlight:not([hidden]) { animation: rk4-in .26s var(--k-ease) both }
-}
-.rk4-spotlight header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px }
-.rk4-spotlight h2 { margin-top: 6px; font-size: clamp(19px, 2.2vw, 24px); font-weight: 600; letter-spacing: -.02em; line-height: 1.2 }
-.rk4-spotlight :is(.rk4-code, .rk4-spot-sub) { margin-top: 4px; font-size: 13px; color: var(--k-muted) }
-.rk4-ghost { flex: 0 0 auto; min-height: 36px; padding: 0 14px; border: 1px solid var(--k-line-strong); border-radius: 8px; background: transparent; font-size: 13px; font-weight: 600; transition: transform .12s var(--k-ease), background-color .16s ease }
+/* Student detail */
+.rk4-spotlight { margin-top: 16px; padding: 18px; border: 1px solid var(--k-line-strong); border-radius: 12px; background: var(--k-surface); scroll-margin-top: 140px }
+@media (prefers-reduced-motion: no-preference) { .rk4-spotlight:not([hidden]) { animation: rk4-in .24s var(--k-ease) both } }
+.rk4-spotlight header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px }
+.rk4-spotlight h2 { margin-top: 4px; font-size: clamp(18px, 2.2vw, 22px); font-weight: 600; letter-spacing: -.02em; line-height: 1.2; overflow-wrap: anywhere }
+.rk4-spotlight .rk4-code { margin-top: 2px; font-size: 13px; color: var(--k-muted) }
+.rk4-ghost { flex: 0 0 auto; min-height: 40px; padding: 0 14px; border: 1px solid var(--k-line-strong); border-radius: 8px; background: transparent; font-size: 13px; font-weight: 600; transition: transform .12s var(--k-ease), background-color .16s ease }
 .rk4-ghost:active { transform: scale(.97) }
 @media (hover: hover) and (pointer: fine) { .rk4-ghost:hover { background: var(--k-line) } }
-.rk4-spot-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 20px; border-top: 1px solid var(--k-line); border-bottom: 1px solid var(--k-line) }
-.rk4-spot-stats > div { display: grid; gap: 6px; padding: 14px 16px 14px 0 }
-.rk4-spot-stats > div + div { padding-left: 16px; border-left: 1px solid var(--k-line) }
-.rk4-big { font-size: 30px; letter-spacing: -.03em }
-.rk4-spot-empty { margin-top: 16px; color: var(--k-ink-2) }
-.rk4-spot-exams { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 16px }
-.rk4-spot-exams li { display: grid; gap: 2px; padding: 12px 14px; border-radius: 8px; background: var(--k-raised) }
-.rk4-spot-exam { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 600; color: var(--k-ink-2) }
-.rk4-spot-exam small { font-weight: 500; color: var(--k-muted) }
-.rk4-spot-exams strong { font-size: 18px; font-weight: 600; letter-spacing: -.01em }
-.rk4-spot-exams li > small { font-size: 11.5px; color: var(--k-muted) }
-.rk4-spot-exams li[data-state="dropped"] strong { color: var(--k-muted) }
-.rk4-spot-exams li[data-state="absent"] strong { color: var(--k-warn); font-size: 15px }
-.rk4-spot-exams li[data-state="pending"] strong { color: var(--k-muted) }
+.rk4-spot-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 16px; border-top: 1px solid var(--k-line); border-bottom: 1px solid var(--k-line) }
+.rk4-spot-stats > div { display: grid; gap: 4px; padding: 12px 14px 12px 0; min-width: 0 }
+.rk4-spot-stats > div + div { padding-left: 14px; border-left: 1px solid var(--k-line) }
+.rk4-big { font-size: 28px; letter-spacing: -.03em }
+.rk4-spot-empty { margin-top: 14px; color: var(--k-ink-2) }
+.rk4-spot-exams { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 14px }
+.rk4-spot-exams li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 8px; padding: 10px 12px; border-radius: 8px; background: var(--k-raised) }
+.rk4-spot-exam { font-size: 12.5px; font-weight: 600; color: var(--k-ink-2) }
+.rk4-spot-exam small { display: none }
+.rk4-spot-exams strong { font-family: var(--k-mono); font-size: 15px; font-weight: 600; text-align: right }
+.rk4-spot-exams li > small { grid-column: 1 / -1; font-size: 11.5px; color: var(--k-muted) }
+.rk4-spot-exams li[data-state="dropped"] strong, .rk4-spot-exams li[data-state="pending"] strong { color: var(--k-muted) }
+.rk4-spot-exams li[data-state="absent"] strong { color: var(--k-warn); font-family: inherit; font-size: 13px }
 
 /* Table */
-.rk4-tablebar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 24px; margin-top: 36px }
-.rk4-table-title { font-size: 17px; font-weight: 600; letter-spacing: -.01em; scroll-margin-top: 96px }
-.rk4-table-sub { margin-top: 3px; font-size: 12.5px; color: var(--k-muted) }
-.rk4-table-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px }
-.rk4-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 14px; font-size: 12px; color: var(--k-muted) }
-.rk4-legend li { display: inline-flex; align-items: center; gap: 8px }
-.rk4-legend-discarded { font-family: var(--k-mono); text-decoration: line-through; color: var(--k-muted) }
-.rk4-legend-pending { color: var(--k-muted); font-weight: 600 }
-.rk4-legend-range { width: 28px; height: 8px; border-radius: 4px; background: var(--k-accent); opacity: .55 }
+.rk4-tablebar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 10px 20px; margin-top: 28px }
+.rk4-table-title { font-size: 16px; font-weight: 600; scroll-margin-top: 140px }
+.rk4-table-sub { margin-top: 2px; font-size: 12.5px; color: var(--k-muted) }
+.rk4-table-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px }
+.rk4-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: 12px; color: var(--k-muted) }
+.rk4-legend li { display: inline-flex; align-items: center; gap: 6px }
+.rk4-legend-discarded { font-family: var(--k-mono); text-decoration: line-through }
+.rk4-legend-pending { font-weight: 600 }
+.rk4-legend-range { width: 24px; height: 8px; border-radius: 4px; background: var(--k-accent); opacity: .55 }
 .rk4-legend-marker { width: 2px; height: 14px; border-radius: 1px; background: var(--k-warn) }
 
-.rk4-table-wrap { position: relative; margin-top: 14px; max-height: min(72vh, 760px); overflow: auto; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-surface); overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--k-line-strong) transparent }
+.rk4-table-wrap { position: relative; margin-top: 12px; max-height: min(72vh, 760px); overflow: auto; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-surface); overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--k-line-strong) transparent }
+.rk4-table-wrap-flat { max-height: none; margin: 0 0 16px }
 .rk4-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px }
 .rk4-table th, .rk4-table td { padding: 10px 14px; border-bottom: 1px solid var(--k-line); text-align: left; vertical-align: middle; white-space: nowrap }
-.rk4-table thead th { position: sticky; top: 0; z-index: 2; padding-top: 11px; padding-bottom: 11px; background: var(--k-raised); color: var(--k-muted); font-size: 11.5px; font-weight: 600; letter-spacing: .02em; border-bottom-color: var(--k-line-strong) }
-.rk4-table thead th small { display: block; font-weight: 500; font-size: 10.5px; letter-spacing: 0; color: var(--k-muted); opacity: .85 }
+.rk4-table thead th { position: sticky; top: 0; z-index: 2; background: var(--k-raised); color: var(--k-muted); font-size: 11.5px; font-weight: 600; border-bottom-color: var(--k-line-strong) }
+.rk4-table thead th small { display: block; font-weight: 500; font-size: 10.5px; opacity: .85 }
 .rk4-table tbody tr:last-child > * { border-bottom: 0 }
 .rk4-table tbody th { font-weight: 500 }
-.rk4-num { text-align: right !important; font-variant-numeric: tabular-nums }
+.rk4-num { text-align: right !important }
 .rk4-table tbody .rk4-num { font-family: var(--k-mono); font-size: 13px; color: var(--k-ink-2) }
 .rk4-table .rk4-col-score { color: var(--k-ink) !important; font-weight: 700 }
-.rk4-table thead .rk4-col-score { color: var(--k-ink) }
 .rk4-col-place { width: 72px }
 .rk4-col-name { min-width: 260px; white-space: normal !important; color: var(--k-ink) }
 .rk4-table .rk4-pending { color: var(--k-muted) }
@@ -214,35 +197,29 @@ body[data-native="ranking"] .page-topline a:hover { color: var(--k-ink) }
 @media (hover: hover) and (pointer: fine) { .rk4-table tbody tr:hover > * { background: var(--k-accent-soft) } }
 .rk4-table tbody tr.is-focus > * { background: var(--k-accent-soft) }
 .rk4-table tbody tr.is-focus > :first-child { box-shadow: inset 2px 0 0 var(--k-accent) }
-.rk4-empty { padding: 40px 20px !important; text-align: center !important; white-space: normal !important; color: var(--k-ink-2) }
+.rk4-empty { padding: 36px 20px !important; text-align: center !important; white-space: normal !important; color: var(--k-ink-2) }
 
-.rk4-place { display: inline-grid; place-items: center; min-width: 30px; height: 26px; padding: 0 7px; border-radius: 6px; font-family: var(--k-mono); font-size: 12.5px; font-weight: 600; color: var(--k-ink-2) }
+.rk4-place { display: inline-grid; place-items: center; min-width: 32px; height: 28px; padding: 0 7px; border-radius: 7px; font-family: var(--k-mono); font-size: 12.5px; font-weight: 600; color: var(--k-ink-2) }
 .rk4-place-none { color: var(--k-muted) }
 .rk4-medal-1 { color: var(--k-gold); background: color-mix(in srgb, var(--k-gold) 14%, transparent) }
 .rk4-medal-2 { color: var(--k-silver); background: color-mix(in srgb, var(--k-silver) 14%, transparent) }
 .rk4-medal-3 { color: var(--k-bronze); background: color-mix(in srgb, var(--k-bronze) 14%, transparent) }
 
-.rk4-code-btn { padding: 4px 6px; margin: -4px -6px; border: 0; border-radius: 5px; background: none; font-family: var(--k-mono); font-size: 13px; font-weight: 500; color: var(--k-ink); text-decoration: underline; text-decoration-color: var(--k-line-strong); text-underline-offset: 4px; transition: text-decoration-color .16s ease, color .16s ease }
+.rk4-code-btn { padding: 4px 6px; margin: -4px -6px; border: 0; border-radius: 5px; background: none; font-family: var(--k-mono); font-size: 13px; font-weight: 500; color: var(--k-ink); text-decoration: underline; text-decoration-color: var(--k-line-strong); text-underline-offset: 4px }
 @media (hover: hover) and (pointer: fine) { .rk4-code-btn:hover { color: var(--k-accent); text-decoration-color: currentColor } }
 
-.rk4-tag { display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 5px; background: var(--k-raised); border: 1px solid var(--k-line); font-family: var(--k-mono); font-size: 11px; font-weight: 600; color: var(--k-ink-2); letter-spacing: .02em }
-.rk4-tag-absent { background: var(--k-warn-soft); border-color: transparent; color: var(--k-warn); font-family: inherit; letter-spacing: 0 }
+.rk4-tag { display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 5px; background: var(--k-raised); border: 1px solid var(--k-line); font-family: var(--k-mono); font-size: 11px; font-weight: 600; color: var(--k-ink-2) }
+.rk4-tag-absent { background: var(--k-warn-soft); border-color: transparent; color: var(--k-warn); font-family: inherit }
 .rk4-tag-in { background: var(--k-ok-soft); border-color: transparent; color: var(--k-ok) }
-.rk4-entrant { display: inline-flex; align-items: center; gap: 8px; max-width: 240px }
-.rk4-entrant-name { overflow: hidden; text-overflow: ellipsis; font-size: 12.5px; color: var(--k-ink-2) }
+.rk4-entrant { display: inline-flex; align-items: center; gap: 8px; max-width: 240px; min-width: 0 }
+.rk4-entrant-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; color: var(--k-ink-2) }
 
-/* Final table extras */
-.rk4-table-final .rk4-group-row th { position: static; padding-top: 9px; padding-bottom: 0; border-bottom: 0; font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--k-muted); text-align: center }
-.rk4-table-final thead tr:nth-child(2) th { top: 0 }
+.rk4-table-final .rk4-group-row th { position: static; padding-top: 9px; padding-bottom: 0; border-bottom: 0; font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; text-align: center }
 .rk4-table-compact th, .rk4-table-compact td { padding-top: 9px; padding-bottom: 9px }
 .rk4-table-compact tbody th { color: var(--k-ink) }
-.rk4-subsection { margin-top: 40px }
-.rk4-subsection h3 { font-size: 15.5px; font-weight: 600 }
-.rk4-subsection .rk4-table-wrap { max-height: none }
 
 /* Careers */
-.rk4-callout { margin-top: 20px; padding: 14px 16px; border-radius: 9px; background: var(--k-warn-soft); color: var(--k-ink-2); font-size: 13.5px; line-height: 1.6 }
-.rk4-callout strong { color: var(--k-warn) }
+.rk4-callout { margin-top: 14px; padding: 10px 14px; border-radius: 9px; background: var(--k-warn-soft); color: var(--k-warn); font-size: 13px; font-weight: 600 }
 .rk4-career { display: inline-flex; align-items: center; gap: 12px; white-space: normal }
 .rk4-career strong { display: block; font-weight: 600; color: var(--k-ink) }
 .rk4-career small { display: block; font-size: 11.5px; color: var(--k-muted) }
@@ -253,110 +230,123 @@ body[data-native="ranking"] .page-topline a:hover { color: var(--k-ink) }
 .rk4-range { position: relative; height: 22px; background: repeating-linear-gradient(90deg, var(--k-line) 0 1px, transparent 1px 33.333%) 0 0 / 100% 100% no-repeat; border-right: 1px solid var(--k-line) }
 .rk4-range i { position: absolute; top: 7px; height: 8px; border-radius: 4px; background: var(--k-accent); opacity: .55 }
 .rk4-range b { position: absolute; top: 2px; width: 2px; height: 18px; margin-left: -1px; border-radius: 1px; background: var(--k-warn) }
-.rk4-footnote { margin-top: 14px; max-width: 90ch; font-size: 12.5px; line-height: 1.65; color: var(--k-muted) }
+.rk4-footnote { margin-top: 12px; font-size: 12.5px; color: var(--k-muted) }
 
 /* Pager */
-.rk4-pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px }
+.rk4-pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px }
 .rk4-pager ol { display: flex; align-items: center; gap: 2px }
 .rk4-pager li[aria-hidden] { padding: 0 6px; color: var(--k-muted) }
-.rk4-pager button { min-width: 36px; min-height: 36px; padding: 0 12px; border: 1px solid transparent; border-radius: 8px; background: transparent; font-size: 13px; font-weight: 600; color: var(--k-ink-2); transition: background-color .16s ease, transform .12s var(--k-ease) }
+.rk4-pager button { min-width: 40px; min-height: 40px; padding: 0 12px; border: 1px solid transparent; border-radius: 8px; background: transparent; font-size: 13px; font-weight: 600; color: var(--k-ink-2); transition: background-color .16s ease, transform .12s var(--k-ease) }
 .rk4-pager > button { border-color: var(--k-line-strong) }
 .rk4-pager button[aria-current="page"] { background: var(--k-ink); color: var(--k-surface) }
 .rk4-pager button:active:not(:disabled) { transform: scale(.97) }
 .rk4-pager button:disabled { opacity: .35 }
+.rk4-pager-count { display: none; font-family: var(--k-mono); font-size: 13px; color: var(--k-ink-2) }
 @media (hover: hover) and (pointer: fine) { .rk4-pager button:not(:disabled):not([aria-current]):hover { background: var(--k-line) } }
 
-/* Notes */
-.rk4-notes { display: grid; margin-top: 40px; border-top: 1px solid var(--k-line) }
-.rk4-note { border-bottom: 1px solid var(--k-line) }
-.rk4-note summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; font-size: 14.5px; font-weight: 600; cursor: pointer; list-style: none }
+/* Collapsible extras */
+.rk4-note { margin-top: 28px; border-top: 1px solid var(--k-line); border-bottom: 1px solid var(--k-line) }
+.rk4-note summary { display: flex; justify-content: space-between; align-items: center; min-height: 48px; font-size: 14px; font-weight: 600; cursor: pointer; list-style: none }
 .rk4-note summary::-webkit-details-marker { display: none }
 .rk4-note summary::after { content: "+"; font-size: 18px; font-weight: 400; color: var(--k-muted); transition: transform .2s var(--k-ease) }
 .rk4-note[open] summary::after { transform: rotate(45deg) }
-.rk4-note-body { display: grid; gap: 10px; max-width: 78ch; padding: 0 0 18px; color: var(--k-ink-2); text-wrap: pretty }
-.rk4-sources { display: grid; gap: 8px }
-.rk4-sources li { position: relative; padding-left: 16px }
-.rk4-sources li::before { content: ""; position: absolute; left: 2px; top: .7em; width: 5px; height: 1px; background: var(--k-muted) }
+.rk4-sources { display: grid; gap: 6px; padding-bottom: 16px; font-size: 13px; color: var(--k-ink-2) }
 
 /* Related */
-.rk4-related { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 56px; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-surface); overflow: hidden }
-.rk4-related a { display: grid; gap: 4px; padding: 18px 20px; color: var(--k-ink); text-decoration: none; transition: background-color .16s ease }
-.rk4-related a + a { border-left: 1px solid var(--k-line) }
-.rk4-related span { font-size: 11.5px; color: var(--k-muted) }
-.rk4-related strong { font-size: 14px; font-weight: 600 }
-.rk4-related strong::after { content: " →"; color: var(--k-muted); transition: color .16s ease }
-@media (hover: hover) and (pointer: fine) { .rk4-related a:hover { background: var(--k-raised) } .rk4-related a:hover strong::after { color: var(--k-ink) } }
+.rk4-related { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px }
+.rk4-related a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border: 1px solid var(--k-line-strong); border-radius: 999px; color: var(--k-ink-2); font-size: 13px; font-weight: 600; text-decoration: none; transition: background-color .16s ease, color .16s ease }
+.rk4-related a::after { content: "→"; margin-left: 6px; color: var(--k-muted) }
+@media (hover: hover) and (pointer: fine) { .rk4-related a:hover { background: var(--k-raised); color: var(--k-ink); text-decoration: none } }
 
-/* Cards (mobile 2027-1) */
+/* Phone cards */
 .rk4-cards { display: none }
-.rk4-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: 0; border-bottom: 1px solid var(--k-line); background: transparent; text-align: left }
+.rk4-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 60px; padding: 10px 14px; border: 0; border-bottom: 1px solid var(--k-line); background: transparent; text-align: left; color: inherit }
 .rk4-cards li:last-child .rk4-card { border-bottom: 0 }
-.rk4-card:active { background: var(--k-raised) }
-.rk4-card-id strong { display: block; font-size: 13.5px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere }
-.rk4-card-id small, .rk4-card-score small { display: block; font-family: var(--k-mono); font-size: 11.5px; color: var(--k-muted) }
-.rk4-card-score { text-align: right }
-.rk4-card-score strong { display: block; font-family: var(--k-mono); font-size: 14px; font-weight: 700 }
+button.rk4-card:active { background: var(--k-raised) }
+.rk4-card-id { display: grid; gap: 2px; min-width: 0 }
+.rk4-card-id strong { font-size: 14px; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere }
+.rk4-card-id small, .rk4-card-score small { font-family: var(--k-mono); font-size: 11.5px; color: var(--k-muted) }
+.rk4-card-id .rk4-entrant { max-width: 100% }
+.rk4-card-score { display: grid; text-align: right }
+.rk4-card-score strong { font-family: var(--k-mono); font-size: 15px; font-weight: 700 }
 .rk4-card-score small { font-family: inherit }
 
-/* Responsive */
+/* Tablet */
 @media (max-width: 1080px) {
   .rk4-head { grid-template-columns: minmax(0, 1fr); align-items: start }
-  .rk4-kpis, .rk4-spot-stats { grid-template-columns: repeat(2, minmax(0, 1fr)) }
-  .rk4-kpis > div:nth-child(3) { border-left: 0 }
-  .rk4-kpis > div:nth-child(n + 3) { border-top: 1px solid var(--k-line) }
+  .rk4-kpis:has(> div:nth-child(4)), .rk4-spot-stats { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .rk4-kpis:has(> div:nth-child(4)) > div:nth-child(3) { border-left: 0 }
+  .rk4-kpis:has(> div:nth-child(4)) > div:nth-child(n + 3) { border-top: 1px solid var(--k-line) }
   .rk4-spot-stats > div:nth-child(3) { padding-left: 0; border-left: 0 }
   .rk4-spot-stats > div:nth-child(n + 3) { border-top: 1px solid var(--k-line) }
-  .rk4-related { grid-template-columns: repeat(2, minmax(0, 1fr)) }
-  .rk4-related a:nth-child(3) { border-left: 0 }
-  .rk4-related a:nth-child(n + 3) { border-top: 1px solid var(--k-line) }
 }
+
+/* Phone */
 @media (max-width: 720px) {
-  body[data-native="ranking"] .page-topline { margin-bottom: 18px }
-  .rk4-head { padding-bottom: 24px }
-  .rk4-lede { font-size: 15px }
-  .rk4-meta { gap: 12px 24px }
-  .rk4-steps { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 12px }
-  .rk4-tabs { margin-top: 20px; margin-inline: -16px; padding-inline: 8px }
-  .rk4-tabs [role="tab"] { padding: 10px 12px 12px }
-  .rk4-panel { padding-top: 20px }
-  .rk4-panel-head { flex-direction: column; align-items: flex-start; gap: 12px }
-  .rk4-controls { display: grid; grid-template-columns: minmax(0, 1fr) }
+  body[data-native="ranking"] .page-topline { display: none }
+  .rk4 { font-size: 14px }
+  .rk4-head { gap: 12px }
+  .rk4-meta { margin-top: 6px; font-size: 12.5px }
+  .rk4-progress { padding: 12px 14px }
+
+  .rk4-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; margin-top: 18px; padding: 3px; background: var(--k-sunken); border: 1px solid var(--k-line); border-radius: 10px }
+  .rk4-tabs [role="tab"] { min-height: 40px; padding: 0 6px; border-radius: 7px; font-size: 14px }
+  .rk4-tabs [role="tab"]::after { display: none }
+  .rk4-tabs [role="tab"][aria-selected="true"] { background: var(--k-surface); box-shadow: 0 0 0 1px var(--k-line-strong) }
+  .rk4-panel { padding-top: 14px }
+
+  /* Search stays reachable while scrolling long lists. */
+  .rk4-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px }
+  .rk4-sticky { position: sticky; top: 0; z-index: 6; margin-inline: -16px; padding: 10px 16px; background: var(--k-page); border-bottom: 1px solid var(--k-line) }
   .rk4-control-grow { flex: none }
   .rk4-segmented { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr) }
-  .rk4-segmented-wrap { display: flex; flex-wrap: wrap }
-  .rk4-segmented-wrap button { flex: 1 0 auto }
-  .rk4-segmented button { flex-direction: column; justify-content: center; gap: 0; min-height: 44px; padding: 4px 8px; line-height: 1.2; white-space: normal; text-align: center }
-  .rk4-chip-count { font-size: 11px }
-  #rk4-panel-current :is(.rk4-legend, #rk4-all-exams-wrap) { display: none }
-  .rk4-kpis > div { padding: 14px }
-  .rk4 dd strong { font-size: 19px }
-  .rk4-spotlight { padding: 18px 16px }
-  .rk4-spot-stats > div { padding-right: 10px }
-  .rk4-spot-stats > div + div { padding-left: 12px }
-  .rk4-big { font-size: 26px }
-  .rk4-spot-exams { grid-template-columns: repeat(2, minmax(0, 1fr)) }
-  .rk4-tablebar { margin-top: 28px }
-  #rk4-panel-current .rk4-table-wrap { display: none }
-  .rk4-cards { display: block; margin-top: 14px; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-surface); overflow: hidden }
+  .rk4-segmented button { padding: 0 6px; font-size: 13px }
+  .rk4-segmented-scroll { display: flex; overflow-x: auto; scrollbar-width: none }
+  .rk4-segmented-scroll::-webkit-scrollbar { display: none }
+  .rk4-segmented-scroll button { flex: 0 0 auto; padding: 0 12px }
+  .rk4-chip-count { display: none }
+
+  .rk4-kpis { margin-top: 12px }
+  .rk4-kpis > div { padding: 10px 12px }
+  .rk4 dt { font-size: 11.5px }
+  .rk4 dd strong { font-size: 17px }
+  .rk4 dd small { font-size: 11.5px; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical }
+  .rk4-kpis:has(> div:nth-child(4)) { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)) }
+
+  .rk4-spotlight { margin-top: 12px; padding: 14px }
+  .rk4-spot-stats > div { padding: 10px 10px 10px 0 }
+  .rk4-spot-stats > div + div { padding-left: 10px }
+  .rk4-big { font-size: 24px }
+  .rk4-spot-exams { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 8px }
+  .rk4-spot-exams li { padding: 9px 0; border-radius: 0; background: none; border-bottom: 1px solid var(--k-line) }
+  .rk4-spot-exams li:last-child { border-bottom: 0 }
+  .rk4-spot-exams li > small { grid-column: 1; grid-row: 2 }
+
+  .rk4-tablebar { margin-top: 20px; align-items: center }
+  .rk4-legend { display: none }
+  #rk4-panel-careers .rk4-legend { display: flex }
+  #rk4-all-exams-wrap { display: none }
+
+  #rk4-panel-current .rk4-table-wrap, #rk4-panel-final .rk4-table-wrap:not(.rk4-table-wrap-flat) { display: none }
+  .rk4-cards { display: block; margin-top: 10px; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-surface); overflow: hidden }
   .rk4-cards .rk4-empty { display: block }
-  .rk4-table-wrap { max-height: 70vh }
   .rk4-table th, .rk4-table td { padding: 9px 10px }
-  .rk4-table-final tbody th, .rk4-table-final thead tr:nth-child(2) th:nth-child(2) { position: sticky; left: 0; z-index: 1; background: var(--k-surface) }
-  .rk4-table-final thead tr:nth-child(2) th:nth-child(2) { z-index: 3; background: var(--k-raised) }
-  #rk4-panel-careers .rk4-table-wrap { max-height: none; overflow: visible }
-  .rk4-axis-mobile { display: flex !important; position: sticky; top: 0; z-index: 2; padding: 10px 14px 8px; background: var(--k-raised); border-bottom: 1px solid var(--k-line-strong); border-radius: var(--k-radius) var(--k-radius) 0 0; color: var(--k-muted) }
+
+  #rk4-panel-careers .rk4-table-wrap { max-height: none; overflow: visible; margin-top: 0; border-radius: 0 0 var(--k-radius) var(--k-radius) }
+  .rk4-axis-mobile { display: flex !important; margin-top: 10px; padding: 8px 14px; background: var(--k-raised); border: 1px solid var(--k-line); border-bottom: 0; border-radius: var(--k-radius) var(--k-radius) 0 0; color: var(--k-muted) }
   .rk4-table-careers, .rk4-table-careers tbody { display: block }
   .rk4-table-careers thead { display: none }
-  .rk4-table-careers tr { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding: 12px 14px; border-bottom: 1px solid var(--k-line) }
+  .rk4-table-careers tr { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 14px; border-bottom: 1px solid var(--k-line) }
   .rk4-table-careers tbody tr:last-child { border-bottom: 0 }
   .rk4-table-careers tr > * { padding: 0 !important; border: 0 !important; background: none !important }
   .rk4-table-careers tbody th { flex: 1 0 100%; min-width: 0 }
   .rk4-table-careers td[data-label] { text-align: left !important }
   .rk4-table-careers td[data-label]::before { content: attr(data-label) " "; font-family: var(--display, sans-serif); font-size: 11px; color: var(--k-muted) }
-  .rk4-table-careers .rk4-col-range { flex: 1 0 100%; width: auto; min-width: 0; margin-top: 2px }
+  .rk4-table-careers .rk4-col-range { flex: 1 0 100%; width: auto; min-width: 0; margin-top: 4px }
   .rk4-table-careers .rk4-empty { flex: 1 0 100% }
+
   .rk4-pager ol { display: none }
-  .rk4-pager { position: relative }
-  .rk4-related { grid-template-columns: minmax(0, 1fr); margin-top: 40px }
-  .rk4-related a + a { border-left: 0; border-top: 1px solid var(--k-line) }
+  .rk4-pager-count { display: block }
+  .rk4-pager > button { min-width: 88px }
+  .rk4-related { margin-top: 28px }
 }
