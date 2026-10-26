@@ -27,6 +27,17 @@ for (const [, code, score] of pc1Juliaca.rows) {
 assert.equal(data.pre.filter(row => row.sede === 'Juliaca' && row.pc1 != null).length, 99);
 console.log('Juliaca: 99 visually reviewed first-practice scores verified');
 
+// Third practice (Pre) and fourth written evaluation (Basic), reviewed against the published PDFs.
+const third = JSON.parse(await fs.readFile('data/cepreuni/2027-1/third-evaluation.json', 'utf8'));
+assert.deepEqual(third.sources.map(source => [source.track, source.sede, source.exam, source.count]), [['pre', 'Lima', 'pc3', 2000], ['pre', 'Juliaca', 'pc3', 81], ['basic', 'Lima', 'e4', 98]]);
+for (const source of third.sources) {
+  const rows = new Map(data[source.track].map(row => [row.code, row]));
+  for (const [, code, score] of source.rows) assert.equal(rows.get(code)[source.exam], score);
+}
+assert.equal(data.pre.filter(row => row.pc3 != null).length, 2081);
+assert.equal(data.basic.filter(row => row.e4 != null).length, 98);
+console.log('3PC (2081 Pre) and 4th evaluation (98 Basic) verified');
+
 // Exercise the actual browser calculation functions, including future exams.
 const elements = new Map();
 const element = () => ({ value: '', querySelectorAll: () => [], addEventListener() {} });
