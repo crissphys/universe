@@ -26,7 +26,7 @@ const routes={
  '/biblioteca/manhattan':['Manhattan Editores.','BIBLIOTECA / EDITORIALES','Ciclo ordinarios 2020-1 de PRE San Marcos. Explora los libros y sus portadas por curso.'],
  '/biblioteca/rubinos':['Rubiños Ediciones.','BIBLIOTECA / EDITORIALES','La Enciclopedia · ediciones 2012 y 2016 organizadas por curso.'],
  '/biblioteca/rodo':['Editorial Rodo.','BIBLIOTECA / EDITORIALES','Colecciones organizadas por curso y serie, siguiendo las carpetas de Google Drive.'],
- '/biblioteca/lumbreras':['Catálogo Lumbreras.','BIBLIOTECA / EDITORIALES','Explora las colecciones y encuentra el libro que acompaña a tu siguiente tema.'],
+ 
  '/biblioteca/librosuniversitarios':['Universidad Nacional de Ingeniería.','BIBLIOTECA / UNIVERSITARIA','Física universitaria, cálculo, geometría descriptiva y química universitaria.'],
  '/cepreuni/ciclopre20271':['Tu material. Tu avance.','CEPREUNI / CICLO PRE 2027-1','Documentos del ciclo, libros y clases. Las mismas fuentes, en un espacio más claro.'],
  '/cepreuni/examenes':['Exámenes CEPREUNI','CEPREUNI / BIBLIOTECA DE EXÁMENES','Prácticas calificadas, exámenes parciales y finales. Explora cada documento y abre su vista previa.'],
