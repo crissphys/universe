@@ -161,11 +161,12 @@
   window.UNIVERSE_RANKING_RK4 = { weighted: weighted, score: score, tracks: TRACKS };
   if (!root) return;
 
-  function weighted(row, track) {
+  // Every published exam counts: an absence or a grade not yet published (e.g. unpaid) is 0 until it changes.
+  function weighted(row, track, exams) {
     var included = [], droppable = [];
-    track.exams.forEach(function (exam) {
+    (exams || track.exams).forEach(function (exam) {
       var value = score(row[exam.key]);
-      if (value == null) return;
+      if (value == null) value = 0;
       var item = { key: exam.key, value: value, weight: exam.weight };
       included.push(item);
       if (exam.drop) droppable.push(item);
@@ -186,11 +187,15 @@
   function rowsFor(trackKey) {
     if (cache[trackKey]) return cache[trackKey];
     var track = TRACKS[trackKey];
-    var rows = ((current && current[track.source]) || []).filter(function (raw) {
+    var raws = ((current && current[track.source]) || []).filter(function (raw) {
       return !track.sede || (raw.sede || 'Lima') === track.sede;
-    }).map(function (raw) {
+    });
+    var published = track.exams.filter(function (exam) {
+      return raws.some(function (row) { return score(row[exam.key]) != null || row[exam.key + 'Status']; });
+    });
+    var rows = raws.map(function (raw) {
       var row = Object.assign({}, raw);
-      var result = weighted(row, track);
+      var result = weighted(row, track, published);
       row.average = result.average;
       row.dropped = result.dropped;
       row.weight = result.weight;
@@ -215,9 +220,6 @@
       });
       examRank[exam.key] = { ranks: ranks, count: list.length };
     });
-    var published = track.exams.filter(function (exam) {
-      return rows.some(function (row) { return score(row[exam.key]) != null || row[exam.key + 'Status']; });
-    });
     var hasNames = rows.some(function (row) { return row.name; });
     var hasAbsent = rows.some(function (row) { return track.exams.some(function (exam) { return row[exam.key + 'Status'] === 'AUSENTE'; }); });
     cache[trackKey] = { rows: rows, scored: scored, examRank: examRank, published: published, track: track, hasNames: hasNames, hasAbsent: hasAbsent };
@@ -232,16 +234,15 @@
     var page = 1, focusCode = null, timer = null;
 
     function cellState(row, exam) {
-      var value = score(row[exam.key]);
+      if (row.dropped === exam.key) return 'dropped';
       if (row[exam.key + 'Status'] === 'AUSENTE') return 'absent';
-      if (value == null) return 'pending';
-      return row.dropped === exam.key ? 'dropped' : 'counted';
+      return score(row[exam.key]) == null ? 'pending' : 'counted';
     }
     function cell(row, exam) {
       var s = cellState(row, exam);
-      if (s === 'absent') return '<td class="rk4-num"><span class="rk4-tag rk4-tag-absent">Ausente</span></td>';
-      if (s === 'pending') return '<td class="rk4-num rk4-pending"><span aria-hidden="true">—</span><span class="sr-only">Sin nota</span></td>';
-      if (s === 'dropped') return '<td class="rk4-num rk4-dropped" title="Nota descartada del ponderado"><s>' + fmt(row[exam.key]) + '</s><span class="sr-only"> (descartada)</span></td>';
+      if (s === 'absent') return '<td class="rk4-num" title="Ausente: cuenta 0"><span class="rk4-tag rk4-tag-absent">Ausente</span></td>';
+      if (s === 'pending') return '<td class="rk4-num rk4-pending" title="Nota no publicada: cuenta 0 hasta que aparezca">0<span class="sr-only"> (sin nota publicada)</span></td>';
+      if (s === 'dropped') return '<td class="rk4-num rk4-dropped" title="Nota descartada del ponderado"><s>' + (row[exam.key + 'Status'] === 'AUSENTE' ? 'Ausente' : fmt(score(row[exam.key]) || 0)) + '</s><span class="sr-only"> (descartada)</span></td>';
       return '<td class="rk4-num">' + fmt(row[exam.key]) + '</td>';
     }
     function placeBadge(place) {
@@ -272,10 +273,10 @@
       }
       var exams = data.published.map(function (exam) {
         var s = cellState(row, exam), rank = data.examRank[exam.key];
-        var status = { counted: 'Cuenta', dropped: 'Descartada', pending: 'Sin nota', absent: 'Ausente' }[s];
-        var value = s === 'absent' ? 'Ausente' : s === 'pending' ? '—' : fmt(row[exam.key]);
+        var status = { counted: 'Cuenta', dropped: 'Descartada', pending: 'No publicada · cuenta 0', absent: 'Ausente · cuenta 0' }[s];
+        var value = s === 'absent' ? 'Ausente' : s === 'pending' ? '0' : s === 'dropped' && row[exam.key + 'Status'] === 'AUSENTE' ? 'Ausente' : fmt(score(row[exam.key]) || 0);
         var detail = rank.ranks[row.code] ? 'Puesto ' + int(rank.ranks[row.code]) + ' de ' + int(rank.count) : status;
-        return '<li data-state="' + s + '"><span class="rk4-spot-exam">' + esc(exam.label) + '<small>peso ' + exam.weight + '</small></span><strong>' + (s === 'dropped' ? '<s>' + value + '</s>' : value) + '</strong><small>' + esc(s === 'dropped' ? 'Descartada · ' + detail : detail) + '</small></li>';
+        return '<li data-state="' + s + '"><span class="rk4-spot-exam">' + esc(exam.label) + '<small>peso ' + exam.weight + '</small></span><strong>' + (s === 'dropped' ? '<s>' + value + '</s>' : value) + '</strong><small>' + esc(s === 'dropped' && rank.ranks[row.code] ? 'Descartada · ' + detail : detail) + '</small></li>';
       }).join('');
       spotlight.innerHTML = '<header><div><p class="rk4-kicker">' + esc(track.label) + '</p><h2>' + esc(row.name || (data.hasNames ? 'Nombre no publicado' : 'Código ' + row.code)) + '</h2>' + (row.name || data.hasNames ? '<p class="rk4-code">' + esc(row.code) + '</p>' : '') + '</div><button type="button" class="rk4-ghost" data-rk4-close>Cerrar</button></header>' + standing + '<ol class="rk4-spot-exams">' + exams + '</ol>';
       spotlight.hidden = false;
@@ -287,7 +288,7 @@
       var values = scored.map(function (r) { return r.average; });
       var mean = values.length ? values.reduce(function (s, v) { return s + v; }, 0) / values.length : null;
       kpis.innerHTML =
-        kpi('Estudiantes', int(data.rows.length), int(scored.length) + ' con nota') +
+        kpi('Estudiantes', int(data.rows.length), data.published.length + ' evaluaciones') +
         kpi('Primer puesto', top ? fmt(top.average) : '—', top ? esc(top.name || top.code) : '') +
         kpi('Media', fmt(mean), 'Mediana ' + fmt(median(values)));
     }

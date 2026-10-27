@@ -44,23 +44,27 @@ const document = { querySelectorAll: () => [], getElementById: () => null };
 const browser = { window: { UNIVERSE_CEPRE_2027_1: data }, document, location: { search: '', pathname: '/ranking', hash: '' }, URLSearchParams };
 vm.runInNewContext(await fs.readFile('universe-ui/native/ranking-v4.js', 'utf8'), browser);
 const { weighted, score, tracks } = browser.window.UNIVERSE_RANKING_RK4;
-const avg = (row, track) => weighted(row, track).average;
 const pre = tracks.pre;
-assert.equal(weighted({ pc1: 80, pc2: 100, pc7: 0 }, pre).dropped, 'pc1');
-assert.equal(avg({}, pre), null);
+const only = (track, keys) => track.exams.filter(exam => keys.includes(exam.key));
+const avg = (row, track, keys) => weighted(row, track, keys && only(track, keys)).average;
+const sofar = ['pc1', 'pc2', 'ep1'];
+assert.equal(weighted({ pc1: 80, pc2: 100 }, pre, only(pre, sofar)).dropped, 'pc1');
 assert.equal(score(''), null);
 assert.equal(score('  '), null);
 assert.equal(score(null), null);
 assert.equal(score('AUSENTE'), null);
 assert.equal(score(0), 0);
-assert.equal(avg({ pc1: 80 }, pre), 80);
-assert.equal(avg({ pc1: 80, pc2: 100, ep1: 70 }, pre), 80); // (100 + 2*70)/3
-assert.equal(avg({ pc1: 0, pc2: 0, ep1: 60 }, pre), 40); // only ONE zero PC discarded
-assert.equal(avg({ pc1: 80, pc2: 100, ep1: null }, pre), 100);
-assert.equal(avg({ pc1: 80, pc2: 100, pc7: 10 }, pre), 55); // PC7 not discarded
+assert.equal(avg({ pc1: 80, pc2: 100, ep1: 70 }, pre, sofar), 80); // (100 + 2*70)/3
+assert.equal(avg({ pc1: 0, pc2: 0, ep1: 60 }, pre, sofar), 40); // only ONE zero PC discarded
+// Absent or unpublished (unpaid) grades count as 0 with their full weight.
+assert.equal(avg({ pc1: 80, pc2: 100, ep1: null, ep1Status: 'AUSENTE' }, pre, sofar), 100 / 3);
+assert.equal(avg({ pc1: 80, ep1: 60 }, pre, sofar), 200 / 3); // missing PC2 = 0, then discarded
+assert.equal(avg({ pc1: 80, pc2: 100 }, pre, ['pc1']), 80); // unpublished exams for everyone do not count
+assert.equal(avg({}, pre, sofar), 0);
+assert.equal(avg({ pc1: 80, pc2: 100, pc7: 10 }, pre, ['pc1', 'pc2', 'pc7']), 55); // PC7 not discarded
 assert.equal(avg({ pc1: 10, pc2: 20, pc3: 30, pc4: 40, pc5: 50, pc6: 60, pc7: 0, ep1: 70, ep2: 80, ef: 90 }, pre), 1200 / 18);
-assert.equal(avg({ ep1: 70, ep2: 80, ef: 90 }, pre), 1000 / 12);
-assert.equal(avg({ e1: 10, e2: 20 }, tracks.basic), 15);
-assert.equal(avg({ pc2: 100, ep1: 70 }, tracks.juliaca), 80);
+assert.equal(avg({ ep1: 70, ep2: 80, ef: 90 }, pre), 1000 / 18);
+assert.equal(avg({ e1: 10, e2: 20 }, tracks.basic, ['e1', 'e2', 'e3']), 10);
+assert.equal(avg({ pc2: 100, ep1: 70 }, tracks.juliaca, sofar), 80);
 assert.equal(await fs.readFile('ranking.html', 'utf8'), await fs.readFile('ranking/index.html', 'utf8'));
 console.log('Weights, one discard, ties, PC7, pending notes, zero, both campuses and Basic: passed');
