@@ -61,6 +61,9 @@ for b in books:
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         im.resize((tw, round(h * tw / w)), Image.LANCZOS).save(dst, 'WEBP', quality=74, method=6)
         after += os.path.getsize(dst)
+    # JPEG for link previews (WhatsApp, Facebook, Telegram); kept small so WhatsApp shows the large card
+    ow = min(600, w)
+    im.resize((ow, round(h * ow / w)), Image.LANCZOS).save(os.path.join(out_root, f'{rel}-og.jpg'), 'JPEG', quality=78, optimize=True, progressive=True)
     r, g, bl = im.resize((1, 1), Image.BOX).getpixel((0, 0))
     covers[src] = {'t': rel, 'c': '#%02x%02x%02x' % (r, g, bl)}
 
