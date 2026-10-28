@@ -556,7 +556,7 @@
   }
 
   async function share(b) {
-    const url = location.origin + location.pathname + '#libro-' + b.id;
+    const url = location.origin + location.pathname + '?libro=' + encodeURIComponent(b.id); // query so link previews can show the cover
     const data = { title: `${b.title} · Lumbreras`, text: `${b.title} (${b.series})`, url };
     try {
       if (navigator.share) { await navigator.share(data); return; }
@@ -621,7 +621,8 @@
   }
 
   function openFromHash() {
-    const m = location.hash.match(/^#libro-([\w-]+)/);
+    const q = new URLSearchParams(location.search).get('libro');
+    const m = q ? [, q] : location.hash.match(/^#libro-([\w-]+)/);
     if (m) { const b = model.byId.get(m[1]); if (b) openSheet(b, b.group.books); return; }
     const slug = decodeURIComponent(location.hash.slice(1));
     const sec = slug && document.getElementById(slug);
