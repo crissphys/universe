@@ -1,5 +1,7 @@
-// Link previews for shared books: /biblioteca/lumbreras/?libro=<id>
+// Link previews for shared books: /biblioteca/<catalog>/?libro=<id> (cuzcano/_middleware.js re-exports this)
 // WhatsApp/Facebook/Telegram do not run JS, so the book's title and cover go into the HTML here.
+
+const NAMES = { lumbreras: 'Lumbreras', cuzcano: 'Cuzcano' };
 
 const bookId = (b, i, seen) => {
   let id = ((b.url.match(/\/d\/([\w-]+)/) || b.url.match(/[?&]id=([\w-]+)/) || [, String(i)])[1]).slice(0, 10);
@@ -26,25 +28,25 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
   const wanted = url.searchParams.get('libro');
-  const isPage = /^\/biblioteca\/lumbreras\/?(index\.html)?$/.test(url.pathname);
-  if (!wanted || !isPage || request.method !== 'GET') return next();
+  const cat = (url.pathname.match(/^\/biblioteca\/(lumbreras|cuzcano)\/?(index\.html)?$/) || [])[1];
+  if (!wanted || !cat || request.method !== 'GET') return next();
 
   const page = await next();
   try {
     const asset = path => env.ASSETS.fetch(new URL(path, url.origin)).then(r => r.json());
-    const [data, manifest] = await Promise.all([asset('/universe-ui/data/platform.json'), asset('/biblioteca/lumbreras/covers/manifest.json')]);
+    const [data, manifest] = await Promise.all([asset('/universe-ui/data/platform.json'), asset(`/biblioteca/${cat}/covers/manifest.json`)]);
     const seen = new Set();
-    const list = data.catalogs.lumbreras.filter(b => b && b.url && !b.upcoming);
+    const list = data.catalogs[cat].filter(b => b && b.url && !b.upcoming);
     const book = list.find((b, i) => bookId(b, i, seen) === wanted);
     if (!book) return page;
 
     const thumb = manifest.covers && manifest.covers[book.image];
     const image = thumb
-      ? `${url.origin}/biblioteca/lumbreras/covers/${encodeURI(thumb.t)}-og.jpg`
+      ? `${url.origin}/biblioteca/${cat}/covers/${encodeURI(thumb.t)}-og.jpg`
       : new URL(book.image, url.origin).href;
-    const title = `${book.title} · Lumbreras`;
+    const title = `${book.title} · ${NAMES[cat]}`;
     const desc = [book.series, book.catalog && book.catalog.charAt(0) + book.catalog.slice(1).toLowerCase()].filter(Boolean).join(' · ');
-    const share = `${url.origin}/biblioteca/lumbreras/?libro=${encodeURIComponent(wanted)}`;
+    const share = `${url.origin}/biblioteca/${cat}/?libro=${encodeURIComponent(wanted)}`;
     const tags = [
       ['og:type', 'book'], ['og:site_name', 'UNIverse to Study'], ['og:title', title], ['og:description', desc],
       ['og:url', share], ['og:image', image], ['og:image:alt', `Portada de ${book.title}`]

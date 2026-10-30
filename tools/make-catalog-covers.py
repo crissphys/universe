@@ -1,19 +1,22 @@
-"""Build light WebP covers (240/480w) + manifest for biblioteca/lumbreras.
+"""Build light WebP covers (240/480w) + manifest for a galaxy catalog page (biblioteca/<catalog>).
 
-Books come from universe-ui/data/platform.json (catalogs.lumbreras). Collection slugs and
+Books come from universe-ui/data/platform.json (catalogs.<catalog>). Collection slugs and
 descriptions are kept from the previous manifest; new collections get a slug from their name.
 
 Usage (from the repo root):
-  python tools/make-lumbreras-covers.py              # read data + images from the working tree
-  python tools/make-lumbreras-covers.py origin/main  # read them from a git ref instead
+  python tools/make-catalog-covers.py lumbreras              # read data + images from the working tree
+  python tools/make-catalog-covers.py cuzcano origin/main    # read them from a git ref instead
 """
 import io, json, os, re, subprocess, sys, unicodedata
 from PIL import Image, ImageOps
 
-ref = sys.argv[1] if len(sys.argv) > 1 else None
+# catalog -> folder that holds its original cover images
+PREFIX = {'lumbreras': '/assets/library/lumbreras/', 'cuzcano': '/biblioteca/cuzcano/assets/'}
+catalog = sys.argv[1] if len(sys.argv) > 1 else sys.exit(f'usage: make-catalog-covers.py {{{"|".join(PREFIX)}}} [git-ref]')
+ref = sys.argv[2] if len(sys.argv) > 2 else None
 root = os.getcwd()
-out_root = os.path.join(root, 'biblioteca/lumbreras/covers')
-prefix = '/assets/library/lumbreras/'
+out_root = os.path.join(root, f'biblioteca/{catalog}/covers')
+prefix = PREFIX[catalog]
 
 
 def read(path):
@@ -28,7 +31,7 @@ def slugify(s):
     return re.sub(r'[^a-z0-9]+', '-', s).strip('-')
 
 
-books = json.loads(read('universe-ui/data/platform.json'))['catalogs']['lumbreras']
+books = json.loads(read('universe-ui/data/platform.json'))['catalogs'][catalog]
 try:
     with open(os.path.join(out_root, 'manifest.json'), encoding='utf-8') as f:
         meta = json.load(f).get('collections', {})
