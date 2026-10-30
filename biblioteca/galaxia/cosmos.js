@@ -5,6 +5,9 @@
   const TAU = Math.PI * 2;
   const WIDE = [[.30, .26], [.47, .17], [.64, .30], [.82, .18], [.55, .50], [.80, .48], [.95, .32], [.12, .19], [.15, .45], [.36, .43]];
   const TALL = [[.24, .18], [.64, .14], [.86, .26], [.42, .30], [.68, .41], [.19, .40], [.88, .51], [.48, .52], [.13, .55], [.32, .47]];
+  // catalogs with only a few collections: spread them over the sky instead of the top-left corner
+  const FEW_WIDE = [[.26, .30], [.58, .20], [.84, .36], [.46, .50]];
+  const FEW_TALL = [[.30, .17], [.66, .28], [.34, .42], [.70, .52]];
 
   function rng(seed) {
     let s = seed >>> 0;
@@ -78,8 +81,9 @@
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
       tall = H > W * 1.05;
-      const P = tall ? TALL : WIDE;
-      scale = Math.min(W, H * (tall ? .75 : 1.3));
+      const few = gals.length <= FEW_WIDE.length;
+      const P = few ? (tall ? FEW_TALL : FEW_WIDE) : tall ? TALL : WIDE;
+      scale = Math.min(W, H * (tall ? .75 : 1.3)) * (few ? (tall ? 1.1 : 1.35) : 1);
       gals.forEach((g, i) => {
         g.x = P[i % P.length][0] * W;
         g.y = P[i % P.length][1] * H;

@@ -1,9 +1,10 @@
 (() => {
   'use strict';
 
-  // platform.json is the same book list the rest of the site uses
+  // platform.json is the same book list the rest of the site uses; <body data-*> picks the catalog
   const DATA_URL = '/universe-ui/data/platform.json';
-  const BASE = '/biblioteca/lumbreras/';
+  const { catalog: CAT, name: NAME, store: STORE } = document.body.dataset;
+  const BASE = `/biblioteca/${CAT}/`;
   const COVERS_URL = BASE + 'covers/manifest.json';
   let covers = {};
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -28,8 +29,9 @@
   const pad2 = n => String(n).padStart(2, '0');
   const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
   const SMALL = new Set(['de', 'del', 'y', 'la', 'el', 'las', 'los', 'en']);
+  const ACRONYM = new Set(['uni', 'preuni', 'cepreuni', 'unsa', 'uncp', 'unmsm']);
   const titleCase = s => s !== s.toUpperCase() ? s : s.toLowerCase().split(' ')
-    .map((w, i) => (i && SMALL.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    .map((w, i) => ACRONYM.has(w) ? w.toUpperCase() : (i && SMALL.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   const ICON = {
     down: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 8 5 5 5-5"/></svg>',
@@ -60,8 +62,8 @@
 
   /* ---------- Storage (per-browser conveniences only) ---------- */
   const store = {
-    get(k, d) { try { const v = localStorage.getItem('lumb:' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
-    set(k, v) { try { localStorage.setItem('lumb:' + k, JSON.stringify(v)); } catch { /* storage blocked */ } }
+    get(k, d) { try { const v = localStorage.getItem(STORE + ':' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(STORE + ':' + k, JSON.stringify(v)); } catch { /* storage blocked */ } }
   };
   let saved = new Set(store.get('saved', []));
   let recent = store.get('recent', []);
@@ -93,8 +95,8 @@
       if (books.some(x => x.id === id)) id += '-' + books.length;
       const book = {
         n: books.length, id, title: b.title, series: b.series, image: b.image, driveUrl: b.url,
-        alt: `Portada de ${b.title}`, col, group: grp, type, course: course || null, thumb: covers[b.image] || null,
-        key: norm([b.title, b.series, gname, col.name, type === 'sol' ? 'solucionario' : ''].join(' '))
+        alt: `Portada de ${b.title}`, author: b.author || '', col, group: grp, type, course: course || null, thumb: covers[b.image] || null,
+        key: norm([b.title, b.series, gname, col.name, b.author || '', type === 'sol' ? 'solucionario' : ''].join(' '))
       };
       books.push(book); grp.books.push(book); col.books.push(book);
     });
@@ -309,7 +311,7 @@
     const courses = COURSES.map(c => ({ ...c, n: count(b => b.course && b.course.slug === c.slug) })).filter(c => c.n);
     const group = (title, html) => `<div class="fgroup"><h3>${title}</h3><div>${html}</div></div>`;
     $('.filters').innerHTML =
-      group('Tipo', TYPES.map(([k, label]) => `<button class="chip" type="button" data-tipo="${k}" aria-pressed="${state.tipo === k}">${label}<i>${count(b => b.type === k)}</i></button>`).join('') +
+      group('Tipo', TYPES.filter(([k]) => count(b => b.type === k)).map(([k, label]) => `<button class="chip" type="button" data-tipo="${k}" aria-pressed="${state.tipo === k}">${label}<i>${count(b => b.type === k)}</i></button>`).join('') +
         `<button class="chip saved" type="button" data-estante aria-pressed="${state.estante}">${ICON.star}Mi estante<i>${saved.size}</i></button>`) +
       group('Curso', courses.map(c => `<button class="chip" type="button" data-curso="${c.slug}" aria-pressed="${state.curso === c.slug}">${c.label}<i>${c.n}</i></button>`).join('')) +
       (state.tipo || state.curso || state.estante ? `<div><button class="chip reset" type="button" data-reset>Quitar filtros</button></div>` : '');
@@ -476,7 +478,7 @@
     $('.sheet-path').innerHTML = `<b>${b.col.number}</b>${esc(b.col.name)}`;
     $('.sheet-series').textContent = b.series;
     $('#sheet-title').textContent = b.title;
-    const rows = [['Sección', b.group.name], ['Curso', b.course && b.course.label], ['Tipo', TYPES.find(t => t[0] === b.type)[1]]];
+    const rows = [['Sección', b.group.name], ['Autor', b.author], ['Curso', b.course && b.course.label], ['Tipo', TYPES.find(t => t[0] === b.type)[1]]];
     $('.specs').innerHTML = rows.filter(r => r[1]).map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('');
     const drive = $('.drive');
     drive.href = b.driveUrl;
@@ -557,7 +559,7 @@
 
   async function share(b) {
     const url = location.origin + location.pathname + '?libro=' + encodeURIComponent(b.id); // query so link previews can show the cover
-    const data = { title: `${b.title} · Lumbreras`, text: `${b.title} (${b.series})`, url };
+    const data = { title: `${b.title} · ${NAME}`, text: `${b.title} (${b.series})`, url };
     try {
       if (navigator.share) { await navigator.share(data); return; }
       await navigator.clipboard.writeText(url);
@@ -696,7 +698,7 @@
     try {
       const [list, man] = await Promise.all([
         fetch(DATA_URL, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-          .then(d => d.catalogs.lumbreras),
+          .then(d => d.catalogs[CAT]),
         fetch(COVERS_URL).then(r => r.ok ? r.json() : {}).catch(() => ({}))
       ]);
       covers = man.covers || {};
