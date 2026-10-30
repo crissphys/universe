@@ -20288,6 +20288,26 @@
       {
         "catalog": "LIBROS ROJOS NUEVOS",
         "section": "Libros",
+        "title": "Física",
+        "url": "https://drive.google.com/file/d/1HD9pkI3bNMRlwMUZCM9GF0FkOaWLhBzX/view?usp=drive_link",
+        "image": "/assets/library/lumbreras/libros-rojos-nuevos/fisica-tomo-i.webp",
+        "series": "Colección Ciencias y Humanidades · Edición Nueva",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "LIBROS ROJOS NUEVOS",
+        "section": "Libros",
+        "title": "Física HD (1,7 GB)",
+        "url": "https://drive.google.com/file/d/1bzaoCfY9Rg4JcNNQw-_CH0OmjKsB0USC/view?usp=drive_link",
+        "image": "/assets/library/lumbreras/libros-rojos-nuevos/fisica-tomo-i.webp",
+        "series": "Colección Ciencias y Humanidades · Edición Nueva",
+        "author": "",
+        "upcoming": false
+      },
+      {
+        "catalog": "LIBROS ROJOS NUEVOS",
+        "section": "Libros",
         "title": "Geometría del Espacio",
         "url": "https://drive.google.com/file/d/1kOzR00cp5n8DRFq9ktlJoRD8D2Ciq9Kt/view?usp=drive_link",
         "image": "/assets/library/lumbreras/libros-rojos-nuevos/geometria-del-espacio.png",
