@@ -94,13 +94,13 @@
       const type = k.includes(' solucionario') ? 'sol' : k.includes('problemas resueltos') ? 'pr' : 'lib';
       const course = COURSES.find(x => k.includes(' ' + x.k));
       // PDFs without a cover file show Drive's first-page thumbnail; the placeholder stays as fallback
-      const did = (b.drivePreview || /\.svg$/.test(b.image)) && (b.url.match(/\/d\/([\w-]+)/) || [])[1];
+      const did = (b.drivePreview || /\.svg$|drive\.google\.com\/thumbnail/.test(b.image)) && (b.url.match(/\/d\/([\w-]+)/) || [])[1];
       let id = ((b.url.match(/\/d\/([\w-]+)/) || b.url.match(/[?&]id=([\w-]+)/) || [, String(books.length)])[1]).slice(0, 10);
       if (books.some(x => x.id === id)) id += '-' + books.length;
       const book = {
         n: books.length, id, title: b.title, series: b.series, driveUrl: b.url,
         image: did ? `https://drive.google.com/thumbnail?id=${did}&sz=w480` : b.image, fallback: did ? b.image : '',
-        alt: `Portada de ${b.title}`, author: b.author || '', col, group: grp, type, course: course || null, thumb: covers[b.image] || null,
+        alt: `Portada de ${b.title}`, author: b.author || '', col, group: grp, type, course: course || null, thumb: covers[b.image] || (did && covers[did]) || null,
         key: norm([b.title, b.series, gname, col.name, b.author || '', type === 'sol' ? 'solucionario' : ''].join(' '))
       };
       books.push(book); grp.books.push(book); col.books.push(book);

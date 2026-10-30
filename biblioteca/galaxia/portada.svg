@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" role="img" aria-label="Portada no disponible">
+  <rect width="600" height="800" fill="#141417"/>
+  <rect x="24" y="24" width="552" height="752" rx="10" fill="none" stroke="#2a2a30" stroke-width="2"/>
+  <path d="M220 330h70a20 20 0 0 1 20 20v130a16 16 0 0 0-16-16h-74zM380 330h-70a20 20 0 0 0-20 20v130a16 16 0 0 1 16-16h74z" fill="none" stroke="#5a5a64" stroke-width="8" stroke-linejoin="round"/>
+</svg>

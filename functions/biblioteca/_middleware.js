@@ -5,7 +5,8 @@
 const PAGES = {
   lumbreras: ['Lumbreras'], cuzcano: ['Cuzcano'], universe: ['Editorial Universe'], amautas: ['Amautas'],
   manhattan: ['Manhattan'], rubinos: ['Rubiños'], rodo: ['Rodo'], librosuniversitarios: ['Libros universitarios', 'college'],
-  literatura: ['Literatura']
+  literatura: ['Literatura'], pamer: ['Pamer'], sanmarcos: ['San Marcos'], trilce: ['Trilce'], megabyte: ['Megabyte'],
+  delta: ['Delta'], moshera: ['Moshera'], editoriales: ['Otras editoriales'], cursos: ['Libros por curso']
 };
 
 const bookId = (b, i, seen) => {
@@ -46,10 +47,13 @@ export async function onRequest(context) {
     const book = list.find((b, i) => bookId(b, i, seen) === wanted);
     if (!book) return page;
 
-    const thumb = manifest.covers && manifest.covers[book.image];
-    const did = (book.drivePreview || /\.svg$/.test(book.image)) && (book.url.match(/\/d\/([\w-]+)/) || [])[1];
+    const covers = manifest.covers || {};
+    const thumb = covers[book.image];
+    const did = (book.drivePreview || /\.svg$|drive\.google\.com\/thumbnail/.test(book.image)) && (book.url.match(/\/d\/([\w-]+)/) || [])[1];
+    // first-page covers (covers/drive/<id>) have no -og.jpg; their 480w WebP is the preview image
     const image = thumb
       ? `${url.origin}/biblioteca/${cat}/covers/${encodeURI(thumb.t)}-og.jpg`
+      : did && covers[did] ? `${url.origin}/biblioteca/${cat}/covers/${covers[did].t}-480.webp`
       : did ? `https://drive.google.com/thumbnail?id=${did}&sz=w600` : new URL(book.image, url.origin).href;
     const title = `${book.title} · ${name}`;
     const desc = [book.series, book.catalog && book.catalog.charAt(0) + book.catalog.slice(1).toLowerCase()].filter(Boolean).join(' · ');
