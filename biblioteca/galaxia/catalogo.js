@@ -3,7 +3,8 @@
 
   // platform.json is the same book list the rest of the site uses; <body data-*> picks the catalog
   const DATA_URL = '/universe-ui/data/platform.json';
-  const { catalog: CAT, name: NAME, store: STORE } = document.body.dataset;
+  // data-key: platform.json key when it differs from the folder (librosuniversitarios -> college)
+  const { catalog: CAT, key: KEY = CAT, name: NAME, store: STORE } = document.body.dataset;
   const BASE = `/biblioteca/${CAT}/`;
   const COVERS_URL = BASE + 'covers/manifest.json';
   let covers = {};
@@ -19,7 +20,8 @@
     list: '56px', shelf: '116px', related: '72px', sheet: '(min-width: 768px) 300px, 56vw'
   };
   const coverSrc = (b, size) => {
-    if (!b.thumb) return `src="${esc(b.image.replace(/([?&]sz=)w\d+/, '$1w480'))}"`; // Drive thumbnails: ask for a small one
+    const fb = b.fallback ? ` data-fallback="${esc(b.fallback)}"` : '';
+    if (!b.thumb) return `src="${esc(b.image.replace(/([?&]sz=)w\d+/, '$1w480'))}"${fb} referrerpolicy="no-referrer"`; // Drive thumbnails: ask for a small one (Drive refuses some referers)
     const base = BASE + 'covers/' + encodeURI(b.thumb.t);
     return `src="${base}-240.webp" srcset="${base}-240.webp 240w, ${base}-480.webp 480w" sizes="${SIZES[size]}"`;
   };
@@ -28,8 +30,8 @@
   const norm = s => ' ' + fold(s).replace(/[^a-z0-9ñ]+/g, ' ').trim() + ' ';
   const pad2 = n => String(n).padStart(2, '0');
   const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
-  const SMALL = new Set(['de', 'del', 'y', 'la', 'el', 'las', 'los', 'en']);
-  const ACRONYM = new Set(['uni', 'preuni', 'cepreuni', 'unsa', 'uncp', 'unmsm']);
+  const SMALL = new Set(['de', 'del', 'y', 'la', 'el', 'las', 'los', 'en', 'un', 'con', 'por', 'a']);
+  const ACRONYM = new Set(['uni', 'preuni', 'cepreuni', 'unsa', 'uncp', 'unmsm', 'cd-rom', 'cepres', 'pcs']);
   const titleCase = s => s !== s.toUpperCase() ? s : s.toLowerCase().split(' ')
     .map((w, i) => ACRONYM.has(w) ? w.toUpperCase() : (i && SMALL.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
@@ -91,10 +93,13 @@
       const k = norm([b.title, b.series, gname].join(' '));
       const type = k.includes(' solucionario') ? 'sol' : k.includes('problemas resueltos') ? 'pr' : 'lib';
       const course = COURSES.find(x => k.includes(' ' + x.k));
+      // PDFs without a cover file show Drive's first-page thumbnail; the placeholder stays as fallback
+      const did = (b.drivePreview || /\.svg$/.test(b.image)) && (b.url.match(/\/d\/([\w-]+)/) || [])[1];
       let id = ((b.url.match(/\/d\/([\w-]+)/) || b.url.match(/[?&]id=([\w-]+)/) || [, String(books.length)])[1]).slice(0, 10);
       if (books.some(x => x.id === id)) id += '-' + books.length;
       const book = {
-        n: books.length, id, title: b.title, series: b.series, image: b.image, driveUrl: b.url,
+        n: books.length, id, title: b.title, series: b.series, driveUrl: b.url,
+        image: did ? `https://drive.google.com/thumbnail?id=${did}&sz=w480` : b.image, fallback: did ? b.image : '',
         alt: `Portada de ${b.title}`, author: b.author || '', col, group: grp, type, course: course || null, thumb: covers[b.image] || null,
         key: norm([b.title, b.series, gname, col.name, b.author || '', type === 'sol' ? 'solucionario' : ''].join(' '))
       };
@@ -171,7 +176,10 @@
     const h = $('#hero-title');
     const text = h.textContent;
     h.setAttribute('aria-label', text);
-    h.innerHTML = [...text].map((ch, i) => `<span class="ch" aria-hidden="true" style="--i:${i}">${esc(ch)}</span>`).join('');
+    // words stay unbroken; plain spaces between them (an inline-block space collapses to nothing)
+    let i = 0;
+    h.style.setProperty('--n', Math.max(...text.split(' ').map(w => w.length)));
+    h.innerHTML = text.split(' ').map(w => `<span class="word" aria-hidden="true">${[...w].map(ch => `<span class="ch" style="--i:${i++}">${esc(ch)}</span>`).join('')}</span>`).join(' ');
   }
 
   function initCosmos() {
@@ -471,8 +479,9 @@
     const im = $('.sheet-cover img');
     const base = b.thumb && BASE + 'covers/' + encodeURI(b.thumb.t);
     im.removeAttribute('srcset');
+    im.referrerPolicy = base ? '' : 'no-referrer';
     if (base) { im.sizes = SIZES.sheet; im.srcset = `${base}-240.webp 240w, ${base}-480.webp 480w`; im.src = `${base}-480.webp`; }
-    else im.src = b.image;
+    else { im.src = b.image; im.dataset.fallback = b.fallback; }
     im.alt = b.alt;
     $('.sheet-cover').style.setProperty('--tint', b.thumb ? b.thumb.c : '');
     $('.sheet-path').innerHTML = `<b>${b.col.number}</b>${esc(b.col.name)}`;
@@ -698,7 +707,7 @@
     try {
       const [list, man] = await Promise.all([
         fetch(DATA_URL, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-          .then(d => d.catalogs[CAT]),
+          .then(d => d.catalogs[KEY]),
         fetch(COVERS_URL).then(r => r.ok ? r.json() : {}).catch(() => ({}))
       ]);
       covers = man.covers || {};
@@ -723,6 +732,12 @@
     openFromHash();
     addEventListener('hashchange', openFromHash);
   }
+
+  // Drive thumbnail missing -> placeholder cover
+  document.addEventListener('error', e => {
+    const im = e.target;
+    if (im.tagName === 'IMG' && im.dataset.fallback && im.getAttribute('src') !== im.dataset.fallback) im.src = im.dataset.fallback;
+  }, true);
 
   splitTitle();
   initSheet();

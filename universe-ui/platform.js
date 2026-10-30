@@ -1,7 +1,7 @@
 import {publisherShowcase,mountPublishers} from './library-showcase.js?v=20261011-editorial-carousel';
 import {renderDirectory} from './library-directory.js';
 import {renderExams} from './cepreuni-exams.js?v=20261013-1ep-reconstruidos';
-import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20261029-galaxy-catalogs';
+import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20261030-galaxy-all';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
 import {renderBranchedMenu} from './branched-menu.js?v=20261011-left-branch-layout';
@@ -20,13 +20,6 @@ function openVideoPreview(id,title,channel){const dialog=$('#video-preview');if(
 const routes={
  '/explorar':['Tu universo de estudio','PLATAFORMA / 01','Un lugar para conectar lo que aprendes, lo que practicas y lo que quieres alcanzar.'],
  '/biblioteca':['Conocimiento en órbita.','BIBLIOTECA / 02','Encuentra tu siguiente lectura. Colecciones, materiales y libros organizados para acompañarte antes y después del ingreso.'],
- '/biblioteca/universe':['Biblioteca Universe.','EDITORIAL UNIVERSE','Resúmenes por edición, colecciones temáticas y solucionarios editoriales.'],
- '/biblioteca/amautas':['Catálogo Amautas.','BIBLIOTECA / EDITORIALES','Problemas de admisión UNI ordenados por temas. Encuentra tu curso, revisa la primera página y abre el libro en Google Drive.'],
- '/biblioteca/manhattan':['Manhattan Editores.','BIBLIOTECA / EDITORIALES','Ciclo ordinarios 2020-1 de PRE San Marcos. Explora los libros y sus portadas por curso.'],
- '/biblioteca/rubinos':['Rubiños Ediciones.','BIBLIOTECA / EDITORIALES','La Enciclopedia · ediciones 2012 y 2016 organizadas por curso.'],
- '/biblioteca/rodo':['Editorial Rodo.','BIBLIOTECA / EDITORIALES','Colecciones organizadas por curso y serie, siguiendo las carpetas de Google Drive.'],
- 
- '/biblioteca/librosuniversitarios':['Universidad Nacional de Ingeniería.','BIBLIOTECA / UNIVERSITARIA','Física universitaria, cálculo, geometría descriptiva y química universitaria.'],
  '/cepreuni/ciclopre20271':['Tu material. Tu avance.','CEPREUNI / CICLO PRE 2027-1','Documentos del ciclo, libros y clases. Las mismas fuentes, en un espacio más claro.'],
  '/cepreuni/examenes':['Exámenes CEPREUNI','CEPREUNI / BIBLIOTECA DE EXÁMENES','Prácticas calificadas, exámenes parciales y finales. Explora cada documento y abre su vista previa.'],
  '/cepreuni':['Tu próxima etapa.','CEPREUNI / 2027-1','Un centro de estudio para tu ciclo: materiales, temas, evaluaciones y una ruta para llegar preparado.'],
@@ -51,9 +44,9 @@ const empty=text=>`<div class="p-empty">${esc(text)}</div>`;
 function toast(text){let el=$('.local-toast');if(!el){el=document.createElement('div');el.className='local-toast';el.setAttribute('role','status');document.body.append(el)}el.textContent=text;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,3500)}
 function pathName(){const path=decodeURI(location.pathname).replace(/\/$/,'').replace(/\.html$/,'')||'/';return path==='/index'?'/':path}
 function setRouteSeo(title,description,canonical){document.title=title;let meta=$('meta[name="description"]');if(!meta){meta=document.createElement('meta');meta.name='description';document.head.append(meta)}meta.content=description;let link=$('link[rel="canonical"]');if(!link){link=document.createElement('link');link.rel='canonical';document.head.append(link)}link.href=new URL(canonical,location.origin).href}
-function head(path){const r=routes[path]||['Aún no estamos aquí.','UNIVERSE / 404','No encontramos esta página. Puedes volver a la plataforma.'];const publisherPaths=['/biblioteca/librosuniversitarios','/biblioteca/amautas','/biblioteca/manhattan','/biblioteca/rubinos','/biblioteca/rodo','/biblioteca/universe'];if(publisherPaths.includes(path))return `<div class="page-topline literature-topline university-topline"><span><a href="/">Universe</a> / <a href="/biblioteca">Biblioteca</a> / ${esc(r[0].replace(/\.$/,''))}</span></div>`;return `<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / ${esc(r[0].replace(/\.$/,''))}</span></div><div class="page-head"><span class="eyebrow">${r[1]}</span><h1 id="page-title" tabindex="-1">${r[0]}</h1><p>${r[2]}</p></div>`}
+function head(path){const r=routes[path]||['Aún no estamos aquí.','UNIVERSE / 404','No encontramos esta página. Puedes volver a la plataforma.'];return `<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / ${esc(r[0].replace(/\.$/,''))}</span></div><div class="page-head"><span class="eyebrow">${r[1]}</span><h1 id="page-title" tabindex="-1">${r[0]}</h1><p>${r[2]}</p></div>`}
 async function route(focus=false){const token=++routeVersion,p=pathName();const isHome=p==='/';home.hidden=!isHome;$('#platform').hidden=isHome;document.body.classList.toggle('in-platform',!isHome);$('.brand').href='/';$('.footer-brand').href='/';$$('.header .nav a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')===p?'page':'false'));if(isHome){setRouteSeo('Universe — El origen de tu siguiente idea','Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.','/');return}const meta=routes[p],title=meta?.[0]||'Página no encontrada';setRouteSeo(`${title} — Universe`,meta?.[2]||'No encontramos esta página. Puedes volver a la plataforma.',p);renderBranchedMenu($('.side-rail'),{activePath:p,renderIcon:name=>ui.icon(name)});view.innerHTML=head(p)+'<div class="page-view" id="page-view"></div>';const out=$('#page-view');if(!data){out.innerHTML=empty('Conectando tus recursos…');try{data=await fetch('/universe-ui/data/platform.json?v=20261021-lenguaje-3ra').then(r=>{if(!r.ok)throw Error('Datos no disponibles');return r.json()});hydrateHumanities(data)}catch{out.innerHTML=note('No se pudieron cargar los recursos. Recarga esta página.');return}}if(token!==routeVersion)return;
- const catalogs={'/biblioteca/amautas':'amautas','/biblioteca/manhattan':'manhattan','/biblioteca/rubinos':'rubinos','/biblioteca/rodo':'rodo','/biblioteca/universe':'universe','/biblioteca/librosuniversitarios':'college','/cepreuni/ciclopre20271':'materials'};
+ const catalogs={'/cepreuni/ciclopre20271':'materials'};
  if(catalogs[p])catalog(out,catalogs[p]);
  else if(p==='/explorar')overview(out);
  else if(p==='/biblioteca')await library(out);

@@ -3,8 +3,11 @@
   'use strict';
 
   const TAU = Math.PI * 2;
-  const WIDE = [[.30, .26], [.47, .17], [.64, .30], [.82, .18], [.55, .50], [.80, .48], [.95, .32], [.12, .19], [.15, .45], [.36, .43]];
-  const TALL = [[.24, .18], [.64, .14], [.86, .26], [.42, .30], [.68, .41], [.19, .40], [.88, .51], [.48, .52], [.13, .55], [.32, .47]];
+  // first 10 slots fit most catalogs; the rest are for long ones (Literatura has 15 épocas)
+  const WIDE = [[.30, .26], [.47, .17], [.64, .30], [.82, .18], [.55, .50], [.80, .48], [.95, .32], [.12, .19], [.15, .45], [.36, .43],
+    [.66, .08], [.07, .33], [.88, .60], [.27, .08], [.46, .36], [.66, .62]];
+  const TALL = [[.24, .18], [.64, .14], [.86, .26], [.42, .30], [.68, .41], [.19, .40], [.88, .51], [.48, .52], [.13, .55], [.32, .47],
+    [.12, .08], [.44, .07], [.86, .07], [.10, .29], [.58, .24], [.70, .58]];
   // catalogs with only a few collections: spread them over the sky instead of the top-left corner
   const FEW_WIDE = [[.26, .30], [.58, .20], [.84, .36], [.46, .50]];
   const FEW_TALL = [[.30, .17], [.66, .28], [.34, .42], [.70, .52]];
@@ -87,7 +90,7 @@
       gals.forEach((g, i) => {
         g.x = P[i % P.length][0] * W;
         g.y = P[i % P.length][1] * H;
-        g.R = scale * (tall ? .085 : .062) * (0.5 + Math.sqrt(g.n / max));
+        g.R = scale * (tall ? .085 : .062) * (0.5 + Math.sqrt(g.n / max)) * Math.min(1, Math.sqrt(10 / gals.length));
       });
       seedBg();
       placeLabels();
