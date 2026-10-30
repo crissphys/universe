@@ -24178,42 +24178,6 @@
         "author": "Lumbreras Editores",
         "upcoming": false,
         "sourceTitle": "Problemas Selectos — César Vallejo × Lumbreras.pdf"
-      },
-      {
-        "catalog": "OBRAS ADICIONALES LUMBRERAS",
-        "section": "Solucionarios de admisión",
-        "title": "Lógico matemático",
-        "url": "https://drive.google.com/file/d/1PPZQVKbafyhplYTcQrXCHwCsb5YKYntU/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "Solucionario UNCP",
-        "author": "Lumbreras Editores",
-        "upcoming": false,
-        "sourceTitle": "Solucionario UNCP — Lógico matemático — Lumbreras.pdf"
-      },
-      {
-        "catalog": "OBRAS ADICIONALES LUMBRERAS",
-        "section": "Solucionarios de admisión",
-        "title": "Estadística",
-        "url": "https://drive.google.com/file/d/1lDaiB5RT55nMbH_6LXNvxlmALsRerNGJ/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "Solucionario UNCP",
-        "author": "Lumbreras Editores",
-        "upcoming": false,
-        "sourceTitle": "Solucionario UNCP — Estadística — Lumbreras.pdf"
-      },
-      {
-        "catalog": "OBRAS ADICIONALES LUMBRERAS",
-        "section": "Solucionarios de admisión",
-        "title": "Razonamiento matemático",
-        "url": "https://drive.google.com/file/d/1zBjWQbb3Tcg34QbYwZrhwIC_piQzvkpF/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "Solucionario UNSA",
-        "author": "Lumbreras Editores",
-        "upcoming": false,
-        "sourceTitle": "Solucionario UNSA — Razonamiento matemático — Lumbreras.pdf"
       }
     ],
     "college": [
@@ -24457,17 +24421,6 @@
         "drivePreview": true,
         "series": "13 · 1993",
         "author": "Francisco Montero López",
-        "upcoming": false
-      },
-      {
-        "catalog": "Libros universitarios",
-        "section": "Geometría descriptiva",
-        "title": "Estudio de geometría descriptiva — Tomo I: Proyección cilíndrica (copia 2)",
-        "url": "https://drive.google.com/file/d/1EQlPJjN14rxsKWAfDuJ44e0DyYyeBWZ4/view?usp=drivesdk",
-        "image": "/biblioteca/librosuniversitarios/assets/university-book-preview-unavailable.svg",
-        "drivePreview": true,
-        "series": "14 · 12.ª edición · Copia 2",
-        "author": "Harry, Rodolfo, Miguel y Tomás Osers",
         "upcoming": false
       },
       {
@@ -28960,174 +28913,6 @@
         "upcoming": false,
         "sourceTitle": "LENGUAJE - RODO WAWA",
         "drivePreview": true
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Razonamiento",
-        "url": "https://drive.google.com/file/d/1de4agDHcQfyta-Y_dF2m8vkerqjBztMj/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Razonamiento",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - RAZONAMIENTOS",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Literatura",
-        "url": "https://drive.google.com/file/d/1N9PZkZSYvYKnmyaDRTcDU7d4LswQYzhm/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Literatura",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - LITERATURA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Química",
-        "url": "https://drive.google.com/file/d/1DKYoxxcnR4HrY_fD5_oTUne-JJ-0jbEs/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Química",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - QUÍMICA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Lenguaje",
-        "url": "https://drive.google.com/file/d/1RmI8PIEKRY3caxOI0rrjbf3CCzlG9qg6/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Lenguaje",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - LENGUAJE",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Geografía",
-        "url": "https://drive.google.com/file/d/1tsHjGUHf3S_BfZqw6xKbqw6wIGhP80Ya/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Geografía",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - GEOGRAFÍA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Economía",
-        "url": "https://drive.google.com/file/d/1QIdssoWQb3Ftsw8VbviZMV2AQnUFnVMt/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Economía",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - ECONOMÍA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Física",
-        "url": "https://drive.google.com/file/d/1LuO7j6meo6PdDm-NVpqWOpmc5OXjJofZ/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Física",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - FISICA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Aritmética",
-        "url": "https://drive.google.com/file/d/1a7wXOvFL0prcCGcME5uL4jCl8OzzxCSt/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Aritmética",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - ARITMÉTICA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Álgebra",
-        "url": "https://drive.google.com/file/d/17tjcER0WyeOUZdWccfI2-c-wxsti43rS/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Álgebra",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - ÁLGEBRA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Historia",
-        "url": "https://drive.google.com/file/d/1ST2ZSV2kYhRjZoqnxUJwXU7OYeohFSAN/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Historia",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - HISTORIA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Psicología",
-        "url": "https://drive.google.com/file/d/19lb7JOJ5vUH1D9Z0YYMj-vb_p-pxa7za/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Psicología",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - PSICOLOGÍA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Geometría",
-        "url": "https://drive.google.com/file/d/16M-2jNHAszFgGpB3wMcBXcNAgnhy2L3b/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Geometría",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - GEOMETRÍA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Trigonometría",
-        "url": "https://drive.google.com/file/d/1B6u9BTHTPfAsr9TzREatPfdOhzlwEi_m/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Trigonometría",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - TRIGONOMETRIA",
-        "drivePreview": false
-      },
-      {
-        "catalog": "ACCESOS DIRECTOS POR CURSO",
-        "section": "Todos los cursos",
-        "title": "Biología",
-        "url": "https://drive.google.com/file/d/1M8Me3MaisZKm7ga45-xkJMaPwffnR_Yj/view?usp=drivesdk",
-        "image": "/biblioteca/rodo/assets/portada-no-disponible.svg",
-        "series": "ACCESOS DIRECTOS POR CURSO · Biología",
-        "author": "Editorial Rodo",
-        "upcoming": false,
-        "sourceTitle": "RODO - BIOLOGIA",
-        "drivePreview": false
       }
     ],
     "literatura": [
@@ -32156,18 +31941,6 @@
         "author": "",
         "upcoming": false,
         "sourceTitle": "CHRISTIAM HUERTAS - 34. SERIES NUMERICAS.pdf"
-      },
-      {
-        "catalog": "Álgebra",
-        "section": "Christian Huertas",
-        "title": "Integral indefinida",
-        "url": "https://drive.google.com/file/d/1JdZKU1HFW7vEKL41FURilIdRk_gAQB3g/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "N.º 35 · Christian Huertas",
-        "author": "",
-        "upcoming": false,
-        "sourceTitle": "CHRISTIAM HUERTAS - 35. INTEGRAL INDEFINIDA.pdf"
       },
       {
         "catalog": "Álgebra",
@@ -35987,18 +35760,6 @@
       },
       {
         "catalog": "Humanidades",
-        "section": "Historia",
-        "title": "Historia universal",
-        "url": "https://drive.google.com/file/d/1IMuc02-EdOK15FrPyYtY9iEw5zlKohK7/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "Libro de consulta",
-        "author": "",
-        "upcoming": false,
-        "sourceTitle": "HISTORIA UNIVERSAL"
-      },
-      {
-        "catalog": "Humanidades",
         "section": "Geografía",
         "title": "Geografía e historia",
         "url": "https://drive.google.com/file/d/17CTrTuhol5oCU5pZwGGpJaABMHo2ocAE/view?usp=drive_link",
@@ -38208,18 +37969,6 @@
         "author": "Colección Goñi",
         "upcoming": false,
         "sourceTitle": "Aritmética Práctica — Guillermo Martínez — Colección Goñi.pdf"
-      },
-      {
-        "catalog": "Colección Goñi",
-        "section": "",
-        "title": "Aritmética razonada",
-        "url": "https://drive.google.com/file/d/11N6wOsjRwyOUjMPENPdARib1dgnPb8J3/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "Mario Silva Santisteban · Blanco y negro",
-        "author": "Colección Goñi",
-        "upcoming": false,
-        "sourceTitle": "Aritmética Razonada — Blanco y Negro — Colección Goñi.pdf"
       },
       {
         "catalog": "Colección Goñi",
@@ -41632,22 +41381,10 @@
         "url": "https://drive.google.com/file/d/1L74LNuWiEqUoBbH0rNkFdenNn9cLneoe/view?usp=drive_link",
         "image": "/biblioteca/galaxia/portada.svg",
         "drivePreview": true,
-        "series": "Adolfo Povis Vega · 2.ª edición a color",
+        "series": "Adolfo Povis Vega · 2.ª edición",
         "author": "Editorial Moshera",
         "upcoming": false,
         "sourceTitle": "RM A COLOR - MOSHERA - Ing. Adolfo Povis"
-      },
-      {
-        "catalog": "Razonamiento Matemático",
-        "section": "",
-        "title": "Razonamiento matemático · Problemas de nivel",
-        "url": "https://drive.google.com/file/d/1MTDGyB3m_IkcTeVx1zw3JX0mTbX3axXN/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "Adolfo Povis Vega · 2.ª edición en blanco y negro",
-        "author": "Editorial Moshera",
-        "upcoming": false,
-        "sourceTitle": "RM - MOSHERA - Ing. Adolfo Vega (2da Ed)"
       },
       {
         "catalog": "Ciencias",
@@ -41675,18 +41412,6 @@
       }
     ],
     "delta": [
-      {
-        "catalog": "Exámenes de admisión",
-        "section": "",
-        "title": "Últimos exámenes UNI 2024-1",
-        "url": "https://drive.google.com/file/d/1devbW-TAuttn7SbkyQ6G-nhByd9x9gE6/view?usp=drive_link",
-        "image": "/biblioteca/galaxia/portada.svg",
-        "drivePreview": true,
-        "series": "Exámenes de admisión",
-        "author": "Editora Delta",
-        "upcoming": false,
-        "sourceTitle": "Últimos Exámenes UNI 2024-1 — Editorial Delta (ACCESO DIRECTO)"
-      },
       {
         "catalog": "Exámenes de admisión",
         "section": "",
