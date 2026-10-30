@@ -90,10 +90,11 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 @media (hover: hover) and (pointer: fine) { .crumb:hover { color: var(--fg); } }
 .cosmos h1 {
   margin: 0 0 0 -.03em;
-  font-size: clamp(56px, 16vw, 168px);
+  /* --n = longest word (set by catalogo.js) so long names like "universitarios" still fit a phone */
+  font-size: min(clamp(56px, 16vw, 168px), calc((100vw - 40px) / (var(--n, 9) * .62)));
   font-weight: 600; letter-spacing: -.06em; line-height: .9;
-  white-space: nowrap;
 }
+.cosmos h1 .word { display: inline-block; white-space: nowrap; }
 .cosmos h1 .ch { display: inline-block; }
 .js .cosmos h1 .ch { opacity: 0; transform: translateY(.3em); filter: blur(8px); animation: chIn 900ms var(--ease-out) forwards; animation-delay: calc(var(--i) * 40ms + 150ms); }
 @keyframes chIn { to { opacity: 1; transform: none; filter: blur(0); } }

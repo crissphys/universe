@@ -3,20 +3,22 @@
 Books come from universe-ui/data/platform.json (catalogs.<catalog>). Collection slugs and
 descriptions are kept from the previous manifest; new collections get a slug from their name.
 
-Usage (from the repo root):
+Usage (from the repo root; <catalog> is the folder under biblioteca/):
   python tools/make-catalog-covers.py lumbreras              # read data + images from the working tree
   python tools/make-catalog-covers.py cuzcano origin/main    # read them from a git ref instead
 """
 import io, json, os, re, subprocess, sys, unicodedata
 from PIL import Image, ImageOps
 
-# catalog -> folder that holds its original cover images
-PREFIX = {'lumbreras': '/assets/library/lumbreras/', 'cuzcano': '/biblioteca/cuzcano/assets/'}
-catalog = sys.argv[1] if len(sys.argv) > 1 else sys.exit(f'usage: make-catalog-covers.py {{{"|".join(PREFIX)}}} [git-ref]')
+# folder -> where its original cover images live (default biblioteca/<folder>/assets/)
+PREFIX = {'lumbreras': '/assets/library/lumbreras/'}
+# folder -> platform.json key when they differ (same as data-key on the page)
+KEY = {'librosuniversitarios': 'college'}
+catalog = sys.argv[1] if len(sys.argv) > 1 else sys.exit('usage: make-catalog-covers.py <catalog folder> [git-ref]')
 ref = sys.argv[2] if len(sys.argv) > 2 else None
 root = os.getcwd()
 out_root = os.path.join(root, f'biblioteca/{catalog}/covers')
-prefix = PREFIX[catalog]
+prefix = PREFIX.get(catalog, f'/biblioteca/{catalog}/assets/')
 
 
 def read(path):
@@ -31,7 +33,7 @@ def slugify(s):
     return re.sub(r'[^a-z0-9]+', '-', s).strip('-')
 
 
-books = json.loads(read('universe-ui/data/platform.json'))['catalogs'][catalog]
+books = json.loads(read('universe-ui/data/platform.json'))['catalogs'][KEY.get(catalog, catalog)]
 try:
     with open(os.path.join(out_root, 'manifest.json'), encoding='utf-8') as f:
         meta = json.load(f).get('collections', {})
@@ -44,7 +46,7 @@ for b in books:
     if name not in collections:
         collections[name] = meta.get(name, {'slug': slugify(name), 'description': ''})
     src = b['image']
-    if src in covers or not src.startswith(prefix):
+    if src in covers or not src.startswith(prefix) or src.endswith('.svg'):  # svg = placeholder, page uses Drive's thumbnail
         continue
     raw = read(src.lstrip('/'))
     before += len(raw)
@@ -71,6 +73,7 @@ for b in books:
     covers[src] = {'t': rel, 'c': '#%02x%02x%02x' % (r, g, bl)}
 
 manifest = {'collections': collections, 'covers': covers}
+os.makedirs(out_root, exist_ok=True)
 with open(os.path.join(out_root, 'manifest.json'), 'w', encoding='utf-8') as f:
     json.dump(manifest, f, ensure_ascii=False, separators=(',', ':'))
 print(f'{len(books)} books, {len(collections)} collections, {len(covers)} covers  '
