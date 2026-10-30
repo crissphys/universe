@@ -1,6 +1,5 @@
 // Link previews for shared books: /biblioteca/lumbreras/?libro=<id>
 // WhatsApp/Facebook/Telegram do not run JS, so the book's title and cover go into the HTML here.
-const PREFIX = '/assets/library/lumbreras/';
 
 const bookId = (b, i, seen) => {
   let id = ((b.url.match(/\/d\/([\w-]+)/) || b.url.match(/[?&]id=([\w-]+)/) || [, String(i)])[1]).slice(0, 10);
