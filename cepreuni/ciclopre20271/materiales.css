@@ -119,3 +119,10 @@
   .m-sk li { animation: none; }
   .m-row, .m-row > svg, .m-courses button, .m-kinds button { transition: none; }
 }
+
+/* ---------- Ciclo ---------- */
+.m-cycles { display: flex; gap: 6px; margin-top: 18px; }
+.m-cycles button { height: 36px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line-2); background: none; color: var(--fg-2); font: 500 14px/1 var(--mono); font-variant-numeric: tabular-nums; transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, transform 140ms var(--ease-out); }
+.m-cycles button:active { transform: scale(.96); }
+.m-cycles button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+@media (hover: hover) and (pointer: fine) { .m-cycles button[aria-pressed="false"]:hover { color: var(--fg); border-color: var(--fg-3); } }
