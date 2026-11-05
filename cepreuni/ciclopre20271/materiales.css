@@ -1,0 +1,84 @@
+/* CEPREUNI 2027-1 · materiales. Extiende biblioteca/galaxia/catalogo.css (tokens, header, buscador, footer). */
+
+/* ---------- Hero ---------- */
+.m-hero { position: relative; padding-top: 104px; padding-bottom: 20px; isolation: isolate; }
+.m-hero::before { content: ""; position: absolute; inset: 0 0 -40px; z-index: -1; background: radial-gradient(60% 90% at 78% 0%, rgba(255, 107, 74, .1), transparent 70%); pointer-events: none; }
+.m-hero h1 { margin: 0 0 0 -.03em; white-space: nowrap; font-size: clamp(32px, 9.6vw, 96px); font-weight: 600; letter-spacing: -.06em; line-height: .92; }
+.m-hero h1 em { font-style: normal; color: var(--accent); white-space: nowrap; }
+.m-hero .stats { margin-top: 18px; }
+
+/* ---------- Tipo (sticky) ---------- */
+.console-inner { gap: 6px; padding-block: 10px 6px; }
+.m-kinds { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+.m-kinds::-webkit-scrollbar { display: none; }
+.m-kinds button { flex: none; height: 34px; padding: 0 13px; border: 0; border-radius: 999px; background: none; font-size: 14px; color: var(--fg-3); white-space: nowrap; transition: color 160ms ease, background-color 160ms ease; }
+.m-kinds button span, .m-courses button span { font: 500 11px/1 var(--mono); margin-left: 6px; opacity: .65; font-variant-numeric: tabular-nums; }
+.m-kinds button[aria-pressed="true"] { color: var(--fg); background: rgba(255, 255, 255, .08); }
+.m-kinds button:active, .m-courses button:active { transform: scale(.96); }
+.m-kinds button:disabled { opacity: .35; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .m-kinds button:not([aria-pressed="true"]):hover { color: var(--fg-2); } }
+
+/* ---------- Curso ---------- */
+.m-courses-wrap { padding-top: 14px; }
+.m-courses { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); padding-bottom: 2px; }
+.m-courses::-webkit-scrollbar { display: none; }
+@media (min-width: 900px) { .m-courses { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; } }
+.m-courses button {
+  flex: none; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px 0 12px;
+  border-radius: 999px; border: 1px solid var(--line); background: transparent; font-size: 14px; color: var(--fg-2); white-space: nowrap;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, transform 140ms var(--ease-out);
+}
+.m-courses button i { width: 8px; height: 8px; border-radius: 50%; background: oklch(.72 calc(var(--c, 1) * .14) var(--h, 0)); }
+.m-courses button span { margin-left: 0; }
+.m-courses button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+@media (hover: hover) and (pointer: fine) { .m-courses button[aria-pressed="false"]:hover { border-color: var(--line-2); color: var(--fg); } }
+
+/* ---------- Resultados ---------- */
+.m-res { padding-block: 8px 96px; min-height: 60svh; }
+.m-sec { padding-top: 40px; scroll-margin-top: 120px; }
+.m-sec h2 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px; font-size: clamp(24px, 5vw, 34px); font-weight: 600; letter-spacing: -.04em; line-height: 1.1; }
+.m-sec h2 span { font: 500 13px/1 var(--mono); color: var(--fg-3); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.m-list { display: grid; gap: 2px 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); }
+.m-row {
+  display: grid; grid-template-columns: 40px minmax(0, 1fr) 16px; align-items: center; gap: 14px;
+  min-height: 72px; padding: 10px 10px 10px 6px; margin-inline: -6px; border-radius: 14px; text-decoration: none;
+  transition: background-color 160ms ease, transform 140ms var(--ease-out);
+}
+.m-row:active { transform: scale(.985); background: rgba(255, 255, 255, .05); }
+.m-row > svg { width: 16px; height: 16px; color: var(--fg-3); transition: color 160ms ease, transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .m-row:hover { background: rgba(255, 255, 255, .045); } .m-row:hover > svg { color: var(--accent); transform: translate(2px, -2px); } }
+
+/* Mini hoja vertical: recuerda la portada de un libro sin forzar la vista previa horizontal del PDF. */
+.m-tile {
+  position: relative; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; align-items: center;
+  width: 40px; height: 52px; padding: 5px 0 4px; border-radius: 5px;
+  background: oklch(.25 calc(var(--c, 1) * .055) var(--h, 0));
+  color: oklch(.84 calc(var(--c, 1) * .1) var(--h, 0));
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+}
+.m-tile::after { content: ""; position: absolute; top: 0; right: 0; width: 9px; height: 9px; background: rgba(255, 255, 255, .14); clip-path: polygon(0 0, 100% 100%, 0 100%); }
+.m-tile i, .m-tile u { font: 500 7.5px/1 var(--mono); font-style: normal; text-decoration: none; letter-spacing: .06em; text-transform: uppercase; opacity: .72; }
+.m-tile b { font: 600 19px/1 var(--sans); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.m-tile b sup { font: 500 9px/1 var(--mono); letter-spacing: 0; margin-left: 1px; opacity: .7; vertical-align: top; }
+.m-tile b.is-ev { font-size: 14px; letter-spacing: -.02em; }
+.m-txt { display: grid; gap: 3px; min-width: 0; }
+.m-txt strong { font-size: 15.5px; font-weight: 500; line-height: 1.28; letter-spacing: -.01em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.m-txt small { font-size: 12.5px; color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-txt small b { font-weight: 500; color: var(--fg-2); }
+
+.m-more { display: block; margin: 18px auto 0; height: 40px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line-2); background: none; font-size: 14px; color: var(--fg-2); }
+
+/* ---------- Vacío / carga ---------- */
+.m-empty { padding: 56px 0 8px; display: grid; gap: 18px; justify-items: start; }
+.m-empty h2 { margin: 0; font-size: clamp(24px, 6vw, 36px); font-weight: 600; letter-spacing: -.04em; line-height: 1.12; overflow-wrap: anywhere; }
+.m-empty button { height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line-2); background: none; color: var(--fg); font-size: 14.5px; }
+.m-sk { display: grid; gap: 14px 24px; padding-top: 36px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); }
+.m-sk li { height: 72px; border-radius: 14px; background: linear-gradient(90deg, var(--surface) 0%, var(--surface-2) 50%, var(--surface) 100%); background-size: 200% 100%; animation: mSk 1.4s ease-in-out infinite; }
+@keyframes mSk { to { background-position: -200% 0; } }
+.m-res[aria-busy="false"] .m-sk { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .m-sk li { animation: none; }
+  .m-row, .m-row > svg, .m-courses button, .m-kinds button { transition: none; }
+}
