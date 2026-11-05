@@ -22,7 +22,7 @@
   const q = $('#q'), clearBtn = $('.search-clear'), count = $('.search-count');
   const kindsEl = $('.m-kinds'), coursesEl = $('.m-courses'), res = $('#res'), consoleEl = $('.console');
   const params = new URLSearchParams(location.search);
-  const state = { q: params.get('q') || '', kind: params.get('t') || 'clase', course: params.get('c') || '' };
+  const state = { q: '', kind: params.get('t') || 'clase', course: params.get('c') || '' };
   let items = [], courses = [];
 
   const style = c => `--h:${HUE[c] ?? 0};--c:${c in HUE ? 1 : 0}`;
@@ -91,7 +91,6 @@
     }
     res.setAttribute('aria-busy', 'false');
     const p = new URLSearchParams();
-    if (state.q.trim()) p.set('q', state.q.trim());
     if (state.kind !== 'clase') p.set('t', state.kind);
     if (state.course) p.set('c', state.course);
     try { history.replaceState(null, '', location.pathname + (String(p) ? `?${p}` : '')); } catch { /* file:// previews */ }
@@ -102,7 +101,7 @@
     if (scrollY > top) scrollTo({ top: Math.max(0, top), behavior: 'instant' });
   }
 
-  q.value = state.q;
+  q.value = '';
   q.addEventListener('input', () => {
     state.q = q.value;
     if (state.q.trim() && !filtered().length) state.kind = KINDS.find(([k]) => { state.kind = k; return filtered().length; })?.[0] || 'clase';
@@ -130,7 +129,7 @@
   addEventListener('scroll', onScroll, { passive: true });
   totop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-  fetch('/cepreuni/ciclopre20271/materiales.json?v=20261107').then(r => r.json()).then(d => {
+  fetch('/cepreuni/ciclopre20271/materiales.json?v=20261108').then(r => r.json()).then(d => {
     courses = d.courses;
     items = d.items.map(it => ({ ...it, h: fold([it.t, it.c, TAG[it.k], KINDS.find(([k]) => k === group(it.k))?.[1] || '', it.e || '', EVENT[it.e] || '', it.w ? `semana ${it.w} sem s${it.w}` : '', EXT[it.x] || '', it.k === 'repaso' ? 'reforzamiento' : ''].join(' ')) }));
     if (!KINDS.some(([k]) => k === state.kind)) state.kind = 'clase';
