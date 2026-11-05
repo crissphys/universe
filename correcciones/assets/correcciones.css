@@ -370,6 +370,7 @@ select option { background: var(--surface-2); color: var(--fg); }
 /* botón fijo hacia el formulario */
 .btn.cta { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 35; min-height: 56px; padding: 0 36px; font-size: 17px; background: var(--accent); color: var(--accent-ink); box-shadow: 0 14px 36px -10px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08) inset; transform: translate(-50%, 0); transition: transform .3s var(--ease), opacity .2s, background-color .16s; }
 .btn.cta:active { transform: translate(-50%, 0) scale(.97); }
+.btn.cta.is-off { opacity: 0; visibility: hidden; pointer-events: none; transform: translate(-50%, 24px); transition: transform .3s var(--ease), opacity .2s, visibility 0s .3s; }
 @media (min-width: 768px) { .btn.cta { bottom: 28px; } }
 @media (hover: hover) and (pointer: fine) { .btn.cta:hover { background: color-mix(in oklab, var(--accent) 86%, #fff); } }
 
