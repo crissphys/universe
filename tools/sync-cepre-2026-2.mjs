@@ -61,8 +61,8 @@ if (finalLima.length !== vacantesLima.length || finalJuliaca.length !== vacantes
   throw new Error('Los listados de examen final y asignación no tienen la misma cantidad de registros.');
 }
 
-const rankingHtml = await fs.readFile('ranking.html', 'utf8');
-const rankingMatch = rankingHtml.match(/<script id="cepre2026-ranking-data" type="application\/json">([\s\S]*?)<\/script>/);
+const rankingHtml = await fs.readFile('ranking/data/ranking-2026-2.js', 'utf8');
+const rankingMatch = rankingHtml.match(/^window\.UNIVERSE_RANKING_2026_2=([\s\S]*?);\s*$/);
 if (!rankingMatch) throw new Error('No se encontró el bloque de datos del ranking.');
 const rankingCodes = new Set(JSON.parse(rankingMatch[1]).map((row) => row[1]));
 

@@ -205,8 +205,8 @@ function statsFor(scores) {
   };
 }
 
-const rankingSource = await fs.readFile('ranking.html', 'utf8');
-const rankingMatch = rankingSource.match(/<script id="cepre2026-ranking-data" type="application\/json">([\s\S]*?)<\/script>/);
+const rankingSource = await fs.readFile('ranking/data/ranking-2026-2.js', 'utf8');
+const rankingMatch = rankingSource.match(/^window\.UNIVERSE_RANKING_2026_2=([\s\S]*?);\s*$/);
 if (!rankingMatch) throw new Error('No se encontró la base del ranking CEPREUNI.');
 const rankingRows = JSON.parse(rankingMatch[1]);
 const codeLookup = suffixLookup(rankingRows);
