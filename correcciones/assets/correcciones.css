@@ -366,3 +366,8 @@ select option { background: var(--surface-2); color: var(--fg); }
 
 @media (max-width: 479px) { .prio-l li { grid-template-columns: 1fr; gap: 6px; } }
 @media (prefers-reduced-motion: reduce) { .done-ic svg { animation: none; stroke-dashoffset: 0; } .spin { animation-duration: 1.4s !important; animation-iteration-count: infinite !important; } }
+
+/* botón central hacia el formulario */
+.cta-wrap { display: flex; justify-content: center; padding-top: 56px; }
+.btn.cta { min-height: 56px; padding: 0 40px; font-size: 17px; background: var(--accent); color: var(--accent-ink); box-shadow: 0 14px 36px -14px color-mix(in oklab, var(--accent) 70%, transparent); }
+@media (hover: hover) and (pointer: fine) { .btn.cta:hover { background: color-mix(in oklab, var(--accent) 86%, #fff); } }

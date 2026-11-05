@@ -39,175 +39,23 @@
   <section class="hero wrap" aria-labelledby="t">
     <p class="k rv">UNIverse / Correcciones</p>
     <h1 id="t" class="rv" style="--d:1">Correcciones <em>y reportes</em></h1>
-    <p class="lede rv" style="--d:2">Una fórmula equivocada, una nota mal registrada, una fuente dudosa o un material que debe retirarse: cuéntanoslo. Cada reporte se revisa contra la fuente y llega directo al equipo.</p>
-    <div class="hero-cta rv" style="--d:3">
-      <a class="btn" href="#reportar">Enviar un reporte<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m0 0 6-6m-6 6-6-6"/></svg></a>
-      <a class="btn ghost" href="#marco">Marco legal y principios</a>
-    </div>
-    <ul class="facts">
-      <li class="card bglow rv" style="--d:3"><span class="edge-light"></span><span class="k">Qué puedes reportar</span><p>Errores académicos, datos o puntajes, fallas técnicas, material con derechos de autor y asuntos de privacidad.</p></li>
-      <li class="card bglow bglow--amber rv" style="--d:4"><span class="edge-light"></span><span class="k amber">Prioridad alta</span><p>Privacidad y datos personales, cálculo de puntaje, resultados y acceso a cuentas se revisan primero.</p></li>
-      <li class="card bglow rv" style="--d:5"><span class="edge-light"></span><span class="k">Tu información</span><p>El correo es opcional, nunca pedimos DNI ni contraseñas y solo usamos tus datos para atender este reporte.</p></li>
-    </ul>
+    <p class="lede rv" style="--d:2">Marco legal, principios y derechos que rigen Universe to Study.</p>
   </section>
 
   <nav class="snav" aria-label="Secciones">
     <div class="wrap">
-      <a href="#reportar" aria-current="false">Reportar</a>
-      <a href="#proceso" aria-current="false">Cómo revisamos</a>
       <a href="#marco" aria-current="false">Marco legal</a>
       <a href="#datos" aria-current="false">Tus datos</a>
+      <a href="#proceso" aria-current="false">Cómo revisamos</a>
+      <a href="#reportar" aria-current="false">Reportar</a>
     </div>
   </nav>
-
-  <!-- ============ REPORTAR ============ -->
-  <section id="reportar" class="sec wrap sc split" aria-labelledby="h-rep">
-    <div class="split-h">
-      <h2 id="h-rep">Reportar</h2>
-      <p class="sub">Mientras más preciso sea el reporte, más rápido se corrige.</p>
-      <ul class="tips">
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Indica qué dice y qué debería decir.</li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Añade la fuente: libro y página, resolución o enlace oficial.</li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Para datos, escribe el código, curso, evaluación o carrera.</li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Nunca compartas contraseñas, DNI ni fotos de documentos.</li>
-      </ul>
-    </div>
-    <div class="split-b">
-      <div class="formcard card bglow" id="formcard">
-        <span class="edge-light"></span>
-        <form id="rep" novalidate autocomplete="on" aria-describedby="rep-help">
-          <p class="k" id="rep-help">Los campos con <span class="req" aria-hidden="true">*</span><span class="sr"> asterisco</span> son obligatorios</p>
-
-          <fieldset class="fs">
-            <legend>Tipo de reporte <span class="req" aria-hidden="true">*</span></legend>
-            <div class="types" id="types">
-              <label class="type"><input type="radio" name="type" value="academica" required><span><b>Académica</b><small>Fórmula, explicación o solución</small></span></label>
-              <label class="type"><input type="radio" name="type" value="datos"><span><b>Datos</b><small>Nota, código, carrera o resultado</small></span></label>
-              <label class="type"><input type="radio" name="type" value="tecnica"><span><b>Técnica</b><small>Tabla, botón o diseño que falla</small></span></label>
-              <label class="type"><input type="radio" name="type" value="derechos"><span><b>Derechos de autor</b><small>Material que debe retirarse</small></span></label>
-              <label class="type"><input type="radio" name="type" value="privacidad"><span><b>Privacidad</b><small>Datos personales y derechos ARCO</small></span></label>
-            </div>
-            <p class="hint" id="type-hint" aria-live="polite">Elige el tipo que mejor describa el problema.</p>
-            <p class="err" id="e-type" role="alert"></p>
-          </fieldset>
-
-          <div class="row2">
-            <div class="fld">
-              <label for="f-name">Tu nombre <span class="req" aria-hidden="true">*</span></label>
-              <input id="f-name" name="name" type="text" maxlength="80" autocomplete="name" required aria-describedby="e-name">
-              <p class="err" id="e-name" role="alert"></p>
-            </div>
-            <div class="fld">
-              <label for="f-email">Correo <span class="opt">(opcional, para responderte)</span></label>
-              <input id="f-email" name="email" type="email" maxlength="120" autocomplete="email" inputmode="email" aria-describedby="e-email">
-              <p class="err" id="e-email" role="alert"></p>
-            </div>
-          </div>
-
-          <div class="row2">
-            <div class="fld">
-              <label for="f-page">Página que reportas <span class="req" aria-hidden="true">*</span></label>
-              <div class="sel"><select id="f-page" name="page" required aria-describedby="e-page">
-                <option value="">Elige una página…</option>
-                <option>Inicio</option>
-                <option>Admisión UNI</option>
-                <option>CEPREUNI</option>
-                <option>Ranking</option>
-                <option>Calculadora de puntaje</option>
-                <option>Temario</option>
-                <option>Clases</option>
-                <option>Biblioteca</option>
-                <option>Exámenes</option>
-                <option>Simulacros</option>
-                <option>Planificador</option>
-                <option>Fijas CEPREUNI</option>
-                <option>Guía de aulas y docentes</option>
-                <option>Ingresantes</option>
-                <option>UNITALK</option>
-                <option>Mi espacio / cuenta</option>
-                <option>Metodología editorial</option>
-                <option>Términos o Privacidad</option>
-                <option>Otra página</option>
-              </select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>
-              <p class="err" id="e-page" role="alert"></p>
-            </div>
-            <div class="fld">
-              <label for="f-url">Enlace exacto <span class="opt">(opcional)</span></label>
-              <input id="f-url" name="url" type="text" inputmode="url" maxlength="300" placeholder="https://universetostudy.com/…" autocomplete="off" spellcheck="false" aria-describedby="e-url">
-              <p class="err" id="e-url" role="alert"></p>
-            </div>
-          </div>
-
-          <div class="fld">
-            <label for="f-data">Datos <span class="opt">(opcional)</span></label>
-            <input id="f-data" name="data" type="text" maxlength="400" autocomplete="off" aria-describedby="data-hint">
-            <p class="hint" id="data-hint">Código, curso, pregunta, evaluación, carrera, libro y página…</p>
-          </div>
-
-          <div class="fld">
-            <label for="f-msg">Mensaje <span class="req" aria-hidden="true">*</span></label>
-            <textarea id="f-msg" name="message" rows="6" maxlength="2000" required aria-describedby="e-message msg-count"></textarea>
-            <div class="msg-foot"><p class="err" id="e-message" role="alert"></p><span class="count-c" id="msg-count">0 / 2000</span></div>
-          </div>
-
-          <div class="checks">
-            <label class="chk"><input type="checkbox" name="adult"><span>Tengo 14 años o más, o mi madre, padre o tutor autoriza este envío. <span class="req" aria-hidden="true">*</span></span></label>
-            <p class="err" id="e-adult" role="alert"></p>
-            <label class="chk"><input type="checkbox" name="consent"><span>Autorizo el tratamiento de estos datos para atender mi reporte, según el apartado <a href="#datos">Tus datos</a> y la <a href="/privacidad">Política de Privacidad</a>. <span class="req" aria-hidden="true">*</span></span></label>
-            <p class="err" id="e-consent" role="alert"></p>
-          </div>
-
-          <div class="trap" aria-hidden="true"><label>No completar este campo<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-
-          <div class="submit-row">
-            <button class="btn send" type="submit" id="send"><span class="send-t">Enviar reporte</span><svg class="send-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg><span class="spin" aria-hidden="true"></span></button>
-            <p class="status" id="status" role="status" aria-live="polite"></p>
-          </div>
-        </form>
-
-        <div class="done" id="done" hidden tabindex="-1" aria-live="polite">
-          <span class="done-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
-          <h3>Reporte enviado</h3>
-          <p>Gracias, <b id="done-name"></b>. Lo revisaremos contra la fuente y, si corresponde, actualizaremos la página.</p>
-          <div class="ref"><span class="k">Tu referencia</span><code id="done-id"></code><button type="button" class="btn ghost" id="copy-id">Copiar</button></div>
-          <p class="done-note" id="done-note"></p>
-          <button type="button" class="btn ghost" id="again">Enviar otro reporte</button>
-        </div>
-
-        <div class="fail" id="fail" hidden>
-          <h3>No pudimos enviarlo desde aquí</h3>
-          <p>Tu mensaje sigue en el formulario. Puedes reintentar o escribirnos por WhatsApp con el reporte ya redactado.</p>
-          <div class="fail-actions"><button type="button" class="btn" id="retry">Reintentar</button><a class="btn ghost" id="wa" href="https://wa.me/51963385410" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp</a></div>
-        </div>
-      </div>
-      <noscript><p class="today-msg">Para usar el formulario activa JavaScript, o escríbenos por <a href="https://wa.me/51963385410?text=Hola%2C%20quiero%20reportar%20un%20error%20en%20Universe%20to%20Study">WhatsApp</a>.</p></noscript>
-    </div>
-  </section>
-
-  <!-- ============ PROCESO ============ -->
-  <section id="proceso" class="sec wrap sc" aria-labelledby="h-proc">
-    <div class="sec-head"><div><h2 id="h-proc">Cómo revisamos un reporte</h2><p class="sub">Un criterio editorial claro: la fuente oficial manda.</p></div></div>
-    <ol class="steps4">
-      <li class="card"><span class="n">1</span><h3>Recepción</h3><p>El reporte recibe una referencia y una prioridad según su tipo. Los de privacidad, puntaje, resultados y cuentas pasan primero.</p></li>
-      <li class="card"><span class="n">2</span><h3>Verificación</h3><p>Se contrasta con la fuente primaria: reglamento, comunicado, libro, boletín o publicación oficial de la UNI o CEPREUNI.</p></li>
-      <li class="card"><span class="n">3</span><h3>Corrección</h3><p>Si el error se confirma, se corrige en la página. Cuando el cambio afecta una decisión, se deja visible qué se corrigió.</p></li>
-      <li class="card"><span class="n">4</span><h3>Respuesta</h3><p>Si dejaste correo, te contamos el resultado. Si no procede, explicamos por qué y qué fuente se consultó.</p></li>
-    </ol>
-    <div class="prio card">
-      <div><span class="k amber">Orden de atención</span><h3>Qué se revisa primero</h3></div>
-      <ul class="prio-l">
-        <li><span class="chip hi">Alta</span><span>Privacidad y datos personales · material que vulnera derechos de autor · cálculo de puntaje, notas y resultados · acceso a cuentas</span></li>
-        <li><span class="chip">Normal</span><span>Errores académicos, enlaces rotos, tablas que no cargan y problemas de diseño</span></li>
-      </ul>
-      <p class="fine">No hay un plazo garantizado: es un proyecto educativo independiente. Para asuntos urgentes, usa también el canal de WhatsApp de soporte.</p>
-    </div>
-  </section>
 
   <!-- ============ MARCO LEGAL ============ -->
   <section id="marco" class="sec wrap sc split" aria-labelledby="h-law">
     <div class="split-h">
       <h2 id="h-law">Marco legal y principios</h2>
-      <p class="sub">Normas peruanas que regulan este servicio y cómo las aplicamos.</p>
+      
       <nav class="lawnav" id="lawnav" aria-label="Áreas del marco legal">
         <a href="#l-gen" aria-current="false"><span>00</span>Principios generales</a>
         <a href="#l-datos" aria-current="false"><span>01</span>Datos personales</a>
@@ -222,11 +70,10 @@
       </nav>
     </div>
     <div class="split-b law">
-      <p class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8.2v.1"/></svg><span>Esta sección es informativa y explica cómo aplicamos la ley en este sitio. No constituye asesoría jurídica ni reemplaza el texto oficial de las normas. Versión 4.0 · actualizada el 5 de noviembre de 2026.</span></p>
 
       <article id="l-gen" class="lw">
         <header><span class="no">00</span><div><h3>Principios generales</h3><p class="norm">Constitución Política del Perú · Código Civil · Ley del Procedimiento Administrativo General</p></div></header>
-        <p>Estos principios guían todo lo que publicamos, corregimos y retiramos.</p>
+        
         <ul class="pr">
           <li class="bglow"><span class="edge-light"></span><b>Legalidad</b><span>Actuamos dentro de la ley y no usamos medios ilícitos para obtener, mostrar o tratar información.</span></li>
           <li class="bglow"><span class="edge-light"></span><b>Buena fe</b><span>Presumimos buena fe en quien reporta y esperamos lo mismo: reportes veraces, sin acusaciones falsas.</span></li>
@@ -353,7 +200,7 @@
   <section id="datos" class="sec wrap sc split" aria-labelledby="h-data">
     <div class="split-h">
       <h2 id="h-data">Tus datos en este reporte</h2>
-      <p class="sub">Aviso de privacidad del formulario, según la Ley N.° 29733.</p>
+      
     </div>
     <div class="split-b">
       <dl class="tbl card">
@@ -368,6 +215,144 @@
       </dl>
     </div>
   </section>
+  <!-- ============ PROCESO ============ -->
+  <section id="proceso" class="sec wrap sc" aria-labelledby="h-proc">
+    <div class="sec-head"><div><h2 id="h-proc">Cómo revisamos un reporte</h2></div></div>
+    <ol class="steps4">
+      <li class="card"><span class="n">1</span><h3>Recepción</h3><p>El reporte recibe una referencia y una prioridad según su tipo. Los de privacidad, puntaje, resultados y cuentas pasan primero.</p></li>
+      <li class="card"><span class="n">2</span><h3>Verificación</h3><p>Se contrasta con la fuente primaria: reglamento, comunicado, libro, boletín o publicación oficial de la UNI o CEPREUNI.</p></li>
+      <li class="card"><span class="n">3</span><h3>Corrección</h3><p>Si el error se confirma, se corrige en la página. Cuando el cambio afecta una decisión, se deja visible qué se corrigió.</p></li>
+      <li class="card"><span class="n">4</span><h3>Respuesta</h3><p>Si dejaste correo, te contamos el resultado. Si no procede, explicamos por qué y qué fuente se consultó.</p></li>
+    </ol>
+    <div class="prio card">
+      <div><span class="k amber">Orden de atención</span><h3>Qué se revisa primero</h3></div>
+      <ul class="prio-l">
+        <li><span class="chip hi">Alta</span><span>Privacidad y datos personales · material que vulnera derechos de autor · cálculo de puntaje, notas y resultados · acceso a cuentas</span></li>
+        <li><span class="chip">Normal</span><span>Errores académicos, enlaces rotos, tablas que no cargan y problemas de diseño</span></li>
+      </ul>
+      <p class="fine">No hay un plazo garantizado: es un proyecto educativo independiente. Para asuntos urgentes, usa también el canal de WhatsApp de soporte.</p>
+    </div>
+  </section>
+
+  <div class="cta-wrap wrap sc"><a class="btn cta" href="#reportar">Quiero reportar</a></div>
+
+  <!-- ============ REPORTAR ============ -->
+  <section id="reportar" class="sec wrap sc split" aria-labelledby="h-rep">
+    <div class="split-h">
+      <h2 id="h-rep">Reportar</h2>
+    </div>
+    <div class="split-b">
+      <div class="formcard card bglow" id="formcard">
+        <span class="edge-light"></span>
+        <form id="rep" novalidate autocomplete="on" aria-describedby="rep-help">
+          <p class="k" id="rep-help">Los campos con <span class="req" aria-hidden="true">*</span><span class="sr"> asterisco</span> son obligatorios</p>
+
+          <fieldset class="fs">
+            <legend>Tipo de reporte <span class="req" aria-hidden="true">*</span></legend>
+            <div class="types" id="types">
+              <label class="type"><input type="radio" name="type" value="academica" required><span><b>Académica</b><small>Fórmula, explicación o solución</small></span></label>
+              <label class="type"><input type="radio" name="type" value="datos"><span><b>Datos</b><small>Nota, código, carrera o resultado</small></span></label>
+              <label class="type"><input type="radio" name="type" value="tecnica"><span><b>Técnica</b><small>Tabla, botón o diseño que falla</small></span></label>
+              <label class="type"><input type="radio" name="type" value="derechos"><span><b>Derechos de autor</b><small>Material que debe retirarse</small></span></label>
+              <label class="type"><input type="radio" name="type" value="privacidad"><span><b>Privacidad</b><small>Datos personales y derechos ARCO</small></span></label>
+            </div>
+            <p class="hint" id="type-hint" aria-live="polite">Elige el tipo que mejor describa el problema.</p>
+            <p class="err" id="e-type" role="alert"></p>
+          </fieldset>
+
+          <div class="row2">
+            <div class="fld">
+              <label for="f-name">Tu nombre <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" maxlength="80" autocomplete="name" required aria-describedby="e-name">
+              <p class="err" id="e-name" role="alert"></p>
+            </div>
+            <div class="fld">
+              <label for="f-email">Correo <span class="opt">(opcional, para responderte)</span></label>
+              <input id="f-email" name="email" type="email" maxlength="120" autocomplete="email" inputmode="email" aria-describedby="e-email">
+              <p class="err" id="e-email" role="alert"></p>
+            </div>
+          </div>
+
+          <div class="row2">
+            <div class="fld">
+              <label for="f-page">Página que reportas <span class="req" aria-hidden="true">*</span></label>
+              <div class="sel"><select id="f-page" name="page" required aria-describedby="e-page">
+                <option value="">Elige una página…</option>
+                <option>Inicio</option>
+                <option>Admisión UNI</option>
+                <option>CEPREUNI</option>
+                <option>Ranking</option>
+                <option>Calculadora de puntaje</option>
+                <option>Temario</option>
+                <option>Clases</option>
+                <option>Biblioteca</option>
+                <option>Exámenes</option>
+                <option>Simulacros</option>
+                <option>Planificador</option>
+                <option>Fijas CEPREUNI</option>
+                <option>Guía de aulas y docentes</option>
+                <option>Ingresantes</option>
+                <option>UNITALK</option>
+                <option>Mi espacio / cuenta</option>
+                <option>Metodología editorial</option>
+                <option>Términos o Privacidad</option>
+                <option>Otra página</option>
+              </select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>
+              <p class="err" id="e-page" role="alert"></p>
+            </div>
+            <div class="fld">
+              <label for="f-url">Enlace exacto <span class="opt">(opcional)</span></label>
+              <input id="f-url" name="url" type="text" inputmode="url" maxlength="300" placeholder="https://universetostudy.com/…" autocomplete="off" spellcheck="false" aria-describedby="e-url">
+              <p class="err" id="e-url" role="alert"></p>
+            </div>
+          </div>
+
+          <div class="fld">
+            <label for="f-data">Datos <span class="opt">(opcional)</span></label>
+            <input id="f-data" name="data" type="text" maxlength="400" autocomplete="off" aria-describedby="data-hint">
+            <p class="hint" id="data-hint">Código, curso, pregunta, evaluación, carrera, libro y página…</p>
+          </div>
+
+          <div class="fld">
+            <label for="f-msg">Mensaje <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="f-msg" name="message" rows="6" maxlength="2000" required aria-describedby="e-message msg-count"></textarea>
+            <div class="msg-foot"><p class="err" id="e-message" role="alert"></p><span class="count-c" id="msg-count">0 / 2000</span></div>
+          </div>
+
+          <div class="checks">
+            <label class="chk"><input type="checkbox" name="adult"><span>Tengo 14 años o más, o mi madre, padre o tutor autoriza este envío. <span class="req" aria-hidden="true">*</span></span></label>
+            <p class="err" id="e-adult" role="alert"></p>
+            <label class="chk"><input type="checkbox" name="consent"><span>Autorizo el tratamiento de estos datos para atender mi reporte, según el apartado <a href="#datos">Tus datos</a> y la <a href="/privacidad">Política de Privacidad</a>. <span class="req" aria-hidden="true">*</span></span></label>
+            <p class="err" id="e-consent" role="alert"></p>
+          </div>
+
+          <div class="trap" aria-hidden="true"><label>No completar este campo<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+          <div class="submit-row">
+            <button class="btn send" type="submit" id="send"><span class="send-t">Enviar reporte</span><svg class="send-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg><span class="spin" aria-hidden="true"></span></button>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <div class="done" id="done" hidden tabindex="-1" aria-live="polite">
+          <span class="done-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+          <h3>Reporte enviado</h3>
+          <p>Gracias, <b id="done-name"></b>. Lo revisaremos contra la fuente y, si corresponde, actualizaremos la página.</p>
+          <div class="ref"><span class="k">Tu referencia</span><code id="done-id"></code><button type="button" class="btn ghost" id="copy-id">Copiar</button></div>
+          <p class="done-note" id="done-note"></p>
+          <button type="button" class="btn ghost" id="again">Enviar otro reporte</button>
+        </div>
+
+        <div class="fail" id="fail" hidden>
+          <h3>No pudimos enviarlo desde aquí</h3>
+          <p>Tu mensaje sigue en el formulario. Puedes reintentar o escribirnos por WhatsApp con el reporte ya redactado.</p>
+          <div class="fail-actions"><button type="button" class="btn" id="retry">Reintentar</button><a class="btn ghost" id="wa" href="https://wa.me/51963385410" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp</a></div>
+        </div>
+      </div>
+      <noscript><p class="today-msg">Para usar el formulario activa JavaScript, o escríbenos por <a href="https://wa.me/51963385410?text=Hola%2C%20quiero%20reportar%20un%20error%20en%20Universe%20to%20Study">WhatsApp</a>.</p></noscript>
+    </div>
+  </section>
+
 </main>
 
 <footer class="foot">
