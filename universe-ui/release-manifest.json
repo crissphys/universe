@@ -40,16 +40,6 @@
       ],
       "contentLength": 315
     },
-    "ranking": {
-      "file": "ranking.html",
-      "scripts": [
-        "cepre-2026-2-official.js",
-        "universe-ui/native/ranking-1.js",
-        "cepre-history-2025-2.js",
-        "universe-ui/native/ranking-2.js"
-      ],
-      "contentLength": 7690
-    },
     "admision": {
       "file": "admision.html",
       "scripts": [

@@ -39,11 +39,11 @@ assert.equal(data.basic.filter(row => row.e4 != null).length, 98);
 console.log('3PC (2081 Pre) and 4th evaluation (98 Basic) verified');
 
 // Exercise the actual browser calculation functions, including future exams.
-// No #rk4 root here: the script only exposes its calculation hooks.
+// No #p-c root here: the script only exposes its calculation hooks.
 const document = { querySelectorAll: () => [], getElementById: () => null };
 const browser = { window: { UNIVERSE_CEPRE_2027_1: data }, document, location: { search: '', pathname: '/ranking', hash: '' }, URLSearchParams };
-vm.runInNewContext(await fs.readFile('universe-ui/native/ranking-v4.js', 'utf8'), browser);
-const { weighted, score, tracks } = browser.window.UNIVERSE_RANKING_RK4;
+vm.runInNewContext(await fs.readFile('ranking/assets/ranking.js', 'utf8'), browser);
+const { weighted, score, tracks } = browser.window.UNIVERSE_RANKING_V5;
 const pre = tracks.pre;
 const only = (track, keys) => track.exams.filter(exam => keys.includes(exam.key));
 const avg = (row, track, keys) => weighted(row, track, keys && only(track, keys)).average;
