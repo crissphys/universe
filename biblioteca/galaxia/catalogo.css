@@ -280,17 +280,12 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 .foot-col h2 { margin: 0 0 8px; font-size: 13px; font-weight: 500; color: var(--fg-3); }
 .foot-col a { justify-self: start; font-size: 14.5px; color: var(--fg-2); text-decoration: none; padding: 6px 0; transition: color 160ms ease; }
 .foot-col a[aria-current] { color: var(--fg); }
-.foot-social { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 48px; }
-.foot-social a { height: 38px; padding: 0 16px; display: inline-flex; align-items: center; border-radius: 999px; border: 1px solid var(--line-2); font-size: 14px; color: var(--fg-2); text-decoration: none; transition: color 160ms ease, border-color 160ms ease, transform 120ms var(--ease-out); }
-.foot-social a::after { content: "↗"; margin-left: 6px; font-size: 12px; color: var(--fg-3); }
-.foot-social a:active { transform: scale(.96); }
 .foot-legal { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; margin-top: 28px; padding: 22px 0; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--fg-3); }
 .foot-legal nav { display: flex; gap: 20px; }
 .foot-legal a { color: var(--fg-3); text-decoration: none; padding: 6px 0; transition: color 160ms ease; }
 .foot-mark { margin: 0; padding-bottom: env(safe-area-inset-bottom); font-size: clamp(80px, 24vw, 340px); font-weight: 600; letter-spacing: -.07em; line-height: .76; text-align: center; white-space: nowrap; user-select: none; pointer-events: none; color: transparent; background: linear-gradient(rgba(255, 255, 255, .09), rgba(255, 255, 255, 0) 85%); -webkit-background-clip: text; background-clip: text; translate: 0 8%; }
 @media (hover: hover) and (pointer: fine) {
   .foot-col a:hover, .foot-legal a:hover { color: var(--fg); }
-  .foot-social a:hover { color: var(--fg); border-color: var(--fg-3); }
 }
 
 /* ---------- Back to top ---------- */
@@ -417,3 +412,21 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
   .toast { transition: opacity 200ms ease; transform: translate(-50%, 0); opacity: 0; }
   .toast.is-on { opacity: 1; }
 }
+
+/* ---------- Canales: carrusel de logos (igual que /ranking) ---------- */
+.report { display: inline-flex; align-items: center; gap: 8px; height: 44px; margin-top: 20px; padding: 0 18px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--accent) 55%, transparent); color: var(--fg); font-size: 14px; text-decoration: none; transition: background-color .16s, transform .12s var(--ease-out); }
+.report svg { width: 16px; height: 16px; color: var(--accent); }
+.report:active { transform: scale(.97); }
+.loop { --tw: 190px; --th: 84px; --gap: 14px; margin-top: 48px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.loop-track { display: flex; width: max-content; animation: loop-right 36s linear infinite; }
+.loop-group { display: flex; gap: var(--gap); padding-right: var(--gap); flex: none; }
+.loop-tile { flex: none; width: var(--tw); height: var(--th); display: grid; place-items: center; transition: transform .25s var(--ease-out), opacity .25s; opacity: .78; }
+.loop-tile img { display: block; width: auto; max-width: 80%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.lg-youtube { height: 34px; } .lg-linktree { height: 30px; } .lg-whatsapp { height: 70px; } .lg-tiktok { height: 62px; }
+.loop:hover .loop-track, .loop:focus-within .loop-track { animation-play-state: paused; }
+.loop-tile:focus-visible { outline-offset: 3px; }
+@keyframes loop-right { from { transform: translateX(-33.3333%); } to { transform: translateX(0); } }
+@media (max-width: 639px) { .loop { --tw: 150px; --th: 68px; --gap: 8px; } .lg-youtube { height: 26px; } .lg-linktree { height: 24px; } .lg-whatsapp { height: 56px; } .lg-tiktok { height: 50px; } }
+@media (hover: hover) and (pointer: fine) { .loop-tile:hover { transform: translateY(-3px); opacity: 1; } .report:hover { background: color-mix(in oklab, var(--accent) 14%, transparent); } }
+/* Los logos se mueven siempre, también con reducir movimiento activo. */
+.loop-track { animation-duration: 36s !important; animation-iteration-count: infinite !important; }
