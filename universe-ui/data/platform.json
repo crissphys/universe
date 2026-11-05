@@ -39211,101 +39211,59 @@
   "publishers": [
     {
       "name": "Editorial Universe",
-      "href": "/biblioteca/universe",
-      "logo": "/assets/library/editorials/universe.png",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/universe"
     },
     {
       "name": "Lumbreras Editores",
-      "href": "/biblioteca/lumbreras",
-      "logo": "/assets/library/editorials/lumbreras.png",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/lumbreras"
     },
     {
       "name": "Editores Amautas",
-      "href": "/biblioteca/amautas",
-      "logo": "/assets/library/editorials/amautas.png",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/amautas"
     },
     {
       "name": "Editorial Rodo",
-      "href": "/biblioteca/rodo",
-      "logo": "/assets/library/editorials/rodo.png?v=20261009-rodo-catalogo-v2",
-      "action": "Abrir",
-      "flat": true
+      "href": "/biblioteca/rodo"
     },
     {
       "name": "Pamer",
-      "href": "/biblioteca/pamer",
-      "logo": "/assets/library/editorials/pamer.png",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/pamer"
     },
     {
       "name": "Trilce",
-      "href": "/biblioteca/trilce",
-      "logo": "/assets/library/editorials/trilce.png",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/trilce"
     },
     {
       "name": "Editorial Cuzcano",
-      "href": "/biblioteca/cuzcano",
-      "logo": "/assets/library/editorials/cuzcano.png",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/cuzcano"
     },
     {
       "name": "Grupo Editorial Megabyte",
-      "href": "/biblioteca/megabyte",
-      "logo": "/assets/library/editorials/megabyte.png",
-      "action": "Catálogo",
-      "flat": true
+      "href": "/biblioteca/megabyte"
     },
     {
       "name": "Editora Delta",
-      "href": "/biblioteca/delta",
-      "logo": "/assets/library/editorials/delta.png",
-      "action": "Catálogo",
-      "flat": true
+      "href": "/biblioteca/delta"
     },
     {
       "name": "Manhattan Editores",
-      "href": "/biblioteca/manhattan",
-      "logo": "/assets/library/editorials/manhattan-wordmark.png",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/manhattan"
     },
     {
       "name": "CEPREUNI",
-      "href": "https://drive.google.com/drive/folders/1yss4NHqP2a78mnujQ4hkb4RIIxlIj06O",
-      "logo": "/assets/library/editorials/cepreuni.png",
-      "action": "Abrir",
-      "flat": true
+      "href": "https://drive.google.com/drive/folders/1yss4NHqP2a78mnujQ4hkb4RIIxlIj06O"
     },
     {
       "name": "Editorial Moshera",
-      "href": "/biblioteca/moshera",
-      "logo": "/assets/library/editorials/moshera.png",
-      "action": "Catálogo",
-      "flat": true
+      "href": "/biblioteca/moshera"
     },
     {
       "name": "Rubiños Ediciones",
-      "href": "/biblioteca/rubinos",
-      "logo": "/assets/library/editorials/rubinos.png?v=20261009-rodo-catalogo-v2",
-      "action": "Catálogo",
-      "flat": false
+      "href": "/biblioteca/rubinos"
     },
     {
       "name": "Editorial San Marcos",
-      "href": "/biblioteca/sanmarcos",
-      "logo": "/assets/library/editorials/san-marcos.png",
-      "action": "Catálogo",
-      "flat": true
+      "href": "/biblioteca/sanmarcos"
     }
   ]
 }

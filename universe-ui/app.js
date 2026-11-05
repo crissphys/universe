@@ -56,7 +56,6 @@ const pages=[
  {name:'Catálogo Cuzcano',desc:'Material preuniversitario, solucionarios CEPREUNI y fascículos de Física por curso.',url:'/biblioteca/cuzcano',keys:'editorial cuzcano libros fasciculos'},
  {name:'Catálogo Amautas',desc:'Problemas de admisión UNI ordenados por temas. Encuentra tu curso y abre el libro en Google Drive.',url:'/biblioteca/amautas',keys:'editorial amautas problemas admision libros'},
  {name:'Catálogo Lumbreras',desc:'Las colecciones de Lumbreras y el libro que acompaña a tu siguiente tema.',url:'/biblioteca/lumbreras',keys:'editorial lumbreras libros'},
- {name:'Recursos de la biblioteca',desc:'Resúmenes, academias, universidades y libros, con una ruta destacada para UNI y CEPREUNI.',url:'/biblioteca/recursos',keys:'drive carpetas resumenes academias universidades'},
  {name:'Libros de literatura CEPREUNI',desc:'213 libros con vista previa, organizados por temas, autores y épocas.',url:'/biblioteca/literatura/',keys:'libros literatura obras cepreuni temas autores epocas'},
  {name:'Correcciones',desc:'Reporta una fórmula incorrecta, una nota mal registrada, una fuente dudosa o un error visual.',url:'/correcciones',keys:'error reporte corregir'},
  {name:'Contacto',desc:'Pide ayuda, reporta problemas técnicos o envía observaciones sobre el contenido.',url:'/contacto',keys:'ayuda soporte whatsapp'},
@@ -85,7 +84,7 @@ function row(kind,label,sub,url,extra){return {kind,label,sub,url,keys:normalize
 const baseRows=()=>[...tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' '))),...pages.map(p=>row('page',p.name,p.desc,p.url,p.keys))];
 function buildIndex(d,videos,directory,mats){
  const rows=baseRows();
- for(const g of directory?.groups||[])for(const item of g.items)rows.push(row('library',item.title,g.title,'/biblioteca#'+g.id,''));
+ for(const g of directory?.groups||[])for(const item of g.items)rows.push(row('library',item.title,g.title,'/biblioteca#carpetas',''));
  const s=d.syllabus||{};
  for(const [id,c] of Object.entries(s.temarios||{})){
   rows.push(row('syllabus',c.name,`Temario · ${(c.semanas||[]).length} semanas de admisión y ${(c.cepreSemanas||[]).length} de CEPREUNI`,'/temario',id+' '+(c.cat||'')));
@@ -103,7 +102,7 @@ function buildIndex(d,videos,directory,mats){
   rows.push({...row('library',b.title,[b.series,b.author].filter(Boolean).join(' · '),key==='examenes'?'/cepreuni/examenes':ROUTES[key]?ROUTES[key]+'?libro='+i:'/biblioteca',b.catalog+' '+b.section),image:thumb(b)}));
  const MK={clase:'Clase',libro:'Libro',adicional:'Material adicional',repaso:'Repaso',pizarra:'Pizarra',solucionario:'Solucionario',resultado:'Resultados',info:'Información'};
  for(const m of mats?.items||[])rows.push({...row('material',m.t,`${m.c} · ${MK[m.k]}`,`/cepreuni/materialespre?t=${m.k==='adicional'?'libro':m.k}${m.c==='General'?'':'&c='+encodeURIComponent(m.c)}`,m.w?'semana '+m.w:''),image:m.k==='clase'?`https://drive.google.com/thumbnail?id=${m.i}&sz=w200`:''});
- for(const p of d.publishers||[])rows.push(row('library',p.name,'Editorial','/biblioteca',''));
+ for(const p of d.publishers||[])rows.push(row('library',p.name,'Editorial',p.href,''));
  for(const c of d.videoIndex?.courses||[])rows.push(row('class',c.title,`${c.videoCount} clases · ${c.area}`,'/clases',c.slug));
  if(videos)for(const [slug,list] of Object.entries(videos))for(const v of list)
   rows.push(row('class',v.title,[v.topicLabel,v.channel].filter(Boolean).join(' · '),'/clases',slug));
@@ -270,7 +269,7 @@ function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserve
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261112-ien');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261113-biblioteca');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});
