@@ -1,3 +1,5 @@
 
 /assets/* /assets/:splat 200
 /biblioteca/recursos /biblioteca 301
+/experimentos/tablaperiodica/elemento/* /experimentos/tablaperiodica/ficha/index.html 200
+/experimentos/tablaperiodica/elemento /experimentos/tablaperiodica 302

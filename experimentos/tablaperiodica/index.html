@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tabla periódica | Universe to Study</title>
+<meta name="description" content="Tabla periódica completa de 118 elementos con propiedades, escalas de electronegatividad en 2D y 3D, modelo de Bohr, orbitales de Schrödinger, teoría de Lewis, orbitales moleculares y las tablas de Mendeléyev y Meyer.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08080a">
+<link rel="canonical" href="https://universetostudy.com/experimentos/tablaperiodica">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tabla periódica de los elementos | Universe to Study">
+<meta property="og:description" content="118 elementos, propiedades, tendencias, Bohr, Schrödinger, Lewis, orbitales moleculares, Mendeléyev y Meyer.">
+<meta property="og:url" content="https://universetostudy.com/experimentos/tablaperiodica">
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="/experimentos/tablaperiodica/assets/tp.css?v=20261111">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
+<script src="/experimentos/tablaperiodica/assets/data.js?v=20261111" defer></script>
+<script src="/experimentos/tablaperiodica/assets/texto.js?v=20261111" defer></script>
+<script src="/experimentos/tablaperiodica/assets/core.js?v=20261111" defer></script>
+<script src="/experimentos/tablaperiodica/assets/buscar.js?v=20261111" defer></script>
+<script src="/experimentos/tablaperiodica/assets/app.js?v=20261111" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/">UNIverse</a>
+    <nav class="top-nav" aria-label="Principal">
+      <a href="/biblioteca">Biblioteca</a>
+      <a href="/cepreuni">CEPREUNI</a>
+      <a href="/experimentos/tablaperiodica" aria-current="page">Tabla periódica</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="head">
+    <h1>Tabla periódica</h1>
+    <div id="search" class="searchbox"></div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Secciones" id="tabs">
+    <button role="tab" id="t-tabla" aria-controls="p-tabla" aria-selected="true" data-tab="tabla">Tabla</button>
+    <button role="tab" id="t-graficos" aria-controls="p-graficos" aria-selected="false" tabindex="-1" data-tab="graficos">Gráficos</button>
+    <button role="tab" id="t-atomo" aria-controls="p-atomo" aria-selected="false" tabindex="-1" data-tab="atomo">Átomo</button>
+    <button role="tab" id="t-enlace" aria-controls="p-enlace" aria-selected="false" tabindex="-1" data-tab="enlace">Enlace</button>
+    <button role="tab" id="t-historia" aria-controls="p-historia" aria-selected="false" tabindex="-1" data-tab="historia">Historia</button>
+  </div>
+
+  <section id="p-tabla" class="panel" role="tabpanel" aria-labelledby="t-tabla"></section>
+  <section id="p-graficos" class="panel" role="tabpanel" aria-labelledby="t-graficos" hidden></section>
+  <section id="p-atomo" class="panel" role="tabpanel" aria-labelledby="t-atomo" hidden></section>
+  <section id="p-enlace" class="panel" role="tabpanel" aria-labelledby="t-enlace" hidden></section>
+  <section id="p-historia" class="panel" role="tabpanel" aria-labelledby="t-historia" hidden></section>
+  <noscript><p class="prose">Esta página necesita JavaScript.</p></noscript>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-about">
+        <a class="brand foot-brand" href="/">UNIverse</a>
+        <p>Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p>
+        <a class="report" href="/correcciones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>Reportar un error</a>
+      </div>
+      <nav class="foot-col" aria-labelledby="f-plat">
+        <h2 id="f-plat">Plataforma</h2>
+        <a href="/admision">Admisión</a>
+        <a href="/cepreuni">CEPREUNI</a>
+        <a href="/temario">Temario</a>
+        <a href="/clases">Clases</a>
+        <a href="/calculadora">Calculadora</a>
+        <a href="/ranking">Ranking</a>
+        <a href="/experimentos/tablaperiodica" aria-current="page">Tabla periódica</a>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-lib">
+        <h2 id="f-lib">Biblioteca</h2>
+        <a href="/biblioteca">Todas las editoriales</a>
+        <a href="/biblioteca/lumbreras">Lumbreras</a>
+        <a href="/biblioteca/cuzcano">Cuzcano</a>
+        <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>
+        <a href="/examenes">Exámenes</a>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-uni">
+        <h2 id="f-uni">UNIverse</h2>
+        <a href="/metodologia-editorial">Metodología editorial</a>
+        <a href="/correcciones">Correcciones</a>
+        <a href="/contacto">Contacto</a>
+      </nav>
+    </div>
+    <nav class="loop" aria-label="Canales oficiales"><div class="loop-track"><div class="loop-group"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="YouTube" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="WhatsApp Channels" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="TikTok" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="Linktree" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div></div></nav>
+    <div class="foot-legal">
+      <span>© 2026 UNIverseToStudy · Aprende. Practica. Avanza.</span>
+      <nav aria-label="Legal">
+        <a href="/terminos">Términos</a>
+        <a href="/privacidad">Privacidad</a>
+      </nav>
+    </div>
+  </div>
+  <p class="foot-mark" aria-hidden="true">UNIverse</p>
+</footer>
+
+<button class="totop" id="totop" type="button" aria-label="Volver arriba" tabindex="-1">
+  <svg class="totop-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg>
+  <svg class="totop-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.5v-11M5 9l5-5 5 5"/></svg>
+</button>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-label="Elemento" data-open="false"></div>
+</body>
+</html>
