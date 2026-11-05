@@ -1,142 +1,120 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Universe — El origen de tu siguiente idea</title>
-  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
-  <meta name="color-scheme" content="dark light"><link rel="icon" href="/favicon.svg">
-  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css?v=20260912-cleanup"><link rel="stylesheet" href="/universe-ui/platform.css?v=20261011-left-branch-layout"><link rel="stylesheet" href="/universe-ui/refinements.css?v=20261009-rodo-catalogo-v2"><link rel="stylesheet" href="/universe-ui/strands.css?v=20261001-strands"><link rel="stylesheet" href="/universe-ui/entry.css?v=20261001-drive"><script type="module" src="/universe-ui/app.js?v=20261030-galaxy-all"></script>
-<link rel="stylesheet" href="/universe-ui/native.css?v=20260912-cleanup"><script src="/universe-ui/auth.js?v=20260912-cleanup" defer></script><script src="/universe-ui/comunicados.js?v=1" defer></script><link rel="stylesheet" href="/universe-ui/library-loading.css?v=20261012-library-skeleton-v1"><script src="/universe-ui/library-loading.js?v=20261012-library-skeleton-v1" defer></script><link rel="stylesheet" href="/universe-ui/mobile-layout.css?v=20261012-mobile-v1"><script src="/universe-ui/mobile-layout.js?v=20261012-mobile-v1" defer></script></head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CEPREUNI 2027-1 · Biblioteca · UNIverse to Study</title>
+  <meta name="description" content="Clases, libros, repasos, solucionarios y resultados del ciclo PRE CEPREUNI 2027-1, ordenados por curso y semana.">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://universetostudy.com/cepreuni/ciclopre20271/">
+  <meta name="theme-color" content="#08080a">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
+  <link rel="preload" href="/cepreuni/ciclopre20271/materiales.json?v=20261105" as="fetch" crossorigin>
+  <link rel="stylesheet" href="/biblioteca/galaxia/catalogo.css?v=20261030">
+  <link rel="stylesheet" href="/cepreuni/ciclopre20271/materiales.css?v=20261105">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/cepreuni/ciclopre20271/materiales.js?v=20261105" defer></script>
+</head>
 <body>
-  <a class="skip-link" href="#main">Saltar al contenido</a>
-  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
-  <div class="space-shade" aria-hidden="true"></div>
-  <header class="header">
-    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+  <a class="skip" href="#res">Saltar a los materiales</a>
 
-    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="/" aria-label="UNIverse to Study, inicio">UNIverse</a>
+      <nav class="top-nav" aria-label="Principal">
+        <a href="/biblioteca">Biblioteca</a>
+        <a href="/cepreuni" aria-current="true">CEPREUNI</a>
+        <a href="/examenes">Exámenes</a>
+        <a href="/planificador">Planificador</a>
+      </nav>
+    </div>
   </header>
-  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a></nav>
+
   <main id="main">
-    <section id="origin" class="hero entry chapter">
-      <div class="entry-strands" aria-hidden="true"><div class="strands-container"></div></div>
-      <div class="entry-body wrap">
-        <div class="hero-copy entry-copy">
-          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
-          <h1><span data-en="Where does your mind">¿A dónde quiere ir</span> <span class="outline-word" data-en="want to go?">tu mente?</span></h1>
-          <p class="hero-description" data-en="Every great idea begins with a question. Search topics, books, classes and tools in one place.">Toda gran idea empieza con una pregunta. Busca temas, libros, clases y herramientas en un solo lugar.</p>
-          <form id="intent-form" class="entry-search" role="search"><span class="entry-search-icon" data-icon="search"></span><label for="intent" class="sr-only" data-en="Search all of Universe">Buscar en todo Universe</label><input id="intent" maxlength="220" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Busca temas, libros, clases…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="intent-result"><button type="button" class="entry-clear" aria-label="Borrar búsqueda" data-icon="close" hidden></button><button type="submit" class="entry-submit" aria-label="Buscar"><span data-icon="arrow-right"></span></button><div id="intent-result" class="intent-result" role="listbox" aria-label="Resultados de búsqueda" hidden></div></form>
-          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam">Preparar mi primera PC</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book">Encontrar un libro</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week">Organizar mi semana</button><button type="button" data-intent="Calcular mi puntaje" data-en="Calculate my score">Calcular mi puntaje</button></div>
-          <div class="hero-cta entry-cta"><a class="text-button" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
-        </div>
-      </div>
-      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
+    <section class="m-hero wrap" aria-labelledby="hero-title">
+      <a class="crumb" href="/biblioteca">Biblioteca</a>
+      <h1 id="hero-title">CEPREUNI <em>2027-1</em></h1>
+      <p class="stats"><span data-stat="files">270</span> archivos<i></i><span data-stat="courses">13</span> cursos<i></i>Ciclo PRE</p>
     </section>
-    <section id="system" class="system chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
-      <div class="workspace reveal">
-        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
-        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
-      </div>
-    </section>
-    <section id="resources" class="resources chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
-      <div class="resource-grid">
-        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
-        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/ciclopre20271"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="Academic archive">Archivo académico</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Explore the evaluations and solutions archive.">Explora el archivo de evaluaciones y soluciones.</p></div><span data-icon="arrow-up-right"></span></a></div>
-      </div>
-    </section>
-    <section id="trajectory" class="trajectory chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
-      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
-      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
-    </section>
-    <section id="materiales-2027-1" class="resources chapter wrap" aria-labelledby="materiales-title">
-      <div class="section-heading reveal"><div><span class="eyebrow">CEPREUNI / PRE 2027-1</span><h2 id="materiales-title">Materiales completos por curso.</h2></div><p>Archivos descargables del ciclo preuniversitario, organizados por asignatura y alojados en Drive.</p></div>
-      <div class="resource-grid">
-        <div class="resource-stack">
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/19qk5I2Z4SqAyY-6Nw26BFLcR6f5fXPnV/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ARITMÉTICA</span><h3>Semana 2 · Magnitudes proporcionales</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1QkRFhXFpEj_mrps1n37tzC6DabtWi1xE/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ARITMÉTICA</span><h3>Semana 3 · Reparto proporcional y porcentaje</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/11dWnVcjRJ33Um6fP616TevZNSy_n6fgj/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>Semana 2 · Economía</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1NlkDB4Y_olqw09KCSHOUD93DXeUkivH_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>Semana 3 · Economía</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1HIKhm4D3xb-y2w5u5KS7V58AyIihGx7X/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>Pensamiento económico</h3><p>Video · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1I9y0q0whgrP37JeEB3uVemSU7dLbNguO/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>Descifrando el mercantilismo</h3><p>Video · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/187usntRdPQtVQe0GqP5EypmQF2i_5iRc/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>La escuela fisiócrata</h3><p>Video · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1vMycE3BUNnhksmA7WRBcPVz5RpaGMi6I/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>La escuela clásica</h3><p>Video · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1CllWGG8cv34Ok9_XsY1xDvyZA6vvM4sm/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">FÍSICA</span><h3>Material de Física</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1g4QsTaCYA2llaqJJ5PLvZ95sC7Lm-40y/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">FÍSICA</span><h3>Problemas · Semana 1</h3><p>PowerPoint · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1YTVTw5ORZV7ZnTwNSIDgWSQ3F6Zf-uvV/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">FÍSICA</span><h3>Semana 1 · Cinemática unidimensional</h3><p>PowerPoint · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/122ndlhNgb6RgjPZNXdOUVtBxkSM1yH7k/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">FÍSICA</span><h3>Sílabo de Física</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1OMTiK_9UzXVIR2WgpJz4h0GxuZI0EAHl/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">GEOMETRÍA</span><h3>Material de Geometría</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-        </div>
-        <div class="resource-stack">
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1kBvZFDxRrP1ob1Jd-8RU7TvEXu4t7QEU/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">HISTORIA</span><h3>Teoría · Semanas 1 al 10</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1TkFMSHYlhzXzLeTyqOF2iKwGYGdCKIXC/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">HISTORIA</span><h3>PPT 01 · Víctor Andrés</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1VOxIox_qUnocdCRKgO52nJ6mnbMDUaR3/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">HISTORIA</span><h3>PPT 02 · Bellodas</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/13tuuPzgS7ei6EFwdFJBsB_ARj4fR0-UI/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">LENGUAJE</span><h3>Libro 1 · Lenguaje</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1jMG8FgaLawoMfAk92P1prh6GVtLMo96E/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">LENGUAJE</span><h3>Semana 1 · Comunicación</h3><p>PowerPoint · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/10d9eYvelrVRG0uFCVwMeJWTflg1e6R-U/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">QUÍMICA</span><h3>Material de Química</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/15KNFHDM1pXuUVlA60JM8WBgGMt2Dr5ye/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">QUÍMICA</span><h3>Cronograma</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1l_zaW-b_hcZmwheV2M0UiD85P_IRYAwA/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">QUÍMICA</span><h3>Sílabo</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1h52ibGVRxU7V6GJJsTqITFfRCs8Ji3U8/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Semana 2.2 · Razones trigonométricas</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1CarG5rNE1yu2wvWv8uzfA-nixycfcy7t/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Semana 3.1 · Razones notables</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1wYwUzdRhf9oyDg0NhySAKBOPNNRIpue2/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Semana 3.2 · Geometría analítica</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/file/d/1xwAKN2aaPOMo_xX34WUyYV6yaUqlf0TW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Solucionario PC1</h3><p>PDF · PRE 2027-1</p></div><span data-icon="arrow-up-right"></span></a>
-          <a class="resource-row reveal" href="https://drive.google.com/drive/folders/1JhM-qksx9sTQRJqtNkeFYUwsm2RhZ4cV" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">DRIVE</span><h3>Ver todos los archivos</h3><p>Materiales, PPTs y solucionarios por curso</p></div><span data-icon="arrow-up-right"></span></a>
-        </div>
-      </div>
-      </section>
-      <section class="resources chapter wrap" aria-labelledby="nuevos-drive-title">
-        <div class="section-heading reveal"><div><span class="eyebrow">CEPREUNI / PRE 2027-1</span><h2 id="nuevos-drive-title">Nuevos materiales en Drive.</h2></div><p>Selecciona cada documento para abrirlo directamente en Google Drive.</p></div>
-        <div class="resource-grid">
-          <div class="resource-stack">
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1_MDitM0yQq-WuXjlrk9RbDi0LuqZCAW6/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ÁLGEBRA</span><h3>Semana 2.1 · Teoría corregida</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1ghtQjl92GO7TP-stb80W5_Qk1UWwHVy9/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ÁLGEBRA</span><h3>Clase 2-2 · 28 de agosto</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1YwiOigCpNEsIhZnEm9rJCeKj3lAIr9iX/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ÁLGEBRA</span><h3>Clase 3-1</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1SOsRuC-YpQPLifpIO7r_MOwgkDaww_62/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ARITMÉTICA</span><h3>Semana 1 · Razones y proporciones</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/15uzMGs9fG-upbRKVkYjvbUbaLSD20NsW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ARITMÉTICA</span><h3>Semana 2 · Magnitudes proporcionales</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1lp-j4nEiNYFa92_IUCMu-TBPsFYhcZWE/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ARITMÉTICA</span><h3>Semana 3 · Reparto y porcentaje</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1Ny6fK-WwAdw26ek1BELILhu-ay31goQZ/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Sílabo de trigonometría</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1gJKMeUjMkt2jqCU8r8eaz5iVV7KX40uS/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Sesión 1.2 · Sector circular</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1UQrQ41aq3hMKsMqYfet04ot7p9Y5G1_G/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Material adicional</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1TcAV3Hy25brhvRYKDwU8NQsk_JtPOqRt/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Sesión 2.1 · Longitud de arco</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1mv6aMOz373rEN9DLuFXambteTtDPXPKD/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Sesión 2.2 · Razones de ángulos agudos</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1lqbelBCMsm6aJtuEdvamulOcDBEPhPZV/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Sesión 3.1 · Ángulos notables y verticales</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1vDdljTKc4Yh_VTKdiRd_txUQJUdDA78j/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">TRIGONOMETRÍA</span><h3>Sesión 3.2 · Geometría analítica</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1ypXMOKdttFU7bFfhDkeBiU-mBVfRuQrk/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>Semana 2</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/13lwmXIl1BsXgblyp8ZxBLY7A8peeZg1o/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA</span><h3>Semana 3</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
+
+    <div class="console" id="catalogo">
+      <div class="wrap console-inner">
+        <form class="search" role="search" autocomplete="off">
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg>
+            <label class="sr-only" for="q">Buscar material por curso, tema o semana</label>
+            <input id="q" type="search" placeholder="Buscar curso o tema" enterkeyhint="search" spellcheck="false">
+            <output class="search-count" for="q"></output>
+            <button class="search-clear" type="button" aria-label="Borrar búsqueda" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button>
           </div>
-          <div class="resource-stack">
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1grBMb22S-Un788X7tqlTQmtET07F9733/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA · VIDEO</span><h3>Pensamiento económico</h3><p>Video · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1UqezbAwvF5uLm5Q4bjuvP7ghbqnBfq5r/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA · VIDEO</span><h3>Descifrando el mercantilismo</h3><p>Video · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1RJUJJYabWMEVlCznzQff9ZX2Rkwe0uz-/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA · VIDEO</span><h3>La escuela fisiócrata</h3><p>Video · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/13hRP6isFfqoC5b-ip8BANr1yT6tycs-b/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">ECONOMÍA · VIDEO</span><h3>La escuela clásica</h3><p>Video · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1dFSbKWXUoKOdlE0hv580gpe6hIkLLyox/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">GEOMETRÍA · PPT</span><h3>Sesión 1a · Nociones básicas</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1cxnenwMzsnKdA-1NL3GJH-zxx09brO37/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">GEOMETRÍA · PPT</span><h3>Sesión 1b · Ángulos</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1G_maDowJgh6lzBFenvr8q0WrF3z0tUb3/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">GEOMETRÍA · PPT</span><h3>Sesión 2a · Triángulos y líneas notables</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1FQ1gzzsQXJo3V-3OU8GonRdvpXWuFkvm/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">GEOMETRÍA · PPT</span><h3>Sesión 2b · Congruencia</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1Vb7YLf0YFHDJy5TUgiEtqERWOINYByRM/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">GEOMETRÍA · PPT</span><h3>Sesión 3a · Aplicaciones de la congruencia</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/19D0gDU_WI3X6J8tUoR2DZ_nvraiTHkWz/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">GEOMETRÍA · PPT</span><h3>Sesión 3b · Polígonos</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1I_Wt9BToFt-QeyQegG9FyYm45D9Tex1S/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">HISTORIA · PPT</span><h3>PPT 03 · Florez</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/1oHE4X6kn3ng_83WKIgNS1HVC2vea5Krx/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">HISTORIA · PPT</span><h3>PPT 04 · Trillo</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1rjiS_mkjIA2W0A6-NDhz4nIUg_sXNxZt/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">LENGUAJE · PPT</span><h3>Semana 2 · Mayúsculas</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://docs.google.com/presentation/d/1KKUfgCA2rSiyxryCyQdeSbSklBKt9GFD/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">LENGUAJE · PPT</span><h3>Semana 3 · Sílaba</h3><p>Presentación · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-            <a class="resource-row reveal" href="https://drive.google.com/file/d/16v7R_EAiDLS8xqVrBMxCKFKrKFfvtue7/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><div><span class="eyebrow">SOLUCIONARIO</span><h3>PC01 · Versión final</h3><p>PDF · Abrir en Drive</p></div><span data-icon="arrow-up-right"></span></a>
-          </div>
+        </form>
+        <nav class="m-kinds" aria-label="Tipo de material"></nav>
+      </div>
+    </div>
+
+    <div class="wrap m-courses-wrap">
+      <nav class="m-courses" aria-label="Curso"></nav>
+    </div>
+
+    <div id="res" class="wrap m-res" aria-live="polite" aria-busy="true">
+      <ul class="m-sk" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-about">
+          <a class="brand foot-brand" href="/">UNIverse</a>
+          <p>Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p>
         </div>
-      </section>
-    </main>
-<footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
-  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
-  <div class="immersion-controls" hidden>
-    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
-    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
-    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
-    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
-    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
-  </div>
-  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><div id="search-drive" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
-  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
-  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
-  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
-</body></html>
+        <nav class="foot-col" aria-labelledby="f-plat">
+          <h2 id="f-plat">Plataforma</h2>
+          <a href="/admision">Admisión</a>
+          <a href="/cepreuni" aria-current="page">CEPREUNI</a>
+          <a href="/temario">Temario</a>
+          <a href="/clases">Clases</a>
+          <a href="/calculadora">Calculadora</a>
+          <a href="/ranking">Ranking</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-lib">
+          <h2 id="f-lib">Biblioteca</h2>
+          <a href="/biblioteca">Todas las editoriales</a>
+          <a href="/biblioteca/lumbreras">Lumbreras</a>
+          <a href="/biblioteca/cuzcano">Cuzcano</a>
+          <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>
+          <a href="/examenes">Exámenes</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-uni">
+          <h2 id="f-uni">UNIverse</h2>
+          <a href="/metodologia-editorial">Metodología editorial</a>
+          <a href="/correcciones">Correcciones</a>
+          <a href="/contacto">Contacto</a>
+        </nav>
+      </div>
+      <nav class="foot-social" aria-label="Canales oficiales">
+        <a href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer">Linktree</a>
+      </nav>
+      <div class="foot-legal">
+        <span>© 2026 UNIverseToStudy · Aprende. Practica. Avanza.</span>
+        <nav aria-label="Legal">
+          <a href="/terminos">Términos</a>
+          <a href="/privacidad">Privacidad</a>
+        </nav>
+      </div>
+    </div>
+    <p class="foot-mark" aria-hidden="true">UNIverse</p>
+  </footer>
+
+  <button class="totop" type="button" aria-label="Volver arriba" tabindex="-1">
+    <svg class="totop-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg>
+    <svg class="totop-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.5v-11M5 9l5-5 5 5"/></svg>
+  </button>
+</body>
+</html>

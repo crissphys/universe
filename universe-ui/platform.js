@@ -1,7 +1,7 @@
 import {publisherShowcase,mountPublishers} from './library-showcase.js?v=20261011-editorial-carousel';
 import {renderDirectory} from './library-directory.js';
 import {renderExams} from './cepreuni-exams.js?v=20261013-1ep-reconstruidos';
-import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20261030-galaxy-all';
+import {renderScore,renderCatalog,renderFijas,cepreEmblem} from './upgrades.js?v=20261105-cepreuni-v4';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
 import {renderBranchedMenu} from './branched-menu.js?v=20261011-left-branch-layout';
@@ -20,7 +20,6 @@ function openVideoPreview(id,title,channel){const dialog=$('#video-preview');if(
 const routes={
  '/explorar':['Tu universo de estudio','PLATAFORMA / 01','Un lugar para conectar lo que aprendes, lo que practicas y lo que quieres alcanzar.'],
  '/biblioteca':['Conocimiento en órbita.','BIBLIOTECA / 02','Encuentra tu siguiente lectura. Colecciones, materiales y libros organizados para acompañarte antes y después del ingreso.'],
- '/cepreuni/ciclopre20271':['Tu material. Tu avance.','CEPREUNI / CICLO PRE 2027-1','Documentos del ciclo, libros y clases. Las mismas fuentes, en un espacio más claro.'],
  '/cepreuni/examenes':['Exámenes CEPREUNI','CEPREUNI / BIBLIOTECA DE EXÁMENES','Prácticas calificadas, exámenes parciales y finales. Explora cada documento y abre su vista previa.'],
  '/cepreuni':['Tu próxima etapa.','CEPREUNI / 2027-1','Un centro de estudio para tu ciclo: materiales, temas, evaluaciones y una ruta para llegar preparado.'],
  '/temario':['Entender empieza aquí.','MAPA DEL CONOCIMIENTO','Explora el temario de admisión y CEPREUNI. Abre un tema, revisa sus conceptos y registra lo que ya estudiaste.'],
