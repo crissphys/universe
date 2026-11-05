@@ -78,16 +78,6 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 #exam-range{margin-top:18px}
 .cepre-fijas{scroll-margin-top:110px;margin:60px 0;padding-top:36px;border-top:1px solid var(--line)}.frequency-row{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.frequency-row>span{font:10px monospace;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:7px;padding:10px;text-align:center;min-width:60px}.frequency-row b{display:block;color:var(--text);font-size:19px;margin-top:9px}
 .orbital-instrument{position:relative;align-self:center;width:min(100%,460px);aspect-ratio:620/460;justify-self:center;isolation:isolate}.orbital-canvas{width:100%;height:100%;display:block}.orbital-coordinate,.orbital-caption{position:absolute;left:0;width:100%;text-align:center;pointer-events:none}.orbital-coordinate{top:5px;font:8px monospace;letter-spacing:3px;color:var(--muted)}.orbital-caption{bottom:0;font-size:10px;letter-spacing:1px;color:var(--muted)}
-.cepre-emblem{position:relative;align-self:center;width:min(100%,460px);aspect-ratio:620/460;justify-self:center;display:grid;place-items:center}
-.emblem-ring{position:relative;width:78%;aspect-ratio:1;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,var(--soft) 0%,transparent 70%)}
-.emblem-ring:before{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid var(--line)}
-.emblem-ring:after{content:'';position:absolute;inset:14%;border-radius:50%;border:1px solid var(--line)}
-.emblem-ripple{position:absolute;inset:-8%;border-radius:50%;border:1px solid #9babc02b;animation:emblem-breathe 7s ease-in-out infinite}
-.emblem-ripple.two{inset:6%;animation-delay:-3.5s;animation-duration:9s}
-.emblem-ring img{position:relative;width:62%;height:auto;object-fit:contain;filter:invert(1) saturate(0) brightness(1.35) contrast(.92)}
-:root[data-theme=light] .emblem-ring img{filter:saturate(0) contrast(1.1)}
-@keyframes emblem-breathe{50%{transform:scale(1.045);opacity:.6}}
-@media(max-width:600px){.cepre-emblem{margin-top:28px}.p-feature:has(.cepre-emblem){grid-template-columns:minmax(0,1fr)}}
 .score-intro{max-width:690px;margin-bottom:30px}.score-intro p{font-size:14px;line-height:1.9;color:var(--muted)}.score-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr);gap:24px;align-items:start}.score-selectors{display:grid;grid-template-columns:minmax(0,2fr) minmax(90px,1fr);gap:15px}.score-selectors label{display:flex;flex-direction:column;gap:9px;font-size:11px;color:var(--muted)}.score-selectors select{max-width:100%;width:100%}.score-layout .p-subhead{margin:24px 0 6px}.score-layout .p-subhead h2{font-size:19px;letter-spacing:-.4px}
 .score-grades{display:flex;flex-direction:column}
 .grade-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:9px 2px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
