@@ -5,7 +5,7 @@
 
 /* ---------- Hero: say what this is, then let people act ---------- */
 .hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; padding-top: 112px; padding-bottom: 8px; position: relative; z-index: 5; isolation: isolate; }
-.hero::before { content: ""; position: absolute; inset: -64px 0 auto; height: 520px; z-index: -1; pointer-events: none; background: radial-gradient(52% 70% at 22% 0%, rgba(255, 255, 255, .06), transparent 72%); }
+.hero::before { content: ""; position: absolute; inset: -64px calc(50% - 50vw) auto; height: 520px; z-index: -1; pointer-events: none; background: radial-gradient(52% 70% at 22% 0%, rgba(255, 255, 255, .06), transparent 72%); }
 @media (min-width: 1000px) { .hero { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; align-items: center; padding-top: 128px; } }
 @media (max-width: 599px) { .hero { padding-top: 92px; gap: 0; } }
 
