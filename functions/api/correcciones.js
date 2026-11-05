@@ -1,16 +1,17 @@
 /* POST /api/correcciones
    Recibe un reporte del formulario de /correcciones, lo valida y lo entrega al propietario:
-     1. correo (Resend) a REPORT_TO_EMAIL, o al primer correo de ADMIN_EMAILS si no existe;
+     1. correo (Resend) a REPORT_TO_EMAIL, a universetostudyoficial@gmail.com (o REPORT_TO_EMAIL si se define);
      2. respaldo en Firebase (/site/universeV1/reports) si hay credenciales.
    Responde ok si al menos una de las dos entregas funcionó. Más específico que [[path]].js, así que tiene prioridad.
 
    Variables (Cloudflare Pages → Settings → Variables and Secrets):
      RESEND_API_KEY       clave de https://resend.com (secreta)
-     REPORT_TO_EMAIL      correo que recibe los reportes (opcional si ya existe ADMIN_EMAILS)
+     REPORT_TO_EMAIL      opcional; por defecto los reportes llegan a universetostudyoficial@gmail.com
      REPORT_FROM_EMAIL    remitente, p. ej. "Universe Reportes <reportes@universetostudy.com>" (dominio verificado en Resend).
                           Sin él se usa onboarding@resend.dev, que solo entrega al correo dueño de la cuenta de Resend.
      FIREBASE_DATABASE_URL / FIREBASE_DATABASE_SECRET   ya existentes; activan el respaldo. */
 
+const OWNER_EMAIL = 'universetostudyoficial@gmail.com';
 const RATE = new Map();
 const MAX = { name: 80, email: 120, page: 160, url: 300, data: 400, message: 2000 };
 
@@ -89,7 +90,7 @@ function recipient(env) {
   const direct = clean(env.REPORT_TO_EMAIL, 200);
   if (EMAIL_RE.test(direct)) return direct;
   const first = String(env.ADMIN_EMAILS || '').split(/[,;\s]+/).map((e) => e.trim()).find((e) => EMAIL_RE.test(e));
-  return first || '';
+  return first || OWNER_EMAIL;
 }
 
 export function buildEmail(id, v, meta) {
@@ -108,7 +109,8 @@ export function buildEmail(id, v, meta) {
     ['Correo para responder', v.email || 'No dejó correo'],
     ['Edad / representante', v.ageOk ? 'Declaró ser mayor de 14 o contar con autorización' : 'Sin declarar'],
     ['Fecha (Lima)', when],
-    ['Enviado desde', meta.origin || '—']
+    ['Enviado desde', meta.origin || '—'],
+    ['Navegador', meta.ua || '—']
   ];
   const text = rows.map((r) => r[0] + ': ' + r[1]).join('\n') + '\n\nMensaje:\n' + v.message + '\n';
   const html = '<div style="font:15px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;color:#18181b;max-width:620px">' +
@@ -181,7 +183,7 @@ export async function onRequest(context) {
   const v = check.value;
   const id = makeId();
   const at = Date.now();
-  const meta = { at, origin: origin || url.origin };
+  const meta = { at, origin: origin || url.origin, ua: clean(request.headers.get('User-Agent'), 200) };
   const mail = buildEmail(id, v, meta);
 
   const [mailed, saved] = await Promise.all([

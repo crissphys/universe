@@ -67,7 +67,9 @@ r = await run(req({ ...good, website: 'http://spam' })); assert.equal(r.status, 
 
 /* solo respaldo / solo correo / nada */
 calls.length = 0; r = await mod.onRequest({ ...req(good), env: { RESEND_API_KEY: 're', REPORT_TO_EMAIL: 'a@b.co' } }); assert.equal(r.status, 200);
-r = await mod.onRequest({ ...req(good), env: {} }); assert.equal(r.status, 503, 'sin ningún destino responde 503 para que la página ofrezca WhatsApp');
+r = await mod.onRequest({ ...req(good), env: {} }); assert.equal(r.status, 503, 'sin ningún medio de entrega responde 503 para que la página ofrezca WhatsApp');
+calls.length = 0; await mod.onRequest({ ...req(good), env: { RESEND_API_KEY: 're' } });
+assert.deepEqual(JSON.parse(calls.find((c) => c.url.includes('resend')).init.body).to, ['universetostudyoficial@gmail.com'], 'destino por defecto');
 globalThis.fetch = async () => { throw new Error('red caída'); };
 r = await mod.onRequest({ ...req(good), env }); assert.equal(r.status, 503);
 globalThis.fetch = async (u) => new Response('{}', { status: String(u).includes('resend') ? 500 : 200 });
