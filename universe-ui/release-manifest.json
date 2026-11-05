@@ -2,7 +2,6 @@
   "routes": [
     "",
     "explorar",
-    "biblioteca",
     "cepreuni",
     "temario",
     "clases",
@@ -103,11 +102,6 @@
         "classes.js"
       ],
       "contentLength": 401
-    },
-    "biblioteca/recursos": {
-      "file": "biblioteca.html",
-      "scripts": [],
-      "contentLength": 33293
     },
     "autores/criss-vasquez": {
       "file": "autores/criss-vasquez/index.html",
