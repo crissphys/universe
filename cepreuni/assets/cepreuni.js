@@ -221,11 +221,11 @@
     }).join('');
     shown = sum.next; lastText = ''; srLast = '';
     if (!sum.next) {
-      next.innerHTML = '<p class="k">Ciclo ' + esc(cycleData().shortTitle) + '</p><div class="next-end"><h2 class="next-name">Todas las evaluaciones ya pasaron</h2><p>Revisa tu puesto y los cortes de ingreso.</p></div>' +
+      next.innerHTML = '<span class="edge-light"></span><p class="k">Ciclo ' + esc(cycleData().shortTitle) + '</p><div class="next-end"><h2 class="next-name">Todas las evaluaciones ya pasaron</h2><p>Revisa tu puesto y los cortes de ingreso.</p></div>' +
         '<div class="actions"><a class="btn" href="/ranking' + (S.cycle === 'basico' ? '?sede=basico' : '') + '">Ver ranking ' + ICON.arrow + '</a></div>';
     } else {
       var e = sum.next;
-      next.innerHTML =
+      next.innerHTML = '<span class="edge-light"></span>' +
         '<p class="k">Siguiente evaluación</p><h2 class="next-name">' + esc(e.name) + '</h2>' +
         '<p class="next-date">' + esc(longDate(e.date, { weekday: 'long', day: 'numeric', month: 'long' })) + (e.timed ? ', 9:00 a. m.' : '') + ' <span class="chip">' + esc(e.mode) + '</span></p>' +
         '<div class="count" id="count" aria-hidden="true"></div><span class="sr" id="count-sr" role="status"></span>' +
@@ -289,7 +289,7 @@
     var w = weekIndexOfDate(S.cycle, showIso);
     var virtual = notes[showIso] && notes[showIso].k === 'virtual' ? '<p class="today-msg">' + esc(notes[showIso].t) + '</p>' : '';
     body = rows ? '<ul class="trows">' + rows.map(function (m) { return trow(m, w, head === 'Hoy'); }).join('') + '</ul>' + virtual : '<p class="today-msg">' + esc(msg) + '</p>';
-    el.innerHTML = '<div class="today-head"><p class="k">' + esc(head) + '</p><p class="today-date">' + esc(longDate(showIso, { weekday: 'long', day: 'numeric', month: 'long' })) + ', semana ' + (w + 1) + '</p></div>' + body +
+    el.innerHTML = '<span class="edge-light"></span><div class="today-head"><p class="k">' + esc(head) + '</p><p class="today-date">' + esc(longDate(showIso, { weekday: 'long', day: 'numeric', month: 'long' })) + ', semana ' + (w + 1) + '</p></div>' + body +
       '<p class="today-foot"><span>' + esc(sc.sh.label) + (sc.mods.length > 1 ? ', Módulo ' + (sc.mod === 'module2' ? 'II' : 'I') : '') + '</span><button type="button" class="link" id="change-turn">Cambiar</button></p>';
     $('#change-turn').addEventListener('click', function () { S.view = 'dia'; S.wk = curWeek(); paintWeek(true, 0); syncUrl(); goTo($('#semana')); });
     if (animate) swap(el, 0);
@@ -323,7 +323,7 @@
         var tp = r.k === 'hum' ? null : topicsFor(S.cycle, r.k, w);
         return '<li class="course" data-k="' + r.k + '"><div class="course-n"><strong>' + esc(r.name) + '</strong><small>' + daysText(r.days) + '</small></div>' +
           (tp ? '<ul class="course-t">' + tp.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '') + '</li>';
-      }).join('') + '</ul>' + (hum ? '<details class="hum"' + (matchMedia('(min-width: 1000px)').matches ? ' open' : '') + '><summary class="hum-sum"><div class="course-n" data-k="hum"><strong>Humanidades</strong><small>' + daysText(hum.days) + '</small></div><span class="hum-more">9 materias' + ICON.down + '</span></summary><ul class="hum-list">' +
+      }).join('') + '</ul>' + (hum ? '<details class="hum bglow"' + (matchMedia('(min-width: 1000px)').matches ? ' open' : '') + '><summary class="hum-sum"><div class="course-n" data-k="hum"><strong>Humanidades</strong><small>' + daysText(hum.days) + '</small></div><span class="hum-more">9 materias' + ICON.down + '</span></summary><span class="edge-light"></span><ul class="hum-list">' +
         humFor(S.cycle, w).map(function (h) { return '<li><span>' + esc(h.n) + '</span><span>' + esc(h.t) + '</span></li>'; }).join('') + '</ul></details>' : '') + '</div>';
     } else {
       var isCur = w === cur, L = new Date(Date.now() + LIMA), d = L.getUTCDay(), mins = L.getUTCHours() * 60 + L.getUTCMinutes();
@@ -421,7 +421,7 @@
   S.need = 0;
   function toolHref(t) { return t.cycle && S.cycle === 'basico' ? t.u + '?sede=basico' : t.u; }
   function tile(t, lead) {
-    return '<li' + (lead ? ' class="lead"' : '') + '><a class="tile" href="' + toolHref(t) + '"><span class="ic">' + svg(t.i) + '</span><span class="tx"><b>' + esc(t.t) + '</b><small>' + esc(t.d) + '</small></span>' +
+    return '<li' + (lead ? ' class="lead"' : '') + '><a class="tile bglow" href="' + toolHref(t) + '"><span class="edge-light"></span><span class="ic">' + svg(t.i) + '</span><span class="tx"><b>' + esc(t.t) + '</b><small>' + esc(t.d) + '</small></span>' +
       (t.g.length ? '<span class="tags">' + t.g.map(function (g) { return '<span>' + esc(g) + '</span>'; }).join('') + '</span>' : '') + '<span class="go">' + ICON.arrow + '</span></a></li>';
   }
   function paintTools(animate) {
@@ -444,6 +444,24 @@
     e.preventDefault(); S.need = (S.need + k + NEEDS.length) % NEEDS.length; paintTools(true);
     $('.need[aria-selected="true"]').focus({ preventScroll: true });
   });
+
+  /* ---------- brillo de borde (BorderGlow de React Bits, sin React) ---------- */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var glowRaf = 0, glowEv = null;
+    document.addEventListener('pointermove', function (e) {
+      glowEv = e;
+      if (glowRaf) return;
+      glowRaf = requestAnimationFrame(function () {
+        glowRaf = 0;
+        var card = glowEv.target.closest && glowEv.target.closest('.bglow'); if (!card) return;
+        var r = card.getBoundingClientRect(), cx = r.width / 2, cy = r.height / 2, dx = glowEv.clientX - r.left - cx, dy = glowEv.clientY - r.top - cy;
+        var kx = dx ? cx / Math.abs(dx) : Infinity, ky = dy ? cy / Math.abs(dy) : Infinity;
+        var edge = Math.min(Math.max(1 / Math.min(kx, ky), 0), 1), a = dx || dy ? Math.atan2(dy, dx) * 180 / Math.PI + 90 : 0;
+        card.style.setProperty('--edge-proximity', (edge * 100).toFixed(3));
+        card.style.setProperty('--cursor-angle', (a < 0 ? a + 360 : a).toFixed(3) + 'deg');
+      });
+    }, { passive: true });
+  }
 
   /* ---------- anclas internas ---------- */
   function goTo(t) {

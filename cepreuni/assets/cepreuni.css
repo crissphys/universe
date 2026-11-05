@@ -2,9 +2,9 @@
    Paleta propia (grafito azulado "plano de ingeniería"): cobalto = acciones, ámbar = tiempo y siguiente, verde = hecho,
    y un matiz por curso solo donde hay cursos. Tipografía y estructura iguales a /biblioteca y /ranking. */
 :root {
-  --bg: #080a10; --surface: #0f121b; --surface-2: #161a26; --surface-3: #1d2231;
-  --fg: #f3f5fa; --fg-2: #a9b0c2; --fg-3: #8089a0;
-  --line: rgba(160,175,255,.09); --line-2: rgba(160,175,255,.17);
+  --bg: #08080a; --surface: #111114; --surface-2: #18181c; --surface-3: #1f1f24;
+  --fg: #f4f4f5; --fg-2: #a1a1aa; --fg-3: #8a8a94;
+  --line: rgba(255,255,255,.07); --line-2: rgba(255,255,255,.13);
   --accent: #7b97ff; --accent-ink: #0a1030;
   --signal: #ffb94a; --signal-ink: #1a1000; --ok: #6fd7a4;
   --c-alg: #b49cff; --c-ari: #62bdff; --c-geo: #46d6c2; --c-tri: #c3e35d; --c-fis: #ff8a7a; --c-qui: #f58bc4; --c-hum: #e0cfa3;
@@ -66,7 +66,7 @@ h1 em { font-style: normal; color: var(--accent); white-space: nowrap; }
 @media (min-width: 640px) { .seg-hero { width: auto; min-width: 340px; } }
 .cards { display: grid; gap: 12px; margin-top: 24px; }
 @media (min-width: 900px) { .cards { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 16px; } }
-.card { position: relative; padding: 22px; border-radius: var(--r); background: var(--surface); box-shadow: 0 0 0 1px var(--line) inset; }
+.card { position: relative; padding: 22px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
 @media (min-width: 640px) { .card { padding: 28px; } }
 
 /* hoy */
@@ -122,7 +122,7 @@ h1 em { font-style: normal; color: var(--accent); white-space: nowrap; }
 .next-end p { margin-top: 8px; color: var(--fg-2); }
 
 /* ---------- navegación de secciones ---------- */
-.snav { position: sticky; top: 0; z-index: 40; margin-top: 40px; background: rgba(8,10,16,.8); -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4); box-shadow: 0 1px 0 var(--line); }
+.snav { position: sticky; top: 0; z-index: 40; margin-top: 40px; background: rgba(8,8,10,.8); -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4); box-shadow: 0 1px 0 var(--line); }
 .snav .wrap { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
 .snav .wrap::-webkit-scrollbar { display: none; }
 .snav a { flex: none; display: inline-flex; align-items: center; min-height: 52px; padding: 0 14px; color: var(--fg-3); font-size: 15px; text-decoration: none; border-bottom: 2px solid transparent; transition: color .16s, border-color .16s; }
@@ -197,7 +197,7 @@ h2 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.04; letter-spacing: -.0
 .course-n small { font-size: 13.5px; color: var(--fg-3); }
 .course-t { display: grid; gap: 4px; margin-top: 14px; font-size: 17px; line-height: 1.4; letter-spacing: -.01em; }
 .course-t li + li { color: var(--fg-2); font-size: 16px; }
-.hum { border-radius: var(--r); background: var(--surface); box-shadow: 0 0 0 1px var(--line) inset; }
+.hum { position: relative; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
 .hum > summary { list-style: none; }
 .hum > summary::-webkit-details-marker { display: none; }
 .hum-sum { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; cursor: pointer; }
@@ -228,7 +228,7 @@ h2 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.04; letter-spacing: -.0
 .need:active { transform: scale(.97); }
 .tiles { display: grid; gap: 10px; }
 .tiles > li { display: grid; }
-.tile { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 20px; background: var(--surface); box-shadow: 0 0 0 1px var(--line) inset; text-decoration: none; transition: box-shadow .2s, background-color .2s, transform .12s var(--ease); }
+.tile { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); text-decoration: none; transition: box-shadow .2s, background-color .2s, transform .12s var(--ease); }
 .tile:active { transform: scale(.985); }
 .ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--surface-3); color: var(--accent); transition: background-color .2s; }
 .ic svg { width: 21px; height: 21px; }
@@ -253,7 +253,7 @@ h2 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.04; letter-spacing: -.0
   .lead .tx b { font-size: 30px; letter-spacing: -.04em; }
 }
 @media (hover: hover) and (pointer: fine) {
-  .tile:hover { background-color: var(--surface-2); box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 50%, transparent) inset; }
+  .tile:hover { background-color: var(--surface-2); }
   .tile:hover .go { transform: translateX(3px); color: var(--fg); }
   .tile:hover .ic { background: color-mix(in oklab, var(--accent) 20%, var(--surface-3)); }
 }
@@ -295,9 +295,60 @@ h2 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.04; letter-spacing: -.0
 /* preferencias del sistema: más contraste y menos transparencia cuando se piden */
 @media (prefers-reduced-transparency: reduce) { .snav, .totop { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; } }
 @media (prefers-contrast: more) {
-  :root { --line: rgba(190,200,255,.28); --line-2: rgba(190,200,255,.5); --fg-3: #a3abc0; }
+  :root { --line: rgba(255,255,255,.28); --line-2: rgba(255,255,255,.5); --fg-3: #a8a8b3; }
   .card, .seg { box-shadow: 0 0 0 1px var(--line-2) inset; }
+  .bglow::before, .bglow::after, .bglow > .edge-light { display: none; }
 }
+
+
+/* BorderGlow de React Bits, portado a CSS y JS sin React. Colores propios: cobalto y violeta; ámbar para la evaluación. */
+.bglow {
+  --edge-proximity: 0; --cursor-angle: 45deg; --edge-sensitivity: 30; --color-sensitivity: calc(var(--edge-sensitivity) + 20);
+  --glow-padding: 36px; --cone-spread: 25; --fill-opacity: .5; --card-bg: var(--surface);
+  --glow-h: 227deg 100% 74%; --c1: #7b97ff; --c2: #b49cff; --c3: #62bdff;
+  --glow-color: hsl(var(--glow-h) / 100%); --glow-color-60: hsl(var(--glow-h) / 60%); --glow-color-50: hsl(var(--glow-h) / 50%); --glow-color-40: hsl(var(--glow-h) / 40%);
+  --glow-color-30: hsl(var(--glow-h) / 30%); --glow-color-20: hsl(var(--glow-h) / 20%); --glow-color-10: hsl(var(--glow-h) / 10%);
+  --gradient-one: radial-gradient(at 80% 55%, var(--c1) 0px, transparent 50%); --gradient-two: radial-gradient(at 69% 34%, var(--c2) 0px, transparent 50%);
+  --gradient-three: radial-gradient(at 8% 6%, var(--c3) 0px, transparent 50%); --gradient-four: radial-gradient(at 41% 38%, var(--c1) 0px, transparent 50%);
+  --gradient-five: radial-gradient(at 86% 85%, var(--c2) 0px, transparent 50%); --gradient-six: radial-gradient(at 82% 18%, var(--c3) 0px, transparent 50%);
+  --gradient-seven: radial-gradient(at 51% 4%, var(--c2) 0px, transparent 50%); --gradient-base: linear-gradient(var(--c1) 0 100%);
+  isolation: isolate;
+}
+.bglow--amber { --glow-h: 36deg 100% 64%; --c1: #ffb94a; --c2: #ff8a7a; --c3: #7b97ff; }
+.bglow > .edge-light { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .bglow > .edge-light { display: block; }
+  .bglow::before, .bglow::after, .bglow > .edge-light { content: ""; position: absolute; inset: 0; border-radius: inherit; transition: opacity .25s ease-out; z-index: -1; pointer-events: none; }
+  .bglow:not(:hover)::before, .bglow:not(:hover)::after, .bglow:not(:hover) > .edge-light { opacity: 0; transition: opacity .75s ease-in-out; }
+  .bglow::before {
+    border: 1px solid transparent;
+    background: linear-gradient(var(--card-bg) 0 100%) padding-box, linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box, var(--gradient-one) border-box, var(--gradient-two) border-box, var(--gradient-three) border-box, var(--gradient-four) border-box, var(--gradient-five) border-box, var(--gradient-six) border-box, var(--gradient-seven) border-box, var(--gradient-base) border-box;
+    opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+    -webkit-mask-image: conic-gradient(from var(--cursor-angle) at center, black calc(var(--cone-spread) * 1%), transparent calc((var(--cone-spread) + 15) * 1%), transparent calc((100 - var(--cone-spread) - 15) * 1%), black calc((100 - var(--cone-spread)) * 1%));
+    mask-image: conic-gradient(from var(--cursor-angle) at center, black calc(var(--cone-spread) * 1%), transparent calc((var(--cone-spread) + 15) * 1%), transparent calc((100 - var(--cone-spread) - 15) * 1%), black calc((100 - var(--cone-spread)) * 1%));
+  }
+  .bglow::after {
+    border: 1px solid transparent;
+    background: var(--gradient-one) padding-box, var(--gradient-two) padding-box, var(--gradient-three) padding-box, var(--gradient-four) padding-box, var(--gradient-five) padding-box, var(--gradient-six) padding-box, var(--gradient-seven) padding-box, var(--gradient-base) padding-box;
+    mask-image: linear-gradient(to bottom, black, black), radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%), radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%), radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%), radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%), radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%), conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
+    mask-composite: subtract, add, add, add, add, add;
+    opacity: calc(var(--fill-opacity) * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+    mix-blend-mode: soft-light;
+  }
+  .bglow > .edge-light {
+    inset: calc(var(--glow-padding) * -1); z-index: 1;
+    -webkit-mask-image: conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+    mask-image: conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+    opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
+    mix-blend-mode: plus-lighter;
+  }
+  .bglow > .edge-light::before {
+    content: ""; position: absolute; inset: var(--glow-padding); border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--glow-color), inset 0 0 1px 0 var(--glow-color-60), inset 0 0 3px 0 var(--glow-color-50), inset 0 0 6px 0 var(--glow-color-40), inset 0 0 15px 0 var(--glow-color-30), inset 0 0 25px 2px var(--glow-color-20), inset 0 0 50px 2px var(--glow-color-10),
+      0 0 1px 0 var(--glow-color-60), 0 0 3px 0 var(--glow-color-50), 0 0 6px 0 var(--glow-color-40), 0 0 15px 0 var(--glow-color-30), 0 0 25px 2px var(--glow-color-20), 0 0 50px 2px var(--glow-color-10);
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) { .bglow::before, .bglow::after, .bglow > .edge-light { transition: none; } }
 
 /* ---------- volver arriba / footer (iguales que /ranking y las bibliotecas) ---------- */
 /* volver arriba */
