@@ -201,6 +201,10 @@
     $$('.sc').forEach(function (n) { rev.observe(n); });
   } else $$('.sc').forEach(function (n) { n.classList.add('in'); });
   (function () {
+    var cta = $('#cta'), target = $('#reportar'); if (!cta || !target || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (es) { cta.classList.toggle('is-off', es[0].isIntersecting); cta.tabIndex = es[0].isIntersecting ? -1 : 0; }, { rootMargin: '0px 0px -20% 0px' }).observe(target);
+  })();
+  (function () {
     var btn = $('.totop'), ticking = false;
     function sync() {
       ticking = false;
