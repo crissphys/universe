@@ -112,6 +112,7 @@
 
   /* ---------- State + URL ---------- */
   const state = { q: '', tipo: '', curso: '', estante: false, view: store.get('view', 'grid') };
+  let deepBook = null;
   function readURL() {
     const p = new URLSearchParams(location.search);
     state.q = p.get('q') || '';
@@ -320,7 +321,7 @@
     const group = (title, html) => `<div class="fgroup"><h3>${title}</h3><div>${html}</div></div>`;
     $('.filters').innerHTML =
       group('Tipo', TYPES.filter(([k]) => count(b => b.type === k)).map(([k, label]) => `<button class="chip" type="button" data-tipo="${k}" aria-pressed="${state.tipo === k}">${label}<i>${count(b => b.type === k)}</i></button>`).join('') +
-        `<button class="chip saved" type="button" data-estante aria-pressed="${state.estante}">${ICON.star}Mi estante<i>${saved.size}</i></button>`) +
+        `<button class="chip saved" type="button" data-estante aria-pressed="${state.estante}">${ICON.star}Mis favoritos<i>${saved.size}</i></button>`) +
       group('Curso', courses.map(c => `<button class="chip" type="button" data-curso="${c.slug}" aria-pressed="${state.curso === c.slug}">${c.label}<i>${c.n}</i></button>`).join('')) +
       (state.tipo || state.curso || state.estante ? `<div><button class="chip reset" type="button" data-reset>Quitar filtros</button></div>` : '');
     const n = [state.tipo, state.curso, state.estante].filter(Boolean).length;
@@ -394,7 +395,7 @@
         fillGrid(grid, near, { showCol: true });
       }
     } else {
-      const head = el('div', 'results-head', `<h2>${state.estante && !q ? 'Mi estante' : 'Resultados'}</h2><span>${plural(list.length, 'libro', 'libros')}</span>`);
+      const head = el('div', 'results-head', `<h2>${state.estante && !q ? 'Mis favoritos' : 'Resultados'}</h2><span>${plural(list.length, 'libro', 'libros')}</span>`);
       const grid = el('ul', 'grid');
       results.append(head, grid);
       fillGrid(grid, list, { showCol: true, needles });
@@ -444,7 +445,7 @@
     const rec = recent.map(id => model.byId.get(id)).filter(Boolean);
     const sav = [...saved].map(id => model.byId.get(id)).filter(Boolean).reverse();
     if (rec.length) orbit.append(shelf('Seguir leyendo', '01', rec, () => { recent = []; store.set('recent', recent); renderOrbit(); }, 'Borrar'));
-    if (sav.length) orbit.append(shelf('Mi estante', rec.length ? '02' : '01', sav, () => { state.estante = true; update(true); }, `Ver ${sav.length}`));
+    if (sav.length) orbit.append(shelf('Mis favoritos', rec.length ? '02' : '01', sav, () => { state.estante = true; update(true); }, `Ver ${sav.length}`));
     orbit.hidden = filtering() || !(rec.length || sav.length);
   }
   function pushRecent(b) {
@@ -512,7 +513,7 @@
     const on = saved.has(current.id);
     const btn = $('[data-act="save"]');
     btn.setAttribute('aria-pressed', String(on));
-    btn.setAttribute('aria-label', on ? 'Quitar de Mi estante' : 'Guardar en Mi estante');
+    btn.setAttribute('aria-label', on ? 'Quitar de Mis favoritos' : 'Guardar en Mis favoritos');
   }
 
   function openSheet(b, list) {
@@ -552,10 +553,23 @@
   }
   const move = d => { const i = ctxList.indexOf(current) + d; if (i >= 0 && i < ctxList.length) fillSheet(ctxList[i], d); };
 
+  // The star is also a public vote: /biblioteca ranks books by how many people starred them.
+  // One vote per account (Bearer token) or per device; failures are silent, the local favorite stays.
+  function syncFavorite(b, on) {
+    try {
+      let clientId = localStorage.getItem('universe_lib_client');
+      if (!clientId) { clientId = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now()).replace(/[^a-zA-Z0-9]/g, ''); localStorage.setItem('universe_lib_client', clientId); }
+      const headers = { 'Content-Type': 'application/json' }, token = localStorage.getItem('universe_auth_token');
+      if (token) headers.Authorization = 'Bearer ' + token;
+      fetch('/api/site/library/favorites', { method: 'PUT', headers, keepalive: true, body: JSON.stringify({ key: CAT + '/' + b.id, on, clientId }) }).catch(() => {});
+    } catch { /* storage blocked */ }
+  }
+
   function toggleSave(b) {
     const was = saved.has(b.id);
     if (was) saved.delete(b.id); else saved.add(b.id);
     persistSaved();
+    syncFavorite(b, !was);
     if (current === b) syncSaveBtn();
     renderFilters();
     $$(`.book[data-id="${b.id}"]`).forEach(card => {
@@ -563,7 +577,7 @@
       if (saved.has(b.id) && !f) card.insertAdjacentHTML('afterbegin', `<span class="flag" aria-hidden="true">${ICON.star}</span>`);
       if (!saved.has(b.id) && f) f.remove();
     });
-    say(was ? 'Quitado de Mi estante' : 'Guardado en Mi estante', () => toggleSave(b));
+    say(was ? 'Quitado de Mis favoritos' : 'Guardado en Mis favoritos', () => toggleSave(b));
   }
 
   async function share(b) {
@@ -632,7 +646,8 @@
   }
 
   function openFromHash() {
-    const q = new URLSearchParams(location.search).get('libro');
+    const q = deepBook; // /biblioteca/<editorial>/?libro=<id>, from the /biblioteca search
+    deepBook = null;
     const m = q ? [, q] : location.hash.match(/^#libro-([\w-]+)/);
     if (m) { const b = model.byId.get(m[1]); if (b) openSheet(b, b.group.books); return; }
     const slug = decodeURIComponent(location.hash.slice(1));
@@ -720,6 +735,7 @@
     $('[data-stat="groups"]').textContent = model.collections.reduce((s, c) => s + c.groups.filter(g => g.name).length, 0);
     saved = new Set([...saved].filter(id => model.byId.has(id)));
 
+    deepBook = new URLSearchParams(location.search).get('libro'); // read before writeURL() rebuilds the query
     readURL();
     initCosmos();
     renderCollections();

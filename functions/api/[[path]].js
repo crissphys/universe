@@ -1235,6 +1235,64 @@ async function handleComunicados(request, env, auth, method, path, data) {
   return json({ error: 'method_not_allowed' }, 405);
 }
 
+// Library favorites: the star on a book (catalogo.js) is a public vote. One vote per account, or per device
+// when signed out. votes/<actor>/<folder~id> holds the vote, counts/<folder~id> the total (atomic increment).
+var LIB_FAV_ROOT = SITE_ROOT + '/libraryFavorites';
+var libraryBooksCache = null;
+var libraryFavTopCache = null;
+
+async function libraryBooks(request) {
+  if (libraryBooksCache && Date.now() - libraryBooksCache.at < 600000) return libraryBooksCache.map;
+  var res = await fetch(new URL('/biblioteca/buscar.json', request.url).toString());
+  if (!res.ok) throw new Error('library_index_unavailable');
+  var index = await res.json();
+  var map = new Map();
+  (index.b || []).forEach(function (row) {
+    var folder = index.f && index.f[row[0]];
+    if (folder) map.set(folder + '~' + row[4], { folder: folder, id: row[4], title: row[1], sub: row[2], type: row[6], cover: row[7] || '' });
+  });
+  libraryBooksCache = { at: Date.now(), map: map };
+  return map;
+}
+
+async function handleLibraryFavorites(request, env, auth, method, data) {
+  if (method === 'GET') {
+    if (!rateLimit(request, 'library-fav-read', 60, 60000)) return json({ error: 'rate_limited' }, 429);
+    var now = Date.now();
+    if (!libraryFavTopCache || now - libraryFavTopCache.at > 30000) {
+      var counts = (await firebase(env, LIB_FAV_ROOT + '/counts', 'GET')) || {};
+      var books = await libraryBooks(request);
+      var top = Object.keys(counts)
+        .filter(function (key) { return Number(counts[key]) > 0 && books.has(key); })
+        .sort(function (a, b) { return Number(counts[b]) - Number(counts[a]) || (a < b ? -1 : 1); })
+        .slice(0, 12)
+        .map(function (key) { return Object.assign({ n: Number(counts[key]) }, books.get(key)); });
+      libraryFavTopCache = { at: now, top: top };
+    }
+    return json({ ok: true, top: libraryFavTopCache.top }, 200, { 'Cache-Control': 'public, max-age=30' });
+  }
+  if (method !== 'PUT') return json({ error: 'method_not_allowed' }, 405);
+  if (!rateLimit(request, 'library-fav-write', 40, 60000)) return json({ error: 'rate_limited' }, 429);
+  data = data && typeof data === 'object' ? data : {};
+  var clientId = cleanId(data.clientId).slice(0, 64);
+  if (!auth && clientId.length < 16) return json({ error: 'client_required' }, 400);
+  var actor = auth && auth.id ? 'u_' + cleanId(auth.id) : 'd_' + clientId;
+  var parts = String(data.key || '').split('/');
+  var bookKey = parts.length === 2 ? cleanId(parts[0]).toLowerCase() + '~' + cleanId(parts[1]) : '';
+  if (!bookKey || !(await libraryBooks(request)).has(bookKey)) return json({ error: 'unknown_book' }, 400);
+  var votePath = LIB_FAV_ROOT + '/votes/' + actor + '/' + bookKey;
+  var countPath = LIB_FAV_ROOT + '/counts/' + bookKey;
+  var on = data.on === true;
+  if (on) {
+    if (await firebaseReserve(env, votePath, { ts: Date.now() })) await firebase(env, countPath, 'PUT', { '.sv': { increment: 1 } });
+  } else if (await firebase(env, votePath, 'GET')) {
+    await firebase(env, votePath, 'DELETE');
+    await firebase(env, countPath, 'PUT', { '.sv': { increment: -1 } });
+  }
+  libraryFavTopCache = null;
+  return json({ ok: true, on: on });
+}
+
 async function handleSite(request, env, subpath) {
   var auth = await verifySession(request, env);
   var method = request.method.toUpperCase();
@@ -1243,6 +1301,7 @@ async function handleSite(request, env, subpath) {
 
   if (path === '/ranking-survey-2027-1/summary' && method === 'GET') return handleRankingSurveySummary(env);
   if (path === '/ranking-survey-2027-1') return handleRankingSurvey(request, env, auth, method, data);
+  if (path === '/library/favorites') return handleLibraryFavorites(request, env, auth, method, data);
 
   if (method === 'GET' && path === '/public') return json(sanitizePublicSiteData(await firebase(env, SITE_ROOT + '/public', 'GET')));
 
