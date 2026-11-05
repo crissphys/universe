@@ -1,4 +1,4 @@
-"""Rebuilds cepreuni/materialespre/materiales-<ciclo>.json from the public CEPREUNI Drive folders.
+"""Rebuilds cepreuni/<programa>/materiales-<ciclo>.json from the public CEPREUNI Drive folders.
 
     python tools/build-cepreuni-materials.py                   # every cycle (crawls Drive, public embeddedfolderview)
     python tools/build-cepreuni-materials.py 2026-2            # one cycle
@@ -12,11 +12,14 @@ import concurrent.futures as cf, html, json, re, sys, unicodedata, urllib.reques
 from datetime import date
 from pathlib import Path
 
-OUT = Path(__file__).resolve().parent.parent / 'cepreuni/materialespre'
-CYCLES = {  # newest first = the order of the selector in the page
-    '2027-1': '1JhM-qksx9sTQRJqtNkeFYUwsm2RhZ4cV',
-    '2026-2': '1eZLZyRRbs46_IlVQyYjXrpCNGuWo5OGW',
-    '2026-1': '1F-1tbNGVQ_34leVy3Yfb1mmDF6eqLZax',
+ROOT = Path(__file__).resolve().parent.parent / 'cepreuni'
+CYCLES = {  # cycle -> (Drive folder, page folder); newest first = the order of the selector in each page
+    '2027-1': ('1JhM-qksx9sTQRJqtNkeFYUwsm2RhZ4cV', 'materialespre'),
+    '2026-2': ('1eZLZyRRbs46_IlVQyYjXrpCNGuWo5OGW', 'materialespre'),
+    '2026-1': ('1F-1tbNGVQ_34leVy3Yfb1mmDF6eqLZax', 'materialespre'),
+    '2027': ('1P9142BrZzvwineILYUaEfo1F1eTKJmnP', 'materialesien'),
+    '2026': ('1aWpK2Y4IlggeZZHggSEnelaD2Mffrtxx', 'materialesien'),
+    '2025': ('1wnVmcDyJMShYL0RTzHsfSk43Bl-yyHu6', 'materialesien'),
 }
 ENTRY = re.compile(r'<div class="flip-entry" id="entry-([^"]+)".*?<a href="([^"]+)".*?<div class="flip-entry-title">(.*?)</div></a></div><div class="flip-entry-last-modified"><div>(.*?)</div>', re.S)
 MONTHS = {'ene': 1, 'jan': 1, 'feb': 2, 'mar': 3, 'abr': 4, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'ago': 8, 'aug': 8,
@@ -33,7 +36,7 @@ COURSE_KEYS = [('Razonamiento Verbal', ('verbal',)), ('Razonamiento Matemático'
                ('Economía', ('econom',)), ('Filosofía', ('filosof',))]
 IMG = ('jpg', 'jpeg', 'png', 'webp')
 SHOWN_EXT = ('pptx', 'ppt', 'docx', 'doc', 'xlsx', 'png', 'jpg', 'jpeg', 'mp4')
-KIND_ORDER = ['clase', 'libro', 'adicional', 'repaso', 'pizarra', 'solucionario', 'info', 'resultado']
+KIND_ORDER = ['clase', 'libro', 'adicional', 'repaso', 'pizarra', 'problemas', 'evaluacion', 'solucionario', 'info', 'resultado']
 # files that are really page screenshots (Drive keeps no extension on the 2026 uploads)
 PAGE_SOL = re.compile(r'^\(.+\)\s*[\d-]')
 PAGE_REPASO = re.compile(r'^(?:\(.*\)\s*)?(?:pizarra|p[aá]gina)\s*\d+$', re.I)
@@ -110,6 +113,7 @@ def clean(name, course='General', keep_year=False):
         t = re.sub(r'\.[A-Za-z0-9]{2,4}$', '', t)
     t = re.sub(r'\[\d+\]|\s*\((?:\d+|copia)\)', '', t.replace('_', ' '))
     t = re.sub(r'\s*[-–—]\s*(?:Ciclo Pre\s+)?CEPREUNI(?:\s+20\d\d-\d)?', '', t)
+    t = re.sub(r'\s*[-–—]?\s*(?<!\w)IEN\s*(?:20\d\d)?(?!\w)', '', t)
     if not keep_year:
         t = re.sub(r'\s*[-–—]?\s*(?<!\w)(?:PRE|Pre|CICLO PRE|CEPRE UNI)?[\s-]*20(?:26|27)\s*[-–]?\s*(?:I{1,2}|1|2)(?!\w)', '', t)
     for _ in range(2):  # "Teoría Pre 2027-1b" needs two passes
@@ -167,7 +171,9 @@ def build(tree, cyc):
 
         if not path:  # loose files at the cycle root
             course = course_of(raw)
-            if 'repaso' in low:
+            if 'resultado' in low:
+                items.append({**base, 'c': 'General', 'k': 'resultado', 't': 'Resultados de admisión'})
+            elif 'repaso' in low:
                 items.append({**base, 'c': course, 'k': 'repaso', 't': repaso_title(raw, course), 'e': event_of(raw)})
             else:
                 items.append({**base, 'c': course, 'k': 'info', 't': clean(raw, course)})
@@ -227,6 +233,15 @@ def build(tree, cyc):
                 else:
                     title, e = re.sub(r'^Resultados\s*[-–—]\s*', '', clean(raw)).replace(' — ', ' · '), event_of(raw)
             items.append({**base, 'c': 'General', 'k': 'resultado', 't': title, 'e': e})
+        elif re.search(r'resolucion|claves', top):
+            course = course_of(sub[0] if sub else raw, raw)
+            items.append({**base, 'c': course, 'k': 'solucionario', 't': clean(raw, course), 'w': week_of(raw), 'e': ''})
+        elif re.search(r'enunciado|problemas|guias', top):
+            course = course_of(sub[0] if sub else raw, raw)
+            items.append({**base, 'c': course, 'k': 'problemas', 't': clean(raw, course), 'w': week_of(raw), 'p': part_of(raw)})
+        elif 'evaluacion' in top:
+            course = course_of(sub[0] if sub else raw, raw)
+            items.append({**base, 'c': course, 'k': 'evaluacion', 't': clean(raw, course), 'w': week_of(raw), 'p': part_of(raw)})
         elif 'material' in top or 'laboratorio' in top:
             adicional = bool(sub) and 'laboratorio' not in top
             course = course_of(sub[0] if adicional else raw)
@@ -268,6 +283,8 @@ def build(tree, cyc):
         e = a.get('e') or ''
         third = -int(e[2:]) if a['k'] == 'resultado' and e[2:].isdigit() else (a.get('w') or 99)
         return (order[a['c']], kind_rank[a['k']], third, e, a.get('p') or '', a['t'])
+    pdfs = {(it['c'], it['k'], it['t'], it.get('w'), it.get('p')) for it in items if not it['x']}
+    items[:] = [it for it in items if not it['x'] or it['x'] not in ('pptx', 'ppt') or (it['c'], it['k'], it['t'], it.get('w'), it.get('p')) not in pdfs]
     for it in items:  # '1.0' is a whole week, not a part
         if it.get('p') in ('0', None):
             it.pop('p', None)
@@ -276,9 +293,10 @@ def build(tree, cyc):
 
 
 def run(cyc, tree_path=None):
-    tree = json.load(open(tree_path, encoding='utf-8')) if tree_path else walk(CYCLES[cyc], [])
+    folder, page = CYCLES[cyc]
+    tree = json.load(open(tree_path, encoding='utf-8')) if tree_path else walk(folder, [])
     items = build(tree, cyc)
-    dest = OUT / f'materiales-{cyc}.json'
+    dest = ROOT / page / f'materiales-{cyc}.json'
     dest.write_text(json.dumps({'cycle': cyc, 'built': date.today().isoformat(), 'courses': COURSES, 'items': items},
                                ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     print(cyc, len(items), 'items ->', dest.name)

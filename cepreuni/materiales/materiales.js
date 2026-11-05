@@ -5,12 +5,12 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const KINDS = [['clase', 'Clases'], ['libro', 'Materiales'], ['repaso', 'Repasos'], ['pizarra', 'Pizarras'],
-    ['solucionario', 'Solucionarios'], ['resultado', 'Resultados'], ['info', 'Información']];
-  const TAG = { clase: 'Clase', libro: 'Libro', adicional: 'Extra', repaso: 'Repaso', pizarra: 'Pizarra', solucionario: 'Solución', resultado: 'Resultado', info: 'Info' };
-  const LABEL = { clase: 'Clase', libro: 'Material de estudio', adicional: 'Material adicional', repaso: 'Repaso', pizarra: 'Pizarra', solucionario: 'Solucionario', resultado: 'Resultados', info: 'Información' };
-  const TILE = { clase: 'Clase', libro: 'Libro', adicional: 'Extra', repaso: 'Repaso', pizarra: 'Pizarra', solucionario: 'Solu.', resultado: 'Result.', info: 'Info' };
+    ['problemas', 'Problemas'], ['evaluacion', 'Evaluaciones'], ['solucionario', 'Solucionarios'], ['resultado', 'Resultados'], ['info', 'Información']];
+  const TAG = { clase: 'Clase', libro: 'Libro', adicional: 'Extra', repaso: 'Repaso', pizarra: 'Pizarra', problemas: 'Problemas', evaluacion: 'Evaluación', solucionario: 'Solución', resultado: 'Resultado', info: 'Info' };
+  const LABEL = { clase: 'Clase', libro: 'Material de estudio', adicional: 'Material adicional', repaso: 'Repaso', pizarra: 'Pizarra', problemas: 'Problemas', evaluacion: 'Evaluación', solucionario: 'Solucionario', resultado: 'Resultados', info: 'Información' };
+  const TILE = { clase: 'Clase', libro: 'Libro', adicional: 'Extra', repaso: 'Repaso', pizarra: 'Pizarra', problemas: 'Probl.', evaluacion: 'Eval.', solucionario: 'Solu.', resultado: 'Result.', info: 'Info' };
   const EVENT = { '1EP': '1.er parcial', '2EP': '2.º parcial', EF: 'Examen final', PC1: '1.ª PC', PC2: '2.ª PC', PC3: '3.ª PC', PC4: '4.ª PC', PC5: '5.ª PC', PC6: '6.ª PC', PC7: '7.ª PC', 'Selección': 'Selección' };
-  const CYCLES = ['2027-1', '2026-2', '2026-1'];
+  const { base, cycles: CYCLES, name } = (({ base, cycles, name }) => ({ base, cycles: cycles.split(','), name }))(document.body.dataset);
   const EXT = { pptx: 'PPT', ppt: 'PPT', docx: 'DOC', doc: 'DOC', xlsx: 'XLS', png: 'IMG', jpg: 'IMG', jpeg: 'IMG', mp4: 'VID', folder: 'DIR' };
   // Matiz del color de cada curso (tarjeta y chip); General no lleva color.
   const HUE = { 'Aritmética': 35, 'Razonamiento Matemático': 15, 'Literatura': 312, 'Álgebra': 60, 'Geometría': 95, 'Trigonometría': 150, 'Física': 205, 'Química': 235,
@@ -134,7 +134,7 @@
   totop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
   const prepare = d => d.items.map(it => ({ ...it, h: fold([it.t, it.c, TAG[it.k], KINDS.find(([k]) => k === group(it.k))?.[1] || '', it.e || '', EVENT[it.e] || '', it.w ? `semana ${it.w} sem s${it.w}` : '', EXT[it.x] || '', it.k === 'repaso' ? 'reforzamiento' : ''].join(' ')) }));
-  const load = cyc => (cache[cyc] ||= fetch(`/cepreuni/materialespre/materiales-${cyc}.json?v=20261110`).then(r => r.json()).then(d => ({ courses: d.courses, items: prepare(d) })));
+  const load = cyc => (cache[cyc] ||= fetch(`${base}/materiales-${cyc}.json?v=20261112`).then(r => r.json()).then(d => ({ courses: d.courses, items: prepare(d) })));
 
   function renderCycles() {
     cyclesEl.innerHTML = CYCLES.map(c => `<button type="button" data-cycle="${c}" aria-pressed="${state.cycle === c}">${c}</button>`).join('');
@@ -149,7 +149,7 @@
     if (!items.some(it => it.c === state.course)) state.course = '';
     if (!KINDS.some(([k]) => k === state.kind && items.some(it => group(it.k) === k))) state.kind = 'clase';
     title.textContent = cyc;
-    document.title = `CEPREUNI ${cyc} · Biblioteca · UNIverse to Study`;
+    document.title = `${name} ${cyc} · Biblioteca · UNIverse to Study`;
     $('[data-stat="files"]').textContent = items.length;
     $('[data-stat="courses"]').textContent = new Set(items.map(it => it.c).filter(c => c !== 'General')).size;
     renderCycles();
