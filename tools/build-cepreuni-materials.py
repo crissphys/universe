@@ -1,4 +1,4 @@
-"""Rebuilds cepreuni/ciclopre20271/materiales-<ciclo>.json from the public CEPREUNI Drive folders.
+"""Rebuilds cepreuni/materialespre/materiales-<ciclo>.json from the public CEPREUNI Drive folders.
 
     python tools/build-cepreuni-materials.py                   # every cycle (crawls Drive, public embeddedfolderview)
     python tools/build-cepreuni-materials.py 2026-2            # one cycle
@@ -12,7 +12,7 @@ import concurrent.futures as cf, html, json, re, sys, unicodedata, urllib.reques
 from datetime import date
 from pathlib import Path
 
-OUT = Path(__file__).resolve().parent.parent / 'cepreuni/ciclopre20271'
+OUT = Path(__file__).resolve().parent.parent / 'cepreuni/materialespre'
 CYCLES = {  # newest first = the order of the selector in the page
     '2027-1': '1JhM-qksx9sTQRJqtNkeFYUwsm2RhZ4cV',
     '2026-2': '1eZLZyRRbs46_IlVQyYjXrpCNGuWo5OGW',

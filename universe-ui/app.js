@@ -35,7 +35,7 @@ const tools=[
  {id:'ranking',name:'Ranking',en:'Ranking',desc:'Accede a la consulta de promedios.',descEn:'Access the average score ranking.',url:'/ranking',icon:'list',keys:'notas promedios resultados puntaje'},
  {id:'applicants',name:'Cantidad de postulantes',en:'Applicant counts',desc:'Consulta las elecciones registradas para 2027-1.',descEn:'Explore registered 2027-1 career choices.',url:'/cantidad-de-postulantes',icon:'users',keys:'postulantes carreras encuesta cepreuni admision 2027-1'},
  {id:'cepre-exams',name:'Exámenes CEPREUNI',en:'CEPREUNI exams',desc:'Biblioteca del ciclo preuniversitario: prácticas, parciales y finales.',descEn:'Pre-university exam library.',url:'/cepreuni/examenes',icon:'layers',keys:'1pc 2pc 1ep 3pc 4pc 2ep 5pc 6pc 7pc examen final pdf'},
- {id:'materials',name:'Materiales CEPREUNI 2027-1',en:'CEPREUNI 2027-1 materials',desc:'Recursos del ciclo preuniversitario.',descEn:'Pre-university cycle resources.',url:'/cepreuni/ciclopre20271',icon:'layers',keys:'material libro pdf primer quimica'},
+ {id:'materials',name:'Materiales PRE CEPREUNI',en:'CEPREUNI PRE materials',desc:'Recursos del ciclo preuniversitario.',descEn:'Pre-university cycle resources.',url:'/cepreuni/materialespre',icon:'layers',keys:'material libro pdf primer quimica'},
  {id:'universe',name:'Editorial Universe',en:'Universe collection',desc:'Solucionarios CEPREUNI 2027-1.',descEn:'CEPREUNI 2027-1 solution books.',url:'/biblioteca/universe/',icon:'book',keys:'editorial universe solucionarios ciclesolus'},
  {id:'college',name:'Libros universitarios',en:'University books',desc:'Lecturas para ir más allá del ingreso.',descEn:'Readings to go beyond admission.',url:'/biblioteca/librosuniversitarios/',icon:'book',keys:'universitarios chang fisica calculo'},
  {id:'account',name:'Mi cuenta',en:'My account',desc:'Abre tu espacio en el sitio real.',descEn:'Open your space on the live site.',url:'/account',icon:'users',keys:'perfil iniciar sesion cuenta'}
@@ -96,7 +96,7 @@ function buildIndex(d,videos,directory){
   rows.push(row('syllabus',c.name,`San Marcos · ${c.topics.length} temas`,'/temario',c.group));
   for(const t of c.topics)rows.push(row('syllabus',t.split('. ')[0].slice(0,90),`San Marcos · ${c.name}`,'/temario',t));
  }
- const ROUTES={amautas:'/biblioteca/amautas',manhattan:'/biblioteca/manhattan',universe:'/biblioteca/universe',cuzcano:'/biblioteca/cuzcano',lumbreras:'/biblioteca/lumbreras',college:'/biblioteca/librosuniversitarios',materials:'/cepreuni/ciclopre20271'};
+ const ROUTES={amautas:'/biblioteca/amautas',manhattan:'/biblioteca/manhattan',universe:'/biblioteca/universe',cuzcano:'/biblioteca/cuzcano',lumbreras:'/biblioteca/lumbreras',college:'/biblioteca/librosuniversitarios',materials:'/cepreuni/materialespre'};
  // Cada libro lleva su portada (la misma que muestra el catálogo) y el enlace a su posición: ?libro=<índice>.
  const thumb=b=>{const id=(b.url||'').match(/\/d\/([^/?]+)|[?&]id=([^&]+)/);return (b.drivePreview||b.image==='/assets/library/editorials/cepreuni.png')&&id?`https://drive.google.com/thumbnail?id=${id[1]||id[2]}&sz=w200`:b.image||''};
  for(const [key,list] of Object.entries(d.catalogs||{}))list.forEach((b,i)=>
@@ -267,7 +267,7 @@ function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserve
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261105-cepreuni-v4');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261110-materialespre');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});

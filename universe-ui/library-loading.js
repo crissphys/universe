@@ -6,7 +6,7 @@
   const roots = new Set(), images = new WeakMap();
   const rootSelector = '#page-view > .p-empty, #page-view > [role="status"], #book-results > .p-empty, #catalog-sections, #library-directory, #library-directory > [role="status"]';
   const imageSelector = '.p-cover img, .book-cover img, .exam-thumb img, .catalog-logo img, .tile-logo img, .editorial-fallback-logo img, .editorial-logo-card > img';
-  const libraryRoute = () => /^\/biblioteca(?:\/|\.html|$)/.test(location.pathname) || /^\/cepreuni\/(ciclopre20271|examenes)(?:\/|$)/.test(location.pathname);
+  const libraryRoute = () => /^\/biblioteca(?:\/|\.html|$)/.test(location.pathname) || /^\/cepreuni\/(materialespre|examenes)(?:\/|$)/.test(location.pathname);
   const directory = () => /^\/biblioteca(?:\/|\.html)?$/.test(location.pathname);
   let visibility;
 
