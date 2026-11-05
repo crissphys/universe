@@ -2,7 +2,7 @@ import {renderExams} from './cepreuni-exams.js?v=20261013-1ep-reconstruidos';
 import {renderScore,renderFijas,cepreEmblem} from './upgrades.js?v=20261112-ien';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
-import {renderBranchedMenu} from './branched-menu.js?v=20261011-left-branch-layout';
+import {renderBranchedMenu} from './branched-menu.js?v=20261114-tabla';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();

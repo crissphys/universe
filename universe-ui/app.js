@@ -270,7 +270,7 @@ function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserve
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261113-biblioteca');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261114-tabla');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});
