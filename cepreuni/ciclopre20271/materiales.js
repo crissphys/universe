@@ -4,7 +4,7 @@
   const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  const KINDS = [['all', 'Todo'], ['clase', 'Clases'], ['libro', 'Materiales'], ['repaso', 'Repasos'],
+  const KINDS = [['clase', 'Clases'], ['libro', 'Materiales'], ['repaso', 'Repasos'],
     ['solucionario', 'Solucionarios'], ['resultado', 'Resultados'], ['info', 'Información']];
   const TAG = { clase: 'Clase', libro: 'Libro', adicional: 'Extra', repaso: 'Repaso', solucionario: 'Solución', resultado: 'Resultado', info: 'Info' };
   const LABEL = { clase: 'Clase', libro: 'Material de estudio', adicional: 'Material adicional', repaso: 'Repaso', solucionario: 'Solucionario', resultado: 'Resultados', info: 'Información' };
@@ -22,14 +22,14 @@
   const q = $('#q'), clearBtn = $('.search-clear'), count = $('.search-count');
   const kindsEl = $('.m-kinds'), coursesEl = $('.m-courses'), res = $('#res'), consoleEl = $('.console');
   const params = new URLSearchParams(location.search);
-  const state = { q: params.get('q') || '', kind: params.get('t') || 'all', course: params.get('c') || '' };
+  const state = { q: params.get('q') || '', kind: params.get('t') || 'clase', course: params.get('c') || '' };
   let items = [], courses = [];
 
   const style = c => `--h:${HUE[c] ?? 0};--c:${c in HUE ? 1 : 0}`;
   const match = (it, words) => words.every(w => it.h.includes(w));
   const filtered = skip => {
     const words = fold(state.q).split(/\s+/).filter(Boolean);
-    return items.filter(it => (skip === 'kind' || state.kind === 'all' || group(it.k) === state.kind)
+    return items.filter(it => (skip === 'kind' || group(it.k) === state.kind)
       && (skip === 'course' || !state.course || it.c === state.course) && match(it, words));
   };
 
@@ -72,7 +72,7 @@
     // Chips de tipo y curso: cada grupo cuenta con el filtro del otro aplicado.
     const byKind = filtered('kind'), byCourse = filtered('course');
     kindsEl.innerHTML = KINDS.map(([k, label]) => {
-      const n = k === 'all' ? byKind.length : byKind.filter(it => group(it.k) === k).length;
+      const n = byKind.filter(it => group(it.k) === k).length;
       return `<button type="button" data-kind="${k}" aria-pressed="${state.kind === k}"${n ? '' : ' disabled'}>${label}<span>${n}</span></button>`;
     }).join('');
     coursesEl.innerHTML = `<button type="button" data-course="" aria-pressed="${!state.course}">Todos<span>${byCourse.length}</span></button>`
@@ -92,7 +92,7 @@
     res.setAttribute('aria-busy', 'false');
     const p = new URLSearchParams();
     if (state.q.trim()) p.set('q', state.q.trim());
-    if (state.kind !== 'all') p.set('t', state.kind);
+    if (state.kind !== 'clase') p.set('t', state.kind);
     if (state.course) p.set('c', state.course);
     try { history.replaceState(null, '', location.pathname + (String(p) ? `?${p}` : '')); } catch { /* file:// previews */ }
   }
@@ -103,7 +103,11 @@
   }
 
   q.value = state.q;
-  q.addEventListener('input', () => { state.q = q.value; render(); });
+  q.addEventListener('input', () => {
+    state.q = q.value;
+    if (state.q.trim() && !filtered().length) state.kind = KINDS.find(([k]) => { state.kind = k; return filtered().length; })?.[0] || 'clase';
+    render();
+  });
   clearBtn.addEventListener('click', () => { state.q = q.value = ''; render(); q.focus(); });
   $('.search').addEventListener('submit', e => { e.preventDefault(); q.blur(); });
   kindsEl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { state.kind = b.dataset.kind; render(); toTop(); } });
@@ -113,7 +117,7 @@
     if (dir) { const r = dir.closest('.m-sec').querySelector('.m-rail'); r.scrollBy({ left: dir.dataset.dir * r.clientWidth * .85, behavior: 'smooth' }); }
   });
   res.addEventListener('error', e => { if (e.target.matches('.m-thumb img')) e.target.remove(); }, true); // el número de semana queda de portada
-  res.addEventListener('click', e => { if (e.target.closest('[data-reset]')) { state.q = q.value = ''; state.kind = 'all'; state.course = ''; render(); } });
+  res.addEventListener('click', e => { if (e.target.closest('[data-reset]')) { state.q = q.value = ''; state.kind = 'clase'; state.course = ''; render(); } });
 
   const totop = $('.totop');
   const onScroll = () => {
@@ -126,10 +130,10 @@
   addEventListener('scroll', onScroll, { passive: true });
   totop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-  fetch('/cepreuni/ciclopre20271/materiales.json?v=20261106').then(r => r.json()).then(d => {
+  fetch('/cepreuni/ciclopre20271/materiales.json?v=20261107').then(r => r.json()).then(d => {
     courses = d.courses;
     items = d.items.map(it => ({ ...it, h: fold([it.t, it.c, TAG[it.k], KINDS.find(([k]) => k === group(it.k))?.[1] || '', it.e || '', EVENT[it.e] || '', it.w ? `semana ${it.w} sem s${it.w}` : '', EXT[it.x] || '', it.k === 'repaso' ? 'reforzamiento' : ''].join(' ')) }));
-    if (!KINDS.some(([k]) => k === state.kind)) state.kind = 'all';
+    if (!KINDS.some(([k]) => k === state.kind)) state.kind = 'clase';
     $('[data-stat="files"]').textContent = items.length;
     $('[data-stat="courses"]').textContent = new Set(items.map(it => it.c).filter(c => c !== 'General')).size;
     render();
