@@ -1,74 +1,424 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Correcciones | Universe to Study</title>
-  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
-  <meta name="color-scheme" content="dark light"><link rel="icon" href="/favicon.svg">
-  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css?v=20261114-tabla"><link rel="stylesheet" href="/universe-ui/platform.css?v=20261011-left-branch-layout"><link rel="stylesheet" href="/universe-ui/refinements.css?v=20260912-cleanup"><link rel="stylesheet" href="/universe-ui/strands.css?v=20261001-strands"><link rel="stylesheet" href="/universe-ui/entry.css?v=20261001-drive"><script type="module" src="/universe-ui/app.js?v=20261117-cepreuni"></script>
-<script src="/universe-ui/auth.js?v=20260912-cleanup" defer></script><link rel="stylesheet" href="/universe-ui/native/correcciones.css?v=20260912-cleanup"><link rel="stylesheet" href="/universe-ui/native.css?v=20260912-cleanup"><script src="/universe-ui/comunicados.js?v=1" defer></script><script src="/universe-ui/library-loading.js?v=20261012-library-skeleton-v1" defer></script><link rel="stylesheet" href="/universe-ui/mobile-layout.css?v=20261012-mobile-v1"><script src="/universe-ui/mobile-layout.js?v=20261012-mobile-v1" defer></script></head>
-<body data-native="correcciones" class="in-platform">
-  <a class="skip-link" href="#native-main">Saltar al contenido</a>
-  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
-  <div class="space-shade" aria-hidden="true"></div>
-  <header class="header">
-    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Correcciones y reportes | Universe to Study</title>
+<meta name="description" content="Reporta una fórmula incorrecta, una nota mal registrada, una fuente dudosa o material con derechos de autor. Conoce cómo revisamos cada caso y el marco legal peruano que aplicamos.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08080a">
+<link rel="canonical" href="https://universetostudy.com/correcciones">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Correcciones y reportes | Universe to Study">
+<meta property="og:description" content="Envía un reporte, conoce el proceso de revisión y tus derechos sobre tus datos.">
+<meta property="og:url" content="https://universetostudy.com/correcciones">
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/correcciones/assets/correcciones.css?v=20261105">
+<script>document.documentElement.classList.add('js')</script>
+<script src="/correcciones/assets/correcciones.js?v=20261105" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
 
-    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
-  </header>
-  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a></nav>
-  <main id="main" hidden>
-    <section id="origin" class="hero entry chapter">
-      <div class="entry-strands" aria-hidden="true"><div class="strands-container"></div></div>
-      <div class="entry-body wrap">
-        <div class="hero-copy entry-copy">
-          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
-          <h1><span data-en="Where does your mind">¿A dónde quiere ir</span> <span class="outline-word" data-en="want to go?">tu mente?</span></h1>
-          <p class="hero-description" data-en="Every great idea begins with a question. Search topics, books, classes and tools in one place.">Toda gran idea empieza con una pregunta. Busca temas, libros, clases y herramientas en un solo lugar.</p>
-          <form id="intent-form" class="entry-search" role="search"><span class="entry-search-icon" data-icon="search"></span><label for="intent" class="sr-only" data-en="Search all of Universe">Buscar en todo Universe</label><input id="intent" maxlength="220" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Busca temas, libros, clases…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="intent-result"><button type="button" class="entry-clear" aria-label="Borrar búsqueda" data-icon="close" hidden></button><button type="submit" class="entry-submit" aria-label="Buscar"><span data-icon="arrow-right"></span></button><div id="intent-result" class="intent-result" role="listbox" aria-label="Resultados de búsqueda" hidden></div></form>
-          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam">Preparar mi primera PC</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book">Encontrar un libro</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week">Organizar mi semana</button><button type="button" data-intent="Calcular mi puntaje" data-en="Calculate my score">Calcular mi puntaje</button></div>
-          <div class="hero-cta entry-cta"><a class="text-button" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/" aria-label="UNIverse to Study, inicio">UNIverse</a>
+    <nav class="top-nav" aria-label="Principal">
+      <a href="/biblioteca">Biblioteca</a>
+      <a href="/cepreuni">CEPREUNI</a>
+      <a href="/ranking">Ranking</a>
+      <a href="/correcciones" aria-current="page">Correcciones</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap" aria-labelledby="t">
+    <p class="k rv">UNIverse / Correcciones</p>
+    <h1 id="t" class="rv" style="--d:1">Correcciones <em>y reportes</em></h1>
+    <p class="lede rv" style="--d:2">Una fórmula equivocada, una nota mal registrada, una fuente dudosa o un material que debe retirarse: cuéntanoslo. Cada reporte se revisa contra la fuente y llega directo al equipo.</p>
+    <div class="hero-cta rv" style="--d:3">
+      <a class="btn" href="#reportar">Enviar un reporte<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m0 0 6-6m-6 6-6-6"/></svg></a>
+      <a class="btn ghost" href="#marco">Marco legal y principios</a>
+    </div>
+    <ul class="facts">
+      <li class="card bglow rv" style="--d:3"><span class="edge-light"></span><span class="k">Qué puedes reportar</span><p>Errores académicos, datos o puntajes, fallas técnicas, material con derechos de autor y asuntos de privacidad.</p></li>
+      <li class="card bglow bglow--amber rv" style="--d:4"><span class="edge-light"></span><span class="k amber">Prioridad alta</span><p>Privacidad y datos personales, cálculo de puntaje, resultados y acceso a cuentas se revisan primero.</p></li>
+      <li class="card bglow rv" style="--d:5"><span class="edge-light"></span><span class="k">Tu información</span><p>El correo es opcional, nunca pedimos DNI ni contraseñas y solo usamos tus datos para atender este reporte.</p></li>
+    </ul>
+  </section>
+
+  <nav class="snav" aria-label="Secciones">
+    <div class="wrap">
+      <a href="#reportar" aria-current="false">Reportar</a>
+      <a href="#proceso" aria-current="false">Cómo revisamos</a>
+      <a href="#marco" aria-current="false">Marco legal</a>
+      <a href="#datos" aria-current="false">Tus datos</a>
+    </div>
+  </nav>
+
+  <!-- ============ REPORTAR ============ -->
+  <section id="reportar" class="sec wrap sc split" aria-labelledby="h-rep">
+    <div class="split-h">
+      <h2 id="h-rep">Reportar</h2>
+      <p class="sub">Mientras más preciso sea el reporte, más rápido se corrige.</p>
+      <ul class="tips">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Indica qué dice y qué debería decir.</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Añade la fuente: libro y página, resolución o enlace oficial.</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Para datos, escribe el código, curso, evaluación o carrera.</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Nunca compartas contraseñas, DNI ni fotos de documentos.</li>
+      </ul>
+    </div>
+    <div class="split-b">
+      <div class="formcard card bglow" id="formcard">
+        <span class="edge-light"></span>
+        <form id="rep" novalidate autocomplete="on" aria-describedby="rep-help">
+          <p class="k" id="rep-help">Los campos con <span class="req" aria-hidden="true">*</span><span class="sr"> asterisco</span> son obligatorios</p>
+
+          <fieldset class="fs">
+            <legend>Tipo de reporte <span class="req" aria-hidden="true">*</span></legend>
+            <div class="types" id="types">
+              <label class="type"><input type="radio" name="type" value="academica" required><span><b>Académica</b><small>Fórmula, explicación o solución</small></span></label>
+              <label class="type"><input type="radio" name="type" value="datos"><span><b>Datos</b><small>Nota, código, carrera o resultado</small></span></label>
+              <label class="type"><input type="radio" name="type" value="tecnica"><span><b>Técnica</b><small>Tabla, botón o diseño que falla</small></span></label>
+              <label class="type"><input type="radio" name="type" value="derechos"><span><b>Derechos de autor</b><small>Material que debe retirarse</small></span></label>
+              <label class="type"><input type="radio" name="type" value="privacidad"><span><b>Privacidad</b><small>Datos personales y derechos ARCO</small></span></label>
+            </div>
+            <p class="hint" id="type-hint" aria-live="polite">Elige el tipo que mejor describa el problema.</p>
+            <p class="err" id="e-type" role="alert"></p>
+          </fieldset>
+
+          <div class="row2">
+            <div class="fld">
+              <label for="f-name">Tu nombre <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" maxlength="80" autocomplete="name" required aria-describedby="e-name">
+              <p class="err" id="e-name" role="alert"></p>
+            </div>
+            <div class="fld">
+              <label for="f-email">Correo <span class="opt">(opcional, para responderte)</span></label>
+              <input id="f-email" name="email" type="email" maxlength="120" autocomplete="email" inputmode="email" aria-describedby="e-email">
+              <p class="err" id="e-email" role="alert"></p>
+            </div>
+          </div>
+
+          <div class="row2">
+            <div class="fld">
+              <label for="f-page">Página que reportas <span class="req" aria-hidden="true">*</span></label>
+              <div class="sel"><select id="f-page" name="page" required aria-describedby="e-page">
+                <option value="">Elige una página…</option>
+                <option>Inicio</option>
+                <option>Admisión UNI</option>
+                <option>CEPREUNI</option>
+                <option>Ranking</option>
+                <option>Calculadora de puntaje</option>
+                <option>Temario</option>
+                <option>Clases</option>
+                <option>Biblioteca</option>
+                <option>Exámenes</option>
+                <option>Simulacros</option>
+                <option>Planificador</option>
+                <option>Fijas CEPREUNI</option>
+                <option>Guía de aulas y docentes</option>
+                <option>Ingresantes</option>
+                <option>UNITALK</option>
+                <option>Mi espacio / cuenta</option>
+                <option>Metodología editorial</option>
+                <option>Términos o Privacidad</option>
+                <option>Otra página</option>
+              </select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>
+              <p class="err" id="e-page" role="alert"></p>
+            </div>
+            <div class="fld">
+              <label for="f-url">Enlace exacto <span class="opt">(opcional)</span></label>
+              <input id="f-url" name="url" type="text" inputmode="url" maxlength="300" placeholder="https://universetostudy.com/…" autocomplete="off" spellcheck="false" aria-describedby="e-url">
+              <p class="err" id="e-url" role="alert"></p>
+            </div>
+          </div>
+
+          <div class="fld">
+            <label for="f-data">Datos <span class="opt">(opcional)</span></label>
+            <input id="f-data" name="data" type="text" maxlength="400" autocomplete="off" aria-describedby="data-hint">
+            <p class="hint" id="data-hint">Código, curso, pregunta, evaluación, carrera, libro y página…</p>
+          </div>
+
+          <div class="fld">
+            <label for="f-msg">Mensaje <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="f-msg" name="message" rows="6" maxlength="2000" required aria-describedby="e-message msg-count"></textarea>
+            <div class="msg-foot"><p class="err" id="e-message" role="alert"></p><span class="count-c" id="msg-count">0 / 2000</span></div>
+          </div>
+
+          <div class="checks">
+            <label class="chk"><input type="checkbox" name="adult"><span>Tengo 14 años o más, o mi madre, padre o tutor autoriza este envío. <span class="req" aria-hidden="true">*</span></span></label>
+            <p class="err" id="e-adult" role="alert"></p>
+            <label class="chk"><input type="checkbox" name="consent"><span>Autorizo el tratamiento de estos datos para atender mi reporte, según el apartado <a href="#datos">Tus datos</a> y la <a href="/privacidad">Política de Privacidad</a>. <span class="req" aria-hidden="true">*</span></span></label>
+            <p class="err" id="e-consent" role="alert"></p>
+          </div>
+
+          <div class="trap" aria-hidden="true"><label>No completar este campo<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+          <div class="submit-row">
+            <button class="btn send" type="submit" id="send"><span class="send-t">Enviar reporte</span><svg class="send-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg><span class="spin" aria-hidden="true"></span></button>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <div class="done" id="done" hidden tabindex="-1" aria-live="polite">
+          <span class="done-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+          <h3>Reporte enviado</h3>
+          <p>Gracias, <b id="done-name"></b>. Lo revisaremos contra la fuente y, si corresponde, actualizaremos la página.</p>
+          <div class="ref"><span class="k">Tu referencia</span><code id="done-id"></code><button type="button" class="btn ghost" id="copy-id">Copiar</button></div>
+          <p class="done-note" id="done-note"></p>
+          <button type="button" class="btn ghost" id="again">Enviar otro reporte</button>
+        </div>
+
+        <div class="fail" id="fail" hidden>
+          <h3>No pudimos enviarlo desde aquí</h3>
+          <p>Tu mensaje sigue en el formulario. Puedes reintentar o escribirnos por WhatsApp con el reporte ya redactado.</p>
+          <div class="fail-actions"><button type="button" class="btn" id="retry">Reintentar</button><a class="btn ghost" id="wa" href="https://wa.me/51963385410" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp</a></div>
         </div>
       </div>
-      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
-    </section>
-    <section id="system" class="system chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
-      <div class="workspace reveal">
-        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
-        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
+      <noscript><p class="today-msg">Para usar el formulario activa JavaScript, o escríbenos por <a href="https://wa.me/51963385410?text=Hola%2C%20quiero%20reportar%20un%20error%20en%20Universe%20to%20Study">WhatsApp</a>.</p></noscript>
+    </div>
+  </section>
+
+  <!-- ============ PROCESO ============ -->
+  <section id="proceso" class="sec wrap sc" aria-labelledby="h-proc">
+    <div class="sec-head"><div><h2 id="h-proc">Cómo revisamos un reporte</h2><p class="sub">Un criterio editorial claro: la fuente oficial manda.</p></div></div>
+    <ol class="steps4">
+      <li class="card"><span class="n">1</span><h3>Recepción</h3><p>El reporte recibe una referencia y una prioridad según su tipo. Los de privacidad, puntaje, resultados y cuentas pasan primero.</p></li>
+      <li class="card"><span class="n">2</span><h3>Verificación</h3><p>Se contrasta con la fuente primaria: reglamento, comunicado, libro, boletín o publicación oficial de la UNI o CEPREUNI.</p></li>
+      <li class="card"><span class="n">3</span><h3>Corrección</h3><p>Si el error se confirma, se corrige en la página. Cuando el cambio afecta una decisión, se deja visible qué se corrigió.</p></li>
+      <li class="card"><span class="n">4</span><h3>Respuesta</h3><p>Si dejaste correo, te contamos el resultado. Si no procede, explicamos por qué y qué fuente se consultó.</p></li>
+    </ol>
+    <div class="prio card">
+      <div><span class="k amber">Orden de atención</span><h3>Qué se revisa primero</h3></div>
+      <ul class="prio-l">
+        <li><span class="chip hi">Alta</span><span>Privacidad y datos personales · material que vulnera derechos de autor · cálculo de puntaje, notas y resultados · acceso a cuentas</span></li>
+        <li><span class="chip">Normal</span><span>Errores académicos, enlaces rotos, tablas que no cargan y problemas de diseño</span></li>
+      </ul>
+      <p class="fine">No hay un plazo garantizado: es un proyecto educativo independiente. Para asuntos urgentes, usa también el canal de WhatsApp de soporte.</p>
+    </div>
+  </section>
+
+  <!-- ============ MARCO LEGAL ============ -->
+  <section id="marco" class="sec wrap sc split" aria-labelledby="h-law">
+    <div class="split-h">
+      <h2 id="h-law">Marco legal y principios</h2>
+      <p class="sub">Normas peruanas que regulan este servicio y cómo las aplicamos.</p>
+      <nav class="lawnav" id="lawnav" aria-label="Áreas del marco legal">
+        <a href="#l-gen" aria-current="false"><span>00</span>Principios generales</a>
+        <a href="#l-datos" aria-current="false"><span>01</span>Datos personales</a>
+        <a href="#l-arco" aria-current="false"><span>02</span>Derechos ARCO</a>
+        <a href="#l-autor" aria-current="false"><span>03</span>Derecho de autor</a>
+        <a href="#l-verac" aria-current="false"><span>04</span>Veracidad y rectificación</a>
+        <a href="#l-cons" aria-current="false"><span>05</span>Consumidor y publicidad</a>
+        <a href="#l-info" aria-current="false"><span>06</span>Seguridad informática</a>
+        <a href="#l-menor" aria-current="false"><span>07</span>Menores de edad</a>
+        <a href="#l-com" aria-current="false"><span>08</span>Comunicaciones</a>
+        <a href="#l-aut" aria-current="false"><span>09</span>Autoridades</a>
+      </nav>
+    </div>
+    <div class="split-b law">
+      <p class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8.2v.1"/></svg><span>Esta sección es informativa y explica cómo aplicamos la ley en este sitio. No constituye asesoría jurídica ni reemplaza el texto oficial de las normas. Versión 4.0 · actualizada el 5 de noviembre de 2026.</span></p>
+
+      <article id="l-gen" class="lw">
+        <header><span class="no">00</span><div><h3>Principios generales</h3><p class="norm">Constitución Política del Perú · Código Civil · Ley del Procedimiento Administrativo General</p></div></header>
+        <p>Estos principios guían todo lo que publicamos, corregimos y retiramos.</p>
+        <ul class="pr">
+          <li class="bglow"><span class="edge-light"></span><b>Legalidad</b><span>Actuamos dentro de la ley y no usamos medios ilícitos para obtener, mostrar o tratar información.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Buena fe</b><span>Presumimos buena fe en quien reporta y esperamos lo mismo: reportes veraces, sin acusaciones falsas.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Veracidad</b><span>Publicamos información contrastada con fuentes oficiales y corregimos lo inexacto.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Transparencia</b><span>Indicamos la fuente y la fecha de los datos, y explicamos qué se corrigió y por qué.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Razonabilidad y proporcionalidad</b><span>Pedimos solo los datos necesarios y respondemos en proporción al daño o riesgo reportado.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Igualdad y no discriminación</b><span>Todo reporte se atiende con el mismo criterio, sin distinción de origen, academia, ciclo o condición.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Derecho de defensa</b><span>Antes de mantener un retiro, la persona afectada puede explicar su posición y aportar pruebas.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Responsabilidad</b><span>Cada persona responde por lo que envía; el sitio responde por cómo trata y corrige la información.</span></li>
+        </ul>
+      </article>
+
+      <article id="l-datos" class="lw">
+        <header><span class="no">01</span><div><h3>Protección de datos personales</h3><p class="norm">Ley N.° 29733 y su Reglamento, aprobado por D.S. N.° 016-2024-JUS · Const., art. 2, inc. 6</p></div></header>
+        <p>La Ley reconoce ocho principios rectores (arts. 4 a 11). Así los aplicamos a este formulario:</p>
+        <dl class="pd">
+          <div><dt>Legalidad</dt><dd>Recopilamos los datos de forma lícita y leal, sin engaños ni medios ocultos.</dd></div>
+          <div><dt>Consentimiento</dt><dd>Previo, libre, expreso, inequívoco e informado: la casilla de autorización nunca viene marcada y sin ella no se envía nada.</dd></div>
+          <div><dt>Finalidad</dt><dd>Solo para revisar, corregir y responder tu reporte. No se usa para publicidad ni se vende.</dd></div>
+          <div><dt>Proporcionalidad</dt><dd>Nombre, página y mensaje. El correo es opcional y no pedimos DNI, teléfono ni documentos.</dd></div>
+          <div><dt>Calidad</dt><dd>Los datos deben ser veraces y exactos; los conservamos solo el tiempo necesario y puedes pedir que se actualicen.</dd></div>
+          <div><dt>Seguridad</dt><dd>Conexión cifrada, acceso restringido al propietario y envío mediante servidores propios, no desde tu navegador a terceros.</dd></div>
+          <div><dt>Disposición de recurso</dt><dd>Puedes reclamar ante nosotros, ante la Autoridad Nacional de Protección de Datos Personales y por la vía judicial (hábeas data).</dd></div>
+          <div><dt>Nivel de protección adecuado</dt><dd>Si un proveedor trata datos fuera del Perú, exigimos un nivel de protección equivalente. Ver <a href="#datos">Tus datos</a>.</dd></div>
+        </dl>
+        <p class="fine">El Reglamento además detalla deberes de seguridad, gestión de incidentes y responsabilidad del titular del banco de datos.</p>
+      </article>
+
+      <article id="l-arco" class="lw">
+        <header><span class="no">02</span><div><h3>Tus derechos sobre tus datos</h3><p class="norm">Ley N.° 29733, Título III · Const., art. 200, inc. 3 (hábeas data)</p></div></header>
+        <ul class="rights">
+          <li><b>Información</b><span>Saber qué datos tratamos, para qué, quién los recibe y por cuánto tiempo.</span></li>
+          <li><b>Acceso</b><span>Pedir una copia de lo que enviaste y de cómo se está usando.</span></li>
+          <li><b>Rectificación</b><span>Actualizar, completar o corregir datos inexactos.</span></li>
+          <li><b>Cancelación</b><span>Solicitar la supresión de tus datos cuando ya no sean necesarios o retires tu consentimiento.</span></li>
+          <li><b>Oposición</b><span>Negarte a un tratamiento por motivos legítimos, o retirar tu consentimiento cuando quieras.</span></li>
+          <li><b>Tratamiento objetivo</b><span>No ser sometido a decisiones basadas únicamente en tratamiento automatizado de tus datos.</span></li>
+        </ul>
+        <p>Para ejercerlos, envía un reporte de tipo <a href="#reportar" data-type="privacidad">Privacidad</a> indicando tu referencia (por ejemplo, <code>COR-XXXXXX-XXXX</code>) y lo que solicitas. Responderemos dentro de los plazos que fija el Reglamento. Si no estás conforme, puedes acudir a la autoridad (ver <a href="#l-aut">Autoridades</a>).</p>
+      </article>
+
+      <article id="l-autor" class="lw">
+        <header><span class="no">03</span><div><h3>Derecho de autor y materiales de terceros</h3><p class="norm">Decreto Legislativo N.° 822 · Decisión 351 de la Comunidad Andina · Const., art. 2, inc. 8</p></div></header>
+        <p>Los libros, videos, exámenes y archivos enlazados conservan la autoría y las condiciones de sus titulares. Universe to Study organiza y enlaza; no reclama autoría sobre obras ajenas.</p>
+        <ul class="pr pr-2">
+          <li class="bglow"><span class="edge-light"></span><b>Reconocimiento de autoría</b><span>Los créditos y la fuente se conservan siempre; no se presenta material ajeno como propio.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Uso educativo y cita</b><span>Fragmentos y enlaces con fin académico, indicando la fuente y sin sustituir la obra original.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Respeto a licencias</b><span>Se acatan las condiciones de Drive, YouTube y de cada editorial o docente.</span></li>
+          <li class="bglow"><span class="edge-light"></span><b>Retiro a pedido del titular</b><span>Si eres titular o representante y algo vulnera tus derechos, se retira o se deja de enlazar.</span></li>
+        </ul>
+        <h4>Cómo solicitar el retiro</h4>
+        <ol class="proc">
+          <li>Elige el tipo <a href="#reportar" data-type="derechos">Derechos de autor</a>.</li>
+          <li>Identifica la obra y su titularidad, e indica el enlace exacto que quieres retirar.</li>
+          <li>Declara de buena fe que actúas como titular o con su autorización, y deja un correo de contacto.</li>
+          <li>Evaluamos el pedido; si es verosímil, el contenido se retira o deja de enlazarse de forma preventiva mientras se verifica.</li>
+          <li>Quien lo publicó puede explicar su posición y aportar pruebas antes de una decisión final.</li>
+        </ol>
+        <p class="fine">Los reportes falsos o abusivos pueden ser desestimados. Para controversias, la autoridad competente es el Indecopi (Dirección de Derecho de Autor).</p>
+      </article>
+
+      <article id="l-verac" class="lw">
+        <header><span class="no">04</span><div><h3>Veracidad, corrección y rectificación</h3><p class="norm">Const., art. 2, incs. 4 y 7 · Ley N.° 26775 (derecho de rectificación)</p></div></header>
+        <p>La libertad de información y de opinión se ejerce con responsabilidad. La Constitución reconoce a quien resulta afectado por afirmaciones inexactas el derecho a que se rectifiquen de forma gratuita, inmediata y proporcional. Aunque somos un sitio educativo y no un medio de comunicación, adoptamos ese estándar:</p>
+        <ul class="rights">
+          <li><b>Fuente oficial primero</b><span>Fechas, vacantes, pagos, puntajes y resultados se verifican siempre en la UNI y CEPREUNI. Universe to Study es independiente y no los representa.</span></li>
+          <li><b>Corrección gratuita</b><span>Reportar un error nunca tiene costo.</span></li>
+          <li><b>Corrección proporcional</b><span>El cambio es tan visible como el error: si afectó una decisión, se avisa en la propia página.</span></li>
+          <li><b>Herramientas de orientación</b><span>Calculadoras, rankings y simulacros orientan, pero no son calificaciones oficiales ni sustituyen reglamentos.</span></li>
+        </ul>
+      </article>
+
+      <article id="l-cons" class="lw">
+        <header><span class="no">05</span><div><h3>Consumidor, publicidad y transparencia</h3><p class="norm">Ley N.° 29571, Código de Protección y Defensa del Consumidor · D. Leg. N.° 1044, Ley de Represión de la Competencia Desleal</p></div></header>
+        <ul class="rights">
+          <li><b>Información veraz</b><span>Describimos qué hace cada herramienta y sus límites, sin promesas de ingreso ni resultados garantizados.</span></li>
+          <li><b>Publicidad identificable</b><span>Los anuncios de terceros se distinguen del contenido editorial y no se colocan en páginas sin contenido propio.</span></li>
+          <li><b>Sin cobros por reportar</b><span>Corregir, retirar o consultar tus datos es gratuito.</span></li>
+          <li><b>Canal de reclamos</b><span>Este formulario es nuestro canal. Si no recibes una respuesta satisfactoria, puedes acudir al Indecopi.</span></li>
+        </ul>
+      </article>
+
+      <article id="l-info" class="lw">
+        <header><span class="no">06</span><div><h3>Seguridad informática y uso responsable</h3><p class="norm">Ley N.° 30096, Ley de Delitos Informáticos, modificada por la Ley N.° 30171</p></div></header>
+        <p>El acceso ilícito a sistemas, la interceptación de datos, el sabotaje y la suplantación de identidad son delitos. Por eso este formulario no admite archivos adjuntos, limita la frecuencia de envíos y descarta mensajes automatizados.</p>
+        <h4>Si encuentras una vulnerabilidad</h4>
+        <ol class="proc">
+          <li>Repórtala con el tipo <a href="#reportar" data-type="tecnica">Técnica</a>, describiendo el problema sin incluir datos de otras personas.</li>
+          <li>No accedas, copies ni modifiques información que no sea tuya, ni afectes la disponibilidad del sitio.</li>
+          <li>Danos tiempo razonable para corregirla antes de divulgarla públicamente.</li>
+        </ol>
+        <p class="fine">Reconocemos los reportes de buena fe; esto no autoriza ningún acceso ilícito ni limita las acciones legales que correspondan frente a un uso indebido.</p>
+      </article>
+
+      <article id="l-menor" class="lw">
+        <header><span class="no">07</span><div><h3>Menores de edad</h3><p class="norm">Ley N.° 29733 y su Reglamento · Ley N.° 27337, Código de los Niños y Adolescentes · Ley N.° 30254</p></div></header>
+        <p>Muchas personas que usan Universe to Study son adolescentes, por eso aplicamos el interés superior del niño y del adolescente y una protección reforzada de sus datos.</p>
+        <ul class="rights">
+          <li><b>Menores de 14 años</b><span>El reporte debe enviarlo su madre, padre o tutor, o contar con su autorización.</span></li>
+          <li><b>De 14 a 17 años</b><span>Pueden reportar por sí mismos; recomendamos no compartir datos innecesarios.</span></li>
+          <li><b>Sin datos sensibles</b><span>No pedimos documento de identidad, imágenes de menores ni información de salud o familiar.</span></li>
+          <li><b>Uso seguro</b><span>Si ves contenido que ponga en riesgo a un menor, repórtalo con prioridad como tipo Privacidad.</span></li>
+        </ul>
+      </article>
+
+      <article id="l-com" class="lw">
+        <header><span class="no">08</span><div><h3>Comunicaciones y correo electrónico</h3><p class="norm">Ley N.° 28493, correo electrónico comercial no solicitado (spam)</p></div></header>
+        <p>El correo que dejes se usa exclusivamente para responder a tu reporte. No lo incluimos en listas de difusión, no enviamos publicidad y no lo cedemos a terceros con fines comerciales.</p>
+      </article>
+
+      <article id="l-aut" class="lw">
+        <header><span class="no">09</span><div><h3>Autoridades y vías de reclamo</h3><p class="norm">Si no estás conforme con nuestra respuesta</p></div></header>
+        <ul class="auth">
+          <li><b>Autoridad Nacional de Protección de Datos Personales</b><span>Reclamos sobre tus datos personales y derechos ARCO. Ministerio de Justicia y Derechos Humanos.</span><a href="https://www.gob.pe/anpd" target="_blank" rel="noopener noreferrer">gob.pe/anpd<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+          <li><b>Indecopi</b><span>Derecho de autor, protección al consumidor y publicidad.</span><a href="https://www.gob.pe/indecopi" target="_blank" rel="noopener noreferrer">gob.pe/indecopi<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+          <li><b>Poder Judicial</b><span>Hábeas data y otras acciones judiciales, según corresponda.</span></li>
+        </ul>
+        <p class="fine">Más información en nuestros <a href="/terminos">Términos y Condiciones</a>, la <a href="/privacidad">Política de Privacidad</a> y la <a href="/metodologia-editorial">Metodología editorial</a>.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TUS DATOS ============ -->
+  <section id="datos" class="sec wrap sc split" aria-labelledby="h-data">
+    <div class="split-h">
+      <h2 id="h-data">Tus datos en este reporte</h2>
+      <p class="sub">Aviso de privacidad del formulario, según la Ley N.° 29733.</p>
+    </div>
+    <div class="split-b">
+      <dl class="tbl card">
+        <div><dt>Responsable</dt><dd>Universe to Study, administración del sitio universetostudy.com (Perú).</dd></div>
+        <div><dt>Datos que recopilamos</dt><dd>Nombre, tipo de reporte, página, enlace y datos opcionales, mensaje y correo opcional. Además, la fecha y el sitio desde el que se envió. No guardamos tu dirección IP en el reporte.</dd></div>
+        <div><dt>Finalidad</dt><dd>Revisar y corregir el contenido, contestarte si dejas correo y llevar un registro de las correcciones.</dd></div>
+        <div><dt>Base de legitimación</dt><dd>Tu consentimiento, que otorgas al marcar la casilla y que puedes retirar en cualquier momento.</dd></div>
+        <div><dt>Quién lo recibe</dt><dd>Solo el propietario del sitio. Para entregarlo intervienen proveedores que actúan por encargo: hosting (Cloudflare), base de datos de respaldo (Google Firebase) y envío de correo (Resend).</dd></div>
+        <div><dt>Transferencia internacional</dt><dd>Esos proveedores pueden procesar datos fuera del Perú, con medidas de seguridad contractuales y técnicas.</dd></div>
+        <div><dt>Plazo de conservación</dt><dd>Hasta 12 meses después de resolver el reporte. Si el reporte originó una corrección, se conserva solo el registro del cambio, sin tus datos personales.</dd></div>
+        <div><dt>Tus derechos</dt><dd>Información, acceso, rectificación, cancelación, oposición y tratamiento objetivo. Se ejercen enviando un reporte de tipo <a href="#reportar" data-type="privacidad">Privacidad</a>.</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-about">
+        <a class="brand foot-brand" href="/">UNIverse</a>
+        <p>Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p>
+        <a class="report" href="#reportar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>Reportar un error</a>
       </div>
-    </section>
-    <section id="resources" class="resources chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
-      <div class="resource-grid">
-        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
-        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/materialespre"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="Academic archive">Archivo académico</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Explore the evaluations and solutions archive.">Explora el archivo de evaluaciones y soluciones.</p></div><span data-icon="arrow-up-right"></span></a></div>
-      </div>
-    </section>
-    <section id="trajectory" class="trajectory chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
-      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
-      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
-    </section>
-  </main>
-<main id="native-main" class="native-shell" tabindex="-1"><div class="platform native-platform">
-<aside class="side-rail"><span>TODO CONECTA</span><nav aria-label="Secciones de Universe"><a href="/explorar"><span data-icon="grid"></span>Plataforma</a><a href="/cepreuni"><span data-icon="cap"></span>CEPREUNI</a><a href="/admision"><span data-icon="cap"></span>Admisión UNI</a><a href="/unitalk"><span data-icon="users"></span>UNITALK</a><a href="/temario"><span data-icon="list"></span>Temario</a><a href="/clases"><span data-icon="play"></span>Clases</a><a href="/planificador"><span data-icon="calendar"></span>Planificador</a><a href="/simulacros"><span data-icon="target"></span>Simulacros</a><a href="/examenes"><span data-icon="layers"></span>Exámenes</a><a href="/biblioteca"><span data-icon="book"></span>Biblioteca</a></nav></aside>
-<div class="platform-body">
-<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / Correcciones y reportes</span></div>
-<div class="page-head"><span class="eyebrow">UNIVERSE / CORRECCIONES</span><h1 id="page-title" tabindex="-1">Correcciones y reportes</h1><p>Si encuentras una fórmula incorrecta, una nota mal registrada, una fuente dudosa o un error visual, puedes reportarlo para revisión.</p></div>
-<div class="page-view native-view"><div class="editorial-wrap"><div class="article-grid p-grid"><article class="article-card p-panel p-tile"><h2>Tipos</h2><ul><li>Académica: explicación, fórmula, alternativa o solución.</li><li>Datos: nota, carrera, código o resultado.</li><li>Técnica: tabla que no carga, botón roto o diseño ilegible.</li><li>Derechos: material externo que deba retirarse o no indexarse.</li></ul><h2>Proceso</h2><p>El equipo revisa el reporte, contrasta información y actualiza la página si corresponde.</p></article><aside class="side-card p-panel p-tile"><h2>Prioridad</h2><p>Privacidad, cálculo de puntaje y acceso a cuentas tienen prioridad alta.</p></aside></div></div><section class="editorial-hero"><div class="editorial-kicker">Correcciones</div></section></div>
-</div></div></main><footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
-  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
-  <div class="immersion-controls" hidden>
-    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
-    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
-    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
-    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
-    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
+      <nav class="foot-col" aria-labelledby="f-plat">
+        <h2 id="f-plat">Plataforma</h2>
+        <a href="/admision">Admisión</a>
+        <a href="/cepreuni">CEPREUNI</a>
+        <a href="/temario">Temario</a>
+        <a href="/clases">Clases</a>
+        <a href="/calculadora">Calculadora</a>
+        <a href="/ranking">Ranking</a>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-lib">
+        <h2 id="f-lib">Biblioteca</h2>
+        <a href="/biblioteca">Todas las editoriales</a>
+        <a href="/biblioteca/lumbreras">Lumbreras</a>
+        <a href="/biblioteca/cuzcano">Cuzcano</a>
+        <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>
+        <a href="/examenes">Exámenes</a>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-uni">
+        <h2 id="f-uni">UNIverse</h2>
+        <a href="/metodologia-editorial">Metodología editorial</a>
+        <a href="/correcciones" aria-current="page">Correcciones</a>
+        <a href="/contacto">Contacto</a>
+      </nav>
+    </div>
+    <nav class="loop" aria-label="Canales oficiales"><div class="loop-track"><div class="loop-group"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="YouTube" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="WhatsApp Channels" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="TikTok" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="Linktree" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div></div></nav>
+    <div class="foot-legal">
+      <span>© 2026 UNIverseToStudy · Aprende. Practica. Avanza.</span>
+      <nav aria-label="Legal">
+        <a href="/terminos">Términos</a>
+        <a href="/privacidad">Privacidad</a>
+        <a href="/correcciones#marco">Marco legal</a>
+      </nav>
+    </div>
   </div>
-  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><div id="search-drive" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
-  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
-  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
-  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
-</body></html>
+  <p class="foot-mark" aria-hidden="true">UNIverse</p>
+</footer>
+
+<button class="totop" type="button" aria-label="Volver arriba" tabindex="-1">
+  <svg class="totop-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg>
+  <svg class="totop-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.5v-11M5 9l5-5 5 5"/></svg>
+</button>
+
+</body>
+</html>
