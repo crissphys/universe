@@ -24,6 +24,7 @@ const tools=[
  {id:'syllabus',name:'Temario',en:'Syllabus',desc:'Conoce el mapa. Identifica los conceptos que necesitas dominar.',descEn:'Know the map. Identify the concepts you need to master.',url:'/temario',icon:'list',keys:'temas algebra fisica aritmetica matematica química'},
  {id:'classes',name:'Clases',en:'Classes',desc:'Dale contexto a cada idea. Aprende a tu ritmo.',descEn:'Give every idea context. Learn at your own pace.',url:'/clases',icon:'play',keys:'videos profesor explicacion entender aprender newton'},
  {id:'library',name:'Biblioteca',en:'Library',desc:'Libros, editoriales y colecciones para ampliar tu universo.',descEn:'Books, publishers and collections to expand your universe.',url:'/biblioteca',icon:'book',keys:'libro pdf lectura material algebra física química resumenes formularios academias universidades cursos'},
+ {id:'periodic',name:'Tabla periódica',en:'Periodic table',desc:'118 elementos, tendencias, átomo, enlace e historia en un solo lugar.',descEn:'118 elements, trends, atom models, bonding and history in one place.',url:'/experimentos/tablaperiodica',icon:'orbit',keys:'quimica elementos tabla periodica propiedades electronegatividad configuracion electronica bohr orbitales lewis mendeleiev atomo enlace'},
  {id:'mock',name:'Simulacros',en:'Mock exams',desc:'Convierte conocimiento en criterio. Practica y revisa.',descEn:'Turn knowledge into judgment. Practice and review.',url:'/simulacros',icon:'target',keys:'practicar prueba preguntas examen evaluar pc'},
  {id:'exams',name:'Exámenes de admisión UNI',en:'UNI admission exams',desc:'Rinde el examen real con su tiempo: 3 pruebas de 3 horas y calificación al terminar.',descEn:'Take the real exam on the clock: 3 tests of 3 hours, graded at the end.',url:'/examenes',icon:'layers',keys:'examen admision uni 2026-2 simulacro humanidades aptitud matematica fisica quimica soluciones clave'},
 {id:'calculator',name:'Calculadora',en:'Calculator',desc:'Calcula tu puntaje CEPREUNI según tus notas y carrera.',descEn:'Calculate your CEPREUNI score and compare historical cutoffs.',url:'/calculadora',icon:'calculator',keys:'calcular puntaje operaciones numeros'},
@@ -65,13 +66,13 @@ const pages=[
  {name:'Términos y condiciones',desc:'Reglas claras para usar las herramientas, materiales y espacios comunitarios de Universe to Study.',url:'/terminos',keys:'legal reglas uso'},
  {name:'Política de privacidad',desc:'Qué información utiliza Universe to Study, para qué se usa y qué controles conserva cada usuario.',url:'/privacidad',keys:'legal datos cuenta'}
 ];
-const modes={learn:['syllabus','classes','library'],practice:['mock','exams','calculator'],plan:['planner','admissions','cepre'],connect:['talk','classrooms','ranking']};
+const modes={learn:['syllabus','classes','library','periodic'],practice:['mock','exams','calculator'],plan:['planner','admissions','cepre'],connect:['talk','classrooms','ranking']};
 const en=()=>prefs.lang==='en';
 const title=t=>en()?t.en:t.name;
 const desc=t=>en()?t.descEn:t.desc;
 function externalLinks(){ $$('a[href^="https://"]').forEach(a=>{const u=new URL(a.href);if(u.origin===location.origin||['universetostudy.com','www.universetostudy.com'].includes(u.hostname))return;a.target='_blank';a.rel='noopener noreferrer'})}
 function toolHTML(t){return `<a class="tool-card" href="${t.url}">${icon(t.icon)}${icon('arrow-up-right','tool-arrow')}<h3>${title(t)}</h3><p>${desc(t)}</p></a>`}
-function renderTools(){ $('#workspace-content').innerHTML=modes[mode].map(id=>toolHTML(tools.find(t=>t.id===id))).join('');$('#workspace-content').setAttribute('aria-labelledby','tab-'+mode);externalLinks() }
+function renderTools(){ $('#workspace-content').dataset.n=modes[mode].length;$('#workspace-content').innerHTML=modes[mode].map(id=>toolHTML(tools.find(t=>t.id===id))).join('');$('#workspace-content').setAttribute('aria-labelledby','tab-'+mode);externalLinks() }
 function normalize(s){return String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()}
 // Buscar "física" devolvía tres herramientas y nada más, cuando la plataforma sabe muchísimo sobre
 // física: el temario de admisión, el de CEPREUNI, el de San Marcos, los libros de la biblioteca, los

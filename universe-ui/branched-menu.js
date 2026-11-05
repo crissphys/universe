@@ -11,7 +11,8 @@ const defaults = [
   { label: 'Aprende', children: [
     { value: '/temario', label: 'Temario', icon: 'list' },
     { value: '/clases', label: 'Clases', icon: 'play' },
-    { value: '/biblioteca', label: 'Biblioteca', icon: 'book' }
+    { value: '/biblioteca', label: 'Biblioteca', icon: 'book' },
+    { value: '/experimentos/tablaperiodica', label: 'Tabla periódica', icon: 'grid' }
   ] },
   { label: 'Practica', children: [
     { value: '/simulacros', label: 'Simulacros', icon: 'target' },

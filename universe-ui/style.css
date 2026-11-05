@@ -8,3 +8,5 @@
 @media(prefers-reduced-motion:reduce){:root.motion-off{scroll-behavior:auto}.motion-off .reveal.pending{opacity:1;transform:none}}
 .footer-brand span{display:none}
 body.immersive #space{z-index:0}
+.tool-grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}
+@media(max-width:760px){.tool-grid[data-n="4"]{grid-template-columns:1fr}}
