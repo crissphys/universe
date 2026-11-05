@@ -83,7 +83,7 @@ const GROUPS=[['tool','Herramientas','Tools'],['page','Páginas','Pages'],['syll
 let indexRows=null,indexPromise=null;
 function row(kind,label,sub,url,extra){return {kind,label,sub,url,keys:normalize([label,sub,extra].join(' '))}}
 const baseRows=()=>[...tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' '))),...pages.map(p=>row('page',p.name,p.desc,p.url,p.keys))];
-function buildIndex(d,videos,directory){
+function buildIndex(d,videos,directory,mats){
  const rows=baseRows();
  for(const g of directory?.groups||[])for(const item of g.items)rows.push(row('library',item.title,g.title,'/biblioteca#'+g.id,''));
  const s=d.syllabus||{};
@@ -96,11 +96,13 @@ function buildIndex(d,videos,directory){
   rows.push(row('syllabus',c.name,`San Marcos · ${c.topics.length} temas`,'/temario',c.group));
   for(const t of c.topics)rows.push(row('syllabus',t.split('. ')[0].slice(0,90),`San Marcos · ${c.name}`,'/temario',t));
  }
- const ROUTES={amautas:'/biblioteca/amautas',manhattan:'/biblioteca/manhattan',universe:'/biblioteca/universe',cuzcano:'/biblioteca/cuzcano',lumbreras:'/biblioteca/lumbreras',college:'/biblioteca/librosuniversitarios',materials:'/cepreuni/materialespre'};
+ const ROUTES={amautas:'/biblioteca/amautas',manhattan:'/biblioteca/manhattan',universe:'/biblioteca/universe',cuzcano:'/biblioteca/cuzcano',lumbreras:'/biblioteca/lumbreras',college:'/biblioteca/librosuniversitarios'};
  // Cada libro lleva su portada (la misma que muestra el catálogo) y el enlace a su posición: ?libro=<índice>.
  const thumb=b=>{const id=(b.url||'').match(/\/d\/([^/?]+)|[?&]id=([^&]+)/);return (b.drivePreview||b.image==='/assets/library/editorials/cepreuni.png')&&id?`https://drive.google.com/thumbnail?id=${id[1]||id[2]}&sz=w200`:b.image||''};
  for(const [key,list] of Object.entries(d.catalogs||{}))list.forEach((b,i)=>
-  rows.push({...row(key==='materials'?'material':'library',b.title,[b.series,b.author].filter(Boolean).join(' · '),key==='examenes'?'/cepreuni/examenes':ROUTES[key]?ROUTES[key]+'?libro='+i:'/biblioteca',b.catalog+' '+b.section),image:thumb(b)}));
+  rows.push({...row('library',b.title,[b.series,b.author].filter(Boolean).join(' · '),key==='examenes'?'/cepreuni/examenes':ROUTES[key]?ROUTES[key]+'?libro='+i:'/biblioteca',b.catalog+' '+b.section),image:thumb(b)}));
+ const MK={clase:'Clase',libro:'Libro',adicional:'Material adicional',repaso:'Repaso',pizarra:'Pizarra',solucionario:'Solucionario',resultado:'Resultados',info:'Información'};
+ for(const m of mats?.items||[])rows.push({...row('material',m.t,`${m.c} · ${MK[m.k]}`,`/cepreuni/materialespre?t=${m.k==='adicional'?'libro':m.k}${m.c==='General'?'':'&c='+encodeURIComponent(m.c)}`,m.w?'semana '+m.w:''),image:m.k==='clase'?`https://drive.google.com/thumbnail?id=${m.i}&sz=w200`:''});
  for(const p of d.publishers||[])rows.push(row('library',p.name,'Editorial','/biblioteca',''));
  for(const c of d.videoIndex?.courses||[])rows.push(row('class',c.title,`${c.videoCount} clases · ${c.area}`,'/clases',c.slug));
  if(videos)for(const [slug,list] of Object.entries(videos))for(const v of list)
@@ -113,7 +115,8 @@ function loadIndex(){
   fetch('/universe-ui/data/platform.json?v=20261013-upcoming-algebra-v1').then(r=>r.json()),
   fetch('/universe-ui/data/videos.json').then(r=>r.json()).catch(()=>null),
   fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
- ]).then(([d,v,directory])=>{indexRows=buildIndex(d,v,directory);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
+  fetch('/cepreuni/materialespre/materiales-2027-1.json?v=20261111').then(r=>r.json()).catch(()=>null),
+ ]).then(([d,v,directory,mats])=>{indexRows=buildIndex(d,v,directory,mats);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
  return indexPromise;
 }
 // Palabras de dos letras cuentan («pc», «uni»), y cada palabra larga también se busca sin su terminación,
@@ -267,7 +270,7 @@ function wakeStrands(){if(!strandsHost)return;const wake=new IntersectionObserve
   stage.classList.add('is-live')}catch(error){stage.classList.add('is-static');console.warn('Strands fallback:',error.message)}});wake.observe(strandsHost)}
 if(startsHome)wakeStrands();
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261110-materialespre');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261111-cleanup');
 if(!document.body.dataset.native) startPlatform({icon,tools,events,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});
