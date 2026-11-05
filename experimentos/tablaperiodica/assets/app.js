@@ -465,7 +465,7 @@
   function loadScript(f, cb) {
     if (loaded[f]) { loaded[f].push(cb); if (loaded[f].ready) cb(); return; }
     loaded[f] = [cb];
-    var s = document.createElement('script'); s.src = BASE + '/assets/' + f + '?v=20261112';
+    var s = document.createElement('script'); s.src = BASE + '/assets/' + f + '?v=20261116';
     s.onload = function () { loaded[f].ready = true; loaded[f].forEach(function (c) { c(); }); };
     document.head.appendChild(s);
   }

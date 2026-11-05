@@ -508,3 +508,17 @@ table.t tr.me td { background: color-mix(in srgb, var(--accent) 12%, transparent
 .sh-act { display: grid; grid-template-columns: 1.6fr 1fr; gap: 8px; margin-top: 16px; }
 .sh-act .btn { width: 100%; }
 html.sheet-open { overflow: hidden; }
+
+/* tabla grande en escritorio: ocupa casi toda la pantalla sin pasar de su altura */
+@media (min-width: 1200px) {
+  main.wrap:has(#p-tabla:not([hidden])) { max-width: min(2200px, 98vw); }
+  #p-tabla { --fit: max(54px, calc((100svh - 215px) / 9.9)); }
+  #p-tabla .pt { min-width: 0; max-width: calc(20px + 18 * (var(--fit) + 3px)); margin-inline: auto; }
+  #p-tabla .el b { font-size: clamp(20px, calc(var(--fit) * .34), 36px); top: 28%; }
+  #p-tabla .el i { font-size: clamp(11px, calc(var(--fit) * .15), 15px); }
+  #p-tabla .el small { font-size: clamp(9.5px, calc(var(--fit) * .15), 14px); }
+  #p-tabla .el em { font-size: clamp(9px, calc(var(--fit) * .14), 13px); }
+  #p-tabla .info .big { width: calc(var(--fit) * 1.5); height: calc(var(--fit) * 1.5); }
+  #p-tabla .info h2 { font-size: clamp(22px, calc(var(--fit) * .4), 34px); }
+  #p-tabla .info dd { font-size: clamp(13px, calc(var(--fit) * .2), 17px); }
+}
