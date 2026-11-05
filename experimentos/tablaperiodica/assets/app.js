@@ -160,16 +160,37 @@
   }
   TP.tableMode = function (m, filter) { S.m = m; S.filter = filter || null; TP.go('tabla'); if (TP._tref) TP._tref(); };
 
-  /* hoja inferior (móvil) */
-  var sheet = $('#sheet'), scrim = $('#scrim');
-  function openSheet(e) {
-    sheet.innerHTML = '<div class="grab"></div><div class="info" style="--c:' + TP.CAT[e.cat].c + '">' + infoHTML(e) + '</div>';
-    $('.go', sheet).className = 'btn';
-    sheet.dataset.open = 'true'; scrim.dataset.open = 'true';
+  /* hoja inferior (móvil): se cierra con X, botón, toque fuera, Escape o arrastrando hacia abajo */
+  var sheet = $('#sheet'), scrim = $('#scrim'), lastFocus = null;
+  var XSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  function sheetHTML(e) {
+    var u = S.unit;
+    return '<div class="sh-head" id="shh"><span class="grab"></span><button type="button" class="sx" aria-label="Cerrar">' + XSVG + '</button></div>' +
+      '<div class="sh-body" style="--c:' + TP.CAT[e.cat].c + '"><div class="sh-top"><div class="sh-tile"><i>' + e.z + '</i><b>' + e.sym + '</b></div><div><h2>' + e.name + '</h2><p>' + TP.num(e.mass) + ' u</p></div></div>' +
+      '<div class="chips"><span class="tag">' + TP.CAT[e.cat].n + '</span>' + (e.group ? '<span class="tag">Grupo ' + e.group + '</span>' : '') + '<span class="tag">Periodo ' + e.period + '</span><span class="tag">Bloque ' + e.block + '</span></div>' +
+      '<dl class="sh-facts"><div><dt>Configuración</dt><dd>' + e.cfgShort + '</dd></div><div><dt>Electronegatividad</dt><dd>' + TP.num(e.en, 2) + '</dd></div><div><dt>Energía de ionización</dt><dd>' + TP.num(e.ie, 1) + ' kJ/mol</dd></div><div><dt>Densidad</dt><dd>' + (e.dens == null ? 'n/d' : TP.num(e.dens) + ' g/cm³') + '</dd></div><div><dt>Fusión</dt><dd>' + TP.temp(e.mp, u) + '</dd></div><div><dt>Ebullición</dt><dd>' + TP.temp(e.bp, u) + '</dd></div></dl>' +
+      '<div class="sh-act"><a class="btn" href="' + TP.url(e) + '">Ver ficha completa</a><button type="button" class="btn ghost sx2">Cerrar</button></div></div>';
   }
-  function closeSheet() { sheet.dataset.open = 'false'; scrim.dataset.open = 'false'; }
+  function openSheet(e) {
+    lastFocus = document.activeElement; sheet.innerHTML = sheetHTML(e); sheet.style.transform = '';
+    sheet.dataset.open = 'true'; scrim.dataset.open = 'true'; document.documentElement.classList.add('sheet-open');
+    var x = $('.sx', sheet); if (x) x.focus({ preventScroll: true });
+  }
+  function closeSheet() {
+    if (sheet.dataset.open !== 'true') return;
+    sheet.dataset.open = 'false'; scrim.dataset.open = 'false'; sheet.style.transform = ''; document.documentElement.classList.remove('sheet-open');
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
   scrim.addEventListener('click', closeSheet);
+  sheet.addEventListener('click', function (ev) { if (ev.target.closest('.sx, .sx2')) closeSheet(); });
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') closeSheet(); });
+  (function drag() {
+    var y0 = null, t0 = 0, dy = 0;
+    sheet.addEventListener('pointerdown', function (ev) { var h = ev.target.closest('.sh-head, .sh-top'); if (!h || ev.target.closest('.sx')) return; y0 = ev.clientY; t0 = Date.now(); dy = 0; sheet.setPointerCapture(ev.pointerId); sheet.classList.add('dragging'); });
+    sheet.addEventListener('pointermove', function (ev) { if (y0 == null) return; dy = Math.max(0, ev.clientY - y0); sheet.style.transform = 'translateY(' + dy + 'px)'; });
+    function end() { if (y0 == null) return; var fast = dy / Math.max(1, Date.now() - t0) > .5; y0 = null; sheet.classList.remove('dragging'); if (dy > 90 || (fast && dy > 30)) closeSheet(); else sheet.style.transform = ''; }
+    sheet.addEventListener('pointerup', end); sheet.addEventListener('pointercancel', end);
+  })();
 
   /* ---------- gráficos ---------- */
   var PX = {
@@ -444,7 +465,7 @@
   function loadScript(f, cb) {
     if (loaded[f]) { loaded[f].push(cb); if (loaded[f].ready) cb(); return; }
     loaded[f] = [cb];
-    var s = document.createElement('script'); s.src = BASE + '/assets/' + f + '?v=20261111';
+    var s = document.createElement('script'); s.src = BASE + '/assets/' + f + '?v=20261112';
     s.onload = function () { loaded[f].ready = true; loaded[f].forEach(function (c) { c(); }); };
     document.head.appendChild(s);
   }
