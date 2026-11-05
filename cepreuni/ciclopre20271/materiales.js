@@ -52,6 +52,20 @@
     return `<li><a class="m-row" style="${style(it.c)}" href="${url(it)}" target="_blank" rel="noopener">${tile(it)}<span class="m-txt"><strong>${esc(it.t)}</strong><small>${meta}</small></span>${ARROW}</a></li>`;
   }
 
+  const wk = it => (it.w ? `${it.w}${it.p ? `<sup>.${it.p}</sup>` : ''}` : '·');
+  // Clases: la portada es la miniatura de Drive (diapositiva 16:9); si falla queda el número de semana.
+  function card(it, flat) {
+    const meta = [flat && it.c !== 'General' ? `<b>${esc(it.c)}</b>` : '', it.w ? `Semana ${it.w}` : LABEL.clase, EXT[it.x]].filter(Boolean).join(' · ');
+    return `<li><a class="m-card" style="${style(it.c)}" href="${url(it)}" target="_blank" rel="noopener"><span class="m-thumb"><em aria-hidden="true">${wk(it)}</em><img src="https://drive.google.com/thumbnail?id=${it.i}&sz=w400" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="320" height="180" alt=""><b>${it.w ? `S${wk(it)}` : 'Clase'}</b></span><strong>${esc(it.t)}</strong><small>${meta}</small></a></li>`;
+  }
+
+  const rail = (list, flat) => `<div class="m-railbox"><ul class="m-rail">${list.map(it => card(it, flat)).join('')}</ul></div>`;
+  const body = (list, flat) => {
+    const cl = list.filter(it => it.k === 'clase'), rest = list.filter(it => it.k !== 'clase');
+    return (cl.length ? rail(cl, flat) : '') + (rest.length ? `<ul class="m-list">${rest.map(it => row(it, flat)).join('')}</ul>` : '');
+  };
+  const nav = '<span class="m-nav"><button type="button" data-dir="-1" aria-label="Anteriores"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg></button><button type="button" data-dir="1" aria-label="Siguientes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg></button></span>';
+
   function render() {
     const list = filtered();
     const flat = !!state.q.trim();
@@ -70,10 +84,10 @@
     if (!list.length) {
       res.innerHTML = `<div class="m-empty"><h2>${flat ? `Sin resultados para «${esc(state.q.trim())}»` : 'Sin materiales'}</h2><button type="button" data-reset>Ver todo</button></div>`;
     } else if (flat) {
-      res.innerHTML = `<section class="m-sec"><ul class="m-list">${list.map(it => row(it, true)).join('')}</ul></section>`;
+      res.innerHTML = `<section class="m-sec">${body(list, true)}</section>`;
     } else {
       res.innerHTML = courses.map(c => [c, list.filter(it => it.c === c)]).filter(([, l]) => l.length).map(([c, l]) =>
-        `<section class="m-sec" id="c-${esc(fold(c).replace(/\W+/g, '-'))}"><h2>${esc(c)}<span>${l.length}</span></h2><ul class="m-list">${l.map(it => row(it, false)).join('')}</ul></section>`).join('');
+        `<section class="m-sec" id="c-${esc(fold(c).replace(/\W+/g, '-'))}"><h2>${esc(c)}<span>${l.length}</span>${l.some(it => it.k === 'clase') ? nav : ''}</h2>${body(l, false)}</section>`).join('');
     }
     res.setAttribute('aria-busy', 'false');
     const p = new URLSearchParams();
@@ -94,6 +108,11 @@
   $('.search').addEventListener('submit', e => { e.preventDefault(); q.blur(); });
   kindsEl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { state.kind = b.dataset.kind; render(); toTop(); } });
   coursesEl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { state.course = b.dataset.course; render(); toTop(); } });
+  res.addEventListener('click', e => {
+    const dir = e.target.closest('[data-dir]');
+    if (dir) { const r = dir.closest('.m-sec').querySelector('.m-rail'); r.scrollBy({ left: dir.dataset.dir * r.clientWidth * .85, behavior: 'smooth' }); }
+  });
+  res.addEventListener('error', e => { if (e.target.matches('.m-thumb img')) e.target.remove(); }, true); // el número de semana queda de portada
   res.addEventListener('click', e => { if (e.target.closest('[data-reset]')) { state.q = q.value = ''; state.kind = 'all'; state.course = ''; render(); } });
 
   const totop = $('.totop');
@@ -107,7 +126,7 @@
   addEventListener('scroll', onScroll, { passive: true });
   totop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-  fetch('/cepreuni/ciclopre20271/materiales.json?v=20261105').then(r => r.json()).then(d => {
+  fetch('/cepreuni/ciclopre20271/materiales.json?v=20261106').then(r => r.json()).then(d => {
     courses = d.courses;
     items = d.items.map(it => ({ ...it, h: fold([it.t, it.c, TAG[it.k], KINDS.find(([k]) => k === group(it.k))?.[1] || '', it.e || '', EVENT[it.e] || '', it.w ? `semana ${it.w} sem s${it.w}` : '', EXT[it.x] || '', it.k === 'repaso' ? 'reforzamiento' : ''].join(' ')) }));
     if (!KINDS.some(([k]) => k === state.kind)) state.kind = 'all';
