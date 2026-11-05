@@ -200,6 +200,21 @@
     var rev = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); rev.unobserve(en.target); } }); }, { rootMargin: '0px 0px -6% 0px' });
     $$('.sc').forEach(function (n) { rev.observe(n); });
   } else $$('.sc').forEach(function (n) { n.classList.add('in'); });
+  /* El botón fijo se oculta solo mientras el formulario queda debajo de él y vuelve al salir de esa zona. */
+  (function () {
+    var cta = $('#cta'), area = $('#formcard'); if (!cta || !area) return;
+    var raf = 0;
+    function sync() {
+      raf = 0;
+      var r = area.getBoundingClientRect(), vh = window.innerHeight, c = cta.getBoundingClientRect().height || 56;
+      var under = r.top < vh - 8 && r.bottom > vh - c - 40;
+      cta.classList.toggle('is-off', under); cta.tabIndex = under ? -1 : 0;
+    }
+    function ask() { if (!raf) raf = requestAnimationFrame(sync); }
+    addEventListener('scroll', ask, { passive: true }); addEventListener('resize', ask);
+    if ('ResizeObserver' in window) new ResizeObserver(ask).observe(area);
+    sync();
+  })();
   (function () {
     var btn = $('.totop'), ticking = false;
     function sync() {
