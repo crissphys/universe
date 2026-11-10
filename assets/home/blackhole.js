@@ -15,13 +15,13 @@
   var FRAG = `
 precision highp float;
 uniform vec2 uRes,uCenter,uLook;
-uniform float uTime,uIntro,uScroll,uFocal,uDist,uWarp,uPhase,uFlash;
+uniform float uTime,uIntro,uScroll,uFocal,uDist,uWarp,uPhase,uFlash,uSteps,uOct,uDetail;
 const float RIN=3.0;const float ROUT=13.0;
 float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float h31(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
 float nP(vec2 p,float P){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);float y0=mod(i.y,P),y1=mod(i.y+1.,P);
  return mix(mix(h21(vec2(i.x,y0)),h21(vec2(i.x+1.,y0)),f.x),mix(h21(vec2(i.x,y1)),h21(vec2(i.x+1.,y1)),f.x),f.y);}
-float fbm(vec2 p,float P){float v=0.,a=.5;for(int k=0;k<4;k++){v+=a*nP(p,P);p*=2.;P*=2.;a*=.5;}return v;}
+float fbm(vec2 p,float P){float v=0.,a=.5;for(int k=0;k<4;k++){if(float(k)>=uOct)break;v+=a*nP(p,P);p*=2.;P*=2.;a*=.5;}return v;}
 float n3(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
  return mix(mix(mix(h31(i),h31(i+vec3(1,0,0)),f.x),mix(h31(i+vec3(0,1,0)),h31(i+vec3(1,1,0)),f.x),f.y),
             mix(mix(h31(i+vec3(0,0,1)),h31(i+vec3(1,0,1)),f.x),mix(h31(i+vec3(0,1,1)),h31(i+vec3(1,1,1)),f.x),f.y),f.z);}
@@ -31,10 +31,10 @@ vec3 sky(vec3 d){
  float st=h>.989?smoothstep(.24,0.,length(fract(p)-.5))*(.2+.9*fract(h*91.)):0.;
  vec3 gn=normalize(vec3(.28,1.,-.42));float b=dot(d,gn);
  float band=exp(-b*b*12.),core=exp(-b*b*55.);
- float cl=fbm3(d*4.2),du=fbm3(d*8.5+3.);
+ float cl=fbm3(d*4.2),du=uDetail>.5?fbm3(d*8.5+3.):.3;
  float milky=band*(.2+.8*cl)*(1.-.8*smoothstep(.45,.7,du)*exp(-b*b*30.))+core*.7*cl*cl;
  vec3 q=d*430.;float h2=h31(floor(q));
- float st2=h2>1.-.03*band?smoothstep(.32,0.,length(fract(q)-.5))*.55:0.;
+ float st2=uDetail>.5&&h2>1.-.03*band?smoothstep(.32,0.,length(fract(q)-.5))*.55:0.;
  return vec3(st*.8+st2*band+milky*.2);}
 vec4 disk(vec3 h,float r,vec3 rd){
  float phi=atan(h.z,h.x)+uTime*3.4*pow(r,-1.5);
@@ -71,6 +71,7 @@ void main(){
  if(cq>0.){float di=bq*bq-cq;if(di<0.||bq>0.)far=true;else pos+=dir*(-bq-sqrt(di));}
  if(!far){
   for(int i=0;i<220;i++){
+   if(float(i)>=uSteps)break;
    float r2=dot(pos,pos);float r=sqrt(r2);
    if(r<1.){cap=true;break;}
    float dt=r<3.4?.045:clamp(.075*r,.045,1.6);
@@ -83,7 +84,7 @@ void main(){
    pos=np;
    if(r>42.&&dot(pos,dir)>0.){done=true;break;}
   }
-  if(!done&&!cap&&dot(pos,pos)<64.)cap=true;
+  if(!done&&!cap&&dot(pos,pos)<1600.&&dot(pos,dir)<.5*length(pos))cap=true;
  }
  if(!cap)col+=(1.-a)*sky(normalize(dir));
  col+=vec3(glow);
@@ -112,14 +113,30 @@ void main(){
   var loc = gl.getAttribLocation(prog, 'p');
   gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   var U = {};
-  ['uRes', 'uCenter', 'uLook', 'uTime', 'uIntro', 'uScroll', 'uFocal', 'uDist', 'uWarp', 'uPhase', 'uFlash'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+  ['uRes', 'uCenter', 'uLook', 'uTime', 'uIntro', 'uScroll', 'uFocal', 'uDist', 'uWarp', 'uPhase', 'uFlash', 'uSteps', 'uOct', 'uDetail'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
 
   var hero = canvas.parentElement;
   var finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   var dpr = devicePixelRatio || 1, small = innerWidth < 760;
-  // escala de render en píxeles CSS; se ajusta sola según el tiempo por cuadro
-  var scale = small ? Math.min(dpr, 1.5) : Math.min(dpr, 1.25) * .8, maxScale = Math.min(dpr, small ? 2 : 1.5);
+  // niveles: pasos del rayo, octavas del disco, detalle del cielo, escala máxima y cuadros por segundo
+  var TIERS = [
+    { steps: 140, oct: 2, detail: 0, max: .7, fps: 30 },
+    { steps: 170, oct: 3, detail: 1, max: 1.1, fps: 60 },
+    { steps: 220, oct: 4, detail: 1, max: 1.5, fps: 60 }
+  ];
+  var gpu = ''; try { var dbg = gl.getExtension('WEBGL_debug_renderer_info'); gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : ''; } catch (e) {}
+  var cores = navigator.hardwareConcurrency || 4, mem = navigator.deviceMemory || 4, saveData = !!(navigator.connection && navigator.connection.saveData);
+  var weakGpu = /swiftshader|llvmpipe|software|mali-[gt]?[0-7]\d?\b|adreno[^\d]*[3-5]\d\d|powervr|intel.*hd graphics( [2-5]\d{2,3})?$|intel.*hd graphics [2-5]/i.test(gpu);
+  var tier = saveData || mem <= 2 || weakGpu ? 0 : (!small && cores >= 8 && mem >= 8 ? 2 : 1);
+  var floorTier = 0, ups = 0, warm = 10, downs = 0;
+  // ?calidad=0|1|2 fija un nivel (para comparar en un equipo concreto)
+  var forced = /[?&]calidad=([012])\b/.exec(location.search);
+  if (forced) { tier = +forced[1]; floorTier = tier; downs = 2; }
+  // escala de render en píxeles CSS (la imagen se estira con suavizado; el disco es difuso y no se nota)
+  var scale = Math.min(dpr, TIERS[tier].max) * (small ? 1 : .85), MIN_SCALE = .45;
   var cssH = 1;
+  function applyTier() { var T = TIERS[tier]; gl.uniform1f(U.uSteps, T.steps); gl.uniform1f(U.uOct, T.oct); gl.uniform1f(U.uDetail, T.detail); scale = Math.min(scale, Math.min(dpr, T.max)); canvas.dataset.q = tier + ':' + scale.toFixed(2); }
+  applyTier();
   function size() {
     var r = hero.getBoundingClientRect();
     cssH = r.height; small = r.width < 760;
@@ -145,9 +162,11 @@ void main(){
   if (warpOn) ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { addEventListener(ev, skip, { passive: true, once: true }); });
   try { sessionStorage.setItem('universe_warp', '1'); } catch (e) {}
 
+  var lastDraw = 0;
   function frame(now) {
     raf = 0;
-    var dt = Math.min(64, now - last); last = now;
+    if (TIERS[tier].fps === 30 && now - lastDraw < 31) { if (visible && !document.hidden) raf = requestAnimationFrame(frame); return; }
+    var dt = Math.min(64, now - last); last = now; lastDraw = now;
     var k = 1 - Math.exp(-dt / 260); // seguimiento amortiguado del puntero (sin rebote)
     look.x += (target.x - look.x) * k; look.y += (target.y - look.y) * k;
     var dist = 23, warp = 0, flash = 0;
@@ -166,13 +185,23 @@ void main(){
     gl.uniform2f(U.uLook, look.x, -look.y);
     gl.uniform1f(U.uDist, dist); gl.uniform1f(U.uWarp, warp); gl.uniform1f(U.uPhase, phase); gl.uniform1f(U.uFlash, flash);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-    // resolución adaptable: baja si el cuadro tarda más de ~24 ms, sube si sobra margen
-    frames++; acc += dt;
-    if (frames === 40) {
-      var avg = acc / frames, next = scale;
-      if (avg > 24 && scale > .38) next = scale * .82;
-      else if (avg < 13 && scale < maxScale) next = Math.min(maxScale, scale * 1.08);
-      if (next !== scale) { scale = next; size(); }
+    // adaptación rápida: primero baja resolución, luego nivel; sube solo con margen sostenido
+    if (warm > 0) { warm--; } else { frames++; acc += dt; }
+    if (frames === 18) {
+      var avg = acc / frames, budget = 1000 / TIERS[tier].fps * 1.3, T = TIERS[tier];
+      if (avg > budget) {
+        ups = 0;
+        if (scale > MIN_SCALE + .05 && avg < budget * 1.6) scale = Math.max(MIN_SCALE, scale * .8);
+        else if (tier > floorTier) { tier--; downs++; if (downs >= 2) floorTier = tier; scale = Math.min(scale, TIERS[tier].max); applyTier(); }
+        else scale = Math.max(MIN_SCALE, scale * .8);
+        size(); warm = 6;
+      } else if (avg < budget * .55 && ++ups >= 3) {
+        ups = 0;
+        if (scale < Math.min(dpr, T.max) - .02) { scale = Math.min(Math.min(dpr, T.max), scale * 1.12); size(); }
+        else if (tier < 2 && downs < 2) { tier++; applyTier(); }
+        warm = 6;
+      }
+      canvas.dataset.q = tier + ':' + scale.toFixed(2);
       frames = 0; acc = 0;
     }
     if (visible && !document.hidden) raf = requestAnimationFrame(frame);
