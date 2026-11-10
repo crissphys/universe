@@ -105,9 +105,8 @@
     return new Set((window.UNIVERSE_CEPRE_VALID_CODES || []).map(normalizeCode));
   }
   function showLogin() {
-    $('account-login-card').hidden = false;
-    $('account-content').hidden = true;
-    $('admin-panel').classList.remove('active');
+    // la pantalla de registro vive en /account
+    location.replace('/account');
   }
   function toggleAcademicFields() {
     var track = $('academic-track') ? $('academic-track').value : '';
@@ -276,6 +275,7 @@
       fillCommunity();
       if (isAdmin()) { $('admin-panel').classList.add('active'); await loadAdmin(); }
       else $('admin-panel').classList.remove('active');
+      document.dispatchEvent(new CustomEvent('account:ready', { detail: { onboarded: !!(state.profile && state.profile.onboardingComplete) || !!(state.community && state.community.username), admin: isAdmin() } }));
     } finally {
       state.profileLoading = false;
     }
@@ -357,6 +357,7 @@
       fillProfile();
       fillCommunity(true);
       unifiedStatus('Perfil actualizado. Los cambios ya se usan también en UNITalk.', 'good');
+      document.dispatchEvent(new CustomEvent('account:saved'));
     } catch (error) {
       var message = {
         cepre_code_required: 'Escribe tu código CEPREUNI para el ciclo verificable seleccionado.',

@@ -27,7 +27,7 @@
     try{
       if(!window.google?.accounts?.id)await new Promise((resolve,reject)=>{let s=document.querySelector('script[data-google-identity]');if(!s){s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.async=true;s.dataset.googleIdentity='true';document.head.append(s)}s.addEventListener('load',resolve,{once:true});s.addEventListener('error',reject,{once:true});setTimeout(()=>reject(Error('El acceso con Google no está disponible. Recarga e inténtalo nuevamente.')),15000)});
       google.accounts.id.initialize({client_id:'410302293146-nr50k7kovcpd5kuekfd49ddqc041612g.apps.googleusercontent.com',callback:async response=>{slot.textContent='Verificando tu cuenta…';try{const r=await request('/auth/google','POST',{credential:response.credential});if(!r.user||!r.token)throw Error('No se pudo verificar la sesión.');acceptSession(r.user,r.token)}catch(e){slot.textContent=e.message}}});
-      slot.textContent='';google.accounts.id.renderButton(slot,{theme:'outline',size:'large',text:'continue_with',width:280});
+      slot.textContent='';google.accounts.id.renderButton(slot,{theme:host.dataset.gsiTheme||'outline',size:'large',text:host.dataset.gsiText||'continue_with',shape:host.dataset.gsiShape||'rectangular',width:Number(host.dataset.gsiWidth)||280});
     }catch(e){slot.textContent=e.message||'No se pudo cargar Google. Comprueba tu conexión.'}
   }
   function signOut(){current=null;localStorage.removeItem(TOKEN);localStorage.removeItem(USER);window.google?.accounts?.id?.disableAutoSelect();emit()}
