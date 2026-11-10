@@ -1,70 +1,180 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es-419">
 <head>
- <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Universe — El origen de tu siguiente idea</title>
-  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
-  <meta name="color-scheme" content="dark light"><link rel="icon" href="/favicon.svg">
-  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css?v=20261009-rodo-catalogo-v2"><link rel="stylesheet" href="/universe-ui/platform.css?v=20261011-left-branch-layout"><link rel="stylesheet" href="/universe-ui/refinements.css?v=20261009-rodo-catalogo-v2"><link rel="stylesheet" href="/universe-ui/strands.css?v=20261001-strands"><link rel="stylesheet" href="/universe-ui/entry.css?v=20261001-drive"><script type="module" src="/universe-ui/app.js?v=20261117-cepreuni"></script>
-<link rel="stylesheet" href="/universe-ui/native.css?v=20261009-rodo-catalogo-v2"><link rel="stylesheet" href="/universe-ui/chroma-grid.css?v=20260919-team"><link rel="stylesheet" href="/universe-ui/exam-links.css?v=20260923-uni"><script src="/universe-ui/auth.js?v=20261009-rodo-catalogo-v2" defer></script><script src="/universe-ui/chroma-grid.js?v=20260919-team" defer></script><script src="/universe-ui/comunicados.js?v=1" defer></script><script src="/universe-ui/library-loading.js?v=20261012-library-skeleton-v1" defer></script><link rel="stylesheet" href="/universe-ui/mobile-layout.css?v=20261012-mobile-v1"><script src="/universe-ui/mobile-layout.js?v=20261012-mobile-v1" defer></script></head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UNIverse to Study · Ingresa a la UNI</title>
+<meta name="description" content="Ranking CEPREUNI 2027-1, biblioteca de libros y exámenes de admisión, y planificador de estudio para ingresar a la Universidad Nacional de Ingeniería.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08080a">
+<link rel="canonical" href="https://universetostudy.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="UNIverse to Study · Ingresa a la UNI">
+<meta property="og:description" content="Ranking CEPREUNI, biblioteca y planificador para ingresar a la Universidad Nacional de Ingeniería.">
+<meta property="og:url" content="https://universetostudy.com/">
+<link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png?v=2" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/home/home.css?v=20261110">
+<script>
+/* idioma y sesión antes del primer pintado: evita ver el texto o la cuenta equivocados un instante */
+(function(d){var L=['es','en','de','pt'],s=null;try{s=localStorage.getItem('universe_lang');if(localStorage.getItem('universe_auth_token'))d.dataset.auth='1'}catch(e){}
+if(L.indexOf(s)<0){s='es';var n=navigator.languages||[navigator.language||'es'];for(var i=0;i<n.length;i++){var c=String(n[i]).slice(0,2).toLowerCase();if(L.indexOf(c)>=0){s=c;break}}}
+try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.lang=s==='es'?'es-419':s;d.dataset.lang=s;if(s!=='es')d.dataset.pending='1';d.className='js'})(document.documentElement);
+</script>
+<script src="/universe-ui/auth.js?v=20261110" defer></script>
+<script src="/assets/home/home.js?v=20261110" defer></script>
+<script src="/assets/home/blackhole.js?v=20261110" defer></script>
+</head>
 <body>
-<a class="skip-link" href="#main">Saltar al contenido</a>
-  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
-  <div class="space-shade" aria-hidden="true"></div>
-  <header class="header">
-    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 6h7v11.2c0 3.2 1.4 4.8 3.9 4.8 2.4 0 4-1.7 4-4.8v-4.5l-4.1 2.5 2.1-6.1L27 4v13.5C27 24.2 22.8 28 16.8 28 10.3 28 6 24.1 6 17.4V6Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+<a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
 
-    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
-  </header>
-  <nav class="chapter-nav" aria-label="Capítulos"><a href="#origin" class="active" aria-label="01 Origen"><span>01</span></a><a href="#system" aria-label="02 Sistema"><span>02</span></a><a href="#resources" aria-label="03 Recursos"><span>03</span></a><a href="#trajectory" aria-label="04 Trayectoria"><span>04</span></a><a href="#team" aria-label="05 Equipo"><span>05</span></a></nav>
-  <main id="main">
-    <section id="origin" class="hero entry chapter">
-      <div class="entry-strands" aria-hidden="true"><div class="strands-container"></div></div>
-      <div class="entry-body wrap">
-        <div class="hero-copy entry-copy">
-          <div class="eyebrow"><span class="status-dot"></span><span data-en="A universe of possibilities">Un universo de posibilidades</span></div>
-          <h1><span data-en="Where does your mind">¿A dónde quiere ir</span> <span class="outline-word" data-en="want to go?">tu mente?</span></h1>
-          <p class="hero-description" data-en="Every great idea begins with a question. Search topics, books, classes and tools in one place.">Toda gran idea empieza con una pregunta. Busca temas, libros, clases y herramientas en un solo lugar.</p>
-          <form id="intent-form" class="entry-search" role="search"><span class="entry-search-icon" data-icon="search"></span><label for="intent" class="sr-only" data-en="Search all of Universe">Buscar en todo Universe</label><input id="intent" maxlength="220" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Busca temas, libros, clases…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="intent-result"><button type="button" class="entry-clear" aria-label="Borrar búsqueda" data-icon="close" hidden></button><button type="submit" class="entry-submit" aria-label="Buscar"><span data-icon="arrow-right"></span></button><div id="intent-result" class="intent-result" role="listbox" aria-label="Resultados de búsqueda" hidden></div></form>
-          <div class="intent-shortcuts"><button type="button" data-intent="Quiero practicar para mi primera PC" data-en="Prepare for my first exam">Preparar mi primera PC</button><button type="button" data-intent="Busco un libro de álgebra" data-en="Find a book">Encontrar un libro</button><button type="button" data-intent="Quiero organizar mi semana" data-en="Plan my week">Organizar mi semana</button><button type="button" data-intent="Calcular mi puntaje" data-en="Calculate my score">Calcular mi puntaje</button></div>
-          <div class="hero-cta entry-cta"><a class="text-button" href="/explorar"><span data-en="Enter my universe">Entrar a mi universo</span><span data-icon="arrow-up-right"></span></a><button class="text-button" id="space-mode"><span data-icon="orbit"></span><span data-en="Explore the galaxy">Explorar la galaxia</span></button></div>
-          <div class="xhome"><span class="xhome__label" data-en="UNI admission exams · 3 hours per test">Exámenes de admisión UNI · 3 horas por prueba</span><nav class="xpills" aria-label="Exámenes de admisión UNI"><a class="xpill" data-tone="blue" href="/examenes#uni-2026-2"><small>Examen admisión UNI</small><b>2026-2</b></a><a class="xpill" data-tone="violet" href="/examenes#uni-2026-1"><small>Examen admisión UNI</small><b>2026-1</b></a><a class="xpill" data-tone="emerald" href="/examenes#uni-2025-2"><small>Examen admisión UNI</small><b>2025-2</b></a><a class="xpill" data-tone="orange" href="/examenes#uni-2025-1"><small>Examen admisión UNI</small><b>2025-1</b></a><a class="xpill" data-tone="rose" href="/examenes#uni-2024-2"><small>Examen admisión UNI</small><b>2024-2</b></a></nav></div>
+<header class="top" id="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/" aria-label="UNIverse, inicio"><svg class="mark" viewBox="0 0 89.5 99" aria-hidden="true"><path d="M0 0H24.5V60A20.25 18 0 0 0 65 60V28L63.5 26L35 37.5L64 .5H89.5V61A44.75 38 0 0 1 0 61Z"/></svg><span>UNIverse</span></a>
+    <nav class="top-nav" aria-label="Principal" data-i18n-aria="nav.label">
+      <a href="#cepreuni">CEPREUNI</a>
+      <a href="#biblioteca" data-i18n="lib.name">Biblioteca</a>
+      <a href="#estudio" data-i18n="study.name">Estudio</a>
+    </nav>
+    <div class="top-actions">
+      <div class="lang">
+        <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-menu" aria-label="Idioma: Español" data-i18n-aria="lang.label"><span class="flag" id="lang-flag"></span><span class="lang-code" id="lang-code">ES</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
+        <ul class="lang-menu" id="lang-menu" role="menu" aria-labelledby="lang-btn"></ul>
+      </div>
+      <a class="acct" id="acct" href="/account"><span class="acct-pic" id="acct-pic" aria-hidden="true"></span><span class="acct-name" id="acct-name"></span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas class="bh" id="bh" aria-hidden="true"></canvas>
+    <div class="wrap hero-inner">
+      <h1 class="hero-title" id="hero-title" aria-label="Ingresa a la UNI"><span class="rot" id="rot" aria-hidden="true"><span class="on">INGRESA A</span></span><span class="fixed" data-i18n="hero.fixed" aria-hidden="true">LA UNI</span></h1>
+      <p class="hero-sub" data-i18n="hero.sub">Prepárate para la Universidad Nacional de Ingeniería.</p>
+      <form class="search" id="search" role="search" action="/ranking" autocomplete="off">
+        <label class="sr" for="q" data-i18n="search.label">Buscar en UNIverse</label>
+        <svg class="search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <div class="search-field">
+          <input id="q" name="q" type="text" inputmode="search" enterkeyhint="search" spellcheck="false" maxlength="120" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="q-list">
+          <span class="ph" id="ph" aria-hidden="true"><span class="ph-pre" data-i18n="search.pre">Busca</span> <span class="ph-ex" id="ph-ex"></span><i class="caret"></i></span>
+        </div>
+        <kbd class="search-key" aria-hidden="true">/</kbd>
+        <button class="search-go" type="submit"><span class="search-go-t" data-i18n="search.go">Buscar</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+        <div class="results" id="q-list" role="listbox" aria-label="Resultados" data-i18n-aria="search.results" hidden></div>
+      </form>
+    </div>
+  </section>
+
+  <div class="wrap pillars">
+    <section class="pillar" id="cepreuni" aria-labelledby="p-cepre">
+      <div class="pillar-head">
+        <h2 class="pillar-name" id="p-cepre">CEPREUNI</h2>
+        <p class="pillar-line" data-i18n="cepre.line">Tu ciclo, tu puesto y tus fechas.</p>
+        <div class="mod" id="mod-cepre" hidden>
+          <div class="cd">
+            <p class="cd-label"><span class="cd-name" id="cd-name"></span><span class="cd-date" id="cd-date"></span></p>
+            <p class="cd-time"><span class="cd-u"><b id="cd-d">00</b><small data-i18n="cd.d">días</small></span><span class="cd-u"><b id="cd-h">00</b><small data-i18n="cd.h">horas</small></span><span class="cd-u"><b id="cd-m">00</b><small data-i18n="cd.m">min</small></span></p>
+          </div>
+          <div class="tl" id="tl"><i class="tl-fill" id="tl-fill"></i><ol id="tl-list"></ol></div>
         </div>
       </div>
-      <div class="hero-bottom wrap"><a href="#system" class="scroll-prompt"><span class="scroll-line"></span><span data-en="Scroll to connect">Desliza para conectar</span></a><span class="scene-label"><span id="scene-status">ESPACIO INTERACTIVO</span><span class="scene-ticks" aria-hidden="true">▏▎▍▎▏</span></span><button class="text-button motion-trigger" aria-pressed="false"><span data-icon="pause"></span><span data-motion-label>Pausar movimiento</span></button></div>
+      <ul class="links">
+        <li><a href="/ranking"><span class="lk-t" data-i18n="cepre.rank">Ranking 2027-1</span><span class="lk-s" data-i18n="cepre.rank.s">Pre, Juliaca y Básico por código o nombre</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/cepreuni"><span class="lk-t" data-i18n="cepre.cycle">Ciclo 2027-1</span><span class="lk-s" data-i18n="cepre.cycle.s">Horarios, semanas y calendario</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/cepreuni/examenes"><span class="lk-t" data-i18n="cepre.exams">Exámenes CEPREUNI</span><span class="lk-s" data-i18n="cepre.exams.s">Prácticas, parciales y finales</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/calculadora"><span class="lk-t" data-i18n="cepre.calc">Calculadora</span><span class="lk-s" data-i18n="cepre.calc.s">Tu ponderado y tu carrera</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/admision"><span class="lk-t" data-i18n="cepre.adm">Admisión UNI</span><span class="lk-s" data-i18n="cepre.adm.s">Resultados, ingresantes y puntajes</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      </ul>
     </section>
-    <section id="system" class="system chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">01 / <span data-en="Your connected system">Tu sistema conectado</span></span><h2 data-en="Not more tabs.<br>More connections.">No más pestañas.<br>Más conexiones.</h2></div><p data-en="An idea becomes a concept. A concept becomes a skill. Choose where to start.">Una idea se convierte en concepto. Un concepto, en habilidad. Elige por dónde empezar.</p></div>
-      <div class="workspace reveal">
-        <div class="workspace-header"><div class="mode-tabs" role="tablist" aria-label="Objetivo de estudio"><button id="tab-learn" role="tab" aria-selected="true" aria-controls="workspace-content" data-mode="learn" data-en="Understand">Entender</button><button id="tab-practice" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="practice" data-en="Practice">Practicar</button><button id="tab-plan" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="plan" data-en="Organize">Organizar</button><button id="tab-connect" role="tab" aria-selected="false" aria-controls="workspace-content" data-mode="connect" data-en="Connect">Conectar</button></div><button class="text-button search-trigger"><span data-en="All tools">Todas las herramientas</span><span data-icon="grid"></span></button></div>
-        <div id="workspace-content" class="tool-grid" role="tabpanel" aria-labelledby="tab-learn"></div>
+
+    <section class="pillar" id="biblioteca" aria-labelledby="p-lib">
+      <div class="pillar-head">
+        <h2 class="pillar-name" id="p-lib" data-i18n="lib.name">Biblioteca</h2>
+        <p class="pillar-line"><span data-i18n="lib.line">Libros y exámenes, por curso y editorial.</span> <b class="count" id="lib-count"></b></p>
+        <div class="mod">
+          <div class="shelf" id="shelf" aria-label="Libros destacados" data-i18n-aria="lib.shelf"></div>
+          <div class="years"><span class="years-l" data-i18n="lib.years">Exámenes de admisión UNI</span><nav class="years-n" aria-label="Exámenes de admisión UNI" data-i18n-aria="lib.years"><a href="/examenes#uni-2026-2">2026-2</a><a href="/examenes#uni-2026-1">2026-1</a><a href="/examenes#uni-2025-2">2025-2</a><a href="/examenes#uni-2025-1">2025-1</a><a href="/examenes#uni-2024-2">2024-2</a></nav></div>
+        </div>
       </div>
+      <ul class="links">
+        <li><a href="/biblioteca"><span class="lk-t" data-i18n="lib.all">Todas las editoriales</span><span class="lk-s" data-i18n="lib.all.s">Lumbreras, Pamer, Cuzcano, Rodo y más</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/examenes"><span class="lk-t" data-i18n="lib.exams">Exámenes de admisión UNI</span><span class="lk-s" data-i18n="lib.exams.s">2024-2 a 2026-2, con su tiempo real</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/biblioteca/universe"><span class="lk-t" data-i18n="lib.uni">Editorial Universe</span><span class="lk-s" data-i18n="lib.uni.s">Primeros Resúmenes y solucionarios</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/biblioteca/lumbreras"><span class="lk-t">Lumbreras</span><span class="lk-s" data-i18n="lib.lum.s">Libros rojos, azules y temas selectos</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/biblioteca/librosuniversitarios"><span class="lk-t" data-i18n="lib.univ">Libros universitarios</span><span class="lk-s" data-i18n="lib.univ.s">Para después del ingreso</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      </ul>
     </section>
-    <section id="resources" class="resources chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">02 / <span data-en="Knowledge in orbit">Conocimiento en órbita</span></span><h2 data-en="Everything you need.<br>Within reach.">Todo lo que necesitas.<br>A tu alcance.</h2></div><a class="text-button" href="/biblioteca"><span data-en="Open library">Abrir biblioteca</span><span data-icon="arrow-up-right"></span></a></div>
-      <div class="resource-grid">
-        <a class="collection-card reveal" href="/biblioteca/universe/"><div class="collection-top"><span class="eyebrow">UNIVERSE × CICLESOLUS</span><span data-icon="arrow-up-right"></span></div><div class="book-scene" aria-hidden="true"><img src="/universe-ui/assets/quimica.webp" class="cover cover-left" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/algebra.webp" class="cover cover-main" alt="" loading="lazy" width="150" height="199"><img src="/universe-ui/assets/geometria.webp" class="cover cover-right" alt="" loading="lazy" width="150" height="199"></div><div class="collection-copy"><span class="eyebrow" data-en="Our collection">Nuestra colección</span><h3>Solucionarios CEPREUNI 2027-1</h3><p data-en="Explore titles and availability.">Explora los títulos y su disponibilidad.</p></div></a>
-        <div class="resource-stack"><a class="resource-row reveal" href="/cepreuni/materialespre"><div class="resource-symbol" data-icon="layers"></div><div><span class="eyebrow">CEPREUNI / 2027-1</span><h3 data-en="Your cycle. Your materials.">Tu ciclo. Tus materiales.</h3><p data-en="Books and resources for the pre-university cycle.">Libros y recursos del ciclo preuniversitario.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/biblioteca/librosuniversitarios/"><div class="resource-symbol" data-icon="book"></div><div><span class="eyebrow" data-en="Beyond admission">Más allá del ingreso</span><h3 data-en="University library.">Biblioteca universitaria.</h3><p data-en="Keep going. Expand your foundation.">Sigue avanzando. Amplía tus fundamentos.</p></div><span data-icon="arrow-up-right"></span></a><a class="resource-row reveal" href="/examenes"><div class="resource-symbol" data-icon="target"></div><div><span class="eyebrow" data-en="UNI admission">Admisión UNI</span><h3 data-en="Learn from each exam.">Aprende de cada examen.</h3><p data-en="Take the real exam on the clock and see your score.">Rinde el examen real con su tiempo y conoce tu puntaje.</p></div><span data-icon="arrow-up-right"></span></a></div>
+
+    <section class="pillar" id="estudio" aria-labelledby="p-study">
+      <div class="pillar-head">
+        <h2 class="pillar-name" id="p-study" data-i18n="study.name">Estudio</h2>
+        <p class="pillar-line" data-i18n="study.line">Organiza la semana y avanza por temas.</p>
+        <div class="mod" id="mod-study" hidden>
+          <p class="wk-label"><b id="wk-n"></b> <span id="wk-of"></span></p>
+          <ol class="wk-bar" id="wk-bar" aria-hidden="true"></ol>
+          <ul class="topics" id="topics"></ul>
+          <a class="wk-link" id="wk-link" href="/cepreuni"><span data-i18n="study.week">Ver la semana completa</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+        </div>
       </div>
+      <ul class="links">
+        <li><a href="/planificador"><span class="lk-t" data-i18n="study.plan">Planificador</span><span class="lk-s" data-i18n="study.plan.s">Tu semana convertida en tareas</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/temario"><span class="lk-t" data-i18n="study.syl">Temario</span><span class="lk-s" data-i18n="study.syl.s">Temas de admisión y CEPREUNI</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/clases"><span class="lk-t" data-i18n="study.cls">Clases</span><span class="lk-s" data-i18n="study.cls.s">Videos organizados por curso</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/docentes-cepreuni"><span class="lk-t" data-i18n="study.room">Guía de aulas</span><span class="lk-s" data-i18n="study.room.s">Docentes, salones y horarios</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/informacion-cepreuni"><span class="lk-t" data-i18n="study.info">Información CEPREUNI</span><span class="lk-s" data-i18n="study.info.s">Normas, estrategia y consejos</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      </ul>
     </section>
-    <section id="trajectory" class="trajectory chapter wrap">
-      <div class="section-heading reveal"><div><span class="eyebrow">03 / <span data-en="Your trajectory">Tu trayectoria</span></span><h2 data-en="The future is big.<br>Your next step is clear.">El futuro es grande.<br>Tu siguiente paso, claro.</h2></div><p data-en="A date. A purpose. A plan that moves with you.">Una fecha. Un propósito. Un plan que avanza contigo.</p></div>
-      <div class="agenda reveal"><div class="agenda-header"><span class="eyebrow">CEPREUNI / SEPTIEMBRE 2026</span><div class="cycle-tabs" aria-label="Filtrar calendario"><button data-cycle="pre" aria-pressed="true">Pre</button><button data-cycle="basic" aria-pressed="false">Básico</button><button data-cycle="ien" aria-pressed="false">IEN</button><button data-cycle="all" aria-pressed="false" data-en="All">Todos</button></div></div><div id="events"></div><div class="agenda-foot"><span data-en="Dates from your Universe calendar. Lima time (UTC−5).">Fechas del calendario de Universe. Hora de Lima (UTC−5).</span><a href="https://www.cepre.uni.edu.pe/" data-en="Confirm at CEPREUNI ↗">Confirmar en CEPREUNI ↗</a></div></div>
-      <div class="closing reveal"><span class="eyebrow" data-en="The origin is you">El origen eres tú</span><h2 data-en="Make room for<br>your next idea.">Haz espacio para<br>tu siguiente idea.</h2><a class="button primary" href="/planificador"><span data-en="Start my plan">Comenzar mi plan</span><span data-icon="arrow-up-right"></span></a><p data-en="A community to learn. The freedom to go further.">Una comunidad para aprender. La libertad de ir más lejos.</p></div>
-    </section>
-    <section id="team" class="team chapter wrap"><div class="section-heading reveal"><div><span class="eyebrow">04 / <span data-en="The team">El equipo</span></span><h2 data-en="The people<br>behind Universe.">Las personas<br>detrás de Universe.</h2></div><p data-en="An independent educational community. Curiosity, knowledge and purpose.">Comunidad educativa independiente. Curiosidad, conocimiento y propósito.</p></div><div class="chroma-grid reveal" data-chroma-grid data-radius="300" data-damping="0.45" data-fade-out="0.6" data-ease="power3.out" style="--cols:1"><a class="chroma-card" href="/autores/criss-vasquez" style="--card-border:#3B82F6;--card-gradient:linear-gradient(145deg,#3B82F6,#000);--img-position:54% 35%"><div class="chroma-photo"><img src="/assets/team/criss-vasquez.jpg" alt="Criss Vásquez, creador de Universe to Study" width="1080" height="712" loading="lazy"></div><footer class="chroma-info"><h3 class="name">Criss Vásquez</h3><span class="handle">@criss.phys</span><p class="role" data-en="Creator of Universe to Study">Creador de Universe to Study</p></footer></a><div class="chroma-overlay"></div><div class="chroma-fade"></div></div></section>
-  </main>
-<footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/clases">Clases</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
-  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
-  <div class="immersion-controls" hidden>
-    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
-    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
-    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
-    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
-    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
   </div>
-  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><div id="search-drive" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
-  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
-  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
-  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
-</body></html>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-about">
+        <a class="brand foot-brand" href="/">UNIverse</a>
+        <p data-i18n="foot.about">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p>
+        <a class="report" href="/correcciones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg><span data-i18n="foot.report">Reportar un error</span></a>
+      </div>
+      <nav class="foot-col" aria-labelledby="f-plat">
+        <h2 id="f-plat" data-i18n="foot.plat">Plataforma</h2>
+        <a href="/admision">Admisión</a>
+        <a href="/cepreuni">CEPREUNI</a>
+        <a href="/temario">Temario</a>
+        <a href="/clases">Clases</a>
+        <a href="/calculadora">Calculadora</a>
+        <a href="/ranking">Ranking</a>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-lib">
+        <h2 id="f-lib" data-i18n="lib.name">Biblioteca</h2>
+        <a href="/biblioteca">Todas las editoriales</a>
+        <a href="/biblioteca/lumbreras">Lumbreras</a>
+        <a href="/biblioteca/cuzcano">Cuzcano</a>
+        <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>
+        <a href="/examenes">Exámenes</a>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-uni">
+        <h2 id="f-uni">UNIverse</h2>
+        <a href="/metodologia-editorial">Metodología editorial</a>
+        <a href="/correcciones">Correcciones</a>
+        <a href="/contacto">Contacto</a>
+      </nav>
+    </div>
+    <nav class="loop" aria-label="Canales oficiales"><div class="loop-track"><div class="loop-group"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="YouTube" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="WhatsApp Channels" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="TikTok" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="Linktree" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div></div></nav>
+    <div class="foot-legal">
+      <span data-i18n="foot.legal">© 2026 UNIverseToStudy · Aprende. Practica. Avanza.</span>
+      <nav aria-label="Legal">
+        <a href="/terminos">Términos</a>
+        <a href="/privacidad">Privacidad</a>
+      </nav>
+    </div>
+  </div>
+  <p class="foot-mark" aria-hidden="true">UNIverse</p>
+</footer>
+</body>
+</html>
