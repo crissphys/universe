@@ -23,7 +23,6 @@ const routes={
  '/planificador':['Una intención. Un plan.','TU TRAYECTORIA','Convierte tus próximos temas en pasos concretos. Este tablero guarda tus tareas únicamente en este navegador.'],
  '/fijas-cepreuni':['Prioriza con criterio.','CEPREUNI / PRIMERA PC','Explora el tipo de problema asociado a cada tema del modelo histórico. Una referencia de preparación, nunca una garantía del examen.'],
  '/calculadora':['Pon tu meta en perspectiva.','CEPREUNI / PUNTAJES','Tus notas, tu carrera y las referencias históricas. Una calculadora para orientar tu preparación, no para prometer una vacante.'],
- '/account':['Tu espacio, a tu manera.','CUENTA / PREFERENCIAS','Personaliza esta experiencia y accede a tu cuenta real cuando lo necesites.'],
 };
 let data,videoData,ui,view,home,routeVersion=0,toastTimer;
 const link=(url,label,cls='button',live=false)=>`<a class="${cls}" href="${safe(url)}" ${live||!url.startsWith('/')?'data-live target="_blank" rel="noopener noreferrer"':''}>${esc(label)} ${ui.icon('arrow-up-right')}</a>`;

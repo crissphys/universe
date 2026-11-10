@@ -127,7 +127,8 @@ void main(){
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
     gl.viewport(0, 0, w, h);
     gl.uniform2f(U.uRes, w, h);
-    gl.uniform2f(U.uCenter, .5, small ? .69 : .62);
+    var cen = (canvas.dataset.center || '').split(',').map(Number);
+    if (cen.length === 2 && cen.every(isFinite)) gl.uniform2f(U.uCenter, cen[0], cen[1]); else gl.uniform2f(U.uCenter, .5, small ? .69 : .62);
     gl.uniform1f(U.uFocal, 1.32 * Math.max(.6, Math.min(1, r.width / r.height * 1.05)));
   }
 
