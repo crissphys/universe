@@ -295,8 +295,11 @@
     if (pages.length) html += '<div class="r-group">' + t('r.pages') + '</div>';
     pages.forEach(function (p) { current.push({ href: p[0] }); html += item(current.length - 1, pageIcon(p), hl(pageTitle(p), words), esc(t(p[2]))); });
     if (books && nq.length > 1) {
-      var found = books.filter(function (b) { return words.every(function (w) { return b.h.indexOf(w) >= 0; }); }).slice(0, 8);
-      if (found.length) html += '<div class="r-group">' + t('r.books') + '</div>';
+      // todas las coincidencias, alternando editoriales para que ninguna tape a las demás
+      var byF = {}, order = [], found = [];
+      books.forEach(function (b) { if (words.every(function (w) { return b.h.indexOf(w) >= 0; })) { if (!byF[b.f]) { byF[b.f] = []; order.push(b.f); } byF[b.f].push(b); } });
+      for (var k = 0, more = true; more; k++) { more = false; order.forEach(function (f) { if (byF[f][k]) { found.push(byF[f][k]); more = true; } }); }
+      if (found.length) html += '<div class="r-group">' + t('r.books') + ' · ' + found.length + '</div>';
       found.forEach(function (b) {
         current.push({ href: '/biblioteca/' + b.f + '/?libro=' + encodeURIComponent(b.id) });
         var cover = b.c ? '<img class="r-cover" alt="" loading="lazy" src="/biblioteca/' + b.f + '/covers/' + encodeURI(b.c) + '-240.webp">' : '<span class="r-ico"><svg viewBox="0 0 24 24">' + ICON.book + '</svg></span>';
