@@ -9,11 +9,11 @@
     if(token)headers.Authorization='Bearer '+token;
     const r=await fetch('/api'+path,{method,headers,cache:'no-store',...(data===undefined?{}:{body:JSON.stringify(data)})});
     const result=await r.json().catch(()=>({}));
-    if(!r.ok)throw new Error(result.error||result.message||(r.status===401?'Inicia sesión para continuar.':'No se pudo conectar. Inténtalo nuevamente.'));
+    if(!r.ok)throw Object.assign(new Error(result.error||result.message||(r.status===401?'Inicia sesión para continuar.':'No se pudo conectar. Inténtalo nuevamente.')),{status:r.status});
     return result;
   }
   function acceptSession(user,token){if(!user||!token)return;localStorage.setItem(TOKEN,token);localStorage.setItem(USER,JSON.stringify(user));localStorage.removeItem('universe_guest_mode');current={...user,secureSession:true};emit();close()}
-  async function refresh(){if(refreshing)return refreshing;if(!read(TOKEN)){current=null;return null}return refreshing=request('/auth/me').then(r=>{current={...r.user,secureSession:true};emit();return current}).catch(()=>{current=null;emit();return null}).finally(()=>refreshing=null)}
+  async function refresh(){if(refreshing)return refreshing;if(!read(TOKEN)){current=null;return null}return refreshing=request('/auth/me').then(r=>{current={...r.user,secureSession:true};emit();return current}).catch(e=>{if(e.status===401){localStorage.removeItem(TOKEN);localStorage.removeItem(USER);current=null}else{try{const u=JSON.parse(read(USER));current=u?{...u,secureSession:true}:null}catch{current=null}}emit();return current}).finally(()=>refreshing=null)}
   // No app-level popup/dialog: the Google button always renders in place, inline, only where a
   // [data-google-signin] control already lives on the page (the profile tab, or an in-page gate on
   // a native tool that needs a live session). There is nothing to close and nowhere else it can appear from.
