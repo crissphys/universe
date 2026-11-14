@@ -25,7 +25,7 @@ const defaults = [
 
 const routeAliases = {
   '/cepreuni': ['/calculadora', '/fijas-cepreuni', '/informacion-cepreuni', '/ingresantes-cepreuni', '/docentes-cepreuni'],
-  '/admision': ['/cantidad-de-postulantes', '/resultados-admision', '/calculadora-admision', '/fichas-admision', '/ranking', '/ranking-admision', '/ingresantes-uni-2026-2']
+  '/admision': ['/admision/cantidad-de-postulantes', '/fichas-admision', '/ranking', '/ranking-admision', '/ingresantes-uni-2026-2']
 };
 const matchesRoute = (activePath, value) => {
   const path = value.replace(/\/$/, '') || '/';

@@ -1,3 +1,9 @@
 
 /assets/* /assets/:splat 200
 /biblioteca/recursos /biblioteca 301
+/calculadora-admision /admision 301
+/calculadora-admision/ /admision 301
+/resultados-admision /admision 301
+/resultados-admision/ /admision 301
+/cantidad-de-postulantes /admision/cantidad-de-postulantes 301
+/cantidad-de-postulantes/ /admision/cantidad-de-postulantes 301

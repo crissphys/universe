@@ -1,207 +1,221 @@
 <!doctype html>
-<html lang="es" data-theme="dark" data-universe-page="admission">
+<html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admisión UNI y Puntaje Ideal | Universe to Study</title>
-  <meta name="description" content="Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.">
-  <meta name="color-scheme" content="dark light"><link rel="icon" href="/favicon.svg?v=2">
-  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css?v=20261114-tabla"><link rel="stylesheet" href="/universe-ui/platform.css?v=20261011-left-branch-layout"><link rel="stylesheet" href="/universe-ui/refinements.css?v=20260912-cleanup"><script type="module" src="/universe-ui/app.js?v=20261114-noclases"></script>
-<script src="/universe-ui/auth.js?v=20260912-cleanup" defer></script><link rel="stylesheet" href="/universe-ui/native/admision.css?v=20260912-cleanup"><link rel="stylesheet" href="/universe-ui/native.css?v=20260912-cleanup"><script src="/admission-2026-2-exam1-summary.js?v=20260912-cleanup" defer></script><script src="/admission-2026-2-exam2-summary.js?v=20260912-cleanup" defer></script><script src="/admission-2026-2-exam3-summary.js?v=20260912-cleanup" defer></script><script src="/admission-dashboard.js?v=20260912-cleanup" defer></script><script src="/admission-data.js?v=20260912-cleanup" defer></script><script src="/universe-ui/admission-engine.js?v=20260912-cleanup" defer></script><script src="/admission-ideal-tools.js?v=20260912-cleanup" defer></script><script src="/san-marcos-data.js?v=20260912-cleanup" defer></script><script src="/san-marcos-features.js?v=20260912-cleanup" defer></script><script src="/universe-ui/comunicados.js?v=1" defer></script><script src="/universe-ui/library-loading.js?v=20261012-library-skeleton-v1" defer></script><link rel="stylesheet" href="/universe-ui/mobile-layout.css?v=20261012-mobile-v1"><script src="/universe-ui/mobile-layout.js?v=20261012-mobile-v1" defer></script></head>
-<body data-native="admision" class="in-platform">
-  <a class="skip-link" href="#native-main">Saltar al contenido</a>
-  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
-  <div class="space-shade" aria-hidden="true"></div>
-  <header class="header">
-    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="-20 -14 129.5 127" aria-hidden="true"><path d="M0 0H24.5V60A20.25 18 0 0 0 65 60V28L63.5 26L35 37.5L64 .5H89.5V61A44.75 38 0 0 1 0 61Z"/></svg><span>universe<small>TO STUDY</small></span></a>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Admisión UNI 2027-1 · Puntaje por carrera, calculadora, máximos y mínimos · UNIverse to Study</title>
+  <meta name="description" content="Puntaje meta 2027-1 para cada carrera de la UNI, calculadora de lo que necesitas en cada prueba, máximos y mínimos de los concursos 2022-2 a 2026-2 y resultados de Admisión UNI 2026-2.">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://universetostudy.com/admision">
+  <meta name="theme-color" content="#08080a">
+  <link rel="icon" href="/favicon.svg?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="/biblioteca/galaxia/catalogo.css?v=20261110">
+  <link rel="stylesheet" href="/admision/assets/admision.css?v=20261114">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/admission-data.js?v=20261114" defer></script>
+  <script src="/admission-2026-2-exam1-summary.js?v=20261114" defer></script>
+  <script src="/admission-2026-2-exam2-summary.js?v=20261114" defer></script>
+  <script src="/admission-2026-2-exam3-summary.js?v=20261114" defer></script>
+  <script src="/admision/assets/admision.js?v=20261114" defer></script>
+</head>
+<body>
+  <a class="skip" href="#meta">Saltar al puntaje de tu carrera</a>
 
-    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="/" aria-label="UNIverse to Study, inicio">UNIverse</a>
+      <nav class="top-nav" aria-label="Principal">
+        <a href="/admision" aria-current="true">Admisión</a>
+        <a href="/cepreuni">CEPREUNI</a>
+        <a href="/biblioteca">Biblioteca</a>
+        <a href="/examenes">Exámenes</a>
+      </nav>
+    </div>
   </header>
-  <main id="main" hidden></main>
-<main id="native-main" class="native-shell" tabindex="-1"><div class="platform native-platform">
-<aside class="side-rail"><span>TODO CONECTA</span><nav aria-label="Secciones de Universe"><a href="/explorar"><span data-icon="grid"></span>Plataforma</a><a href="/cepreuni"><span data-icon="cap"></span>CEPREUNI</a><a href="/admision" aria-current="page"><span data-icon="cap"></span>Admisión UNI</a><a href="/unitalk"><span data-icon="users"></span>UNITALK</a><a href="/temario"><span data-icon="list"></span>Temario</a><a href="/planificador"><span data-icon="calendar"></span>Planificador</a><a href="/simulacros"><span data-icon="target"></span>Simulacros</a><a href="/examenes"><span data-icon="layers"></span>Exámenes</a><a href="/biblioteca"><span data-icon="book"></span>Biblioteca</a></nav></aside>
-<div class="platform-body">
-<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / Puntaje ideal para ingresar a la UNI</span></div>
-<div class="page-head"><span class="eyebrow">UNIVERSE / ADMISION</span><h1 id="page-title" tabindex="-1">Puntaje ideal para ingresar a la UNI</h1><p>Elige una carrera y mira una referencia clara: corte proyectado, zona ideal, variación histórica y Último registro incorporado. Está pensado como brújula de preparación, no como promesa de ingreso.</p></div>
-<div class="page-view native-view"><div class="admission-page admission-home">
-  <section class="exam-overview" aria-labelledby="examOverviewTitle">
-    <div class="exam-overview-head">
-      <div>
-        <span class="admission-kicker" id="examOverviewKicker">Resultados oficiales · 15 de agosto de 2026</span>
-        <h2 id="examOverviewTitle">Tercera prueba: Física y Química</h2>
-        <p id="examOverviewDescription">Distribución completa de la prueba de Ciencias de Admisión UNI 2026-2. Con esta evaluación se completaron los 1.800 puntos del concurso ordinario.</p>
-      </div>
-      <div class="exam-overview-actions"><span class="exam-status">Resultados publicados</span><a class="admission-btn primary button" href="/ingresantes-uni-2026-2">Ingresantes UNI 2026-2</a></div>
-    </div>
 
-    <div class="exam-result-tabs" aria-label="Seleccionar prueba publicada">
-      <a href="/admision?prueba=humanidades" data-exam-result="humanidades" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('humanidades');history.replaceState(null,'','/admision?prueba=humanidades');return false}"><span>10 AGO</span><b>Humanidades y Aptitud</b><small>Primera prueba · 600 puntos</small></a>
-      <a href="/admision?prueba=matematica" data-exam-result="matematica" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('matematica');history.replaceState(null,'','/admision?prueba=matematica');return false}"><span>12 AGO</span><b>Matemática</b><small>Segunda prueba · 600 puntos</small></a>
-      <a href="/admision?prueba=ciencias" class="active" data-exam-result="ciencias" onclick="if(window.UNIVERSE_SELECT_ADMISSION_EXAM){window.UNIVERSE_SELECT_ADMISSION_EXAM('ciencias');history.replaceState(null,'','/admision?prueba=ciencias');return false}"><span>15 AGO</span><b>Física y Química</b><small>Tercera prueba · 600 puntos</small></a>
-    </div>
+  <main id="main">
+    <section class="a-hero wrap" aria-labelledby="hero-title">
+      <p class="a-kicker">Concurso 2027-1</p>
+      <h1 id="hero-title" aria-label="Admisión UNI"><span class="w">Admisión</span> <em class="w">UNI</em></h1>
 
-    <div class="exam-dashboard-grid p-grid">
-      <article class="score-chart-panel p-panel">
-        <div class="chart-title-row">
-          <div><h2>Distribución de puntajes</h2><p>Cantidad de postulantes por intervalos de 50 puntos.</p></div>
-          <span class="chart-scale-pill p-chip">0–600 puntos</span>
+      <div class="pick" role="search">
+        <div class="search-box pick-box">
+          <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg>
+          <label class="sr-only" for="career">Busca tu carrera</label>
+          <input id="career" type="text" placeholder="Busca tu carrera" autocomplete="off" spellcheck="false" enterkeyhint="go"
+            role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="career-list">
+          <button class="search-clear" type="button" aria-label="Borrar" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button>
+          <ul id="career-list" class="pick-list" role="listbox" aria-label="Carreras" hidden></ul>
         </div>
-        <div class="score-histogram" id="admissionScoreHistogram" aria-label="Gráfica de barras de puntajes"></div>
-        <div class="chart-foot"><span>Pasa el cursor o toca una barra para ver la cantidad exacta.</span><strong id="examMeanCaption">Promedio: —</strong></div>
-      </article>
-
-      <aside class="exam-kpi-panel p-panel" aria-label="Indicadores generales de la prueba">
-        <article class="exam-kpi accent wide"><span>Personas que rindieron</span><strong id="examPresent">—</strong><small id="examRegistered">—</small></article>
-        <article class="exam-kpi"><span>Promedio general</span><strong id="examMean">—</strong><small id="examMean20">—</small></article>
-        <article class="exam-kpi"><span>Desviación estándar</span><strong id="examStdDev">—</strong><small id="examStdDevNote">—</small></article>
-        <article class="exam-kpi wide"><span>Lectura de dificultad</span><strong id="examDifficulty">—</strong><small id="examDifficultyNote">—</small></article>
-        <article class="exam-kpi"><span>Mayor puntaje</span><strong id="examTopScore">—</strong><small id="examTopStudent">—</small></article>
-        <article class="exam-kpi"><span>Menor puntaje válido</span><strong id="examLowScore">—</strong><small id="examLowStudent">—</small></article>
-      </aside>
-    </div>
-
-    <section class="exam-comparison" aria-labelledby="examComparisonTitle">
-      <header><div><span class="admission-kicker">Comparación de pruebas</span><h2 id="examComparisonTitle">Humanidades, Matemática y Ciencias</h2></div><p>Los indicadores se calculan sobre los resultados oficiales publicados.</p></header>
-      <div id="examComparison"></div>
+      </div>
     </section>
 
-    <div class="scoring-strip" aria-label="Regla de calificación de la prueba seleccionada">
-      <article><span>Total de preguntas</span><strong id="scoringQuestionCount">40</strong></article>
-      <article class="correct"><span>Respuesta correcta</span><strong id="scoringCorrect">+15 puntos</strong></article>
-      <article class="wrong"><span>Respuesta incorrecta</span><strong id="scoringWrong">−3 puntos</strong></article>
-      <article><span>Pregunta en blanco</span><strong id="scoringBlank">0 puntos</strong></article>
-    </div>
-
-    <div class="exam-tools">
-      <div class="exam-tools-head"><div><h2>Herramientas para interpretar tu resultado</h2><p>Convierte, ubica y proyecta tu puntaje sin confundir avance actual con nota final.</p></div></div>
-      <div class="exam-tools-grid p-grid">
-        <article class="exam-tool"><h3>Equivalencia vigesimal actual</h3><p id="converterDescription">Convierte tu resultado de Matemática a una escala 0–20.</p><label for="scoreConverterInput">Tu puntaje (0–600)</label><input id="scoreConverterInput" type="number" min="0" max="600" step="0.001" value="300"><div class="tool-result"><strong id="scoreConverterResult">—</strong><br><span id="scoreConverterDetail">—</span></div></article>
-        <article class="exam-tool"><h3>Posición y percentil estimados</h3><p id="percentileDescription">Compara tu nota con quienes rindieron Matemática.</p><label for="percentileInput">Tu puntaje (0–600)</label><input id="percentileInput" type="number" min="0" max="600" step="0.001" value="300"><div class="tool-result"><strong id="percentileResult">—</strong><br><span id="percentileDetail">—</span></div></article>
-        <article class="exam-tool"><h3 id="targetToolTitle">Evalúa tu puntaje final</h3><p id="targetToolDescription">Compara el acumulado de las tres pruebas con una meta vigesimal final.</p><label id="targetScoreLabel" for="targetScoreInput">Puntaje final acumulado</label><input id="targetScoreInput" type="number" min="0" max="1800" step="0.001" value="700"><label for="targetVigesimalInput">Meta final (0–20)</label><input id="targetVigesimalInput" type="number" min="0" max="20" step="0.1" value="12"><div class="tool-result"><strong id="targetResult">—</strong><br><span id="targetDetail">—</span></div></article>
-      </div>
-    </div>
-
-    <div class="exam-action-row">
-      <div class="exam-action-note p-panel"><b>Lectura de dificultad:</b> es una interpretación estadística de Universe to Study basada en el porcentaje del promedio respecto de 600; no es una calificación oficial de la UNI.</div>
-      <a class="admission-btn primary button" href="/ranking-admision">Ranking de promedios Admisión UNI</a>
-    </div>
-  </section>
-
-  
-
-  <section class="admission-grid-links five p-grid" aria-label="Secciones de Admisión">
-    <a href="#puntaje-ideal"><b>Puntaje ideal</b><span>Proyección por carrera en escala UNI.</span></a>
-    <a href="/calculadora-admision"><b>Calculadora de Admisión</b><span>Suma tus tres pruebas y descubre qué necesitas después.</span></a>
-    <a href="/resultados-admision"><b>Máximos y mínimos de Admisión UNI</b><span>Cortes, demanda y tabla completa por proceso.</span></a>
-    <a href="/temario#temario"><b>Temario UNI</b><span>Matemática, Ciencias y Humanidades para admisión.</span></a>
-    <a href="/simulacros"><b>Simulacros</b><span>Practica con estructura tipo UNI.</span></a>
-  </section>
-
-  <section class="admission-card ideal-card p-panel p-tile" id="puntaje-ideal">
-    <div class="section-head clean">
-      <div><span class="admission-kicker">Proyección referencial</span><h2>Puntaje ideal por carrera para 2027-1</h2></div>
-      <div class="institution-switch" aria-label="Universidad">
-        <button class="active" data-institution="uni" type="button">UNI</button>
-        <button data-institution="unmsm" type="button">San Marcos</button>
-      </div>
-    </div>
-    <div class="ideal-layout">
-      <div class="selector-panel p-panel">
-        <label for="careerSelect">Carrera a comparar</label>
-        <select id="careerSelect"></select>
-        <p class="admission-note p-panel">La escala UNI va de 0 a 1800. Para aproximar a escala vigesimal, se divide entre 90.</p>
-        <div class="ideal-score-form" aria-labelledby="idealScoreTitle">
-          <div class="ideal-score-form-head">
-            <div><span>Simula tu resultado</span><strong id="idealScoreTitle">Ingresa tus tres notas</strong></div>
-            <button id="idealScoreReset" type="button">Limpiar</button>
-          </div>
-          <div class="ideal-exam-grid p-grid">
-            <label for="idealExam1"><span>Humanidades</span><small>Examen 1 · 600 pts</small><input id="idealExam1" inputmode="decimal" min="0" max="600" step="0.01" placeholder="0–600" type="number"></label>
-            <label for="idealExam2"><span>Matemática</span><small>Examen 2 · 600 pts</small><input id="idealExam2" inputmode="decimal" min="0" max="600" step="0.01" placeholder="0–600" type="number"></label>
-            <label for="idealExam3"><span>Física y Química</span><small>Examen 3 · 600 pts</small><input id="idealExam3" inputmode="decimal" min="0" max="600" step="0.01" placeholder="0–600" type="number"></label>
-          </div>
-          <p id="idealScoreHint">Puedes comenzar con una sola nota. Mientras falten pruebas, verás una proyección provisional sobre 1800 puntos.</p>
+    <section id="meta" class="wrap a-meta" aria-live="polite" aria-labelledby="meta-name">
+      <div class="meta-card">
+        <div class="meta-head">
+          <p class="meta-label">Meta 2027-1</p>
+          <h2 id="meta-name" class="meta-name">&nbsp;</h2>
         </div>
-        <div class="history-title"><span>Cortes mínimos recientes</span><small>Escala UNI y vigesimal</small></div>
-        <div class="latest-list" id="careerHistory"></div>
+        <p class="meta-score"><b data-k="target">0</b><span>pts</span><small data-k="target20"></small></p>
+
+        <div class="scale" aria-hidden="true">
+          <div class="scale-track">
+            <i class="scale-zone"><i></i></i>
+            <i class="scale-mark is-last"><i></i></i>
+            <i class="scale-mark is-target"><i></i></i>
+            <i class="scale-mark is-you" hidden><i></i></i>
+          </div>
+          <div class="scale-axis"><span>0</span><span>600</span><span>1200</span><span>1800</span></div>
+        </div>
+        <ul class="legend">
+          <li><i class="lg-zone"></i>Corte estimado <b data-k="zone"></b></li>
+          <li><i class="lg-last"></i>Último corte <b data-k="last"></b></li>
+          <li class="lg-you-row" hidden><i class="lg-you"></i>Tú <b data-k="you"></b></li>
+        </ul>
+
+        <dl class="facts">
+          <div><dt>Ingresó con</dt><dd data-k="min26"></dd><small>2026-2</small></div>
+          <div><dt>Máximo</dt><dd data-k="max26"></dd><small>2026-2</small></div>
+          <div><dt>Vacantes</dt><dd data-k="cap"></dd><small data-k="capCycle"></small></div>
+        </dl>
       </div>
-      <div class="result-panel p-panel">
-        <div class="score-axis-card p-panel p-tile">
-          <div class="score-label-layer" aria-hidden="true">
-            <span class="zone-label min" id="zoneMinLabel">Mínimo &mdash;</span>
-            <span class="zone-label max" id="zoneMaxLabel">Máximo &mdash;</span>
-            <span class="zone-label target" id="targetLabel">Ideal &mdash;</span>
-          </div>
-          <div class="score-line"><span>0</span><div class="score-bar" aria-label="Barra de puntaje UNI"><i id="scoreFill"></i><em id="idealZoneBand"></em><b id="latestMarker"></b><strong id="targetMarker"></strong><span class="personal-score-marker" id="personalScoreMarker" hidden></span></div><span>1800</span></div>
-          <div class="score-legend"><span><i class="legend-zone"></i> zona ideal aproximada</span><span><i class="legend-target"></i> puntaje ideal sugerido</span><span><i class="legend-latest"></i> último corte incorporado</span><span><i class="legend-personal"></i> tu puntaje o proyección</span></div>
+
+      <form class="you-card" autocomplete="off" novalidate>
+        <div class="card-head">
+          <h3>Tu puntaje</h3>
+          <button class="you-clear" type="reset" hidden>Borrar</button>
         </div>
-        <div class="target-box p-panel"><span>Zona ideal aproximada</span><strong id="idealZone">&mdash;</strong><small id="idealZone20">&mdash;</small></div>
-        <div class="metric-grid p-grid">
-          <article><span>Puntaje ideal</span><strong id="targetScore">&mdash;</strong><small id="target20">&mdash;</small></article>
-          <article><span>Promedio mínimo</span><strong id="projectedScore">&mdash;</strong><small id="projected20">&mdash;</small></article>
-          <article><span>Desviación estándar</span><strong id="sdScore">&mdash;</strong><small>variación histórica</small></article>
-          <article><span>Último examen</span><strong id="latestScore">&mdash;</strong><small id="latest20">&mdash;</small></article>
+        <div class="you-inputs">
+          <label><span>Humanidades</span><input inputmode="decimal" name="e1" placeholder="0–600" maxlength="6"></label>
+          <label><span>Matemática</span><input inputmode="decimal" name="e2" placeholder="0–600" maxlength="6"></label>
+          <label><span>Física y Química</span><input inputmode="decimal" name="e3" placeholder="0–600" maxlength="6"></label>
         </div>
-        <section class="ideal-probability" aria-live="polite">
-          <div class="probability-summary p-panel">
-            <div class="probability-ring" id="admissionProbabilityRing" style="--probability:0">
-              <div><strong id="admissionProbabilityPercent">—</strong><small>referencial</small></div>
-            </div>
-            <div class="probability-copy">
-              <span>Probabilidad histórica referencial</span>
-              <h3 id="admissionProbabilityLabel">Ingresa una nota para calcularla</h3>
-              <p id="admissionProbabilityDescription">El porcentaje indicará cuántos cortes mínimos históricos de la carrera habría superado tu puntaje.</p>
-            </div>
+        <div class="you-out" data-state="empty">
+          <p class="you-empty">Escribe las notas que ya tienes.</p>
+          <div class="you-res">
+            <p class="you-total"><b data-k="proj">0</b><span data-k="projLabel">pts</span></p>
+            <p class="you-gap" data-k="gap"></p>
+            <div class="you-cuts" aria-hidden="true"></div>
+            <p class="you-cuts-label" data-k="cuts"></p>
           </div>
-          <div class="personal-metrics p-statbar">
-            <article><span id="personalScoreCaption">Tu proyección</span><strong id="personalProjectedScore">—</strong><small id="personalProjected20">—</small></article>
-            <article><span>Frente al último corte</span><strong id="personalLatestDistance">—</strong><small id="personalLatestPercent">—</small></article>
-            <article><span>Cortes superados</span><strong id="historicalCoverage">—</strong><small id="historicalCoverageDetail">de los ciclos disponibles</small></article>
-          </div>
-          <div class="history-visual-head"><div><span>Comparación por ciclo</span><strong id="historyVisualCareer">Carrera seleccionada</strong></div><small>La barra es el corte mínimo; el marcador violeta es tu resultado.</small></div>
-          <div class="admission-history-visual" id="admissionHistoryVisual"></div>
-          <p class="probability-disclaimer">Este porcentaje es una referencia estadística basada en cortes mínimos anteriores. No garantiza una vacante: la dificultad, la demanda y las vacantes cambian en cada proceso.</p>
-        </section>
-        <p class="reading" id="readingText">Selecciona una carrera para ver la lectura.</p>
+        </div>
+        <div class="needs">
+          <p class="needs-head" data-k="needsHead"></p>
+          <ul class="needs-list"></ul>
+        </div>
+      </form>
+
+      <div class="hist-card">
+        <div class="card-head">
+          <h3>Cortes mínimos</h3>
+          <span data-k="histN"></span>
+        </div>
+        <div class="hist" role="img" aria-label="Corte mínimo por proceso"></div>
+      </div>
+    </section>
+
+    <section class="wrap a-sec" id="cortes" aria-labelledby="mm-title">
+      <div class="sec-head">
+        <h2 id="mm-title">Máximos y mínimos</h2>
+        <div class="seg" role="group" aria-label="Ordenar">
+          <button type="button" aria-pressed="true" data-sort="min">Corte</button>
+          <button type="button" aria-pressed="false" data-sort="comp">Competencia</button>
+          <button type="button" aria-pressed="false" data-sort="az">A–Z</button>
+        </div>
+      </div>
+      <div class="cyc" role="group" aria-label="Concurso"></div>
+      <p class="mm-sum stats"></p>
+      <ol class="mm" aria-labelledby="mm-title"></ol>
+      <button class="more" type="button" aria-expanded="false" hidden></button>
+    </section>
+
+    <section class="wrap a-sec" id="resultados" aria-labelledby="res-title">
+      <div class="sec-head">
+        <h2 id="res-title">Resultados 2026-2</h2>
+      </div>
+      <div class="exam-tabs" role="tablist" aria-label="Prueba"></div>
+      <div class="exam" role="tabpanel">
+        <dl class="exam-stats"></dl>
+        <div class="bins" role="img"></div>
+        <div class="bins-axis" aria-hidden="true"><span>0</span><span>300</span><span>600</span></div>
+        <label class="pct">
+          <span>Tu nota en esta prueba</span>
+          <input inputmode="decimal" placeholder="0–600" maxlength="6">
+          <output></output>
+        </label>
+      </div>
+    </section>
+
+    <section class="wrap a-sec" id="herramientas" aria-labelledby="tools-title">
+      <div class="sec-head"><h2 id="tools-title">Herramientas</h2></div>
+      <ul class="tools">
+        <li><a href="/admision/cantidad-de-postulantes"><b>Postulantes 2027-1</b><span>Cuántos eligen cada carrera</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></a></li>
+        <li><a href="/ranking-admision"><b>Ranking de admisión</b><span>Notas por nombre o código</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></a></li>
+        <li><a href="/ingresantes-uni-2026-2"><b>Ingresantes 2026-2</b><span>Ordinario y modalidades</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></a></li>
+        <li><a href="/examenes"><b>Exámenes de admisión</b><span>Rinde el examen con su tiempo</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></a></li>
+        <li><a href="/fichas-admision"><b>Fijas de admisión</b><span>Temas más recurrentes</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></a></li>
+        <li><a href="/temario"><b>Temario UNI</b><span>Matemática, Ciencias y Humanidades</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></a></li>
+      </ul>
+
+      <details class="src">
+        <summary>Cómo se calcula y fuentes</summary>
+        <div class="src-body">
+          <p>La meta combina el promedio ponderado de los cortes mínimos de cada proceso con su tendencia, y suma un margen según cuánto varían. Escala de 0 a 1800; entre 90 da la nota vigesimal. No garantiza una vacante.</p>
+          <div class="src-links"></div>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-about">
+          <a class="brand foot-brand" href="/">UNIverse</a>
+          <p>Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p>
+        <a class="report" href="/correcciones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>Reportar un error</a>
+        </div>
+        <nav class="foot-col" aria-labelledby="f-plat">
+          <h2 id="f-plat">Plataforma</h2>
+          <a href="/admision" aria-current="page">Admisión</a>
+          <a href="/cepreuni">CEPREUNI</a>
+          <a href="/temario">Temario</a>
+          <a href="/calculadora">Calculadora</a>
+          <a href="/ranking">Ranking</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-lib">
+          <h2 id="f-lib">Biblioteca</h2>
+          <a href="/biblioteca">Todas las editoriales</a>
+          <a href="/biblioteca/lumbreras">Lumbreras</a>
+          <a href="/biblioteca/cuzcano">Cuzcano</a>
+          <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>
+          <a href="/examenes">Exámenes</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-uni">
+          <h2 id="f-uni">UNIverse</h2>
+          <a href="/metodologia-editorial">Metodología editorial</a>
+          <a href="/correcciones">Correcciones</a>
+          <a href="/contacto">Contacto</a>
+        </nav>
+      </div>
+      <nav class="loop" aria-label="Canales oficiales"><div class="loop-track"><div class="loop-group"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="YouTube" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="WhatsApp Channels" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="TikTok" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="Linktree" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div></div></nav>
+      <div class="foot-legal">
+        <span>© 2026 UNIverseToStudy · Aprende. Practica. Avanza.</span>
+        <nav aria-label="Legal">
+          <a href="/terminos">Términos</a>
+          <a href="/privacidad">Privacidad</a>
+        </nav>
       </div>
     </div>
-  </section>
+    <p class="foot-mark" aria-hidden="true">UNIverse</p>
+  </footer>
 
-  <section class="admission-card compact-results p-panel p-tile">
-    <div class="section-head clean"><div><span class="admission-kicker">Vista rápida</span><h2>Carreras con mayor referencia de corte</h2></div><a class="admission-btn ghost button" href="/resultados-admision">Abrir análisis completo</a></div>
-    <div class="quick-ranking" id="quickRanking"></div>
-  </section>
-
-  <section class="sources-card p-panel p-tile" id="fuentes"><h2>Fuentes y criterio</h2><p>Los resultados 2026-2 y sus cortes por carrera se calcularon con las publicaciones finales de la Dirección de Admisión UNI para la modalidad ordinaria. La referencia 2027-1 es una proyección estadística y no garantiza una vacante.</p><div id="sourceList" class="source-list"></div></section>
-</div><section class="admission-hero">
-    <div class="admission-hero-copy">
-      <span class="admission-kicker">Admisión UNI · escala 0 a 1800</span>
-      
-      
-      <div class="admission-actions">
-        <a class="admission-btn primary button" href="#puntaje-ideal">Calcular puntaje ideal</a>
-        <a class="admission-btn primary button" href="/calculadora-admision">Calculadora de Admisión</a>
-        <a class="admission-btn ghost button" href="/resultados-admision">Máximos y mínimos de Admisión UNI</a>
-        <a class="admission-btn ghost button" href="/temario#temario">Temario de Admisión UNI</a>
-      </div>
-    </div>
-    <aside class="admission-hero-card p-panel p-tile">
-      <strong>Lectura rápida</strong>
-      <div class="hero-score"><span id="heroTargetScore">&mdash;</span><small>puntos ideales</small></div>
-      <p id="heroCareerText">Selecciona una carrera para iniciar.</p>
-      <div class="mini-scale"><span></span></div>
-    </aside>
-  </section></div>
-</div></div></main><footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temario">Temario</a><a href="/calculadora">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
-  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
-  <div class="immersion-controls" hidden>
-    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
-    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
-    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
-    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
-    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
-  </div>
-  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><div id="search-drive" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
-  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
-  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
-  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
-</body></html>
+  <button class="totop" type="button" aria-label="Volver arriba" tabindex="-1">
+    <svg class="totop-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg>
+    <svg class="totop-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.5v-11M5 9l5-5 5 5"/></svg>
+  </button>
+</body>
+</html>

@@ -44,12 +44,8 @@
         "admission-2026-2-exam1-summary.js",
         "admission-2026-2-exam2-summary.js",
         "admission-2026-2-exam3-summary.js",
-        "admission-dashboard.js",
         "admission-data.js",
-        "universe-ui/admission-engine.js",
-        "admission-ideal-tools.js",
-        "san-marcos-data.js",
-        "san-marcos-features.js"
+        "universe-ui/admission-engine.js"
       ],
       "contentLength": 15026
     },
@@ -100,14 +96,6 @@
       "scripts": [],
       "contentLength": 963
     },
-    "calculadora-admision": {
-      "file": "calculadora-admision.html",
-      "scripts": [
-        "admission-data.js",
-        "admission-calculator.js"
-      ],
-      "contentLength": 5395
-    },
     "fichas-admision": {
       "file": "fichas-admision.html",
       "scripts": [
@@ -151,16 +139,6 @@
         "admission-ranking.js"
       ],
       "contentLength": 3398
-    },
-    "resultados-admision": {
-      "file": "resultados-admision.html",
-      "scripts": [
-        "admission-data.js",
-        "universe-ui/admission-engine.js",
-        "san-marcos-data.js",
-        "san-marcos-features.js"
-      ],
-      "contentLength": 2606
     }
   }
 }
