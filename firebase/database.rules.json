@@ -1,0 +1,13 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "resumenesV1": {
+      ".read": false,
+      ".write": false,
+      "uploads": {
+        ".indexOn": ["status", "owner"]
+      }
+    }
+  }
+}

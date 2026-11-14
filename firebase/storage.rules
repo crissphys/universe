@@ -1,0 +1,10 @@
+rules_version = '2';
+// Los archivos de /resumenes viven en Cloudflare R2 y solo los escribe el backend.
+// Ningún cliente puede leer ni escribir en Firebase Storage.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

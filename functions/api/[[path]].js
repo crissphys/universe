@@ -3474,6 +3474,373 @@ async function handleExam(request, env, subpath) {
   return json({ error: 'not_found' }, 404);
 }
 
+/* ---------- Biblioteca de resúmenes (/resumenes) ----------
+   Firebase: /resumenesV1 (only this backend writes; clients have no direct access).
+   Files: R2 binding RESUMENES_BUCKET — base catalog at resumenes/base/<id>, uploads at resumenes/up/<id>. */
+const RES_ROOT = '/resumenesV1';
+const RES_TYPES = { 'application/pdf': 'pdf', 'image/jpeg': 'image', 'image/png': 'image', 'image/webp': 'image' };
+const RES_EXT = { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+const RES_PART_BYTES = 8 * 1024 * 1024;
+const RES_MAX_PARTS = 10000; // R2 multipart limit: 80 GB with 8 MB parts, i.e. no practical size cap
+const RES_LIMITS = [[3, 3600000], [10, 86400000]]; // 3 per hour, 10 per day, per account
+const RES_PUBLIC_CACHE = { at: 0, rows: null };
+const RES_RATIOS = ['16:9', '3:2', '4:3', '5:4', '1:1', '4:5', '3:4', '2:3', '9:16']; // preview shapes, as in resumenes/assets/shared.js
+const RES_LIKES_CACHE = { at: 0, map: null };
+
+function resPlain(value, max) {
+  // Stored as plain text: tags and angle brackets removed (the page also renders with textContent).
+  return cleanText(String(value == null ? '' : value).replace(/<[^>]*>?/g, ' ').replace(/[<>]/g, ' ').replace(/\s+/g, ' '), max);
+}
+
+function resValidId(id) {
+  return /^[bu][a-z0-9]{6,32}$/.test(String(id || ''));
+}
+
+function resIsGoogle(auth) {
+  return !!(auth && auth.provider === 'google' && auth.email);
+}
+
+async function resIsAdmin(env, auth) {
+  // The signed token says admin AND the e-mail is still in ADMIN_EMAILS / ADMIN_EMAIL_SHA256 right now.
+  return !!(resIsGoogle(auth) && auth.admin === true && await isAdminEmail(env, auth.email));
+}
+
+function resBucket(env) {
+  return env.RESUMENES_BUCKET && typeof env.RESUMENES_BUCKET.get === 'function' ? env.RESUMENES_BUCKET : null;
+}
+
+function resPublicUpload(row) {
+  var avatar = String(row.ownerAvatar || '');
+  return {
+    id: cleanId(row.id),
+    t: resPlain(row.title, 120),
+    d: resPlain(row.description, 1000),
+    y: Number(row.year) || undefined,
+    e: row.mime === 'application/pdf' ? 'pdf' : row.mime === 'image/png' ? 'png' : row.mime === 'image/webp' ? 'webp' : 'jpg',
+    s: Math.max(0, Number(row.size) || 0),
+    at: Number(row.reviewedAt) || Number(row.createdAt) || 0,
+    // Uploader shown on the summary: public handle + an opaque key for their page (never the account id or e-mail).
+    a: resPlain(row.ownerHandle || row.ownerName, 60) || 'Comunidad',
+    u: cleanId(row.ownerKey),
+    av: /^https:\/\/[^\s"'<>]{1,600}$/i.test(avatar) ? avatar : undefined,
+    p: row.thumb ? 1 : undefined,
+    r: row.thumb && RES_RATIOS.includes(row.thumbRatio) ? row.thumbRatio : undefined
+  };
+}
+
+async function resOwnerIdentity(env, auth) {
+  // Public name for the uploader: their UNITALK @username when they have one, else their Google name.
+  var profile = await firebase(env, UNIT_ROOT + '/profiles/' + cleanId(auth.id), 'GET').catch(function () { return null; }) || {};
+  var username = cleanUsername(profile.username);
+  return {
+    ownerKey: (await sha256HexText('resumenes:' + auth.id)).slice(0, 16),
+    ownerHandle: validUsername(username) ? '@' + username : '',
+    ownerName: resPlain(profile.displayName || auth.name, 60) || 'Estudiante',
+    ownerAvatar: safeAvatar(profile.showAvatar === false ? '' : (profile.avatar || auth.avatar)).slice(0, 600)
+  };
+}
+
+function resOwnUpload(row) {
+  return Object.assign(resPublicUpload(row), {
+    status: ['uploading', 'pending', 'approved', 'rejected'].includes(row.status) ? row.status : 'pending',
+    note: resPlain(row.note, 300),
+    createdAt: Number(row.createdAt) || 0
+  });
+}
+
+async function resTransaction(env, path, mutate) {
+  // Read-modify-write with the Firebase ETag so two requests cannot both pass the rate limit.
+  var url = new URL(env.FIREBASE_DATABASE_URL.replace(/\/+$/, '') + path + '.json');
+  url.searchParams.set('auth', env.FIREBASE_DATABASE_SECRET);
+  for (var attempt = 0; attempt < 4; attempt += 1) {
+    var current = await fetch(url.toString(), { headers: { 'X-Firebase-ETag': 'true' }, cache: 'no-store' });
+    if (!current.ok) throw new Error('Firebase HTTP ' + current.status);
+    var next = mutate(await current.json());
+    if (next === undefined) return false;
+    var saved = await fetch(url.toString(), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'If-Match': current.headers.get('ETag') || 'null_etag' },
+      body: JSON.stringify(next)
+    });
+    if (saved.status === 412) continue;
+    if (!saved.ok) throw new Error('Firebase HTTP ' + saved.status);
+    return true;
+  }
+  return false;
+}
+
+async function resVerifyCaptcha(env, token, request) {
+  if (!env.TURNSTILE_SECRET) return 'captcha_not_configured';
+  if (!token) return 'captcha_required';
+  var form = new FormData();
+  form.append('secret', env.TURNSTILE_SECRET);
+  form.append('response', String(token).slice(0, 2048));
+  var ip = request.headers.get('CF-Connecting-IP');
+  if (ip) form.append('remoteip', ip);
+  var res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: form });
+  var out = await res.json().catch(function () { return {}; });
+  return out && out.success === true ? '' : 'captcha_failed';
+}
+
+async function resFileResponse(env, request, key, meta, publicFile) {
+  var bucket = resBucket(env);
+  if (!bucket) return json({ error: 'storage_not_configured' }, 503);
+  var head = await bucket.head(key);
+  if (!head) return json({ error: 'not_found' }, 404);
+  var total = Number(head.size) || 0;
+  var range = parseMediaRange(request.headers.get('Range'), total);
+  if (range && range.invalid) return new Response(null, { status: 416, headers: { 'Content-Range': 'bytes */' + total } });
+  var object = await bucket.get(key, range ? { range: { offset: range.start, length: range.length } } : undefined);
+  if (!object) return json({ error: 'not_found' }, 404);
+  var mime = RES_TYPES[meta.mime] ? meta.mime : (head.httpMetadata && RES_TYPES[head.httpMetadata.contentType] ? head.httpMetadata.contentType : 'application/octet-stream');
+  var disposition = String(head.httpMetadata && head.httpMetadata.contentDisposition || '').match(/filename\*=UTF-8''([^;]+)/i);
+  var storedName = head.customMetadata && head.customMetadata.name || (disposition ? decodeURIComponent(disposition[1]) : '');
+  var name = cleanFileName(meta.name || storedName || 'resumen');
+  var ascii = name.replace(/[^\x20-\x7e]/g, '_').replace(/"/g, '_');
+  var download = new URL(request.url).searchParams.get('download') === '1';
+  var headers = {
+    'Content-Type': mime,
+    'Content-Length': String(range ? range.length : total),
+    'Content-Disposition': (download ? 'attachment' : 'inline') + '; filename="' + ascii + '"; filename*=UTF-8\'\'' + encodeURIComponent(name),
+    'Accept-Ranges': 'bytes',
+    'Cache-Control': publicFile ? 'public, max-age=86400' : 'private, no-store',
+    'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'none'; sandbox",
+    // The summary's own page (/resumenes/<slug>-<id>) is what search engines should list, not the raw file.
+    'X-Robots-Tag': 'noindex'
+  };
+  if (range) headers['Content-Range'] = 'bytes ' + range.start + '-' + range.end + '/' + total;
+  return new Response(object.body, { status: range ? 206 : 200, headers });
+}
+
+async function handleResumenes(request, env, subpath) {
+  var method = request.method.toUpperCase();
+  var path = '/' + subpath.replace(/^\/+/, '');
+  var parts = path.split('/').filter(Boolean);
+  var auth = await verifySession(request, env);
+
+  if (path === '/config' && method === 'GET') {
+    return json({ turnstileSiteKey: String(env.TURNSTILE_SITE_KEY || ''), uploads: !!(resBucket(env) && env.TURNSTILE_SECRET), partSize: RES_PART_BYTES });
+  }
+
+  if (path === '/list' && method === 'GET') {
+    if (!rateLimit(request, 'res-list', 120, 60000)) return json({ error: 'rate_limited' }, 429);
+    if (!RES_PUBLIC_CACHE.rows || Date.now() - RES_PUBLIC_CACHE.at > 60000) {
+      var approved = await firebaseQuery(env, RES_ROOT + '/uploads', { orderBy: '"status"', equalTo: '"approved"' }) || {};
+      RES_PUBLIC_CACHE.rows = Object.values(approved).map(resPublicUpload).sort(function (a, b) { return b.at - a.at; });
+      RES_PUBLIC_CACHE.at = Date.now();
+    }
+    return json({ items: RES_PUBLIC_CACHE.rows });
+  }
+
+  if (path === '/likes' && method === 'GET') {
+    if (!rateLimit(request, 'res-likes', 120, 60000)) return json({ error: 'rate_limited' }, 429);
+    if (!RES_LIKES_CACHE.map || Date.now() - RES_LIKES_CACHE.at > 30000) {
+      RES_LIKES_CACHE.map = await firebase(env, RES_ROOT + '/likes', 'GET') || {};
+      RES_LIKES_CACHE.at = Date.now();
+    }
+    return json({ likes: RES_LIKES_CACHE.map });
+  }
+
+  if (path === '/like' && method === 'POST') {
+    if (!rateLimit(request, 'res-like', 30, 60000)) return json({ error: 'rate_limited' }, 429);
+    var likeBody = await request.json().catch(function () { return {}; });
+    var likeId = String(likeBody.id || '');
+    var clientId = cleanId(likeBody.clientId).slice(0, 40);
+    var actor = auth ? auth.id : clientId.length >= 12 ? 'd_' + clientId : '';
+    // shortcut: ids are checked by format only, not against the catalog; add a lookup if likes get spammed.
+    if (!resValidId(likeId) || !actor) return json({ error: 'invalid_like' }, 400);
+    var votePath = RES_ROOT + '/votes/' + actor + '/' + likeId;
+    var changed = false;
+    if (likeBody.on) {
+      changed = await firebaseReserve(env, votePath, Date.now());
+    } else if (await firebase(env, votePath, 'GET')) {
+      await firebase(env, votePath, 'DELETE');
+      changed = true;
+    }
+    if (changed) await firebase(env, RES_ROOT + '/likes', 'PATCH', { [likeId]: { '.sv': { increment: likeBody.on ? 1 : -1 } } });
+    var count = Math.max(0, Number(await firebase(env, RES_ROOT + '/likes/' + likeId, 'GET')) || 0);
+    if (RES_LIKES_CACHE.map) RES_LIKES_CACHE.map[likeId] = count;
+    return json({ id: likeId, likes: count, on: !!likeBody.on });
+  }
+
+  if (parts[0] === 'file' && parts[1] && method === 'GET') {
+    if (!rateLimit(request, 'res-file', 240, 60000)) return json({ error: 'rate_limited' }, 429);
+    var fileId = parts[1];
+    if (!resValidId(fileId)) return json({ error: 'not_found' }, 404);
+    if (fileId[0] === 'b') return resFileResponse(env, request, 'resumenes/base/' + fileId, {}, true);
+    var rec = await firebase(env, RES_ROOT + '/uploads/' + fileId, 'GET');
+    if (!rec || rec.status === 'uploading' || rec.status === 'rejected') return json({ error: 'not_found' }, 404);
+    if (rec.status !== 'approved' && !(auth && (auth.id === rec.owner || await resIsAdmin(env, auth)))) return json({ error: 'not_found' }, 404);
+    return resFileResponse(env, request, 'resumenes/up/' + fileId, { mime: rec.mime, name: rec.name }, rec.status === 'approved');
+  }
+
+  if (parts[0] === 'thumb' && parts[1] && method === 'GET') {
+    if (!rateLimit(request, 'res-thumb', 600, 60000)) return json({ error: 'rate_limited' }, 429);
+    var thumbId = parts[1];
+    if (!resValidId(thumbId) || thumbId[0] !== 'u') return json({ error: 'not_found' }, 404);
+    var trec = await firebase(env, RES_ROOT + '/uploads/' + thumbId, 'GET');
+    if (!trec || !trec.thumb || trec.status === 'rejected') return json({ error: 'not_found' }, 404);
+    if (trec.status !== 'approved' && !(auth && (auth.id === trec.owner || await resIsAdmin(env, auth)))) return json({ error: 'not_found' }, 404);
+    return resFileResponse(env, request, 'resumenes/thumb/' + thumbId, { mime: trec.thumb, name: thumbId + (trec.thumb === 'image/webp' ? '.webp' : '.jpg') }, trec.status === 'approved');
+  }
+
+  // Everything below needs a Google session.
+  if (!resIsGoogle(auth)) return json({ error: 'google_login_required' }, 401);
+
+  if (path === '/me' && method === 'GET') {
+    var mine = await firebaseQuery(env, RES_ROOT + '/uploads', { orderBy: '"owner"', equalTo: JSON.stringify(auth.id) }) || {};
+    var me = await resOwnerIdentity(env, auth);
+    return json({ items: Object.values(mine).map(resOwnUpload).sort(function (a, b) { return b.createdAt - a.createdAt; }), admin: await resIsAdmin(env, auth), publicName: me.ownerHandle || me.ownerName, key: me.ownerKey });
+  }
+
+  if (path === '/uploads/start' && method === 'POST') {
+    if (!rateLimit(request, 'res-upload-start', 10, 60000)) return json({ error: 'rate_limited' }, 429);
+    var bucket = resBucket(env);
+    if (!bucket || typeof bucket.createMultipartUpload !== 'function') return json({ error: 'storage_not_configured' }, 503);
+    var body = await request.json().catch(function () { return {}; });
+    var title = resPlain(body.title, 120);
+    var description = resPlain(body.description, 1000);
+    var year = Number(body.year);
+    var mime = String(body.mime || '').toLowerCase();
+    var size = Number(body.size);
+    var name = cleanFileName(resPlain(body.name, 120));
+    var ext = (name.match(/\.([a-z0-9]+)$/i) || [])[1];
+    if (title.length < 3) return json({ error: 'title_required' }, 400);
+    if (description.length < 10) return json({ error: 'description_required' }, 400);
+    if (!Number.isInteger(year) || year < 2010 || year > new Date().getUTCFullYear()) return json({ error: 'year_invalid' }, 400);
+    if (!RES_TYPES[mime] || !ext || RES_EXT[ext.toLowerCase()] !== mime) return json({ error: 'type_not_allowed' }, 400);
+    if (!Number.isSafeInteger(size) || size <= 0 || size > RES_PART_BYTES * RES_MAX_PARTS) return json({ error: 'size_invalid' }, 400);
+    var captcha = await resVerifyCaptcha(env, body.captcha, request);
+    if (captcha) return json({ error: captcha }, captcha === 'captcha_not_configured' ? 503 : 403);
+    var now = Date.now();
+    var blockedBy = '';
+    var allowed = await resTransaction(env, RES_ROOT + '/rate/' + auth.id, function (value) {
+      var hits = (Array.isArray(value) ? value : []).map(Number).filter(function (t) { return now - t < 86400000; });
+      for (var i = 0; i < RES_LIMITS.length; i += 1) {
+        if (hits.filter(function (t) { return now - t < RES_LIMITS[i][1]; }).length >= RES_LIMITS[i][0]) { blockedBy = i ? 'day' : 'hour'; return undefined; }
+      }
+      return hits.concat(now);
+    });
+    if (!allowed) return json({ error: blockedBy ? 'upload_limit_' + blockedBy : 'rate_limited' }, 429);
+    var id = 'u' + Date.now().toString(36) + randomHex(5);
+    var identity = await resOwnerIdentity(env, auth);
+    var upload = await bucket.createMultipartUpload('resumenes/up/' + id, {
+      httpMetadata: { contentType: mime },
+      customMetadata: { name, owner: auth.id }
+    });
+    await firebase(env, RES_ROOT + '/uploads/' + id, 'PUT', {
+      id, owner: auth.id, ownerEmail: auth.email, ownerKey: identity.ownerKey, ownerHandle: identity.ownerHandle,
+      ownerName: identity.ownerName, ownerAvatar: /^https:/.test(identity.ownerAvatar) ? identity.ownerAvatar : '',
+      title, description, year, name, mime, size,
+      status: 'uploading', uploadId: upload.uploadId, partSize: RES_PART_BYTES,
+      parts: Math.ceil(size / RES_PART_BYTES), createdAt: now, updatedAt: now
+    });
+    return json({ id, partSize: RES_PART_BYTES, parts: Math.ceil(size / RES_PART_BYTES), publicName: identity.ownerHandle || identity.ownerName }, 201);
+  }
+
+  if (parts[0] === 'uploads' && parts[1] && parts[1] !== 'start') {
+    var upId = parts[1];
+    if (!resValidId(upId) || upId[0] !== 'u') return json({ error: 'not_found' }, 404);
+    var upPath = RES_ROOT + '/uploads/' + upId;
+    var record = await firebase(env, upPath, 'GET');
+    if (!record || record.owner !== auth.id) return json({ error: 'not_found' }, 404);
+    var store = resBucket(env);
+    if (!store) return json({ error: 'storage_not_configured' }, 503);
+    var key = 'resumenes/up/' + upId;
+
+    if (parts[2] === 'part' && method === 'PUT') {
+      if (!rateLimit(request, 'res-upload-part-' + auth.id, 240, 60000)) return json({ error: 'rate_limited' }, 429);
+      if (record.status !== 'uploading') return json({ error: 'upload_closed' }, 409);
+      var n = Number(parts[3]);
+      var count = Number(record.parts) || 0;
+      if (!Number.isInteger(n) || n < 1 || n > count) return json({ error: 'part_invalid' }, 400);
+      var expected = n < count ? RES_PART_BYTES : Number(record.size) - RES_PART_BYTES * (count - 1);
+      var declared = Number(request.headers.get('Content-Length'));
+      if (declared && declared !== expected) return json({ error: 'part_size_invalid' }, 400);
+      var bytes = new Uint8Array(await request.arrayBuffer());
+      if (bytes.length !== expected) return json({ error: 'part_size_invalid' }, 400);
+      if (n === 1 && !validAttachmentSignature(RES_TYPES[record.mime], record.mime, bytes.slice(0, 16))) {
+        return json({ error: 'type_mismatch' }, 400);
+      }
+      var uploaded = await store.resumeMultipartUpload(key, record.uploadId).uploadPart(n, bytes);
+      await firebase(env, upPath + '/etags/' + n, 'PUT', uploaded.etag);
+      return json({ ok: true, part: n });
+    }
+
+    if (parts[2] === 'thumb' && method === 'PUT') {
+      // Preview made in the browser (first page / reduced image). Small, and checked by its bytes like the file.
+      if (!rateLimit(request, 'res-upload-thumb-' + auth.id, 20, 60000)) return json({ error: 'rate_limited' }, 429);
+      if (!['uploading', 'pending'].includes(record.status)) return json({ error: 'upload_closed' }, 409);
+      var tbytes = new Uint8Array(await request.arrayBuffer());
+      var tmime = validAttachmentSignature('image', 'image/webp', tbytes.slice(0, 16)) ? 'image/webp' : validAttachmentSignature('image', 'image/jpeg', tbytes.slice(0, 16)) ? 'image/jpeg' : '';
+      if (!tmime || tbytes.length > 400000) return json({ error: 'thumb_invalid' }, 400);
+      var tratio = String(new URL(request.url).searchParams.get('r') || '').replace('x', ':');
+      await store.put('resumenes/thumb/' + upId, tbytes, { httpMetadata: { contentType: tmime } });
+      await firebase(env, upPath, 'PATCH', { thumb: tmime, thumbRatio: RES_RATIOS.includes(tratio) ? tratio : '3:4', updatedAt: Date.now() });
+      return json({ ok: true });
+    }
+
+    if (parts[2] === 'complete' && method === 'POST') {
+      if (record.status !== 'uploading') return json({ error: 'upload_closed' }, 409);
+      var etags = record.etags || {};
+      var list = [];
+      for (var p = 1; p <= Number(record.parts); p += 1) {
+        if (!etags[p]) return json({ error: 'parts_missing', part: p }, 409);
+        list.push({ partNumber: p, etag: etags[p] });
+      }
+      var resumed = store.resumeMultipartUpload(key, record.uploadId);
+      await resumed.complete(list);
+      // Real type and size are checked on the stored object, not on what the browser declared.
+      var stored = await store.get(key, { range: { offset: 0, length: 16 } });
+      var head16 = stored ? new Uint8Array(await stored.arrayBuffer()) : new Uint8Array();
+      var storedSize = stored ? Number(stored.size) : 0;
+      if (!validAttachmentSignature(RES_TYPES[record.mime], record.mime, head16) || storedSize !== Number(record.size)) {
+        await store.delete(key).catch(function () {});
+        await firebase(env, upPath, 'PATCH', { status: 'rejected', note: 'El archivo no es un PDF o una imagen válida.', etags: null, uploadId: null, updatedAt: Date.now() });
+        return json({ error: 'type_mismatch' }, 400);
+      }
+      await firebase(env, upPath, 'PATCH', { status: 'pending', etags: null, uploadId: null, updatedAt: Date.now() });
+      return json({ ok: true, id: upId, status: 'pending' });
+    }
+
+    if (parts[2] === 'abort' && method === 'POST') {
+      if (record.status === 'uploading' && record.uploadId) await store.resumeMultipartUpload(key, record.uploadId).abort().catch(function () {});
+      if (record.status === 'uploading') await firebase(env, upPath, 'DELETE');
+      return json({ ok: true });
+    }
+  }
+
+  if (parts[0] === 'admin') {
+    if (!await resIsAdmin(env, auth)) return json({ error: 'admin_required' }, 403);
+    if (path === '/admin/queue' && method === 'GET') {
+      var status = ['pending', 'approved', 'rejected'].includes(new URL(request.url).searchParams.get('status')) ? new URL(request.url).searchParams.get('status') : 'pending';
+      var rows = await firebaseQuery(env, RES_ROOT + '/uploads', { orderBy: '"status"', equalTo: JSON.stringify(status) }) || {};
+      return json({ items: Object.values(rows).map(function (row) {
+        return Object.assign(resOwnUpload(row), { name: cleanFileName(row.name), mime: row.mime, ownerName: resPlain(row.ownerName, 60), ownerEmail: String(row.ownerEmail || '') });
+      }).sort(function (a, b) { return a.createdAt - b.createdAt; }) });
+    }
+    if (path === '/admin/review' && method === 'POST') {
+      if (!rateLimit(request, 'res-review', 120, 60000)) return json({ error: 'rate_limited' }, 429);
+      var review = await request.json().catch(function () { return {}; });
+      var reviewId = String(review.id || '');
+      var action = review.action === 'approve' ? 'approved' : review.action === 'reject' ? 'rejected' : '';
+      if (!resValidId(reviewId) || reviewId[0] !== 'u' || !action) return json({ error: 'invalid_review' }, 400);
+      var target = await firebase(env, RES_ROOT + '/uploads/' + reviewId, 'GET');
+      if (!target || target.status === 'uploading') return json({ error: 'not_found' }, 404);
+      await firebase(env, RES_ROOT + '/uploads/' + reviewId, 'PATCH', { status: action, note: resPlain(review.note, 300), reviewedAt: Date.now(), reviewedBy: auth.email, updatedAt: Date.now() });
+      if (action === 'rejected' && resBucket(env)) {
+        await resBucket(env).delete('resumenes/up/' + reviewId).catch(function () {});
+        await resBucket(env).delete('resumenes/thumb/' + reviewId).catch(function () {});
+      }
+      RES_PUBLIC_CACHE.rows = null;
+      return json({ ok: true, id: reviewId, status: action });
+    }
+  }
+
+  return json({ error: 'not_found' }, 404);
+}
+
 export async function onRequest(context) {
   var request = context.request;
   if (request.method === 'OPTIONS') return json({ ok: true });
@@ -3489,6 +3856,7 @@ export async function onRequest(context) {
     if (apiPath.startsWith('classes/')) return handleClasses(request, context.env, apiPath.slice(8));
     if (apiPath.startsWith('exam/')) return handleExam(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('unitalk/')) return handleUnitalk(request, context.env, apiPath.slice(8));
+    if (apiPath.startsWith('resumenes/')) return handleResumenes(request, context.env, apiPath.slice(10));
     if (apiPath === 'ai/study' || apiPath === 'ai/support') return handleAiStudy(request, context.env);
     if (apiPath === 'ai/embed') return handleAiEmbed(request, context.env);
     return json({ error: 'not_found' }, 404);
