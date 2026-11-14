@@ -38,7 +38,10 @@
   const S = { items: [], byId: new Map(), idx: null, temas: null, likes: {}, q: '', sort: 'rel', savedOnly: false, results: [], shown: 0, viewer: null, cfg: null, uploadsLoaded: false, scroll: {}, terms: [], route: { view: 'list' }, me: null };
   const Auth = () => window.UniverseGoogleAuth;
   const token = () => { try { return localStorage.getItem('universe_auth_token') || ''; } catch { return ''; } };
-  const googleUser = () => { const u = Auth() && Auth().user(); return u && u.provider === 'google' && u.secureSession ? u : null; };
+  // The saved session counts right away (the server checks the token on every call), so nobody is asked
+  // to sign in again while auth.js is still confirming it in the background.
+  const cachedUser = () => { try { return token() ? JSON.parse(localStorage.getItem('universe_google_user') || 'null') : null; } catch { return null; } };
+  const googleUser = () => { const u = (Auth() && Auth().user()) || cachedUser(); return u && u.provider === 'google' ? u : null; };
 
   async function api(path, method = 'GET', body, signal) {
     const headers = {};
@@ -378,7 +381,10 @@
   }
   async function loadMe() {
     if (!googleUser()) { S.me = null; return null; }
-    S.me = await api('/me').catch(e => (e.status === 401 ? null : S.me));
+    S.me = await api('/me').catch(e => {
+      if (e.status === 401 && Auth()) Auth().refresh(); // expired token: auth.js clears it and the page shows the Google button
+      return e.status === 401 ? null : S.me;
+    });
     return S.me;
   }
   async function renderMe() {
@@ -392,7 +398,11 @@
     list.textContent = '';
     $('me-count').textContent = 'Cargando…';
     const r = await loadMe();
-    if (!r) { $('me-count').textContent = 'No se pudo cargar tu lista. Vuelve a ingresar.'; return; }
+    if (!r) {
+      if (!googleUser()) { $('me-panel').hidden = true; return showGate($('me-gate')); }
+      $('me-count').textContent = 'No se pudo cargar tu lista. Revisa tu conexión.';
+      return;
+    }
     $('admin-link').hidden = !r.admin;
     const pub = $('my-page');
     pub.hidden = !r.items.some(it => it.status === 'approved');

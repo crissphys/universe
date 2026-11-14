@@ -32,7 +32,9 @@
   }
 
   async function load() {
-    const u = window.UniverseGoogleAuth && UniverseGoogleAuth.user();
+    let cached = null;
+    try { cached = token() ? JSON.parse(localStorage.getItem('universe_google_user') || 'null') : null; } catch {}
+    const u = (window.UniverseGoogleAuth && UniverseGoogleAuth.user()) || cached;
     if (!u || u.provider !== 'google') return gate();
     $('gate').hidden = true;
     viewers.splice(0).forEach(v => v.destroy());

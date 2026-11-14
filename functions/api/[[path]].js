@@ -3505,8 +3505,17 @@ function resIsGoogle(auth) {
 }
 
 async function resIsAdmin(env, auth) {
-  // The signed token says admin AND the e-mail is still in ADMIN_EMAILS / ADMIN_EMAIL_SHA256 right now.
-  return !!(resIsGoogle(auth) && auth.admin === true && await isAdminEmail(env, auth.email));
+  // Admin = a Google sign-in (verified by Google, signed by this server) whose e-mail is in the Cloudflare
+  // settings ADMIN_EMAILS / ADMIN_EMAIL_SHA256 right now. No password or key opens it, and adding or
+  // removing an admin there takes effect on the next request, without signing in again.
+  return !!(resIsGoogle(auth) && await isAdminEmail(env, auth.email));
+}
+
+async function resUploadsWhere(env, field, value) {
+  // shortcut: reads all upload records and filters here, so it works before the Firebase indexes in
+  // firebase/database.rules.json are deployed; switch to firebaseQuery once uploads number in the thousands.
+  var all = await firebase(env, RES_ROOT + '/uploads', 'GET') || {};
+  return Object.values(all).filter(function (row) { return row && row[field] === value; });
 }
 
 function resBucket(env) {
@@ -3630,8 +3639,8 @@ async function handleResumenes(request, env, subpath) {
   if (path === '/list' && method === 'GET') {
     if (!rateLimit(request, 'res-list', 120, 60000)) return json({ error: 'rate_limited' }, 429);
     if (!RES_PUBLIC_CACHE.rows || Date.now() - RES_PUBLIC_CACHE.at > 60000) {
-      var approved = await firebaseQuery(env, RES_ROOT + '/uploads', { orderBy: '"status"', equalTo: '"approved"' }) || {};
-      RES_PUBLIC_CACHE.rows = Object.values(approved).map(resPublicUpload).sort(function (a, b) { return b.at - a.at; });
+      var approved = await resUploadsWhere(env, 'status', 'approved');
+      RES_PUBLIC_CACHE.rows = approved.map(resPublicUpload).sort(function (a, b) { return b.at - a.at; });
       RES_PUBLIC_CACHE.at = Date.now();
     }
     return json({ items: RES_PUBLIC_CACHE.rows });
@@ -3693,9 +3702,9 @@ async function handleResumenes(request, env, subpath) {
   if (!resIsGoogle(auth)) return json({ error: 'google_login_required' }, 401);
 
   if (path === '/me' && method === 'GET') {
-    var mine = await firebaseQuery(env, RES_ROOT + '/uploads', { orderBy: '"owner"', equalTo: JSON.stringify(auth.id) }) || {};
+    var mine = await resUploadsWhere(env, 'owner', auth.id);
     var me = await resOwnerIdentity(env, auth);
-    return json({ items: Object.values(mine).map(resOwnUpload).sort(function (a, b) { return b.createdAt - a.createdAt; }), admin: await resIsAdmin(env, auth), publicName: me.ownerHandle || me.ownerName, key: me.ownerKey });
+    return json({ items: mine.map(resOwnUpload).sort(function (a, b) { return b.createdAt - a.createdAt; }), admin: await resIsAdmin(env, auth), publicName: me.ownerHandle || me.ownerName, key: me.ownerKey });
   }
 
   if (path === '/uploads/start' && method === 'POST') {
@@ -3819,8 +3828,8 @@ async function handleResumenes(request, env, subpath) {
     if (!await resIsAdmin(env, auth)) return json({ error: 'admin_required' }, 403);
     if (path === '/admin/queue' && method === 'GET') {
       var status = ['pending', 'approved', 'rejected'].includes(new URL(request.url).searchParams.get('status')) ? new URL(request.url).searchParams.get('status') : 'pending';
-      var rows = await firebaseQuery(env, RES_ROOT + '/uploads', { orderBy: '"status"', equalTo: JSON.stringify(status) }) || {};
-      return json({ items: Object.values(rows).map(function (row) {
+      var rows = await resUploadsWhere(env, 'status', status);
+      return json({ items: rows.map(function (row) {
         return Object.assign(resOwnUpload(row), { name: cleanFileName(row.name), mime: row.mime, ownerName: resPlain(row.ownerName, 60), ownerEmail: String(row.ownerEmail || '') });
       }).sort(function (a, b) { return a.createdAt - b.createdAt; }) });
     }
