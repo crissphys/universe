@@ -1,6 +1,9 @@
 
 /assets/* /assets/:splat 200
 /biblioteca/recursos /biblioteca 301
+/calculadora /cepreuni/calculadorapre/ 301
+/calculadora/ /cepreuni/calculadorapre/ 301
+/calculadora.html /cepreuni/calculadorapre/ 301
 /calculadora-admision /admision 301
 /calculadora-admision/ /admision 301
 /resultados-admision /admision 301

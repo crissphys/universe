@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Calculadora PRE · CEPREUNI 2027-1 · UNIverse to Study</title>
+  <meta name="description" content="Escribe tu código CEPREUNI o tus notas y mira tu ponderado, tu carrera y cuánto necesitas en la siguiente prueba.">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://universetostudy.com/cepreuni/calculadorapre/">
+  <meta name="theme-color" content="#08080a">
+  <link rel="icon" href="/favicon.svg?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
+  <link rel="preload" href="/cepreuni/calculadorapre/cortes.json?v=20261114" as="fetch" crossorigin>
+  <link rel="stylesheet" href="/biblioteca/galaxia/catalogo.css?v=20261110">
+  <link rel="stylesheet" href="/cepreuni/calculadorapre/calc.css?v=20261114">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/cepreuni/calculadorapre/calc.js?v=20261114" defer></script>
+</head>
+<body>
+  <a class="skip" href="#q">Saltar a la calculadora</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="/" aria-label="UNIverse to Study, inicio">UNIverse</a>
+      <nav class="top-nav" aria-label="Principal">
+        <a href="/biblioteca">Biblioteca</a>
+        <a href="/cepreuni" aria-current="true">CEPREUNI</a>
+        <a href="/examenes">Exámenes</a>
+        <a href="/planificador">Planificador</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="c-hero wrap" aria-labelledby="hero-title">
+      <a class="crumb" href="/cepreuni">CEPREUNI</a>
+      <h1 id="hero-title"><span class="w">Calculadora</span> <em class="w">PRE</em></h1>
+      <p class="stats">Ciclo 2027-1<i></i><span id="hero-next">&nbsp;</span></p>
+    </section>
+
+    <div class="wrap c-grid">
+      <div class="c-find">
+        <form id="find" class="search" role="search" autocomplete="off">
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg>
+            <label class="sr-only" for="q">Tu código o apellidos</label>
+            <input id="q" type="search" placeholder="Tu código o apellidos" enterkeyhint="search" spellcheck="false" autocapitalize="characters" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="q-list">
+            <ul id="q-list" class="q-list" role="listbox" aria-label="Alumnos" hidden></ul>
+          </div>
+        </form>
+        <div id="who" class="who" hidden>
+          <span class="who-dot" aria-hidden="true"></span>
+          <p><b id="who-name"></b><span id="who-code"></span></p>
+          <button id="who-x" class="who-x" type="button" aria-label="Quitar alumno"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button>
+        </div>
+      </div>
+
+      <aside id="out" class="c-out" aria-live="polite" data-empty="true">
+        <div class="o-career">
+          <label class="sr-only" for="career">Carrera</label>
+          <div class="select"><select id="career"></select><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></div>
+          <div id="sede" class="seg" role="group" aria-label="Sede"><button type="button" data-sede="Lima">Lima</button><button type="button" data-sede="Juliaca">Juliaca</button></div>
+        </div>
+
+        <div class="o-score">
+          <div>
+            <p class="o-label">Ponderado</p>
+            <p class="o-big"><b id="p" data-v="">—</b><small>/ 20</small></p>
+            <p class="o-sub"><span id="p150"></span><span id="done"></span></p>
+          </div>
+          <p id="status" class="pill" hidden></p>
+        </div>
+
+        <div id="gauge" class="gauge" hidden aria-hidden="true">
+          <div class="g-track"><i class="g-band"></i><i class="g-avg"></i><i class="g-me"></i><i class="g-pj"></i></div>
+          <div class="g-axis"><span class="g-a"></span><span class="g-b"></span></div>
+        </div>
+
+        <div id="tgt" class="tgt" role="group" aria-label="Meta">
+          <button type="button" data-t="lo">Mínimo<span></span></button>
+          <button type="button" data-t="avg">Promedio<span></span></button>
+          <button type="button" data-t="hi">Más alto<span></span></button>
+        </div>
+        <p id="from" class="o-from"></p>
+
+        <div id="next" class="o-next"></div>
+        <p id="place" class="o-place"></p>
+        <ul id="flags" class="flags"></ul>
+      </aside>
+
+      <section class="c-notes" aria-labelledby="notes-title">
+        <div class="sec-head">
+          <h2 id="notes-title">Tus notas</h2>
+          <div id="scale" class="seg" role="group" aria-label="Escala"><button type="button" data-s="20">/20</button><button type="button" data-s="150">/150</button></div>
+        </div>
+        <ol id="notes" class="notes"></ol>
+        <div class="n-actions">
+          <button id="restore" class="ghost" type="button" hidden>Restaurar notas oficiales</button>
+          <button id="clear" class="ghost" type="button" hidden>Borrar notas</button>
+        </div>
+      </section>
+
+      <section id="more" class="c-more">
+        <div id="reach" class="reach" hidden>
+          <div>
+            <h2>A tu alcance <span id="reach-n"></span></h2>
+            <ul id="reach-ok" class="r-list"></ul>
+          </div>
+          <div id="near-box">
+            <h2>Cerca</h2>
+            <ul id="reach-near" class="r-list"></ul>
+          </div>
+        </div>
+        <div class="hist">
+          <h2><span id="h-career"></span> <small id="h-sede"></small></h2>
+          <div class="h-scroll">
+            <table>
+              <thead><tr><th scope="col">Ciclo</th><th scope="col">Mínimo</th><th scope="col">Máximo</th><th scope="col"><span class="sr-only">Rango</span></th></tr></thead>
+              <tbody id="h-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-about">
+          <a class="brand foot-brand" href="/">UNIverse</a>
+          <p>Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p>
+        <a class="report" href="/correcciones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>Reportar un error</a>
+        </div>
+        <nav class="foot-col" aria-labelledby="f-plat">
+          <h2 id="f-plat">Plataforma</h2>
+          <a href="/admision">Admisión</a>
+          <a href="/cepreuni">CEPREUNI</a>
+          <a href="/temario">Temario</a>
+          <a href="/cepreuni/calculadorapre" aria-current="page">Calculadora</a>
+          <a href="/ranking">Ranking</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-lib">
+          <h2 id="f-lib">Biblioteca</h2>
+          <a href="/biblioteca">Todas las editoriales</a>
+          <a href="/biblioteca/lumbreras">Lumbreras</a>
+          <a href="/biblioteca/cuzcano">Cuzcano</a>
+          <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>
+          <a href="/examenes">Exámenes</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-uni">
+          <h2 id="f-uni">UNIverse</h2>
+          <a href="/metodologia-editorial">Metodología editorial</a>
+          <a href="/correcciones">Correcciones</a>
+          <a href="/contacto">Contacto</a>
+        </nav>
+      </div>
+      <nav class="loop" aria-label="Canales oficiales"><div class="loop-track"><div class="loop-group"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="YouTube" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="WhatsApp Channels" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="TikTok" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="Linktree" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div></div></nav>
+      <div class="foot-legal">
+        <span>© 2026 UNIverseToStudy · Aprende. Practica. Avanza.</span>
+        <nav aria-label="Legal">
+          <a href="/terminos">Términos</a>
+          <a href="/privacidad">Privacidad</a>
+        </nav>
+      </div>
+    </div>
+    <p class="foot-mark" aria-hidden="true">UNIverse</p>
+  </footer>
+
+  <button class="totop" type="button" aria-label="Volver arriba" tabindex="-1">
+    <svg class="totop-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg>
+    <svg class="totop-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.5v-11M5 9l5-5 5 5"/></svg>
+  </button>
+</body>
+</html>

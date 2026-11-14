@@ -407,7 +407,7 @@
     ]],
     ['result', 'Resultados', 'Cómo vas', [
       { t: 'Ranking', d: 'Tu puesto, tu ponderado y cada evaluación, por código o nombre.', u: '/ranking', i: 'rank', cycle: true, g: ['2027-1', '2026-2', 'Carreras'] },
-      { t: 'Calculadora de puntaje', d: 'Tu nota, tu carrera y los cortes históricos.', u: '/calculadora', i: 'calc', g: ['Puntaje', 'Carrera', 'Cortes'] },
+      { t: 'Calculadora de puntaje', d: 'Tu nota, tu carrera y los cortes históricos.', u: '/cepreuni/calculadorapre', i: 'calc', g: ['Puntaje', 'Carrera', 'Cortes'] },
       { t: 'Ingresantes 2026-2', d: 'Quién ingresó y con qué puntaje.', u: '/ingresantes-cepreuni', i: 'users', g: ['Por nombre', 'Por código'] },
       { t: 'Postulantes 2027-1', d: 'Cuántas personas eligieron cada carrera.', u: '/admision/cantidad-de-postulantes', i: 'users', g: ['Por carrera'] }
     ]],

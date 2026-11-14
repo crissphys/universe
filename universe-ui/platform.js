@@ -1,7 +1,7 @@
-import {renderScore,renderFijas} from './upgrades.js?v=20261112-ien';
+import {renderFijas} from './upgrades.js?v=20261114-calcpre';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
-import {renderBranchedMenu} from './branched-menu.js?v=20261114-noclases';
+import {renderBranchedMenu} from './branched-menu.js?v=20261114-calcpre';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -12,7 +12,6 @@ const routes={
  '/temario':['Entender empieza aquí.','MAPA DEL CONOCIMIENTO','Explora el temario de admisión y CEPREUNI. Abre un tema, revisa sus conceptos y registra lo que ya estudiaste.'],
  '/planificador':['Una intención. Un plan.','TU TRAYECTORIA','Convierte tus próximos temas en pasos concretos. Este tablero guarda tus tareas únicamente en este navegador.'],
  '/fijas-cepreuni':['Prioriza con criterio.','CEPREUNI / PRIMERA PC','Explora el tipo de problema asociado a cada tema del modelo histórico. Una referencia de preparación, nunca una garantía del examen.'],
- '/calculadora':['Pon tu meta en perspectiva.','CEPREUNI / PUNTAJES','Tus notas, tu carrera y las referencias históricas. Una calculadora para orientar tu preparación, no para prometer una vacante.'],
 };
 let data,ui,view,home,routeVersion=0,toastTimer;
 const link=(url,label,cls='button',live=false)=>`<a class="${cls}" href="${safe(url)}" ${live||!url.startsWith('/')?'data-live target="_blank" rel="noopener noreferrer"':''}>${esc(label)} ${ui.icon('arrow-up-right')}</a>`;
@@ -29,12 +28,11 @@ function toast(text){let el=$('.local-toast');if(!el){el=document.createElement(
 function pathName(){const path=decodeURI(location.pathname).replace(/\/$/,'').replace(/\.html$/,'')||'/';return path==='/index'?'/':path}
 function setRouteSeo(title,description,canonical){document.title=title;let meta=$('meta[name="description"]');if(!meta){meta=document.createElement('meta');meta.name='description';document.head.append(meta)}meta.content=description;let link=$('link[rel="canonical"]');if(!link){link=document.createElement('link');link.rel='canonical';document.head.append(link)}link.href=new URL(canonical,location.origin).href}
 function head(path){const r=routes[path]||['Aún no estamos aquí.','UNIVERSE / 404','No encontramos esta página. Puedes volver a la plataforma.'];return `<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / ${esc(r[0].replace(/\.$/,''))}</span></div><div class="page-head"><span class="eyebrow">${r[1]}</span><h1 id="page-title" tabindex="-1">${r[0]}</h1><p>${r[2]}</p></div>`}
-async function route(focus=false){const token=++routeVersion,p=pathName();if(p==='/'){location.reload();return}const isHome=false;home.hidden=!isHome;$('#platform').hidden=isHome;document.body.classList.toggle('in-platform',!isHome);$('.brand').href='/';$('.footer-brand').href='/';$$('.header .nav a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')===p?'page':'false'));if(isHome){setRouteSeo('Universe — El origen de tu siguiente idea','Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.','/');return}const meta=routes[p],title=meta?.[0]||'Página no encontrada';setRouteSeo(`${title} — Universe`,meta?.[2]||'No encontramos esta página. Puedes volver a la plataforma.',p);renderBranchedMenu($('.side-rail'),{activePath:p,renderIcon:name=>ui.icon(name)});view.innerHTML=head(p)+'<div class="page-view" id="page-view"></div>';const out=$('#page-view');if(!data){out.innerHTML=empty('Conectando tus recursos…');try{data=await fetch('/universe-ui/data/platform.json?v=20261021-lenguaje-3ra').then(r=>{if(!r.ok)throw Error('Datos no disponibles');return r.json()});hydrateHumanities(data)}catch{out.innerHTML=note('No se pudieron cargar los recursos. Recarga esta página.');return}}if(token!==routeVersion)return;
+async function route(focus=false){const token=++routeVersion,p=pathName();if(p==='/'){location.reload();return}const isHome=false;home.hidden=!isHome;$('#platform').hidden=isHome;document.body.classList.toggle('in-platform',!isHome);$('.brand').href='/';$('.footer-brand').href='/';$$('.header .nav a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')===p?'page':'false'));if(isHome){setRouteSeo('Universe — El origen de tu siguiente idea','Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.','/');return}const meta=routes[p],title=meta?.[0]||'Página no encontrada';setRouteSeo(`${title} — Universe`,meta?.[2]||'No encontramos esta página. Puedes volver a la plataforma.',p);renderBranchedMenu($('.side-rail'),{activePath:p,renderIcon:name=>ui.icon(name)});view.innerHTML=head(p)+'<div class="page-view" id="page-view"></div>';const out=$('#page-view');if(!data){out.innerHTML=empty('Conectando tus recursos…');try{data=await fetch('/universe-ui/data/platform.json?v=20261114-calcpre').then(r=>{if(!r.ok)throw Error('Datos no disponibles');return r.json()});hydrateHumanities(data)}catch{out.innerHTML=note('No se pudieron cargar los recursos. Recarga esta página.');return}}if(token!==routeVersion)return;
  if(p==='/explorar')overview(out);
  else if(p==='/temario')syllabus(out);
  else if(p==='/planificador')planner(out);
  else if(p==='/fijas-cepreuni')fijas(out);
- else if(p==='/calculadora')calculator(out);
  else if(p==='/account')account(out);
  else out.innerHTML=internal('/explorar','Volver a la plataforma');
  mountOrbits();syncProfileBadge();
@@ -268,7 +266,6 @@ function planner(out){
 function fixed(out){renderFijas(out,data)}
 // Small arithmetic parser. No eval, Function constructor, or remote requests.
 export function calculate(input){const text=input.replace(/\s+/g,'').replace(/×/g,'*').replace(/÷/g,'/').replace(/,/g,'.');if(!text||text.length>160||/[^0-9.+\-*/()%]/.test(text))throw Error('Expresión no válida');const tokens=text.match(/(?:\d+(?:\.\d*)?|\.\d+)|[+\-*/()%]/g)||[];if(tokens.join('')!==text)throw Error('Número no válido');let at=0,depth=0;function value(){if(++depth>40)throw Error('Expresión demasiado larga');let n;if(tokens[at]==='+'||tokens[at]==='-'){const sign=tokens[at++];n=(sign==='-'?-1:1)*value()}else if(tokens[at]==='('){at++;n=add();if(tokens[at++]!==')')throw Error('Falta cerrar paréntesis')}else{const t=tokens[at++];if(!t||!/^\d|^\./.test(t))throw Error('Falta un número');n=Number(t)}while(tokens[at]==='%'){at++;n/=100}depth--;return n}function mul(){let n=value();while(['*','/'].includes(tokens[at])){const op=tokens[at++],v=value();if(op==='/'&&v===0)throw Error('No se puede dividir entre cero');n=op==='*'?n*v:n/v}return n}function add(){let n=mul();while(['+','-'].includes(tokens[at])){const op=tokens[at++],v=mul();n=op==='+'?n+v:n-v}return n}const result=add();if(at!==tokens.length||!Number.isFinite(result))throw Error('Revisa la expresión');return Number(result.toPrecision(12))}
-function calculator(out){renderScore(out,data)}
 function account(out){renderProfile(out,data,ui.openPreferences)}
 export function startPlatform(api){ui=api;home=$('main');const shell=document.createElement('main');shell.id='platform';shell.className='platform';shell.hidden=true;shell.innerHTML='<aside class="side-rail"></aside><div class="platform-body"></div>';home.after(shell);view=$('.platform-body');const phone=document.createElement('a');phone.className='phone-nav';phone.href='/explorar';phone.textContent='Explorar toda la plataforma →';$('.hero-copy')?.append(phone);$('#search-dialog .dialog-foot').removeAttribute('data-en');$('#search-dialog .dialog-foot').textContent='Busca herramientas, materiales y recursos de estudio.';
  // Real local URLs also make Ctrl-click, copying links and opening new tabs work.

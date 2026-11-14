@@ -245,7 +245,7 @@
     ['/ranking', 'cepre.rank', 'cepre.rank.s', 'rank', 'ranking puesto merito orden pre basico juliaca codigo nota ponderado'],
     ['/cepreuni', 'cepre.cycle', 'cepre.cycle.s', 'cal', 'cepreuni ciclo horario semana calendario cronograma fechas clases pre basico ien'],
     ['/cepreuni/examenes', 'cepre.exams', 'cepre.exams.s', 'exam', 'examenes cepreuni practica calificada pc parcial final solucionario'],
-    ['/calculadora', 'cepre.calc', 'cepre.calc.s', 'calc', 'calculadora puntaje ponderado nota carrera vacante'],
+    ['/cepreuni/calculadorapre', 'cepre.calc', 'cepre.calc.s', 'calc', 'calculadora puntaje ponderado nota carrera vacante'],
     ['/admision', 'cepre.adm', 'cepre.adm.s', 'info', 'admision uni resultados ingresantes postulantes puntaje minimo maximo'],
     ['/examenes', 'lib.exams', 'lib.exams.s', 'exam', 'examen admision uni simulacro prueba cronometro 2026 2025 2024 matematica fisica quimica'],
     ['/biblioteca', 'lib.all', 'lib.all.s', 'book', 'biblioteca libros editoriales lumbreras pamer cuzcano rodo san marcos trilce'],

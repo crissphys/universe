@@ -26,7 +26,7 @@ const tools=[
  {id:'periodic',name:'Tabla periódica',en:'Periodic table',desc:'118 elementos, tendencias, átomo, enlace e historia en un solo lugar.',descEn:'118 elements, trends, atom models, bonding and history in one place.',url:'/experimentos/tablaperiodica',icon:'orbit',keys:'quimica elementos tabla periodica propiedades electronegatividad configuracion electronica bohr orbitales lewis mendeleiev atomo enlace'},
  {id:'mock',name:'Simulacros',en:'Mock exams',desc:'Convierte conocimiento en criterio. Practica y revisa.',descEn:'Turn knowledge into judgment. Practice and review.',url:'/simulacros',icon:'target',keys:'practicar prueba preguntas examen evaluar pc'},
  {id:'exams',name:'Exámenes de admisión UNI',en:'UNI admission exams',desc:'Rinde el examen real con su tiempo: 3 pruebas de 3 horas y calificación al terminar.',descEn:'Take the real exam on the clock: 3 tests of 3 hours, graded at the end.',url:'/examenes',icon:'layers',keys:'examen admision uni 2026-2 simulacro humanidades aptitud matematica fisica quimica soluciones clave'},
-{id:'calculator',name:'Calculadora',en:'Calculator',desc:'Calcula tu puntaje CEPREUNI según tus notas y carrera.',descEn:'Calculate your CEPREUNI score and compare historical cutoffs.',url:'/calculadora',icon:'calculator',keys:'calcular puntaje operaciones numeros'},
+{id:'calculator',name:'Calculadora',en:'Calculator',desc:'Calcula tu puntaje CEPREUNI según tus notas y carrera.',descEn:'Calculate your CEPREUNI score and compare historical cutoffs.',url:'/cepreuni/calculadorapre',icon:'calculator',keys:'calcular puntaje operaciones numeros'},
  {id:'planner',name:'Planificador',en:'Planner',desc:'Dale un espacio a tu objetivo. Organiza tu próximo paso.',descEn:'Make room for your goal. Organize your next step.',url:'/planificador',icon:'calendar',keys:'plan organizar semana horario tiempo rutina'},
  {id:'admissions',name:'Admisión',en:'Admissions',desc:'Encuentra orientación para tu siguiente etapa.',descEn:'Find guidance for your next stage.',url:'/admision',icon:'cap',keys:'ingresar uni postular universidad requisitos'},
  {id:'cepre',name:'CEPREUNI',en:'CEPREUNI',desc:'Tu ciclo, sus recursos y las fechas que importan.',descEn:'Your cycle, its resources and the dates that matter.',url:'/cepreuni',icon:'orbit',keys:'cepre uni ciclo pre basico ien fijas'},
@@ -110,7 +110,7 @@ function buildIndex(d,directory,mats,exams){
 function loadIndex(){
  if(indexRows)return Promise.resolve(indexRows);
  if(!indexPromise)indexPromise=Promise.all([
-  fetch('/universe-ui/data/platform.json?v=20261114-sin-examenes').then(r=>r.json()),
+  fetch('/universe-ui/data/platform.json?v=20261114-calcpre').then(r=>r.json()),
   fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
   fetch('/cepreuni/materialespre/materiales-2027-1.json?v=20261111').then(r=>r.json()).catch(()=>null),
   fetch('/cepreuni/examenes/examenes.json?v=20261114').then(r=>r.json()).catch(()=>null),
@@ -261,7 +261,7 @@ addEventListener('scroll',()=>{if(!scrollScheduled){scrollScheduled=true;request
 const startsHome=['/','/index','/index.html'].includes(location.pathname.replace(/\/$/,''));
 
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261114-noclases');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261114-calcpre');
 if(!document.body.dataset.native) startPlatform({icon,tools,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});

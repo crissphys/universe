@@ -27,7 +27,7 @@ if(L.indexOf(s)<0){s='es';var n=navigator.languages||[navigator.language||'es'];
 try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.lang=s==='es'?'es-419':s;d.dataset.lang=s;if(s!=='es')d.dataset.pending='1';d.className='js'})(document.documentElement);
 </script>
 <script src="/universe-ui/auth.js?v=20261110" defer></script>
-<script src="/assets/home/home.js?v=20261114-noclases" defer></script>
+<script src="/assets/home/home.js?v=20261114-calcpre" defer></script>
 <script src="/assets/home/blackhole.js?v=20261111" defer></script>
 </head>
 <body>
@@ -89,7 +89,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
         <li><a href="/ranking"><span class="lk-t" data-i18n="cepre.rank">Ranking 2027-1</span><span class="lk-s" data-i18n="cepre.rank.s">Pre, Juliaca y Básico por código o nombre</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/cepreuni"><span class="lk-t" data-i18n="cepre.cycle">Ciclo 2027-1</span><span class="lk-s" data-i18n="cepre.cycle.s">Horarios, semanas y calendario</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/cepreuni/examenes"><span class="lk-t" data-i18n="cepre.exams">Exámenes CEPREUNI</span><span class="lk-s" data-i18n="cepre.exams.s">Prácticas, parciales y finales</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
-        <li><a href="/calculadora"><span class="lk-t" data-i18n="cepre.calc">Calculadora</span><span class="lk-s" data-i18n="cepre.calc.s">Tu ponderado y tu carrera</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/cepreuni/calculadorapre"><span class="lk-t" data-i18n="cepre.calc">Calculadora</span><span class="lk-s" data-i18n="cepre.calc.s">Tu ponderado y tu carrera</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/admision"><span class="lk-t" data-i18n="cepre.adm">Admisión UNI</span><span class="lk-s" data-i18n="cepre.adm.s">Resultados, ingresantes y puntajes</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
       </ul>
     </section>
@@ -147,7 +147,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
         <a href="/admision">Admisión</a>
         <a href="/cepreuni">CEPREUNI</a>
         <a href="/temario">Temario</a>
-        <a href="/calculadora">Calculadora</a>
+        <a href="/cepreuni/calculadorapre">Calculadora</a>
         <a href="/ranking">Ranking</a>
       </nav>
       <nav class="foot-col" aria-labelledby="f-lib">
