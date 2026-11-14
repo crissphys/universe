@@ -21,7 +21,7 @@ assert.equal(run(Array(10).fill(null)).p, null);
 
 // need(): la nota hallada deja el ponderado exactamente en la meta.
 const v = [120, 110, 100, null, null, null, null, null, null, null];
-const t = 15, x = need(v, [3], t);
+const t = 15, x = need(v, [3], t) * 150;
 near(run(v.map((y, i) => i === 3 ? x : y)).p, t, 1e-4);
 assert.equal(need(v, [3], 25), null);
 assert.equal(need(v, [3], 1), 0);
@@ -38,4 +38,15 @@ for (const r of w.UNIVERSE_CEPRE_2027_1.pre.slice(0, 300)) {
   if (pcs.length >= 2) { const low = pcs.reduce((l, o) => o.x < l.x ? o : l); use = inc.filter(o => o !== low); }
   near(run(vals).p, use.reduce((s, o) => s + o.x * o.w, 0) / use.reduce((s, o) => s + o.w, 0) / 7.5);
 }
+// Arquitectura: PAD = PID + 1.54·(SV + PVD), máximo 3701; SV = 5 mejores de 6 vocacionales.
+const voc = [80, 70, 85, 60, 90, 75], pvd = 150;
+const SV = voc.slice().sort((a, b) => b - a).slice(0, 5).reduce((a, b) => a + b);
+const PID = S + 2 * 120 + 4 * 130 + 6 * 115;
+near(run(full.concat(voc, [pvd]), true).p, (PID + 1.54 * (SV + pvd)) / 3701 * 20);
+assert.equal(run(full.concat(voc, [pvd]), true).vdrop, 13);
+near(run(full.concat(voc, [pvd]), false).p, PID / 2700 * 20); // otras carreras ignoran lo vocacional
+const pa = [120, 110, 100, null, null, null, null, null, null, null, 80, 70, null, null, null, null, null];
+near(run(pa, true).p, ((120 + 2 * 100) + 1.54 * 80) / (150 * 3 + 1.54 * 90) * 20); // cae la 2.ª práctica y la vocacional 2
+const xa = need(pa, [16], 15, true);
+near(run(pa.map((y, i) => i === 16 ? xa * 200 : y), true).p, 15, 1e-4);
 console.log('calculadora PRE: ok');

@@ -14,9 +14,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
   <link rel="preload" href="/cepreuni/calculadorapre/cortes.json?v=20261114" as="fetch" crossorigin>
   <link rel="stylesheet" href="/biblioteca/galaxia/catalogo.css?v=20261110">
-  <link rel="stylesheet" href="/cepreuni/calculadorapre/calc.css?v=20261114b">
+  <link rel="stylesheet" href="/cepreuni/calculadorapre/calc.css?v=20261115">
   <script>document.documentElement.classList.add('js')</script>
-  <script src="/cepreuni/calculadorapre/calc.js?v=20261114" defer></script>
+  <script src="/cepreuni/calculadorapre/calc.js?v=20261115" defer></script>
 </head>
 <body>
   <a class="skip" href="#q">Saltar a la calculadora</a>
@@ -96,6 +96,10 @@
           <div id="scale" class="seg" role="group" aria-label="Escala"><button type="button" data-s="20">/20</button><button type="button" data-s="150">/150</button></div>
         </div>
         <ol id="notes" class="notes"></ol>
+        <div id="voc-box" class="voc-box" hidden>
+          <h3>Vocacional</h3>
+          <ol id="voc" class="notes"></ol>
+        </div>
         <div class="n-actions">
           <button id="restore" class="ghost" type="button" hidden>Restaurar notas oficiales</button>
           <button id="clear" class="ghost" type="button" hidden>Borrar notas</button>

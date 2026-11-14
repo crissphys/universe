@@ -183,3 +183,9 @@ html, body { overflow-x: clip; }
   .g-me, .g-pj, .g-band, .g-avg { transition: none; }
 }
 @keyframes fadeOnly { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- Vocacional (Arquitectura y Urbanismo) ---------- */
+.voc-box { margin-top: 28px; }
+.voc-box h3 { margin: 0 0 4px; font-size: 18px; font-weight: 600; letter-spacing: -.03em; }
+@starting-style { .voc-box { opacity: 0; transform: translateY(6px); } }
+.voc-box { transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out); }
