@@ -18,7 +18,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TEMAS = json.loads((ROOT / 'resumenes/data/temas.json').read_text(encoding='utf-8'))
-RATIOS = [(16, 9), (3, 2), (4, 3), (5, 4), (1, 1), (4, 5), (3, 4), (2, 3), (9, 16)]  # same list as make-resumenes-thumbs.py
 EXTS = {'pdf': 'pdf', 'jpg': 'jpg', 'jpeg': 'jpg', 'png': 'png', 'webp': 'webp'}
 
 def norm(s):
@@ -217,7 +216,7 @@ def main(zips):
                     with Image.open(thumb) as im:
                         w, h = im.size
                     rows[-1]['p'] = 1
-                    rows[-1]['r'] = '%d:%d' % min(RATIOS, key=lambda r: abs(w / h - r[0] / r[1]))
+                    rows[-1]['r'] = '%d:%d' % (w, h)  # exact proportions of the preview
                 manifest[rid] = [Path(zpath).name, info.filename]
     # Same file saved twice under different names (same size and format): keep one copy, preferring the one
     # that names its author, then a known topic, then a real title over a generic "Curso · Carpeta N".
