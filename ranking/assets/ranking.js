@@ -241,6 +241,12 @@
     var below = ds.scored.filter(function (r) { return r.avg < row.avg; }).length, p = below / ds.scored.length * 100;
     return p >= 99 ? Math.floor(p * 10) / 10 : Math.round(p);
   }
+  // Examen vocacional (solo Arquitectura y Urbanismo): se muestra aparte, no entra en el ponderado.
+  function vocHTML(row) {
+    var v = window.UNIVERSE_VOCACIONAL, r = v && v.rows[row.code];
+    if (r === undefined) return '';
+    return '<h3>' + esc(v.title) + '</h3><p class="voc"><span>' + esc(v.specialty) + '</span>' + (r ? '<b>' + fmt(r[0], 2) + '</b><small>/ ' + v.max + ' · nota ' + fmt(r[1], 2) + '</small>' : '<b>Ausente</b>') + '</p>';
+  }
   function resultHTML(ds, row) {
     var big;
     if (row.place == null) big = '<p class="res-empty">Sin notas registradas.</p>';
@@ -261,7 +267,7 @@
       '<span class="eq">' + fmt(row.sum, 2) + ' ÷ ' + row.den + ' = <strong>' + fmt(row.avg) + '</strong></span></p>';
     return '<header class="res-head"><div><p class="res-k">' + esc(ds.label) + '</p><h2 id="res-title">' + esc(row.name || (ds.hasNames ? 'Nombre no publicado' : 'Código ' + row.code)) + '</h2>' +
       (row.name || ds.hasNames ? '<p class="code mono">' + esc(row.code) + '</p>' : '') + '</div><button type="button" class="x" data-close aria-label="Cerrar">' + X + '</button></header>' +
-      big + '<h3>Cómo se calculó</h3><ol class="ex">' + items + '</ol>' + calc;
+      big + '<h3>Cómo se calculó</h3><ol class="ex">' + items + '</ol>' + calc + vocHTML(row);
   }
 
   /* ---------- board (lista + panel) ---------- */
