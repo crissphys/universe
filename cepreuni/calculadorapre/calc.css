@@ -1,5 +1,6 @@
 /* CEPREUNI PRE · calculadora. Extiende biblioteca/galaxia/catalogo.css (tokens, header, buscador, footer). */
 :root { --ok: oklch(.8 .15 158); --warn: #ffb94a; --bad: #ff8a7a; --fg-3: #85858e; }
+html, body { overflow-x: clip; }
 
 /* ---------- Hero ---------- */
 .c-hero { position: relative; padding-top: 96px; padding-bottom: 20px; isolation: isolate; }
@@ -85,7 +86,7 @@
 .pill[data-tone="warn"] { color: var(--warn); background: color-mix(in oklab, var(--warn) 14%, transparent); }
 .pill[data-tone="bad"] { color: var(--bad); background: color-mix(in oklab, var(--bad) 13%, transparent); }
 
-.gauge { margin-top: 20px; }
+.gauge { margin: 14px -10px 0; padding: 6px 10px 0; overflow: hidden; }
 .g-track { position: relative; height: 8px; border-radius: 999px; background: rgba(255, 255, 255, .06); }
 .g-band { position: absolute; top: 0; bottom: 0; left: var(--lo); right: calc(100% - var(--hi)); min-width: 3px; border-radius: 999px; background: rgba(255, 107, 74, .35); transition: left 300ms var(--ease-in-out), right 300ms var(--ease-in-out); }
 .g-avg { position: absolute; top: -4px; bottom: -4px; left: var(--avg); width: 2px; margin-left: -1px; border-radius: 2px; background: var(--accent); transition: left 300ms var(--ease-in-out); }
