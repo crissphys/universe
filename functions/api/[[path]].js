@@ -3484,7 +3484,11 @@ const RES_PART_BYTES = 8 * 1024 * 1024;
 const RES_MAX_PARTS = 10000; // R2 multipart limit: 80 GB with 8 MB parts, i.e. no practical size cap
 const RES_LIMITS = [[3, 3600000], [10, 86400000]]; // 3 per hour, 10 per day, per account
 const RES_PUBLIC_CACHE = { at: 0, rows: null };
-const RES_RATIOS = ['16:9', '3:2', '4:3', '5:4', '1:1', '4:5', '3:4', '2:3', '9:16']; // preview shapes, as in resumenes/assets/shared.js
+// Preview size "width:height" (exact proportions of the page), sane bounds only.
+function resRatio(value) {
+  var m = /^(\d{2,4}):(\d{2,4})$/.exec(String(value || ''));
+  return !!m && +m[2] / +m[1] <= 3.05 && +m[1] / +m[2] <= 12;
+}
 const RES_LIKES_CACHE = { at: 0, map: null };
 
 function resPlain(value, max) {
@@ -3524,7 +3528,7 @@ function resPublicUpload(row) {
     u: cleanId(row.ownerKey),
     av: /^https:\/\/[^\s"'<>]{1,600}$/i.test(avatar) ? avatar : undefined,
     p: row.thumb ? 1 : undefined,
-    r: row.thumb && RES_RATIOS.includes(row.thumbRatio) ? row.thumbRatio : undefined
+    r: row.thumb && resRatio(row.thumbRatio) ? row.thumbRatio : undefined
   };
 }
 
@@ -3777,7 +3781,7 @@ async function handleResumenes(request, env, subpath) {
       if (!tmime || tbytes.length > 400000) return json({ error: 'thumb_invalid' }, 400);
       var tratio = String(new URL(request.url).searchParams.get('r') || '').replace('x', ':');
       await store.put('resumenes/thumb/' + upId, tbytes, { httpMetadata: { contentType: tmime } });
-      await firebase(env, upPath, 'PATCH', { thumb: tmime, thumbRatio: RES_RATIOS.includes(tratio) ? tratio : '3:4', updatedAt: Date.now() });
+      await firebase(env, upPath, 'PATCH', { thumb: tmime, thumbRatio: resRatio(tratio) ? tratio : '3:4', updatedAt: Date.now() });
       return json({ ok: true });
     }
 

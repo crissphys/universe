@@ -66,9 +66,13 @@
     return out + esc(text.slice(at));
   }
 
-  // Preview shape: the file's own ratio, snapped by tools/make-resumenes-thumbs.py (16:9 ... 9:16).
-  var RATIOS = ['16:9', '3:2', '4:3', '5:4', '1:1', '4:5', '3:4', '2:3', '9:16'];
-  function ratio(it) { var r = RATIOS.indexOf(it.r) >= 0 ? it.r : '3:4'; var wh = r.split(':'); return { css: wh[0] + ' / ' + wh[1], h: Math.round(360 * wh[1] / wh[0]) }; }
+  // Preview shape: the page's exact proportions, as "width:height" of its preview image.
+  function ratio(it) {
+    var m = /^(\d{1,5}):(\d{1,5})$/.exec(it.r || '');
+    var w = m ? +m[1] : 3, h = m ? +m[2] : 4;
+    if (!w || !h) { w = 3; h = 4; }
+    return { css: w + ' / ' + h, h: Math.round(360 * h / w) };
+  }
 
   function thumbHTML(it, eager) {
     var src = path.thumb(it);
@@ -116,7 +120,7 @@
       '</span><span>Subido por <b>' + esc(it.a) + '</b></span></a>';
   }
 
-  var api = { RATIOS: RATIOS, ratio: ratio, HUE: HUE, slug: slug, esc: esc, path: path, route: route, matches: matches, fmtExt: fmtExt, fmtSize: fmtSize, describe: describe, marked: marked, cardHTML: cardHTML, recHTML: recHTML, metaRows: metaRows, uploaderHTML: uploaderHTML, initials: initials };
+  var api = { ratio: ratio, HUE: HUE, slug: slug, esc: esc, path: path, route: route, matches: matches, fmtExt: fmtExt, fmtSize: fmtSize, describe: describe, marked: marked, cardHTML: cardHTML, recHTML: recHTML, metaRows: metaRows, uploaderHTML: uploaderHTML, initials: initials };
   root.ResShared = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

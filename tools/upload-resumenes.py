@@ -25,6 +25,9 @@ def main(bucket, zips):
     todo = [i for i in rows if i not in done]
     print(f'{len(rows)} en el catálogo, {len(done)} ya subidos, {len(todo)} por subir')
     npx = 'npx.cmd' if sys.platform == 'win32' else 'npx'
+    import os
+    local = os.environ.get('WRANGLER_JS')  # optional: path to an installed wrangler.js (skips npx on every file)
+    base = ['node', local] if local else [npx, '--yes', 'wrangler@4']
 
     def put(rid):
         zip_name, inner = manifest[rid]
@@ -34,7 +37,7 @@ def main(bucket, zips):
         with tempfile.NamedTemporaryFile(delete=False, suffix='.' + row['e']) as tmp:
             tmp.write(data)
         try:
-            cmd = [npx, 'wrangler', 'r2', 'object', 'put', f'{bucket}/resumenes/base/{rid}', '--file', tmp.name,
+            cmd = base + ['r2', 'object', 'put', f'{bucket}/resumenes/base/{rid}', '--file', tmp.name,
                    '--content-type', MIME[row['e']], '--content-disposition', "inline; filename*=UTF-8''" + quote(row['f']), '--remote']
             r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace')
             if r.returncode != 0:
@@ -47,7 +50,7 @@ def main(bucket, zips):
         finally:
             Path(tmp.name).unlink(missing_ok=True)
 
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=int(os.environ.get('UPLOAD_WORKERS', '6'))) as pool:
         list(pool.map(put, todo))
 
 if __name__ == '__main__':

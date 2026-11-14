@@ -3,7 +3,7 @@
    /resumenes/tema/<tema>, /resumenes/curso/<curso>, /resumenes/autor/<autor>, /resumenes/u/<clave>. */
 (() => {
   'use strict';
-  const V = '20261114c';
+  const V = '20261114d';
   const $ = id => document.getElementById(id);
   const R = window.ResShared;
   const STATUS = { pending: 'En revisión', approved: 'Publicado', rejected: 'Rechazado', uploading: 'Subida incompleta' };

@@ -181,29 +181,24 @@
   }
 
   // Preview for an upload, made in the browser the same way tools/make-resumenes-thumbs.py makes the
-  // catalog's: first PDF page or the image, its shape snapped to 16:9 ... 9:16, 360 px wide.
-  // Resolves { blob, r: '4:5' } (WebP, or JPEG where the browser cannot encode WebP) or null.
-  var RATIOS = [[16, 9], [3, 2], [4, 3], [5, 4], [1, 1], [4, 5], [3, 4], [2, 3], [9, 16]];
-  function snap(w, h) {
-    return RATIOS.reduce(function (best, r) { return Math.abs(Math.log(w / h / (r[0] / r[1]))) < Math.abs(Math.log(w / h / (best[0] / best[1]))) ? r : best; });
-  }
+  // catalog's: first PDF page or the image, 360 px wide, in its exact proportions (strips taller than 1:3
+  // keep their top). Resolves { blob, r: '360:497' } (WebP, or JPEG where WebP cannot be encoded) or null.
   function snapshot(file, isPdf) {
     var W = 360;
     function toBlob(source, sw, sh) {
-      var r = snap(sw, sh);
-      var cw = sw, ch = sh, sx = 0;
-      if (sw / sh > r[0] / r[1]) { cw = sh * r[0] / r[1]; sx = (sw - cw) / 2; } else { ch = sw * r[1] / r[0]; } // wider: centre; taller: top
+      var ch = Math.min(sh, sw * 3);
       var c = el('canvas');
       c.width = W;
-      c.height = Math.round(W * r[1] / r[0]);
+      c.height = Math.max(1, Math.round(ch * W / sw));
       var ctx = c.getContext('2d', { alpha: false });
       ctx.fillStyle = '#fff';
       ctx.fillRect(0, 0, c.width, c.height);
-      ctx.drawImage(source, sx, 0, cw, ch, 0, 0, c.width, c.height);
+      ctx.drawImage(source, 0, 0, sw, ch, 0, 0, c.width, c.height);
+      var r = c.width + ':' + c.height;
       return new Promise(function (res) {
         c.toBlob(function (b) {
-          if (b && b.type === 'image/webp') return res({ blob: b, r: r.join(':') });
-          c.toBlob(function (j) { res(j ? { blob: j, r: r.join(':') } : null); }, 'image/jpeg', 0.72);
+          if (b && b.type === 'image/webp') return res({ blob: b, r: r });
+          c.toBlob(function (j) { res(j ? { blob: j, r: r } : null); }, 'image/jpeg', 0.72);
         }, 'image/webp', 0.62);
       });
     }
