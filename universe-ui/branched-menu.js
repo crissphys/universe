@@ -10,7 +10,6 @@ const defaults = [
   ] },
   { label: 'Aprende', children: [
     { value: '/temario', label: 'Temario', icon: 'list' },
-    { value: '/clases', label: 'Clases', icon: 'play' },
     { value: '/biblioteca', label: 'Biblioteca', icon: 'book' },
     { value: '/experimentos/tablaperiodica', label: 'Tabla periódica', icon: 'grid' }
   ] },
@@ -26,8 +25,7 @@ const defaults = [
 
 const routeAliases = {
   '/cepreuni': ['/calculadora', '/fijas-cepreuni', '/informacion-cepreuni', '/ingresantes-cepreuni', '/docentes-cepreuni'],
-  '/admision': ['/cantidad-de-postulantes', '/resultados-admision', '/calculadora-admision', '/fichas-admision', '/ranking', '/ranking-admision', '/ingresantes-uni-2026-2'],
-  '/clases': ['/aula']
+  '/admision': ['/cantidad-de-postulantes', '/resultados-admision', '/calculadora-admision', '/fichas-admision', '/ranking', '/ranking-admision', '/ingresantes-uni-2026-2']
 };
 const matchesRoute = (activePath, value) => {
   const path = value.replace(/\/$/, '') || '/';

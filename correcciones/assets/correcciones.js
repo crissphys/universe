@@ -22,7 +22,7 @@
     adult_required: 'Confirma esta casilla para continuar.'
   };
   var PAGES = { '/': 'Inicio', '/admision': 'Admisión UNI', '/cepreuni': 'CEPREUNI', '/ranking': 'Ranking', '/calculadora': 'Calculadora de puntaje', '/calculadora-admision': 'Calculadora de puntaje',
-    '/temario': 'Temario', '/clases': 'Clases', '/biblioteca': 'Biblioteca', '/examenes': 'Exámenes', '/simulacros': 'Simulacros', '/planificador': 'Planificador', '/fijas-cepreuni': 'Fijas CEPREUNI',
+    '/temario': 'Temario', '/biblioteca': 'Biblioteca', '/examenes': 'Exámenes', '/simulacros': 'Simulacros', '/planificador': 'Planificador', '/fijas-cepreuni': 'Fijas CEPREUNI',
     '/docentes-cepreuni': 'Guía de aulas y docentes', '/ingresantes-uni-2026-2': 'Ingresantes', '/ingresantes-cepreuni': 'Ingresantes', '/unitalk': 'UNITALK', '/account': 'Mi espacio / cuenta',
     '/metodologia-editorial': 'Metodología editorial', '/terminos': 'Términos o Privacidad', '/privacidad': 'Términos o Privacidad' };
 

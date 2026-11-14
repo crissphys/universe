@@ -90,14 +90,6 @@
       "scripts": [],
       "contentLength": 891
     },
-    "aula": {
-      "file": "clases.html",
-      "scripts": [
-        "classes-data.js",
-        "classes.js"
-      ],
-      "contentLength": 401
-    },
     "autores/criss-vasquez": {
       "file": "autores/criss-vasquez/index.html",
       "scripts": [],

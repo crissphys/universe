@@ -2,29 +2,21 @@ import {renderExams} from './cepreuni-exams.js?v=20261013-1ep-reconstruidos';
 import {renderScore,renderFijas} from './upgrades.js?v=20261112-ien';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
-import {renderBranchedMenu} from './branched-menu.js?v=20261114-tabla';
+import {renderBranchedMenu} from './branched-menu.js?v=20261114-noclases';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const store={get(k,d){try{return JSON.parse(localStorage.getItem('universe-preview-'+k))??d}catch{return d}},set(k,v){try{localStorage.setItem('universe-preview-'+k,JSON.stringify(v));return true}catch{return false}}};
 const safe=s=>{try{const u=new URL(s,'https://universetostudy.com');return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
-function openVideoPreview(id,title,channel){const dialog=$('#video-preview');if(!dialog)return;
- $('#video-frame').innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&amp;rel=0" title="${esc(title)}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
- $('#video-preview-meta').textContent=`${title} · ${channel}`;
- $('#video-preview-link').href=`https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
- document.body.classList.add('modal-open');dialog.showModal();
- if(!dialog.dataset.wired){dialog.dataset.wired='1';dialog.addEventListener('close',()=>{$('#video-frame').innerHTML=''})}
-}
 const routes={
  '/explorar':['Tu universo de estudio','PLATAFORMA / 01','Un lugar para conectar lo que aprendes, lo que practicas y lo que quieres alcanzar.'],
  '/cepreuni/examenes':['Exámenes CEPREUNI','CEPREUNI / BIBLIOTECA DE EXÁMENES','Prácticas calificadas, exámenes parciales y finales. Explora cada documento y abre su vista previa.'],
  '/temario':['Entender empieza aquí.','MAPA DEL CONOCIMIENTO','Explora el temario de admisión y CEPREUNI. Abre un tema, revisa sus conceptos y registra lo que ya estudiaste.'],
- '/clases':['Una idea más clara.','CLASES / VIDEOTECA','Videos organizados por curso. Filtra, busca y continúa aprendiendo desde el canal de origen.'],
  '/planificador':['Una intención. Un plan.','TU TRAYECTORIA','Convierte tus próximos temas en pasos concretos. Este tablero guarda tus tareas únicamente en este navegador.'],
  '/fijas-cepreuni':['Prioriza con criterio.','CEPREUNI / PRIMERA PC','Explora el tipo de problema asociado a cada tema del modelo histórico. Una referencia de preparación, nunca una garantía del examen.'],
  '/calculadora':['Pon tu meta en perspectiva.','CEPREUNI / PUNTAJES','Tus notas, tu carrera y las referencias históricas. Una calculadora para orientar tu preparación, no para prometer una vacante.'],
 };
-let data,videoData,ui,view,home,routeVersion=0,toastTimer;
+let data,ui,view,home,routeVersion=0,toastTimer;
 const link=(url,label,cls='button',live=false)=>`<a class="${cls}" href="${safe(url)}" ${live||!url.startsWith('/')?'data-live target="_blank" rel="noopener noreferrer"':''}>${esc(label)} ${ui.icon('arrow-up-right')}</a>`;
 const internal=(url,label,cls='button')=>`<a class="${cls}" href="${esc(url)}">${esc(label)} ${ui.icon('arrow-right')}</a>`;
 const note=(text)=>`<div class="p-notice">${text}</div>`;
@@ -43,7 +35,6 @@ async function route(focus=false){const token=++routeVersion,p=pathName();if(p==
  if(p==='/explorar')overview(out);
  else if(p==='/cepreuni/examenes')await renderExams(out);
  else if(p==='/temario')syllabus(out);
- else if(p==='/clases')await classes(out,token);
  else if(p==='/planificador')planner(out);
  else if(p==='/fijas-cepreuni')fijas(out);
  else if(p==='/calculadora')calculator(out);
@@ -170,7 +161,7 @@ function planner(out){
   goal:chosen('#plan-goal').goal||'cepre',
   focus:$$('#plan-focus [data-focus][aria-pressed="true"]').map(b=>b.dataset.focus).filter(f=>f!=='all')});
 
- document.addEventListener('click',e=>{const anchor=e.target.closest('a[href]');if(anchor){const target=new URL(anchor.href,location.href);if(["/account/cloud","/planificador/seguimiento","/simulacros","/ranking","/admision","/docentes-cepreuni","/informacion-cepreuni","/privacidad","/terminos","/metodologia-editorial","/correcciones","/contacto","/aula","/autores/criss-vasquez","/autores/luhana-belen","/calculadora-admision","/fichas-admision","/guias/como-interpretar-ranking-cepreuni","/guias/como-se-calcula-puntaje-cepreuni-2026-2","/ingresantes-cepreuni","/ingresantes-uni-2026-2","/ranking-admision","/resultados-admision"].includes(target.pathname.replace(/\/$/,'')))return;}if(!$('#plan-setup'))return;
+ document.addEventListener('click',e=>{const anchor=e.target.closest('a[href]');if(anchor){const target=new URL(anchor.href,location.href);if(["/account/cloud","/planificador/seguimiento","/simulacros","/ranking","/admision","/docentes-cepreuni","/informacion-cepreuni","/privacidad","/terminos","/metodologia-editorial","/correcciones","/contacto","/autores/criss-vasquez","/autores/luhana-belen","/calculadora-admision","/fichas-admision","/guias/como-interpretar-ranking-cepreuni","/guias/como-se-calcula-puntaje-cepreuni-2026-2","/ingresantes-cepreuni","/ingresantes-uni-2026-2","/ranking-admision","/resultados-admision"].includes(target.pathname.replace(/\/$/,'')))return;}if(!$('#plan-setup'))return;
   const t=e.target.closest('[data-track]');
   if(t){press(t);const d=$('#plan-track-detail');
    if(t.dataset.track==='cepre'){d.hidden=false;d.innerHTML=`<h3>¿Qué ciclo CEPREUNI 2027-1 llevarás?</h3><div class="p-chips" id="plan-cycle">${CEPRE_CYCLES.map(([v,x])=>`<button type="button" data-cycle="${v}" aria-pressed="false">${esc(x)}</button>`).join('')}</div>`}
@@ -280,27 +271,6 @@ function planner(out){
 function fixed(out){renderFijas(out,data)}
 // Small arithmetic parser. No eval, Function constructor, or remote requests.
 export function calculate(input){const text=input.replace(/\s+/g,'').replace(/×/g,'*').replace(/÷/g,'/').replace(/,/g,'.');if(!text||text.length>160||/[^0-9.+\-*/()%]/.test(text))throw Error('Expresión no válida');const tokens=text.match(/(?:\d+(?:\.\d*)?|\.\d+)|[+\-*/()%]/g)||[];if(tokens.join('')!==text)throw Error('Número no válido');let at=0,depth=0;function value(){if(++depth>40)throw Error('Expresión demasiado larga');let n;if(tokens[at]==='+'||tokens[at]==='-'){const sign=tokens[at++];n=(sign==='-'?-1:1)*value()}else if(tokens[at]==='('){at++;n=add();if(tokens[at++]!==')')throw Error('Falta cerrar paréntesis')}else{const t=tokens[at++];if(!t||!/^\d|^\./.test(t))throw Error('Falta un número');n=Number(t)}while(tokens[at]==='%'){at++;n/=100}depth--;return n}function mul(){let n=value();while(['*','/'].includes(tokens[at])){const op=tokens[at++],v=value();if(op==='/'&&v===0)throw Error('No se puede dividir entre cero');n=op==='*'?n*v:n/v}return n}function add(){let n=mul();while(['+','-'].includes(tokens[at])){const op=tokens[at++],v=mul();n=op==='+'?n+v:n-v}return n}const result=add();if(at!==tokens.length||!Number.isFinite(result))throw Error('Revisa la expresión');return Number(result.toPrecision(12))}
-async function classes(out,token){
- const courses=data.videoIndex?.courses||[];
- const slug=new URLSearchParams(location.search).get('curso');
- const course=courses.find(c=>c.slug===slug);
- if(!course){
-  setRouteSeo('Clases preuniversitarias por curso | Universe to Study','Explora clases en video de razonamiento, matemática, ciencias y humanidades. Elige un curso y continúa aprendiendo.','/clases');
-  const areas=[...new Set(courses.map(c=>c.area))];
-  out.innerHTML=`${sub('Elige un curso','Cada uno abre sus clases reales, agrupadas por semana')}${areas.map(area=>`<div class="p-subhead"><h2>${esc(area)}</h2></div><div class="p-grid three">${courses.filter(c=>c.area===area).map(c=>tile('/clases?curso='+encodeURIComponent(c.slug),c.title,`${c.videoCount} clases disponibles`,'play')).join('')}</div>`).join('')}`;
-  return;
- }
- setRouteSeo(`Clases de ${course.title} | Universe to Study`,`Explora ${course.videoCount} clases de ${course.title}, organizadas por semana. Videos de UNIverse, TODO PRE y Bastet para repasar a tu ritmo.`,`/clases?curso=${encodeURIComponent(course.slug)}`);
- out.innerHTML=`<div class="page-actions">${internal('/clases','← Todos los cursos','text-button')}</div>${sub(course.title,course.videoCount+' clases')}<div id="classes-list">${empty('Cargando clases…')}</div>`;
- if(!videoData){try{videoData=await fetch('/universe-ui/data/videos.json').then(r=>{if(!r.ok)throw Error();return r.json()})}catch{videoData=null}}
- if(token!==routeVersion)return;
- const list=$('#classes-list'),videos=videoData?.[slug]||[];
- if(!videos.length){list.innerHTML=empty('No se pudieron cargar las clases de este curso.');return}
- const weeks=[...new Set(videos.map(v=>v.week).filter(Boolean))].sort((a,b)=>(Number(a)||0)-(Number(b)||0));
- list.innerHTML=(weeks.length?weeks:['']).map(w=>{const items=w?videos.filter(v=>v.week===w):videos;if(!items.length)return'';
-  return `<div class="p-subhead"><h2>${w?'Semana '+esc(w):'Clases'}</h2><span>${items.length}</span></div><div class="p-grid three">${items.map(v=>`<button type="button" class="p-panel p-tile class-video" data-video="${esc(v.videoId)}" data-title="${esc(v.title)}" data-channel="${esc(v.channel)}"><span class="class-thumb"><img src="https://i.ytimg.com/vi/${esc(v.videoId)}/hqdefault.jpg" alt="" loading="lazy" width="320" height="180">${ui.icon('play')}</span><h3>${esc(v.title)}</h3><p>${esc(v.channel)}</p><span class="tile-foot">Ver vista previa${ui.icon('arrow-right')}</span></button>`).join('')}</div>`}).join('');
- $$('.class-video').forEach(b=>b.onclick=()=>openVideoPreview(b.dataset.video,b.dataset.title,b.dataset.channel));
-}
 function calculator(out){renderScore(out,data)}
 function account(out){renderProfile(out,data,ui.openPreferences)}
 export function startPlatform(api){ui=api;home=$('main');const shell=document.createElement('main');shell.id='platform';shell.className='platform';shell.hidden=true;shell.innerHTML='<aside class="side-rail"></aside><div class="platform-body"></div>';home.after(shell);view=$('.platform-body');const phone=document.createElement('a');phone.className='phone-nav';phone.href='/explorar';phone.textContent='Explorar toda la plataforma →';$('.hero-copy')?.append(phone);$('#search-dialog .dialog-foot').removeAttribute('data-en');$('#search-dialog .dialog-foot').textContent='Busca herramientas, materiales y recursos de estudio.';

@@ -22,7 +22,6 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches){
 }
 const tools=[
  {id:'syllabus',name:'Temario',en:'Syllabus',desc:'Conoce el mapa. Identifica los conceptos que necesitas dominar.',descEn:'Know the map. Identify the concepts you need to master.',url:'/temario',icon:'list',keys:'temas algebra fisica aritmetica matematica química'},
- {id:'classes',name:'Clases',en:'Classes',desc:'Dale contexto a cada idea. Aprende a tu ritmo.',descEn:'Give every idea context. Learn at your own pace.',url:'/clases',icon:'play',keys:'videos profesor explicacion entender aprender newton'},
  {id:'library',name:'Biblioteca',en:'Library',desc:'Libros, editoriales y colecciones para ampliar tu universo.',descEn:'Books, publishers and collections to expand your universe.',url:'/biblioteca',icon:'book',keys:'libro pdf lectura material algebra física química resumenes formularios academias universidades cursos'},
  {id:'periodic',name:'Tabla periódica',en:'Periodic table',desc:'118 elementos, tendencias, átomo, enlace e historia en un solo lugar.',descEn:'118 elements, trends, atom models, bonding and history in one place.',url:'/experimentos/tablaperiodica',icon:'orbit',keys:'quimica elementos tabla periodica propiedades electronegatividad configuracion electronica bohr orbitales lewis mendeleiev atomo enlace'},
  {id:'mock',name:'Simulacros',en:'Mock exams',desc:'Convierte conocimiento en criterio. Practica y revisa.',descEn:'Turn knowledge into judgment. Practice and review.',url:'/simulacros',icon:'target',keys:'practicar prueba preguntas examen evaluar pc'},
@@ -83,7 +82,7 @@ const GROUPS=[['tool','Herramientas','Tools'],['page','Páginas','Pages'],['syll
 let indexRows=null,indexPromise=null;
 function row(kind,label,sub,url,extra){return {kind,label,sub,url,keys:normalize([label,sub,extra].join(' '))}}
 const baseRows=()=>[...tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' '))),...pages.map(p=>row('page',p.name,p.desc,p.url,p.keys))];
-function buildIndex(d,videos,directory,mats){
+function buildIndex(d,directory,mats){
  const rows=baseRows();
  for(const g of directory?.groups||[])for(const item of g.items)rows.push(row('library',item.title,g.title,'/biblioteca#carpetas',''));
  const s=d.syllabus||{};
@@ -104,19 +103,15 @@ function buildIndex(d,videos,directory,mats){
  const MK={clase:'Clase',libro:'Libro',adicional:'Material adicional',repaso:'Repaso',pizarra:'Pizarra',solucionario:'Solucionario',resultado:'Resultados',info:'Información'};
  for(const m of mats?.items||[])rows.push({...row('material',m.t,`${m.c} · ${MK[m.k]}`,`/cepreuni/materialespre?t=${m.k==='adicional'?'libro':m.k}${m.c==='General'?'':'&c='+encodeURIComponent(m.c)}`,m.w?'semana '+m.w:''),image:m.k==='clase'?`https://drive.google.com/thumbnail?id=${m.i}&sz=w200`:''});
  for(const p of d.publishers||[])rows.push(row('library',p.name,'Editorial',p.href,''));
- for(const c of d.videoIndex?.courses||[])rows.push(row('class',c.title,`${c.videoCount} clases · ${c.area}`,'/clases',c.slug));
- if(videos)for(const [slug,list] of Object.entries(videos))for(const v of list)
-  rows.push(row('class',v.title,[v.topicLabel,v.channel].filter(Boolean).join(' · '),'/clases',slug));
  return rows;
 }
 function loadIndex(){
  if(indexRows)return Promise.resolve(indexRows);
  if(!indexPromise)indexPromise=Promise.all([
   fetch('/universe-ui/data/platform.json?v=20261013-upcoming-algebra-v1').then(r=>r.json()),
-  fetch('/universe-ui/data/videos.json').then(r=>r.json()).catch(()=>null),
   fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
   fetch('/cepreuni/materialespre/materiales-2027-1.json?v=20261111').then(r=>r.json()).catch(()=>null),
- ]).then(([d,v,directory,mats])=>{indexRows=buildIndex(d,v,directory,mats);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
+ ]).then(([d,directory,mats])=>{indexRows=buildIndex(d,directory,mats);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
  return indexPromise;
 }
 // Palabras de dos letras cuentan («pc», «uni»), y cada palabra larga también se busca sin su terminación,
@@ -263,7 +258,7 @@ addEventListener('scroll',()=>{if(!scrollScheduled){scrollScheduled=true;request
 const startsHome=['/','/index','/index.html'].includes(location.pathname.replace(/\/$/,''));
 
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261110-home4');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261114-noclases');
 if(!document.body.dataset.native) startPlatform({icon,tools,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});

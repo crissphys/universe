@@ -76,8 +76,6 @@
     'study.plan.s': ['Tu semana convertida en tareas', 'Your week turned into tasks', 'Deine Woche als Aufgaben', 'Sua semana em tarefas'],
     'study.syl': ['Temario', 'Syllabus', 'Themenplan', 'Temário'],
     'study.syl.s': ['Temas de admisión y CEPREUNI', 'Admission and CEPREUNI topics', 'Themen für Zulassung und CEPREUNI', 'Temas de admissão e CEPREUNI'],
-    'study.cls': ['Clases', 'Classes', 'Unterricht', 'Aulas'],
-    'study.cls.s': ['Videos organizados por curso', 'Videos sorted by course', 'Videos nach Fach', 'Vídeos por matéria'],
     'study.room': ['Guía de aulas', 'Classroom guide', 'Raumführer', 'Guia de salas'],
     'study.room.s': ['Docentes, salones y horarios', 'Teachers, rooms and timetables', 'Lehrkräfte, Räume und Zeiten', 'Professores, salas e horários'],
     'study.info': ['Información CEPREUNI', 'CEPREUNI information', 'CEPREUNI-Infos', 'Informações CEPREUNI'],
@@ -257,7 +255,6 @@
     ['/biblioteca/librosuniversitarios', 'lib.univ', 'lib.univ.s', 'book', 'universitarios calculo fisica universitaria libros carrera'],
     ['/planificador', 'study.plan', 'study.plan.s', 'plan', 'planificador plan semana tareas organizar horario estudio'],
     ['/temario', 'study.syl', 'study.syl.s', 'plan', 'temario temas silabo contenidos admision cepreuni'],
-    ['/clases', 'study.cls', 'study.cls.s', 'play', 'clases videos youtube curso'],
     ['/docentes-cepreuni', 'study.room', 'study.room.s', 'info', 'docentes profesores aulas salones guia horario'],
     ['/informacion-cepreuni', 'study.info', 'study.info.s', 'info', 'informacion cepreuni normas reglamento consejos estrategia']
   ];

@@ -403,8 +403,7 @@
     ]],
     ['study', 'Estudiar', 'Material y clases', [
       { t: 'Materiales PRE', d: 'Todo el ciclo ordenado por curso y semana.', u: '/cepreuni/materialespre', i: 'book', g: ['Clases', 'Libros', 'Repasos', 'Solucionarios'] },
-      { t: 'Materiales IEN', d: 'Clases, libros y problemas de cada ciclo.', u: '/cepreuni/materialesien', i: 'book', g: ['Clases', 'Libros', 'Problemas'] },
-      { t: 'Clases en video', d: 'Explicaciones por curso, a tu ritmo.', u: '/clases', i: 'play', g: ['Por curso'] }
+      { t: 'Materiales IEN', d: 'Clases, libros y problemas de cada ciclo.', u: '/cepreuni/materialesien', i: 'book', g: ['Clases', 'Libros', 'Problemas'] }
     ]],
     ['result', 'Resultados', 'Cómo vas', [
       { t: 'Ranking', d: 'Tu puesto, tu ponderado y cada evaluación, por código o nombre.', u: '/ranking', i: 'rank', cycle: true, g: ['2027-1', '2026-2', 'Carreras'] },
