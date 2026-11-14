@@ -11,3 +11,5 @@ output/
 node_modules/
 
 tools/resumenes-uploaded.txt
+hd/
+tools/resumenes-uploaded-hd.txt

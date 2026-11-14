@@ -234,7 +234,7 @@
     d.href = R.path.file(it, true);
     d.setAttribute('download', it.f || it.t);
     S.viewer = ResViewer.render(pages, {
-      url: R.path.file(it), ext: it.e, alt: it.t, poster: R.path.thumb(it) || undefined, posterRatio: R.ratio(it).css,
+      url: R.path.file(it), hd: R.path.hd(it) || undefined, ext: it.e, alt: it.t, poster: R.path.thumb(it) || undefined, posterRatio: R.ratio(it).css,
       onPages: n => { if (it.e === 'pdf') { $('doc-pages-n').textContent = fmtN(n); $('doc-pages-n').hidden = $('doc-pages-k').hidden = false; } },
       onError: () => {
         pages.textContent = '';
@@ -643,6 +643,16 @@
       e.preventDefault();
       go(a.getAttribute('href'));
     });
+    // Start fetching the HD copy when a finger or the pointer lands on a card, before the tap completes.
+    const warmed = new Set();
+    const warm = e => {
+      const a = e.target.closest && e.target.closest('a[data-id]');
+      const it = a && S.byId.get(a.dataset.id);
+      const src = it && R.path.hd(it);
+      if (src && !warmed.has(src)) { warmed.add(src); new Image().src = src; }
+    };
+    document.addEventListener('pointerover', warm, { passive: true });
+    document.addEventListener('touchstart', warm, { passive: true });
     $('back').addEventListener('click', e => {
       e.preventDefault();
       if (history.state && history.state.inApp) history.back();
@@ -707,6 +717,7 @@
     S.likes = likes.likes || {};
     mergeUploads(list.items || []);
     S.uploadsLoaded = true;
+    (window.requestIdleCallback || setTimeout)(() => ResViewer.preload(), 1500);
     const open = currentItem();
     if (S.route.view === 'doc') { if (open && $('pages').childElementCount) syncLike(open); else openDoc(S.route.id); }
     else { renderHero(); compute(); }

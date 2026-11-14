@@ -3688,6 +3688,24 @@ async function handleResumenes(request, env, subpath) {
     return resFileResponse(env, request, 'resumenes/up/' + fileId, { mime: rec.mime, name: rec.name }, rec.status === 'approved');
   }
 
+  if (parts[0] === 'hd' && parts[1] && method === 'GET') {
+    // Reader copy of a catalog file (tools/make-resumenes-hd.py): small WebP, cached at the edge.
+    if (!rateLimit(request, 'res-hd', 600, 60000)) return json({ error: 'rate_limited' }, 429);
+    if (!resValidId(parts[1]) || parts[1][0] !== 'b') return json({ error: 'not_found' }, 404);
+    var edge = typeof caches !== 'undefined' ? caches.default : null;
+    var cacheKey = new Request(new URL(request.url).origin + '/api/resumenes/hd/' + parts[1]);
+    var hit = edge && !request.headers.get('Range') ? await edge.match(cacheKey) : null;
+    if (hit) return hit;
+    var hdRes = await resFileResponse(env, request, 'resumenes/hd/' + parts[1], { mime: 'image/webp', name: parts[1] + '.webp' }, true);
+    if (hdRes.status === 200) {
+      var cached = new Response(hdRes.body, hdRes);
+      cached.headers.set('Cache-Control', 'public, max-age=2592000, immutable');
+      if (edge) await edge.put(cacheKey, cached.clone()).catch(function () {});
+      return cached;
+    }
+    return hdRes;
+  }
+
   if (parts[0] === 'thumb' && parts[1] && method === 'GET') {
     if (!rateLimit(request, 'res-thumb', 600, 60000)) return json({ error: 'rate_limited' }, 429);
     var thumbId = parts[1];

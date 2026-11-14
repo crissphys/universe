@@ -71,6 +71,9 @@ function renderDoc(html, it, items, idx, origin) {
     crumbs(origin, trail)
   ] };
   html = setMeta(html, { title, desc, url, image, jsonld });
+  // The HD copy starts downloading with the HTML, before any script runs.
+  if (R.path.hd(it)) html = html.replace('</head>', `<link rel="preload" as="image" href="${esc(R.path.hd(it))}" fetchpriority="high">
+</head>`);
   const recs = Search.recommend(idx, it, 8);
   const metaRows = R.metaRows(it).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('') + '<dt id="doc-pages-k" hidden>Páginas</dt><dd id="doc-pages-n" hidden></dd>';
   return html

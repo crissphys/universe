@@ -6,6 +6,8 @@
   'use strict';
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/';
   var pdfjsReady = null;
+  // Started as soon as the library page is idle, so opening a PDF does not wait for the engine.
+  function preload() { loadPdfjs().catch(function () {}); }
   function loadPdfjs() {
     if (!pdfjsReady) {
       pdfjsReady = import(PDFJS + 'pdf.min.mjs').then(function (lib) {
@@ -38,6 +40,20 @@
     host.setAttribute('aria-busy', 'true');
     var poster = opts.poster ? posterPage(opts.poster, opts.posterRatio) : null;
     if (poster) host.append(poster);
+    // PDFs: the HD copy of page 1 replaces the small preview while the PDF itself loads.
+    if (poster && opts.hd && opts.ext === 'pdf') {
+      var hi = new Image();
+      hi.decoding = 'async';
+      hi.onload = function () {
+        if (!alive) return;
+        var img = poster.querySelector('img');
+        if (img) img.src = hi.src;
+        var first = host.querySelector('.page.has-poster');
+        if (first) first.style.backgroundImage = 'url("' + hi.src + '")';
+        opts.poster = hi.src;
+      };
+      hi.src = opts.hd;
+    }
 
     function fail(err) {
       if (!alive) return;
@@ -61,14 +77,17 @@
         host.removeAttribute('aria-busy');
         if (opts.onPages) opts.onPages(1);
       });
-      img.addEventListener('error', function () { fail(new Error('image')); });
+      img.addEventListener('error', function () {
+        if (opts.hd && img.src.indexOf(opts.hd) >= 0) { img.src = opts.url; return; } // no HD copy: use the original
+        fail(new Error('image'));
+      });
       if (opts.headers) {
         // Pending files need the session header, which <img> cannot send: fetch and show a blob.
         fetch(opts.url, { headers: opts.headers }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.blob(); })
           .then(function (b) { if (!alive) return; var u = URL.createObjectURL(b); cleanups.push(function () { URL.revokeObjectURL(u); }); img.src = u; })
           .catch(fail);
       } else {
-        img.src = opts.url;
+        img.src = opts.hd || opts.url;
       }
       page.append(img);
       if (poster) poster.replaceWith(page); else host.append(page);
@@ -223,5 +242,5 @@
     }).catch(function () { return null; });
   }
 
-  window.ResViewer = { render: render, snapshot: snapshot };
+  window.ResViewer = { render: render, snapshot: snapshot, preload: preload };
 })();
