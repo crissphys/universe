@@ -1,4 +1,3 @@
-import {renderExams} from './cepreuni-exams.js?v=20261013-1ep-reconstruidos';
 import {renderScore,renderFijas} from './upgrades.js?v=20261112-ien';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
@@ -10,7 +9,6 @@ const store={get(k,d){try{return JSON.parse(localStorage.getItem('universe-previ
 const safe=s=>{try{const u=new URL(s,'https://universetostudy.com');return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
 const routes={
  '/explorar':['Tu universo de estudio','PLATAFORMA / 01','Un lugar para conectar lo que aprendes, lo que practicas y lo que quieres alcanzar.'],
- '/cepreuni/examenes':['Exámenes CEPREUNI','CEPREUNI / BIBLIOTECA DE EXÁMENES','Prácticas calificadas, exámenes parciales y finales. Explora cada documento y abre su vista previa.'],
  '/temario':['Entender empieza aquí.','MAPA DEL CONOCIMIENTO','Explora el temario de admisión y CEPREUNI. Abre un tema, revisa sus conceptos y registra lo que ya estudiaste.'],
  '/planificador':['Una intención. Un plan.','TU TRAYECTORIA','Convierte tus próximos temas en pasos concretos. Este tablero guarda tus tareas únicamente en este navegador.'],
  '/fijas-cepreuni':['Prioriza con criterio.','CEPREUNI / PRIMERA PC','Explora el tipo de problema asociado a cada tema del modelo histórico. Una referencia de preparación, nunca una garantía del examen.'],
@@ -33,7 +31,6 @@ function setRouteSeo(title,description,canonical){document.title=title;let meta=
 function head(path){const r=routes[path]||['Aún no estamos aquí.','UNIVERSE / 404','No encontramos esta página. Puedes volver a la plataforma.'];return `<div class="page-topline"><span><a href="/">Universe</a> / <a href="/explorar">Plataforma</a> / ${esc(r[0].replace(/\.$/,''))}</span></div><div class="page-head"><span class="eyebrow">${r[1]}</span><h1 id="page-title" tabindex="-1">${r[0]}</h1><p>${r[2]}</p></div>`}
 async function route(focus=false){const token=++routeVersion,p=pathName();if(p==='/'){location.reload();return}const isHome=false;home.hidden=!isHome;$('#platform').hidden=isHome;document.body.classList.toggle('in-platform',!isHome);$('.brand').href='/';$('.footer-brand').href='/';$$('.header .nav a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')===p?'page':'false'));if(isHome){setRouteSeo('Universe — El origen de tu siguiente idea','Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.','/');return}const meta=routes[p],title=meta?.[0]||'Página no encontrada';setRouteSeo(`${title} — Universe`,meta?.[2]||'No encontramos esta página. Puedes volver a la plataforma.',p);renderBranchedMenu($('.side-rail'),{activePath:p,renderIcon:name=>ui.icon(name)});view.innerHTML=head(p)+'<div class="page-view" id="page-view"></div>';const out=$('#page-view');if(!data){out.innerHTML=empty('Conectando tus recursos…');try{data=await fetch('/universe-ui/data/platform.json?v=20261021-lenguaje-3ra').then(r=>{if(!r.ok)throw Error('Datos no disponibles');return r.json()});hydrateHumanities(data)}catch{out.innerHTML=note('No se pudieron cargar los recursos. Recarga esta página.');return}}if(token!==routeVersion)return;
  if(p==='/explorar')overview(out);
- else if(p==='/cepreuni/examenes')await renderExams(out);
  else if(p==='/temario')syllabus(out);
  else if(p==='/planificador')planner(out);
  else if(p==='/fijas-cepreuni')fijas(out);
