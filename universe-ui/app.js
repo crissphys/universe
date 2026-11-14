@@ -82,7 +82,7 @@ const GROUPS=[['tool','Herramientas','Tools'],['page','Páginas','Pages'],['syll
 let indexRows=null,indexPromise=null;
 function row(kind,label,sub,url,extra){return {kind,label,sub,url,keys:normalize([label,sub,extra].join(' '))}}
 const baseRows=()=>[...tools.map(t=>row('tool',t.name,t.desc,t.url,[t.en,t.keys].join(' '))),...pages.map(p=>row('page',p.name,p.desc,p.url,p.keys))];
-function buildIndex(d,directory,mats){
+function buildIndex(d,directory,mats,exams){
  const rows=baseRows();
  for(const g of directory?.groups||[])for(const item of g.items)rows.push(row('library',item.title,g.title,'/biblioteca#carpetas',''));
  const s=d.syllabus||{};
@@ -99,7 +99,9 @@ function buildIndex(d,directory,mats){
  // Cada libro lleva su portada (la misma que muestra el catálogo) y el enlace a su posición: ?libro=<índice>.
  const thumb=b=>{const id=(b.url||'').match(/\/d\/([^/?]+)|[?&]id=([^&]+)/);return (b.drivePreview||b.image==='/assets/library/editorials/cepreuni.png')&&id?`https://drive.google.com/thumbnail?id=${id[1]||id[2]}&sz=w200`:b.image||''};
  for(const [key,list] of Object.entries(d.catalogs||{}))list.forEach((b,i)=>
-  rows.push({...row('library',b.title,[b.series,b.author].filter(Boolean).join(' · '),key==='examenes'?'/cepreuni/examenes':ROUTES[key]?ROUTES[key]+'?libro='+i:'/biblioteca',b.catalog+' '+b.section),image:thumb(b)}));
+  rows.push({...row('library',b.title,[b.series,b.author].filter(Boolean).join(' · '),ROUTES[key]?ROUTES[key]+'?libro='+i:'/biblioteca',b.catalog+' '+b.section),image:thumb(b)}));
+ // Exámenes CEPREUNI: cada documento abre su visor en /cepreuni/examenes?doc=<id>.
+ for(const sec of exams?.sections||[])for(const x of sec.documents)rows.push({...row("library",`${sec.label} ${x.title}`,"Exámenes CEPREUNI",`/cepreuni/examenes?doc=${encodeURIComponent(x.id)}`,"examen cepreuni practica calificada parcial final"),image:`https://drive.google.com/thumbnail?id=${encodeURIComponent(x.id)}&sz=w200`});
  const MK={clase:'Clase',libro:'Libro',adicional:'Material adicional',repaso:'Repaso',pizarra:'Pizarra',solucionario:'Solucionario',resultado:'Resultados',info:'Información'};
  for(const m of mats?.items||[])rows.push({...row('material',m.t,`${m.c} · ${MK[m.k]}`,`/cepreuni/materialespre?t=${m.k==='adicional'?'libro':m.k}${m.c==='General'?'':'&c='+encodeURIComponent(m.c)}`,m.w?'semana '+m.w:''),image:m.k==='clase'?`https://drive.google.com/thumbnail?id=${m.i}&sz=w200`:''});
  for(const p of d.publishers||[])rows.push(row('library',p.name,'Editorial',p.href,''));
@@ -108,10 +110,11 @@ function buildIndex(d,directory,mats){
 function loadIndex(){
  if(indexRows)return Promise.resolve(indexRows);
  if(!indexPromise)indexPromise=Promise.all([
-  fetch('/universe-ui/data/platform.json?v=20261013-upcoming-algebra-v1').then(r=>r.json()),
+  fetch('/universe-ui/data/platform.json?v=20261114-sin-examenes').then(r=>r.json()),
   fetch('/universe-ui/data/library-directory.json').then(r=>r.json()).catch(()=>null),
   fetch('/cepreuni/materialespre/materiales-2027-1.json?v=20261111').then(r=>r.json()).catch(()=>null),
- ]).then(([d,directory,mats])=>{indexRows=buildIndex(d,directory,mats);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
+  fetch('/cepreuni/examenes/examenes.json?v=20261114').then(r=>r.json()).catch(()=>null),
+ ]).then(([d,directory,mats,exams])=>{indexRows=buildIndex(d,directory,mats,exams);return indexRows}).catch(()=>{indexRows=baseRows();return indexRows});
  return indexPromise;
 }
 // Palabras de dos letras cuentan («pc», «uni»), y cada palabra larga también se busca sin su terminación,

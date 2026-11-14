@@ -140,6 +140,9 @@ def main():
     spath = ROOT / 'biblioteca' / 'buscar.json'
     spath.write_text(json.dumps(search, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
     print(f'{spath.relative_to(ROOT)}: {len(books)} libros, {spath.stat().st_size} bytes')
+    # Los exámenes CEPREUNI viven en su propia página con su propio JSON.
+    exams = json.loads((ROOT / 'cepreuni' / 'examenes' / 'examenes.json').read_text(encoding='utf-8'))
+    cat = {**cat, 'examenes': [{'url': d['url'], 'title': d['title'], 'catalog': s['label']} for s in exams['sections'] for d in s['documents']]}
     links = []
     for key, name, url, one, many in LINKS:
         books = [b for b in cat.get(key, []) if b and b.get('url') and not b.get('upcoming')]
