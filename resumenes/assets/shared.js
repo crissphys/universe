@@ -18,6 +18,7 @@
     autor: function (a) { return '/resumenes/autor/' + slug(a); },
     user: function (key) { return '/resumenes/u/' + encodeURIComponent(key); },
     thumb: function (it) { return it.p ? (it.id[0] === 'b' ? '/resumenes/thumbs/' + it.id + '.webp' : '/api/resumenes/thumb/' + it.id) : ''; },
+    hd: function (it) { return it.id[0] === 'b' ? '/api/resumenes/hd/' + it.id : ''; },
     file: function (it, dl) { return '/api/resumenes/file/' + encodeURIComponent(it.id) + (dl ? '?download=1' : ''); }
   };
 
