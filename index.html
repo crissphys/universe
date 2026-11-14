@@ -27,7 +27,7 @@ if(L.indexOf(s)<0){s='es';var n=navigator.languages||[navigator.language||'es'];
 try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.lang=s==='es'?'es-419':s;d.dataset.lang=s;if(s!=='es')d.dataset.pending='1';d.className='js'})(document.documentElement);
 </script>
 <script src="/universe-ui/auth.js?v=20261110" defer></script>
-<script src="/assets/home/home.js?v=20261110b" defer></script>
+<script src="/assets/home/home.js?v=20261114" defer></script>
 <script src="/assets/home/blackhole.js?v=20261111" defer></script>
 </head>
 <body>
@@ -39,6 +39,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
     <nav class="top-nav" aria-label="Principal" data-i18n-aria="nav.label">
       <a href="#cepreuni">CEPREUNI</a>
       <a href="#biblioteca" data-i18n="lib.name">Biblioteca</a>
+      <a href="/resumenes" data-i18n="lib.sum">Resúmenes</a>
       <a href="#estudio" data-i18n="study.name">Estudio</a>
     </nav>
     <div class="top-actions">
@@ -104,6 +105,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
       </div>
       <ul class="links">
         <li><a href="/biblioteca"><span class="lk-t" data-i18n="lib.all">Todas las editoriales</span><span class="lk-s" data-i18n="lib.all.s">Lumbreras, Pamer, Cuzcano, Rodo y más</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/resumenes"><span class="lk-t" data-i18n="lib.sum">Resúmenes</span><span class="lk-s" data-i18n="lib.sum.s">Apuntes, formularios y mapas por tema</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/examenes"><span class="lk-t" data-i18n="lib.exams">Exámenes de admisión UNI</span><span class="lk-s" data-i18n="lib.exams.s">2024-2 a 2026-2, con su tiempo real</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/biblioteca/universe"><span class="lk-t" data-i18n="lib.uni">Editorial Universe</span><span class="lk-s" data-i18n="lib.uni.s">Primeros Resúmenes y solucionarios</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/biblioteca/lumbreras"><span class="lk-t">Lumbreras</span><span class="lk-s" data-i18n="lib.lum.s">Libros rojos, azules y temas selectos</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
@@ -153,6 +155,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
       <nav class="foot-col" aria-labelledby="f-lib">
         <h2 id="f-lib" data-i18n="lib.name">Biblioteca</h2>
         <a href="/biblioteca">Todas las editoriales</a>
+        <a href="/resumenes">Resúmenes</a>
         <a href="/biblioteca/lumbreras">Lumbreras</a>
         <a href="/biblioteca/cuzcano">Cuzcano</a>
         <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>

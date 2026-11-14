@@ -58,6 +58,8 @@
     'lib.years': ['Exámenes de admisión UNI', 'UNI admission exams', 'UNI-Aufnahmeprüfungen', 'Provas de admissão UNI'],
     'lib.all': ['Todas las editoriales', 'All publishers', 'Alle Verlage', 'Todas as editoras'],
     'lib.all.s': ['Lumbreras, Pamer, Cuzcano, Rodo y más', 'Lumbreras, Pamer, Cuzcano, Rodo and more', 'Lumbreras, Pamer, Cuzcano, Rodo und mehr', 'Lumbreras, Pamer, Cuzcano, Rodo e mais'],
+    'lib.sum': ['Resúmenes', 'Summaries', 'Zusammenfassungen', 'Resumos'],
+    'lib.sum.s': ['Apuntes, formularios y mapas por tema', 'Notes, formula sheets and maps by topic', 'Notizen, Formelsammlungen und Mindmaps', 'Apontamentos, formulários e mapas por tema'],
     'lib.exams': ['Exámenes de admisión UNI', 'UNI admission exams', 'UNI-Aufnahmeprüfungen', 'Provas de admissão UNI'],
     'lib.exams.s': ['2024-2 a 2026-2, con su tiempo real', '2024-2 to 2026-2, on the real clock', '2024-2 bis 2026-2, mit echter Zeit', '2024-2 a 2026-2, com o tempo real'],
     'lib.uni': ['Editorial Universe', 'Universe editions', 'Universe-Verlag', 'Editora Universe'],
@@ -249,6 +251,7 @@
     ['/admision', 'cepre.adm', 'cepre.adm.s', 'info', 'admision uni resultados ingresantes postulantes puntaje minimo maximo'],
     ['/examenes', 'lib.exams', 'lib.exams.s', 'exam', 'examen admision uni simulacro prueba cronometro 2026 2025 2024 matematica fisica quimica'],
     ['/biblioteca', 'lib.all', 'lib.all.s', 'book', 'biblioteca libros editoriales lumbreras pamer cuzcano rodo san marcos trilce'],
+    ['/resumenes', 'lib.sum', 'lib.sum.s', 'book', 'resumenes resumen apuntes formulario formularios mapas chuletas fisica quimica biologia economia'],
     ['/biblioteca/universe', 'lib.uni', 'lib.uni.s', 'book', 'universe primeros resumenes solucionarios editorial'],
     ['/biblioteca/lumbreras', null, 'lib.lum.s', 'book', 'lumbreras libros rojos azules temas selectos compendio', 'Lumbreras'],
     ['/biblioteca/librosuniversitarios', 'lib.univ', 'lib.univ.s', 'book', 'universitarios calculo fisica universitaria libros carrera'],
@@ -258,7 +261,7 @@
     ['/docentes-cepreuni', 'study.room', 'study.room.s', 'info', 'docentes profesores aulas salones guia horario'],
     ['/informacion-cepreuni', 'study.info', 'study.info.s', 'info', 'informacion cepreuni normas reglamento consejos estrategia']
   ];
-  var POPULAR = [0, 5, 7, 10];
+  var POPULAR = [0, 5, 7, 11];
   var form = $('#search'), input = $('#q'), list = $('#q-list');
   var books = null, loading = null, sel = -1, current = [];
   function loadBooks() {
