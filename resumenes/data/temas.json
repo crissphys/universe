@@ -1,0 +1,1382 @@
+{
+ "cursos": {
+  "Física": [
+   "fisica",
+   "fis",
+   "fisica 1",
+   "physics"
+  ],
+  "Química": [
+   "quimica",
+   "quim",
+   "quimica 1"
+  ],
+  "Biología": [
+   "biologia",
+   "bio"
+  ],
+  "Anatomía": [
+   "anatomia",
+   "anato"
+  ],
+  "Economía": [
+   "economia",
+   "eco"
+  ],
+  "Historia": [
+   "historia",
+   "historia universal",
+   "historia del peru",
+   "hist"
+  ],
+  "Geografía": [
+   "geografia",
+   "geo"
+  ],
+  "Filosofía": [
+   "filosofia",
+   "filo"
+  ],
+  "Psicología": [
+   "psicologia",
+   "psico"
+  ],
+  "Lenguaje": [
+   "lenguaje",
+   "lengua",
+   "gramatica",
+   "ortografia"
+  ],
+  "Literatura": [
+   "literatura",
+   "lite"
+  ],
+  "Razonamiento Verbal": [
+   "razonamiento verbal",
+   "rv",
+   "raz verbal",
+   "verbal"
+  ],
+  "Álgebra": [
+   "algebra",
+   "matematica",
+   "mate"
+  ],
+  "Aritmética": [
+   "aritmetica",
+   "matematica",
+   "mate"
+  ],
+  "Geometría": [
+   "geometria",
+   "matematica",
+   "mate"
+  ],
+  "Trigonometría": [
+   "trigonometria",
+   "trigo",
+   "matematica",
+   "mate"
+  ],
+  "Inglés": [
+   "ingles",
+   "english"
+  ],
+  "Educación Cívica": [
+   "civica",
+   "educacion civica",
+   "civismo"
+  ],
+  "Arquitectura": [
+   "arquitectura",
+   "dibujo"
+  ],
+  "Cálculo Diferencial": [
+   "calculo",
+   "calculo diferencial",
+   "derivadas",
+   "limites"
+  ],
+  "Álgebra Lineal": [
+   "algebra lineal"
+  ],
+  "Computación": [
+   "computacion",
+   "introduccion a la computacion",
+   "programacion"
+  ]
+ },
+ "temas": [
+  {
+   "tema": "Doctrinas económicas",
+   "curso": "Economía",
+   "claves": [
+    "doctrinas economicas",
+    "doctrina economica",
+    "doctrina economicas",
+    "escuelas economicas",
+    "escuela economica",
+    "fisiocracia",
+    "fisiocratas",
+    "quesnay",
+    "mercantilismo",
+    "mercantilistas",
+    "clasicismo",
+    "escuela clasica",
+    "adam smith",
+    "neoclasicismo",
+    "neoclasicos",
+    "marginalismo",
+    "keynes",
+    "keynesianismo",
+    "marxismo",
+    "socialismo",
+    "monetarismo"
+   ]
+  },
+  {
+   "tema": "Necesidades, bienes y servicios",
+   "curso": "Economía",
+   "claves": [
+    "necesidades humanas",
+    "necesidades",
+    "bienes",
+    "servicios",
+    "bienes y servicios",
+    "division de la economia",
+    "conceptos basicos",
+    "definicion",
+    "introduccion",
+    "introduccion a la economia",
+    "economia introduccion",
+    "microeconomia",
+    "macroeconomia",
+    "micro y macroeconomia",
+    "abc de economia",
+    "abc de la economia"
+   ]
+  },
+  {
+   "tema": "Proceso económico y producción",
+   "curso": "Economía",
+   "claves": [
+    "proceso economico",
+    "produccion",
+    "factores productivos",
+    "factores de produccion",
+    "costos",
+    "circulacion",
+    "circuito economico",
+    "distribucion",
+    "consumo"
+   ]
+  },
+  {
+   "tema": "Trabajo y salario",
+   "curso": "Economía",
+   "claves": [
+    "trabajo",
+    "salario",
+    "empleo",
+    "empleo atipico",
+    "terminos laborales",
+    "laboral"
+   ]
+  },
+  {
+   "tema": "Capital y empresa",
+   "curso": "Economía",
+   "claves": [
+    "empresa",
+    "capital",
+    "sociedades",
+    "sociedades mercantiles",
+    "emprendimiento",
+    "ley de sociedades"
+   ]
+  },
+  {
+   "tema": "Oferta, demanda y mercado",
+   "curso": "Economía",
+   "claves": [
+    "oferta",
+    "demanda",
+    "cantidad demandada",
+    "elasticidad",
+    "elasticidades",
+    "equilibrio de mercado",
+    "desequilibrio",
+    "mercado",
+    "modelos de mercado",
+    "tipos de mercado",
+    "monopolio",
+    "competencia perfecta",
+    "oligopolio"
+   ]
+  },
+  {
+   "tema": "Dinero y sistema financiero",
+   "curso": "Economía",
+   "claves": [
+    "dinero",
+    "teoria cuantitativa",
+    "sistema financiero",
+    "sistema monetario",
+    "sistema monitorio",
+    "banca",
+    "bancos",
+    "inflacion",
+    "bcrp"
+   ]
+  },
+  {
+   "tema": "Sistema tributario y presupuesto",
+   "curso": "Economía",
+   "claves": [
+    "sistema tributario",
+    "tributos",
+    "impuestos",
+    "presupuesto publico",
+    "sector publico",
+    "sunat",
+    "tributario"
+   ]
+  },
+  {
+   "tema": "Comercio internacional y balanza de pagos",
+   "curso": "Economía",
+   "claves": [
+    "comercio internacional",
+    "comercio exterior",
+    "balanza de pagos",
+    "tipo de cambio",
+    "integracion economica",
+    "bloques de integracion",
+    "deuda externa",
+    "organismos financieros"
+   ]
+  },
+  {
+   "tema": "Cuentas nacionales y ciclos",
+   "curso": "Economía",
+   "claves": [
+    "cuentas nacionales",
+    "agregados economicos",
+    "pbi",
+    "ciclos economicos",
+    "ciclo economico",
+    "sector interno",
+    "economia informal"
+   ]
+  },
+  {
+   "tema": "Análisis dimensional y vectores",
+   "curso": "Física",
+   "claves": [
+    "analisis dimensional",
+    "dimensional",
+    "dimensiones",
+    "ecuaciones dimensionales",
+    "magnitudes",
+    "unidades",
+    "sistema internacional",
+    "vectores",
+    "vector",
+    "paralelogramo",
+    "incertidumbre",
+    "errores",
+    "medicion"
+   ]
+  },
+  {
+   "tema": "Cinemática",
+   "curso": "Física",
+   "claves": [
+    "cinematica",
+    "mru",
+    "mruv",
+    "mrua",
+    "movimiento rectilineo",
+    "caida libre",
+    "mvcl",
+    "mcl",
+    "parabolico",
+    "mpcl",
+    "tiro parabolico",
+    "mcu",
+    "mcuv",
+    "movimiento circular",
+    "galileo"
+   ]
+  },
+  {
+   "tema": "Estática y dinámica",
+   "curso": "Física",
+   "claves": [
+    "estatica",
+    "dinamica",
+    "dinamica lineal",
+    "dinamica circular",
+    "leyes de newton",
+    "newton",
+    "fuerza",
+    "fuerzas",
+    "rozamiento",
+    "friccion",
+    "fuerza normal",
+    "fuerza elastica",
+    "torque",
+    "equilibrio"
+   ]
+  },
+  {
+   "tema": "Trabajo, energía y potencia",
+   "curso": "Física",
+   "claves": [
+    "trabajo mecanico",
+    "trabajo y energia",
+    "energia",
+    "energia mecanica",
+    "conservacion de energia",
+    "potencia",
+    "cantidad de movimiento",
+    "impulso",
+    "choques",
+    "teoremas de conservacion"
+   ]
+  },
+  {
+   "tema": "Gravitación",
+   "curso": "Física",
+   "claves": [
+    "gravitacion",
+    "gravitacion universal",
+    "kepler",
+    "leyes de kepler",
+    "modelos del universo"
+   ]
+  },
+  {
+   "tema": "Oscilaciones y ondas",
+   "curso": "Física",
+   "claves": [
+    "mas",
+    "movimiento armonico",
+    "oscilaciones",
+    "pendulo",
+    "ondas",
+    "ondas sonoras",
+    "sonido",
+    "movimiento ondulatorio",
+    "ondas mecanicas"
+   ]
+  },
+  {
+   "tema": "Hidrostática y fluidos",
+   "curso": "Física",
+   "claves": [
+    "hidrostatica",
+    "fluidos",
+    "presion",
+    "empuje",
+    "arquimedes",
+    "pascal"
+   ]
+  },
+  {
+   "tema": "Calor y termodinámica",
+   "curso": "Física",
+   "claves": [
+    "calor",
+    "temperatura",
+    "calorimetria",
+    "dilatacion",
+    "cambio de volumen",
+    "cambio de area",
+    "termodinamica",
+    "gases ideales"
+   ]
+  },
+  {
+   "tema": "Electricidad y magnetismo",
+   "curso": "Física",
+   "claves": [
+    "electrostatica",
+    "electrodinamica",
+    "electricidad",
+    "campo electrico",
+    "potencial electrico",
+    "corriente",
+    "circuitos",
+    "capacitores",
+    "magnetismo",
+    "electromagnetismo",
+    "induccion",
+    "ondas electromagneticas",
+    "generadores"
+   ]
+  },
+  {
+   "tema": "Óptica",
+   "curso": "Física",
+   "claves": [
+    "optica",
+    "optica geometrica",
+    "espejos",
+    "lentes",
+    "refraccion",
+    "reflexion",
+    "luz"
+   ]
+  },
+  {
+   "tema": "Física moderna",
+   "curso": "Física",
+   "claves": [
+    "fisica moderna",
+    "relatividad",
+    "efecto fotoelectrico",
+    "cuantica",
+    "rayos x"
+   ]
+  },
+  {
+   "tema": "Materia y unidades químicas",
+   "curso": "Química",
+   "claves": [
+    "materia",
+    "quimica y materia",
+    "unidades quimicas de masa",
+    "mol",
+    "masa molar",
+    "sistema internacional"
+   ]
+  },
+  {
+   "tema": "Estructura atómica",
+   "curso": "Química",
+   "claves": [
+    "atomo",
+    "estructura atomica",
+    "modelos atomicos",
+    "modelo atomico",
+    "teorias atomicas",
+    "teorias y modelos atomicos",
+    "numeros cuanticos",
+    "configuracion electronica",
+    "regiones energeticas",
+    "quimica nuclear",
+    "reacciones nucleares",
+    "radiactividad"
+   ]
+  },
+  {
+   "tema": "Tabla periódica",
+   "curso": "Química",
+   "claves": [
+    "tabla periodica",
+    "propiedades periodicas",
+    "elementos quimicos"
+   ]
+  },
+  {
+   "tema": "Enlace químico",
+   "curso": "Química",
+   "claves": [
+    "enlace quimico",
+    "enlace",
+    "enlaces",
+    "geometria molecular",
+    "fuerzas intermoleculares",
+    "lewis"
+   ]
+  },
+  {
+   "tema": "Nomenclatura inorgánica",
+   "curso": "Química",
+   "claves": [
+    "nomenclatura",
+    "nomenclatura inorganica",
+    "formacion de compuestos",
+    "funciones inorganicas",
+    "oxidos",
+    "hidroxidos",
+    "acidos oxacidos",
+    "sales"
+   ]
+  },
+  {
+   "tema": "Reacciones y estequiometría",
+   "curso": "Química",
+   "claves": [
+    "reacciones quimicas",
+    "reacciones",
+    "balanceo",
+    "redox",
+    "estequiometria",
+    "reactivo limitante"
+   ]
+  },
+  {
+   "tema": "Estados de la materia y gases",
+   "curso": "Química",
+   "claves": [
+    "estado gaseoso",
+    "gases",
+    "mezcla de gases",
+    "estado liquido",
+    "estado solido",
+    "soluciones",
+    "disoluciones",
+    "concentracion",
+    "dilucion"
+   ]
+  },
+  {
+   "tema": "Cinética y equilibrio químico",
+   "curso": "Química",
+   "claves": [
+    "cinetica quimica",
+    "equilibrio quimico",
+    "le chatelier",
+    "keq",
+    "calculos keq"
+   ]
+  },
+  {
+   "tema": "Ácidos y bases",
+   "curso": "Química",
+   "claves": [
+    "acidos y bases",
+    "acido base",
+    "acidos",
+    "bases",
+    "ph",
+    "equilibrio acido base"
+   ]
+  },
+  {
+   "tema": "Electroquímica",
+   "curso": "Química",
+   "claves": [
+    "electroquimica",
+    "celdas galvanicas",
+    "electrolisis",
+    "pilas"
+   ]
+  },
+  {
+   "tema": "Termoquímica",
+   "curso": "Química",
+   "claves": [
+    "termoquimica",
+    "entalpia",
+    "funciones termodinamicas",
+    "termodinamica"
+   ]
+  },
+  {
+   "tema": "Química orgánica",
+   "curso": "Química",
+   "claves": [
+    "quimica organica",
+    "organica",
+    "hidrocarburos",
+    "carbono",
+    "grupos funcionales",
+    "isomeros",
+    "alcanos",
+    "alquenos",
+    "alquinos",
+    "bioquimica"
+   ]
+  },
+  {
+   "tema": "Contaminación ambiental",
+   "curso": "Química",
+   "claves": [
+    "contaminacion",
+    "contaminacion ambiental",
+    "ciclo del nitrogeno",
+    "medio ambiente"
+   ]
+  },
+  {
+   "tema": "Célula",
+   "curso": "Biología",
+   "claves": [
+    "celula",
+    "celular",
+    "membrana celular",
+    "mosaico fluido",
+    "sistema endomembranoso",
+    "endomem",
+    "organelos",
+    "nucleo",
+    "mitosis",
+    "meiosis",
+    "division celular",
+    "ciclo celular"
+   ]
+  },
+  {
+   "tema": "Bioquímica y metabolismo",
+   "curso": "Biología",
+   "claves": [
+    "biomoleculas",
+    "proteinas",
+    "carbohidratos",
+    "lipidos",
+    "acidos nucleicos",
+    "atp",
+    "glucosa",
+    "nutricion celular",
+    "respiracion celular",
+    "metabolismo",
+    "enzimas",
+    "fotosintesis"
+   ]
+  },
+  {
+   "tema": "Virus y bacterias",
+   "curso": "Biología",
+   "claves": [
+    "virus",
+    "estructura viral",
+    "coronavirus",
+    "bacterias",
+    "bacteria",
+    "bacterias patogenas",
+    "procariotas",
+    "microorganismos",
+    "vih",
+    "sida",
+    "hongos",
+    "reino fungi",
+    "protistas",
+    "reino protista",
+    "reino monera"
+   ]
+  },
+  {
+   "tema": "Tejidos",
+   "curso": "Biología",
+   "claves": [
+    "tejidos",
+    "tejido",
+    "tejidos animales",
+    "tejidos vegetales",
+    "histologia",
+    "tejido nervioso"
+   ]
+  },
+  {
+   "tema": "Genética y herencia",
+   "curso": "Biología",
+   "claves": [
+    "genetica",
+    "herencia",
+    "mendel",
+    "adn",
+    "cromosomas",
+    "mutaciones"
+   ]
+  },
+  {
+   "tema": "Evolución y taxonomía",
+   "curso": "Biología",
+   "claves": [
+    "evolucion",
+    "taxonomia",
+    "evolucion del hombre",
+    "anatomia comparada",
+    "origen de la vida",
+    "clasificacion"
+   ]
+  },
+  {
+   "tema": "Ecología",
+   "curso": "Biología",
+   "claves": [
+    "ecologia",
+    "ecosistema",
+    "relacion seres vivos",
+    "cadena alimenticia",
+    "biomas",
+    "reino plantae",
+    "plantas",
+    "reino animalia",
+    "animales",
+    "invertebrados",
+    "biodiversidad"
+   ]
+  },
+  {
+   "tema": "Reproducción",
+   "curso": "Biología",
+   "claves": [
+    "reproduccion",
+    "reproduccion sexual",
+    "ciclo sexual",
+    "ciclo menstrual",
+    "reproductor",
+    "embriologia"
+   ]
+  },
+  {
+   "tema": "Sistemas del cuerpo humano",
+   "curso": "Anatomía",
+   "claves": [
+    "sistema digestivo",
+    "digestion",
+    "aparato digestivo",
+    "sistema respiratorio",
+    "respiracion",
+    "aparato respiratorio",
+    "sistema circulatorio",
+    "circulacion",
+    "cardiovascular",
+    "corazon",
+    "sistema nervioso",
+    "nervioso",
+    "sensorial",
+    "sistema urinario",
+    "excrecion",
+    "sistema muscular",
+    "sistema oseo",
+    "esqueleto",
+    "hormonas",
+    "sistema endocrino",
+    "sistema inmune",
+    "inmune",
+    "vitaminas",
+    "digestion en aves",
+    "rumiantes",
+    "hormonas en invertebrados"
+   ]
+  },
+  {
+   "tema": "Prehistoria y primeras civilizaciones",
+   "curso": "Historia",
+   "claves": [
+    "prehistoria",
+    "hominizacion",
+    "hominidos",
+    "edad de piedra",
+    "periodificacion",
+    "mesopotamia",
+    "egipto",
+    "china",
+    "india"
+   ]
+  },
+  {
+   "tema": "Antigüedad clásica",
+   "curso": "Historia",
+   "claves": [
+    "grecia",
+    "antigua grecia",
+    "roma",
+    "edad antigua",
+    "imperio romano"
+   ]
+  },
+  {
+   "tema": "Edad Media",
+   "curso": "Historia",
+   "claves": [
+    "edad media",
+    "feudalismo",
+    "imperio carolingio",
+    "imperio bizantino",
+    "imperio islamico",
+    "cruzadas",
+    "imperio musulman",
+    "renacimiento urbano"
+   ]
+  },
+  {
+   "tema": "Edad Moderna",
+   "curso": "Historia",
+   "claves": [
+    "edad moderna",
+    "humanismo",
+    "renacimiento",
+    "reforma",
+    "contrarreforma",
+    "contrareforma",
+    "monarquias absolutas",
+    "absolutismo",
+    "ilustracion",
+    "trece colonias",
+    "13 colonias"
+   ]
+  },
+  {
+   "tema": "Revoluciones liberales",
+   "curso": "Historia",
+   "claves": [
+    "revolucion francesa",
+    "revoluciones liberales",
+    "restauracion europea",
+    "unificacion italiana",
+    "unificacion alemana",
+    "revolucion industrial",
+    "segunda revolucion industrial",
+    "imperialismo",
+    "imperialismo colonial"
+   ]
+  },
+  {
+   "tema": "Siglo XX",
+   "curso": "Historia",
+   "claves": [
+    "primera guerra mundial",
+    "segunda guerra mundial",
+    "revolucion rusa",
+    "crisis de 1929",
+    "totalitarismos",
+    "movimientos totalitarios",
+    "guerra fria"
+   ]
+  },
+  {
+   "tema": "Historia del Perú",
+   "curso": "Historia",
+   "claves": [
+    "historia del peru",
+    "altas culturas",
+    "culturas andinas",
+    "formativo andino",
+    "paracas",
+    "chavin",
+    "incas",
+    "tahuantinsuyo",
+    "virreinato",
+    "independencia",
+    "republica"
+   ]
+  },
+  {
+   "tema": "Geografía general",
+   "curso": "Geografía",
+   "claves": [
+    "ciencia geografica",
+    "teoria geografica",
+    "cartografia",
+    "universo",
+    "tierra",
+    "relieve",
+    "clima",
+    "recursos naturales",
+    "geografia del peru"
+   ]
+  },
+  {
+   "tema": "Introducción a la filosofía",
+   "curso": "Filosofía",
+   "claves": [
+    "introduccion a la filosofia",
+    "modo de saber",
+    "que es filosofia",
+    "valor de la filosofia",
+    "filosofia un modo de saber"
+   ]
+  },
+  {
+   "tema": "Filosofía antigua",
+   "curso": "Filosofía",
+   "claves": [
+    "filosofia antigua",
+    "presocraticos",
+    "periodo antropologico",
+    "periodo ontologico",
+    "socrates",
+    "platon",
+    "aristoteles",
+    "alegoria de la caverna",
+    "etica aristotelica",
+    "helenistico",
+    "periodo helenistico",
+    "estoicos",
+    "epicureos"
+   ]
+  },
+  {
+   "tema": "Filosofía moderna",
+   "curso": "Filosofía",
+   "claves": [
+    "filosofia moderna",
+    "racionalismo",
+    "empirismo",
+    "descartes",
+    "kant",
+    "criticismo",
+    "ilustracion",
+    "renacimiento"
+   ]
+  },
+  {
+   "tema": "Filosofía contemporánea",
+   "curso": "Filosofía",
+   "claves": [
+    "siglo xix",
+    "siglo xx",
+    "comte",
+    "positivismo",
+    "marx",
+    "nietzsche",
+    "wittgenstein",
+    "circulo de viena",
+    "carnap",
+    "popper",
+    "conjeturas y refutaciones"
+   ]
+  },
+  {
+   "tema": "Gnoseología y epistemología",
+   "curso": "Filosofía",
+   "claves": [
+    "gnoseologia",
+    "epistemologia",
+    "conocimiento",
+    "ciencia",
+    "pseudociencia",
+    "naturaleza del conocimiento"
+   ]
+  },
+  {
+   "tema": "Ética, axiología y política",
+   "curso": "Filosofía",
+   "claves": [
+    "etica",
+    "moral",
+    "axiologia",
+    "valores",
+    "filosofia politica",
+    "utilitarismo",
+    "bentham",
+    "mill",
+    "reconocimiento",
+    "etica medioambiental",
+    "acciones buenas"
+   ]
+  },
+  {
+   "tema": "Lógica",
+   "curso": "Filosofía",
+   "claves": [
+    "logica",
+    "razonamiento correcto",
+    "proposiciones",
+    "falacias"
+   ]
+  },
+  {
+   "tema": "Psicología como ciencia",
+   "curso": "Psicología",
+   "claves": [
+    "la psicologia",
+    "psicologia como ciencia",
+    "etimologia",
+    "origen e historia",
+    "historia de la psicologia",
+    "escuelas psicologicas",
+    "psicologos",
+    "psicoanalisis",
+    "psicoterapia",
+    "conductismo"
+   ]
+  },
+  {
+   "tema": "Bases biológicas de la conducta",
+   "curso": "Psicología",
+   "claves": [
+    "bases biologicas",
+    "factores biologicos",
+    "cerebro",
+    "lobulos",
+    "lobulos cerebrales",
+    "homunculo",
+    "corteza cerebral",
+    "pares craneales",
+    "sistema nervioso",
+    "neurona"
+   ]
+  },
+  {
+   "tema": "Socialización y desarrollo",
+   "curso": "Psicología",
+   "claves": [
+    "bases sociales",
+    "socializacion",
+    "proceso de socializacion",
+    "desarrollo humano",
+    "etapa posnatal",
+    "desarrollo psicosexual",
+    "identidad",
+    "busqueda de la identidad",
+    "adolescencia"
+   ]
+  },
+  {
+   "tema": "Procesos cognitivos",
+   "curso": "Psicología",
+   "claves": [
+    "procesos cognitivos",
+    "sensacion",
+    "percepcion",
+    "atencion",
+    "conciencia",
+    "memoria",
+    "imaginacion",
+    "pensamiento",
+    "lenguaje",
+    "inteligencia",
+    "aprendizaje",
+    "psicologia cognitiva"
+   ]
+  },
+  {
+   "tema": "Afectividad y personalidad",
+   "curso": "Psicología",
+   "claves": [
+    "procesos afectivos",
+    "conativos",
+    "emociones",
+    "sentimientos",
+    "motivacion",
+    "personalidad",
+    "mecanismos de defensa",
+    "karen horney",
+    "necesidades neuroticas",
+    "retraso mental"
+   ]
+  },
+  {
+   "tema": "Comunicación y lenguaje",
+   "curso": "Lenguaje",
+   "claves": [
+    "comunicacion",
+    "comunicacion humana",
+    "el lenguaje",
+    "lengua",
+    "habla",
+    "signo linguistico",
+    "variedades linguisticas"
+   ]
+  },
+  {
+   "tema": "Fonética y ortografía",
+   "curso": "Lenguaje",
+   "claves": [
+    "silaba",
+    "acentuacion",
+    "acentuacion general",
+    "acentuacion especial",
+    "tildacion",
+    "ortografia",
+    "fonetica",
+    "fonologia",
+    "diptongo",
+    "hiato",
+    "signos de puntuacion",
+    "letras mayusculas"
+   ]
+  },
+  {
+   "tema": "Semántica y morfología",
+   "curso": "Lenguaje",
+   "claves": [
+    "semantica",
+    "morfologia",
+    "sustantivo",
+    "adjetivo",
+    "verbo",
+    "pronombre",
+    "categorias gramaticales",
+    "sintaxis",
+    "oracion"
+   ]
+  },
+  {
+   "tema": "Literatura",
+   "curso": "Literatura",
+   "claves": [
+    "literatura",
+    "genero literario",
+    "linea de tiempo",
+    "indigenismo",
+    "cien anos de soledad",
+    "pedro paramo",
+    "boom latinoamericano",
+    "romanticismo",
+    "modernismo",
+    "vanguardismo"
+   ]
+  },
+  {
+   "tema": "Vocabulario y relaciones léxicas",
+   "curso": "Razonamiento Verbal",
+   "claves": [
+    "definiciones",
+    "analogias",
+    "precision lexica",
+    "antonimia",
+    "antonimia contextual",
+    "sinonimia",
+    "sentido contextual",
+    "lexico",
+    "terminos excluidos"
+   ]
+  },
+  {
+   "tema": "Redacción y cohesión",
+   "curso": "Razonamiento Verbal",
+   "claves": [
+    "conectores",
+    "conectores logico textuales",
+    "informacion eliminada",
+    "plan de redaccion",
+    "inclusion de informacion",
+    "coherencia",
+    "cohesion",
+    "oraciones incompletas"
+   ]
+  },
+  {
+   "tema": "Comprensión lectora",
+   "curso": "Razonamiento Verbal",
+   "claves": [
+    "comprension lectora",
+    "niveles de comprension",
+    "textos continuos",
+    "textos discontinuos",
+    "mapa conceptual",
+    "resumen",
+    "inferencia",
+    "lectura"
+   ]
+  },
+  {
+   "tema": "Números y operaciones",
+   "curso": "Aritmética",
+   "claves": [
+    "numeracion",
+    "adicion",
+    "sustraccion",
+    "multiplicacion",
+    "division",
+    "divisibilidad",
+    "numeros primos",
+    "primos y compuestos",
+    "mcd",
+    "mcm",
+    "fracciones",
+    "numeros decimales",
+    "racionales"
+   ]
+  },
+  {
+   "tema": "Razones, proporciones y porcentajes",
+   "curso": "Aritmética",
+   "claves": [
+    "razones y proporciones",
+    "razones",
+    "proporciones",
+    "magnitudes proporcionales",
+    "porcentaje",
+    "porcentajes",
+    "regla de tres",
+    "mezcla",
+    "aleacion",
+    "interes"
+   ]
+  },
+  {
+   "tema": "Estadística y probabilidad",
+   "curso": "Aritmética",
+   "claves": [
+    "estadistica",
+    "fundamentos de estadistica",
+    "medidas de tendencia central",
+    "tendencia central",
+    "dispersion",
+    "probabilidades",
+    "probabilidad",
+    "analisis combinatorio",
+    "combinatoria"
+   ]
+  },
+  {
+   "tema": "Expresiones y polinomios",
+   "curso": "Álgebra",
+   "claves": [
+    "leyes de exponentes",
+    "exponentes",
+    "productos notables",
+    "polinomios",
+    "funciones polinomiales",
+    "division algebraica",
+    "factorizacion",
+    "radicacion"
+   ]
+  },
+  {
+   "tema": "Ecuaciones e inecuaciones",
+   "curso": "Álgebra",
+   "claves": [
+    "ecuaciones",
+    "inecuaciones",
+    "valor absoluto",
+    "logaritmos",
+    "sistemas de ecuaciones",
+    "desigualdades"
+   ]
+  },
+  {
+   "tema": "Funciones",
+   "curso": "Álgebra",
+   "claves": [
+    "funciones",
+    "funcion",
+    "funciones especiales",
+    "dominio",
+    "rango",
+    "graficas"
+   ]
+  },
+  {
+   "tema": "Matrices y determinantes",
+   "curso": "Álgebra",
+   "claves": [
+    "matrices",
+    "matriz",
+    "determinantes",
+    "matriz adjunta",
+    "algebra lineal"
+   ]
+  },
+  {
+   "tema": "Geometría plana",
+   "curso": "Geometría",
+   "claves": [
+    "segmentos",
+    "angulos",
+    "triangulos",
+    "congruencia",
+    "poligonos",
+    "cuadrilateros",
+    "circunferencia",
+    "proporcionalidad",
+    "semejanza",
+    "relaciones metricas",
+    "areas",
+    "conjuntos convexos",
+    "postulados"
+   ]
+  },
+  {
+   "tema": "Geometría del espacio",
+   "curso": "Geometría",
+   "claves": [
+    "geometria del espacio",
+    "solidos",
+    "poliedros",
+    "prisma",
+    "piramide",
+    "cilindro",
+    "cono",
+    "esfera",
+    "planos"
+   ]
+  },
+  {
+   "tema": "Geometría analítica",
+   "curso": "Geometría",
+   "claves": [
+    "geometria analitica",
+    "recta",
+    "parabola",
+    "elipse",
+    "elipses",
+    "hiperbola",
+    "hiperbole",
+    "conicas",
+    "coordenadas polares"
+   ]
+  },
+  {
+   "tema": "Razones e identidades trigonométricas",
+   "curso": "Trigonometría",
+   "claves": [
+    "razones trigonometricas",
+    "razones",
+    "sistemas de medicion angular",
+    "angulos verticales",
+    "identidades trigonometricas",
+    "identidades",
+    "angulos compuestos",
+    "angulo doble",
+    "transformaciones trigonometricas"
+   ]
+  },
+  {
+   "tema": "Funciones y ecuaciones trigonométricas",
+   "curso": "Trigonometría",
+   "claves": [
+    "funciones trigonometricas",
+    "ft inversas",
+    "funciones inversas",
+    "ecuaciones trigonometricas",
+    "circunferencia trigonometrica"
+   ]
+  },
+  {
+   "tema": "Resolución de triángulos",
+   "curso": "Trigonometría",
+   "claves": [
+    "resolucion de triangulos",
+    "ley de senos",
+    "ley de cosenos",
+    "triangulos oblicuangulos"
+   ]
+  },
+  {
+   "tema": "Inglés",
+   "curso": "Inglés",
+   "claves": [
+    "english",
+    "ingles",
+    "grammar",
+    "vocabulary",
+    "verb to be",
+    "present simple"
+   ]
+  },
+  {
+   "tema": "Educación cívica",
+   "curso": "Educación Cívica",
+   "claves": [
+    "civica",
+    "constitucion",
+    "estado",
+    "derechos humanos",
+    "democracia",
+    "ciudadania",
+    "politica",
+    "poderes del estado"
+   ]
+  },
+  {
+   "tema": "Cálculo diferencial",
+   "curso": "Cálculo Diferencial",
+   "claves": [
+    "limites",
+    "derivadas",
+    "continuidad",
+    "funciones y funciones especiales"
+   ]
+  }
+ ]
+}

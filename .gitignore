@@ -9,3 +9,5 @@ __pycache__/
 .wrangler/
 output/
 node_modules/
+
+tools/resumenes-uploaded.txt

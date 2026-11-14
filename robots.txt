@@ -6,3 +6,4 @@ Disallow: /work/
 Disallow: /account?*
 
 Sitemap: https://universetostudy.com/sitemap.xml
+Sitemap: https://universetostudy.com/resumenes/sitemap.xml

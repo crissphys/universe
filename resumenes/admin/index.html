@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revisión de resúmenes | UNIverse</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="/resumenes/assets/resumenes.css?v=20261114c">
+<script>(function(d){var t;try{t=localStorage.getItem('res_theme')}catch(e){}d.dataset.theme=t||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')})(document.documentElement)</script>
+<script src="/universe-ui/auth.js?v=20261110b" defer></script>
+<script src="/resumenes/assets/viewer.js?v=20261114c" defer></script>
+<script src="/resumenes/assets/admin.js?v=20261114c" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/" aria-label="UNIverse, inicio"><svg class="mark" viewBox="0 0 89.5 99" aria-hidden="true"><path d="M0 0H24.5V60A20.25 18 0 0 0 65 60V28L63.5 26L35 37.5L64 .5H89.5V61A44.75 38 0 0 1 0 61Z"/></svg><span>UNIverse</span></a>
+    <div class="top-actions"><a class="btn-quiet" href="/resumenes">Ver resúmenes</a></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <div class="admin-head"><h1>Revisión de resúmenes</h1></div>
+  <div class="gate" id="gate" hidden>
+    <p id="gate-msg">Ingresa con una cuenta de administrador.</p>
+    <div class="gsi" data-google-signin data-gsi-theme="filled_black" data-gsi-shape="pill"><div data-google-signin-slot></div></div>
+  </div>
+  <p class="notice" id="denied" hidden>Esta cuenta no tiene permisos de administrador.</p>
+  <div id="panel" hidden>
+    <div class="tabs" role="tablist" aria-label="Estado">
+      <button class="chip" role="tab" type="button" data-status="pending" aria-pressed="true" aria-selected="true">Pendientes <b id="n-pending"></b></button>
+      <button class="chip" role="tab" type="button" data-status="approved" aria-pressed="false" aria-selected="false">Aprobados</button>
+      <button class="chip" role="tab" type="button" data-status="rejected" aria-pressed="false" aria-selected="false">Rechazados</button>
+    </div>
+    <div class="queue" id="queue" aria-live="polite"></div>
+  </div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
