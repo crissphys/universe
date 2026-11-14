@@ -19,8 +19,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TEMAS = json.loads((ROOT / 'resumenes/data/temas.json').read_text(encoding='utf-8'))
 RATIOS = [(16, 9), (3, 2), (4, 3), (5, 4), (1, 1), (4, 5), (3, 4), (2, 3), (9, 16)]  # same list as make-resumenes-thumbs.py
-# Unattributed copies (same bytes) of files credited to @alfajorcita: only the credited ones are listed.
-DROP_IDS = {'b42b3a2c95', 'b50ca29473', 'b13e579450'}
 EXTS = {'pdf': 'pdf', 'jpg': 'jpg', 'jpeg': 'jpg', 'png': 'png', 'webp': 'webp'}
 
 def norm(s):
@@ -210,8 +208,6 @@ def main(zips):
                     continue
                 seen[dkey] = True
                 rid = 'b' + hashlib.sha1(info.filename.encode('utf-8')).hexdigest()[:9]
-                if rid in DROP_IDS:
-                    continue
                 rows.append({'id': rid, 't': title, 'c': course, 'm': topic, 'k': tipo, 'a': author, 'e': ext,
                              's': info.file_size, 'n': level, 'y': int(year.group(1)) if year else None,
                              'g': bool(generic), 'f': re.sub(r'^(copia de\s+)+', '', base, flags=re.I)})
@@ -223,6 +219,19 @@ def main(zips):
                     rows[-1]['p'] = 1
                     rows[-1]['r'] = '%d:%d' % min(RATIOS, key=lambda r: abs(w / h - r[0] / r[1]))
                 manifest[rid] = [Path(zpath).name, info.filename]
+    # Same file saved twice under different names (same size and format): keep one copy, preferring the one
+    # that names its author, then a known topic, then a real title over a generic "Curso · Carpeta N".
+    best = {}
+    for r in rows:
+        k = (r['s'], r['e'])
+        score = (bool(r['a']), bool(r['m']), not r['g'], -len(r['t']))
+        if k not in best or score > best[k][0]:
+            best[k] = (score, r['id'])
+    dropped = [r for r in rows if best[(r['s'], r['e'])][1] != r['id']]
+    keep = {i for _, i in best.values()}
+    rows = [r for r in rows if r['id'] in keep]
+    for r in dropped:
+        manifest.pop(r['id'], None)
     # number generic titles that collide ("Biología · Pizarras virtuales" x108)
     counts, idx = {}, {}
     for r in rows:
