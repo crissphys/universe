@@ -19,9 +19,9 @@
   var STN = { s: 'Sólido', l: 'Líquido', g: 'Gas', u: 'Desconocido' };
   var unit = TP.store.get('unit', 'K');
 
-  document.title = e.name + ' (' + e.sym + '), elemento ' + e.z + ' | Tabla periódica | Universe to Study';
+  document.title = e.name + ' (' + e.sym + '): estados de oxidación y propiedades | Tabla periódica UNIverse';
   function setMeta(sel, attr, v) { var n = $(sel); if (n) n.setAttribute(attr, v); }
-  setMeta('meta[name="description"]', 'content', e.name + ' (' + e.sym + '), elemento ' + e.z + ': ' + cat.n.toLowerCase() + ', masa ' + TP.num(e.mass) + ' u, configuración ' + e.cfgShort + '. Propiedades, energía de ionización, Bohr, orbitales, descubrimiento y usos.');
+  setMeta('meta[name="description"]', 'content', e.name + ' (' + e.sym + '), elemento ' + e.z + (e.ox ? ': estados de oxidación ' + e.ox : '') + '; ' + cat.n.toLowerCase() + ', masa ' + TP.num(e.mass) + ' u, configuración ' + e.cfgShort + '. Propiedades, energía de ionización, Bohr, orbitales, descubrimiento y usos.');
   setMeta('meta[property="og:title"]', 'content', document.title);
   setMeta('link[rel="canonical"]', 'href', 'https://universetostudy.com' + TP.url(e));
 

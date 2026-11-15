@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>UNIverse to Study · Ingresa a la UNI</title>
-<meta name="description" content="Ranking CEPREUNI 2027-1, biblioteca de libros y exámenes de admisión, y planificador de estudio para ingresar a la Universidad Nacional de Ingeniería.">
+<title>Preuniversitario gratuito para ingresar a la UNI | UNIverse</title>
+<meta name="description" content="Grupo preuniversitario gratuito para ingresar a la UNI: libros de Lumbreras, Cuzcano y más editoriales, exámenes de admisión, temario, ranking CEPREUNI y resultados.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#08080a">
 <link rel="canonical" href="https://universetostudy.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="UNIverse to Study · Ingresa a la UNI">
-<meta property="og:description" content="Ranking CEPREUNI, biblioteca y planificador para ingresar a la Universidad Nacional de Ingeniería.">
+<meta property="og:title" content="Preuniversitario gratuito para ingresar a la UNI | UNIverse">
+<meta property="og:description" content="Grupo preuniversitario gratuito para ingresar a la UNI: libros de Lumbreras, Cuzcano y más editoriales, exámenes de admisión, temario, ranking CEPREUNI y resultados.">
 <meta property="og:url" content="https://universetostudy.com/">
 <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png?v=2" sizes="32x32" type="image/png">
@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/assets/home/home.css?v=20261110">
+<link rel="stylesheet" href="/assets/home/home.css?v=20261114-seo">
 <script>
 /* idioma y sesión antes del primer pintado: evita ver el texto o la cuenta equivocados un instante */
 (function(d){var L=['es','en','de','pt'],s=null;try{s=localStorage.getItem('universe_lang');if(localStorage.getItem('universe_auth_token'))d.dataset.auth='1'}catch(e){}
@@ -27,7 +27,7 @@ if(L.indexOf(s)<0){s='es';var n=navigator.languages||[navigator.language||'es'];
 try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.lang=s==='es'?'es-419':s;d.dataset.lang=s;if(s!=='es')d.dataset.pending='1';d.className='js'})(document.documentElement);
 </script>
 <script src="/universe-ui/auth.js?v=20261110" defer></script>
-<script src="/assets/home/home.js?v=20261114-calcpre" defer></script>
+<script src="/assets/home/home.js?v=20261114-seo" defer></script>
 <script src="/assets/home/blackhole.js?v=20261111" defer></script>
 </head>
 <body>
@@ -53,11 +53,11 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
 </header>
 
 <main id="main">
-  <section class="hero" aria-labelledby="hero-title">
+  <section class="hero" aria-labelledby="hero-h1">
     <canvas class="bh" id="bh" aria-hidden="true"></canvas>
     <div class="wrap hero-inner">
-      <h1 class="hero-title" id="hero-title" aria-label="Ingresa a la UNI"><span class="rot" id="rot" aria-hidden="true"><span class="on">INGRESA A</span></span><span class="fixed" data-i18n="hero.fixed" aria-hidden="true">LA UNI</span></h1>
-      <p class="hero-sub" data-i18n="hero.sub">Prepárate para la Universidad Nacional de Ingeniería.</p>
+      <p class="hero-title" id="hero-title" aria-hidden="true"><span class="rot" id="rot" aria-hidden="true"><span class="on">INGRESA A</span></span><span class="fixed" data-i18n="hero.fixed" aria-hidden="true">LA UNI</span></p>
+      <h1 class="hero-sub" id="hero-h1" data-i18n="hero.sub">Grupo preuniversitario gratuito para ingresar a la UNI</h1>
       <form class="search" id="search" role="search" action="/ranking" autocomplete="off">
         <label class="sr" for="q" data-i18n="search.label">Buscar en UNIverse</label>
         <svg class="search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>

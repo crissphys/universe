@@ -261,7 +261,7 @@ addEventListener('scroll',()=>{if(!scrollScheduled){scrollScheduled=true;request
 const startsHome=['/','/index','/index.html'].includes(location.pathname.replace(/\/$/,''));
 
 translate();
-const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261114-calcpre');
+const {startPlatform,startNativeNavigation}=await import('./platform.js?v=20261114-seo');
 if(!document.body.dataset.native) startPlatform({icon,tools,openPreferences:()=>openDialog($('#preferences'))});
 else startNativeNavigation(icon);
 if(startsHome) startNativeNavigation(icon,{home:true});

@@ -31,7 +31,7 @@
     'lang.label': ['Idioma: {x}', 'Language: {x}', 'Sprache: {x}', 'Idioma: {x}'],
     'hero.fixed': ['LA UNI', 'UNI', 'UNI', 'UNI'],
     'hero.aria': ['Ingresa a la UNI', 'Get into UNI', 'Schaff die UNI', 'Entre na UNI'],
-    'hero.sub': ['Prepárate para la Universidad Nacional de Ingeniería.', 'Get ready for Peru’s National University of Engineering.', 'Bereite dich auf die Nationale Universität für Ingenieurwesen in Peru vor.', 'Prepare-se para a Universidade Nacional de Engenharia do Peru.'],
+    'hero.sub': ['Grupo preuniversitario gratuito para ingresar a la UNI', 'Free pre-university study group to get into UNI', 'Kostenlose Lerngruppe für die Aufnahme an der UNI', 'Grupo pré-universitário gratuito para entrar na UNI'],
     'search.label': ['Buscar en UNIverse', 'Search UNIverse', 'In UNIverse suchen', 'Buscar no UNIverse'],
     'search.pre': ['Busca', 'Search', 'Suche', 'Busque'],
     'search.go': ['Buscar', 'Search', 'Suchen', 'Buscar'],
