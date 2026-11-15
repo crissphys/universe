@@ -427,6 +427,15 @@
   }, { passive: true });
   totop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
+  /* ---------- copias viejas de /calculadora ---------- */
+  // Atrás/adelante usa la copia guardada sin revalidar: se reemplaza por la redirección 301 actual, una vez por navegador.
+  try {
+    if (!localStorage.getItem('universe-calc-legacy')) {
+      Promise.all(['/calculadora', '/calculadora/', '/calculadora.html'].map(u => fetch(u, { cache: 'reload', redirect: 'manual', credentials: 'same-origin' })))
+        .then(() => localStorage.setItem('universe-calc-legacy', '1')).catch(() => {});
+    }
+  } catch (e) { /* sin almacenamiento */ }
+
   /* ---------- arranque ---------- */
   buildNotes();
   fetch('/cepreuni/calculadorapre/cortes.json?v=20261114').then(r => r.json()).then(d => {
