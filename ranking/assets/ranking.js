@@ -53,6 +53,7 @@
     { key: 'pc7', label: '7.ª práctica', step: '7PC', weight: 1 },
     { key: 'ef', label: 'Examen final', step: 'EF', weight: 6 }
   ];
+  var VOC = { key: 'voc', label: 'Vocacional 1', weight: 1, optional: true };
   var BASIC = []; for (var b = 1; b <= 9; b++) BASIC.push({ key: 'e' + b, label: b + '.ª evaluación', weight: 1 });
   var TRACKS = {
     pre: { label: 'Pre Lima', sede: 'Lima', src: 'pre', max: 150, metas: PRE },
@@ -81,7 +82,7 @@
     return ds;
   }
   function applyDrop(row, metas) {
-    var inc = row.v.map(function (v, i) { return { i: i, v: v.value, w: metas[i].weight, drop: metas[i].drop }; });
+    var inc = row.v.map(function (v, i) { return { i: i, v: v.value, w: metas[i].weight, drop: metas[i].drop, na: v.state === 'na' }; }).filter(function (x) { return !x.na; });
     var cand = inc.filter(function (x) { return x.drop; });
     if (cand.length >= 2) {
       var low = cand.reduce(function (l, x) { return x.v < l.v ? x : l; });
@@ -97,6 +98,7 @@
   function rowFrom(r, metas) {
     var row = { code: r.code, name: r.name || '', sede: r.sede || '', search: fold(r.code + ' ' + (r.name || '')) };
     row.v = metas.map(function (m) {
+      if (m.optional && r[m.key] === undefined && !r[m.key + 'Status']) return { value: 0, real: false, state: 'na' }; // no rindió este examen: no cuenta
       var s = score(r[m.key]), absent = r[m.key + 'Status'] === 'AUSENTE';
       return { value: s == null ? 0 : s, real: s != null && !absent, state: absent ? 'absent' : s == null ? 'pending' : 'counted' };
     });
@@ -119,8 +121,12 @@
   function buildCurrent(key) {
     if (cacheC[key]) return cacheC[key];
     var t = TRACKS[key];
-    var raws = ((cur && cur[t.src]) || []).filter(function (r) { return !t.sede || (r.sede || 'Lima') === t.sede; });
-    var metas = t.metas.filter(function (m) { return raws.some(function (r) { return score(r[m.key]) != null || r[m.key + 'Status']; }); });
+    var voc = window.UNIVERSE_VOCACIONAL;
+    var raws = ((cur && cur[t.src]) || []).filter(function (r) { return !t.sede || (r.sede || 'Lima') === t.sede; }).map(function (r) {
+      var v = t.src === 'pre' && voc ? voc.rows[r.code] : undefined; // nota sobre 20 -> escala 150
+      return v === undefined ? r : Object.assign({}, r, v ? { voc: v[1] * 7.5 } : { voc: null, vocStatus: 'AUSENTE' });
+    });
+    var metas = t.metas.concat(t.src === 'pre' ? [VOC] : []).filter(function (m) { return raws.some(function (r) { return score(r[m.key]) != null || r[m.key + 'Status']; }); });
     var rows = raws.map(function (r) { return rowFrom(r, metas); });
     return (cacheC[key] = finish({ label: t.label, max: t.max, scoreLabel: t.src === 'basic' ? 'Promedio' : 'Ponderado', metas: metas, rows: rows, hasNames: rows.some(function (r) { return r.name; }), dropText: 'Tu nota más baja entre las prácticas no cuenta' }));
   }
@@ -254,7 +260,7 @@
       '<p class="pct">' + (row.place === 1 ? '<b>Primer puesto</b>' : 'Por encima del <b>' + pctAbove(ds, row) + ' %</b> de los estudiantes') + '</p>' +
       histHTML(ds, { mark: row.avg });
     var items = ds.metas.map(function (m, i) {
-      var v = row.v[i], s = v.state;
+      var v = row.v[i], s = v.state; if (s === 'na') return '';
       var note = s === 'dropped' ? ds.dropText : s === 'absent' ? 'Ausente · cuenta 0' : s === 'pending' ? (ds.pendingText || 'Nota no publicada · cuenta 0') : '';
       var rank = v.real ? 'Puesto ' + int(v.rank) + ' de ' + int(v.of) : '';
       var val = s === 'absent' ? 'Ausente' : fmt(v.value, ds.max === 150 ? 2 : 2);
@@ -262,7 +268,7 @@
         '<span class="bar"><i style="--w:' + Math.min(100, v.value / ds.max * 100).toFixed(1) + '%"></i></span>' +
         '<span class="note">' + esc([rank, note].filter(Boolean).join(' · ')) + '</span></li>';
     }).join('');
-    var inc = ds.metas.map(function (m, i) { return { m: m, v: row.v[i] }; }).filter(function (x) { return x.v.state !== 'dropped'; });
+    var inc = ds.metas.map(function (m, i) { return { m: m, v: row.v[i] }; }).filter(function (x) { return x.v.state !== 'dropped' && x.v.state !== 'na'; });
     var calc = row.avg == null ? '' : '<p class="calc"><b>Nota × peso</b><br>' + inc.map(function (x) { return fmt(x.v.value, 2) + '×' + x.m.weight; }).join(' + ') +
       '<span class="eq">' + fmt(row.sum, 2) + ' ÷ ' + row.den + ' = <strong>' + fmt(row.avg) + '</strong></span></p>';
     return '<header class="res-head"><div><p class="res-k">' + esc(ds.label) + '</p><h2 id="res-title">' + esc(row.name || (ds.hasNames ? 'Nombre no publicado' : 'Código ' + row.code)) + '</h2>' +
