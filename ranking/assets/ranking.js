@@ -53,7 +53,7 @@
     { key: 'pc7', label: '7.ª práctica', step: '7PC', weight: 1 },
     { key: 'ef', label: 'Examen final', step: 'EF', weight: 6 }
   ];
-  var VOC = { key: 'voc', label: 'Vocacional 1', weight: 1, optional: true };
+  function vocMetas() { var v = window.UNIVERSE_VOCACIONAL; return v ? v.exams.map(function (e) { return { key: e.key, label: e.label, weight: 1, optional: true, drop: 'voc' }; }) : []; }
   var BASIC = []; for (var b = 1; b <= 9; b++) BASIC.push({ key: 'e' + b, label: b + '.ª evaluación', weight: 1 });
   var TRACKS = {
     pre: { label: 'Pre Lima', sede: 'Lima', src: 'pre', max: 150, metas: PRE },
@@ -83,12 +83,14 @@
   }
   function applyDrop(row, metas) {
     var inc = row.v.map(function (v, i) { return { i: i, v: v.value, w: metas[i].weight, drop: metas[i].drop, na: v.state === 'na' }; }).filter(function (x) { return !x.na; });
-    var cand = inc.filter(function (x) { return x.drop; });
-    if (cand.length >= 2) {
-      var low = cand.reduce(function (l, x) { return x.v < l.v ? x : l; });
-      row.v[low.i].state = 'dropped';
-      inc = inc.filter(function (x) { return x !== low; });
-    }
+    [true, 'voc'].forEach(function (g) { // prácticas: se descarta 1 si hay 2+; vocacionales: las 5 mejores de 6
+      var cand = inc.filter(function (x) { return x.drop === g; });
+      if (cand.length >= (g === 'voc' ? 6 : 2)) {
+        var low = cand.reduce(function (l, x) { return x.v < l.v ? x : l; });
+        row.v[low.i].state = 'dropped';
+        inc = inc.filter(function (x) { return x !== low; });
+      }
+    });
     var w = inc.reduce(function (s, x) { return s + x.w; }, 0);
     row.sum = inc.reduce(function (s, x) { return s + x.v * x.w; }, 0);
     row.den = w;
@@ -123,10 +125,12 @@
     var t = TRACKS[key];
     var voc = window.UNIVERSE_VOCACIONAL;
     var raws = ((cur && cur[t.src]) || []).filter(function (r) { return !t.sede || (r.sede || 'Lima') === t.sede; }).map(function (r) {
-      var v = t.src === 'pre' && voc ? voc.rows[r.code] : undefined; // nota sobre 20 -> escala 150
-      return v === undefined ? r : Object.assign({}, r, v ? { voc: v[1] * 7.5 } : { voc: null, vocStatus: 'AUSENTE' });
+      if (t.src !== 'pre' || !voc) return r;
+      var o = Object.assign({}, r); // nota sobre 20 -> escala 150
+      voc.exams.forEach(function (e) { var v = e.rows[r.code]; if (v !== undefined) { o[e.key] = v ? v[1] * 7.5 : null; if (!v) o[e.key + 'Status'] = 'AUSENTE'; } });
+      return o;
     });
-    var metas = t.metas.concat(t.src === 'pre' ? [VOC] : []).filter(function (m) { return raws.some(function (r) { return score(r[m.key]) != null || r[m.key + 'Status']; }); });
+    var metas = t.metas.concat(t.src === 'pre' ? vocMetas() : []).filter(function (m) { return raws.some(function (r) { return score(r[m.key]) != null || r[m.key + 'Status']; }); });
     var rows = raws.map(function (r) { return rowFrom(r, metas); });
     return (cacheC[key] = finish({ label: t.label, max: t.max, scoreLabel: t.src === 'basic' ? 'Promedio' : 'Ponderado', metas: metas, rows: rows, hasNames: rows.some(function (r) { return r.name; }), dropText: 'Tu nota más baja entre las prácticas no cuenta' }));
   }
@@ -249,9 +253,13 @@
   }
   // Examen vocacional (solo Arquitectura y Urbanismo): se muestra aparte, no entra en el ponderado.
   function vocHTML(row) {
-    var v = window.UNIVERSE_VOCACIONAL, r = v && v.rows[row.code];
-    if (r === undefined) return '';
-    return '<h3>' + esc(v.title) + '</h3><p class="voc"><span>' + esc(v.specialty) + '</span>' + (r ? '<b>' + fmt(r[0], 2) + '</b><small>/ ' + v.max + ' · nota ' + fmt(r[1], 2) + '</small>' : '<b>Ausente</b>') + '</p>';
+    var v = window.UNIVERSE_VOCACIONAL;
+    var list = v ? v.exams.filter(function (e) { return e.rows[row.code] !== undefined; }) : [];
+    if (!list.length) return '';
+    return '<h3>' + esc(v.specialty) + ' · vocacional</h3>' + list.map(function (e) {
+      var r = e.rows[row.code];
+      return '<p class="voc"><span>' + esc(e.label) + '</span>' + (r ? '<b>' + fmt(r[0], 2) + '</b><small>/ ' + v.max + ' · nota ' + fmt(r[1], 2) + '</small>' : '<b>Ausente</b>') + '</p>';
+    }).join('');
   }
   function resultHTML(ds, row) {
     var big;
