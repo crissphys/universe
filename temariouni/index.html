@@ -17,9 +17,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
   <link rel="preload" href="/temariouni/temario.json?v=20261115" as="fetch" crossorigin>
   <link rel="stylesheet" href="/biblioteca/galaxia/catalogo.css?v=20261110">
-  <link rel="stylesheet" href="/temariouni/temario.css?v=20261115">
+  <link rel="stylesheet" href="/temariouni/temario.css?v=20261115b">
   <script>document.documentElement.classList.add('js')</script>
-  <script src="/temariouni/temario.js?v=20261115" defer></script>
+  <script src="/temariouni/temario.js?v=20261115b" defer></script>
 </head>
 <body>
   <a class="skip" href="#q">Saltar al buscador</a>
@@ -41,7 +41,7 @@
       <img class="t-crest" src="/temariouni/uni.webp" alt="" width="320" height="402" fetchpriority="high">
       <p class="t-kicker"><img src="/temariouni/uni.webp" alt="" width="18" height="23">Universidad Nacional de Ingeniería</p>
       <h1 id="hero-title"><span class="w">Temario</span> <em class="w">UNI</em></h1>
-      <p class="stats"><span id="st-adm">243</span>temas de admisión<i></i><span>3</span>ciclos CEPREUNI</p>
+      <p class="stats"><em class="g"><span id="st-adm">243</span>temas de admisión</em><i></i><em class="g"><span>3</span>ciclos CEPREUNI</em></p>
     </section>
 
     <div class="t-console" id="console">
@@ -56,7 +56,7 @@
           <div class="search-box">
             <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.3 3.3"/></svg>
             <label class="sr-only" for="q">Buscar un tema</label>
-            <input id="q" type="search" placeholder="Busca un tema" enterkeyhint="search" spellcheck="false">
+            <input id="q" type="search" placeholder="Buscar tema" enterkeyhint="search" spellcheck="false">
             <span class="search-count" id="q-count" aria-hidden="true"></span>
             <button class="search-clear" id="q-x" type="button" aria-label="Borrar búsqueda" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button>
           </div>
@@ -66,11 +66,9 @@
 
     <div class="wrap t-body">
       <section id="v-admision" class="view" role="tabpanel" aria-labelledby="tab-adm">
-        <div class="secs" id="secs" role="group" aria-label="Área"></div>
         <div class="adm">
           <nav class="idx" id="idx" aria-label="Cursos"></nav>
           <div class="adm-main">
-            <div class="crs-chips" id="crs-chips" role="group" aria-label="Curso"></div>
             <div id="course" aria-live="polite"><div class="sk" aria-hidden="true"><i class="sk-h"></i><i class="sk-r"></i><i class="sk-r"></i><i class="sk-r"></i><i class="sk-r"></i><i class="sk-r"></i><i class="sk-r"></i><i class="sk-r"></i></div></div>
           </div>
         </div>
@@ -86,11 +84,9 @@
           </div>
           <p class="cyc-title" id="cyc-title"></p>
         </div>
-        <div class="next" id="next"></div>
+        <button type="button" class="next" id="next"></button>
         <div class="weeks-wrap">
-          <button class="wk-arrow" id="wk-prev" type="button" aria-label="Semana anterior"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg></button>
           <div class="weeks" id="weeks" role="group" aria-label="Semanas"></div>
-          <button class="wk-arrow" id="wk-next" type="button" aria-label="Semana siguiente"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg></button>
         </div>
         <div id="week" aria-live="polite"></div>
       </section>
@@ -99,6 +95,14 @@
         <div id="news"></div>
       </section>
     </div>
+    <dialog class="sheet" id="pick" aria-labelledby="pick-t">
+      <div class="sheet-scrim"></div>
+      <div class="sheet-panel" tabindex="-1">
+        <div class="sheet-grab"><span></span></div>
+        <h2 class="pick-t" id="pick-t">Cursos</h2>
+        <nav class="pick-list" id="pick-list" aria-label="Cursos"></nav>
+      </div>
+    </dialog>
   </main>
 
   <footer class="foot">

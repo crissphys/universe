@@ -10,6 +10,7 @@
   var SEC_SHORT = { mat: 'Matemáticas', cie: 'Ciencias', apt: 'Aptitud y Humanidades' };
   var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ICON = {
+    down: '<svg class="c-down" viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 8 4.5 4.5L14.5 8"/></svg>',
     chev: '<svg class="t-chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4.5v11M4.5 10h11"/></svg>',
     go: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg>',
     out: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg>',
@@ -129,7 +130,7 @@
   }
 
   /* ---------- vistas ---------- */
-  var PH = { admision: 'Busca un tema: «Leyes de Newton»', cepreuni: '¿En qué semana toca…?' };
+  var PH = { admision: 'Buscar tema', cepreuni: 'Buscar tema' };
   function setView(v, first) {
     S.view = v; store.set('view', v);
     var tabs = $$('#views [role="tab"]');
@@ -167,17 +168,14 @@
     });
 
     // Admisión
-    $('#secs').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-sec]'); if (!b) return;
-      S.sec = b.dataset.sec;
-      var last = store.get('last_' + S.sec), list = D.admision.filter(function (s) { return s.id === S.sec; })[0].courses;
-      pickCourse(list.some(function (c) { return c.id === last; }) ? last : list[0].id);
-    });
     function onCourse(e) { var a = e.target.closest('[data-c]'); if (!a) return; e.preventDefault(); pickCourse(a.dataset.c); }
     $('#idx').addEventListener('click', onCourse);
-    $('#crs-chips').addEventListener('click', onCourse);
+    $('#pick-list').addEventListener('click', function (e) { var a = e.target.closest('[data-c]'); if (!a) return; e.preventDefault(); closePick(function () { pickCourse(a.dataset.c); }); });
+    var dlg = $('#pick');
+    dlg.addEventListener('cancel', function (e) { e.preventDefault(); closePick(); });
+    dlg.querySelector('.sheet-scrim').addEventListener('click', function () { closePick(); });
     $('#course').addEventListener('click', function (e) {
-      var row = e.target.closest('.t-row'), mk = e.target.closest('.mark'), so = e.target.closest('[data-sort]'), res = e.target.closest('.res[data-c]');
+      var row = e.target.closest('.t-row'), mk = e.target.closest('.mark'), pk = e.target.closest('[data-pick]'), res = e.target.closest('.res[data-c]');
       if (row) {
         var li = row.parentNode, open = !li.hasAttribute('data-open');
         li.toggleAttribute('data-open', open); row.setAttribute('aria-expanded', String(open)); li.querySelector('.t-body-wrap').inert = !open;
@@ -189,8 +187,8 @@
         tp.classList.toggle('done', on); mk.setAttribute('aria-pressed', String(on));
         mk.querySelector('span').textContent = on ? 'Estudiado' : 'Marcar como estudiado';
         paintProgress(); paintIdx();
-      } else if (so) {
-        S.sort = so.dataset.sort; paintCourse();
+      } else if (pk) {
+        openPick();
       } else if (res) {
         S.open = res.dataset.t; clearQ(true); pickCourse(res.dataset.c);
       }
@@ -203,10 +201,8 @@
       renderCep(); syncUrl();
     });
     $('#weeks').addEventListener('click', function (e) { var b = e.target.closest('[data-w]'); if (b) goWeek(+b.dataset.w); });
-    $('#wk-prev').addEventListener('click', function () { goWeek(S.wk - 1); });
-    $('#wk-next').addEventListener('click', function () { goWeek(S.wk + 1); });
-    $('#next').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-range]'); if (!b) return;
+    $('#next').addEventListener('click', function () {
+      if (!nextEval(S.cycle)) return;
       if (S.range) { S.range = null; } else { var ev = nextEval(S.cycle); S.range = ev; }
       paintNext(); paintWeeks(); paintWeek('fade'); syncUrl();
     });
@@ -230,34 +226,31 @@
   }
 
   /* ---------- Admisión ---------- */
-  function renderAdm() { paintSecs(); paintIdx(); paintChips(); paintCourse(); }
-  function pickCourse(id) {
-    S.course = id; S.sec = course(id).s; store.set('course', id); store.set('last_' + S.sec, id); S.sort = 'orden';
-    paintSecs(); paintIdx(); paintChips(); paintCourse(true); syncUrl(); toContent();
+  function renderAdm() { paintIdx(); paintCourse(); }
+  // Hoja inferior con la lista de cursos (teléfono y tableta; en escritorio la lista está a la izquierda).
+  function openPick() {
+    var d = $('#pick'); if (d.open) return;
+    d.classList.remove('is-closing'); d.showModal();
+    requestAnimationFrame(function () { d.setAttribute('data-open', ''); var on = d.querySelector('[aria-current]'); if (on) on.scrollIntoView({ block: 'center' }); });
   }
-  function paintSecs() {
-    $('#secs').innerHTML = D.admision.map(function (s) {
-      return '<button type="button" class="sec" data-s="' + s.id + '" data-sec="' + s.id + '" aria-pressed="' + (s.id === S.sec) + '">' + esc(s.name) + '<i>' + s.courses.length + '</i></button>';
-    }).join('');
+  function closePick(then) {
+    var d = $('#pick'); if (!d.open) { if (then) then(); return; }
+    d.classList.add('is-closing'); d.removeAttribute('data-open');
+    setTimeout(function () { d.close(); d.classList.remove('is-closing'); if (then) then(); }, REDUCED ? 0 : 240);
+  }
+  function pickCourse(id) {
+    S.course = id; S.sec = course(id).s; store.set('course', id);
+    paintIdx(); paintCourse(true); syncUrl(); toContent();
   }
   function doneCount(c) { var l = done[c.id] || []; return c.topics.filter(function (t, i) { return l.indexOf(String(i)) >= 0; }).length; }
   function paintIdx() {
-    $('#idx').innerHTML = D.admision.map(function (s) {
+    $('#idx').innerHTML = $('#pick-list').innerHTML = D.admision.map(function (s) {
       return '<div class="idx-g" data-s="' + s.id + '"><h3>' + esc(SEC_SHORT[s.id]) + '</h3>' + s.courses.map(function (c) {
         var n = doneCount(c);
         return '<a href="?curso=' + c.id + '" data-c="' + c.id + '"' + (c.id === S.course ? ' aria-current="page"' : '') + '>' + esc(c.name) +
           '<b class="' + (n && n === c.topics.length ? 'full' : '') + '">' + (n ? n + '/' : '') + c.topics.length + '</b></a>';
       }).join('') + '</div>';
     }).join('');
-  }
-  function paintChips() {
-    var s = D.admision.filter(function (x) { return x.id === S.sec; })[0];
-    var box = $('#crs-chips');
-    box.innerHTML = s.courses.map(function (c) {
-      return '<button type="button" class="chip" data-c="' + c.id + '" aria-pressed="' + (c.id === S.course) + '">' + esc(c.name) + '<i>' + c.topics.length + '</i></button>';
-    }).join('');
-    var on = box.querySelector('[aria-pressed="true"]');
-    if (on) box.scrollLeft = on.offsetLeft - (box.clientWidth - on.offsetWidth) / 2;
   }
   function paintProgress() {
     var c = course(S.course), n = doneCount(c), el = $('#c-prog');
@@ -270,14 +263,11 @@
     var box = $('#course');
     if (S.q) return paintAdmSearch(box);
     $('#q-count').textContent = '';
-    var c = course(S.course), list = done[c.id] || [], hasF = c.topics.some(function (t) { return t.f; });
-    if (!hasF) S.sort = 'orden';
+    var c = course(S.course), list = done[c.id] || [];
     var rows = c.topics.map(function (t, i) { return { t: t, i: i }; });
-    if (S.sort === 'freq') rows.sort(function (a, b) { return b.t.f - a.t.f || a.i - b.i; });
-    var head = '<div class="c-head" data-s="' + c.s + '"><h2>' + esc(c.name) + '</h2><div class="c-meta">' +
-      '<p class="c-prog" id="c-prog"><span class="bar"><i></i></span><span class="lbl"></span></p>' +
-      (hasF ? '<div class="sort" role="group" aria-label="Orden"><button type="button" data-sort="orden" aria-pressed="' + (S.sort === 'orden') + '">Temario</button><button type="button" data-sort="freq" aria-pressed="' + (S.sort === 'freq') + '">Más preguntados</button></div>' : '') +
-      '</div></div>';
+    var head = '<div class="c-head" data-s="' + c.s + '"><p class="c-sec">' + esc(SEC_SHORT[c.s]) + '</p>' +
+      '<h2><button type="button" class="c-pick" data-pick aria-haspopup="dialog">' + esc(c.name) + ICON.down + '</button></h2>' +
+      '<p class="c-prog" id="c-prog"><span class="bar"><i></i></span><span class="lbl"></span></p></div>';
     var body = '<ol class="topics">' + rows.map(function (r, k) {
       var t = r.t, id = String(r.i), isDone = list.indexOf(id) >= 0, open = S.open === id;
       var tag = t.f >= 2 ? '<span class="freq-tag">' + freqHtml(t.f) + '<span>' + (t.f === 3 ? 'Muy preguntado' : 'Frecuente') + '</span></span>' : t.f ? '<span class="freq-tag">' + freqHtml(t.f) + '</span>' : '<span></span>';
@@ -325,11 +315,13 @@
   }
   function paintNext() {
     var ev = nextEval(S.cycle), el = $('#next');
-    if (!ev) { el.innerHTML = '<div><p class="k">' + esc(cyc().title) + '</p><h2>Ciclo terminado</h2></div>'; return; }
+    el.disabled = !ev;
+    if (!ev) { el.innerHTML = '<span class="nx"><span class="k">' + esc(cyc().title) + '</span><span class="nm">Ciclo terminado</span></span>'; return; }
     var d = daysTo(ev.d), when = d <= 0 ? 'Hoy' : d === 1 ? 'Mañana' : 'En ' + d + ' días';
     var r = ev.r[0] === ev.r[1] ? 'semana ' + ev.r[0] : 'semanas ' + ev.r[0] + ' a ' + ev.r[1];
-    el.innerHTML = '<div><p class="k">Siguiente evaluación</p><h2>' + esc(ev.n) + '</h2><p class="d"><b>' + when + '</b> · ' + esc(day(ev.d, { weekday: 'long', day: 'numeric', month: 'long' })) + ' · entran ' + r + '</p></div>' +
-      '<button type="button" class="btn' + (S.range ? ' ghost' : '') + '" data-range>' + (S.range ? 'Volver a la semana' : 'Ver lo que entra') + '</button>';
+    el.setAttribute('aria-pressed', String(!!S.range));
+    el.innerHTML = '<span class="nx"><span class="k">Siguiente evaluación</span><span class="nm">' + esc(ev.n) + '</span><span class="d"><b>' + when + '</b> · ' + esc(day(ev.d, { weekday: 'long', day: 'numeric', month: 'long' })) + '</span></span>' +
+      '<span class="go">' + (S.range ? 'Ver semana ' + (S.wk + 1) : 'Entran ' + r) + ICON.go + '</span>';
   }
   function paintWeeks() {
     var c = cyc(), now = curWeek(S.cycle), t = todayIso(), html = '';
@@ -341,7 +333,6 @@
       c.evals.forEach(function (e) { if (e.d > w[1] && (!nx || e.d < nx[0])) html += '<span class="wk-ev" title="' + esc(e.n + ', ' + day(e.d, { day: 'numeric', month: 'short' })) + '"></span>'; });
     });
     var box = $('#weeks'); box.innerHTML = html;
-    $('#wk-prev').disabled = S.wk <= 0 || !!S.range; $('#wk-next').disabled = S.wk >= c.weeks.length - 1 || !!S.range;
     var on = box.querySelector('[aria-pressed="true"]') || box.querySelector('.inr');
     if (on) box.scrollTo({ left: on.offsetLeft - (box.clientWidth - on.offsetWidth) / 2, behavior: REDUCED ? 'auto' : 'smooth' });
   }
