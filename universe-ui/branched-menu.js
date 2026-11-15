@@ -9,7 +9,7 @@ const defaults = [
     { value: '/admision', label: 'Admisión UNI', icon: 'cap' }
   ] },
   { label: 'Aprende', children: [
-    { value: '/temario', label: 'Temario', icon: 'list' },
+    { value: '/temariouni', label: 'Temario', icon: 'list' },
     { value: '/biblioteca', label: 'Biblioteca', icon: 'book' },
     { value: '/experimentos/tablaperiodica', label: 'Tabla periódica', icon: 'grid' }
   ] },

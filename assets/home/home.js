@@ -254,7 +254,7 @@
     ['/biblioteca/lumbreras', null, 'lib.lum.s', 'book', 'lumbreras libros rojos azules temas selectos compendio', 'Lumbreras'],
     ['/biblioteca/librosuniversitarios', 'lib.univ', 'lib.univ.s', 'book', 'universitarios calculo fisica universitaria libros carrera'],
     ['/planificador', 'study.plan', 'study.plan.s', 'plan', 'planificador plan semana tareas organizar horario estudio'],
-    ['/temario', 'study.syl', 'study.syl.s', 'plan', 'temario temas silabo contenidos admision cepreuni'],
+    ['/temariouni', 'study.syl', 'study.syl.s', 'plan', 'temario temas silabo contenidos admision cepreuni'],
     ['/docentes-cepreuni', 'study.room', 'study.room.s', 'info', 'docentes profesores aulas salones guia horario'],
     ['/informacion-cepreuni', 'study.info', 'study.info.s', 'info', 'informacion cepreuni normas reglamento consejos estrategia']
   ];

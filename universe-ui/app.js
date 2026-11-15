@@ -21,7 +21,7 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches){
  addEventListener('scroll',hideCover,{passive:true,capture:true});
 }
 const tools=[
- {id:'syllabus',name:'Temario',en:'Syllabus',desc:'Conoce el mapa. Identifica los conceptos que necesitas dominar.',descEn:'Know the map. Identify the concepts you need to master.',url:'/temario',icon:'list',keys:'temas algebra fisica aritmetica matematica química'},
+ {id:'syllabus',name:'Temario',en:'Syllabus',desc:'Conoce el mapa. Identifica los conceptos que necesitas dominar.',descEn:'Know the map. Identify the concepts you need to master.',url:'/temariouni',icon:'list',keys:'temas algebra fisica aritmetica matematica química'},
  {id:'library',name:'Biblioteca',en:'Library',desc:'Libros, editoriales y colecciones para ampliar tu universo.',descEn:'Books, publishers and collections to expand your universe.',url:'/biblioteca',icon:'book',keys:'libro pdf lectura material algebra física química resumenes formularios academias universidades cursos'},
  {id:'periodic',name:'Tabla periódica',en:'Periodic table',desc:'118 elementos, tendencias, átomo, enlace e historia en un solo lugar.',descEn:'118 elements, trends, atom models, bonding and history in one place.',url:'/experimentos/tablaperiodica',icon:'orbit',keys:'quimica elementos tabla periodica propiedades electronegatividad configuracion electronica bohr orbitales lewis mendeleiev atomo enlace'},
  {id:'mock',name:'Simulacros',en:'Mock exams',desc:'Convierte conocimiento en criterio. Practica y revisa.',descEn:'Turn knowledge into judgment. Practice and review.',url:'/simulacros',icon:'target',keys:'practicar prueba preguntas examen evaluar pc'},
@@ -87,13 +87,9 @@ function buildIndex(d,directory,mats,exams){
  for(const g of directory?.groups||[])for(const item of g.items)rows.push(row('library',item.title,g.title,'/biblioteca#carpetas',''));
  const s=d.syllabus||{};
  for(const [id,c] of Object.entries(s.temarios||{})){
-  rows.push(row('syllabus',c.name,`Temario · ${(c.semanas||[]).length} semanas de admisión y ${(c.cepreSemanas||[]).length} de CEPREUNI`,'/temario',id+' '+(c.cat||'')));
+  rows.push(row('syllabus',c.name,`Temario · ${(c.semanas||[]).length} semanas de admisión y ${(c.cepreSemanas||[]).length} de CEPREUNI`,'/temariouni?curso='+id,id+' '+(c.cat||'')));
   for(const m of [...(c.semanas||[]),...(c.cepreSemanas||[])])for(const t of m.topics||[])
-   rows.push(row('syllabus',t.title.replace(/^\d+\.\s*/,''),`${c.name} · ${m.label}`,'/temario',(t.items||[]).join(' ').slice(0,400)));
- }
- for(const c of s.sanMarcos?.courses||[]){
-  rows.push(row('syllabus',c.name,`San Marcos · ${c.topics.length} temas`,'/temario',c.group));
-  for(const t of c.topics)rows.push(row('syllabus',t.split('. ')[0].slice(0,90),`San Marcos · ${c.name}`,'/temario',t));
+   rows.push(row('syllabus',t.title.replace(/^\d+\.\s*/,''),`${c.name} · ${m.label}`,'/temariouni?curso='+id,(t.items||[]).join(' ').slice(0,400)));
  }
  const ROUTES={amautas:'/biblioteca/amautas',manhattan:'/biblioteca/manhattan',universe:'/biblioteca/universe',cuzcano:'/biblioteca/cuzcano',lumbreras:'/biblioteca/lumbreras',college:'/biblioteca/librosuniversitarios'};
  // Cada libro lleva su portada (la misma que muestra el catálogo) y el enlace a su posición: ?libro=<índice>.
