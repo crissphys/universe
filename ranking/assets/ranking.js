@@ -53,7 +53,6 @@
     { key: 'pc7', label: '7.ª práctica', step: '7PC', weight: 1 },
     { key: 'ef', label: 'Examen final', step: 'EF', weight: 6 }
   ];
-  function vocMetas() { var v = window.UNIVERSE_VOCACIONAL; return v ? v.exams.map(function (e) { return { key: e.key, label: e.label, weight: 1, optional: true, drop: 'voc' }; }) : []; }
   var BASIC = []; for (var b = 1; b <= 9; b++) BASIC.push({ key: 'e' + b, label: b + '.ª evaluación', weight: 1 });
   var TRACKS = {
     pre: { label: 'Pre Lima', sede: 'Lima', src: 'pre', max: 150, metas: PRE },
@@ -123,14 +122,8 @@
   function buildCurrent(key) {
     if (cacheC[key]) return cacheC[key];
     var t = TRACKS[key];
-    var voc = window.UNIVERSE_VOCACIONAL;
-    var raws = ((cur && cur[t.src]) || []).filter(function (r) { return !t.sede || (r.sede || 'Lima') === t.sede; }).map(function (r) {
-      if (t.src !== 'pre' || !voc) return r;
-      var o = Object.assign({}, r); // nota sobre 20 -> escala 150
-      voc.exams.forEach(function (e) { var v = e.rows[r.code]; if (v !== undefined) { o[e.key] = v ? v[1] * 7.5 : null; if (!v) o[e.key + 'Status'] = 'AUSENTE'; } });
-      return o;
-    });
-    var metas = t.metas.concat(t.src === 'pre' ? vocMetas() : []).filter(function (m) { return raws.some(function (r) { return score(r[m.key]) != null || r[m.key + 'Status']; }); });
+    var raws = ((cur && cur[t.src]) || []).filter(function (r) { return !t.sede || (r.sede || 'Lima') === t.sede; });
+    var metas = t.metas.filter(function (m) { return raws.some(function (r) { return score(r[m.key]) != null || r[m.key + 'Status']; }); });
     var rows = raws.map(function (r) { return rowFrom(r, metas); });
     return (cacheC[key] = finish({ label: t.label, max: t.max, scoreLabel: t.src === 'basic' ? 'Promedio' : 'Ponderado', metas: metas, rows: rows, hasNames: rows.some(function (r) { return r.name; }), dropText: 'Tu nota más baja entre las prácticas no cuenta' }));
   }
@@ -252,14 +245,18 @@
     return p >= 99 ? Math.floor(p * 10) / 10 : Math.round(p);
   }
   // Examen vocacional (solo Arquitectura y Urbanismo): se muestra aparte, no entra en el ponderado.
+  // Arquitectura: PAD = PID + 1.54 (SV + PVD), máx. 3701. PID = ponderado × 18 (máx. 2700); SV = 5 mejores vocacionales (máx. 450).
+  // Parcial: usa lo publicado (las vocacionales o la PVD que faltan suman 0). No cambia el puesto del ranking.
   function vocHTML(row) {
     var v = window.UNIVERSE_VOCACIONAL;
     var list = v ? v.exams.filter(function (e) { return e.rows[row.code] !== undefined; }) : [];
     if (!list.length) return '';
+    var pts = list.map(function (e) { var r = e.rows[row.code]; return r ? r[0] : 0; }).sort(function (a, b) { return b - a; });
+    var sv = pts.slice(0, 5).reduce(function (s, x) { return s + x; }, 0), pad = row.avg == null ? null : row.avg * 18 + 1.54 * sv;
     return '<h3>' + esc(v.specialty) + ' · vocacional</h3>' + list.map(function (e) {
       var r = e.rows[row.code];
       return '<p class="voc"><span>' + esc(e.label) + '</span>' + (r ? '<b>' + fmt(r[0], 2) + '</b><small>/ ' + v.max + ' · nota ' + fmt(r[1], 2) + '</small>' : '<b>Ausente</b>') + '</p>';
-    }).join('');
+    }).join('') + (pad == null ? '' : '<p class="calc"><b>PAD parcial</b><br>' + fmt(row.avg * 18, 2) + ' + 1.54 × (' + fmt(sv, 2) + ' + 0)<span class="eq"><strong>' + fmt(pad, 2) + '</strong> / 3701</span></p>');
   }
   function resultHTML(ds, row) {
     var big;
