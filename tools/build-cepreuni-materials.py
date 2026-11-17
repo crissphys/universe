@@ -84,6 +84,8 @@ def ext_of(name):
 
 
 def iso(mod):
+    if re.match(r'\d{1,2}:\d{2}', mod):  # Drive shows only the time for files modified today
+        return date.today().isoformat()
     m = re.match(r'(\d+)\s+([a-z]+)', fold(mod))
     return f'2026-{MONTHS[m[2]]:02d}-{int(m[1]):02d}' if m and m[2] in MONTHS else ''
 
@@ -200,7 +202,7 @@ def build(tree, cyc):
             items.append({**base, 'c': course, 'k': 'pizarra', 't': 'Pizarra' if who in ('', 'N/A') else who, 'x': base['x'] or 'jpg',
                           'w': week_of(raw) if 'semana' in low else None, 'p': part_of(raw)})
         elif 'solucionario' in top:
-            if ext in IMG or (cyc != '2027-1' and PAGE_SOL.match(raw)):  # page screenshots -> one link per Drive folder
+            if (ext in IMG and sub) or (cyc != '2027-1' and PAGE_SOL.match(raw)):  # page screenshots -> one link per Drive folder
                 group(path, kind='solucionario', mod=n['mod'])
                 continue
             course = course_of(raw, *sub)
@@ -223,9 +225,14 @@ def build(tree, cyc):
         elif 'resultado' in top:
             if cyc == '2027-1':
                 sede = 'Juliaca' if 'juliaca' in low else 'Lima'
-                ev = '1PC' if re.search(r'1\.?.?\s*pc|1pc', low) else '2PC' if '2pc' in low else '3PC' if '3pc' in low else 'Selección'
-                title = f"{ev.replace('PC', '.ª PC')} · {sede}".replace('Selección · ', 'Prueba de selección · ')
-                e = ev.replace('1PC', 'PC1').replace('2PC', 'PC2').replace('3PC', 'PC3')
+                pc = re.search(r'(?<!\d)([1-7])\.?.?\s*pc', low)
+                voc = re.search(r'(\d)\s*e\w*\s*vocacional', low)
+                if pc:
+                    title, e = f'{pc[1]}.ª PC · {sede}', f'PC{pc[1]}'
+                elif voc:
+                    title, e = f'{voc[1]}.ª Evaluación vocacional', ''
+                else:
+                    title, e = f'Prueba de selección · {sede}', 'Selección'
             else:
                 m = re.match(r'RESULTADOS?(\d)PC.*?(JULIACA)?$', raw.rsplit('.', 1)[0], re.I)
                 if m:
@@ -283,8 +290,9 @@ def build(tree, cyc):
         e = a.get('e') or ''
         third = -int(e[2:]) if a['k'] == 'resultado' and e[2:].isdigit() else (a.get('w') or 99)
         return (order[a['c']], kind_rank[a['k']], third, e, a.get('p') or '', a['t'])
-    pdfs = {(it['c'], it['k'], it['t'], it.get('w'), it.get('p')) for it in items if not it['x']}
-    items[:] = [it for it in items if not it['x'] or it['x'] not in ('pptx', 'ppt') or (it['c'], it['k'], it['t'], it.get('w'), it.get('p')) not in pdfs]
+    same = lambda it: (it['c'], it['k'], it['t'], it.get('w'), it.get('p'), it.get('e'))
+    pdfs = {same(it) for it in items if not it['x']}
+    items[:] = [it for it in items if not it['x'] or it['x'] not in ('pptx', 'ppt') or same(it) not in pdfs]
     for it in items:  # '1.0' is a whole week, not a part
         if it.get('p') in ('0', None):
             it.pop('p', None)
