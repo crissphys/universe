@@ -134,7 +134,7 @@
   totop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
   const prepare = d => d.items.map(it => ({ ...it, h: fold([it.t, it.c, TAG[it.k], KINDS.find(([k]) => k === group(it.k))?.[1] || '', it.e || '', EVENT[it.e] || '', it.w ? `semana ${it.w} sem s${it.w}` : '', EXT[it.x] || '', it.k === 'repaso' ? 'reforzamiento' : ''].join(' ')) }));
-  const load = cyc => (cache[cyc] ||= fetch(`${base}/materiales-${cyc}.json?v=20261117`).then(r => r.json()).then(d => ({ courses: d.courses, items: prepare(d) })));
+  const load = cyc => (cache[cyc] ||= fetch(`${base}/materiales-${cyc}.json?v=20261117b`).then(r => r.json()).then(d => ({ courses: d.courses, items: prepare(d) })));
 
   function renderCycles() {
     cyclesEl.innerHTML = CYCLES.map(c => `<button type="button" data-cycle="${c}" aria-pressed="${state.cycle === c}">${c}</button>`).join('');
