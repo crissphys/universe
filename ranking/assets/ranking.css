@@ -379,3 +379,6 @@ h1 { margin: 0; font-size: clamp(34px, 6vw, 56px); line-height: 1.02; letter-spa
 .voc { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 0; font-size: 13px; color: var(--fg-3); }
 .voc span { flex: 1 0 100%; color: var(--fg-2); }
 .voc b { font: 500 22px var(--mono); color: var(--fg); letter-spacing: -.03em; }
+
+.who-code { display: block; font: 400 11px var(--mono); color: var(--fg-3); letter-spacing: .02em; }
+.metric .who-code { grid-column: 1 / -1; margin-top: -2px; }

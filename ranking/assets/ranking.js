@@ -193,6 +193,11 @@
   }
   function sdOf(a, m) { return a.length ? Math.sqrt(a.reduce(function (s, x) { return s + (x - m) * (x - m); }, 0) / a.length) : null; }
   // Desviación estándar poblacional; máximos y mínimos solo con notas reales (sin ausentes ni pendientes).
+  // Código de quien sacó esa nota; si hubo empate, "+N" indica cuántos más.
+  function who(rows, i, val) {
+    var same = rows.filter(function (r) { return r.v[i].value === val; }).sort(function (a, b) { return a.code < b.code ? -1 : 1; });
+    return same[0].code + (same.length > 1 ? ' +' + (same.length - 1) : '');
+  }
   function statsOf(ds) {
     if (ds._st) return ds._st;
     var vals = ds.scored.map(function (r) { return r.avg; });
@@ -202,7 +207,7 @@
       var v = rows.map(function (r) { return r.v[i].value; }), mu = v.reduce(function (s, x) { return s + x; }, 0) / v.length;
       var hi = rows.reduce(function (a, r) { return r.v[i].value > a.v[i].value ? r : a; }, rows[0]);
       var lo = rows.reduce(function (a, r) { return r.v[i].value < a.v[i].value ? r : a; }, rows[0]);
-      return { label: m.label, n: v.length, sd: sdOf(v, mu), max: hi.v[i].value, maxWho: hi.name || hi.code, min: lo.v[i].value, minWho: lo.name || lo.code };
+      return { label: m.label, n: v.length, sd: sdOf(v, mu), max: hi.v[i].value, maxWho: who(rows, i, hi.v[i].value), min: lo.v[i].value, minWho: who(rows, i, lo.v[i].value) };
     });
     return (ds._st = { sd: sdOf(vals, ds.mean), min: Math.min.apply(null, vals), per: per });
   }
@@ -216,14 +221,14 @@
   function metricHTML(ds, key) {
     var per = statsOf(ds).per, scale = key === 'sd' ? (Math.max.apply(null, per.map(function (p) { return p.n ? p.sd : 0; })) || 1) : ds.max;
     return '<ul class="metric">' + per.map(function (p) {
-      return '<li><span>' + esc(p.label) + '</span><b>' + (p.n ? fmt(p[key], 2) : '—') + '</b><i style="--w:' + (p.n ? Math.min(100, p[key] / scale * 100) : 0).toFixed(1) + '%"></i></li>';
+      return '<li><span>' + esc(p.label) + '</span><b>' + (p.n ? fmt(p[key], 2) : '—') + '</b><i style="--w:' + (p.n ? Math.min(100, p[key] / scale * 100) : 0).toFixed(1) + '%"></i>' + (p.n && key !== 'sd' ? '<small class="who-code">' + esc(p[key + 'Who']) + '</small>' : '') + '</li>';
     }).join('') + '</ul>';
   }
   function tableHTML(ds) {
     return '<table class="ptable"><thead><tr><th scope="col">Prueba</th><th scope="col" title="Desviación estándar">Desv. est.</th><th scope="col">Máxima</th><th scope="col">Mínima</th></tr></thead><tbody>' +
       statsOf(ds).per.map(function (p) {
         if (!p.n) return '<tr><th scope="row">' + esc(p.label) + '</th><td>—</td><td>—</td><td>—</td></tr>';
-        return '<tr><th scope="row">' + esc(p.label) + '</th><td>' + fmt(p.sd, 2) + '</td><td title="' + esc(p.maxWho) + '">' + fmt(p.max, 2) + '</td><td title="' + esc(p.minWho) + '">' + fmt(p.min, 2) + '</td></tr>';
+        return '<tr><th scope="row">' + esc(p.label) + '</th><td>' + fmt(p.sd, 2) + '</td><td>' + fmt(p.max, 2) + '<small class="who-code">' + esc(p.maxWho) + '</small></td><td>' + fmt(p.min, 2) + '<small class="who-code">' + esc(p.minWho) + '</small></td></tr>';
       }).join('') + '</tbody></table>';
   }
   var CHEV_L = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>', CHEV_R = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
