@@ -6,7 +6,8 @@
   const fold = v => String(v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim();
   const fmt = (n, d = 2) => n == null || !isFinite(n) ? '—' : n.toFixed(d);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const DATA_URL = '/universe-ui/data/cepre-2027-1-ranking.js?v=20261026-pc1-2620333g';
+  const DATA_URL = '/universe-ui/data/cepre-2027-1-ranking.js?v=20261117-4pc';
+  const VOC_URL = '/ranking/data/vocacional.js?v=20261117';
   const KEY = 'universe-calc-pre';
 
   // Cronograma CEPRE UNI Pre 2027-1: todas las evaluaciones a las 9:00 a. m. de Lima.
@@ -87,8 +88,8 @@
   let pool = null, poolP = null;
   function loadPool() {
     return poolP ||= new Promise((ok, ko) => {
-      if (window.UNIVERSE_CEPRE_2027_1) return ok();
-      const s = document.createElement('script'); s.src = DATA_URL; s.onload = ok; s.onerror = ko; document.head.append(s);
+      const load = u => new Promise((y, n) => { const s = document.createElement('script'); s.src = u; s.onload = y; s.onerror = n; document.head.append(s); });
+      Promise.all([window.UNIVERSE_CEPRE_2027_1 ? 0 : load(DATA_URL), window.UNIVERSE_VOCACIONAL ? 0 : load(VOC_URL).catch(() => {})]).then(ok, ko);
     }).then(() => {
       const d = window.UNIVERSE_CEPRE_2027_1 || { pre: [] };
       const pub = EX.map(e => d.pre.some(r => r[e.k] != null || r[e.k + 'Status']));
@@ -366,7 +367,12 @@
       return (h.r[e.k + 'Status'] === 'AUSENTE' || h.r[e.k] == null) ? 0 : +h.r[e.k];
     });
     S.tag = EX.map((e, i) => !pool.pub[i] ? '' : h.r[e.k + 'Status'] === 'AUSENTE' ? 'aus' : h.r[e.k] == null ? 'sin' : '').concat(S.tag.slice(10));
-    S.v = v.concat(S.v.slice(10)); S.off = v.slice(); S.sede = h.sede === 'Juliaca' ? 'Juliaca' : 'Lima';
+    // vocacionales publicadas (Arquitectura y Urbanismo), en puntos sobre 90
+    const voc = (window.UNIVERSE_VOCACIONAL || { exams: [] }).exams;
+    const vv = S.v.slice(10, 16), vt = S.tag.slice(10, 16);
+    voc.forEach((e, j) => { const r = e.rows[h.code]; if (j < 6 && r !== undefined) { vv[j] = r ? r[0] : 0; vt[j] = r ? '' : 'aus'; } });
+    S.tag = S.tag.slice(0, 10).concat(vt, S.tag.slice(16));
+    S.v = v.concat(vv, S.v.slice(16)); S.off = v.slice(); S.sede = h.sede === 'Juliaca' ? 'Juliaca' : 'Lima';
     S.who = { code: h.code, name: h.name };
     q.value = ''; paintList({ hits: [] }); q.blur();
     paintWho(); paintSede(); paintInputs(); commit();

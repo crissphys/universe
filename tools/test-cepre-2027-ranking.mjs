@@ -38,6 +38,15 @@ assert.equal(data.pre.filter(row => row.pc3 != null).length, 2081);
 assert.equal(data.basic.filter(row => row.e4 != null).length, 98);
 console.log('3PC (2081 Pre) and 4th evaluation (98 Basic) verified');
 
+// Fourth practice (Pre) and fifth written evaluation (Basic), OCR checked against the published PDFs.
+const fourth = JSON.parse(await fs.readFile('data/cepreuni/2027-1/fourth-evaluation.json', 'utf8'));
+assert.deepEqual(fourth.sources.map(source => [source.track, source.sede, source.exam, source.count]), [['pre', 'Lima', 'pc4', 1931], ['pre', 'Juliaca', 'pc4', 75], ['basic', 'Lima', 'e5', 87]]);
+for (const source of fourth.sources) {
+  const rows = new Map(data[source.track].map(row => [row.code, row]));
+  for (const [, code, score] of source.rows) assert.equal(rows.get(code)[source.exam], score);
+}
+console.log('4PC (2006 Pre) and 5th evaluation (87 Basic) verified');
+
 // Exercise the actual browser calculation functions, including future exams.
 // No #p-c root here: the script only exposes its calculation hooks.
 const document = { querySelectorAll: () => [], getElementById: () => null };
