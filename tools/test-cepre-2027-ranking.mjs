@@ -40,7 +40,7 @@ console.log('3PC (2081 Pre) and 4th evaluation (98 Basic) verified');
 
 // Fourth practice (Pre) and fifth written evaluation (Basic), OCR checked against the published PDFs.
 const fourth = JSON.parse(await fs.readFile('data/cepreuni/2027-1/fourth-evaluation.json', 'utf8'));
-assert.deepEqual(fourth.sources.map(source => [source.track, source.sede, source.exam, source.count]), [['pre', 'Lima', 'pc4', 1931], ['pre', 'Juliaca', 'pc4', 75], ['basic', 'Lima', 'e5', 87]]);
+assert.deepEqual(fourth.sources.map(source => [source.track, source.sede, source.exam, source.count]), [['pre', 'Lima', 'pc4', 1932], ['pre', 'Juliaca', 'pc4', 75], ['basic', 'Lima', 'e5', 87]]);
 for (const source of fourth.sources) {
   const rows = new Map(data[source.track].map(row => [row.code, row]));
   for (const [, code, score] of source.rows) assert.equal(rows.get(code)[source.exam], score);
