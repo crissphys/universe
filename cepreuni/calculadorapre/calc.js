@@ -6,7 +6,7 @@
   const fold = v => String(v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim();
   const fmt = (n, d = 2) => n == null || !isFinite(n) ? '—' : n.toFixed(d);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const DATA_URL = '/universe-ui/data/cepre-2027-1-ranking.js?v=20261117-4pc';
+  const DATA_URL = '/universe-ui/data/cepre-2027-1-ranking.js?v=20261117-4pc2';
   const VOC_URL = '/ranking/data/vocacional.js?v=20261117';
   const KEY = 'universe-calc-pre';
 
