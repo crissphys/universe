@@ -15998,12 +15998,13 @@
         "catalog": "PRIMEROS RESÚMENES",
         "section": "3RA EDICIÓN",
         "title": "Filosofía",
-        "url": "",
+        "url": "https://drive.google.com/file/d/1CTBNnTHOPo6on4U0lQw64fRQeikWk-o2/view?usp=drive_link",
         "image": "/biblioteca/universe/assets/primeros-resumenes-filosofia-3ra.png",
         "series": "Primeros Resúmenes · 3.ª edición",
         "author": "Editorial Universe",
-        "upcoming": true,
-        "availabilityLabel": "Aún no disponible"
+        "upcoming": false,
+        "drivePreview": false,
+        "sourceTitle": "📂 PRIMEROS RESUMENES FILOSOFÍA 3RA EDICIÓN.pdf"
       },
       {
         "catalog": "PRIMEROS RESÚMENES",
