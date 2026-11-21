@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/assets/home/home.css?v=20261114-seo">
+<link rel="stylesheet" href="/assets/home/home.css?v=20261120-plan">
 <script>
 /* idioma y sesión antes del primer pintado: evita ver el texto o la cuenta equivocados un instante */
 (function(d){var L=['es','en','de','pt'],s=null;try{s=localStorage.getItem('universe_lang');if(localStorage.getItem('universe_auth_token'))d.dataset.auth='1'}catch(e){}
@@ -27,7 +27,7 @@ if(L.indexOf(s)<0){s='es';var n=navigator.languages||[navigator.language||'es'];
 try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.lang=s==='es'?'es-419':s;d.dataset.lang=s;if(s!=='es')d.dataset.pending='1';d.className='js'})(document.documentElement);
 </script>
 <script src="/universe-ui/auth.js?v=20261110" defer></script>
-<script src="/assets/home/home.js?v=20261114-seo" defer></script>
+<script src="/assets/home/home.js?v=20261120-plan" defer></script>
 <script src="/assets/home/blackhole.js?v=20261111" defer></script>
 </head>
 <body>
@@ -41,6 +41,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
       <a href="#biblioteca" data-i18n="lib.name">Biblioteca</a>
       <a href="/resumenes" data-i18n="lib.sum">Resúmenes</a>
       <a href="#estudio" data-i18n="study.name">Estudio</a>
+      <a class="nav-plan" href="/planificador" data-i18n="study.plan">Planificador</a>
     </nav>
     <div class="top-actions">
       <div class="lang">
@@ -69,6 +70,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
         <button class="search-go" type="submit"><span class="search-go-t" data-i18n="search.go">Buscar</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
         <div class="results" id="q-list" role="listbox" aria-label="Resultados" data-i18n-aria="search.results" hidden></div>
       </form>
+      <a class="plan-chip" id="plan-chip" href="/planificador" hidden><i aria-hidden="true"></i><span id="plan-chip-t"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
     </div>
   </section>
 
@@ -125,7 +127,7 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
         </div>
       </div>
       <ul class="links">
-        <li><a href="/planificador"><span class="lk-t" data-i18n="study.plan">Planificador</span><span class="lk-s" data-i18n="study.plan.s">Tu semana convertida en tareas</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a href="/planificador"><span class="lk-t" data-i18n="study.plan">Planificador</span><span class="lk-s" id="plan-s" data-i18n="study.plan.s">CEPREUNI, admisión o tu academia</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/temariouni"><span class="lk-t" data-i18n="study.syl">Temario</span><span class="lk-s" data-i18n="study.syl.s">Temas de admisión y CEPREUNI</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/docentes-cepreuni"><span class="lk-t" data-i18n="study.room">Guía de aulas</span><span class="lk-s" data-i18n="study.room.s">Docentes, salones y horarios</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
         <li><a href="/informacion-cepreuni"><span class="lk-t" data-i18n="study.info">Información CEPREUNI</span><span class="lk-s" data-i18n="study.info.s">Normas, estrategia y consejos</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
@@ -147,6 +149,8 @@ try{if(!sessionStorage.getItem('universe_warp'))d.dataset.warp='1'}catch(e){}d.l
         <a href="/admision">Admisión</a>
         <a href="/cepreuni">CEPREUNI</a>
         <a href="/temariouni">Temario</a>
+
+        <a href="/planificador">Planificador</a>
         <a href="/cepreuni/calculadorapre">Calculadora</a>
         <a href="/ranking">Ranking</a>
       </nav>

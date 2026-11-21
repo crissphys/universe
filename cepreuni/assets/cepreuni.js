@@ -412,7 +412,7 @@
       { t: 'Postulantes 2027-1', d: 'Cuántas personas eligieron cada carrera.', u: '/admision/cantidad-de-postulantes', i: 'users', g: ['Por carrera'] }
     ]],
     ['plan', 'Organizarme', 'Tu ciclo y tu semana', [
-      { t: 'Planificador', d: 'Convierte los temas en tu plan semanal y sigue tu avance.', u: '/planificador', i: 'plan', g: ['Temas', 'Tareas', 'Seguimiento'] },
+      { t: 'Planificador', d: 'Tu horario según tu ciclo y sus exámenes.', u: '/planificador?modo=cepre', i: 'plan', g: ['Temas', 'Tareas', 'Seguimiento'] },
       { t: 'Guía de aulas', d: 'Docentes y aulas del ciclo.', u: '/docentes-cepreuni', i: 'room', g: ['Docentes', 'Aulas'] },
       { t: 'Información del ciclo', d: 'Normas, faltas y evaluaciones, para estudiantes y familias.', u: '/informacion-cepreuni', i: 'info', g: ['Normas', 'Evaluaciones', 'Familias'] }
     ]]

@@ -633,154 +633,9 @@ function validPassword(value) {
   return password.length >= 8 && password.length <= 72 && /[A-Za-z]/.test(password) && /\d/.test(password);
 }
 
-const PLANNER_STUDENT_TYPES = ['cepreuni', 'academy', 'independent'];
-const PLANNER_CYCLES = ['preuniversitario', 'basico', 'ien', 'i'];
-const PLANNER_SHIFTS = ['morning', 'afternoon', 'custom'];
-const PLANNER_FOCUS = ['math', 'science', 'humanities', 'all'];
-const PLANNER_END_MODES = ['cepre-final', 'admission', 'custom'];
-const PLANNER_AREAS = ['Matemática', 'Ciencias', 'Humanidades', 'General'];
-const PLANNER_EVENT_TYPES = ['study', 'review', 'practice', 'exam', 'custom', 'break'];
-const PLANNER_EVENT_STATUS = ['pending', 'done', 'skipped'];
-
-function plannerDate(value) {
-  var date = cleanText(value, 10);
-  return /^20\d{2}-\d{2}-\d{2}$/.test(date) ? date : '';
-}
-
 function plannerTime(value) {
   var time = cleanText(value, 5);
-  return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time) ? time : '';
-}
-
-function plannerTimeMinutes(value) {
-  var time = plannerTime(value);
-  if (!time) return -1;
-  var parts = time.split(':').map(Number);
-  return parts[0] * 60 + parts[1];
-}
-
-function sanitizePlannerEvent(event, index) {
-  event = event && typeof event === 'object' ? event : {};
-  var date = plannerDate(event.date);
-  var start = plannerTime(event.start);
-  var end = plannerTime(event.end);
-  if (!date || !start || !end) return null;
-  return {
-    id: cleanId(event.id || ('event_' + index)).slice(0, 80) || ('event_' + index),
-    date,
-    start,
-    end,
-    course: cleanText(event.course, 60),
-    area: PLANNER_AREAS.includes(event.area) ? event.area : 'General',
-    topic: cleanText(event.topic, 220),
-    type: PLANNER_EVENT_TYPES.includes(event.type) ? event.type : 'study',
-    status: PLANNER_EVENT_STATUS.includes(event.status) ? event.status : 'pending',
-    source: cleanText(event.source, 40),
-    assessment: cleanText(event.assessment, 60)
-  };
-}
-
-function sanitizePlannerEvents(events) {
-  var used = new Set();
-  return (Array.isArray(events) ? events : []).map(sanitizePlannerEvent).filter(Boolean).map(function (event, index) {
-    if (!used.has(event.id)) {
-      used.add(event.id);
-      return event;
-    }
-    var marker = event.date.replace(/-/g, '') + '_' + event.start.replace(':', '') + '_' + index;
-    event.id = ('event_' + marker).slice(0, 80);
-    var counter = 2;
-    while (used.has(event.id)) {
-      event.id = ('event_' + marker + '_' + counter).slice(0, 80);
-      counter += 1;
-    }
-    used.add(event.id);
-    return event;
-  });
-}
-
-function sanitizePlannerData(data, existing, auth) {
-  data = data && typeof data === 'object' ? data : {};
-  existing = existing && typeof existing === 'object' ? existing : {};
-  var profile = data.profile && typeof data.profile === 'object' ? data.profile : {};
-  var settings = data.settings && typeof data.settings === 'object' ? data.settings : {};
-  var sharing = data.sharing && typeof data.sharing === 'object' ? data.sharing : {};
-  var events = Array.isArray(data.events) ? data.events.slice(0, 1400) : [];
-  return {
-    version: 1,
-    userId: auth.id,
-    profile: {
-      username: cleanUsername(profile.username),
-      studentType: PLANNER_STUDENT_TYPES.includes(profile.studentType) ? profile.studentType : '',
-      cepreCycle: PLANNER_CYCLES.includes(profile.cepreCycle) ? profile.cepreCycle : '',
-      academyName: cleanText(profile.academyName, 60),
-      shift: PLANNER_SHIFTS.includes(profile.shift) ? profile.shift : 'morning',
-      customStart: profile.shift === 'custom' ? plannerTime(profile.customStart) : '',
-      customEnd: profile.shift === 'custom' ? plannerTime(profile.customEnd) : '',
-      focus: PLANNER_FOCUS.includes(profile.focus) ? profile.focus : 'all',
-      startDate: plannerDate(profile.startDate),
-      endMode: PLANNER_END_MODES.includes(profile.endMode) ? profile.endMode : 'admission',
-      endDate: plannerDate(profile.endDate)
-    },
-    settings: {
-      technique: ['20-5', '25-5', '50-10', '90-20'].includes(settings.technique) ? settings.technique : '50-10',
-      notifications: settings.notifications === true,
-      view: ['week', 'month'].includes(settings.view) ? settings.view : 'week'
-    },
-    sharing: {
-      visibility: sharing.visibility === 'public' ? 'public' : 'private',
-      note: censorText(cleanText(sharing.note, 500))
-    },
-    events: sanitizePlannerEvents(events),
-    createdAt: Number(existing.createdAt) || Date.now(),
-    updatedAt: Date.now()
-  };
-}
-
-function plannerPublicSummary(planner) {
-  planner = planner && typeof planner === 'object' ? planner : {};
-  var events = Array.isArray(planner.events) ? planner.events : [];
-  var studyEvents = events.filter(function (event) { return event && event.type !== 'exam'; });
-  var done = studyEvents.filter(function (event) { return event.status === 'done'; }).length;
-  var minutes = studyEvents.reduce(function (total, event) {
-    var start = plannerTime(event.start).split(':').map(Number);
-    var end = plannerTime(event.end).split(':').map(Number);
-    if (start.length !== 2 || end.length !== 2) return total;
-    return total + Math.max(0, (end[0] * 60 + end[1]) - (start[0] * 60 + start[1]));
-  }, 0);
-  return {
-    sessions: studyEvents.length,
-    completed: done,
-    progress: studyEvents.length ? Math.round(done * 100 / studyEvents.length) : 0,
-    hours: Math.round(minutes / 6) / 10,
-    startDate: plannerDate(planner.profile && planner.profile.startDate),
-    endDate: plannerDate(planner.profile && planner.profile.endDate)
-  };
-}
-
-function publicPlannerSnapshot(id, planner, community, includeEvents) {
-  planner = planner && typeof planner === 'object' ? planner : {};
-  var profile = planner.profile && typeof planner.profile === 'object' ? planner.profile : {};
-  var sharing = planner.sharing && typeof planner.sharing === 'object' ? planner.sharing : {};
-  var result = {
-    id: cleanId(id),
-    owner: publicProfile(community || { username: profile.username, displayName: profile.username }, null),
-    profile: {
-      username: cleanUsername(profile.username),
-      studentType: PLANNER_STUDENT_TYPES.includes(profile.studentType) ? profile.studentType : '',
-      cepreCycle: PLANNER_CYCLES.includes(profile.cepreCycle) ? profile.cepreCycle : '',
-      academyName: cleanText(profile.academyName, 60),
-      shift: PLANNER_SHIFTS.includes(profile.shift) ? profile.shift : 'morning',
-      customStart: profile.shift === 'custom' ? plannerTime(profile.customStart) : '',
-      customEnd: profile.shift === 'custom' ? plannerTime(profile.customEnd) : '',
-      focus: PLANNER_FOCUS.includes(profile.focus) ? profile.focus : 'all'
-    },
-    note: censorText(cleanText(sharing.note, 500)),
-    summary: plannerPublicSummary(planner),
-    updatedAt: Number(planner.updatedAt) || Date.now()
-  };
-  if (includeEvents) result.events = sanitizePlannerEvents((Array.isArray(planner.events) ? planner.events : []).slice(0, 1400));
-  return result;
+  return /^(?:[01]d|2[0-3]):[0-5]d$/.test(time) ? time : '';
 }
 
 function rateLimit(request, key, max = 90, windowMs = 60000) {
@@ -1363,60 +1218,6 @@ async function handleSite(request, env, subpath) {
     return json(path === '/public/announcement' ? publicData.announcement : path === '/public/schedule' ? publicData.schedule : {});
   }
   if (path.startsWith('/public') && (!auth || !auth.admin)) return json({ error: 'admin_required' }, 403);
-
-  if (path === '/planner/public' && method === 'GET') {
-    if (!auth) return json({ error: 'login_required' }, 401);
-    var publicPlannerRows = await firebase(env, SITE_ROOT + '/publicPlanIndex', 'GET') || {};
-    var publicPlans = Object.keys(publicPlannerRows).map(function (key) {
-      var row = publicPlannerRows[key] && typeof publicPlannerRows[key] === 'object' ? publicPlannerRows[key] : {};
-      row.id = cleanId(row.id || key);
-      return row;
-    }).filter(function (row) { return row.id && row.profile && row.summary; });
-    publicPlans.sort(function (left, right) { return (Number(right.updatedAt) || 0) - (Number(left.updatedAt) || 0); });
-    return json({ plans: publicPlans.slice(0, 80) });
-  }
-
-  if (/^\/planner\/public\/[a-zA-Z0-9_-]+$/.test(path) && method === 'GET') {
-    if (!auth) return json({ error: 'login_required' }, 401);
-    var publicPlannerId = cleanId(path.split('/')[3]);
-    var publicPlanner = await firebase(env, SITE_ROOT + '/publicPlans/' + publicPlannerId, 'GET');
-    if (!publicPlanner || !publicPlanner.profile || !Array.isArray(publicPlanner.events)) return json({ error: 'not_found' }, 404);
-    return json({ plan: publicPlanner });
-  }
-
-  if (path === '/planner') {
-    if (!auth) return json({ error: 'login_required' }, 401);
-    if (method === 'GET') {
-      return json({ planner: await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'GET') || null });
-    }
-    if (!['PUT', 'PATCH'].includes(method)) return json({ error: 'method_not_allowed' }, 405);
-    if (!rateLimit(request, 'planner-save-' + auth.id, 24, 60000)) return json({ error: 'rate_limited' }, 429);
-    var existingPlanner = await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'GET') || {};
-    var planner = sanitizePlannerData(data, existingPlanner, auth);
-    if (!planner.profile.username || !planner.profile.studentType || !planner.profile.startDate || !planner.profile.endDate) {
-      return json({ error: 'invalid_planner_profile' }, 400);
-    }
-    if (planner.profile.shift === 'custom' && plannerTimeMinutes(planner.profile.customEnd) - plannerTimeMinutes(planner.profile.customStart) < 90) {
-      return json({ error: 'invalid_custom_schedule' }, 400);
-    }
-    if (planner.profile.endDate < planner.profile.startDate) return json({ error: 'invalid_date_range' }, 400);
-    await firebase(env, SITE_ROOT + '/planners/' + auth.id, 'PUT', planner);
-    if (planner.sharing.visibility === 'public') {
-      var plannerCommunity = await communityProfileById(env, auth.id).catch(function () { return null; });
-      var plannerIndex = publicPlannerSnapshot(auth.id, planner, plannerCommunity, false);
-      var plannerDetail = publicPlannerSnapshot(auth.id, planner, plannerCommunity, true);
-      await Promise.all([
-        firebase(env, SITE_ROOT + '/publicPlanIndex/' + auth.id, 'PUT', plannerIndex),
-        firebase(env, SITE_ROOT + '/publicPlans/' + auth.id, 'PUT', plannerDetail)
-      ]);
-    } else {
-      await Promise.all([
-        firebase(env, SITE_ROOT + '/publicPlanIndex/' + auth.id, 'DELETE'),
-        firebase(env, SITE_ROOT + '/publicPlans/' + auth.id, 'DELETE')
-      ]);
-    }
-    return json({ ok: true, planner });
-  }
 
   if (path.startsWith('/profiles/')) {
     if (!auth) return json({ error: 'login_required' }, 401);
@@ -2443,6 +2244,54 @@ async function moderateWithNemotron(userText, env) {
     return { allowed: true };
   } catch (_) {
     return { allowed: false, unavailable: true };
+  }
+}
+
+// Lee la foto de un horario de academia y devuelve sus clases. El modelo lo decide el servidor.
+async function handlePlannerSchedule(request, env) {
+  if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
+  if (!rateLimit(request, 'planner_schedule', 6, 60000)) return json({ error: 'rate_limited' }, 429);
+  if (Number(request.headers.get('Content-Length') || 0) > 400000) return json({ error: 'payload_too_large' }, 413);
+  if (!env.NVIDIA_API_KEY) return json({ error: 'model_not_configured' }, 503);
+  var body = null;
+  try { body = await request.json(); } catch (_) { return json({ error: 'invalid_json' }, 400); }
+  var image = String(body && body.image || '');
+  if (image.length > 380000 || !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(image)) return json({ error: 'invalid_image' }, 400);
+  var prompt = 'Esta imagen es el horario semanal de clases de una academia preuniversitaria. Lee cada clase y responde SOLO con JSON valido, sin texto adicional, con esta forma: {"clases":[{"dia":1,"inicio":"07:00","fin":"08:30","curso":"Algebra"}]}. dia: 1=lunes ... 7=domingo. Horas en formato 24 h. curso: nombre del curso tal como aparece. Si una celda no es una clase (recreo, almuerzo), omitela.';
+  var controller = new AbortController();
+  var timer = setTimeout(function () { controller.abort(); }, 45000);
+  try {
+    var resp = await fetch(NVIDIA_CHAT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + env.NVIDIA_API_KEY },
+      body: JSON.stringify({
+        model: cleanText(env.NVIDIA_VISION_MODEL || 'meta/llama-3.2-90b-vision-instruct', 100),
+        messages: [{ role: 'user', content: prompt + ' <img src="' + image + '" />' }],
+        temperature: 0.1,
+        max_tokens: 2000
+      }),
+      signal: controller.signal
+    });
+    if (!resp.ok) return json({ error: 'model_failed' }, 502);
+    var data = await resp.json();
+    var text = String(data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '');
+    var match = text.match(/\{[\s\S]*\}/);
+    var parsed = null;
+    try { parsed = match ? JSON.parse(match[0]) : null; } catch (_) { parsed = null; }
+    var rows = (parsed && Array.isArray(parsed.clases) ? parsed.clases : []).slice(0, 80).map(function (row) {
+      row = row && typeof row === 'object' ? row : {};
+      var day = Math.round(Number(row.dia));
+      var pad = function (t) { return String(t || '').trim().replace(/^(\d):/, '0$1:'); };
+      var start = plannerTime(pad(row.inicio));
+      var end = plannerTime(pad(row.fin));
+      if (!(day >= 1 && day <= 7) || !start || !end || end <= start) return null;
+      return { dia: day, inicio: start, fin: end, curso: cleanText(row.curso, 40) };
+    }).filter(Boolean);
+    return json({ clases: rows });
+  } catch (_) {
+    return json({ error: 'model_failed' }, 502);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
@@ -3792,6 +3641,7 @@ export async function onRequest(context) {
     if (apiPath.startsWith('exam/')) return handleExam(request, context.env, apiPath.slice(5));
     if (apiPath.startsWith('unitalk/')) return handleUnitalk(request, context.env, apiPath.slice(8));
     if (apiPath.startsWith('resumenes/')) return handleResumenes(request, context.env, apiPath.slice(10));
+    if (apiPath === 'planner/horario') return handlePlannerSchedule(request, context.env);
     if (apiPath === 'ai/study' || apiPath === 'ai/support') return handleAiStudy(request, context.env);
     if (apiPath === 'ai/embed') return handleAiEmbed(request, context.env);
     return json({ error: 'not_found' }, 404);

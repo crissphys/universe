@@ -267,3 +267,15 @@ html[data-pending] body { opacity: 0; animation: show 0s 2s forwards; }
   .loop-tile:hover { transform: translateY(-3px); opacity: 1; }
   .report:hover { background: color-mix(in oklab, var(--accent) 14%, transparent); }
 }
+
+/* ---------- Planificador: acceso directo ---------- */
+.top-nav .nav-plan { display: none; }
+@media (min-width: 1024px) { .top-nav .nav-plan { display: inline; } }
+.plan-chip { display: inline-flex; align-items: center; gap: 10px; max-width: 100%; height: 40px; padding: 0 14px 0 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); font-size: 14px; color: var(--fg-2); text-decoration: none; transition: border-color .16s ease, color .16s ease, transform .14s var(--ease); }
+.plan-chip i { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.plan-chip span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.plan-chip svg { flex: none; width: 16px; height: 16px; transition: transform .2s var(--ease); }
+.plan-chip:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .plan-chip:hover { color: var(--fg); border-color: rgba(255,255,255,.18); } .plan-chip:hover svg { transform: translateX(3px); } }
+@starting-style { .plan-chip { opacity: 0; transform: translateY(6px); } }
+.plan-chip { transition: opacity .4s var(--ease), transform .4s var(--ease), border-color .16s ease, color .16s ease; }

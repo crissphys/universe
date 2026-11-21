@@ -1,33 +1,285 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Planificador de estudio para ingresar a la UNI | UNIverse</title>
-  <meta name="description" content="Organiza tu preparación para la UNI: convierte los temas de admisión y CEPREUNI en tareas concretas. Gratis; tus tareas se guardan en tu navegador.">
-  <meta name="color-scheme" content="dark light"><link rel="icon" href="/favicon.svg?v=2">
-  <base href="/"><link rel="stylesheet" href="/universe-ui/style.css?v=20261114-tabla"><link rel="stylesheet" href="/universe-ui/platform.css?v=20261114-sinexamenes"><link rel="stylesheet" href="/universe-ui/refinements.css?v=20261009-rodo-catalogo-v2"><script type="module" src="/universe-ui/app.js?v=20261114-calcpre"></script>
-<link rel="stylesheet" href="/universe-ui/native.css?v=20260912-cleanup"><script src="/universe-ui/auth.js?v=20260912-cleanup" defer></script><script src="/universe-ui/comunicados.js?v=1" defer></script><script src="/universe-ui/library-loading.js?v=20261114-sinexamenes" defer></script><link rel="stylesheet" href="/universe-ui/mobile-layout.css?v=20261012-mobile-v1"><script src="/universe-ui/mobile-layout.js?v=20261012-mobile-v1" defer></script></head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Planificador de estudio · CEPREUNI, Admisión UNI y academias · UNIverse to Study</title>
+  <meta name="description" content="Arma tu horario de estudio con el temario de CEPREUNI, de la admisión UNI o de tu academia. Marca lo que hiciste y reprograma lo pendiente.">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://universetostudy.com/planificador/">
+  <meta name="theme-color" content="#08080a">
+  <link rel="icon" href="/favicon.svg?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
+  <link rel="preload" href="/temariouni/temario.json?v=20261115" as="fetch" crossorigin>
+  <link rel="stylesheet" href="/biblioteca/galaxia/catalogo.css?v=20261110">
+  <link rel="stylesheet" href="/planificador/plan.css?v=20261121a">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/planificador/plan.js?v=20261121a" defer></script>
+  <script src="/planificador/focus.js?v=20261121a" defer></script>
+</head>
 <body>
-  <a class="skip-link" href="#main">Saltar al contenido</a>
-  <div id="space" aria-hidden="true"><div class="space-fallback"></div><canvas id="galaxy"></canvas></div>
-  <div class="space-shade" aria-hidden="true"></div>
-  <header class="header">
-    <a class="brand" href="/" aria-label="Universe, inicio"><svg viewBox="-20 -14 129.5 127" aria-hidden="true"><path d="M0 0H24.5V60A20.25 18 0 0 0 65 60V28L63.5 26L35 37.5L64 .5H89.5V61A44.75 38 0 0 1 0 61Z"/></svg><span>universe<small>TO STUDY</small></span></a>
-
-    <div class="header-actions"><button class="icon-button search-trigger" aria-label="Buscar herramientas" data-icon="search"></button><button class="icon-button settings-trigger" aria-label="Preferencias" data-icon="settings"></button><a class="account" href="/account" >Mi espacio ↗</a></div>
+  <a class="skip" href="#main">Saltar al planificador</a>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="/" aria-label="UNIverse to Study, inicio">UNIverse</a>
+      <nav class="top-nav" aria-label="Principal">
+        <a href="/biblioteca">Biblioteca</a>
+        <a href="/cepreuni">CEPREUNI</a>
+        <a href="/examenes">Exámenes</a>
+        <a href="/planificador" aria-current="true">Planificador</a>
+      </nav>
+    </div>
   </header>
-  <main id="main" hidden></main>
-<footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/">universe<span>®</span></a><p data-en="An independent educational community.<br>Curiosity, knowledge and purpose.">Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p></div><div class="footer-tools"><h3 data-en="Platform">Plataforma</h3><a href="/admision">Admisión</a><a href="/cepreuni">CEPREUNI</a><a href="/temariouni">Temario</a><a href="/cepreuni/calculadorapre">Calculadora</a><a href="/ranking">Ranking</a><a href="/docentes-cepreuni">Guía de aulas</a></div><div><h3 data-en="Universe">Universe</h3><a href="/metodologia-editorial">Metodología editorial</a><a href="/correcciones">Correcciones</a><a href="/contacto">Contacto</a><button class="settings-trigger text-button" data-en="Preferences">Preferencias</button></div></div><nav class="community-links brand-rail" aria-label="Canales e instituciones"><a class="brand-link brand-uni" href="https://admision.uni.edu.pe/" aria-label="UNI" title="UNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/uni.png" alt="UNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-cepreuni" href="https://www.cepre.uni.edu.pe/" aria-label="CEPREUNI" title="CEPREUNI" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/cepreuni.png" alt="CEPREUNI" width="160" height="64" loading="lazy"></a><a class="brand-link brand-youtube" href="https://www.youtube.com/@universepre_official" aria-label="YouTube" title="YouTube" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/youtube.png" alt="YouTube" width="160" height="64" loading="lazy"></a><a class="brand-link brand-whatsapp" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" aria-label="WhatsApp" title="WhatsApp" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/whatsapp.png" alt="WhatsApp" width="160" height="64" loading="lazy"></a><a class="brand-link brand-drive" href="https://drive.google.com/drive/folders/12ShZq78aaBi6FYzwmTlGCudsgL76Eb93" aria-label="Drive" title="Drive" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/drive.png" alt="Drive" width="160" height="64" loading="lazy"></a><a class="brand-link brand-tiktok" href="https://www.tiktok.com/@universe_preuni" aria-label="TikTok" title="TikTok" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/tiktok.png" alt="TikTok" width="160" height="64" loading="lazy"></a><a class="brand-link brand-linktree" href="https://linktr.ee/universetostudy" aria-label="Linktree" title="Linktree" data-live target="_blank" rel="noopener noreferrer"><img src="/assets/home-access/linktree.png" alt="Linktree" width="160" height="64" loading="lazy"></a></nav><div class="legal"><span>© 2026 Universe to Study · <span data-en="Learn. Practice. Grow.">Aprende. Practica. Avanza.</span></span><div><a href="/terminos">Términos</a><a href="/privacidad">Privacidad</a></div></div></footer>
-  <a class="support" href="https://wa.me/51963385410?text=Hola%2C%20necesito%20ayuda%20con%20Universe%20to%20Study" aria-label="Soporte por WhatsApp"><span data-icon="message"></span><span data-en="Need help?">¿Te ayudamos?</span></a>
-  <div class="immersion-controls" hidden>
-    <div class="space-readout"><span>UNIVERSE / VUELO LIBRE</span><strong id="flight-status">Cámara libre</strong><small>Escena generada · estrellas volumétricas<br>No representa posiciones astronómicas reales.</small></div>
-    <div class="solar-picker" id="solar-picker" hidden aria-label="Elige un planeta"></div>
-    <p class="solar-fact" id="solar-fact" aria-live="polite" hidden></p>
-    <div class="flight-toolbar"><button id="star-close" class="button">Acercarme a una estrella</button><button id="solar-open" class="button">Ver el sistema solar</button><button id="solar-back" class="button" hidden>← Volver a la galaxia</button><button id="reset-flight" class="button">Panorámica</button><button id="exit-space" class="button primary">Volver al estudio <span data-icon="close"></span></button></div>
-    <div class="flight-help"><span>Arrastra para mirar · rueda para acercarte<br>W A S D para volar · Q / E para bajar / subir<br>Mayús + arrastrar para desplazar · Esc para salir</span><div class="flight-pad" aria-label="Controles de desplazamiento"><button data-flight="up" aria-label="Subir">↑</button><button data-flight="forward" aria-label="Avanzar">＋</button><button data-flight="down" aria-label="Bajar">↓</button><button data-flight="left" aria-label="Mover a la izquierda">←</button><button data-flight="back" aria-label="Retroceder">−</button><button data-flight="right" aria-label="Mover a la derecha">→</button></div></div>
-  </div>
-  <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-head"><h2 id="search-title" data-en="Your control center">Tu centro de control</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Every tool, one search away.">Cada herramienta, a una búsqueda de distancia.</p><label for="tool-search" class="sr-only">Buscar herramientas</label><input id="tool-search" type="search" placeholder="Busca libros, clases, calculadora…"><div id="search-results" aria-live="polite"></div><div id="search-drive" aria-live="polite"></div><p class="dialog-foot" data-en="Find your next tool. Esc to close.">Encuentra tu herramienta. Esc para cerrar.</p></dialog>
-  <dialog id="video-preview" aria-labelledby="video-preview-title"><div class="dialog-head"><h2 id="video-preview-title" data-en="Preview">Vista previa</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><div class="video-frame" id="video-frame"></div><p class="dialog-foot"><span id="video-preview-meta"></span><a id="video-preview-link" href="#" data-en="Open on YouTube ↗" target="_blank" rel="noopener noreferrer">Ver en YouTube ↗</a></p></dialog>
-  <dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-head"><h2 id="preferences-title" data-en="Your experience">Tu experiencia</h2><button class="icon-button close-dialog" aria-label="Cerrar" data-icon="close"></button></div><p data-en="Make space feel right for you.">Adapta el espacio a tu manera.</p><label class="setting"><span data-en="Appearance">Apariencia</span><select id="theme"><option value="dark">Oscuro / Negro</option><option value="light">Claro / Blanco</option></select></label><label class="setting"><span data-en="Language">Idioma</span><select id="language"><option value="es">Español</option><option value="en">English</option></select></label><label class="setting"><span data-en="Animations">Animaciones</span><input type="checkbox" id="motion" checked></label><label class="setting"><span data-en="3D quality">Calidad 3D</span><select id="quality"><option value="auto">Automática</option><option value="high">Alta</option><option value="low">Ligera</option><option value="off">Fondo estático</option></select></label><p class="dialog-foot" data-en="Your preferences are saved in this browser.">Tus preferencias se guardan en este navegador. Puedes cambiarlas cuando quieras.</p></dialog>
-  <noscript><div class="noscript">Activa JavaScript para ver la galaxia y usar la búsqueda. Los enlaces a Universe siguen disponibles.</div></noscript>
-</body></html>
+
+  <main id="main">
+    <section class="p-hero wrap" aria-labelledby="hero-title">
+      <h1 id="hero-title"><span class="w">Planificador</span></h1>
+      <p class="stats" id="hero-stats">&nbsp;</p>
+    </section>
+
+    <div class="wrap ske" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <section id="setup" class="wrap setup" aria-label="Configurar plan" hidden>
+      <form id="form" class="card form" autocomplete="off" novalidate>
+        <div id="track" class="opts opts-3 opts-track" role="group" aria-label="Preparación">
+          <button type="button" class="opt" data-v="cepre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5-9 4.5z"/><path d="M7 11.5v4.2c1.3 1.2 3 1.8 5 1.8s3.7-.6 5-1.8v-4.2"/></svg><b>CEPREUNI</b><small>Pre · Básico · IEN</small></button>
+          <button type="button" class="opt" data-v="admision"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/></svg><b>Admisión</b><small id="track-adm"></small></button>
+          <button type="button" class="opt" data-v="academia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><b>Academia</b><small>Tu horario + repaso</small></button>
+        </div>
+
+        <div class="fields" data-for="cepre">
+          <div class="field field-wide">
+            <span class="lbl">Ciclo</span>
+            <div id="cycle" class="opts opts-3" role="group" aria-label="Ciclo">
+              <button type="button" class="opt" data-v="pre"><b>Pre</b><small></small></button>
+              <button type="button" class="opt" data-v="basico"><b>Básico</b><small></small></button>
+              <button type="button" class="opt" data-v="ien"><b>IEN</b><small></small></button>
+            </div>
+          </div>
+          <div class="field field-wide">
+            <span class="lbl">Ritmo</span>
+            <div id="goal" class="opts opts-2" role="group" aria-label="Ritmo">
+              <button type="button" class="opt" data-v="exams"><b>Por exámenes</b><small id="goal-s1"></small></button>
+              <button type="button" class="opt" data-v="date"><b>Hasta una fecha</b><small id="goal-s2"></small></button>
+            </div>
+            <label class="sr-only" for="goal-date">Fecha meta</label>
+            <input id="goal-date" class="inp" type="date" hidden>
+          </div>
+        </div>
+
+        <div class="fields" data-for="admision" hidden>
+          <div class="field">
+            <span class="lbl">Examen UNI 2027-1</span>
+            <label class="date-card"><span><b id="adm-label"></b><small>Fecha estimada</small></span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 4.5h9a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 4 14.5V6a1.5 1.5 0 0 1 1.5-1.5zM4 8h12"/></svg><input id="adm-date" type="date" aria-label="Fecha del examen"></label>
+          </div>
+          <div class="field">
+            <span class="lbl">Empiezo</span>
+            <div id="start-mode" class="opts opts-2" role="group" aria-label="Inicio">
+              <button type="button" class="opt" data-v="today"><b>Hoy</b><small id="start-s1"></small></button>
+              <button type="button" class="opt" data-v="past"><b>Ya empecé</b><small id="start-s2">Elige el día</small></button>
+            </div>
+            <label class="sr-only" for="start-date">Empecé el</label>
+            <input id="start-date" class="inp" type="date" hidden>
+          </div>
+        </div>
+
+        <div class="fields" data-for="academia" hidden>
+          <div class="field field-wide">
+            <span class="lbl">Academia</span>
+            <div id="acad" class="logos" role="group" aria-label="Academia"></div>
+            <button type="button" id="acad-more" class="more" aria-expanded="false"><span>Más academias</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></button>
+          </div>
+          <div class="field field-wide">
+            <span class="lbl">Ciclo</span>
+            <div id="acad-cycle" class="opts opts-list" role="group" aria-label="Ciclo de la academia"></div>
+          </div>
+          <div class="field field-wide">
+            <span class="lbl">Horario de la academia</span>
+            <div id="acad-shifts" class="chips" role="group" aria-label="Turno"></div>
+            <ol id="rows" class="rows"></ol>
+            <div class="row-actions">
+              <button type="button" id="row-add" class="ghost"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4.5v11M4.5 10h11"/></svg>Fila</button>
+              <button type="button" id="photo-btn" class="ghost"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1.5-2h6l1.5 2h2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.2"/></svg><span>Subir foto del horario</span></button>
+              <input id="photo" type="file" accept="image/*" hidden>
+            </div>
+          </div>
+          <div class="field">
+            <label class="lbl" for="acad-goal">Examen</label>
+            <input id="acad-goal" class="inp" type="date">
+          </div>
+        </div>
+
+        <div class="fields">
+          <div class="field field-wide">
+            <span class="lbl">Días</span>
+            <div id="days-q" class="chips" role="group" aria-label="Días rápidos">
+              <button type="button" data-q="1,2,3,4,5">L–V</button><button type="button" data-q="1,2,3,4,5,6">L–S</button><button type="button" data-q="0,1,2,3,4,5,6">Todos</button>
+            </div>
+            <div id="days" class="days" role="group" aria-label="Días de estudio">
+              <button type="button" data-v="1" aria-label="Lunes">L</button><button type="button" data-v="2" aria-label="Martes">M</button><button type="button" data-v="3" aria-label="Miércoles">X</button><button type="button" data-v="4" aria-label="Jueves">J</button><button type="button" data-v="5" aria-label="Viernes">V</button><button type="button" data-v="6" aria-label="Sábado">S</button><button type="button" data-v="0" aria-label="Domingo">D</button>
+            </div>
+          </div>
+          <div class="field field-wide">
+            <span class="lbl">Empiezo a estudiar</span>
+            <div class="from-row">
+              <div id="from-q" class="chips" role="group" aria-label="Hora rápida">
+                <button type="button" data-t="08:00">Mañana <span>08:00</span></button><button type="button" data-t="15:00">Tarde <span>15:00</span></button><button type="button" data-t="19:00">Noche <span>19:00</span></button>
+              </div>
+              <label class="sr-only" for="from">Hora exacta</label>
+              <input id="from" class="inp inp-time" type="time" step="900">
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="hours-l">Horas al día</span>
+            <div class="stepper" role="group" aria-labelledby="hours-l">
+              <button type="button" id="hours-m" aria-label="Menos"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10"/></svg></button>
+              <output id="hours-v" aria-live="polite"></output>
+              <button type="button" id="hours-p" aria-label="Más"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 5v10M5 10h10"/></svg></button>
+            </div>
+          </div>
+          <div class="field field-wide">
+            <span class="lbl">Priorizar</span>
+            <div id="prio" class="prio" role="group" aria-label="Cursos prioritarios"></div>
+          </div>
+        </div>
+
+        <div class="form-foot">
+          <p id="sum" class="sum" aria-live="polite"></p>
+          <div class="form-btns">
+            <button type="button" id="cancel" class="ghost" hidden>Cancelar</button>
+            <button type="submit" id="create" class="primary">Crear plan</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section id="plan" class="wrap plan" aria-label="Tu plan" hidden>
+      <article id="now" class="card now" aria-live="polite"></article>
+      <article id="exam" class="card exam"></article>
+      <article id="progress" class="card progress"></article>
+
+      <details id="late" class="card late" hidden>
+        <summary><span class="late-dot" aria-hidden="true"></span><b id="late-n"></b> pendientes<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></summary>
+        <ol id="late-list" class="blocks"></ol>
+        <button type="button" id="late-move" class="ghost">Reprogramar todo</button>
+      </details>
+
+      <div class="week">
+        <div class="w-head">
+          <button type="button" id="w-prev" class="icon" aria-label="Semana anterior"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 5-5 5 5 5"/></svg></button>
+          <h2 id="w-label"></h2>
+          <button type="button" id="w-next" class="icon" aria-label="Semana siguiente"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5"/></svg></button>
+          <button type="button" id="w-today" class="ghost ghost-sm" hidden>Hoy</button>
+          <span class="w-sp"></span>
+          <button type="button" id="w-focus" class="icon" aria-label="Temporizador de estudio"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 1.5M9.5 3h5M19 6.5l1.5-1.5"/></svg></button>
+          <button type="button" id="add" class="primary primary-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4.5v11M4.5 10h11"/></svg>Añadir</button>
+          <div class="menu-wrap">
+            <button type="button" id="menu-btn" class="icon" aria-label="Más opciones" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="5" cy="10" r=".9"/><circle cx="10" cy="10" r=".9"/><circle cx="15" cy="10" r=".9"/></svg></button>
+            <div id="menu" class="menu" role="menu" hidden>
+              <button type="button" id="m-edit" role="menuitem">Editar plan</button>
+              <button type="button" id="m-ics" role="menuitem">Añadir a mi calendario</button>
+              <button type="button" id="m-reset" role="menuitem" class="danger">Borrar plan</button>
+            </div>
+          </div>
+        </div>
+        <div id="strip" class="strip" role="group" aria-label="Día"></div>
+        <div id="board" class="board"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="sheet" class="sheet" aria-labelledby="s-title">
+    <form id="s-form" class="sheet-in" novalidate>
+      <i class="grab" aria-hidden="true"></i>
+      <header><h2 id="s-title">Bloque</h2><button type="button" id="s-close" class="icon" aria-label="Cerrar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button></header>
+      <label class="field"><span class="lbl">Curso</span><span class="select"><select id="s-course"></select><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></span></label>
+      <label class="field"><span class="lbl">Tema</span><input id="s-topic" class="inp" type="text" list="s-topics" maxlength="160" placeholder="Tema"><datalist id="s-topics"></datalist></label>
+      <ul id="s-contents" class="contents" hidden></ul>
+      <div class="s-grid">
+        <label class="field"><span class="lbl">Día</span><input id="s-date" class="inp" type="date"></label>
+        <label class="field"><span class="lbl">Inicio</span><input id="s-start" class="inp" type="time" step="300"></label>
+      </div>
+      <div class="field"><span class="lbl">Duración</span><div id="s-dur" class="seg" role="group" aria-label="Duración"><button type="button" data-v="25">25 min</button><button type="button" data-v="50">50 min</button><button type="button" data-v="90">90 min</button></div></div>
+      <div class="field"><span class="lbl">Tipo</span><div id="s-kind" class="seg" role="group" aria-label="Tipo"><button type="button" data-v="teo">Teoría</button><button type="button" data-v="pra">Práctica</button><button type="button" data-v="rep">Repaso</button></div></div>
+      <footer><button type="button" id="s-del" class="ghost danger">Eliminar</button><button type="submit" class="primary">Guardar</button></footer>
+    </form>
+  </dialog>
+
+<dialog id="focus" class="focus" aria-labelledby="f-label" data-phase="idle">
+    <div class="focus-in">
+      <header class="f-top">
+        <div id="f-methods" class="f-methods" role="group" aria-label="Método"></div>
+        <button type="button" id="f-min" class="icon" aria-label="Minimizar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 8 5 5 5-5"/></svg></button>
+      </header>
+      <div class="f-main">
+        <p class="f-label"><span id="f-label"></span><small id="f-round"></small></p>
+        <p id="f-time" class="f-time" aria-live="off"></p>
+        <div class="f-bar"><i id="f-bar"></i></div>
+        <p class="f-what"><b id="f-title"></b><span id="f-sub"></span></p>
+      </div>
+      <footer class="f-ctrl">
+        <button type="button" id="f-sound" class="f-btn" aria-label="Sonido" aria-pressed="true"><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9.5l5 5m0-5-5 5"/></svg></button>
+        <button type="button" id="f-stop" class="f-btn" aria-label="Terminar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
+        <button type="button" id="f-play" class="f-play" aria-label="Pausar" data-state="pause"><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5v13M15 5.5v13"/></svg></button>
+        <button type="button" id="f-skip" class="f-btn" aria-label="Saltar fase"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 8 6-8 6zM18 6v12"/></svg></button>
+        <button type="button" id="f-pip" class="f-btn" aria-label="Ventana flotante" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><rect x="12" y="11.5" width="6.5" height="5" rx="1.2"/></svg></button>
+      </footer>
+    </div>
+  </dialog>
+  <button type="button" id="f-pill" class="f-pill" hidden><i aria-hidden="true"></i><span id="f-pill-t"></span></button>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-about">
+          <a class="brand foot-brand" href="/">UNIverse</a>
+          <p>Comunidad educativa independiente.<br>Curiosidad, conocimiento y propósito.</p>
+        <a class="report" href="/correcciones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>Reportar un error</a>
+        </div>
+        <nav class="foot-col" aria-labelledby="f-plat">
+          <h2 id="f-plat">Plataforma</h2>
+          <a href="/admision">Admisión</a>
+          <a href="/cepreuni">CEPREUNI</a>
+          <a href="/temariouni">Temario</a>
+
+          <a href="/planificador" aria-current="page">Planificador</a>
+          <a href="/cepreuni/calculadorapre">Calculadora</a>
+          <a href="/ranking">Ranking</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-lib">
+          <h2 id="f-lib">Biblioteca</h2>
+          <a href="/biblioteca">Todas las editoriales</a>
+          <a href="/biblioteca/lumbreras">Lumbreras</a>
+          <a href="/biblioteca/cuzcano">Cuzcano</a>
+          <a href="/biblioteca/librosuniversitarios">Libros universitarios</a>
+          <a href="/examenes">Exámenes</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="f-uni">
+          <h2 id="f-uni">UNIverse</h2>
+          <a href="/metodologia-editorial">Metodología editorial</a>
+          <a href="/correcciones">Correcciones</a>
+          <a href="/contacto">Contacto</a>
+        </nav>
+      </div>
+      <nav class="loop" aria-label="Canales oficiales"><div class="loop-track"><div class="loop-group"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="YouTube" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="WhatsApp Channels" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="TikTok" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="Linktree" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div><div class="loop-group" aria-hidden="true"><a class="loop-tile" href="https://www.youtube.com/@universepre_official" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="YouTube (se abre en una pestaña nueva)"><img class="lg-youtube" src="/assets/channels/youtube.webp" alt="" width="360" height="81" draggable="false"></a><a class="loop-tile" href="https://whatsapp.com/channel/0029VbBKG4SAojYveJl8MJ0T" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp Channels (se abre en una pestaña nueva)"><img class="lg-whatsapp" src="/assets/channels/whatsapp.webp" alt="" width="360" height="336" draggable="false"></a><a class="loop-tile" href="https://www.tiktok.com/@universe_preuni" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="TikTok (se abre en una pestaña nueva)"><img class="lg-tiktok" src="/assets/channels/tiktok.webp" alt="" width="319" height="360" draggable="false"></a><a class="loop-tile" href="https://linktr.ee/universetostudy" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Linktree (se abre en una pestaña nueva)"><img class="lg-linktree" src="/assets/channels/linktree.webp" alt="" width="360" height="73" draggable="false"></a></div></div></nav>
+      <div class="foot-legal">
+        <span>© 2026 UNIverseToStudy · Aprende. Practica. Avanza.</span>
+        <nav aria-label="Legal">
+          <a href="/terminos">Términos</a>
+          <a href="/privacidad">Privacidad</a>
+        </nav>
+      </div>
+    </div>
+    <p class="foot-mark" aria-hidden="true">UNIverse</p>
+  </footer>
+
+  <button class="totop" type="button" aria-label="Volver arriba" tabindex="-1">
+    <svg class="totop-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg>
+    <svg class="totop-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.5v-11M5 9l5-5 5 5"/></svg>
+  </button>
+</body>
+</html>

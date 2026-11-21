@@ -73,7 +73,11 @@
     'study.wk': ['Semana {n}', 'Week {n}', 'Woche {n}', 'Semana {n}'],
     'study.of': ['de 20 · Ciclo Pre', 'of 20 · Pre cycle', 'von 20 · Pre-Zyklus', 'de 20 · Ciclo Pre'],
     'study.plan': ['Planificador', 'Planner', 'Planer', 'Planejador'],
-    'study.plan.s': ['Tu semana convertida en tareas', 'Your week turned into tasks', 'Deine Woche als Aufgaben', 'Sua semana em tarefas'],
+    'study.plan.s': ['CEPREUNI, admisión o tu academia', 'CEPREUNI, admission or your academy', 'CEPREUNI, Zulassung oder deine Akademie', 'CEPREUNI, admissão ou sua academia'],
+    'plan.next': ['Siguiente: {c}, {d} {h}', 'Next: {c}, {d} {h}', 'Als Nächstes: {c}, {d} {h}', 'Próximo: {c}, {d} {h}'],
+    'plan.now': ['Ahora: {c}, hasta las {h}', 'Now: {c}, until {h}', 'Jetzt: {c}, bis {h}', 'Agora: {c}, até {h}'],
+    'plan.late': ['{n} pendientes', '{n} pending', '{n} offen', '{n} pendentes'],
+    'plan.today': ['hoy', 'today', 'heute', 'hoje'], 'plan.tom': ['mañana', 'tomorrow', 'morgen', 'amanhã'],
     'study.syl': ['Temario', 'Syllabus', 'Themenplan', 'Temário'],
     'study.syl.s': ['Temas de admisión y CEPREUNI', 'Admission and CEPREUNI topics', 'Themen für Zulassung und CEPREUNI', 'Temas de admissão e CEPREUNI'],
     'study.room': ['Guía de aulas', 'Classroom guide', 'Raumführer', 'Guia de salas'],
@@ -253,7 +257,7 @@
     ['/biblioteca/universe', 'lib.uni', 'lib.uni.s', 'book', 'universe primeros resumenes solucionarios editorial'],
     ['/biblioteca/lumbreras', null, 'lib.lum.s', 'book', 'lumbreras libros rojos azules temas selectos compendio', 'Lumbreras'],
     ['/biblioteca/librosuniversitarios', 'lib.univ', 'lib.univ.s', 'book', 'universitarios calculo fisica universitaria libros carrera'],
-    ['/planificador', 'study.plan', 'study.plan.s', 'plan', 'planificador plan semana tareas organizar horario estudio'],
+    ['/planificador', 'study.plan', 'study.plan.s', 'plan', 'planificador plan semana tareas organizar horario estudio academia cronograma calendario rutina repaso pendientes'],
     ['/temariouni', 'study.syl', 'study.syl.s', 'plan', 'temario temas silabo contenidos admision cepreuni'],
     ['/docentes-cepreuni', 'study.room', 'study.room.s', 'info', 'docentes profesores aulas salones guia horario'],
     ['/informacion-cepreuni', 'study.info', 'study.info.s', 'info', 'informacion cepreuni normas reglamento consejos estrategia']
@@ -430,7 +434,30 @@
     $('#wk-link').href = '/cepreuni?ciclo=pre&semana=' + wk;
     mod.hidden = false;
   }
-  function modules() { countdown(); library(); study(); }
+  // Si hay un plan guardado, el enlace al planificador muestra lo siguiente que toca.
+  var COURSE = { aritmetica: 'c.ari', algebra: 'c.alg', geometria: 'c.geo', trigonometria: 'c.tri', fisica: 'c.fis', quimica: 'c.qui' };
+  var COURSE_ES = { razonamientomatematico: 'R. Matemático', razonamientoverbal: 'R. Verbal', lenguaje: 'Lenguaje', literatura: 'Literatura', historia: 'Historia', geografia: 'Geografía', economia: 'Economía', filosofia: 'Filosofía', logica: 'Lógica', psicologia: 'Psicología', ingles: 'Inglés' };
+  function planLink() {
+    var el = $('#plan-s'); if (!el) return;
+    var p = null; try { p = JSON.parse(localStorage.getItem('universe-plan-v4')); } catch (e) {}
+    if (!p || !p.blocks || !p.blocks.length) return;
+    var d = new Date(), pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var day = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()), hm = pad(d.getHours()) + ':' + pad(d.getMinutes());
+    var tm = new Date(d); tm.setDate(tm.getDate() + 1); var tom = tm.getFullYear() + '-' + pad(tm.getMonth() + 1) + '-' + pad(tm.getDate());
+    var study = p.blocks.filter(function (b) { return b.k !== 'aca'; });
+    var late = study.filter(function (b) { return !b.done && (b.d < day || (b.d === day && b.e < hm)); }).length;
+    var next = study.filter(function (b) { return !b.done && (b.d > day || (b.d === day && b.e > hm)); }).sort(function (a, b) { return (a.d + a.s) < (b.d + b.s) ? -1 : 1; })[0];
+    var name = function (c) { return COURSE[c] ? t(COURSE[c]) : (COURSE_ES[c] || c); };
+    var txt = '';
+    if (next && next.d === day && next.s <= hm) txt = t('plan.now', { c: name(next.c), h: next.e });
+    else if (next) txt = t('plan.next', { c: name(next.c), d: next.d === day ? t('plan.today') : next.d === tom ? t('plan.tom') : next.d.slice(8) + '/' + next.d.slice(5, 7), h: next.s });
+    if (late) txt += (txt ? ' · ' : '') + t('plan.late', { n: late });
+    if (!txt) return;
+    el.textContent = txt;
+    $('#plan-chip-t').textContent = txt;
+    $('#plan-chip').hidden = false;
+  }
+  function modules() { countdown(); library(); study(); planLink(); }
   var asked = false;
   function loadModules() {
     if (asked) return; asked = true;

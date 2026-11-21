@@ -5,7 +5,6 @@
     "cepreuni",
     "temario",
     "clases",
-    "planificador",
     "fijas-cepreuni",
     "account"
   ],
@@ -17,16 +16,6 @@
         "account.js"
       ],
       "contentLength": 14211
-    },
-    "planificador/seguimiento": {
-      "file": "planificador.html",
-      "scripts": [
-        "planner-syllabus-data.js",
-        "cepreuni-2027-data.js",
-        "universe-ui/admission-engine.js",
-        "planner.js"
-      ],
-      "contentLength": 23419
     },
     "simulacros": {
       "file": "simulacros.html",
