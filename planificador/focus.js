@@ -8,8 +8,36 @@
   // [estudio, descanso, nombre]
   const METHODS = [[25, 5, 'Pomodoro'], [20, 5, 'Corto'], [50, 10, 'Bloque'], [52, 17, '52 · 17'], [90, 20, 'Profundo'], [105, 15, 'Maratón']];
   const COOL = 5; // segundos de aviso entre fases
+  const V = '20261121c';
+
+  // Autónomo: cualquier página v4 que cargue este archivo recibe el temporizador.
+  if (!$('link[href*="/planificador/focus.css"]')) {
+    const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/planificador/focus.css?v=' + V; document.head.appendChild(l);
+  }
+  if (!$('#focus')) document.body.insertAdjacentHTML('beforeend', `
+  <dialog id="focus" class="focus" aria-labelledby="f-label" data-phase="idle">
+    <div class="focus-in">
+      <header class="f-top">
+        <div id="f-methods" class="f-methods" role="group" aria-label="Método"></div>
+        <button type="button" id="f-min" class="f-min" aria-label="Minimizar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 8 5 5 5-5"/></svg></button>
+      </header>
+      <div class="f-main">
+        <p class="f-label"><span id="f-label"></span><small id="f-round"></small></p>
+        <p id="f-time" class="f-time" aria-live="off"></p>
+        <div class="f-bar"><i id="f-bar"></i></div>
+        <p class="f-what"><b id="f-title"></b><span id="f-sub"></span></p>
+      </div>
+      <footer class="f-ctrl">
+        <button type="button" id="f-sound" class="f-btn" aria-label="Sonido" aria-pressed="true"><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9.5l5 5m0-5-5 5"/></svg></button>
+        <button type="button" id="f-stop" class="f-btn" aria-label="Terminar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
+        <button type="button" id="f-play" class="f-play" aria-label="Pausar" data-state="pause"><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5v13M15 5.5v13"/></svg></button>
+        <button type="button" id="f-skip" class="f-btn" aria-label="Saltar fase"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 8 6-8 6zM18 6v12"/></svg></button>
+        <button type="button" id="f-pip" class="f-btn" aria-label="Ventana flotante" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><rect x="12" y="11.5" width="6.5" height="5" rx="1.2"/></svg></button>
+      </footer>
+    </div>
+  </dialog>
+  <button type="button" id="f-pill" class="f-pill" hidden><i aria-hidden="true"></i><span id="f-pill-t"></span></button>`);
   const dlg = $('#focus');
-  if (!dlg) return;
 
   let st = load() || { m: 2, phase: 'idle', endsAt: 0, left: null, n: 1, next: 'break', title: '', sub: '', id: '', sound: true };
   let tick = 0, ac = null, alarms = [], pip = null, vpip = null, wake = null, lastShown = '', baseTitle = document.title;
@@ -147,7 +175,7 @@
       try {
         const w = await window.documentPictureInPicture.requestWindow({ width: 300, height: 190 });
         const d = w.document;
-        d.head.innerHTML = `<meta charset="utf-8"><title>UNIverse</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&display=swap"><link rel="stylesheet" href="/planificador/plan.css?v=${encodeURIComponent($('link[href*="plan.css"]').href.split('v=')[1] || '')}">`;
+        d.head.innerHTML = `<meta charset="utf-8"><title>UNIverse</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&display=swap"><link rel="stylesheet" href="/planificador/focus.css?v=${V}">`;
         d.body.className = 'pip-body';
         d.body.innerHTML = `<div class="pip" id="pip"><p class="pip-l" id="pl"></p><p class="pip-t" id="pt"></p><div class="pip-bar"><i id="pb"></i></div><div class="pip-c"><button type="button" id="pp" aria-label="Pausar"></button><button type="button" id="ps" aria-label="Saltar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 7 5-7 5zM15 5v10"/></svg></button></div></div>`;
         d.getElementById('pp').onclick = () => { paused() || !running() ? (running() ? resume() : begin()) : pause(); };
@@ -236,6 +264,8 @@
     render(true);
   }
   document.addEventListener('focus:open', e => open(e.detail));
+  // El navegador solo deja sonar el audio tras un toque en la página: se arma con el primero.
+  document.addEventListener('pointerdown', () => { if (running()) { audio(); arm(); } }, { once: true, capture: true });
   loop();
   render(true);
   if (running()) arm();

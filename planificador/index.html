@@ -14,10 +14,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
   <link rel="preload" href="/temariouni/temario.json?v=20261115" as="fetch" crossorigin>
   <link rel="stylesheet" href="/biblioteca/galaxia/catalogo.css?v=20261110">
-  <link rel="stylesheet" href="/planificador/plan.css?v=20261121a">
+  <link rel="stylesheet" href="/planificador/plan.css?v=20261121c">
   <script>document.documentElement.classList.add('js')</script>
-  <script src="/planificador/plan.js?v=20261121a" defer></script>
-  <script src="/planificador/focus.js?v=20261121a" defer></script>
+  <script src="/planificador/plan.js?v=20261121c" defer></script>
+  <script src="/planificador/focus.js?v=20261121c" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Saltar al planificador</a>
@@ -206,29 +206,6 @@
       <footer><button type="button" id="s-del" class="ghost danger">Eliminar</button><button type="submit" class="primary">Guardar</button></footer>
     </form>
   </dialog>
-
-<dialog id="focus" class="focus" aria-labelledby="f-label" data-phase="idle">
-    <div class="focus-in">
-      <header class="f-top">
-        <div id="f-methods" class="f-methods" role="group" aria-label="Método"></div>
-        <button type="button" id="f-min" class="icon" aria-label="Minimizar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 8 5 5 5-5"/></svg></button>
-      </header>
-      <div class="f-main">
-        <p class="f-label"><span id="f-label"></span><small id="f-round"></small></p>
-        <p id="f-time" class="f-time" aria-live="off"></p>
-        <div class="f-bar"><i id="f-bar"></i></div>
-        <p class="f-what"><b id="f-title"></b><span id="f-sub"></span></p>
-      </div>
-      <footer class="f-ctrl">
-        <button type="button" id="f-sound" class="f-btn" aria-label="Sonido" aria-pressed="true"><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9.5l5 5m0-5-5 5"/></svg></button>
-        <button type="button" id="f-stop" class="f-btn" aria-label="Terminar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
-        <button type="button" id="f-play" class="f-play" aria-label="Pausar" data-state="pause"><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5v13M15 5.5v13"/></svg></button>
-        <button type="button" id="f-skip" class="f-btn" aria-label="Saltar fase"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 8 6-8 6zM18 6v12"/></svg></button>
-        <button type="button" id="f-pip" class="f-btn" aria-label="Ventana flotante" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><rect x="12" y="11.5" width="6.5" height="5" rx="1.2"/></svg></button>
-      </footer>
-    </div>
-  </dialog>
-  <button type="button" id="f-pill" class="f-pill" hidden><i aria-hidden="true"></i><span id="f-pill-t"></span></button>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
