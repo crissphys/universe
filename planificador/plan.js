@@ -330,7 +330,7 @@
     const b = generate(c);
     const h = Math.round(b.length * BLOCK / 60);
     const end = b.length ? b[b.length - 1].d : goalOf(c);
-    $('#sum').innerHTML = b.length ? `<b>${b.length}</b> bloques<i></i><b>${h}</b> h<i></i>hasta ${fmt(end)}` : 'Sin horas disponibles';
+    $('#sum').innerHTML = b.length ? `<span><b>${b.length}</b> bloques</span><i></i><span><b>${h}</b> h</span><i></i><span>hasta ${fmt(end)}</span>` : 'Sin horas disponibles';
     $('#create').disabled = !b.length;
   }
 
@@ -778,7 +778,12 @@
   }
 
   // Refresca "ahora" cada 30 s y al volver a la pestaña.
-  setInterval(() => { if (T && state.blocks && !editing && !document.hidden && !sheet.open) renderPlan(); }, 30000);
+  let dayNow = today();
+  setInterval(() => {
+    // Pasada la medianoche, la semana y el día elegido saltan a hoy.
+    if (today() !== dayNow) { if (selDay === dayNow) { selDay = today(); weekOff = 0; } dayNow = today(); }
+    if (T && state.blocks && !editing && !document.hidden && !sheet.open) renderPlan();
+  }, 30000);
   document.addEventListener('visibilitychange', () => { if (T && !document.hidden && state.blocks && !editing) renderPlan(); });
 
   fetch('/temariouni/temario.json?v=20261115').then(r => r.json()).then(j => {
