@@ -15,7 +15,7 @@
   var FRAG = `
 precision highp float;
 uniform vec2 uRes,uCenter,uLook;
-uniform float uTime,uIntro,uScroll,uFocal,uDist,uWarp,uPhase,uFlash,uSteps,uOct,uDetail;
+uniform float uTime,uIntro,uScroll,uFocal,uDist,uSteps,uOct,uDetail;
 const float RIN=3.0;const float ROUT=13.0;
 float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float h31(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
@@ -48,15 +48,6 @@ vec4 disk(vec3 h,float r,vec3 rd){
  float g=sqrt(1.-be*be)/(1.-be*dot(t,-normalize(rd)));
  I*=g*g*g*g*sqrt(1.-1./r);
  return vec4(vec3(I),clamp(I*2.2,0.,.95)*edge);}
-float streaks(vec2 uv){
- float rho=length(uv);if(rho<.01)return 0.;
- float N=170.,a=atan(uv.y,uv.x)/6.2831853*N,ai=floor(a),af=fract(a)-.5;
- float z=log(rho)*5.-uPhase+h21(vec2(ai,3.))*9.;float zi=floor(z),zf=fract(z);
- float on=step(.55,h21(vec2(ai,zi)));
- float L=.05+uWarp*.85;
- float len=smoothstep(0.,L,zf)*(1.-smoothstep(L,L+.04,zf));
- float w=1.3/uRes.y/rho*N/6.2831853;
- return on*len*exp(-af*af/(w*w))*smoothstep(.02,.35,rho)*(.4+.6*h21(vec2(zi,ai)));}
 void main(){
  vec2 uv0=(gl_FragCoord.xy-uCenter*uRes)/uRes.y;
  float roll=-.09;vec2 uv=mat2(cos(roll),-sin(roll),sin(roll),cos(roll))*uv0;
@@ -64,7 +55,7 @@ void main(){
  float el=.12+.035*sin(uTime*.07)+uLook.y*.05+uScroll*.06,az=.24*sin(uTime*.045)+uLook.x*.09;
  vec3 ro=dist*vec3(sin(az)*cos(el),sin(el),-cos(az)*cos(el));
  vec3 fw=normalize(-ro),rt=normalize(cross(vec3(0.,1.,0.),fw)),up=cross(fw,rt);
- vec3 rd=normalize(fw*uFocal*(1.+uWarp*.7)+rt*uv.x+up*uv.y);
+ vec3 rd=normalize(fw*uFocal+rt*uv.x+up*uv.y);
  vec3 pos=ro,dir=rd;vec3 hv=cross(pos,dir);float h2=dot(hv,hv);
  vec3 col=vec3(0.);float a=0.,glow=0.;bool cap=false,done=false;
  float bq=dot(pos,dir),cq=dot(pos,pos)-1600.;bool far=false;
@@ -88,9 +79,7 @@ void main(){
  }
  if(!cap)col+=(1.-a)*sky(normalize(dir));
  col+=vec3(glow);
- if(!cap)col+=vec3(streaks(uv0))*uWarp*1.4*(1.-a);
  col=1.-exp(-col*2.*uIntro);
- col=mix(col,vec3(1.),uFlash);
  col+=(h21(gl_FragCoord.xy+fract(uTime))-.5)/255.;
  gl_FragColor=vec4(col,1.);
 }`;
@@ -113,7 +102,7 @@ void main(){
   var loc = gl.getAttribLocation(prog, 'p');
   gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   var U = {};
-  ['uRes', 'uCenter', 'uLook', 'uTime', 'uIntro', 'uScroll', 'uFocal', 'uDist', 'uWarp', 'uPhase', 'uFlash', 'uSteps', 'uOct', 'uDetail'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+  ['uRes', 'uCenter', 'uLook', 'uTime', 'uIntro', 'uScroll', 'uFocal', 'uDist', 'uSteps', 'uOct', 'uDetail'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
 
   var hero = canvas.parentElement;
   var finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -152,15 +141,9 @@ void main(){
   var look = { x: 0, y: 0 }, target = { x: 0, y: 0 };
   if (finePointer) addEventListener('pointermove', function (e) { target.x = e.clientX / innerWidth * 2 - 1; target.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
 
-  // viaje inicial: desde 320 Rs hasta 23 Rs; una vez por sesión, se puede saltar con cualquier interacción
-  var WARP_MS = 4600, warpOn = root.dataset.warp === '1';
-  var start = performance.now(), warpStart = start, last = start, raf = 0, visible = true, frames = 0, acc = 0, phase = 0, arrived = false;
+  var start = performance.now(), last = start, raf = 0, visible = true, frames = 0, acc = 0;
   var t0 = 20 + Math.random() * 40;
-  var ease = function (x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
   var clamp01 = function (x) { return Math.max(0, Math.min(1, x)); };
-  function skip() { if (warpOn && !arrived) warpStart = Math.min(warpStart, performance.now() - WARP_MS * .84); }
-  if (warpOn) ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { addEventListener(ev, skip, { passive: true, once: true }); });
-  try { sessionStorage.setItem('universe_warp', '1'); } catch (e) {}
 
   var lastDraw = 0;
   function frame(now) {
@@ -169,21 +152,11 @@ void main(){
     var dt = Math.min(64, now - last); last = now; lastDraw = now;
     var k = 1 - Math.exp(-dt / 260); // seguimiento amortiguado del puntero (sin rebote)
     look.x += (target.x - look.x) * k; look.y += (target.y - look.y) * k;
-    var dist = 23, warp = 0, flash = 0;
-    if (warpOn) {
-      var p = clamp01((now - warpStart) / WARP_MS);
-      dist = 23 * Math.pow(320 / 23, 1 - ease(clamp01((p - .04) / .8)));
-      warp = Math.pow(Math.sin(Math.PI * clamp01((p - .06) / .78)), .7);
-      flash = .55 * Math.exp(-Math.pow((p - .86) * 16, 2));
-      if (p >= .86 && !arrived) { arrived = true; arrive(); }
-      if (p >= 1) warpOn = false;
-    }
-    phase += warp * dt / 1000 * 7;
     gl.uniform1f(U.uTime, t0 + (now - start) / 1000);
     gl.uniform1f(U.uIntro, 1 - Math.pow(1 - clamp01((now - start) / 1600), 3));
     gl.uniform1f(U.uScroll, clamp01(scrollY / Math.max(1, cssH)));
     gl.uniform2f(U.uLook, look.x, -look.y);
-    gl.uniform1f(U.uDist, dist); gl.uniform1f(U.uWarp, warp); gl.uniform1f(U.uPhase, phase); gl.uniform1f(U.uFlash, flash);
+    gl.uniform1f(U.uDist, 23);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     // adaptación rápida: primero baja resolución, luego nivel; sube solo con margen sostenido
     if (warm > 0) { warm--; } else { frames++; acc += dt; }
@@ -210,7 +183,7 @@ void main(){
   function play() { if (!raf && visible && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } }
 
   size();
-  if (!warpOn) arrive();
+  arrive();
   play();
   canvas.classList.add('on');
   new IntersectionObserver(function (e) { visible = e[0].isIntersecting; play(); }).observe(hero);
