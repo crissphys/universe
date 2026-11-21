@@ -68,7 +68,7 @@
   $$('.t-hero h1 .w').forEach(function (w) {
     w.innerHTML = w.textContent.split('').map(function (c) { return '<span class="ch" style="--i:' + (ci++) + '">' + esc(c) + '</span>'; }).join('');
   });
-  $('#hero-title').setAttribute('aria-label', 'Temario UNI');
+  $('#hero-title').setAttribute('aria-label', $('#hero-title').textContent.replace(/\s+/g, ' ').trim());
 
   /* ---------- consola fija y volver arriba ---------- */
   var con = $('#console');

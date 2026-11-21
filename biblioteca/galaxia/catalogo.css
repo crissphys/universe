@@ -430,3 +430,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 @media (hover: hover) and (pointer: fine) { .loop-tile:hover { transform: translateY(-3px); opacity: 1; } .report:hover { background: color-mix(in oklab, var(--accent) 14%, transparent); } }
 /* Los logos se mueven siempre, también con reducir movimiento activo. */
 .loop-track { animation-duration: 36s !important; animation-iteration-count: infinite !important; }
+
+/* SEO: línea descriptiva dentro del H1 */
+h1 .h1-sub { display: block; margin-top: 14px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; line-height: 1.35; white-space: normal; color: var(--fg-2); }
+h1 .h1-sub[hidden] { display: none; }

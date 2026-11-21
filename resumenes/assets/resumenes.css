@@ -418,3 +418,7 @@ body.doc-open .foot { display: none; }
   .sheet, .sheet.closing, .add, .toast, .thumb { transition-property: opacity !important; transform: none !important; }
   .sk-card .thumb::after, .sk-line::after, .page:not(.ready):not(.has-poster)::after { animation: none; }
 }
+
+/* SEO: línea descriptiva dentro del H1 */
+h1 .h1-sub { display: block; margin-top: 14px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; line-height: 1.35; white-space: normal; color: var(--fg-2); }
+h1 .h1-sub[hidden] { display: none; }

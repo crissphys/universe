@@ -398,3 +398,7 @@ h2 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.04; letter-spacing: -.0
 /* El carrusel de canales se mueve siempre, también con reducir movimiento activo. */
 .loop-track { animation-duration: 36s !important; animation-iteration-count: infinite !important; }
 
+
+/* SEO: línea descriptiva dentro del H1 */
+h1 .h1-sub { display: block; margin-top: 14px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; line-height: 1.35; white-space: normal; color: var(--fg-2); }
+h1 .h1-sub[hidden] { display: none; }

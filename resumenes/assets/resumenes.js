@@ -154,7 +154,8 @@
     $('scope').hidden = !scoped;
     $('hero-pic').hidden = r.kind !== 'u';
     if (!scoped) {
-      $('list-title').textContent = 'Resúmenes';
+      $('list-title').firstChild.nodeValue = 'Resúmenes ';
+      $('list-title').lastElementChild.hidden = false;
       $('hero-sub').innerHTML = '';
       $('hero-sub').append(node('b', 'num', fmtN(S.items.length)), ' resúmenes, formularios y mapas para leer y descargar');
       document.title = LIST_TITLE;
@@ -162,7 +163,8 @@
     }
     const count = S.items.filter(it => R.matches(it, r)).length;
     const name = label || (r.kind === 'u' ? 'Este usuario' : 'Sin resultados');
-    $('list-title').textContent = name;
+    $('list-title').firstChild.nodeValue = name + ' ';
+    $('list-title').lastElementChild.hidden = true;
     const what = r.kind === 'u' ? (count === 1 ? ' resumen publicado' : ' resúmenes publicados') : count === 1 ? ' resumen' : ' resúmenes';
     $('hero-sub').innerHTML = '';
     $('hero-sub').append(node('b', 'num', fmtN(count)), what);

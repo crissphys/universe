@@ -175,12 +175,15 @@
   /* ---------- Hero ---------- */
   function splitTitle() {
     const h = $('#hero-title');
-    const text = h.textContent;
-    h.setAttribute('aria-label', text);
+    const tail = h.querySelector('.h1-sub');
+    h.setAttribute('aria-label', h.textContent.trim().replace(/\s+/g, ' '));
+    if (tail) tail.remove();
+    const text = h.textContent.trim();
     // words stay unbroken; plain spaces between them (an inline-block space collapses to nothing)
     let i = 0;
     h.style.setProperty('--n', Math.max(...text.split(' ').map(w => w.length)));
     h.innerHTML = text.split(' ').map(w => `<span class="word" aria-hidden="true">${[...w].map(ch => `<span class="ch" style="--i:${i++}">${esc(ch)}</span>`).join('')}</span>`).join(' ');
+    if (tail) h.append(' ', tail);
   }
 
   function initCosmos() {
