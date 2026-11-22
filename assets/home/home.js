@@ -293,7 +293,7 @@
   function hide() { list.hidden = true; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); }
   function render() {
     var q = input.value.trim(), nq = norm(q), words = nq.split(/\s+/).filter(Boolean);
-    current = []; sel = -1;
+    current = []; sel = -1; rest = [];
     form.classList.toggle('has-value', !!q);
     if (!q) { // con el campo vacío: accesos más visitados
       var html0 = '<div class="r-group">' + t('r.popular') + '</div>';
@@ -314,11 +314,9 @@
       books.forEach(function (b) { if (words.every(function (w) { return b.h.indexOf(w) >= 0; })) { if (!byF[b.f]) { byF[b.f] = []; order.push(b.f); } byF[b.f].push(b); } });
       for (var k = 0, more = true; more; k++) { more = false; order.forEach(function (f) { if (byF[f][k]) { found.push(byF[f][k]); more = true; } }); }
       if (found.length) html += '<div class="r-group">' + t('r.books') + ' · ' + found.length + '</div>';
-      found.forEach(function (b) {
-        current.push({ href: '/biblioteca/' + b.f + '/?libro=' + encodeURIComponent(b.id) });
-        var cover = b.c ? '<img class="r-cover" alt="" loading="lazy" src="/biblioteca/' + b.f + '/covers/' + encodeURI(b.c) + '-240.webp">' : '<span class="r-ico"><svg viewBox="0 0 24 24">' + ICON.book + '</svg></span>';
-        html += item(current.length - 1, cover, hl(b.t, words), esc(b.s));
-      });
+      // se pintan las primeras 30; el resto se agrega al bajar por la lista (escribir sigue siendo instantáneo)
+      rest = found; restWords = words;
+      html += bookItems(30);
     }
     if (!isCode(q) && q.length > 2 && !current.length && books) {
       current.push({ href: '/ranking?q=' + encodeURIComponent(q) });
@@ -326,13 +324,31 @@
     }
     if (!current.length) html = '<div class="r-empty">' + esc(books ? t('r.none', { x: q }) : t('r.loading')) + '</div>';
     show(html);
-    $$('img.r-cover', list).forEach(function (img) { img.onerror = function () { this.style.visibility = 'hidden'; }; });
   }
+  var rest = [], restWords = [];
+  function bookItems(n) {
+    var html = '';
+    rest.splice(0, n).forEach(function (b) {
+      current.push({ href: '/biblioteca/' + b.f + '/?libro=' + encodeURIComponent(b.id) });
+      var cover = b.c ? '<img class="r-cover" alt="" loading="lazy" decoding="async" src="/biblioteca/' + b.f + '/covers/' + encodeURI(b.c) + '-240.webp">' : '<span class="r-ico"><svg viewBox="0 0 24 24">' + ICON.book + '</svg></span>';
+      html += item(current.length - 1, cover, hl(b.t, restWords), esc(b.s));
+    });
+    return html;
+  }
+  list.addEventListener('scroll', function () {
+    if (rest.length && list.scrollTop + list.clientHeight > list.scrollHeight - 300) list.insertAdjacentHTML('beforeend', bookItems(40));
+  }, { passive: true });
+  // portada que no carga: se oculta (un solo oyente para toda la lista)
+  list.addEventListener('error', function (e) { if (e.target.classList && e.target.classList.contains('r-cover')) e.target.style.visibility = 'hidden'; }, true);
+  // varias teclas en el mismo cuadro: una sola búsqueda
+  var pend = 0;
+  function renderSoon() { if (!pend) pend = requestAnimationFrame(function () { pend = 0; render(); }); }
   function item(i, ico, title, sub) {
     return '<a class="r-item" id="r-' + i + '" role="option" aria-selected="false" href="' + esc(current[i].href) + '" tabindex="-1">' + ico + '<span><span class="r-t">' + title + '</span><span class="r-s">' + sub + '</span></span></a>';
   }
   function move(d) {
-    var opts = $$('.r-item', list); if (!opts.length) return;
+    var opts = $('.r-item', list); if (!opts.length) return;
+    if (d > 0 && sel + d >= opts.length && rest.length) { list.insertAdjacentHTML('beforeend', bookItems(40)); opts = $('.r-item', list); }
     sel = (sel + d + opts.length) % opts.length;
     opts.forEach(function (o, i) { o.setAttribute('aria-selected', String(i === sel)); });
     opts[sel].scrollIntoView({ block: 'nearest' });
@@ -343,7 +359,7 @@
     // en teléfono el buscador sube bajo la cabecera para que los resultados (que abren hacia abajo) no queden tapados
     if (innerWidth < 1000) setTimeout(function () { form.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 60);
   });
-  input.addEventListener('input', function () { loadBooks(); render(); });
+  input.addEventListener('input', function () { loadBooks(); renderSoon(); });
   input.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowDown') { e.preventDefault(); if (list.hidden) render(); move(1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }

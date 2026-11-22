@@ -62,19 +62,22 @@
     for (var i = 0; i < 6; i++) { TEX.crystals.push(crystal(72, 11 + i * 7)); TEX.clumps.push(clump(48, 5 + i * 13)); }
     return TEX;
   }
-  // escarcha del vidrio a media resolución: cristalitos y granos, más densa cerca de los bordes
-  function frostTexture(w, h) {
-    var c = cnv(w, h), g = c.getContext('2d'), rnd = mulberry(7), n = Math.min(3500, Math.round(w * h / 90)), cr = textures().crystals;
+  // escarcha del vidrio a un tercio de resolución, dibujada por partes (unos cientos de granos por cuadro) para no
+  // trabar el arranque; más densa cerca de los bordes
+  function frostJob(w, h) {
+    var c = cnv(w, h), g = c.getContext('2d'), rnd = mulberry(7), n = Math.min(2200, Math.round(w * h / 45)), i = 0, cr = textures().crystals;
     g.fillStyle = '#fff';
-    for (var i = 0; i < n; i++) {
-      var x = rnd() * w, y = rnd() * h, e = Math.min(x, w - x, y, h - y) / Math.min(w, h); // 0 en el borde
-      if (rnd() < e * 2.2) continue;
-      var s = 1 + rnd() * rnd() * 8;
-      g.globalAlpha = .35 + rnd() * .5;
-      if (s > 4.5) { var a = rnd() * 6.28; g.setTransform(Math.cos(a), Math.sin(a), -Math.sin(a), Math.cos(a), x, y); g.drawImage(cr[i % 6], -s / 2, -s / 2, s, s); g.setTransform(1, 0, 0, 1, 0, 0); }
-      else g.fillRect(x - s * .11, y - s * .11, s * .22 + .6, s * .22 + .6);
-    }
-    return c;
+    return { c: c, step: function (k) {
+      for (var end = Math.min(n, i + k); i < end; i++) {
+        var x = rnd() * w, y = rnd() * h, e = Math.min(x, w - x, y, h - y) / Math.min(w, h); // 0 en el borde
+        if (rnd() < e * 2.2) continue;
+        var s = .7 + rnd() * rnd() * 6;
+        g.globalAlpha = .35 + rnd() * .5;
+        if (s > 3.4) { var a = rnd() * 6.28; g.setTransform(Math.cos(a), Math.sin(a), -Math.sin(a), Math.cos(a), x, y); g.drawImage(cr[i % 6], -s / 2, -s / 2, s, s); g.setTransform(1, 0, 0, 1, 0, 0); }
+        else g.fillRect(x - s * .11, y - s * .11, s * .22 + .5, s * .22 + .5);
+      }
+      return i >= n;
+    } };
   }
 
   function run(speed) {
@@ -82,20 +85,24 @@
     var SPEED = speed > 0 && speed <= 1 ? speed : 1;
     if (window.setTheme) setTheme('dark'); else root.dataset.theme = 'dark';
     var T = textures();
-    var wrap = document.createElement('div'), air = cnv(1, 1), glass = cnv(1, 1);
-    var ax = air.getContext('2d'), gx = glass.getContext('2d');
-    wrap.className = 'snow'; wrap.setAttribute('aria-hidden', 'true'); wrap.appendChild(air); wrap.appendChild(glass);
+    var wrap = document.createElement('div'), air = cnv(1, 1), glass = null, gx = null;
+    var ax = air.getContext('2d');
+    wrap.className = 'snow'; wrap.setAttribute('aria-hidden', 'true'); wrap.appendChild(air);
+    root.dataset.snowing = '1'; // el agujero negro baja a 30 cps mientras nieva
     document.body.appendChild(wrap);
 
     // equipo modesto: menos copos y lienzo más pequeño (la nieve es suave, no se nota)
     var low = (navigator.hardwareConcurrency || 4) <= 4 || (navigator.deviceMemory || 4) <= 3 || innerWidth < 760;
-    var S = Math.min(devicePixelRatio || 1, 1) * (low ? .75 : 1);
-    var W, H, FW, FH, flakes = [], t0 = performance.now(), whiteAt = 0, frost, fm, fmx, ridge = [], maxFlakes, tick = 0;
+    var S = Math.min(devicePixelRatio || 1, 1) * (low ? .6 : .8); // la nieve es suave: a menor resolución no se nota y pesa mucho menos
+    var W, H, FW, FH, flakes = [], t0 = performance.now(), whiteAt = 0, frost, frostDone = false, fm, fmx, ridge = [], maxFlakes, tick = 0;
+    function makeGlass() {
+      glass = cnv(Math.round(W * S), Math.round(H * S)); gx = glass.getContext('2d'); gx.setTransform(S, 0, 0, S, 0, 0); wrap.appendChild(glass);
+    }
     function size() {
-      W = innerWidth; H = innerHeight; FW = Math.ceil(W / 2); FH = Math.ceil(H / 2);
-      air.width = glass.width = Math.round(W * S); air.height = glass.height = Math.round(H * S);
-      ax.setTransform(S, 0, 0, S, 0, 0); gx.setTransform(S, 0, 0, S, 0, 0);
-      frost = frostTexture(FW, FH); fm = cnv(FW, FH); fmx = fm.getContext('2d');
+      W = innerWidth; H = innerHeight; FW = Math.ceil(W / 3); FH = Math.ceil(H / 3);
+      air.width = Math.round(W * S); air.height = Math.round(H * S); ax.setTransform(S, 0, 0, S, 0, 0);
+      if (glass) { glass.width = air.width; glass.height = air.height; gx.setTransform(S, 0, 0, S, 0, 0); }
+      frost = frostJob(FW, FH); frostDone = false; fm = cnv(FW, FH); fmx = fm.getContext('2d');
       var rnd = mulberry(3); ridge = []; for (var i = 0; i < 9; i++) ridge.push([rnd() * 6.28, .003 + rnd() * .03, 1.5 + rnd() * (i < 3 ? 14 : 4)]);
       maxFlakes = Math.round(Math.min(low ? 260 : 460, W * H / (low ? 2600 : 2200)));
     }
@@ -124,6 +131,7 @@
     var halo = T.speck;
     // copo que se pega al vidrio: queda en un lienzo que no se borra
     function stick(f, p) {
+      if (!glass) makeGlass();
       var s = f.k === 2 ? f.s * .5 : Math.max(8, f.s) * (1 + p * 1.5);
       gx.globalAlpha = .4 + p * .3; gx.drawImage(halo, f.x - s, f.y - s, s * 2, s * 2);
       gx.globalAlpha = .55 + p * .4;
@@ -143,8 +151,9 @@
 
       // escarcha desde los bordes: media resolución y cada 3 cuadros
       var reach = Math.pow(p, 1.4);
-      if (tick++ % 3 === 0) {
-        fmx.globalCompositeOperation = 'copy'; fmx.drawImage(frost, 0, 0);
+      if (!frostDone) frostDone = frost.step(low ? 120 : 220);
+      if (tick++ % 3 === 0 && reach > .02) {
+        fmx.globalCompositeOperation = 'copy'; fmx.drawImage(frost.c, 0, 0);
         fmx.globalCompositeOperation = 'destination-out';
         var R = Math.hypot(FW, FH) * .62, gr = fmx.createRadialGradient(FW / 2, FH / 2, R * Math.max(0, .95 - reach * 1.05), FW / 2, FH / 2, R * Math.max(.05, 1.25 - reach * 1.1));
         gr.addColorStop(0, '#000'); gr.addColorStop(1, 'rgba(0,0,0,0)');
@@ -166,7 +175,7 @@
       }
 
       // copos, ya ordenados del más lejano al más cercano
-      var stickRate = .01 + p * p * p * 1.3;
+      var stickRate = .01 + p * p * p * 1.3, keep = 0;
       for (var i = 0; i < flakes.length; i++) {
         var f = flakes[i];
         f.ph += dt; f.rot += f.spin * dt; f.tum += f.tumS * dt;
@@ -174,7 +183,8 @@
         f.x += (w * f.drag + gust * .6) * dt;
         f.y += (f.fall + gust * .9) * dt;
         if (f.k !== 0 && Math.random() < stickRate * dt) { stick(f, p); f.x = W + 999; }
-        if (f.x > W + f.s || f.y > H + f.s) { flakes.splice(i--, 1); continue; }
+        if (f.x > W + f.s || f.y > H + f.s) continue;
+        flakes[keep++] = f;
         ax.globalAlpha = f.al;
         if (f.k !== 1) ax.drawImage(f.tex, f.x - f.s / 2, f.y - f.s / 2, f.s, f.s);
         else { // cristal que gira y se voltea: el coseno lo aplasta como un disco visto de canto
@@ -184,7 +194,8 @@
           ax.setTransform(S, 0, 0, S, 0, 0);
         }
       }
-      ax.globalAlpha = Math.min(1, .25 + reach); ax.drawImage(fm, 0, 0, W, H); ax.globalAlpha = 1;
+      flakes.length = keep;
+      if (reach > .02) { ax.globalAlpha = Math.min(1, .25 + reach); ax.drawImage(fm, 0, 0, W, H); ax.globalAlpha = 1; }
 
       // al final el blanco termina de cerrar los huecos
       wrap.style.setProperty('--white', Math.pow(Math.max(0, (p - .74) / .26), 2).toFixed(3));
@@ -215,7 +226,7 @@
       if (window.setTheme) setTheme('light', true); else root.dataset.theme = 'light';
       delete root.dataset.cover;
       if (msg) msg.classList.add('out');
-      gx.clearRect(0, 0, W, H); wrap.style.setProperty('--white', '0');
+      if (glass) { glass.remove(); glass = gx = null; } frost = fm = fmx = null; wrap.style.setProperty('--white', '0');
       var b0 = performance.now(), DUR = 1700 / SPEED, bits = [], prev = b0, edge = [], rate = low ? 450 : 900;
       for (var k = 0; k < 6; k++) edge.push([Math.random() * 6.28, .004 + Math.random() * .03, 10 + Math.random() * (k < 2 ? 70 : 20)]);
       function front(y, base) { var v = base; for (var k = 0; k < edge.length; k++) v += Math.sin(y * edge[k][1] + edge[k][0]) * edge[k][2]; return v; }
@@ -245,7 +256,7 @@
         ax.globalAlpha = .12; sheet(base, 6);
         ax.globalAlpha = 1; ax.fillStyle = '#fff'; sheet(base, 0);
         if (q < 1 || bits.length) requestAnimationFrame(step);
-        else { wrap.remove(); removeEventListener('resize', size); running = false; }
+        else { wrap.remove(); removeEventListener('resize', size); delete root.dataset.snowing; running = false; }
       }
       requestAnimationFrame(step);
     }
@@ -253,8 +264,12 @@
 
   window.playSnow = run;
   if (root.dataset.snow === '1') {
+    // se marca como vista en tres sitios: si el navegador borra o bloquea uno, al recargar no se repite
     try { localStorage.setItem('universe_snow', '1'); } catch (e) {}
+    try { sessionStorage.setItem('universe_snow', '1'); } catch (e) {}
+    document.cookie = 'universe_snow=1; max-age=31536000; path=/; SameSite=Lax';
     root.removeAttribute('data-snow');
-    run();
+    var go = function () { (window.requestIdleCallback || setTimeout)(function () { run(); }, { timeout: 400 }); };
+    if (document.readyState === 'complete') go(); else addEventListener('load', go, { once: true });
   }
 })();

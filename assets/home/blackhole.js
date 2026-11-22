@@ -1,15 +1,18 @@
 /* UNIverse · inicio — agujero negro de Schwarzschild en blanco y negro.
    Cada píxel traza un rayo de luz curvado por la gravedad (a = -1.5·h²·r/|r|⁵, unidades Rs = 1): el disco de acreción
    se ve por encima y por debajo de la sombra, con anillo de fotones, y la Vía Láctea del fondo se deforma alrededor.
-   Al llegar (una vez por sesión) la cámara viaja desde lejos a la velocidad de la luz entre estelas de estrellas. */
+   Calidad contenida desde el arranque (30 cps, media resolución) y solo baja si el equipo no llega. */
 (function () {
   'use strict';
   var root = document.documentElement;
   var canvas = document.getElementById('bh');
   var arrive = function () { root.classList.add('arrived'); dispatchEvent(new Event('bh-arrive')); };
   if (!canvas) { arrive(); return; }
+  // el titular aparece ya; el agujero negro arranca cuando la página cargó y el navegador está libre (el buscador responde primero)
+  arrive();
+  function init() {
   var gl = canvas.getContext('webgl', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' });
-  if (!gl) { root.classList.add('no-gl'); arrive(); return; }
+  if (!gl) { root.classList.add('no-gl'); return; }
 
   var VERT = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   var FRAG = `
@@ -65,7 +68,8 @@ void main(){
    if(float(i)>=uSteps)break;
    float r2=dot(pos,pos);float r=sqrt(r2);
    if(r<1.){cap=true;break;}
-   float dt=r<3.4?.045:clamp(.075*r,.045,1.6);
+   float ks=max(1.,150./uSteps); // con menos pasos, pasos más largos: el rayo sigue llegando al anillo
+   float dt=(r<3.4?.045:clamp(.075*r,.045,1.6))*ks;
    float rx=length(pos.xz);
    glow+=(1.-a)*dt*(.05*exp(-pow((r-1.55)*6.,2.))+.02*exp(-abs(pos.y)*3.2)*smoothstep(ROUT,RIN,rx)*smoothstep(RIN*.8,RIN*1.1,rx));
    dir+=-1.5*h2*pos/(r2*r2*r)*dt;
@@ -109,10 +113,11 @@ void main(){
   var finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   var dpr = devicePixelRatio || 1, small = innerWidth < 760;
   // niveles: pasos del rayo, octavas del disco, detalle del cielo, escala máxima y cuadros por segundo
+  // calidad contenida desde el arranque: 30 cps y media resolución como máximo; solo baja, nunca sube
   var TIERS = [
-    { steps: 140, oct: 2, detail: 0, max: .7, fps: 30 },
-    { steps: 170, oct: 3, detail: 1, max: 1.1, fps: 60 },
-    { steps: 220, oct: 4, detail: 1, max: 1.5, fps: 60 }
+    { steps: 90, oct: 1, detail: 0, max: .4, fps: 30 },
+    { steps: 120, oct: 2, detail: 0, max: .55, fps: 30 },
+    { steps: 150, oct: 2, detail: 1, max: .7, fps: 30 }
   ];
   var gpu = ''; try { var dbg = gl.getExtension('WEBGL_debug_renderer_info'); gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : ''; } catch (e) {}
   var cores = navigator.hardwareConcurrency || 4, mem = navigator.deviceMemory || 4, saveData = !!(navigator.connection && navigator.connection.saveData);
@@ -123,7 +128,7 @@ void main(){
   var forced = /[?&]calidad=([012])\b/.exec(location.search);
   if (forced) { tier = +forced[1]; floorTier = tier; downs = 2; }
   // escala de render en píxeles CSS (la imagen se estira con suavizado; el disco es difuso y no se nota)
-  var scale = Math.min(dpr, TIERS[tier].max) * (small ? 1 : .85), MIN_SCALE = .45;
+  var scale = Math.min(dpr, TIERS[tier].max), MIN_SCALE = .3;
   var cssH = 1;
   function applyTier() { var T = TIERS[tier]; gl.uniform1f(U.uSteps, T.steps); gl.uniform1f(U.uOct, T.oct); gl.uniform1f(U.uDetail, T.detail); scale = Math.min(scale, Math.min(dpr, T.max)); canvas.dataset.q = tier + ':' + scale.toFixed(2); }
   applyTier();
@@ -147,10 +152,14 @@ void main(){
   var t0 = 20 + Math.random() * 40;
   var clamp01 = function (x) { return Math.max(0, Math.min(1, x)); };
 
-  var lastDraw = 0;
+  var lastDraw = 0, busy = false;
+  var q = document.getElementById('q');
+  if (q) { q.addEventListener('focus', function () { busy = true; }); q.addEventListener('blur', function () { busy = false; }); }
   function frame(now) {
     raf = 0;
-    if (TIERS[tier].fps === 30 && now - lastDraw < 31) { if (visible && !document.hidden) raf = requestAnimationFrame(frame); return; }
+    // 30 cps; mientras se escribe en el buscador o nieva, 20 cps para que la búsqueda responda al instante
+    var gap = busy || root.dataset.snowing ? 49 : 31;
+    if (now - lastDraw < gap) { if (visible && !document.hidden) raf = requestAnimationFrame(frame); return; }
     if (root.dataset.cover) { if (visible && !document.hidden) raf = requestAnimationFrame(frame); return; } // tapado por la nieve: no dibuja
     var dt = Math.min(64, now - last); last = now; lastDraw = now;
     var k = 1 - Math.exp(-dt / 260); // seguimiento amortiguado del puntero (sin rebote)
@@ -171,11 +180,6 @@ void main(){
         else if (tier > floorTier) { tier--; downs++; if (downs >= 2) floorTier = tier; scale = Math.min(scale, TIERS[tier].max); applyTier(); }
         else scale = Math.max(MIN_SCALE, scale * .8);
         size(); warm = 6;
-      } else if (avg < budget * .55 && ++ups >= 3) {
-        ups = 0;
-        if (scale < Math.min(dpr, T.max) - .02) { scale = Math.min(Math.min(dpr, T.max), scale * 1.12); size(); }
-        else if (tier < 2 && downs < 2) { tier++; applyTier(); }
-        warm = 6;
       }
       canvas.dataset.q = tier + ':' + scale.toFixed(2);
       frames = 0; acc = 0;
@@ -193,4 +197,7 @@ void main(){
   document.addEventListener('visibilitychange', play);
   var rt; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(size, 120); });
   canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); cancelAnimationFrame(raf); raf = 0; root.classList.add('no-gl'); arrive(); });
+  }
+  var go = function () { (window.requestIdleCallback || setTimeout)(init, { timeout: 700 }); };
+  if (document.readyState === 'complete') go(); else addEventListener('load', go, { once: true });
 })();
