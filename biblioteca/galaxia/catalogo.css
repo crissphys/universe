@@ -353,7 +353,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 }
 .drive svg { width: 18px; height: 18px; stroke-width: 2; transition: transform 220ms var(--ease-out); }
 .drive:active { transform: scale(.98); }
-@media (hover: hover) and (pointer: fine) { .drive:hover { background: #fff; } .drive:hover svg { transform: translate(2px, -2px); } }
+@media (hover: hover) and (pointer: fine) { .drive:hover { background: var(--fg-hover); } .drive:hover svg { transform: translate(2px, -2px); } }
 .act { width: 54px; height: 54px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(var(--ink), .07); color: var(--fg-2); transition: transform 140ms var(--ease-out), color 160ms ease, background-color 160ms ease; }
 .act svg { width: 20px; height: 20px; }
 .act[aria-pressed="true"] { color: var(--accent); background: color-mix(in oklab, var(--accent) 16%, transparent); }

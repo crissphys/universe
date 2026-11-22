@@ -55,7 +55,7 @@ html.is-locked { overflow: hidden; }
 .x-thumb::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); pointer-events: none; }
 .x-badge {
   position: absolute; left: 8px; top: 8px; z-index: 1; height: 22px; padding: 0 8px; border-radius: 999px; display: inline-flex; align-items: center;
-  font: 500 11px/1 var(--mono); letter-spacing: .03em; color: #fff; background: rgba(8, 8, 10, .78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  font: 500 11px/1 var(--mono); letter-spacing: .03em; color: var(--fg); background: rgba(var(--bg-rgb), .78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .x-badge.is-big { background: var(--accent); color: var(--accent-ink); }
 .x-card strong { font-size: 15px; font-weight: 500; line-height: 1.25; letter-spacing: -.01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
@@ -113,12 +113,12 @@ html.is-locked { overflow: hidden; }
 .x-v-open { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 14px; margin: 0 4px; border-radius: 999px; background: var(--fg); color: var(--bg); text-decoration: none; font-size: 13.5px; font-weight: 500; white-space: nowrap; transition: transform 140ms var(--ease-out), background-color 160ms ease; }
 .x-v-open svg { width: 14px; height: 14px; }
 .x-v-open:active { transform: scale(.97); }
-@media (hover: hover) and (pointer: fine) { .x-v-btn:hover { color: var(--fg); background: rgba(255, 255, 255, .06); } .x-v-open:hover { background: #fff; } }
+@media (hover: hover) and (pointer: fine) { .x-v-btn:hover { color: var(--fg); background: rgba(var(--ink), .06); } .x-v-open:hover { background: var(--fg-hover); } }
 
 .x-frame { position: relative; display: grid; place-items: center; background: #1b1b1f; overflow: hidden; }
 .x-frame > * { grid-area: 1 / 1; }
 .x-poster { max-width: min(92%, 760px); max-height: 92%; object-fit: contain; background: #fff; border-radius: 4px; box-shadow: 0 20px 40px -20px rgba(0, 0, 0, .8); transition: opacity 240ms ease; }
-.x-loading { align-self: end; margin-bottom: 18px; padding: 6px 12px; border-radius: 999px; background: rgba(8, 8, 10, .8); font: 500 11.5px/1 var(--mono); color: var(--fg-2); letter-spacing: .02em; }
+.x-loading { align-self: end; margin-bottom: 18px; padding: 6px 12px; border-radius: 999px; background: rgba(var(--bg-rgb), .8); font: 500 11.5px/1 var(--mono); color: var(--fg-2); letter-spacing: .02em; }
 .x-frame iframe { width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity 240ms ease; }
 .x-frame.is-ready iframe { opacity: 1; }
 .x-frame.is-ready .x-poster, .x-frame.is-ready .x-loading { opacity: 0; pointer-events: none; }

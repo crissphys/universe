@@ -53,7 +53,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .btn:active { transform: scale(.97); }
 .btn.ghost { background: transparent; color: var(--fg); box-shadow: 0 0 0 1px var(--line-2) inset; font-weight: 400; }
 .btn.ok { color: var(--ok); }
-@media (hover: hover) and (pointer: fine) { .btn:hover { background: #fff; } .btn.ghost:hover { background: rgba(var(--ink),.06); } }
+@media (hover: hover) and (pointer: fine) { .btn:hover { background: var(--fg-hover); } .btn.ghost:hover { background: rgba(var(--ink),.06); } }
 .k { font-size: 12px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--fg-3); }
 .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 12px; font-weight: 500; background: var(--surface-3); color: var(--fg-2); white-space: nowrap; }
 
@@ -402,3 +402,7 @@ h2 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.04; letter-spacing: -.0
 /* SEO: línea descriptiva dentro del H1 */
 h1 .h1-sub { display: block; margin-top: 14px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; line-height: 1.35; white-space: normal; color: var(--fg-2); }
 h1 .h1-sub[hidden] { display: none; }
+
+/* tema claro: acentos oscurecidos para leerse sobre blanco (AA 4.5:1) */
+html[data-theme="light"]:root { --accent: #3654d1; --accent-ink: #fff; --signal: #9a5600; --signal-ink: #fff; --ok: #137a48;
+  --c-alg: #6b4fd6; --c-ari: #1c73b5; --c-geo: #0c7f71; --c-tri: #5a760c; --c-fis: #bf3a29; --c-qui: #a92e70; --c-hum: #77643a; }

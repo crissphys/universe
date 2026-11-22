@@ -36,7 +36,7 @@ input, select, textarea { font: inherit; color: inherit; }
 @media (hover: hover) and (pointer: fine) {
   .ghost:hover { color: var(--fg); border-color: var(--line-2); }
   .icon:hover { color: var(--fg); background: rgba(var(--ink), .06); }
-  .primary:not(:disabled):hover { background: #fff; }
+  .primary:not(:disabled):hover { background: var(--fg-hover); }
   .seg button:not([aria-pressed="true"]):hover { color: var(--fg-2); }
 }
 .inp { height: 42px; width: 100%; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); font-size: 15px; color-scheme: dark; transition: border-color 160ms ease; }
