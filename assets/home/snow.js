@@ -204,8 +204,8 @@
     function message() {
       var L = (root.lang || 'es').slice(0, 2), pre = { en: 'Christmas has arrived at', de: 'Weihnachten ist da bei', pt: 'O Natal chegou à' }[L] || 'La Navidad llegó a';
       msg = document.createElement('div'); msg.className = 'snow-msg';
-      var letters = 'UNIverse'.split('').map(function (ch, i) { return '<span style="transition-delay:' + (700 + i * 70) + 'ms">' + ch + '</span>'; }).join('');
-      msg.innerHTML = '<small>' + pre + '</small><b><svg viewBox="0 0 89.5 99" aria-hidden="true" style="transition-delay:550ms"><path d="M0 0H24.5V60A20.25 18 0 0 0 65 60V28L63.5 26L35 37.5L64 .5H89.5V61A44.75 38 0 0 1 0 61Z"/></svg>' + letters + '</b>';
+      var letters = 'UNIverse'.split('').map(function (ch, i) { return '<span style="transition-delay:' + (550 + i * 70) + 'ms">' + ch + '</span>'; }).join('');
+      msg.innerHTML = '<small>' + pre + '</small><b>' + letters + '</b>';
       wrap.appendChild(msg);
       requestAnimationFrame(function () { requestAnimationFrame(function () { msg.classList.add('on'); }); });
     }

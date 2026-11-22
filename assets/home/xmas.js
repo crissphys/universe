@@ -1,10 +1,10 @@
-/* UNIverse · Navidad en el inicio: gorro 3D sobre el logo (se balancea al inclinar el teléfono, al desplazarse o
+/* UNIverse · Navidad en el inicio: gorro 3D en la esquina del buscador (se balancea al inclinar el teléfono, al desplazarse o
    al mover el puntero), guirnalda de luces y dos esferas colgantes. Solo transform y opacity; el bucle duerme
    cuando el gorro está quieto. */
 (function () {
   'use strict';
-  var brand = document.querySelector('.top .brand'), hero = document.querySelector('.hero');
-  if (!brand || !hero) return;
+  var search = document.getElementById('search'), hero = document.querySelector('.hero');
+  if (!search || !hero) return;
 
   /* ---------- gorro ---------- */
   var hat = document.createElement('span');
@@ -16,7 +16,7 @@
     '<path d="M20 22 C26 14 34 9 42 8" stroke="rgba(255,255,255,.28)" stroke-width="2.4" fill="none" stroke-linecap="round"/>' +
     '<rect x="4" y="40" width="48" height="12" rx="6" fill="url(#hatF)"/>' +
     '</svg></span><span class="hat-pom"></span>';
-  brand.appendChild(hat);
+  search.appendChild(hat);
   var body = hat.firstChild, pom = hat.lastChild;
 
   // resorte amortiguado: ángulo del gorro y de la borla (la borla va con retraso)
