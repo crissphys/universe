@@ -2,11 +2,11 @@
 :root {
   --bg: #08080a; --surface: #111114; --surface-2: #18181c; --surface-3: #202026;
   --fg: #f4f4f5; --fg-2: #a1a1aa; --fg-3: #8a8a93;
-  --line: rgba(255,255,255,.08); --line-2: rgba(255,255,255,.14);
+  --line: rgba(var(--ink),.08); --line-2: rgba(var(--ink),.14);
   --accent: #ff6b4a; --accent-ink: #160805;
   --go: #2fd176; --go-ink: #04140a; --go-hover: #45dc87;
-  --paper: #ffffff; --paper-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 20px 50px -24px rgba(0,0,0,.9);
-  --scrim: rgba(4,4,6,.62); --glass: rgba(8,8,10,.86);
+  --paper: #ffffff; --paper-shadow: 0 1px 0 rgba(var(--ink),.04) inset, 0 20px 50px -24px rgba(0,0,0,.9);
+  --scrim: rgba(4,4,6,.62); --glass: rgba(var(--bg-rgb),.86);
   --c-l: .74; --c-c: .12;
   --ease: cubic-bezier(.23,1,.32,1); --ease-io: cubic-bezier(.77,0,.175,1); --ease-drawer: cubic-bezier(.32,.72,0,1);
   --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -245,7 +245,7 @@ a.course { text-decoration: none; transition: color .16s ease; }
 .page.has-poster { background-size: 100% auto; background-position: top center; background-repeat: no-repeat; }
 .page.poster img { position: absolute; inset: 0; height: 100%; object-fit: cover; object-position: top; opacity: 1; filter: saturate(.9); }
 .doc-state-img { width: 140px; aspect-ratio: 3 / 4; object-fit: cover; object-position: top; border-radius: 8px; margin: 0 auto 16px; display: block; box-shadow: var(--paper-shadow); }
-.page-n { position: absolute; right: 10px; bottom: 10px; font: 500 11.5px var(--mono); color: #55555c; background: rgba(255,255,255,.88); border-radius: 999px; padding: 3px 9px; pointer-events: none; }
+.page-n { position: absolute; right: 10px; bottom: 10px; font: 500 11.5px var(--mono); color: #55555c; background: rgba(var(--ink),.88); border-radius: 999px; padding: 3px 9px; pointer-events: none; }
 .doc-state { padding: 48px 20px; border: 1px dashed var(--line-2); border-radius: var(--r); text-align: center; color: var(--fg-2); }
 .doc-state h2 { font-size: 18px; font-weight: 600; color: var(--fg); }
 .doc-state p { margin-top: 6px; font-size: 14.5px; }

@@ -6,8 +6,8 @@
   --fg: #f4f4f5;
   --fg-2: #a1a1aa;
   --fg-3: #63636b;
-  --line: rgba(255, 255, 255, .07);
-  --line-2: rgba(255, 255, 255, .12);
+  --line: rgba(var(--ink), .07);
+  --line-2: rgba(var(--ink), .12);
   --accent: #ff6b4a;
   --accent-ink: #160805;
 
@@ -53,7 +53,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 .top-nav a[aria-current] { color: var(--fg); }
 .top-nav a:not([aria-current]) { display: none; }
 @media (min-width: 640px) { .top-nav a:not([aria-current]) { display: inline; } }
-@media (hover: hover) and (pointer: fine) { .top-nav a:hover { color: var(--fg); background: rgba(255, 255, 255, .06); } }
+@media (hover: hover) and (pointer: fine) { .top-nav a:hover { color: var(--fg); background: rgba(var(--ink), .06); } }
 
 /* ---------- Hero / star map ---------- */
 .cosmos {
@@ -123,7 +123,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 }
 .search input::-webkit-search-cancel-button { display: none; }
 .search input::placeholder { color: var(--fg-3); }
-.search input:focus { outline: none; border-color: var(--line-2); background: var(--surface-2); box-shadow: 0 0 0 4px rgba(255, 255, 255, .04); }
+.search input:focus { outline: none; border-color: var(--line-2); background: var(--surface-2); box-shadow: 0 0 0 4px rgba(var(--ink), .04); }
 .search-count { position: absolute; right: 48px; font: 500 12px/1 var(--mono); color: var(--fg-3); font-variant-numeric: tabular-nums; }
 .search-clear { position: absolute; right: 5px; width: 38px; height: 38px; border: 0; border-radius: 50%; background: none; color: var(--fg-2); display: grid; place-items: center; }
 .search-clear svg { width: 16px; height: 16px; }
@@ -153,17 +153,17 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
   display: inline-flex; align-items: center; gap: 7px;
   height: 36px; padding: 0 14px; border-radius: 999px;
   font-size: 14px; font-weight: 450; white-space: nowrap; text-decoration: none;
-  color: var(--fg-2); background: rgba(255, 255, 255, .04); border: 1px solid transparent;
+  color: var(--fg-2); background: rgba(var(--ink), .04); border: 1px solid transparent;
   transition: color 140ms ease, background-color 140ms ease, transform 120ms var(--ease-out);
 }
 .chip i { font: 500 11.5px/1 var(--mono); font-style: normal; color: var(--fg-3); }
 .chip svg { width: 14px; height: 14px; }
 .chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
-.chip[aria-pressed="true"] i { color: rgba(8, 8, 10, .5); }
+.chip[aria-pressed="true"] i { color: rgba(var(--bg-rgb), .5); }
 .chip.saved[aria-pressed="true"] svg { fill: currentColor; }
 .chip:active { transform: scale(.96); }
 .chip.reset { background: none; color: var(--accent); padding-inline: 10px; }
-@media (hover: hover) and (pointer: fine) { .chip:not([aria-pressed="true"]):hover { color: var(--fg); background: rgba(255, 255, 255, .08); } }
+@media (hover: hover) and (pointer: fine) { .chip:not([aria-pressed="true"]):hover { color: var(--fg); background: rgba(var(--ink), .08); } }
 
 .hint { margin: 0; font-size: 13px; color: var(--fg-3); padding-left: 4px; }
 .hint b { color: var(--fg-2); font-weight: 500; }
@@ -171,7 +171,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 .jump { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - 32px), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - 32px), transparent); }
 .jump::-webkit-scrollbar { display: none; }
 .jump a { flex: none; height: 34px; padding: 0 12px; display: inline-flex; align-items: center; border-radius: 999px; font-size: 13.5px; color: var(--fg-3); text-decoration: none; white-space: nowrap; transition: color 160ms ease, background-color 160ms ease; }
-.jump a.is-on { color: var(--fg); background: rgba(255, 255, 255, .08); }
+.jump a.is-on { color: var(--fg); background: rgba(var(--ink), .08); }
 .jump a:active { transform: scale(.96); }
 @media (hover: hover) and (pointer: fine) { .jump a:not(.is-on):hover { color: var(--fg-2); } }
 
@@ -203,7 +203,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 @media (min-width: 768px) { .tabs { margin-inline: 0; padding-inline: 0; flex-wrap: wrap; } }
 .tab { flex: none; height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: none; font-size: 14px; color: var(--fg-3); transition: color 160ms ease, background-color 160ms ease; }
 .tab span { font: 500 11.5px/1 var(--mono); margin-left: 6px; opacity: .7; }
-.tab[aria-pressed="true"] { color: var(--fg); background: rgba(255, 255, 255, .08); }
+.tab[aria-pressed="true"] { color: var(--fg); background: rgba(var(--ink), .08); }
 .tab:active { transform: scale(.96); }
 @media (hover: hover) and (pointer: fine) { .tab:not([aria-pressed="true"]):hover { color: var(--fg-2); } }
 
@@ -219,24 +219,24 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 .cover {
   position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 10px;
   background: var(--tint, var(--surface));
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 22px 40px -22px rgba(0, 0, 0, .9);
+  box-shadow: 0 1px 0 rgba(var(--ink), .06) inset, 0 22px 40px -22px rgba(0, 0, 0, .9);
   transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0));
   transition: transform 460ms var(--ease-out), box-shadow 300ms ease;
 }
 .cover img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 360ms ease; }
 .cover.is-ready img { opacity: 1; }
-.cover::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit; background: radial-gradient(110% 70% at var(--gx, 30%) var(--gy, 0%), rgba(255, 255, 255, .18), transparent 55%); opacity: 0; transition: opacity 260ms ease; }
+.cover::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit; background: radial-gradient(110% 70% at var(--gx, 30%) var(--gy, 0%), rgba(var(--ink), .18), transparent 55%); opacity: 0; transition: opacity 260ms ease; }
 /* per-cover loading skeleton */
 .cover:not(.is-ready)::before {
   content: ""; position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .09) 50%, transparent 70%) 0 0 / 250% 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(var(--ink), .09) 50%, transparent 70%) 0 0 / 250% 100%;
   animation: shimmer 1.3s linear infinite;
 }
-.book .flag { position: absolute; top: 8px; right: 8px; z-index: 2; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: rgba(8, 8, 10, .6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--accent); }
+.book .flag { position: absolute; top: 8px; right: 8px; z-index: 2; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: rgba(var(--bg-rgb), .6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--accent); }
 .book .flag svg { width: 13px; height: 13px; fill: currentColor; stroke: none; }
 .book:active .cover { transform: perspective(800px) scale(.97); transition-duration: 120ms; }
 @media (hover: hover) and (pointer: fine) {
-  .book:hover .cover { --lift: -4px; box-shadow: 0 1px 0 rgba(255, 255, 255, .08) inset, 0 30px 50px -22px rgba(0, 0, 0, .95); }
+  .book:hover .cover { --lift: -4px; box-shadow: 0 1px 0 rgba(var(--ink), .08) inset, 0 30px 50px -22px rgba(0, 0, 0, .95); }
   .book:hover .cover::after { opacity: 1; }
 }
 .book-meta { display: grid; gap: 3px; min-width: 0; }
@@ -283,7 +283,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 .foot-legal { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; margin-top: 28px; padding: 22px 0; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--fg-3); }
 .foot-legal nav { display: flex; gap: 20px; }
 .foot-legal a { color: var(--fg-3); text-decoration: none; padding: 6px 0; transition: color 160ms ease; }
-.foot-mark { margin: 0; padding-bottom: env(safe-area-inset-bottom); font-size: clamp(80px, 24vw, 340px); font-weight: 600; letter-spacing: -.07em; line-height: .76; text-align: center; white-space: nowrap; user-select: none; pointer-events: none; color: transparent; background: linear-gradient(rgba(255, 255, 255, .09), rgba(255, 255, 255, 0) 85%); -webkit-background-clip: text; background-clip: text; translate: 0 8%; }
+.foot-mark { margin: 0; padding-bottom: env(safe-area-inset-bottom); font-size: clamp(80px, 24vw, 340px); font-weight: 600; letter-spacing: -.07em; line-height: .76; text-align: center; white-space: nowrap; user-select: none; pointer-events: none; color: transparent; background: linear-gradient(rgba(var(--ink), .09), rgba(var(--ink), 0) 85%); -webkit-background-clip: text; background-clip: text; translate: 0 8%; }
 @media (hover: hover) and (pointer: fine) {
   .foot-col a:hover, .foot-legal a:hover { color: var(--fg); }
 }
@@ -327,7 +327,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 .sheet.is-dragging .sheet-panel { transition: none; }
 .sheet-grab { position: sticky; top: 0; z-index: 2; height: 28px; margin: 0 calc(var(--gutter) * -1); display: grid; place-items: center; background: linear-gradient(var(--surface) 60%, transparent); touch-action: none; }
 .sheet-grab span { width: 38px; height: 5px; border-radius: 5px; background: var(--line-2); }
-.sheet-x { position: absolute; top: 14px; right: 14px; z-index: 3; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .07); color: var(--fg-2); transition: background-color 160ms ease, transform 140ms var(--ease-out); }
+.sheet-x { position: absolute; top: 14px; right: 14px; z-index: 3; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(var(--ink), .07); color: var(--fg-2); transition: background-color 160ms ease, transform 140ms var(--ease-out); }
 .sheet-x svg { width: 18px; height: 18px; }
 .sheet-x:active { transform: scale(.92); }
 .sheet-body { display: grid; gap: 24px; padding-top: 8px; }
@@ -354,18 +354,18 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 .drive svg { width: 18px; height: 18px; stroke-width: 2; transition: transform 220ms var(--ease-out); }
 .drive:active { transform: scale(.98); }
 @media (hover: hover) and (pointer: fine) { .drive:hover { background: #fff; } .drive:hover svg { transform: translate(2px, -2px); } }
-.act { width: 54px; height: 54px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .07); color: var(--fg-2); transition: transform 140ms var(--ease-out), color 160ms ease, background-color 160ms ease; }
+.act { width: 54px; height: 54px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(var(--ink), .07); color: var(--fg-2); transition: transform 140ms var(--ease-out), color 160ms ease, background-color 160ms ease; }
 .act svg { width: 20px; height: 20px; }
 .act[aria-pressed="true"] { color: var(--accent); background: color-mix(in oklab, var(--accent) 16%, transparent); }
 .act[aria-pressed="true"] svg { fill: currentColor; }
 .act:active { transform: scale(.94); }
-@media (hover: hover) and (pointer: fine) { .act:hover { background: rgba(255, 255, 255, .11); } }
+@media (hover: hover) and (pointer: fine) { .act:hover { background: rgba(var(--ink), .11); } }
 .sheet-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 14px; }
 .sheet-nav button { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: var(--fg-2); transition: transform 140ms var(--ease-out), opacity 160ms ease, background-color 160ms ease; }
 .sheet-nav button svg { width: 18px; height: 18px; }
 .sheet-nav button:active { transform: scale(.92); }
 .sheet-nav button:disabled { opacity: .25; pointer-events: none; }
-@media (hover: hover) and (pointer: fine) { .sheet-nav button:hover { background: rgba(255, 255, 255, .07); } }
+@media (hover: hover) and (pointer: fine) { .sheet-nav button:hover { background: rgba(var(--ink), .07); } }
 .sheet-pos { font: 500 12.5px/1 var(--mono); color: var(--fg-3); font-variant-numeric: tabular-nums; }
 .sheet-related { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); min-width: 0; }
 .sheet-related h3 { margin: 0 0 12px; font-size: 13.5px; font-weight: 500; color: var(--fg-3); }
@@ -397,7 +397,7 @@ mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: v
 /* ---------- Toast ---------- */
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); z-index: 80; display: flex; align-items: center; gap: 12px; max-width: calc(100vw - 32px); height: 48px; padding: 0 6px 0 18px; border-radius: 999px; background: var(--fg); color: var(--bg); font-size: 14.5px; font-weight: 500; white-space: nowrap; box-shadow: 0 16px 40px -12px rgba(0, 0, 0, .7); transform: translate(-50%, calc(100% + 40px)); transition: transform 360ms var(--ease-out); }
 .toast.is-on { transform: translate(-50%, 0); }
-.toast button { height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: rgba(8, 8, 10, .08); color: var(--bg); font-size: 14px; font-weight: 600; }
+.toast button { height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: rgba(var(--bg-rgb), .08); color: var(--bg); font-size: 14px; font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .cosmos h1 .ch { animation: fadeOnly 400ms ease forwards; transform: none; filter: none; }

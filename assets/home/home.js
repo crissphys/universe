@@ -28,6 +28,7 @@
   var T = {
     'skip': ['Saltar al contenido', 'Skip to content', 'Zum Inhalt springen', 'Pular para o conteúdo'],
     'nav.label': ['Principal', 'Main', 'Hauptnavigation', 'Principal'],
+    'theme.label': ['Cambiar tema claro u oscuro', 'Toggle light or dark theme', 'Hell- oder Dunkelmodus', 'Alternar tema claro ou escuro'],
     'lang.label': ['Idioma: {x}', 'Language: {x}', 'Sprache: {x}', 'Idioma: {x}'],
     'hero.fixed': ['LA UNI', 'UNI', 'UNI', 'UNI'],
     'hero.aria': ['Ingresa a la UNI', 'Get into UNI', 'Schaff die UNI', 'Entre na UNI'],
@@ -263,6 +264,15 @@
     ['/informacion-cepreuni', 'study.info', 'study.info.s', 'info', 'informacion cepreuni normas reglamento consejos estrategia']
   ];
   var POPULAR = [0, 5, 7, 11];
+  // claro / oscuro: se guarda por equipo
+  var root0 = document.documentElement, themeBtn = $('#theme-btn');
+  window.setTheme = function (th, save) {
+    root0.classList.add('theming'); root0.dataset.theme = th;
+    setTimeout(function () { root0.classList.remove('theming'); }, 400);
+    if (save) try { localStorage.setItem('universe_theme', th); } catch (e) {}
+  };
+  if (themeBtn) themeBtn.addEventListener('click', function () { setTheme(root0.dataset.theme === 'light' ? 'dark' : 'light', true); });
+
   var form = $('#search'), input = $('#q'), list = $('#q-list');
   var books = null, loading = null, sel = -1, current = [];
   function loadBooks() {

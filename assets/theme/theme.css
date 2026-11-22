@@ -1,0 +1,23 @@
+/* UNIverse · tema claro compartido por las páginas v4 (el inicio trae el suyo en home.css).
+   Las hojas de cada página usan rgba(var(--ink), …) y rgba(var(--bg-rgb), …) en vez de blancos y negros fijos. */
+:root { --ink: 255,255,255; --bg-rgb: 8,8,10; }
+html[data-theme="light"] {
+  --bg: #fafaf9; --surface: #ffffff; --surface-2: #f0f0ee; --surface-3: #e8e8e5;
+  --fg: #111113; --fg-2: #52525b; --fg-3: #6b6b74;
+  --line: rgba(0,0,0,.08); --line-2: rgba(0,0,0,.14);
+  --ink: 0,0,0; --bg-rgb: 250,250,249;
+  --card: #ffffff; --glass: rgba(250,250,249,.9); --scrim: rgba(20,20,24,.35);
+  color-scheme: light;
+}
+html[data-theme="light"] body { background: var(--bg); color: var(--fg); }
+html.theming, html.theming * { transition: background-color .35s ease, color .35s ease, border-color .35s ease !important; }
+
+/* botón claro / oscuro que theme.js agrega a la cabecera */
+.ut-theme { display: inline-grid; place-items: center; flex: none; width: 40px; height: 40px; margin-left: 8px; border-radius: 50%; border: 1px solid var(--line-2); background: none; color: var(--fg-2); cursor: pointer; transition: color .16s ease, border-color .16s ease, transform .16s cubic-bezier(.23,1,.32,1); -webkit-tap-highlight-color: transparent; }
+.ut-theme:active { transform: scale(.94); }
+.ut-theme svg { grid-area: 1/1; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; transition: opacity .25s ease, transform .4s cubic-bezier(.23,1,.32,1); }
+.ut-theme .moon, html[data-theme="light"] .ut-theme .sun { opacity: 0; transform: rotate(-60deg) scale(.6); }
+html[data-theme="light"] .ut-theme .moon { opacity: 1; transform: none; }
+.ut-theme:focus-visible { outline: 2px solid var(--accent, #ff6b4a); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) { .ut-theme:hover { color: var(--fg); border-color: rgba(var(--ink),.28); } }
+.ut-theme.float { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 60; margin: 0; background: var(--surface); box-shadow: 0 8px 24px -10px rgba(0,0,0,.4); }

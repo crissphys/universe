@@ -15,7 +15,7 @@
   var FRAG = `
 precision highp float;
 uniform vec2 uRes,uCenter,uLook;
-uniform float uTime,uIntro,uScroll,uFocal,uDist,uSteps,uOct,uDetail;
+uniform float uTime,uIntro,uScroll,uFocal,uDist,uLight,uSteps,uOct,uDetail;
 const float RIN=3.0;const float ROUT=13.0;
 float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float h31(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
@@ -80,6 +80,7 @@ void main(){
  if(!cap)col+=(1.-a)*sky(normalize(dir));
  col+=vec3(glow);
  col=1.-exp(-col*2.*uIntro);
+ col=mix(col,1.-col,uLight);
  col+=(h21(gl_FragCoord.xy+fract(uTime))-.5)/255.;
  gl_FragColor=vec4(col,1.);
 }`;
@@ -102,7 +103,7 @@ void main(){
   var loc = gl.getAttribLocation(prog, 'p');
   gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   var U = {};
-  ['uRes', 'uCenter', 'uLook', 'uTime', 'uIntro', 'uScroll', 'uFocal', 'uDist', 'uSteps', 'uOct', 'uDetail'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+  ['uRes', 'uCenter', 'uLook', 'uTime', 'uIntro', 'uScroll', 'uFocal', 'uDist', 'uLight', 'uSteps', 'uOct', 'uDetail'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
 
   var hero = canvas.parentElement;
   var finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -141,6 +142,7 @@ void main(){
   var look = { x: 0, y: 0 }, target = { x: 0, y: 0 };
   if (finePointer) addEventListener('pointermove', function (e) { target.x = e.clientX / innerWidth * 2 - 1; target.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
 
+  var light = root.dataset.theme === 'light' ? 1 : 0;
   var start = performance.now(), last = start, raf = 0, visible = true, frames = 0, acc = 0;
   var t0 = 20 + Math.random() * 40;
   var clamp01 = function (x) { return Math.max(0, Math.min(1, x)); };
@@ -149,6 +151,7 @@ void main(){
   function frame(now) {
     raf = 0;
     if (TIERS[tier].fps === 30 && now - lastDraw < 31) { if (visible && !document.hidden) raf = requestAnimationFrame(frame); return; }
+    if (root.dataset.cover) { if (visible && !document.hidden) raf = requestAnimationFrame(frame); return; } // tapado por la nieve: no dibuja
     var dt = Math.min(64, now - last); last = now; lastDraw = now;
     var k = 1 - Math.exp(-dt / 260); // seguimiento amortiguado del puntero (sin rebote)
     look.x += (target.x - look.x) * k; look.y += (target.y - look.y) * k;
@@ -156,7 +159,7 @@ void main(){
     gl.uniform1f(U.uIntro, 1 - Math.pow(1 - clamp01((now - start) / 1600), 3));
     gl.uniform1f(U.uScroll, clamp01(scrollY / Math.max(1, cssH)));
     gl.uniform2f(U.uLook, look.x, -look.y);
-    gl.uniform1f(U.uDist, 23);
+    light += ((root.dataset.theme === 'light' ? 1 : 0) - light) * (1 - Math.exp(-dt / 140)); gl.uniform1f(U.uDist, 23); gl.uniform1f(U.uLight, light);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     // adaptación rápida: primero baja resolución, luego nivel; sube solo con margen sostenido
     if (warm > 0) { warm--; } else { frames++; acc += dt; }

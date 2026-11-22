@@ -1,7 +1,7 @@
 /* UNIverse · temporizador de estudio. Autónomo: se carga en todas las páginas v4. */
 .focus, .f-pill, .pip-body {
   --f-bg: #070709; --f-fg: #f4f4f5; --f-fg2: #a1a1aa; --f-fg3: #85858e;
-  --f-line: rgba(255, 255, 255, .08); --f-line2: rgba(255, 255, 255, .14);
+  --f-line: rgba(var(--ink), .08); --f-line2: rgba(var(--ink), .14);
   --f-accent: #ff6b4a; --f-ink: #160805; --f-ok: oklch(.8 .15 158); --f-warn: #ffb94a;
   --f-ease: cubic-bezier(0.23, 1, 0.32, 1); --f-gutter: 20px;
   font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -16,7 +16,7 @@
 .focus :focus-visible, .f-pill:focus-visible { outline: 2px solid var(--f-accent); outline-offset: 3px; }
 .f-min { width: 40px; height: 40px; flex: none; display: grid; place-items: center; padding: 0; border: 0; border-radius: 10px; background: none; color: var(--f-fg2); }
 .f-min svg { width: 22px; height: 22px; }
-@media (hover: hover) and (pointer: fine) { .f-min:hover { color: var(--f-fg); background: rgba(255, 255, 255, .06); } }
+@media (hover: hover) and (pointer: fine) { .f-min:hover { color: var(--f-fg); background: rgba(var(--ink), .06); } }
 @keyframes f-pulse { to { opacity: .3; } }
 @keyframes f-fade { from { opacity: 0; } to { opacity: 1; } }
 .focus { --fc: var(--f-accent); width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; padding: 0; border: 0; background: #070709; color: var(--f-fg); overflow: hidden; opacity: 0; transition: opacity 240ms ease, overlay 240ms allow-discrete, display 240ms allow-discrete; }
@@ -34,7 +34,7 @@
 .f-methods b { font-size: 15px; font-weight: 600; color: var(--f-fg2); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
 .f-methods b i { font-style: normal; margin: 0 3px; color: var(--f-fg3); }
 .f-methods span { font-size: 11.5px; }
-.f-methods button[aria-pressed="true"] { border-color: var(--f-fg); background: rgba(255, 255, 255, .07); }
+.f-methods button[aria-pressed="true"] { border-color: var(--f-fg); background: rgba(var(--ink), .07); }
 .f-methods button[aria-pressed="true"] b { color: var(--f-fg); }
 .f-methods button:active { transform: scale(.97); }
 .f-main { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; text-align: center; }
@@ -45,7 +45,7 @@
 .focus[data-phase="cool"] .f-time { color: var(--f-warn); font-size: clamp(140px, 48vw, 380px); }
 .f-time.beat { animation: beat 1000ms var(--f-ease); }
 @keyframes beat { 0% { transform: scale(1.12); opacity: .4; } 18% { transform: scale(1); opacity: 1; } 100% { transform: scale(.96); } }
-.f-bar { width: min(560px, 82%); height: 4px; margin-top: clamp(18px, 4vh, 36px); border-radius: 4px; background: rgba(255, 255, 255, .08); overflow: hidden; }
+.f-bar { width: min(560px, 82%); height: 4px; margin-top: clamp(18px, 4vh, 36px); border-radius: 4px; background: rgba(var(--ink), .08); overflow: hidden; }
 .f-bar i { display: block; height: 100%; background: var(--fc); transform-origin: left; transform: scaleX(0); transition: transform 300ms linear, background-color 400ms ease; }
 .f-what { display: flex; flex-direction: column; gap: 3px; margin: 22px 0 0; max-width: 34ch; }
 .f-what b { font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
@@ -54,7 +54,7 @@
 .f-ctrl { display: flex; align-items: center; justify-content: center; gap: clamp(10px, 4vw, 22px); }
 .f-btn { width: 50px; height: 50px; display: grid; place-items: center; border: 1px solid var(--f-line); border-radius: 50%; background: none; color: var(--f-fg2); transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 140ms var(--f-ease); }
 .f-btn svg { width: 22px; height: 22px; }
-.f-btn[aria-pressed="true"] { color: var(--f-fg); border-color: var(--f-line2); background: rgba(255, 255, 255, .06); }
+.f-btn[aria-pressed="true"] { color: var(--f-fg); border-color: var(--f-line2); background: rgba(var(--ink), .06); }
 #f-sound .off { display: none; }
 #f-sound[aria-pressed="false"] .on { display: none; }
 #f-sound[aria-pressed="false"] .off { display: block; }
@@ -85,10 +85,10 @@ body:has(.f-pill:not([hidden])) .toast { bottom: calc(70px + env(safe-area-inset
 .pip-l { margin: 0; font-size: 13px; font-weight: 500; color: var(--fc); }
 .pip-t { margin: 0; font-size: 22vw; font-weight: 600; line-height: 1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
 .pip[data-phase="cool"] .pip-t { color: #ffb94a; }
-.pip-bar { width: 86%; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+.pip-bar { width: 86%; height: 3px; border-radius: 3px; background: rgba(var(--ink), .1); overflow: hidden; }
 .pip-bar i { display: block; height: 100%; background: var(--fc); transform-origin: left; }
 .pip-c { display: flex; gap: 10px; margin-top: 4px; }
-.pip-c button { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .14); border-radius: 50%; background: none; color: #f4f4f5; cursor: pointer; }
+.pip-c button { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(var(--ink), .14); border-radius: 50%; background: none; color: #f4f4f5; cursor: pointer; }
 .pip-c svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (prefers-reduced-motion: reduce) {
