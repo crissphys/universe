@@ -10,12 +10,13 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
   // mismo matiz por curso que la biblioteca de materiales
-  const HUE = { fisica: 205, quimica: 235, aritmetica: 35, algebra: 60, geometria: 95, trigonometria: 150, rm: 15, 'razonamiento-matematico': 15,
-    rv: 275, 'razonamiento-verbal': 275, humanidades: 330, literatura: 312, lenguaje: 300, ingles: 325, psicologia: 350, historia: 15, geografia: 125, economia: 180, filosofia: 260 };
+  // un tono por curso, repartido en el círculo sin violetas (270–330°)
+  const HUE = { fisica: 190, quimica: 225, aritmetica: 42, algebra: 68, geometria: 100, trigonometria: 145, rm: 15, 'razonamiento-matematico': 15,
+    rv: 255, 'razonamiento-verbal': 255, humanidades: 345, literatura: 345, lenguaje: 255, ingles: 0, psicologia: 355, historia: 25, geografia: 125, economia: 180, filosofia: 240 };
   // cursos de la biblioteca de materiales (para enlazar el repaso)
   const MAT = { fisica: 'Física', quimica: 'Química', aritmetica: 'Aritmética', algebra: 'Álgebra', geometria: 'Geometría', trigonometria: 'Trigonometría',
     rm: 'Razonamiento Matemático', rv: 'Razonamiento Verbal' };
-  const SHORT = { rm: 'R. Matemático', rv: 'R. Verbal' };
+  const SHORT = { rm: 'RM', rv: 'RV' };
   const EV = {
     p2: { title: '2.º Parcial', sub: 'Pronóstico para 2027-1 a partir de <b>13 exámenes</b> y <b>752 preguntas</b>.' },
     final: { title: 'Examen final', sub: 'Temas que más se repitieron en los exámenes finales <b>2022-2 a 2026-1</b>.' },
@@ -70,9 +71,18 @@
     else list = ARCH[state.ev].courses.map(c => [c.id, c.name, '']);
     chipsEl.innerHTML = list.map(([id, name, n]) =>
       `<button type="button" aria-pressed="${id === state.course}" data-c="${esc(id)}" style="--h:${HUE[id] ?? 0};--c:${id ? 1 : 0}">${id ? '<i></i>' : ''}${esc(name)}${n ? `<span>${esc(n)}</span>` : ''}</button>`).join('');
+    overflow();
     const on = $('[aria-pressed="true"]', chipsEl);
     if (on && chipsEl.scrollWidth > chipsEl.clientWidth) chipsEl.scrollTo({ left: on.offsetLeft - chipsEl.clientWidth / 2 + on.offsetWidth / 2, behavior: first ? 'instant' : 'smooth' });
   }
+
+  // si los chips no caben, el borde que tiene más contenido se desvanece
+  function overflow() {
+    const over = chipsEl.scrollWidth > chipsEl.clientWidth + 1;
+    chipsEl.classList.toggle('is-over', over);
+    chipsEl.classList.toggle('is-end', over && chipsEl.scrollLeft + chipsEl.clientWidth >= chipsEl.scrollWidth - 2);
+  }
+  chipsEl.addEventListener('scroll', overflow, { passive: true });
 
   /* ---------- vista: resumen ---------- */
   function summary() {
@@ -136,7 +146,7 @@
       </button>
       <div class="fj-t-body" id="tb-${id}" role="region" aria-label="${esc(t.n)}"><div class="fj-t-inner">
         ${c.syl?.[name] ? syllabus(c.syl[name]) : ''}
-        ${qs.length ? `<ul class="fj-mini">${qs.map(q => `<li><strong>${esc(cap(q.n.replace(/^[^:]+:\s*/, '')))}</strong> · ${esc(q.h)} <small>${q.v} ${q.v === 1 ? 'vez' : 'veces'}</small></li>`).join('')}</ul>` : ''}
+        ${qs.length ? `<p class="fj-syl-k">Cómo suelen preguntar</p><ul class="fj-mini">${qs.map(q => `<li><strong>${esc(cap(q.n.replace(/^[^:]+:\s*/, '')))}</strong> · ${esc(q.h)} <small>${q.v} ${q.v === 1 ? 'vez' : 'veces'}</small></li>`).join('')}</ul>` : ''}
         ${strip(t.s, P2.periods)}${matLink(name)}
       </div></div></li>`;
   }
@@ -181,7 +191,7 @@
       <ul class="fj-qs${more ? ' is-clipped' : ''}">${c.types.map((q, i) => `<li${i >= LIM ? ' class="is-extra"' : ''}>
         <div class="fj-q-main"><strong>${esc(q.n)}</strong><p>${esc(q.h)}</p><small>${esc(q.y.replace(/, /g, ' · '))}</small></div>
         <span class="fj-q-n"><b>${q.v}</b>${q.v === 1 ? 'vez' : 'veces'}<small>${q.x} de ${n}</small></span></li>`).join('')}</ul>
-      ${more ? `<button type="button" class="fj-more" data-more>Ver los ${c.types.length} tipos</button>` : ''}</section>`;
+      ${more ? `<button type="button" class="fj-btn fj-more" data-more>Ver los ${c.types.length} tipos</button>` : ''}</section>`;
   }
 
   /* ---------- vista: archivo ---------- */
@@ -206,11 +216,15 @@
   /* ---------- render ---------- */
   function render(scroll) {
     const ev = EV[state.ev];
-    $('[data-ev-title]').textContent = ev.title;
+    const title = $('[data-ev-title]');
+    if (title.textContent !== ev.title) {
+      title.textContent = ev.title;
+      if (!first && !reduce.matches) { title.classList.remove('is-swap'); void title.offsetWidth; title.classList.add('is-swap'); }
+    }
     $('[data-ev-sub]').innerHTML = ev.sub;
     document.title = `Fijas CEPREUNI · ${state.ev === 'p2' ? 'Segundo Parcial 2027-1' : ev.title} · UNIverse to Study`;
     $$('button', seg).forEach(b => b.setAttribute('aria-selected', String(b.dataset.ev === state.ev)));
-    movePill();
+    movePill(!first);
     hot.hidden = state.ev !== 'p2';
     if (state.ev === 'p2' && state.course && !course(state.course)) state.course = '';
     if (state.ev !== 'p2' && !ARCH[state.ev].courses.some(x => x.id === state.course)) state.course = ARCH[state.ev].courses[0].id;
@@ -239,16 +253,26 @@
     if (scrollY > top) scrollTo({ top, behavior: 'instant' });
   }
 
-  function movePill() {
+  // el indicador toma el tamaño nuevo al instante y viaja solo con transform (nunca anima width)
+  let pillBox = null;
+  function movePill(animate) {
     const on = $('[aria-selected="true"]', seg);
     if (!on) return;
-    pill.style.width = on.offsetWidth + 'px';
-    pill.style.transform = `translateX(${on.offsetLeft}px)`;
+    const box = { x: on.offsetLeft, w: on.offsetWidth };
+    pill.classList.remove('is-moving');
+    pill.style.width = box.w + 'px';
+    if (animate && pillBox && !reduce.matches) {
+      pill.style.transform = `translateX(${pillBox.x}px) scaleX(${pillBox.w / box.w})`;
+      void pill.offsetWidth;
+      pill.classList.add('is-moving');
+    }
+    pill.style.transform = `translateX(${box.x}px)`;
+    pillBox = box;
   }
 
-  const fail = msg => { view.setAttribute('aria-busy', 'false'); view.innerHTML = `<p class="fj-note">${msg} <button type="button" class="fj-more" onclick="location.reload()">Reintentar</button></p>`; };
+  const fail = msg => { view.setAttribute('aria-busy', 'false'); view.innerHTML = `<p class="fj-note">${msg} <button type="button" class="fj-btn" onclick="location.reload()">Reintentar</button></p>`; };
   async function ensureArch() {
-    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261126')).json(); }
+    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261127')).json(); }
   }
   async function setEv(ev) {
     if (ev !== 'p2') { try { await ensureArch(); } catch { fail('No se pudo cargar el archivo.'); return; } }
@@ -291,7 +315,7 @@
     if (state.ev !== 'p2' && !ARCH) ensureArch().then(() => render(true), () => fail('No se pudo cargar el archivo.'));
     else render(true);
   });
-  addEventListener('resize', movePill);
+  addEventListener('resize', () => { movePill(false); overflow(); });
 
   /* ---------- barra fija y volver arriba ---------- */
   const totop = $('.totop');
@@ -326,8 +350,8 @@
   /* ---------- inicio ---------- */
   readHash();
   countUp();
-  document.fonts?.ready.then(movePill);
-  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261126').then(r => r.json()).then(async d => {
+  document.fonts?.ready.then(() => movePill(false));
+  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261127').then(r => r.json()).then(async d => {
     P2 = d;
     if (state.ev !== 'p2') await ensureArch();
     render();
