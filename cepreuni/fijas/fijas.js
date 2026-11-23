@@ -25,14 +25,13 @@
   const ICON = {
     up: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 12.5v-9M4 7l4-4 4 4"/></svg>',
     down: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.5v9M4 9l4 4 4-4"/></svg>',
-    chev: '<svg class="fj-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>',
-    arrow: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10m-4-4 4 4-4 4"/></svg>'
+    chev: '<svg class="fj-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>'
   };
 
   const chipsEl = $('.fj-chips'), view = $('#vista'), hot = $('.fj-hot'), consoleEl = $('.console');
   const seg = $('.fj-seg'), pill = $('.fj-seg-pill');
   const state = { ev: 'p2', course: '', topic: '' };
-  let P2 = null, ARCH = null, first = true;
+  let P2 = null, ARCH = null, first = true, kbd = false;
 
   /* ---------- hash ---------- */
   function readHash() {
@@ -62,7 +61,7 @@
       `<span class="${v === null ? 'is-na' : v ? '' : 'is-zero'}" style="--a:${v ? (0.28 + 0.72 * v / max).toFixed(2) : 0}"><b>${v === null ? '–' : v || '·'}</b><i>${esc(periods[i])}</i></span>`).join('')}</div>`;
   }
 
-  const matLink = name => `<a class="fj-link" href="/cepreuni/materialespre/?c=${encodeURIComponent(name)}">Clases y materiales de ${esc(name)} ${ICON.arrow}</a>`;
+  const matLink = name => `<a class="fj-link" href="/cepreuni/materialespre/?c=${encodeURIComponent(name)}">Ver clases de ${esc(name)}</a>`;
 
   /* ---------- chips de curso ---------- */
   function chips() {
@@ -91,7 +90,7 @@
       const c = course(t.c), i = j + hotN;
       return `<li><a class="fj-rank" href="#${c.id}/${slug(t.n)}" style="--h:${HUE[c.id]}">
         <span class="fj-rank-n">${i + 1}</span>
-        <span class="fj-rank-txt"><strong>${esc(t.n)}</strong><small><i></i>${esc(c.name)} · ${preg(t.e)}</small></span>
+        <span class="fj-rank-txt"><strong>${esc(t.n)}</strong><small><i></i>${esc(c.name)}, ${preg(t.e)}</small></span>
         ${bar(t.p / 100, j)}<span class="fj-pct">${t.p}<small>%</small></span></a></li>`;
     }).join('');
     const tr = P2.trends.map(t => `<li class="${t.dir > 0 ? 'is-up' : 'is-down'}"><span class="fj-tr-ico">${t.dir > 0 ? ICON.up : ICON.down}</span><div><strong>${esc(t.t)}</strong> <em>${esc(course(t.c).name)}</em><p>${esc(t.d)}</p></div></li>`).join('');
@@ -104,7 +103,7 @@
   function repeats(list, all) {
     if (!list.length) return '';
     return `<section class="fj-sec"><div class="fj-sec-head"><h2>Preguntas que volvieron</h2><p>Mismos datos, mismo enunciado o mismo esquema de resolución en dos o más exámenes.</p></div>
-      <ul class="fj-reps">${list.map(r => `<li style="--h:${HUE[r.c]}"><div><strong>${esc(r.q)}</strong><small>${all ? `<i></i>${esc(course(r.c).name)} · ` : ''}${esc(r.r)}</small></div><span>${esc(r.w)}</span></li>`).join('')}</ul></section>`;
+      <ul class="fj-reps">${list.map(r => `<li style="--h:${HUE[r.c]}"><div><strong>${esc(r.q)}</strong><small>${all ? `<i></i>${esc(course(r.c).name)}, ${esc(r.r.charAt(0).toLowerCase() + r.r.slice(1))}` : esc(r.r)}</small></div><span>${esc(r.w.replace(/ · /g, ', '))}</span></li>`).join('')}</ul></section>`;
   }
 
   function method() {
@@ -146,7 +145,7 @@
       </button>
       <div class="fj-t-body" id="tb-${id}" role="region" aria-label="${esc(t.n)}"><div class="fj-t-inner">
         ${c.syl?.[name] ? syllabus(c.syl[name]) : ''}
-        ${qs.length ? `<p class="fj-syl-k">Cómo suelen preguntar</p><ul class="fj-mini">${qs.map(q => `<li><strong>${esc(cap(q.n.replace(/^[^:]+:\s*/, '')))}</strong> · ${esc(q.h)} <small>${q.v} ${q.v === 1 ? 'vez' : 'veces'}</small></li>`).join('')}</ul>` : ''}
+        ${qs.length ? `<p class="fj-syl-k">Cómo suelen preguntar</p><ul class="fj-mini">${qs.map(q => `<li><strong>${esc(cap(q.n.replace(/^[^:]+:\s*/, '')))}</strong>: ${esc(q.h.charAt(0).toLowerCase() + q.h.slice(1))} <small>${q.v} ${q.v === 1 ? 'vez' : 'veces'}</small></li>`).join('')}</ul>` : ''}
         ${strip(t.s, P2.periods)}${matLink(name)}
       </div></div></li>`;
   }
@@ -168,13 +167,12 @@
         </div></div></li>`;
     }).join('');
     const reps = repeats(P2.repeats.filter(r => r.c === c.id), false);
-    const next = [MAT[c.id] ? `<a href="/cepreuni/materialespre/?c=${encodeURIComponent(MAT[c.id])}">Clases y materiales de ${esc(MAT[c.id])}${ICON.arrow}</a>` : '',
-      `<a href="/cepreuni/examenes?e=2ep">Parciales anteriores para practicar${ICON.arrow}</a>`].join('');
+    const next = [MAT[c.id] ? `<a href="/cepreuni/materialespre/?c=${encodeURIComponent(MAT[c.id])}">Ver clases de ${esc(MAT[c.id])}</a>` : '',
+      `<a href="/cepreuni/examenes?e=2ep">Practicar con parciales anteriores</a>`].join('');
     return `<section class="fj-sec fj-course" style="--h:${HUE[c.id]}">
         <header class="fj-ch">
-          <p class="fj-kicker"><i></i>${esc(c.name)}${c.provisional ? ' · pronóstico provisional' : ''}</p>
-          <h2><span class="fj-big">${esc(c.exp)}</span> preguntas esperadas</h2>
-          <p class="fj-meta">${c.only ? 'Temario acumulativo: semanas 1 a 13. Si las preguntas se reparten por igual, serían 3 o 4 por curso.' : `Promedio histórico ${esc(c.avg)}${c.avgNote ? ` (${esc(c.avgNote)})` : ''} · ${esc(c.base)}${c.id === 'rv' ? ' · Temario acumulativo: semanas 1 a 13' : ''}`}</p>
+          <h2>${esc(c.name)}</h2>
+          <p class="fj-meta"><b>${esc(c.exp)} preguntas</b> esperadas. ${c.only ? 'Temario acumulativo, de la semana 1 a la 13; si se reparten por igual, serían 3 o 4 por curso.' : `En promedio vinieron ${esc(c.avg)} por examen (${esc(c.base.replace(' · ', ', '))}).${c.provisional ? ' Pronóstico provisional.' : ''}${c.id === 'rv' ? ' Temario acumulativo, de la semana 1 a la 13.' : ''}`}</p>
         </header>
         <div class="fj-sec-head is-sm"><h3>${c.only ? 'Cursos que entran' : 'Temas'}</h3><p>${c.only ? 'Toca un curso para ver su temario' : 'Probabilidad de aparecer al menos una vez'}</p></div>
         <ul class="fj-topics">${topics}</ul>
@@ -189,7 +187,7 @@
     const n = c.id === 'humanidades' || c.id === 'rv' ? 12 : 13;
     return `<section class="fj-sec"><div class="fj-sec-head"><h2>Cómo suelen preguntar</h2><p>Tipos de pregunta más frecuentes y su planteamiento habitual.</p></div>
       <ul class="fj-qs${more ? ' is-clipped' : ''}">${c.types.map((q, i) => `<li${i >= LIM ? ' class="is-extra"' : ''}>
-        <div class="fj-q-main"><strong>${esc(q.n)}</strong><p>${esc(q.h)}</p><small>${esc(q.y.replace(/, /g, ' · '))}</small></div>
+        <div class="fj-q-main"><strong>${esc(q.n)}</strong><p>${esc(q.h)}</p><small>${esc(q.y)}</small></div>
         <span class="fj-q-n"><b>${q.v}</b>${q.v === 1 ? 'vez' : 'veces'}<small>${q.x} de ${n}</small></span></li>`).join('')}</ul>
       ${more ? `<button type="button" class="fj-btn fj-more" data-more>Ver los ${c.types.length} tipos</button>` : ''}</section>`;
   }
@@ -207,10 +205,10 @@
     }).join('');
     const total = c.topics.reduce((a, t) => a + t.t, 0);
     return `<section class="fj-sec fj-course" style="--h:${HUE[c.id] ?? 0}">
-        <header class="fj-ch"><h2 class="is-name">${esc(c.name)}</h2><p class="fj-meta">${total} preguntas en ${ex.n} ${state.ev === 'final' ? 'exámenes' : 'pruebas'}</p></header>
+        <header class="fj-ch"><h2>${esc(c.name)}</h2><p class="fj-meta">${total} preguntas en ${ex.n} ${state.ev === 'final' ? 'exámenes' : 'pruebas'}</p></header>
         <div class="fj-sec-head is-sm"><h3>Temas más frecuentes</h3><p>${periods ? 'Toca un tema para verlo examen por examen' : 'Veces que apareció'}</p></div>
         <ul class="fj-topics">${rows}</ul></section>
-      <nav class="fj-next"><a href="/cepreuni/examenes?e=${state.ev === 'final' ? 'examen-final' : '2ep'}">${state.ev === 'final' ? 'Exámenes finales anteriores' : 'Exámenes CEPREUNI anteriores'}${ICON.arrow}</a></nav>`;
+      <nav class="fj-next"><a href="/cepreuni/examenes?e=${state.ev === 'final' ? 'examen-final' : '2ep'}">${state.ev === 'final' ? 'Practicar con finales anteriores' : 'Practicar con exámenes anteriores'}</a></nav>`;
   }
 
   /* ---------- render ---------- */
@@ -224,7 +222,7 @@
     $('[data-ev-sub]').innerHTML = ev.sub;
     document.title = `Fijas CEPREUNI · ${state.ev === 'p2' ? 'Segundo Parcial 2027-1' : ev.title} · UNIverse to Study`;
     $$('button', seg).forEach(b => b.setAttribute('aria-selected', String(b.dataset.ev === state.ev)));
-    movePill(!first);
+    movePill(!first && !kbd); kbd = false;
     hot.hidden = state.ev !== 'p2';
     if (state.ev === 'p2' && state.course && !course(state.course)) state.course = '';
     if (state.ev !== 'p2' && !ARCH[state.ev].courses.some(x => x.id === state.course)) state.course = ARCH[state.ev].courses[0].id;
@@ -232,6 +230,7 @@
     const c = state.ev === 'p2' && state.course ? course(state.course) : null;
     view.innerHTML = state.ev !== 'p2' ? archiveView() : c ? courseView(c) : summary();
     view.setAttribute('aria-busy', 'false');
+    document.documentElement.classList.toggle('is-first', first);
     if (!first && !reduce.matches) { view.classList.remove('is-in'); void view.offsetWidth; view.classList.add('is-in'); }
     writeHash();
     if (state.topic) {
@@ -272,7 +271,7 @@
 
   const fail = msg => { view.setAttribute('aria-busy', 'false'); view.innerHTML = `<p class="fj-note">${msg} <button type="button" class="fj-btn" onclick="location.reload()">Reintentar</button></p>`; };
   async function ensureArch() {
-    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261127')).json(); }
+    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261128')).json(); }
   }
   async function setEv(ev) {
     if (ev !== 'p2') { try { await ensureArch(); } catch { fail('No se pudo cargar el archivo.'); return; } }
@@ -286,7 +285,7 @@
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
     const tabs = $$('[data-ev]', seg), i = tabs.findIndex(b => b.dataset.ev === state.ev);
     const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
-    n.focus(); setEv(n.dataset.ev);
+    n.focus(); kbd = true; setEv(n.dataset.ev);
   });
   chipsEl.addEventListener('click', e => {
     const b = e.target.closest('[data-c]');
@@ -335,7 +334,7 @@
   function countUp() {
     const nums = $$('.fj-card-p b');
     if (reduce.matches) return;
-    const t0 = performance.now(), D = 900, ease = t => 1 - Math.pow(1 - t, 4);
+    const t0 = performance.now(), D = 600, ease = t => 1 - Math.pow(1 - t, 4);
     nums.forEach(b => { b.dataset.to = b.textContent; b.textContent = '0'; });
     const tick = now => {
       nums.forEach((b, i) => {
@@ -351,7 +350,7 @@
   readHash();
   countUp();
   document.fonts?.ready.then(() => movePill(false));
-  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261127').then(r => r.json()).then(async d => {
+  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261128').then(r => r.json()).then(async d => {
     P2 = d;
     if (state.ev !== 'p2') await ensureArch();
     render();
