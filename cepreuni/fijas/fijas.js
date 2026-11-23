@@ -90,9 +90,9 @@
     }).join('');
     const tr = P2.trends.map(t => `<li class="${t.dir > 0 ? 'is-up' : 'is-down'}"><span class="fj-tr-ico">${t.dir > 0 ? ICON.up : ICON.down}</span><div><strong>${esc(t.t)}</strong> <em>${esc(course(t.c).name)}</em><p>${esc(t.d)}</p></div></li>`).join('');
     const per = P2.order.map(id => { const c = course(id);
-      return `<li><a href="#${id}" style="--h:${HUE[id]}"><b>${esc(c.exp)}</b><span><i></i>${esc(c.name)}</span><small>Promedio ${esc(c.avg)}</small></a></li>`; }).join('');
-    return `<section class="fj-sec"><div class="fj-sec-head"><h2>Los 20 temas con más preguntas esperadas</h2><p>Todos los cursos, ordenados por cuántas preguntas se esperan.</p></div><ol class="fj-ranks">${rows}</ol>
-      <p class="fj-foot">Razonamiento Matemático solo tiene dos exámenes: su pronóstico es provisional.</p></section>
+      return `<li><a href="#${id}" style="--h:${HUE[id]}"><b>${esc(c.exp)}</b><span><i></i>${esc(c.name)}</span><small>${c.only ? 'Lit · Len · Psi' : `Promedio ${esc(c.avg)}`}</small></a></li>`; }).join('');
+    return `<section class="fj-sec"><div class="fj-sec-head"><h2>Los temas con más preguntas esperadas</h2><p>Todos los cursos, ordenados por cuántas preguntas se esperan.</p></div><ol class="fj-ranks">${rows}</ol>
+      <p class="fj-foot">Humanidades no figura: en 2027-1 entran solo Literatura, Lenguaje y Psicología, así que esos cursos están confirmados (<a href="#humanidades">ver Humanidades</a>). Razonamiento Matemático solo tiene dos exámenes: su pronóstico es provisional.</p></section>
       <section class="fj-sec"><div class="fj-sec-head"><h2>Preguntas por curso</h2><p>Formato de los tres últimos exámenes: 7 de Física, 7 de Química, 16 de Matemática y 30 de RM, RV y Humanidades.</p></div><ul class="fj-per">${per}</ul></section>
       <section class="fj-sec"><div class="fj-sec-head"><h2>Lo que está cambiando</h2><p>Temas que en los últimos exámenes se alejaron de su historial.</p></div><ul class="fj-trends">${tr}</ul></section>
       ${repeats(P2.repeats, true)}${method()}`;
@@ -111,6 +111,7 @@
     return `<section class="fj-sec fj-method"><details><summary><span>Cómo se calcula</span>${ICON.chev}</summary><div class="fj-method-body">
       <p>La base reúne los segundos exámenes parciales de 2017-1, 2019-1, 2019-2, 2020-1 y 2022-2 a 2026-2. Cada pregunta se asignó a un curso y a un tema. De 2019-1 solo existen 32 preguntas (Física, Química y Matemática).</p>
       <p>Cada tema se mide como proporción de las preguntas de su curso en cada examen, con un peso que se reduce a la mitad cada tres exámenes hacia el pasado. Esa proporción por el número de preguntas del curso da las <b>preguntas esperadas</b>. La <b>probabilidad de aparecer</b> es 1 − (1 − p)<sup>N</sup>, redondeada a múltiplos de 5 %.</p>
+      <p><b>Ajuste 2027-1:</b> está confirmado que en Humanidades solo entran Literatura, Lenguaje y Psicología, además de Razonamiento Verbal. Por eso se retiraron del pronóstico Economía, Filosofía, Geografía, Historia, Inglés, Educación cívica y actualidad, y esos tres cursos se muestran como confirmados en vez de con una probabilidad.</p>
       <p>Se supone que se mantiene el formato de los tres últimos exámenes (75 % estimado). Si volviera el anterior (Física 6, Química 6, Matemática 20, RV 18, Humanidades 10 con Inglés), cada curso tendría más preguntas y las probabilidades serían algo más altas.</p>
       <h3>Validación con exámenes pasados</h3>
       <p>Se pronosticaron los seis últimos exámenes usando solo los anteriores. De los tres temas con más preguntas esperadas por curso, el 81 % apareció (63 % al azar) y reunieron el 63 % de las preguntas del curso (46 % al azar).</p>
@@ -122,9 +123,31 @@
   }
 
   /* ---------- vista: curso del parcial ---------- */
+  const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+  const inOnly = (c, n) => !c.only || c.only.some(o => fold(n).startsWith(fold(o)));
+  function syllabus(name, list) { // semanas 8 a 13: lo que cubre el 2.º parcial
+    return `<div class="fj-syl"><h4>${esc(name)} · semanas 8 a 13</h4><ol>${list.map((t, i) => `<li><span>S${i + 8}</span>${esc(t)}</li>`).join('')}</ol></div>`;
+  }
+  function confirmedRow(c, t, i) {
+    const s = seriesStats(t.s), id = slug(t.n), open = state.topic === id;
+    const name = c.only.find(o => fold(t.n).startsWith(fold(o)));
+    const qs = c.types.filter(q => fold(q.n).startsWith(fold(name)));
+    return `<li class="fj-t is-confirmed${open ? ' is-open' : ''}" id="t-${id}" data-t="${id}">
+      <button type="button" class="fj-t-head" aria-expanded="${open}" aria-controls="tb-${id}">
+        <span class="fj-t-name"><strong>${esc(t.n)}</strong><small>Historial: ${s.total} preguntas en ${s.hit} de ${s.n} exámenes</small></span>
+        <span class="fj-pct fj-ok">Entra</span>${ICON.chev}
+      </button>
+      <div class="fj-t-body" id="tb-${id}" role="region" aria-label="${esc(t.n)}"><div class="fj-t-inner">
+        ${c.syl?.[name] ? syllabus('Temas del ciclo', c.syl[name]) : ''}
+        ${qs.length ? `<ul class="fj-mini">${qs.map(q => `<li><strong>${esc(cap(q.n.replace(/^[^:]+:\s*/, '')))}</strong> · ${esc(q.h)} <small>${q.v} ${q.v === 1 ? 'vez' : 'veces'}</small></li>`).join('')}</ul>` : ''}
+        ${strip(t.s, P2.periods)}${matLink(c, t)}
+      </div></div></li>`;
+  }
+
   function courseView(c) {
     const max = Math.max(...c.topics.map(t => t.p));
-    const topics = c.topics.map((t, i) => {
+    const inT = c.topics.filter(t => inOnly(c, t.n)), outT = c.topics.filter(t => !inOnly(c, t.n));
+    const topics = c.only ? inT.map((t, i) => confirmedRow(c, t, i)).join('') : inT.map((t, i) => {
       const s = seriesStats(t.s), id = slug(t.n), open = state.topic === id;
       const facts = [`<li><b>${s.total}</b> ${s.total === 1 ? 'pregunta' : 'preguntas'} en <b>${s.hit} de ${s.n}</b> exámenes</li>`,
         t.l4 !== null ? `<li><b>${t.l4}</b> en los últimos 4 exámenes</li>` : '',
@@ -146,16 +169,19 @@
       `<a href="/cepreuni/examenes?e=2ep">Parciales anteriores para practicar${ICON.arrow}</a>`].join('');
     return `<section class="fj-sec fj-course" style="--h:${HUE[c.id]}">
         <header class="fj-ch">
-          <p class="fj-kicker"><i></i>${esc(c.name)}${c.provisional ? ' · pronóstico provisional' : ''}</p>
+          <p class="fj-kicker"><i></i>${esc(c.name)}${c.provisional ? ' · pronóstico provisional' : ''}${c.only || P2.confirmed.includes(c.name) ? ' · <b class="fj-ok">confirmado para 2027-1</b>' : ''}</p>
           <h2><span class="fj-big">${esc(c.exp)}</span> preguntas esperadas</h2>
-          <p class="fj-meta">Promedio histórico ${esc(c.avg)}${c.avgNote ? ` (${esc(c.avgNote)})` : ''} · ${esc(c.base)}</p>
+          <p class="fj-meta">${c.only ? `Solo entran ${esc(c.only.slice(0, -1).join(', '))} y ${esc(c.only.at(-1))}. Si se reparten por igual, serían 3 o 4 por curso.` : `Promedio histórico ${esc(c.avg)}${c.avgNote ? ` (${esc(c.avgNote)})` : ''} · ${esc(c.base)}`}</p>
         </header>${mix}
-        <div class="fj-sec-head is-sm"><h3>Temas</h3><p>Probabilidad de aparecer al menos una vez</p></div>
+        <div class="fj-sec-head is-sm"><h3>${c.only ? 'Cursos que entran' : 'Temas'}</h3><p>${c.only ? 'Toca un curso para ver sus temas del ciclo y cómo suelen preguntar' : 'Probabilidad de aparecer al menos una vez'}</p></div>
         <ul class="fj-topics">${topics}</ul>
+        ${outT.length ? `<div class="fj-out"><h4>No entran en 2027-1</h4><p>${outT.map(t => esc(t.n)).join(' · ')}</p></div>` : ''}
+        ${!c.only && c.syl ? Object.entries(c.syl).map(([n, l]) => syllabus('Temas del ciclo', l)).join('') : ''}
       </section>${types(c)}${reps}<nav class="fj-next" aria-label="Seguir con ${esc(c.name)}">${next}</nav>`;
   }
 
   function types(c) {
+    if (c.only) return '';
     if (!c.types.length) return '';
     const LIM = 5, more = c.types.length > LIM;
     const n = c.id === 'humanidades' || c.id === 'rv' ? 12 : 13;
@@ -230,7 +256,7 @@
 
   const fail = msg => { view.setAttribute('aria-busy', 'false'); view.innerHTML = `<p class="fj-note">${msg} <button type="button" class="fj-more" onclick="location.reload()">Reintentar</button></p>`; };
   async function ensureArch() {
-    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261123')).json(); }
+    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261124')).json(); }
   }
   async function setEv(ev) {
     if (ev !== 'p2') { try { await ensureArch(); } catch { fail('No se pudo cargar el archivo.'); return; } }
@@ -309,7 +335,7 @@
   readHash();
   countUp();
   document.fonts?.ready.then(movePill);
-  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261123').then(r => r.json()).then(async d => {
+  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261124').then(r => r.json()).then(async d => {
     P2 = d;
     if (state.ev !== 'p2') await ensureArch();
     render();
