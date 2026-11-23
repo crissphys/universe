@@ -16,7 +16,6 @@
   const MAT = { fisica: 'Física', quimica: 'Química', aritmetica: 'Aritmética', algebra: 'Álgebra', geometria: 'Geometría', trigonometria: 'Trigonometría',
     rm: 'Razonamiento Matemático', rv: 'Razonamiento Verbal' };
   const SHORT = { rm: 'R. Matemático', rv: 'R. Verbal' };
-  const HUM = ['Economía', 'Filosofía', 'Psicología', 'Lenguaje', 'Geografía', 'Inglés', 'Literatura', 'Historia'];
   const EV = {
     p2: { title: '2.º Parcial', sub: 'Pronóstico para 2027-1 a partir de <b>13 exámenes</b> y <b>752 preguntas</b>.' },
     final: { title: 'Examen final', sub: 'Temas que más se repitieron en los exámenes finales <b>2022-2 a 2026-1</b>.' },
@@ -62,11 +61,7 @@
       `<span class="${v === null ? 'is-na' : v ? '' : 'is-zero'}" style="--a:${v ? (0.28 + 0.72 * v / max).toFixed(2) : 0}"><b>${v === null ? '–' : v || '·'}</b><i>${esc(periods[i])}</i></span>`).join('')}</div>`;
   }
 
-  function matLink(c, t) {
-    const hum = c.id === 'humanidades' && HUM.find(h => fold(t.n).startsWith(fold(h)));
-    const name = hum || MAT[c.id];
-    return name ? `<a class="fj-link" href="/cepreuni/materialespre/?c=${encodeURIComponent(name)}">Repasar ${esc(name)} en materiales ${ICON.arrow}</a>` : '';
-  }
+  const matLink = name => `<a class="fj-link" href="/cepreuni/materialespre/?c=${encodeURIComponent(name)}">Clases y materiales de ${esc(name)} ${ICON.arrow}</a>`;
 
   /* ---------- chips de curso ---------- */
   function chips() {
@@ -81,19 +76,17 @@
 
   /* ---------- vista: resumen ---------- */
   function summary() {
-    const rows = P2.top.map((t, i) => {
-      const c = course(t.c);
+    const hotN = P2.top.filter(t => t.p >= 85).length;
+    const rows = P2.top.slice(hotN).map((t, j) => {
+      const c = course(t.c), i = j + hotN;
       return `<li><a class="fj-rank" href="#${c.id}/${slug(t.n)}" style="--h:${HUE[c.id]}">
         <span class="fj-rank-n">${i + 1}</span>
-        <span class="fj-rank-txt"><strong>${esc(t.n)}</strong><small><i></i>${esc(c.name)}${c.provisional ? ' · provisional' : ''} · ${preg(t.e)}</small></span>
-        ${bar(t.p / 100, i, t.p >= 85 ? 'is-hot' : '')}<span class="fj-pct">${t.p}<small>%</small></span></a></li>`;
+        <span class="fj-rank-txt"><strong>${esc(t.n)}</strong><small><i></i>${esc(c.name)} · ${preg(t.e)}</small></span>
+        ${bar(t.p / 100, j)}<span class="fj-pct">${t.p}<small>%</small></span></a></li>`;
     }).join('');
     const tr = P2.trends.map(t => `<li class="${t.dir > 0 ? 'is-up' : 'is-down'}"><span class="fj-tr-ico">${t.dir > 0 ? ICON.up : ICON.down}</span><div><strong>${esc(t.t)}</strong> <em>${esc(course(t.c).name)}</em><p>${esc(t.d)}</p></div></li>`).join('');
-    const per = P2.order.map(id => { const c = course(id);
-      return `<li><a href="#${id}" style="--h:${HUE[id]}"><b>${esc(c.exp)}</b><span><i></i>${esc(c.name)}</span><small>${c.only ? 'Lit · Len · Psi' : `Promedio ${esc(c.avg)}`}</small></a></li>`; }).join('');
-    return `<section class="fj-sec"><div class="fj-sec-head"><h2>Los temas con más preguntas esperadas</h2><p>Todos los cursos, ordenados por cuántas preguntas se esperan.</p></div><ol class="fj-ranks">${rows}</ol>
-      <p class="fj-foot">Humanidades no figura: en 2027-1 entran solo Literatura, Lenguaje y Psicología, así que esos cursos están confirmados (<a href="#humanidades">ver Humanidades</a>). Razonamiento Matemático solo tiene dos exámenes: su pronóstico es provisional.</p></section>
-      <section class="fj-sec"><div class="fj-sec-head"><h2>Preguntas por curso</h2><p>Formato de los tres últimos exámenes: 7 de Física, 7 de Química, 16 de Matemática y 30 de RM, RV y Humanidades.</p></div><ul class="fj-per">${per}</ul></section>
+    return `<section class="fj-sec"><div class="fj-sec-head"><h2>Le siguen</h2><p>Todos los cursos, ordenados por preguntas esperadas.</p></div><ol class="fj-ranks">${rows}</ol>
+      <p class="fj-foot">Razonamiento Matemático solo tiene dos exámenes: su pronóstico es provisional.</p></section>
       <section class="fj-sec"><div class="fj-sec-head"><h2>Lo que está cambiando</h2><p>Temas que en los últimos exámenes se alejaron de su historial.</p></div><ul class="fj-trends">${tr}</ul></section>
       ${repeats(P2.repeats, true)}${method()}`;
   }
@@ -111,7 +104,7 @@
     return `<section class="fj-sec fj-method"><details><summary><span>Cómo se calcula</span>${ICON.chev}</summary><div class="fj-method-body">
       <p>La base reúne los segundos exámenes parciales de 2017-1, 2019-1, 2019-2, 2020-1 y 2022-2 a 2026-2. Cada pregunta se asignó a un curso y a un tema. De 2019-1 solo existen 32 preguntas (Física, Química y Matemática).</p>
       <p>Cada tema se mide como proporción de las preguntas de su curso en cada examen, con un peso que se reduce a la mitad cada tres exámenes hacia el pasado. Esa proporción por el número de preguntas del curso da las <b>preguntas esperadas</b>. La <b>probabilidad de aparecer</b> es 1 − (1 − p)<sup>N</sup>, redondeada a múltiplos de 5 %.</p>
-      <p><b>Ajuste 2027-1:</b> está confirmado que en Humanidades solo entran Literatura, Lenguaje y Psicología, además de Razonamiento Verbal. Por eso se retiraron del pronóstico Economía, Filosofía, Geografía, Historia, Inglés, Educación cívica y actualidad, y esos tres cursos se muestran como confirmados en vez de con una probabilidad. En Humanidades y Razonamiento Verbal el temario es acumulativo: cada examen evalúa desde la semana 1 hasta la semana del examen.</p>
+      <p>En Humanidades, los cursos que no entran en 2027-1 se retiraron del pronóstico, y los que entran se muestran como confirmados en vez de con una probabilidad.</p>
       <p>Se supone que se mantiene el formato de los tres últimos exámenes (75 % estimado). Si volviera el anterior (Física 6, Química 6, Matemática 20, RV 18, Humanidades 10 con Inglés), cada curso tendría más preguntas y las probabilidades serían algo más altas.</p>
       <h3>Validación con exámenes pasados</h3>
       <p>Se pronosticaron los seis últimos exámenes usando solo los anteriores. De los tres temas con más preguntas esperadas por curso, el 81 % apareció (63 % al azar) y reunieron el 63 % de las preguntas del curso (46 % al azar).</p>
@@ -129,9 +122,8 @@
   function syllabus(list) {
     const wk = list.map((t, i) => [i + 1, t]).filter(([, t]) => !/^repaso/i.test(t));
     const li = ([w, t]) => `<li><span>S${w}</span>${esc(t)}</li>`;
-    return `<div class="fj-syl"><h4>Temario acumulativo · semanas 1 a 13</h4>
-      <p class="fj-syl-k">Lo nuevo desde el 1.er parcial</p><ol class="is-new">${wk.filter(([w]) => w >= 8).map(li).join('')}</ol>
-      <p class="fj-syl-k">También entra</p><ol>${wk.filter(([w]) => w < 8).map(li).join('')}</ol></div>`;
+    return `<div class="fj-syl"><p class="fj-syl-k">Lo nuevo desde el 1.er parcial</p><ol class="is-new">${wk.filter(([w]) => w >= 8).map(li).join('')}</ol>
+      <p class="fj-syl-k">Semanas 1 a 7</p><ol>${wk.filter(([w]) => w < 8).map(li).join('')}</ol></div>`;
   }
   function confirmedRow(c, t, i) {
     const s = seriesStats(t.s), id = slug(t.n), open = state.topic === id;
@@ -145,7 +137,7 @@
       <div class="fj-t-body" id="tb-${id}" role="region" aria-label="${esc(t.n)}"><div class="fj-t-inner">
         ${c.syl?.[name] ? syllabus(c.syl[name]) : ''}
         ${qs.length ? `<ul class="fj-mini">${qs.map(q => `<li><strong>${esc(cap(q.n.replace(/^[^:]+:\s*/, '')))}</strong> · ${esc(q.h)} <small>${q.v} ${q.v === 1 ? 'vez' : 'veces'}</small></li>`).join('')}</ul>` : ''}
-        ${strip(t.s, P2.periods)}${matLink(c, t)}
+        ${strip(t.s, P2.periods)}${matLink(name)}
       </div></div></li>`;
   }
 
@@ -154,9 +146,6 @@
     const inT = c.topics.filter(t => inOnly(c, t.n)), outT = c.topics.filter(t => !inOnly(c, t.n));
     const topics = c.only ? inT.map((t, i) => confirmedRow(c, t, i)).join('') : inT.map((t, i) => {
       const s = seriesStats(t.s), id = slug(t.n), open = state.topic === id;
-      const facts = [`<li><b>${s.total}</b> ${s.total === 1 ? 'pregunta' : 'preguntas'} en <b>${s.hit} de ${s.n}</b> exámenes</li>`,
-        t.l4 !== null ? `<li><b>${t.l4}</b> en los últimos 4 exámenes</li>` : '',
-        `<li>Promedio <b>${dec(s.total / s.n, 2)}</b> por examen</li>`].join('');
       return `<li class="fj-t${open ? ' is-open' : ''}" id="t-${id}" data-t="${id}">
         <button type="button" class="fj-t-head" aria-expanded="${open}" aria-controls="tb-${id}">
           <span class="fj-t-name"><strong>${esc(t.n)}</strong><small>${preg(t.e)}${trend(t.t)}</small></span>
@@ -165,23 +154,21 @@
         <div class="fj-t-body" id="tb-${id}" role="region" aria-label="${esc(t.n)}"><div class="fj-t-inner">
           ${t.h ? `<p class="fj-t-how">${esc(t.h)}</p>` : ''}
           ${strip(t.s, P2.periods)}
-          <ul class="fj-facts">${facts}</ul>${matLink(c, t)}
+          <p class="fj-facts"><b>${s.total}</b> ${s.total === 1 ? 'pregunta' : 'preguntas'} en <b>${s.hit} de ${s.n}</b> exámenes</p>
         </div></div></li>`;
     }).join('');
-    const mix = c.mix.length ? `<div class="fj-mix"><h3>Composición más probable</h3><ol>${c.mix.map(([n, t]) => `<li><b>${n}</b>${esc(t)}</li>`).join('')}</ol></div>` : '';
     const reps = repeats(P2.repeats.filter(r => r.c === c.id), false);
     const next = [MAT[c.id] ? `<a href="/cepreuni/materialespre/?c=${encodeURIComponent(MAT[c.id])}">Clases y materiales de ${esc(MAT[c.id])}${ICON.arrow}</a>` : '',
       `<a href="/cepreuni/examenes?e=2ep">Parciales anteriores para practicar${ICON.arrow}</a>`].join('');
     return `<section class="fj-sec fj-course" style="--h:${HUE[c.id]}">
         <header class="fj-ch">
-          <p class="fj-kicker"><i></i>${esc(c.name)}${c.provisional ? ' · pronóstico provisional' : ''}${c.only || P2.confirmed.includes(c.name) ? ' · <b class="fj-ok">confirmado para 2027-1</b>' : ''}</p>
+          <p class="fj-kicker"><i></i>${esc(c.name)}${c.provisional ? ' · pronóstico provisional' : ''}</p>
           <h2><span class="fj-big">${esc(c.exp)}</span> preguntas esperadas</h2>
-          <p class="fj-meta">${c.only ? `Solo entran ${esc(c.only.slice(0, -1).join(', '))} y ${esc(c.only.at(-1))}. El temario es acumulativo: entra todo lo de las semanas 1 a 13. Si las preguntas se reparten por igual, serían 3 o 4 por curso.` : `Promedio histórico ${esc(c.avg)}${c.avgNote ? ` (${esc(c.avgNote)})` : ''} · ${esc(c.base)}`}</p>
-        </header>${mix}
-        <div class="fj-sec-head is-sm"><h3>${c.only ? 'Cursos que entran' : 'Temas'}</h3><p>${c.only ? 'Toca un curso para ver su temario acumulativo y cómo suelen preguntar' : 'Probabilidad de aparecer al menos una vez'}</p></div>
+          <p class="fj-meta">${c.only ? 'Temario acumulativo: semanas 1 a 13. Si las preguntas se reparten por igual, serían 3 o 4 por curso.' : `Promedio histórico ${esc(c.avg)}${c.avgNote ? ` (${esc(c.avgNote)})` : ''} · ${esc(c.base)}${c.id === 'rv' ? ' · Temario acumulativo: semanas 1 a 13' : ''}`}</p>
+        </header>
+        <div class="fj-sec-head is-sm"><h3>${c.only ? 'Cursos que entran' : 'Temas'}</h3><p>${c.only ? 'Toca un curso para ver su temario' : 'Probabilidad de aparecer al menos una vez'}</p></div>
         <ul class="fj-topics">${topics}</ul>
         ${outT.length ? `<div class="fj-out"><h4>No entran en 2027-1</h4><p>${outT.map(t => esc(t.n)).join(' · ')}</p></div>` : ''}
-        ${!c.only && c.syl ? Object.values(c.syl).map(syllabus).join('') : ''}
       </section>${types(c)}${reps}<nav class="fj-next" aria-label="Seguir con ${esc(c.name)}">${next}</nav>`;
   }
 
@@ -210,7 +197,7 @@
     }).join('');
     const total = c.topics.reduce((a, t) => a + t.t, 0);
     return `<section class="fj-sec fj-course" style="--h:${HUE[c.id] ?? 0}">
-        <header class="fj-ch"><p class="fj-kicker"><i></i>${esc(ex.title)}</p><h2 class="is-name">${esc(c.name)}</h2><p class="fj-meta">${esc(ex.note)} ${total} preguntas de ${esc(c.name)}.</p></header>
+        <header class="fj-ch"><h2 class="is-name">${esc(c.name)}</h2><p class="fj-meta">${total} preguntas en ${ex.n} ${state.ev === 'final' ? 'exámenes' : 'pruebas'}</p></header>
         <div class="fj-sec-head is-sm"><h3>Temas más frecuentes</h3><p>${periods ? 'Toca un tema para verlo examen por examen' : 'Veces que apareció'}</p></div>
         <ul class="fj-topics">${rows}</ul></section>
       <nav class="fj-next"><a href="/cepreuni/examenes?e=${state.ev === 'final' ? 'examen-final' : '2ep'}">${state.ev === 'final' ? 'Exámenes finales anteriores' : 'Exámenes CEPREUNI anteriores'}${ICON.arrow}</a></nav>`;
@@ -261,7 +248,7 @@
 
   const fail = msg => { view.setAttribute('aria-busy', 'false'); view.innerHTML = `<p class="fj-note">${msg} <button type="button" class="fj-more" onclick="location.reload()">Reintentar</button></p>`; };
   async function ensureArch() {
-    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261125')).json(); }
+    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261126')).json(); }
   }
   async function setEv(ev) {
     if (ev !== 'p2') { try { await ensureArch(); } catch { fail('No se pudo cargar el archivo.'); return; } }
@@ -340,7 +327,7 @@
   readHash();
   countUp();
   document.fonts?.ready.then(movePill);
-  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261125').then(r => r.json()).then(async d => {
+  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261126').then(r => r.json()).then(async d => {
     P2 = d;
     if (state.ev !== 'p2') await ensureArch();
     render();
