@@ -43,7 +43,7 @@ const tools=[
 // El resto de páginas del sitio, para que el buscador de la entrada llegue a todo y no solo a las herramientas.
 const pages=[
  {name:'Plataforma',desc:'Un lugar para conectar lo que aprendes, lo que practicas y lo que quieres alcanzar.',url:'/explorar',keys:'explorar todas las herramientas inicio'},
- {name:'Fijas CEPREUNI',desc:'El tipo de problema asociado a cada tema del modelo histórico. Una referencia de preparación, nunca una garantía del examen.',url:'/fijas-cepreuni',keys:'cepreuni primera pc practica calificada fijas temas problemas'},
+ {name:'Fijas CEPREUNI',desc:'Los temas con más probabilidad de venir en el 2.º parcial, curso por curso.',url:'/cepreuni/fijas',keys:'cepreuni fijas segundo parcial examen final seleccion temas probables pronostico'},
  {name:'Información CEPREUNI',desc:'Normas oficiales, estrategia de estudio y consejos prácticos en un solo lugar.',url:'/informacion-cepreuni',keys:'normas reglamento faltas asistencia pagos estudiante familia'},
  {name:'Ingresantes CEPREUNI 2026-2',desc:'Busca a una persona por su nombre o código y celebra su ingreso.',url:'/ingresantes-cepreuni',keys:'ingresantes vacantes especialidad sede codigo nombre'},
  {name:'Ingresantes UNI 2026-2',desc:'Ordinario, primeros puestos y modalidades extraordinarias. Busca por nombre o código.',url:'/ingresantes-uni-2026-2',keys:'ingresantes admision uni codigo nombre'},

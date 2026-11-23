@@ -56,7 +56,7 @@ body.immersive{overflow:hidden;background:#060608!important}body.immersive #spac
 .exam-course summary .topic-plus{font:10px monospace;border:1px solid var(--line);border-radius:20px;padding:3px 9px;transform:none!important}
 .exam-course .topic-detail p{margin:0 0 10px;font-size:11px}
 #exam-range{margin-top:18px}
-.cepre-fijas{scroll-margin-top:110px;margin:60px 0;padding-top:36px;border-top:1px solid var(--line)}.frequency-row{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.frequency-row>span{font:10px monospace;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:7px;padding:10px;text-align:center;min-width:60px}.frequency-row b{display:block;color:var(--text);font-size:19px;margin-top:9px}
+
 .orbital-instrument{position:relative;align-self:center;width:min(100%,460px);aspect-ratio:620/460;justify-self:center;isolation:isolate}.orbital-canvas{width:100%;height:100%;display:block}.orbital-coordinate,.orbital-caption{position:absolute;left:0;width:100%;text-align:center;pointer-events:none}.orbital-coordinate{top:5px;font:8px monospace;letter-spacing:3px;color:var(--muted)}.orbital-caption{bottom:0;font-size:10px;letter-spacing:1px;color:var(--muted)}
 
 /* Brand rail — sin recuadro, sin recorte, monocroma.

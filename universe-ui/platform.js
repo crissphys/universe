@@ -1,4 +1,3 @@
-import {renderFijas} from './upgrades.js?v=20261114-calcpre';
 import {orbitHTML,mountOrbits} from './orbit.js';
 import {renderProfile,syncProfileBadge} from './profile.js';
 import {renderBranchedMenu} from './branched-menu.js?v=20261114-calcpre';
@@ -9,7 +8,6 @@ const store={get(k,d){try{return JSON.parse(localStorage.getItem('universe-previ
 const safe=s=>{try{const u=new URL(s,'https://universetostudy.com');return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
 const routes={
  '/explorar':['Herramientas para ingresar a la UNI','PLATAFORMA / 01','Un lugar para conectar lo que aprendes, lo que practicas y lo que quieres alcanzar.','Herramientas gratis para ingresar a la UNI | UNIverse','Temario, planificador, fijas, exámenes de admisión, biblioteca y ranking CEPREUNI: las herramientas gratuitas de UNIverse para ingresar a la UNI.'],
- '/fijas-cepreuni':['Fijas CEPREUNI: Primera PC','CEPREUNI / PRIMERA PC','Explora el tipo de problema asociado a cada tema del modelo histórico. Una referencia de preparación, nunca una garantía del examen.','Fijas CEPREUNI para la Primera PC | UNIverse','Fijas CEPREUNI para la Primera Práctica Calificada: tipo de problema por tema según el modelo histórico. Una guía de repaso, no una garantía del examen.'],
 };
 let data,ui,view,home,routeVersion=0,toastTimer;
 const link=(url,label,cls='button',live=false)=>`<a class="${cls}" href="${safe(url)}" ${live||!url.startsWith('/')?'data-live target="_blank" rel="noopener noreferrer"':''}>${esc(label)} ${ui.icon('arrow-up-right')}</a>`;
@@ -29,14 +27,12 @@ function head(path){const r=routes[path]||['Aún no estamos aquí.','UNIVERSE / 
 async function route(focus=false){const token=++routeVersion,p=pathName();if(p==='/'){location.reload();return}const isHome=false;home.hidden=!isHome;$('#platform').hidden=isHome;document.body.classList.toggle('in-platform',!isHome);$('.brand').href='/';$('.footer-brand').href='/';$$('.header .nav a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')===p?'page':'false'));if(isHome){setRouteSeo('Universe — El origen de tu siguiente idea','Universe to Study. Una nueva experiencia para aprender, practicar y avanzar.','/');return}const meta=routes[p],title=meta?.[0]||'Página no encontrada';setRouteSeo(meta?.[3]||`${title} — Universe`,meta?.[4]||meta?.[2]||'No encontramos esta página. Puedes volver a la plataforma.',p);renderBranchedMenu($('.side-rail'),{activePath:p,renderIcon:name=>ui.icon(name)});view.innerHTML=head(p)+'<div class="page-view" id="page-view"></div>';const out=$('#page-view');if(!data){out.innerHTML=empty('Conectando tus recursos…');try{data=await fetch('/universe-ui/data/platform.json?v=20261114-calcpre').then(r=>{if(!r.ok)throw Error('Datos no disponibles');return r.json()});hydrateHumanities(data)}catch{out.innerHTML=note('No se pudieron cargar los recursos. Recarga esta página.');return}}if(token!==routeVersion)return;
  if(p==='/explorar')overview(out);
  
- else if(p==='/fijas-cepreuni')fijas(out);
  else if(p==='/account')account(out);
  else out.innerHTML=internal('/explorar','Volver a la plataforma');
  mountOrbits();syncProfileBadge();
  if(focus)$('#page-title')?.focus({preventScroll:true});
 }
-function overview(out){out.innerHTML=`<section class="p-panel p-feature"><div><span class="p-label">UNA RUTA PARA CADA OBJETIVO</span><h2>Tu siguiente idea<br>ya tiene un lugar.</h2><p>No necesitas tener todo resuelto. Empieza por un concepto, una lectura o una pregunta.</p><div class="page-actions">${internal('/temariouni','Explorar mi temario','button primary')}${internal('/planificador','Crear mi ruta','text-button')}</div></div>${orbit()}</section>${sub('Elige tu próxima conexión','Herramientas de Universe')}<div class="p-grid">${ui.tools.map(t=>tile(t.url,t.name,t.desc,t.icon)).join('')}${tile('/fijas-cepreuni','Fijas CEPREUNI','Primera PC, examen final y prueba de selección.','target')}</div>`}
-function fijas(out){out.innerHTML='<section id="cepre-fijas" class="cepre-fijas"></section>';renderFijas($('#cepre-fijas'),data);if(new URLSearchParams(location.search).get('panel')==='fijas'||pathName()==='/fijas-cepreuni')requestAnimationFrame(()=>$('#cepre-fijas').scrollIntoView({block:'start'}))}
+function overview(out){out.innerHTML=`<section class="p-panel p-feature"><div><span class="p-label">UNA RUTA PARA CADA OBJETIVO</span><h2>Tu siguiente idea<br>ya tiene un lugar.</h2><p>No necesitas tener todo resuelto. Empieza por un concepto, una lectura o una pregunta.</p><div class="page-actions">${internal('/temariouni','Explorar mi temario','button primary')}${internal('/planificador','Crear mi ruta','text-button')}</div></div>${orbit()}</section>${sub('Elige tu próxima conexión','Herramientas de Universe')}<div class="p-grid">${ui.tools.map(t=>tile(t.url,t.name,t.desc,t.icon)).join('')}${tile('/cepreuni/fijas','Fijas CEPREUNI','Los temas que más probablemente vienen en el 2.º parcial, curso por curso.','target')}</div>`}
 // El programa CEPREUNI de humanidades sí existe, pero guardado aparte (syllabus.humanities: una lista
 // de 21 semanas por curso) y con otro nombre que el del temario de admisión — "Historia" frente a
 // "Historia del Perú y del Mundo". El render solo leía cepreSemanas, así que esos cursos aparecían
@@ -46,7 +42,6 @@ function hydrateHumanities(d){const src=d?.syllabus?.humanities;if(!src)return;
  for(const [id,key] of Object.entries(HUMANITIES_PROGRAM)){const c=d.syllabus.temarios[id];const weeks=src[key];
   if(!c||!weeks||(c.cepreSemanas||[]).length)continue;
   c.cepreSemanas=weeks.map((title,i)=>({label:`Semana ${i+1}`,topics:[{title,items:[title]}]}));}}
-function fixed(out){renderFijas(out,data)}
 // Small arithmetic parser. No eval, Function constructor, or remote requests.
 export function calculate(input){const text=input.replace(/\s+/g,'').replace(/×/g,'*').replace(/÷/g,'/').replace(/,/g,'.');if(!text||text.length>160||/[^0-9.+\-*/()%]/.test(text))throw Error('Expresión no válida');const tokens=text.match(/(?:\d+(?:\.\d*)?|\.\d+)|[+\-*/()%]/g)||[];if(tokens.join('')!==text)throw Error('Número no válido');let at=0,depth=0;function value(){if(++depth>40)throw Error('Expresión demasiado larga');let n;if(tokens[at]==='+'||tokens[at]==='-'){const sign=tokens[at++];n=(sign==='-'?-1:1)*value()}else if(tokens[at]==='('){at++;n=add();if(tokens[at++]!==')')throw Error('Falta cerrar paréntesis')}else{const t=tokens[at++];if(!t||!/^\d|^\./.test(t))throw Error('Falta un número');n=Number(t)}while(tokens[at]==='%'){at++;n/=100}depth--;return n}function mul(){let n=value();while(['*','/'].includes(tokens[at])){const op=tokens[at++],v=value();if(op==='/'&&v===0)throw Error('No se puede dividir entre cero');n=op==='*'?n*v:n/v}return n}function add(){let n=mul();while(['+','-'].includes(tokens[at])){const op=tokens[at++],v=mul();n=op==='+'?n+v:n-v}return n}const result=add();if(at!==tokens.length||!Number.isFinite(result))throw Error('Revisa la expresión');return Number(result.toPrecision(12))}
 function account(out){renderProfile(out,data,ui.openPreferences)}

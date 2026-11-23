@@ -397,7 +397,7 @@
   /* ---------- herramientas: se elige por necesidad ---------- */
   var NEEDS = [
     ['prep', 'Practicar', 'Antes de rendir', [
-      { t: 'Fijas CEPREUNI', d: 'Los temas que más cayeron en cada evaluación, curso por curso.', u: '/fijas-cepreuni', i: 'target', g: ['Primera PC', 'Examen final', 'Selección'] },
+      { t: 'Fijas CEPREUNI', d: 'Los temas con más probabilidad de venir, curso por curso.', u: '/cepreuni/fijas', i: 'target', g: ['2.º parcial', 'Examen final', 'Selección'] },
       { t: 'Exámenes CEPREUNI', d: 'Prácticas y parciales anteriores para ensayar.', u: '/cepreuni/examenes', i: 'exam', g: ['Prácticas', 'Parciales', 'Finales'] },
       { t: 'Simulacro final', d: 'Ensaya en condiciones de examen.', u: '/simulacros', i: 'timer', g: [] }
     ]],
