@@ -176,7 +176,7 @@
         </header>
         <div class="fj-sec-head is-sm"><h3>${c.only ? 'Cursos que entran' : 'Temas'}</h3><p>${c.only ? 'Toca un curso para ver su temario' : 'Probabilidad de aparecer al menos una vez'}</p></div>
         <ul class="fj-topics">${topics}</ul>
-        ${outT.length ? `<div class="fj-out"><h4>No entran en 2027-1</h4><p>${outT.map(t => esc(t.n)).join(' · ')}</p></div>` : ''}
+        ${outT.length ? `<div class="fj-out"><h4>No entran en 2027-1</h4><p>${outT.map(t => esc(t.n)).join(', ')}</p></div>` : ''}
       </section>${types(c)}${reps}<nav class="fj-next" aria-label="Seguir con ${esc(c.name)}">${next}</nav>`;
   }
 
@@ -271,7 +271,7 @@
 
   const fail = msg => { view.setAttribute('aria-busy', 'false'); view.innerHTML = `<p class="fj-note">${msg} <button type="button" class="fj-btn" onclick="location.reload()">Reintentar</button></p>`; };
   async function ensureArch() {
-    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261128')).json(); }
+    if (!ARCH) { view.setAttribute('aria-busy', 'true'); ARCH = await (await fetch('/cepreuni/fijas/archivo.json?v=20261129')).json(); }
   }
   async function setEv(ev) {
     if (ev !== 'p2') { try { await ensureArch(); } catch { fail('No se pudo cargar el archivo.'); return; } }
@@ -307,8 +307,12 @@
     const a = e.target.closest('a[href^="#"]');
     if (a) { e.preventDefault(); go(a.getAttribute('href')); }
   });
-  hot.addEventListener('click', e => { const a = e.target.closest('a[href^="#"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
-  function go(h) { history.replaceState(null, '', h); readHash(); render(true); }
+  // el aviso y las tarjetas llevan hasta el curso: la página baja a su cabecera
+  hot.addEventListener('click', e => { const a = e.target.closest('a[href^="#"]'); if (a) { e.preventDefault(); go(a.getAttribute('href'), true); } });
+  function go(h, reveal) {
+    history.replaceState(null, '', h); readHash(); render(!reveal);
+    if (reveal && !state.topic) requestAnimationFrame(() => scrollToEl(view, 8));
+  }
   addEventListener('hashchange', () => {
     readHash();
     if (state.ev !== 'p2' && !ARCH) ensureArch().then(() => render(true), () => fail('No se pudo cargar el archivo.'));
@@ -350,7 +354,7 @@
   readHash();
   countUp();
   document.fonts?.ready.then(() => movePill(false));
-  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261128').then(r => r.json()).then(async d => {
+  fetch('/cepreuni/fijas/segundo-parcial.json?v=20261129').then(r => r.json()).then(async d => {
     P2 = d;
     if (state.ev !== 'p2') await ensureArch();
     render();
