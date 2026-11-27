@@ -9505,6 +9505,18 @@
     "universe": [
       {
         "catalog": "PRIMEROS RESÚMENES",
+        "section": "4TA EDICIÓN",
+        "title": "Literatura",
+        "url": "https://drive.google.com/file/d/19rJIvablCUoK0ofyI4WdPpOWJU-tDG2O/view?usp=drive_link",
+        "image": "/biblioteca/universe/assets/primeros-resumenes-literatura-4ta.webp",
+        "series": "Primeros Resúmenes · 4.ª edición",
+        "author": "Editorial Universe",
+        "upcoming": false,
+        "drivePreview": false,
+        "sourceTitle": "PRIMEROS RESUMENES LITERATURA 4ED - UNIVERSE.pdf"
+      },
+      {
+        "catalog": "PRIMEROS RESÚMENES",
         "section": "3RA EDICIÓN",
         "title": "Historia",
         "url": "https://drive.google.com/file/d/1hO7inDd2BRudc_DV94F7_qtGHKFd8Iyj/view?usp=drive_link",
